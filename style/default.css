@@ -2,6 +2,8 @@ table {
     margin-top: 50px;
     /* all tables must start hidden. */
     /* display: none; */
+    font-family : Courier;
+    font-size: 14px;
 }
 .fixed {
     position: fixed; 
@@ -19,20 +21,20 @@ td {
     padding-left: 5px;
 }
 
-#SunTable td:nth-of-type(1),#SunTable th:nth-of-type(1), 
-#SunTable td:nth-of-type(2),#SunTable th:nth-of-type(2) {
-    min-width : 15px;
+#Sun td:nth-of-type(1),#Sun th:nth-of-type(1), 
+#Sun td:nth-of-type(2),#Sun th:nth-of-type(2) {
+    min-width : 25px;
 }
-#SunTable td:nth-of-type(3),#SunTable th:nth-of-type(3),
-#SunTable td:nth-of-type(4),#SunTable th:nth-of-type(4){
-    min-width : 60px;
+#Sun td:nth-of-type(3),#Sun th:nth-of-type(3),
+#Sun td:nth-of-type(4),#Sun th:nth-of-type(4){
+    min-width : 90px;
 }
-#SunTable td:nth-of-type(5),#SunTable th:nth-of-type(5){
-    min-width : 63px;
+#Sun td:nth-of-type(5),#Sun th:nth-of-type(5){
+    min-width : 80px;
 }
-#SunTable td:nth-of-type(6),#SunTable th:nth-of-type(6), 
-#SunTable td:nth-of-type(7),#SunTable th:nth-of-type(7),
-#SunTable td:nth-of-type(8),#SunTable th:nth-of-type(8),
-#SunTable td:nth-of-type(9),#SunTable th:nth-of-type(9) {
-    min-width : 68px;
+#Sun td:nth-of-type(6),#Sun th:nth-of-type(6), 
+#Sun td:nth-of-type(7),#Sun th:nth-of-type(7),
+#Sun td:nth-of-type(8),#Sun th:nth-of-type(8),
+#Sun td:nth-of-type(9),#Sun th:nth-of-type(9) {
+    min-width : 75px;
 }
