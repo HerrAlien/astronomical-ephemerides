@@ -83,6 +83,34 @@ the north point of the disk, negative if west;</li>
         var r = Math.sqrt (coords.X * coords.X + coords.Y * coords.Y + coords.Z * coords.Z);
         return 2 * AAJS.Diameters.SunSemidiameterA (r);
     };
+    
+    AAJS['Numerical'] = {
+            RoundTo1Decimal : function (n) {
+                return Math.round (n * 10) / 10;
+            },
+
+            RoundTo2Decimals : function (n) {
+                return Math.round (n * 100) / 100;
+            },
+
+            RoundTo3Decimals : function (n) {
+                return Math.round (n * 1000) / 1000;
+            },
+            
+            ToSexagesimal : function (numericalValue) {
+                var isNegative  = numericalValue < 0;
+                numericalValue = Math.abs(numericalValue);
+                var r = numericalValue;
+                var M = Math.floor(r);
+                r = (r - M) * 60;
+                var m = Math.floor (r);
+                r = (r - m) * 60;
+                var s = this.RoundTo2Decimals(r);
+                if (isNegative)
+                    M = -M;
+                return {"Ord3" : M, "Ord2" : m, "Ord1" : s};
+            }
+        };
 
 })();
 
