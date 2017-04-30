@@ -72,6 +72,18 @@ the north point of the disk, negative if west;</li>
         return {"D" : Math.floor((h % s) / u) + 1, "M" : M,
                 "Y" : Math.floor(e / p) - y + Math.floor((n + m - M) / n) };
     };
+    
+    AAJS['Sun']['EquatorialCoordinates'] = function (JD, bHighPrecision) {
+        var Epsilon = AAJS.Nutation.TrueObliquityOfEcliptic(JD);
+        return AAJS.CoordinateTransformation.Ecliptic2Equatorial(AAJS.Sun.ApparentEclipticLongitude(JD, bHighPrecision), AAJS.Sun.ApparentEclipticLatitude(JD, bHighPrecision), Epsilon);
+    };
+             
+    AAJS['Sun']['Diameter'] = function (JD, bHighPrecision) {
+        var coords = AAJS.Sun.EclipticRectangularCoordinatesJ2000(JD, true);
+        var r = Math.sqrt (coords.X * coords.X + coords.Y * coords.Y + coords.Z * coords.Z);
+        return 2 * AAJS.Diameters.SunSemidiameterA (r);
+    };
+
 })();
 
 var SunData = {
