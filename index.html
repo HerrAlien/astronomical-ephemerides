@@ -40,16 +40,21 @@ the north point of the disk, negative if west;</li>
 //! ST in hours and fraction of hours
 function ST2NextJD(ST, initialJD) {
     var accurracy = 1 / (24 * 3600);
+    var errorFraction = 0.95 * 1 / 24;
+
     var jd = initialJD;
-    var error = AAJS.Date.JD2ST(jd) / 15 - ST;
+    var computeError = function (jd, ST) {
+        return AAJS.Date.JD2ST(jd) / 15 - ST;
+    }
+    
+    var error = computeError(jd, ST);
     while (Math.abs(error) > accurracy) {
         if (error > 0) {
-            error = AAJS.Date.JD2ST(jd) / 15 - (ST + 24);
+            error -= 24;
         }
         
-        jd += Math.abs(error) / 48;
-            
-        error = AAJS.Date.JD2ST(jd) / 15 - ST;
+        jd += Math.abs(error) * errorFraction;
+        error = computeError(jd, ST);
     }
     return jd;
 }
@@ -155,9 +160,9 @@ var SunPage = {
 
 
 (function(){
-    var JD = AAJS.Date.DateToJD (2017, 4, 8, true);
+    var JD = AAJS.Date.DateToJD (2017, 1, 3, true);
     var i = 0;
-    //for (i = 0; i < 365; i++)
+//    for (i = 0; i < 365; i++)
         SunPage.appendLine (SunPage.prepareLineForView(SunData.getDataForJD(JD + i)));
 })();
 
