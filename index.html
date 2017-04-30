@@ -37,28 +37,6 @@ the north point of the disk, negative if west;</li>
 
 <script type="text/JavaScript">
 
-//! ST in hours and fraction of hours
-function ST2NextJD(ST, initialJD) {
-    var accurracy = 1 / (24 * 3600);
-    var errorFraction = 0.95 * 1 / 24;
-
-    var jd = initialJD;
-    var computeError = function (jd, ST) {
-        return AAJS.Date.JD2ST(jd) / 15 - ST;
-    }
-    
-    var error = computeError(jd, ST);
-    while (Math.abs(error) > accurracy) {
-        if (error > 0) {
-            error -= 24;
-        }
-        
-        jd += Math.abs(error) * errorFraction;
-        error = computeError(jd, ST);
-    }
-    return jd;
-}
-
 var SunData = {
     cache : {},
     getDataForJD : function (JD) {
@@ -76,9 +54,9 @@ var SunData = {
             line[3] = radec.Y; // DEC [deg.dddd]
             line[4] = AAJS.Sun.Diameter(JD, true)/3600; // [deg.dddd]
             // transit should be computed from the RA (LST to UTC conversion)
-            var jdOfTransit = ST2NextJD(radec.X, JD);
+            var jdOfTransit = AAJS.Date.ST2NextJD(radec.X, JD);
             radec = AAJS.Sun.EquatorialCoordinates(jdOfTransit - 30 /(24 * 60), true);
-            jdOfTransit = ST2NextJD(radec.X, jdOfTransit);
+            jdOfTransit = AAJS.Date.ST2NextJD(radec.X, jdOfTransit);
 /*            radec = AAJS.Sun.EquatorialCoordinates(jdOfTransit - 1 /(24 * 60), true);
             jdOfTransit = ST2NextJD(radec.X, JD);
             radec = AAJS.Sun.EquatorialCoordinates(jdOfTransit - 1 /(24 * 60 * 60), true);
