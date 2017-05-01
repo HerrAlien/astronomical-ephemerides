@@ -137,11 +137,21 @@ var SunPage = {
 };
 
 
-(function(){
-    var JD = AAJS.Date.DateToJD (2017, 1, 3, true);
-    var i = 0;
-//    for (i = 0; i < 365; i++)
-        SunPage.appendLine (SunPage.prepareLineForView(SunData.getDataForJD(JD + i)));
+(function(){    
+    
+    function displyaySunPage() {
+    if (!AAJS.AllDependenciesLoaded())
+        return setTimeout (function() { displyaySunPage(); }, 1000);
+    
+        var JD = AAJS.Date.DateToJD (2017, 1, 3, true);
+        var i = 0;
+        for (i = 0; i < 365; i++)
+            SunPage.appendLine (SunPage.prepareLineForView(SunData.getDataForJD(JD + i)));
+            }
+            
+            
+    displyaySunPage() ;
+    
 })();
 
 </script>
