@@ -6,7 +6,7 @@
     font-size: 14px;
 }
 .fixed {
-
+    
 }
 
 #Sun tr:nth-of-type(odd) {
@@ -17,17 +17,28 @@ background: #ffffff;
 background: #DDDDDD;
 }
 
-#Sun tr:nth-of-type(2) {
+#Sun tr:nth-of-type(1){
     margin-top: -50px;
     background: #ffffff;
+
+    border-left: 2px solid black;
+    border-right: 2px solid black;
 }
 
-#Sun tr:nth-of-type(3) {
+#Sun tr:nth-of-type(2){
     margin-top: -25px;
      background: #ffffff;
+
+     border-left: 2px solid black;
+    border-right: 2px solid black;
 }
 
+#Sun td:nth-of-type(2), #Sun td:nth-of-type(5), #Sun td:nth-of-type(8), #Sun td:nth-of-type(10),
+#Sun td:nth-of-type(13), #Sun td:nth-of-type(14), #Sun td:nth-of-type(15) {
+    border-right: 1px solid black;
+}
 
+/*
 #Sun td:nth-of-type(1),#Sun th:nth-of-type(1), 
 #Sun td:nth-of-type(2),#Sun th:nth-of-type(2) {
     min-width : 25px;
@@ -47,8 +58,8 @@ background: #DDDDDD;
 #Sun td:nth-of-type(14),#Sun th:nth-of-type(14), 
 #Sun td:nth-of-type(15),#Sun th:nth-of-type(15), 
 #Sun td:nth-of-type(16),#Sun th:nth-of-type(16) {
-    min-width : 30px;
-}
+    min-width : 20px;
+} */
 /*
 #Sun td:nth-of-type(6),#Sun th:nth-of-type(6), 
 #Sun td:nth-of-type(3),#Sun th:nth-of-type(3),
