@@ -1,4 +1,4 @@
-table {
+#Sun {
     margin-top: 50px;
     /* all tables must start hidden. */
     /* display: none; */
@@ -6,35 +6,70 @@ table {
     font-size: 14px;
 }
 .fixed {
-    position: fixed; 
+    position: fixed;
 }
 
-tr.fixed {
+#Sun tr td, #Sun tr th {
+    padding: 2px;
+}
+
+#Sun tr:nth-of-type(odd) {
+background: #ffffff;
+}
+
+#Sun tr:nth-of-type(even) {
+background: #eeeeee;
+}
+
+#Sun tr:nth-of-type(1){
     margin-top: -50px;
     background: #ffffff;
 }
 
-.fixed th {
+#Sun tr:nth-of-type(2){
+    margin-top: -25px;
+     background: #ffffff;
 }
 
-td {
-    padding-left: 5px;
+#Sun td:nth-of-type(2), #Sun td:nth-of-type(5), #Sun td:nth-of-type(8), #Sun td:nth-of-type(10),
+#Sun td:nth-of-type(13), #Sun td:nth-of-type(14), #Sun td:nth-of-type(15) {
+    border-right: 1px solid black;
 }
+
 
 #Sun td:nth-of-type(1),#Sun th:nth-of-type(1), 
 #Sun td:nth-of-type(2),#Sun th:nth-of-type(2) {
-    min-width : 34px;
-}
+    min-width : 35px;
+} 
+
+#Sun td:nth-of-type(3),#Sun th:nth-of-type(3), 
+#Sun td:nth-of-type(4),#Sun th:nth-of-type(4),
+
 #Sun td:nth-of-type(6),#Sun th:nth-of-type(6), 
-#Sun td:nth-of-type(3),#Sun th:nth-of-type(3),
-#Sun td:nth-of-type(4),#Sun th:nth-of-type(4){
-    min-width : 110px;
-}
-#Sun td:nth-of-type(5),#Sun th:nth-of-type(5){
+#Sun td:nth-of-type(7),#Sun th:nth-of-type(7), 
+
+#Sun td:nth-of-type(9),#Sun th:nth-of-type(9), 
+
+#Sun td:nth-of-type(11),#Sun th:nth-of-type(11), 
+#Sun td:nth-of-type(12),#Sun th:nth-of-type(12){
+    min-width : 30px;
+} 
+
+#Sun td:nth-of-type(14),#Sun th:nth-of-type(14), 
+#Sun td:nth-of-type(15),#Sun th:nth-of-type(15), 
+#Sun td:nth-of-type(16),#Sun th:nth-of-type(16) {
     min-width : 70px;
 }
-#Sun td:nth-of-type(7),#Sun th:nth-of-type(7),
+
+#Sun td:nth-of-type(5),#Sun th:nth-of-type(5),
 #Sun td:nth-of-type(8),#Sun th:nth-of-type(8),
-#Sun td:nth-of-type(9),#Sun th:nth-of-type(9) {
-    min-width : 65px;
+#Sun td:nth-of-type(10),#Sun th:nth-of-type(10),
+#Sun td:nth-of-type(13),#Sun th:nth-of-type(13)
+{
+    min-width: 42px;
+}
+
+#Sun tr:nth-of-type(1) th:nth-of-type(12),
+#Sun tr:nth-of-type(1) th:nth-of-type(13){
+    min-width: 10px;
 }
