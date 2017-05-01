@@ -127,24 +127,21 @@ var SunPage = {
             line.appendChild(td);
             td.textContent = dataArray[i];
         }
+    },
+    
+    displyaySunPage : function(JD, daysAfter) {
+        if (!AAJS.AllDependenciesLoaded())
+            return setTimeout (function() { SunPage.displyaySunPage(JD, daysAfter); }, 100);
+        var i = 0;
+        for (i = 0; i < daysAfter; i++)
+            SunPage.appendLine (SunPage.prepareLineForView(SunData.getDataForJD(JD + i)));
     }
 };
 
 
 (function(){    
-    
-    function displyaySunPage() {
-    if (!AAJS.AllDependenciesLoaded())
-        return setTimeout (function() { displyaySunPage(); }, 100);
-    
-        var JD = AAJS.Date.DateToJD (2017, 1, 1, true);
-        var i = 0;
-        for (i = 0; i < 365; i++)
-            SunPage.appendLine (SunPage.prepareLineForView(SunData.getDataForJD(JD + i)));
-            }
-            
-            
-    displyaySunPage() ;
+                  
+    SunPage.displyaySunPage(AAJS.Date.DateToJD (2017, 1, 1, true), 365) ;
     
 })();
 
