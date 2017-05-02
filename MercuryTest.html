@@ -34,13 +34,18 @@
             input : AAJS.Date.DateToJD (2017, 1, 2, true),
             expectedOutput : 
             [1,
-            
+            2,
+            18.153333333333333333333333333333, // RA
             ]
             ,
             actualOutput : [],
+            raAccurracy : 1e-3,
             test : function () {
                 this.actualOutput = MercuryData.getDataForJD (this.input);
-                return JSON.stringify(this.actualOutput) == JSON.stringify(this.expectedOutput);
+                return this.actualOutput[0] == this.expectedOutput[0] &&
+                       this.actualOutput[1] == this.expectedOutput[1] &&
+                       testlib.doubleEq(this.actualOutput[2] , this.expectedOutput[2], this.raAccurracy ) &&
+                       true;
             }
         }
  

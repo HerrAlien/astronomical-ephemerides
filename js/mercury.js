@@ -20,6 +20,11 @@ var MercuryData = {
         
         var dateOfJD =  AAJS.Date.JD2Date(JD);
         data[0] = dateOfJD.M;
+        data[1] = dateOfJD.D;
+        
+        var planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (JD, 1, true);
+        
+        data[2] = planetaryDetails.ApparentGeocentricRA;
         
         return data;
     }
