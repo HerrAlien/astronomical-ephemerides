@@ -38,11 +38,23 @@
             1.5427777777777777777777777777778, // RA
             8.0611111111111111111111111111111, // DEC
             //!! todo: insert here magnitude
-            11.03 / 3600
+            // 2.3,
+            11.03 / 3600, // diameter in degrees
+            // 0.121, // phase
+            // -17, // elongation
+            // 115, // central meridian
+            // 0.60908 // delta, in AU
             ]
             ,
             actualOutput : [],
-            accurracy : [0, 0, 3e-4, 3e-2, 3e-6],
+            accurracy : [0, 0, 3e-4, 3e-2, 
+            // 1e-1, 
+            3e-6,
+            // 1e-3, 
+            // 5e-1, 
+            // 1e-1, 
+            // 1e-3, 
+            ],
             test : function () {
                 this.actualOutput = MercuryData.getDataForJD (this.input);
 
