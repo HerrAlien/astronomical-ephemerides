@@ -37,10 +37,12 @@
             2,  // day
             1.5427777777777777777777777777778, // RA
             8.0611111111111111111111111111111, // DEC
+            //!! todo: insert here magnitude
+            11.03 / 3600
             ]
             ,
             actualOutput : [],
-            accurracy : [0, 0, 3e-4, 3e-2],
+            accurracy : [0, 0, 3e-4, 3e-2, 3e-6],
             test : function () {
                 this.actualOutput = MercuryData.getDataForJD (this.input);
 

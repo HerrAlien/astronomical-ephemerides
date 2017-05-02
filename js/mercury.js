@@ -24,8 +24,13 @@ var MercuryData = {
         
         var planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (JD, 1, true);
         
+        //!! These are fairly low precision, need to investigate why ...
         data[2] = planetaryDetails.ApparentGeocentricRA;
         data[3] = planetaryDetails.ApparentGeocentricDeclination;
+        
+        var delta = planetaryDetails.ApparentGeocentricDistance;
+        
+        data[4] = 2 * AAJS.Diameters.MercurySemidiameterB(delta) / 3600;
         
         return data;
     }
