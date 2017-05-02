@@ -22,13 +22,17 @@ background: #eeeeee;
 }
 
 #Sun tr:nth-of-type(1){
-    margin-top: -50px;
+    margin-top: -45px;
     background: #ffffff;
+    min-width: 729px;
+    border-top: 1px solid black;
 }
 
 #Sun tr:nth-of-type(2){
     margin-top: -25px;
      background: #ffffff;
+    min-width: 729px;
+    border-bottom: 1px solid black;
 }
 
 #Sun td:nth-of-type(2), #Sun td:nth-of-type(5), #Sun td:nth-of-type(8), #Sun td:nth-of-type(10),
