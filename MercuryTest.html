@@ -30,17 +30,17 @@
         }, */
             
         {
-            name : "Mercury Data for 2017-01-02",
-            input : AAJS.Date.DateToJD (2017, 1, 2, true),
+            name : "Mercury Data for 2017-04-25",
+            input : AAJS.Date.DateToJD (2017, 5, 2, true),
             expectedOutput : 
-            [1, // month
+            [5, // month
             2,  // day
-            18.153333333333333333333333333333, // RA
-            -20.266666666666666666666666666667, // DEC
+            1.5427777777777777777777777777778, // RA
+            8.0611111111111111111111111111111, // DEC
             ]
             ,
             actualOutput : [],
-            accurracy : [0, 0, 1e-3, 1e-2],
+            accurracy : [0, 0, 3e-4, 3e-2],
             test : function () {
                 this.actualOutput = MercuryData.getDataForJD (this.input);
 
