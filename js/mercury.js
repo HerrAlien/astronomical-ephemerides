@@ -25,6 +25,7 @@ var MercuryData = {
         var planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (JD, 1, true);
         
         data[2] = planetaryDetails.ApparentGeocentricRA;
+        data[3] = planetaryDetails.ApparentGeocentricDeclination;
         
         return data;
     }

@@ -18,7 +18,7 @@ var testlib = testlib || {
         
         doubleEq: function  (a, b, eps)
         {
-            return Math.abs(a - b) < eps;
+            return Math.abs(a - b) <= eps;
         },
         
         runTests : function (tests)
