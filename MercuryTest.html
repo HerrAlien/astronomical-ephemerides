@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <script type="text/javascript" src="js/aajs.js"></script>
+        <script type="text/javascript" src="js/mercury.js"></script>
+        <script type="text/javascript" src="testlib.js"></script>
+        <style>
+            p {
+                line-spacing: 2px;
+            }
+        </style>
+    </head>
+    <body>
+    </body>
+</html>
+<script type="text/javascript">
+         
+    (function () {
+            
+        
+        var tests = [
+ /*       {
+            name : "tan",
+            input : Math.PI/4,
+            expectedOutput : 1,
+            actualOutput : 0 ,
+            test : function () {
+                this.actualOutput = tan (this.input);
+                return testlib.doubleEq(this.expectedOutput, this.actualOutput, 1e-9);
+            }
+        }, */
+            
+        {
+            name : "Mercury Data for 2017-01-02",
+            input : AAJS.Date.DateToJD (2017, 1, 2, true),
+            expectedOutput : 
+            [1,
+            
+            ]
+            ,
+            actualOutput : [],
+            test : function () {
+                this.actualOutput = MercuryData.getDataForJD (this.input);
+                return JSON.stringify(this.actualOutput) == JSON.stringify(this.expectedOutput);
+            }
+        }
+ 
+
+        ];
+            
+        testlib.runTests (tests);
+            
+    })();
+            
+        </script>
