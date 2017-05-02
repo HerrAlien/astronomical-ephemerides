@@ -1,16 +1,52 @@
-#Sun {
-    margin-top: 50px;
-    /* all tables must start hidden. */
-    /* display: none; */
-    font-family : Courier;
-    font-size: 14px;
+.invisible {
+    display: none;
 }
+
+.visible {
+    display: block;
+}
+
 .fixed {
     position: fixed;
 }
 
 .page {
 
+}
+
+#menuContainer {
+    width:100%;
+    margin-bottom: 50px;
+}
+
+#menu {
+        width:100%;
+}
+
+#menu li a {
+    cursor: pointer;
+    padding-right: 10px;
+    text-decoration: underline;
+}
+
+#menu li a:hover {
+    color: red;
+}
+
+#menu li {
+    float: left;
+}
+
+#menu { 
+    list-style-type:none;
+}
+
+/** -------------------------------------- S U N -------------------------------- **/
+#Sun {
+    margin-top: 50px;
+    /* all tables must start hidden. */
+    font-family : Courier;
+    font-size: 14px;
 }
 
 #Sun td, #Sun th {

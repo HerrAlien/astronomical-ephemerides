@@ -7,6 +7,12 @@
 </head>
 
 <body>
+    <div id="menuContainer">
+        <ul id="menu">
+            <li><a nohref="#" id="SunLink">Sun</a></li>
+            <li><a nohref="#" id="MercuryLink">Mercury</a></li>
+        </ul>
+    </div>
     <div id="SunPage" class="page invisible">
     The table gives the apparent RA, Dec. and diameter of the Sun, the UT of transit across the
 Greenwich meridian, and P, B<sub>0</sub>, L<sub>0</sub> where:
@@ -39,9 +45,31 @@ Greenwich meridian, and P, B<sub>0</sub>, L<sub>0</sub> where:
             </tr>
         </table>
     </div>
+    <div id="MercuryPage" class="page invisible">
+    </div>
+
 </body>
 
 </html>
 <script type="text/JavaScript" src="js/aajs.js"></script>
 <script type="text/JavaScript" src="js/sun.js"></script>
-
+<script type="text/JavaScript" >
+(function () {
+    
+    var previousPage = false;
+    
+    function gotoPage(pageName) {
+        if (!!previousPage) {
+            previousPage.classList.remove ("visible");
+            previousPage.classList.add ("invisible");
+        }
+        previousPage = document.getElementById(pageName); 
+        previousPage.classList.remove ("invisible"); 
+        previousPage.classList.add ("visible");
+    }
+    
+    document.getElementById("SunLink").onclick = function() { gotoPage("SunPage"); }
+    document.getElementById("MercuryLink").onclick = function() { gotoPage("MercuryPage"); }
+    
+})();
+</script>
