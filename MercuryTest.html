@@ -29,7 +29,18 @@
                 return testlib.doubleEq(this.expectedOutput, this.actualOutput, 1e-9);
             }
         }, */
-            
+        
+        {
+            name : "eccentric anomaly",
+            input : [357.02861 * Math.PI/180, 0.29039],
+            expectedOutput : (360-4.18577) * Math.PI/180,
+            actualOutput : 0 ,
+            test : function () {
+                this.actualOutput = EccentricAnomalyFromMeanAnomaly (this.input[0], this.input[1]);
+                return testlib.doubleEq(this.expectedOutput, this.actualOutput, 2e-6);
+            }
+        },
+        
         {
             name : "Mercury Data for 2017-04-25",
             input : AAJS.Date.DateToJD (2017, 5, 2, true),

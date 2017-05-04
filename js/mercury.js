@@ -14,6 +14,13 @@ PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
+function EccentricAnomalyFromMeanAnomaly (M, e) {
+	var E = M;
+	for (var i = 0; i < 10; i++)
+		E = M + e * Math.sin(E);
+	return E;
+}
+
 var MercuryData = {
     getDataForJD : function (JD) {
         var data = [];
@@ -37,7 +44,17 @@ var MercuryData = {
 		/* M = E - e*sin(E); => E = M + e * sin(E)
 		r = a * (1 - e * cos (E))
 		*/
+		var meanAnomaly;
+		var eccentricity = AAJS.ElementsPlanetaryOrbit.MercuryEccentricity(JD);
+		var eccentricAnomaly = EccentricAnomalyFromMeanAnomaly (meanAnomaly, eccentricity);
 		
+		var r = AAJS.ElementsPlanetaryOrbit.MercurySemimajorAxis(JD) *
+		        (1 -  eccentricity * Math.cos(eccentricAnomaly) );
+		/*
+			sunEarthDistance**2 = r**2 + delta **2 - 2 * delta * r * cos (phase);
+			2 delta r cos phase = r **2 + delta **2 - sunEarthDistance**2
+			phase = acos (( r **2 + delta **2 - sunEarthDistance**2) / (2 * delta * r))
+		*/
         return data;
     }
 };
