@@ -23,25 +23,26 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             var line = this.cache[JD];
             if (!line) {
                 line = [];
-                
+                var i = 0;
                 var _date = AAJS.Date.JD2Date(JD);
                 // convert from JD to gregorian
-                line[0] = _date.M;
-                line[1] = _date.D;
+                line[i++] = _date.M;
+                line[i++] = _date.D;
                 var radec = AAJS.Sun.EquatorialCoordinates(JD, true);
-                line[2] = radec.X; // RA [h.hhhh]
-                line[3] = radec.Y; // DEC [deg.dddd]
-                line[4] = AAJS.Sun.Diameter(JD, true)/3600; // [deg.dddd]
+                line[i++] = radec.X; // RA [h.hhhh]
+                line[i++] = radec.Y; // DEC [deg.dddd]
+				line[i++] = AAJS.Sun.Distance(JD, true); // [au]
+                line[i++] = AAJS.Sun.Diameter(JD, true)/3600; // [deg.dddd]
                 // transit should be computed from the RA (LST to UTC conversion)
                 var jdOfTransit = AAJS.Date.ST2NextJD(radec.X, JD);
                 radec = AAJS.Sun.EquatorialCoordinates(jdOfTransit - 5 /(24 * 60), true);
                 jdOfTransit = AAJS.Date.ST2NextJD(radec.X, jdOfTransit);
                 var transitHour = 24 * (jdOfTransit - JD);
-                line[5] = transitHour;
+                line[i++] = transitHour;
                 var physical = AAJS.Sun.CalculatePhysicalDetails(JD, true);
-                line[6] = physical.P; // [deg.dddd]
-                line[7] = physical.B0; // [deg.dddd]
-                line[8] = physical.L0; // [deg.dddd]
+                line[i++] = physical.P; // [deg.dddd]
+                line[i++] = physical.B0; // [deg.dddd]
+                line[i++] = physical.L0; // [deg.dddd]
             }
             this.cache[JD] = line;
             return line;
@@ -87,6 +88,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             displayableLine[di++] = sexagesimalDec.Ord3 ;
             displayableLine[di++] = sexagesimalDec.Ord2;
             displayableLine[di++] = sexagesimalDec.Ord1;
+			
+			displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals(line[si++]);
             
             var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(line[si++]);
             displayableLine[di++] = sexagesimalDiam.Ord2;
