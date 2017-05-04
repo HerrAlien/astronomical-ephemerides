@@ -15,8 +15,6 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 
-(function(){    
-
     var SunData = {
         cache : {},
         getDataForJD : function (JD) {
@@ -49,10 +47,15 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         },
         initFromLocalStorage : function () {
             // TODO: this is where we fetch data already computed during earlier sessions
-        }
+        },
+		getSunEarthDistance : function(JD) {
+			var line = this.getDataForJD(JD);
+			return line[4];
+		}
     };
     SunData.initFromLocalStorage();
 
+(function(){    
     var SunPage = {
         page : document.getElementById("SunPage"),
         table : document.getElementById("Sun"),

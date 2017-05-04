@@ -31,7 +31,13 @@ var MercuryData = {
         var delta = planetaryDetails.ApparentGeocentricDistance;
         
         data[4] = 2 * AAJS.Diameters.MercurySemidiameterB(delta) / 3600;
+		
+		var sunEarthDistance = SunData.getSunEarthDistance(JD);
         
+		/* M = E - e*sin(E); => E = M + e * sin(E)
+		r = a * (1 - e * cos (E))
+		*/
+		
         return data;
     }
 };
