@@ -36,7 +36,7 @@
             expectedOutput : (360-4.18577) * Math.PI/180,
             actualOutput : 0 ,
             test : function () {
-                this.actualOutput = EccentricAnomalyFromMeanAnomaly (this.input[0], this.input[1]);
+                this.actualOutput = AAJS['Elliptical']['EccentricAnomalyFromMeanAnomaly'] (this.input[0], this.input[1]);
                 return testlib.doubleEq(this.expectedOutput, this.actualOutput, 2e-6);
             }
         },
