@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 
-var MercuryData = {
+var VenusData = {
     getDataForJD : function (JD) {
         var data = [];
         
@@ -23,7 +23,7 @@ var MercuryData = {
         data[0] = dateOfJD.M;
         data[1] = dateOfJD.D;
         
-        var planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (JD, 1, true);
+        var planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (JD, 2, true);
         
         //!! These are fairly low precision, need to investigate why ...
         data[2] = planetaryDetails.ApparentGeocentricRA;
@@ -31,25 +31,25 @@ var MercuryData = {
         
         var delta = planetaryDetails.ApparentGeocentricDistance;
         
-        data[4] = 2 * AAJS.Diameters.MercurySemidiameterB(delta) / 3600;
+        data[4] = 2 * AAJS.Diameters.VenusSemidiameterB(delta) / 3600;
 		
 		var sunEarthDistance = SunData.getSunEarthDistance(JD);
         
 		/* M = E - e*sin(E); => E = M + e * sin(E)
 		r = a * (1 - e * cos (E))
 		*/
-        var meanLongitude = AAJS.ElementsPlanetaryOrbit.MercuryMeanLongitude(JD);
+        var meanLongitude = AAJS.ElementsPlanetaryOrbit.VenusMeanLongitude(JD);
         // these two change slowly ... do we really want to recompute them for each JD?
-        var ascendingNodeLongitude = AAJS.ElementsPlanetaryOrbit.MercuryLongitudeAscendingNode(JD);
-        var perihelionLongitude = AAJS.ElementsPlanetaryOrbit.MercuryLongitudePerihelion(JD);
+        var ascendingNodeLongitude = AAJS.ElementsPlanetaryOrbit.VenusLongitudeAscendingNode(JD);
+        var perihelionLongitude = AAJS.ElementsPlanetaryOrbit.VenusLongitudePerihelion(JD);
         
 		var meanAnomaly = meanLongitude - ascendingNodeLongitude - perihelionLongitude; // l = omega + w + M => M = l - omega - w
         // transform it to radians
         meanAnomaly = meanAnomaly * Math.PI / 180;
         
-		var eccentricity = AAJS.ElementsPlanetaryOrbit.MercuryEccentricity(JD);
+		var eccentricity = AAJS.ElementsPlanetaryOrbit.VenusEccentricity(JD);
 		var eccentricAnomaly = AAJS.Elliptical.EccentricAnomalyFromMeanAnomaly(meanAnomaly, eccentricity);
-		var a = AAJS.ElementsPlanetaryOrbit.MercurySemimajorAxis(JD);
+		var a = AAJS.ElementsPlanetaryOrbit.VenusSemimajorAxis(JD);
 		var r =  a *  (1 -  eccentricity * Math.cos(eccentricAnomaly) );
 		/*
 			sunEarthDistance**2 = r**2 + delta **2 - 2 * delta * r * cos (phase);
