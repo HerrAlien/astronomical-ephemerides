@@ -58,11 +58,10 @@ var VenusData = {
 		*/
         
         var cosPhaseAngle = (r*r + delta * delta - sunEarthDistance * sunEarthDistance)/(2 * delta * r);
-        // debug ...
-        // data[5] = 0.5 * (cosPhaseAngle + 1);
+        data[5] = 0.5 * (cosPhaseAngle + 1);
 		
 		var cosElongationAngle = (delta * delta + sunEarthDistance * sunEarthDistance - r * r)/(2 * delta * sunEarthDistance);
-		data[5] = Math.acos(cosElongationAngle);
+		data[6] = Math.acos(cosElongationAngle);
         return data;
     }
 };
