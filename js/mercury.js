@@ -42,33 +42,8 @@ var MercuryData = {
 		data[i++] = delta;
 		
 		var sunEarthDistance = SunData.getSunEarthDistance(JD);
-        
-		/* M = E - e*sin(E); => E = M + e * sin(E)
-		r = a * (1 - e * cos (E))
-		*/
-        var meanLongitude = AAJS.ElementsPlanetaryOrbit.MercuryMeanLongitude(JD);
-        // these two change slowly ... do we really want to recompute them for each JD?
-        var ascendingNodeLongitude = AAJS.ElementsPlanetaryOrbit.MercuryLongitudeAscendingNode(JD);
-        var perihelionLongitude = AAJS.ElementsPlanetaryOrbit.MercuryLongitudePerihelion(JD);
-        
-		var meanAnomaly = meanLongitude - ascendingNodeLongitude - perihelionLongitude; // l = omega + w + M => M = l - omega - w
-        // transform it to radians
-        meanAnomaly = meanAnomaly * Math.PI / 180;
-        
-		var eccentricity = AAJS.ElementsPlanetaryOrbit.MercuryEccentricity(JD);
-		var eccentricAnomaly = AAJS.Elliptical.EccentricAnomalyFromMeanAnomaly(meanAnomaly, eccentricity);
-		var a = AAJS.ElementsPlanetaryOrbit.MercurySemimajorAxis(JD);
-		var r =  a *  (1 -  eccentricity * Math.cos(eccentricAnomaly) );
+		var r =  AAJS.Mercury.RadiusVector(JD, true);
 		data[i++] = r;
-		
-		/*
-			sunEarthDistance**2 = r**2 + delta **2 - 2 * delta * r * cos (phase);
-			2 delta r cos phase = r **2 + delta **2 - sunEarthDistance**2
-			phase = acos (( r **2 + delta **2 - sunEarthDistance**2) / (2 * delta * r))
-		*/
-        
-        // debug ...
-        // data[5] = 0.5 * (cosPhaseAngle + 1);
 		
 		var cosElongationAngle = (delta * delta + sunEarthDistance * sunEarthDistance - r * r)/(2 * delta * sunEarthDistance);
 		data[i++] = Math.acos(cosElongationAngle);
