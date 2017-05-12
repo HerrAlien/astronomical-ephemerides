@@ -138,43 +138,43 @@ background: #eeeeee;
 }
 
 /** ---------------------------------- M E R C U R Y ---------------------------------------- **/
-#Mercury tr:nth-of-type(1), #Mercury tr:nth-of-type(2)
+.planetTable tr:nth-of-type(1), .planetTable tr:nth-of-type(2)
 {
     min-width: 858px;
 }
 
-#Mercury td:nth-of-type(1),#Mercury th:nth-of-type(1), 
-#Mercury td:nth-of-type(2),#Mercury th:nth-of-type(2) {
+.planetTable td:nth-of-type(1),.planetTable th:nth-of-type(1), 
+.planetTable td:nth-of-type(2),.planetTable th:nth-of-type(2) {
     min-width : 35px;
 } 
 
-#Mercury td:nth-of-type(3),#Mercury th:nth-of-type(3), 
-#Mercury td:nth-of-type(4),#Mercury th:nth-of-type(4),
+.planetTable td:nth-of-type(3),.planetTable th:nth-of-type(3), 
+.planetTable td:nth-of-type(4),.planetTable th:nth-of-type(4),
 
-#Mercury td:nth-of-type(6),#Mercury th:nth-of-type(6), 
-#Mercury td:nth-of-type(7),#Mercury th:nth-of-type(7),
-#Mercury td:nth-of-type(10),#Mercury th:nth-of-type(10), 
-#Mercury td:nth-of-type(11),#Mercury th:nth-of-type(11)
+.planetTable td:nth-of-type(6),.planetTable th:nth-of-type(6), 
+.planetTable td:nth-of-type(7),.planetTable th:nth-of-type(7),
+.planetTable td:nth-of-type(10),.planetTable th:nth-of-type(10), 
+.planetTable td:nth-of-type(11),.planetTable th:nth-of-type(11)
 {
     min-width : 30px;
 } 
 
-#Mercury td:nth-of-type(5),#Mercury th:nth-of-type(5),
-#Mercury td:nth-of-type(8),#Mercury th:nth-of-type(8),
-#Mercury td:nth-of-type(9),#Mercury th:nth-of-type(9), 
-#Mercury td:nth-of-type(12),#Mercury th:nth-of-type(12)
+.planetTable td:nth-of-type(5),.planetTable th:nth-of-type(5),
+.planetTable td:nth-of-type(8),.planetTable th:nth-of-type(8),
+.planetTable td:nth-of-type(9),.planetTable th:nth-of-type(9), 
+.planetTable td:nth-of-type(12),.planetTable th:nth-of-type(12)
 {
     min-width: 50px;
 }
 
-#Mercury td:nth-of-type(13),#Mercury th:nth-of-type(13), 
-#Mercury td:nth-of-type(14),#Mercury th:nth-of-type(14), 
-#Mercury td:nth-of-type(15),#Mercury th:nth-of-type(15), 
-#Mercury td:nth-of-type(16),#Mercury th:nth-of-type(16) {
+.planetTable td:nth-of-type(13),.planetTable th:nth-of-type(13), 
+.planetTable td:nth-of-type(14),.planetTable th:nth-of-type(14), 
+.planetTable td:nth-of-type(15),.planetTable th:nth-of-type(15), 
+.planetTable td:nth-of-type(16),.planetTable th:nth-of-type(16) {
     min-width : 86px;
 }
 
-#Mercury > tbody > tr:nth-child(1) > th:nth-child(11),
-#Mercury > tbody > tr:nth-child(1) > th:nth-child(12) {
+.planetTable > tbody > tr:nth-child(1) > th:nth-child(11),
+.planetTable > tbody > tr:nth-child(1) > th:nth-child(12) {
 	min-width: 20px;
 }
