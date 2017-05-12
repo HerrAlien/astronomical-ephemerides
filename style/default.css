@@ -41,25 +41,46 @@
     list-style-type:none;
 }
 
-/** -------------------------------------- S U N -------------------------------- **/
-#Sun {
+.clear {
+	clear: both;
+}
+
+tr:nth-of-type(1){
+    margin-top: -41px;
+    border-top: 1px solid black;
+}
+
+tr:nth-of-type(2){
+    margin-top: -21px;
+    border-bottom: 1px solid black;
+}
+
+table {
     margin-top: 50px;
     /* all tables must start hidden. */
     font-family : Courier;
     font-size: 14px;
 }
 
-#Sun td, #Sun th {
+ td,  th {
     padding: 2px;
 }
 
-#Sun tr:nth-of-type(odd) {
+ tr:nth-of-type(odd) {
 background: #ffffff;
 }
 
-#Sun tr:nth-of-type(even) {
+ tr:nth-of-type(even) {
 background: #eeeeee;
 }
+
+ tr:nth-of-type(1),  tr:nth-of-type(2){
+    background: #ffffff;
+	    height: 20px;
+}
+
+/** -------------------------------------- S U N -------------------------------- **/
+
 
 #Sun tr, #Sun td:nth-of-type(1) {
     border-left: 1px solid black;
@@ -70,19 +91,7 @@ background: #eeeeee;
 }
 
 #Sun tr:nth-of-type(1), #Sun tr:nth-of-type(2){
-    background: #ffffff;
     min-width: 824px;
-    height: 20px;
-}
-
-#Sun tr:nth-of-type(1){
-    margin-top: -41px;
-    border-top: 1px solid black;
-}
-
-#Sun tr:nth-of-type(2){
-    margin-top: -21px;
-    border-bottom: 1px solid black;
 }
 
 #Sun td:nth-of-type(2), #Sun td:nth-of-type(5), #Sun td:nth-of-type(8), #Sun td:nth-of-type(9), #Sun td:nth-of-type(11),
