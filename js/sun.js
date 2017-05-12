@@ -57,7 +57,6 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 (function(){    
     var SunPage = {
-        page : document.getElementById("SunPage"),
         table : document.getElementById("Sun"),
 
         reset : function () {
