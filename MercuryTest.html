@@ -16,81 +16,67 @@
 <script type="text/javascript">
          
     (function () {
-            
-        
+                    
         var tests = [
- /*       {
-            name : "tan",
-            input : Math.PI/4,
-            expectedOutput : 1,
-            actualOutput : 0 ,
-            test : function () {
-                this.actualOutput = tan (this.input);
-                return testlib.doubleEq(this.expectedOutput, this.actualOutput, 1e-9);
-            }
-        }, */
-        
-        {
-            name : "eccentric anomaly",
-            input : [357.02861 * Math.PI/180, 0.29039],
-            expectedOutput : (360-4.18577) * Math.PI/180,
-            actualOutput : 0 ,
-            test : function () {
-                this.actualOutput = AAJS['Elliptical']['EccentricAnomalyFromMeanAnomaly'] (this.input[0], this.input[1]);
-                return testlib.doubleEq(this.expectedOutput, this.actualOutput, 2e-6);
-            }
-        },
-        
-        {
-            name : "Mercury Data for 2017-05-02",
-            input : AAJS.Date.DateToJD (2017, 5, 2, true),
-            expectedOutput : 
-            [5, // month
-            2,  // day
-            1.5427777777777777777777777777778, // RA
-            8.0611111111111111111111111111111, // DEC
-            //!! todo: insert here magnitude
-            // 2.3,
-            11.03 / 3600, // diameter in degrees
-			10 + 50 / 60.0, // transit
-			0.60982, // delta in AU
-			0.46380,
-            17.4* Math.PI/180, // elongation
-            0.121, // phase
-            // 114.6, // central meridian
-            ]
-            ,
-            actualOutput : [],
-            accurracy : [0, 0, 3e-4, 3e-2, 
-            3e-6,
-			7e-3,
-			2e-5,
-			2e-5,
-			2e-3, // too big ... way too big
-			1e-3,
-            //5e-3, 
-             //5e-2, 
-            // 1e-1, 
-            // 1e-3, 
-            ],
-            test : function () {
-                this.actualOutput = MercuryData.getDataForJD (this.input);
+			{
+				name : "eccentric anomaly",
+				input : [357.02861 * Math.PI/180, 0.29039],
+				expectedOutput : (360-4.18577) * Math.PI/180,
+				actualOutput : 0 ,
+				test : function () {
+					this.actualOutput = AAJS['Elliptical']['EccentricAnomalyFromMeanAnomaly'] (this.input[0], this.input[1]);
+					return testlib.doubleEq(this.expectedOutput, this.actualOutput, 2e-6);
+				}
+			},
+			
+			{
+				name : "Mercury Data for 2017-05-02",
+				input : AAJS.Date.DateToJD (2017, 5, 2, true),
+				expectedOutput : 
+				[5, // month
+				2,  // day
+				1.5427777777777777777777777777778, // RA
+				8.0611111111111111111111111111111, // DEC
+				//!! todo: insert here magnitude
+				// 2.3,
+				11.03 / 3600, // diameter in degrees
+				10 + 50 / 60.0, // transit
+				0.60982, // delta in AU
+				0.46380,
+				17.4* Math.PI/180, // elongation
+				0.121, // phase
+				// 114.6, // central meridian
+				]
+				,
+				actualOutput : [],
+				accurracy : [0, 0, 3e-4, 3e-2, 
+				3e-6,
+				7e-3,
+				2e-5,
+				2e-5,
+				2e-3, // too big ... way too big
+				1e-3,
+				//5e-3, 
+				 //5e-2, 
+				// 1e-1, 
+				// 1e-3, 
+				],
+				test : function () {
+					this.actualOutput = MercuryData.getDataForJD (this.input);
 
-                if (this.expectedOutput.length != this.actualOutput.length ||
-                    this.expectedOutput.length != this.accurracy.length)
-                    return false;
-                
-                var i = 0;
-                for (i = 0; i < this.expectedOutput.length; i++) {
-                    if (!testlib.doubleEq(this.actualOutput[i] , this.expectedOutput[i], this.accurracy[i]))
-                        return false;
-                }
-                
-                return true;
-            }
-        }
- 
-
+					if (this.expectedOutput.length != this.actualOutput.length ||
+						this.expectedOutput.length != this.accurracy.length)
+						return false;
+					
+					var i = 0;
+					for (i = 0; i < this.expectedOutput.length; i++) {
+						if (!testlib.doubleEq(this.actualOutput[i] , this.expectedOutput[i], this.accurracy[i]))
+							return false;
+					}
+					
+					return true;
+				}
+			}
         ];
             
         testlib.runTests (tests);

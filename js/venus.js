@@ -16,52 +16,128 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 
 var VenusData = {
+	cache : {},
     getDataForJD : function (JD) {
-        var data = [];
-        
-        var dateOfJD =  AAJS.Date.JD2Date(JD);
-        data[0] = dateOfJD.M;
-        data[1] = dateOfJD.D;
-        
-        var planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (JD, 2, true);
-        
-        //!! These are fairly low precision, need to investigate why ...
-        data[2] = planetaryDetails.ApparentGeocentricRA;
-        data[3] = planetaryDetails.ApparentGeocentricDeclination;
-        
-        var delta = planetaryDetails.ApparentGeocentricDistance;
-        
-        data[4] = 2 * AAJS.Diameters.VenusSemidiameterB(delta) / 3600;
-		
-		var sunEarthDistance = SunData.getSunEarthDistance(JD);
-        
-		/* M = E - e*sin(E); => E = M + e * sin(E)
-		r = a * (1 - e * cos (E))
-		*/
-        var meanLongitude = AAJS.ElementsPlanetaryOrbit.VenusMeanLongitude(JD);
-        // these two change slowly ... do we really want to recompute them for each JD?
-        var ascendingNodeLongitude = AAJS.ElementsPlanetaryOrbit.VenusLongitudeAscendingNode(JD);
-        var perihelionLongitude = AAJS.ElementsPlanetaryOrbit.VenusLongitudePerihelion(JD);
-        
-		var meanAnomaly = meanLongitude - ascendingNodeLongitude - perihelionLongitude; // l = omega + w + M => M = l - omega - w
-        // transform it to radians
-        meanAnomaly = meanAnomaly * Math.PI / 180;
-        
-		var eccentricity = AAJS.ElementsPlanetaryOrbit.VenusEccentricity(JD);
-		var eccentricAnomaly = AAJS.Elliptical.EccentricAnomalyFromMeanAnomaly(meanAnomaly, eccentricity);
-		var a = AAJS.ElementsPlanetaryOrbit.VenusSemimajorAxis(JD);
-		var r =  a *  (1 -  eccentricity * Math.cos(eccentricAnomaly) );
-		/*
-			sunEarthDistance**2 = r**2 + delta **2 - 2 * delta * r * cos (phase);
-			2 delta r cos phase = r **2 + delta **2 - sunEarthDistance**2
-			phase = acos (( r **2 + delta **2 - sunEarthDistance**2) / (2 * delta * r))
-		*/
-        
-        var cosPhaseAngle = (r*r + delta * delta - sunEarthDistance * sunEarthDistance)/(2 * delta * r);
-        data[5] = 0.5 * (cosPhaseAngle + 1);
-		
-		var cosElongationAngle = (delta * delta + sunEarthDistance * sunEarthDistance - r * r)/(2 * delta * sunEarthDistance);
-		data[6] = Math.acos(cosElongationAngle);
-        return data;
+        var data = this.cache[JD];
+            if (!data) {
+				data = [];
+				var i = 0;
+				var dateOfJD =  AAJS.Date.JD2Date(JD);
+				data[i++] = dateOfJD.M;
+				data[i++] = dateOfJD.D;
+				
+				var planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (JD, 2, true);
+				
+				//!! These are fairly low precision, need to investigate why ...
+				data[i++] = planetaryDetails.ApparentGeocentricRA;
+				data[i++] = planetaryDetails.ApparentGeocentricDeclination;
+				
+				var delta = planetaryDetails.ApparentGeocentricDistance;
+				
+				data[i++] = 2 * AAJS.Diameters.VenusSemidiameterB(delta) / 3600;
+				
+				var jdOfTransit = AAJS.Date.ST2NextJD(planetaryDetails.ApparentGeocentricRA, JD);
+		//		planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (jdOfTransit - 6.0 /24, 1, true);
+		//		jdOfTransit = AAJS.Date.ST2NextJD(planetaryDetails.ApparentGeocentricRA, jdOfTransit);
+				var transitHour = 24 * (jdOfTransit - JD);
+				data[i++] = transitHour;
+				data[i++] = delta;
+				
+				var sunEarthDistance = SunData.getSunEarthDistance(JD);
+				var r =  AAJS.Venus.RadiusVector(JD, true);
+				data[i++] = r;
+				
+				var cosElongationAngle = (delta * delta + sunEarthDistance * sunEarthDistance - r * r)/(2 * delta * sunEarthDistance);
+				data[i++] = Math.acos(cosElongationAngle);
+				var cosPhaseAngle = (r*r + delta * delta - sunEarthDistance * sunEarthDistance)/(2 * delta * r);
+				data[i++] = 0.5 * (cosPhaseAngle + 1);
+				this.cache[JD] = data;
+			}
+		return data;
+    },
+    initFromLocalStorage : function () {
+            // TODO: this is where we fetch data already computed during earlier sessions
     }
 };
+
+(function () {
+    var VenusPage = {
+        table : document.getElementById("Venus"),
+
+        reset : function () {
+            while (this.table.hasChildNodes()) {
+                var currentTr = this.table.lastElementChild;
+                if (currentTr.className == "fixed") // not the safest way
+                    break;
+                this.table.removeChild(currentTr);
+            }
+        },
+        
+        prepareLineForView : function (line) {
+            var displayableLine = [];
+            // copy the day verbatim
+            displayableLine[1] = line[1];
+            if (line[1] == 1) { // first day of the month
+                var months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                displayableLine[0] = months[line[0]]; // set displayableLine[0] to the name of the month
+            }
+            else
+                displayableLine[0] = "";
+            
+            var di = 2;
+            var si = 2;
+            var sexagesimalRA = AAJS.Numerical.ToSexagesimal(line[si++]);
+            displayableLine[di++] = sexagesimalRA.Ord3 ;
+            displayableLine[di++] = sexagesimalRA.Ord2 
+            displayableLine[di++] = sexagesimalRA.Ord1;
+
+            var sexagesimalDec = AAJS.Numerical.ToSexagesimal(line[si++]);
+            displayableLine[di++] = sexagesimalDec.Ord3 ;
+            displayableLine[di++] = sexagesimalDec.Ord2;
+            displayableLine[di++] = sexagesimalDec.Ord1;
+			
+//			displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals(line[si++]);
+            
+            var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(line[si++]);
+            displayableLine[di++] = sexagesimalDiam.Ord1;
+            
+            var sexagesimalTransit = AAJS.Numerical.ToSexagesimal(line[si++]);
+            displayableLine[di++] = sexagesimalTransit.Ord3;
+            displayableLine[di++] = sexagesimalTransit.Ord2;
+            displayableLine[di++] = sexagesimalTransit.Ord1;
+            
+            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
+            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
+            displayableLine[di++] = AAJS.Numerical.RoundTo1Decimal (line[si++] * 180 / Math.PI);
+            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
+
+            return displayableLine;
+        },
+        
+        // this will probably become an utility available for every page
+        appendLine : function (dataArray) {
+            var line = this.table.ownerDocument.createElement("tr");
+            var tbody = this.table.getElementsByTagName("tbody")[0];
+            tbody.appendChild(line);
+            
+            var i = 0;
+            for (i = 0; i < dataArray.length; i++) {
+                var td = line.ownerDocument.createElement("td");
+                line.appendChild(td);
+                td.textContent = dataArray[i];
+            }
+        },
+        
+        displayVenusPage : function(JD, daysAfter) {
+            if (!AAJS.AllDependenciesLoaded())
+                return setTimeout (function() { VenusPage.displyaySunPage(JD, daysAfter); }, 100);
+            var i = 0;
+            for (i = 0; i < daysAfter; i++)
+                VenusPage.appendLine (VenusPage.prepareLineForView(VenusData.getDataForJD(JD + i)));
+        }
+    };
+
+    setTimeout( function() { VenusPage.displayVenusPage(AAJS.Date.DateToJD (2017, 1, 1, true), 380); }, 100);
+
+
+})();
