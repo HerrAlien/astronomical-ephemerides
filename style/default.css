@@ -136,3 +136,39 @@ background: #eeeeee;
 #Sun tr:nth-of-type(1) th:nth-of-type(14){
     min-width: 30px;
 }
+
+/** ---------------------------------- M E R C U R Y ---------------------------------------- **/
+#Mercury tr:nth-of-type(1), #Mercury tr:nth-of-type(2){
+    min-width: 824px;
+}
+
+#Mercury td:nth-of-type(1),#Mercury th:nth-of-type(1), 
+#Mercury td:nth-of-type(2),#Mercury th:nth-of-type(2) {
+    min-width : 35px;
+} 
+
+#Mercury td:nth-of-type(3),#Mercury th:nth-of-type(3), 
+#Mercury td:nth-of-type(4),#Mercury th:nth-of-type(4),
+
+#Mercury td:nth-of-type(6),#Mercury th:nth-of-type(6), 
+#Mercury td:nth-of-type(7),#Mercury th:nth-of-type(7),
+#Mercury td:nth-of-type(10),#Mercury th:nth-of-type(10), 
+#Mercury td:nth-of-type(11),#Mercury th:nth-of-type(11)
+{
+    min-width : 30px;
+} 
+
+#Mercury td:nth-of-type(5),#Mercury th:nth-of-type(5),
+#Mercury td:nth-of-type(8),#Mercury th:nth-of-type(8),
+#Mercury td:nth-of-type(9),#Mercury th:nth-of-type(9), 
+#Mercury td:nth-of-type(12),#Mercury th:nth-of-type(12)
+{
+    min-width: 42px;
+}
+
+#Mercury td:nth-of-type(13),#Mercury th:nth-of-type(13), 
+#Mercury td:nth-of-type(14),#Mercury th:nth-of-type(14), 
+#Mercury td:nth-of-type(15),#Mercury th:nth-of-type(15), 
+#Mercury td:nth-of-type(16),#Mercury th:nth-of-type(16) {
+    min-width : 50px;
+}

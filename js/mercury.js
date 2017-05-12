@@ -99,7 +99,6 @@ var MercuryData = {
 //			displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals(line[si++]);
             
             var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(line[si++]);
-            displayableLine[di++] = sexagesimalDiam.Ord2;
             displayableLine[di++] = sexagesimalDiam.Ord1;
             
             var sexagesimalTransit = AAJS.Numerical.ToSexagesimal(line[si++]);
@@ -138,7 +137,7 @@ var MercuryData = {
         }
     };
 
-    setTimeout( function() { MercuryPage.displayMercuryPage(AAJS.Date.DateToJD (2017, 1, 1, true), 365); }, 100);
+    setTimeout( function() { MercuryPage.displayMercuryPage(AAJS.Date.DateToJD (2017, 1, 1, true), 380); }, 100);
 
 
 })();
