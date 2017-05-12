@@ -15,9 +15,9 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 // planet object - {number, name, semidiameterFunctionName}
-function PlanetData(planetObject)
+function PlanetData(planet)
 {
-	this.planetObject = planetObject;
+	this.planet = planet;
 	this.cache = {};
 	this.getDataForJD = function (JD) {
         var data = this.cache[JD];
@@ -29,7 +29,7 @@ function PlanetData(planetObject)
 				data[i++] = dateOfJD.D;
 				
 				var planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (JD, 
-																				this.planetObject.number, 
+																				this.planet.number, 
 																				true);
 				
 				//!! These are fairly low precision, need to investigate why ...
@@ -38,7 +38,7 @@ function PlanetData(planetObject)
 				
 				var delta = planetaryDetails.ApparentGeocentricDistance;
 				
-				data[i++] = 2 *this.planetObject.semidiameterFunctionName(delta) / 3600;
+				data[i++] = 2 *this.planet.semidiameterFunctionName(delta) / 3600;
 				
 				var jdOfTransit = AAJS.Date.ST2NextJD(planetaryDetails.ApparentGeocentricRA, JD);
 		//		planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (jdOfTransit - 6.0 /24, 1, true);
@@ -48,7 +48,7 @@ function PlanetData(planetObject)
 				data[i++] = delta;
 				
 				var sunEarthDistance = SunData.getSunEarthDistance(JD);
-				var r =  AAJS[this.planetObject.name].RadiusVector(JD, true);
+				var r =  AAJS[this.planet.name].RadiusVector(JD, true);
 				data[i++] = r;
 				
 				var cosElongationAngle = (delta * delta + sunEarthDistance * sunEarthDistance - r * r)/(2 * delta * sunEarthDistance);

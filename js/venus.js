@@ -19,83 +19,8 @@ var VenusData = new PlanetData({ number: 2, name: "Venus",
 
 							   
 (function () {
-    var VenusPage = {
-        table : document.getElementById("Venus"),
-
-        reset : function () {
-            while (this.table.hasChildNodes()) {
-                var currentTr = this.table.lastElementChild;
-                if (currentTr.className == "fixed") // not the safest way
-                    break;
-                this.table.removeChild(currentTr);
-            }
-        },
-        
-        prepareLineForView : function (line) {
-            var displayableLine = [];
-            // copy the day verbatim
-            displayableLine[1] = line[1];
-            if (line[1] == 1) { // first day of the month
-                var months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                displayableLine[0] = months[line[0]]; // set displayableLine[0] to the name of the month
-            }
-            else
-                displayableLine[0] = "";
-            
-            var di = 2;
-            var si = 2;
-            var sexagesimalRA = AAJS.Numerical.ToSexagesimal(line[si++]);
-            displayableLine[di++] = sexagesimalRA.Ord3 ;
-            displayableLine[di++] = sexagesimalRA.Ord2 
-            displayableLine[di++] = sexagesimalRA.Ord1;
-
-            var sexagesimalDec = AAJS.Numerical.ToSexagesimal(line[si++]);
-            displayableLine[di++] = sexagesimalDec.Ord3 ;
-            displayableLine[di++] = sexagesimalDec.Ord2;
-            displayableLine[di++] = sexagesimalDec.Ord1;
-			
-//			displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals(line[si++]);
-            
-            var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(line[si++]);
-            displayableLine[di++] = sexagesimalDiam.Ord1;
-            
-            var sexagesimalTransit = AAJS.Numerical.ToSexagesimal(line[si++]);
-            displayableLine[di++] = sexagesimalTransit.Ord3;
-            displayableLine[di++] = sexagesimalTransit.Ord2;
-            displayableLine[di++] = sexagesimalTransit.Ord1;
-            
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
-            displayableLine[di++] = AAJS.Numerical.RoundTo1Decimal (line[si++] * 180 / Math.PI);
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
-
-            return displayableLine;
-        },
-        
-        // this will probably become an utility available for every page
-        appendLine : function (dataArray) {
-            var line = this.table.ownerDocument.createElement("tr");
-            var tbody = this.table.getElementsByTagName("tbody")[0];
-            tbody.appendChild(line);
-            
-            var i = 0;
-            for (i = 0; i < dataArray.length; i++) {
-                var td = line.ownerDocument.createElement("td");
-                line.appendChild(td);
-                td.textContent = dataArray[i];
-            }
-        },
-        
-        displayVenusPage : function(JD, daysAfter) {
-            if (!AAJS.AllDependenciesLoaded())
-                return setTimeout (function() { VenusPage.displyaySunPage(JD, daysAfter); }, 100);
-            var i = 0;
-            for (i = 0; i < daysAfter; i++)
-                VenusPage.appendLine (VenusPage.prepareLineForView(VenusData.getDataForJD(JD + i)));
-        }
-    };
-
-    setTimeout( function() { VenusPage.displayVenusPage(AAJS.Date.DateToJD (2017, 1, 1, true), 380); }, 100);
+    var Page = new PlanetPage (VenusData);
+    setTimeout( function() { Page.displayPage(AAJS.Date.DateToJD (2017, 1, 1, true), 380); }, 100);
 
 
 })();
