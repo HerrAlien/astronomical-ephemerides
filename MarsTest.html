@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <script type="text/javascript" src="js/aajs.js"></script>
+        <script type="text/javascript" src="js/sun.js"></script>
+ <script type="text/JavaScript" src="js/planetdata.js"></script>
+       <script type="text/javascript" src="js/mars.js"></script>
+        <script type="text/javascript" src="testlib.js"></script>
+        <style>
+            p {
+                line-spacing: 2px;
+            }
+        </style>
+    </head>
+    <body>
+    </body>
+</html>
+<script type="text/javascript">
+         
+    (function () {
+            
+        
+        var tests = [
+		{
+            name : "Mars Data for 2017-08-05",
+            input : AAJS.Date.DateToJD (2017, 8, 5, true),
+            expectedOutput : 
+            [8, // month
+            5,  // day
+            8 + 50.9/60, // RA
+            18+50/60, // DEC
+            //!! todo: insert here magnitude
+            // 2.3,
+            3.5 / 3600, // diameter in degrees
+			11+55/60, // transit time
+			2.65815, // delta
+			1.64599, // R
+            3* Math.PI/180, // elongation
+            1, // phase
+            ]
+            ,
+            actualOutput : [],
+            accurracy : [0, 0, 7e-5, 6e-3, 
+				7e-6,
+				1e-1,
+				1e-1,
+				1e-1,
+				1e-1,
+				1e-1,
+				//5e-3, 
+				 //5e-2, 
+				// 1e-1, 
+				// 1e-3, 
+				],
+            test : function () {
+                this.actualOutput = MarsData.getDataForJD (this.input);
+
+                if (this.expectedOutput.length != this.actualOutput.length ||
+                    this.expectedOutput.length != this.accurracy.length)
+                    return false;
+                
+                var i = 0;
+                for (i = 0; i < this.expectedOutput.length; i++) {
+                    if (!testlib.doubleEq(this.actualOutput[i] , this.expectedOutput[i], this.accurracy[i]))
+                        return false;
+                }
+                
+                return true;
+            }
+        }
+
+        ];
+            
+        testlib.runTests (tests);
+            
+    })();
+            
+        </script>

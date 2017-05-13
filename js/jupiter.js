@@ -14,12 +14,12 @@ PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
-var MarsData = new PlanetData({ number: 3, name: "Mars", 
+var JupiterData = new PlanetData({ number: 4, name: "Jupiter", 
                                semidiameterFunctionName : AAJS.Diameters.MarsSemidiameterB });
 
 							   
 (function () {
-    var Page = new PlanetPage (MarsData);
+    var Page = new PlanetPage (JupiterData);
     setTimeout( function() { Page.displayPage(AAJS.Date.DateToJD (2017, 1, 1, true), 380); }, 100);
 
    Page.displayPage(AAJS.Date.DateToJD (2017, 1, 1, true), 380);
