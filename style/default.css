@@ -192,3 +192,14 @@ background: #eeeeee;
 .planetTable tr:nth-child(2) th:nth-child(16) {
     border-right: 1px black solid;
 }
+
+.planetTable td:nth-of-type(2) ,
+.planetTable td:nth-of-type(5),
+.planetTable td:nth-of-type(8),
+.planetTable td:nth-of-type(9),
+.planetTable td:nth-of-type(12),
+.planetTable td:nth-of-type(13),
+.planetTable td:nth-of-type(14),
+.planetTable td:nth-of-type(15){
+    border-right: solid 1px black;
+}
