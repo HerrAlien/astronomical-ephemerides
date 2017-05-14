@@ -127,12 +127,14 @@ Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
 (function () {
     
     var previousPage = false;
+    var currentActiveLink = false;
     
     function gotoPage(pageName) {
         if (!!previousPage) {
             previousPage.classList.remove ("visible");
             previousPage.classList.add ("invisible");
         }
+        
         previousPage = document.getElementById(pageName); 
         previousPage.classList.remove ("invisible"); 
         previousPage.classList.add ("visible");
@@ -148,6 +150,5 @@ Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
     
    document.getElementById("UranusLink").onclick = function() { gotoPage("UranusPage"); }
    document.getElementById("NeptuneLink").onclick = function() { gotoPage("NeptunePage"); }
-   document.getElementById("PlutoLink").onclick = function() { gotoPage("PlutoPage"); }
 })();
 </script>
