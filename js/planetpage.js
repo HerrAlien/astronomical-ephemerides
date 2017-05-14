@@ -124,10 +124,18 @@ function PlanetPage (planetDataSource) {
             
             if (!this.tablePopulated)
             {
-                var i = 0;
-                for (i = 0; i < daysAfter; i++)
-                    this.appendLine (this.prepareLineForView(this.dataSource.getDataForJD(JD + i)));
-                this.tablePopulated = true;
+                var pageObj = this;
+                var delayedAppendData = function (JD, endJD) {
+                if (JD == endJD)
+                {
+                    pageObj.tablePopulated = true;
+                    return;
+                }
+                pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD)));
+                setTimeout (function() {delayedAppendData (JD+1, endJD); },1 );
+            }
+            delayedAppendData (JD, JD + daysAfter);
+        
             }
         };
 }							   

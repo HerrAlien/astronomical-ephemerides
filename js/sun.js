@@ -58,7 +58,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 (function(){    
     var SunPage = {
         table : document.getElementById("Sun"),
-
+        tablePopulated : false,
         reset : function () {
             while (this.table.hasChildNodes()) {
                 var currentTr = this.table.lastElementChild;
@@ -126,9 +126,19 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         displayPage : function(JD, daysAfter) {
             if (!AAJS.AllDependenciesLoaded())
                 return setTimeout (function() { SunPage.displayPage(JD, daysAfter); }, 100);
-            var i = 0;
-            for (i = 0; i < daysAfter; i++)
-                SunPage.appendLine (SunPage.prepareLineForView(SunData.getDataForJD(JD + i)));
+
+            if (!SunPage.tablePopulated) {
+                var delayedAppendData = function (JD, endJD) {
+                    if (JD == endJD) {
+                        SunPage.tablePopulated = true;
+                        return;
+                    }
+                        
+                    SunPage.appendLine (SunPage.prepareLineForView(SunData.getDataForJD(JD)));
+                    setTimeout (function() {delayedAppendData (JD+1, endJD); },1 );
+                }
+                delayedAppendData (JD, JD + daysAfter);
+            }
         }
     };
 
