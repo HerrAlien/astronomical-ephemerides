@@ -178,3 +178,17 @@ background: #eeeeee;
 .planetTable   tr:nth-child(1)  th:nth-child(12) {
 	min-width: 20px;
 }
+
+.planetTable tr:nth-child(1) th:nth-child(1),
+.planetTable tr:nth-child(2) th:nth-child(1) {
+    border-left: solid 1px black;
+}
+
+.planetTable tr:nth-child(1) th:nth-child(16) {
+    min-width: 100px;
+}
+
+.planetTable tr:nth-child(1) th:nth-child(16),
+.planetTable tr:nth-child(2) th:nth-child(16) {
+    border-right: 1px black solid;
+}
