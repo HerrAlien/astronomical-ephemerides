@@ -14,6 +14,9 @@
             <li><a nohref="#" id="VenusLink">Venus</a></li>
             <li><a nohref="#" id="MarsLink">Mars</a></li>
             <li><a nohref="#" id="JupiterLink">Jupiter</a></li>
+            <li><a nohref="#" id="SaturnLink">Saturn</a></li>
+            <li><a nohref="#" id="UranusLink">Uranus</a></li>
+            <li><a nohref="#" id="NeptuneLink">Neptune</a></li>
         </ul>
 		<div class="clear">&nbsp;</div>
     </div>
@@ -79,6 +82,27 @@ Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
          </table>
     </div>
 
+    <div id="SaturnPage" class="page invisible">
+    The table gives the apparent RA, Dec. diameter, the UT of transit across the
+Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
+        <table id="Saturn" cellspacing="0" cellpadding="0" class="planetTable">
+         </table>
+    </div>
+
+   <div id="UranusPage" class="page invisible">
+    The table gives the apparent RA, Dec. diameter, the UT of transit across the
+Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
+        <table id="Uranus" cellspacing="0" cellpadding="0" class="planetTable">
+         </table>
+    </div>
+
+   <div id="NeptunePage" class="page invisible">
+    The table gives the apparent RA, Dec. diameter, the UT of transit across the
+Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
+        <table id="Neptune" cellspacing="0" cellpadding="0" class="planetTable">
+         </table>
+    </div>
+
 	</body>
 
 </html>
@@ -96,6 +120,9 @@ Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
 <script type="text/JavaScript" src="js/venus.js"></script>
 <script type="text/JavaScript" src="js/mars.js"></script>
 <script type="text/JavaScript" src="js/jupiter.js"></script>
+<script type="text/JavaScript" src="js/saturn.js"></script>
+<script type="text/JavaScript" src="js/uranus.js"></script>
+<script type="text/JavaScript" src="js/neptune.js"></script>
 <script type="text/JavaScript" >
 (function () {
     
@@ -117,6 +144,10 @@ Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
     document.getElementById("VenusLink").onclick = function() { gotoPage("VenusPage"); }
    document.getElementById("MarsLink").onclick = function() { gotoPage("MarsPage"); }
    document.getElementById("JupiterLink").onclick = function() { gotoPage("JupiterPage"); }
+   document.getElementById("SaturnLink").onclick = function() { gotoPage("SaturnPage"); }
     
+   document.getElementById("UranusLink").onclick = function() { gotoPage("UranusPage"); }
+   document.getElementById("NeptuneLink").onclick = function() { gotoPage("NeptunePage"); }
+   document.getElementById("PlutoLink").onclick = function() { gotoPage("PlutoPage"); }
 })();
 </script>
