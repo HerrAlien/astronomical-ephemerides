@@ -132,6 +132,6 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         }
     };
 
-    setTimeout( function() { SunPage.displaySunPage(AAJS.Date.DateToJD (2017, 1, 1, true), 380); }, 100);
+    setTimeout( function() { SunPage.displaySunPage(PageTimeInterval.JD, PageTimeInterval.steps); }, 100);
     
 })();

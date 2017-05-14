@@ -20,7 +20,7 @@ var MercuryData = new PlanetData({ number: 1, name: "Mercury",
 							   
 (function () {
     var Page = new PlanetPage (MercuryData);
-    setTimeout( function() { Page.displayPage(AAJS.Date.DateToJD (2017, 1, 1, true), 380); }, 100);
+    setTimeout( function() { Page.displayPage(PageTimeInterval.JD, PageTimeInterval.steps); }, 100);
 
 
 })();

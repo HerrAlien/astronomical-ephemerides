@@ -20,7 +20,7 @@ var VenusData = new PlanetData({ number: 2, name: "Venus",
 							   
 (function () {
     var Page = new PlanetPage (VenusData);
-    setTimeout( function() { Page.displayPage(AAJS.Date.DateToJD (2017, 1, 1, true), 380); }, 100);
+    setTimeout( function() { Page.displayPage(PageTimeInterval.JD, PageTimeInterval.steps); }, 100);
 
 
 })();

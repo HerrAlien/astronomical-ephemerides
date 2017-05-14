@@ -17,10 +17,9 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 var MarsData = new PlanetData({ number: 3, name: "Mars", 
                                semidiameterFunctionName : AAJS.Diameters.MarsSemidiameterB });
 
-							   
 (function () {
     var Page = new PlanetPage (MarsData);
-    setTimeout( function() { Page.displayPage(AAJS.Date.DateToJD (2017, 1, 1, true), 380); }, 100);
+    setTimeout( function() { Page.displayPage(PageTimeInterval.JD, PageTimeInterval.steps); }, 100);
 
    Page.displayPage(AAJS.Date.DateToJD (2017, 1, 1, true), 380);
 
