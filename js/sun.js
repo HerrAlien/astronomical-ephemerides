@@ -129,15 +129,14 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
             if (!SunPage.tablePopulated) {
                 var delayedAppendData = function (JD, endJD) {
-                    if (JD == endJD) {
-                        SunPage.tablePopulated = true;
+                    if (JD == endJD)
                         return;
-                    }
                         
                     SunPage.appendLine (SunPage.prepareLineForView(SunData.getDataForJD(JD)));
                     setTimeout (function() {delayedAppendData (JD+1, endJD); },1 );
                 }
                 delayedAppendData (JD, JD + daysAfter);
+                SunPage.tablePopulated = true;
             }
         }
     };

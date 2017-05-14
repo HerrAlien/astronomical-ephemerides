@@ -122,20 +122,17 @@ function PlanetPage (planetDataSource) {
             if (!AAJS.AllDependenciesLoaded())
                 return setTimeout (function() { this.displayPage(JD, daysAfter); }, 100);
             
-            if (!this.tablePopulated)
-            {
+            if (!this.tablePopulated) {
                 var pageObj = this;
                 var delayedAppendData = function (JD, endJD) {
-                if (JD == endJD)
-                {
-                    pageObj.tablePopulated = true;
-                    return;
+                    if (JD == endJD)
+                        return;
+                    
+                    pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD)));
+                    setTimeout (function() {delayedAppendData (JD+1, endJD); },1 );
                 }
-                pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD)));
-                setTimeout (function() {delayedAppendData (JD+1, endJD); },1 );
-            }
-            delayedAppendData (JD, JD + daysAfter);
-        
+                delayedAppendData (JD, JD + daysAfter);
+                this.tablePopulated = true;
             }
         };
 }							   
