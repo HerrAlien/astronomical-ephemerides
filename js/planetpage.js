@@ -3,13 +3,13 @@ function PlanetPage (planetDataSource) {
 	this.table = document.getElementById(this.dataSource.planet.name);
 	
 	this.reset = function () {
-            while (this.table.hasChildNodes()) {
-                var currentTr = this.table.lastElementChild;
-                if (currentTr.className == "fixed") // not the safest way
-                    break;
-                this.table.removeChild(currentTr);
-            }
-        };
+        while (this.table.hasChildNodes()) {
+            var currentTr = this.table.lastElementChild;
+            if (currentTr.className == "fixed") // not the safest way
+                break;
+            this.table.removeChild(currentTr);
+        }
+    };
 		
 	this.prepareLineForView = function (line) {
             var displayableLine = [];
@@ -50,8 +50,56 @@ function PlanetPage (planetDataSource) {
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
 
             return displayableLine;
-        };
-	
+    };
+    
+	this.addNodeChild = function (parent, type, content) {
+        var child = parent.ownerDocument.createElement(type);
+        parent.appendChild(child);
+        if (content)
+            child.textContent =  content;
+        return child;
+    };
+    
+    this.addPlanetTableHeader = function (table) {
+        var row1 = this.addNodeChild (table, "tr");
+        row1.classList.add ("fixed");    
+        this.addNodeChild (row1, "th", "Date");
+        this.addNodeChild (row1, "th");    
+        this.addNodeChild (row1, "th", "RA");
+        this.addNodeChild (row1, "th");
+        this.addNodeChild (row1, "th");
+        this.addNodeChild (row1, "th", "Dec");
+        this.addNodeChild (row1, "th");
+        this.addNodeChild (row1, "th");
+        this.addNodeChild (row1, "th", "Diam.");
+        this.addNodeChild (row1, "th", "Transit");
+        this.addNodeChild (row1, "th");
+        this.addNodeChild (row1, "th");
+        this.addNodeChild (row1, "th", "Delta");
+        this.addNodeChild (row1, "th", "r");
+        this.addNodeChild (row1, "th", "Elongation");
+        this.addNodeChild (row1, "th", "Phase");
+        var row2 = this.addNodeChild (table, "tr");
+        row2.classList.add ("fixed");    
+        this.addNodeChild (row2, "th");
+        this.addNodeChild (row2, "th");
+        this.addNodeChild (row2, "th", "h");
+        this.addNodeChild (row2, "th", "m");
+        this.addNodeChild (row2, "th", "s");
+        this.addNodeChild (row2, "th", "\u00B0");
+        this.addNodeChild (row2, "th", "'");
+        this.addNodeChild (row2, "th", "''");
+        this.addNodeChild (row2, "th", "''");
+        this.addNodeChild (row2, "th", "h");
+        this.addNodeChild (row2, "th", "m");
+        this.addNodeChild (row2, "th", "s");
+        this.addNodeChild (row2, "th", "A.U.");
+        this.addNodeChild (row2, "th", "A.U.");
+        this.addNodeChild (row2, "th", "\u00B0");
+        this.addNodeChild (row2, "th");
+    };
+    this.addPlanetTableHeader (this.table);
+
 	this.appendLine = function (dataArray) {
             var line = this.table.ownerDocument.createElement("tr");
             var tbody = this.table.getElementsByTagName("tbody")[0];

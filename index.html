@@ -86,61 +86,6 @@ Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
 <script type="text/JavaScript" src="js/sun.js"></script>
 <script type="text/JavaScript" src="js/planetdata.js"></script>
 <script type="text/JavaScript" src="js/planetpage.js"></script>
-
-<script type="text/javascript">
-function addNodeChild (parent, type, content) {
-    var child = parent.ownerDocument.createElement(type);
-    parent.appendChild(child);
-    if (content)
-        child.textContent =  content;
-    return child;
-}
-function addPlanetTableHeader (table) {
-    var row1 = addNodeChild (table, "tr");
-    row1.classList.add ("fixed");    
-    var th = addNodeChild (row1, "th", "Date");
-    addNodeChild (row1, "th");    
-    th = addNodeChild (row1, "th", "RA");
-    addNodeChild (row1, "th");
-    addNodeChild (row1, "th");
-    th = addNodeChild (row1, "th", "Dec");
-    addNodeChild (row1, "th");
-    addNodeChild (row1, "th");
-    th = addNodeChild (row1, "th", "Diam.");
-    th = addNodeChild (row1, "th", "Transit");
-    addNodeChild (row1, "th");
-    addNodeChild (row1, "th");
-    th = addNodeChild (row1, "th", "Delta");
-    th = addNodeChild (row1, "th", "r");
-    th = addNodeChild (row1, "th", "Elongation");
-    th = addNodeChild (row1, "th", "Phase");
-    var row2 = addNodeChild (table, "tr");
-    row2.classList.add ("fixed");    
-    addNodeChild (row2, "th");
-    addNodeChild (row2, "th");
-    th = addNodeChild (row2, "th", "h");
-    th = addNodeChild (row2, "th", "m");
-    th = addNodeChild (row2, "th", "s");
-    th = addNodeChild (row2, "th", "\u00B0");
-    th = addNodeChild (row2, "th", "'");
-    th = addNodeChild (row2, "th", "''");
-    th = addNodeChild (row2, "th", "''");
-    th = addNodeChild (row2, "th", "h");
-    th = addNodeChild (row2, "th", "m");
-    th = addNodeChild (row2, "th", "s");
-    th = addNodeChild (row2, "th", "A.U.");
-    th = addNodeChild (row2, "th", "A.U.");
-    th = addNodeChild (row2, "th", "\u00B0");
-    th = addNodeChild (row2, "th");
-}
-
-addPlanetTableHeader (document.getElementById("Mercury"));
-addPlanetTableHeader (document.getElementById("Venus"));
-addPlanetTableHeader (document.getElementById("Mars"));
-addPlanetTableHeader (document.getElementById("Jupiter"));
-
-</script>
-
 <script type="text/JavaScript" src="js/mercury.js"></script>
 <script type="text/JavaScript" src="js/venus.js"></script>
 <script type="text/JavaScript" src="js/mars.js"></script>
