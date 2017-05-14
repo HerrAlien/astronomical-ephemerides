@@ -81,15 +81,6 @@ background: #eeeeee;
 
 /** -------------------------------------- S U N -------------------------------- **/
 
-
-#Sun tr, #Sun td:nth-of-type(1) {
-    border-left: 1px solid black;
-}
-
-#Sun tr, #Sun td:nth-of-type(16) {
-    border-right: 1px solid black;
-}
-
 #Sun tr:nth-of-type(1), #Sun tr:nth-of-type(2){
     min-width: 830px;
 }
@@ -179,18 +170,8 @@ background: #eeeeee;
 	min-width: 20px;
 }
 
-.planetTable tr:nth-child(1) th:nth-child(1),
-.planetTable tr:nth-child(2) th:nth-child(1) {
-    border-left: solid 1px black;
-}
-
 .planetTable tr:nth-child(1) th:nth-child(16) {
     min-width: 100px;
-}
-
-.planetTable tr:nth-child(1) th:nth-child(16),
-.planetTable tr:nth-child(2) th:nth-child(16) {
-    border-right: 1px black solid;
 }
 
 .planetTable td:nth-of-type(2) ,
