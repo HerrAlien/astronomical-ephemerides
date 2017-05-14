@@ -85,11 +85,13 @@ Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
 <script type="text/JavaScript" src="js/aajs.js"></script>
 <script type="text/JavaScript" >
     var PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (2013, 1, 1, true), "steps" : 380 };
+    var Pages = {};
 </script>
 
-<script type="text/JavaScript" src="js/sun.js"></script>
 <script type="text/JavaScript" src="js/planetdata.js"></script>
 <script type="text/JavaScript" src="js/planetpage.js"></script>
+
+<script type="text/JavaScript" src="js/sun.js"></script>
 <script type="text/JavaScript" src="js/mercury.js"></script>
 <script type="text/JavaScript" src="js/venus.js"></script>
 <script type="text/JavaScript" src="js/mars.js"></script>
@@ -107,6 +109,7 @@ Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
         previousPage = document.getElementById(pageName); 
         previousPage.classList.remove ("invisible"); 
         previousPage.classList.add ("visible");
+        Pages[pageName].displayPage(PageTimeInterval.JD, PageTimeInterval.steps);
     }
     
     document.getElementById("SunLink").onclick = function() { gotoPage("SunPage"); }

@@ -1,6 +1,9 @@
 function PlanetPage (planetDataSource) {
-	this.dataSource = planetDataSource;
-	this.table = document.getElementById(this.dataSource.planet.name);
+    if (planetDataSource) {
+        this.dataSource = planetDataSource;
+        this.table = document.getElementById(this.dataSource.planet.name);
+    }
+    this.tablePopulated = false;
 	
 	this.reset = function () {
         while (this.table.hasChildNodes()) {
@@ -118,9 +121,14 @@ function PlanetPage (planetDataSource) {
 		this.displayPage = function (JD, daysAfter) {
             if (!AAJS.AllDependenciesLoaded())
                 return setTimeout (function() { this.displayPage(JD, daysAfter); }, 100);
-            var i = 0;
-            for (i = 0; i < daysAfter; i++)
-                this.appendLine (this.prepareLineForView(this.dataSource.getDataForJD(JD + i)));
+            
+            if (!this.tablePopulated)
+            {
+                var i = 0;
+                for (i = 0; i < daysAfter; i++)
+                    this.appendLine (this.prepareLineForView(this.dataSource.getDataForJD(JD + i)));
+                this.tablePopulated = true;
+            }
         };
 }							   
 	

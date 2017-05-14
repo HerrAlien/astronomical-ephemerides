@@ -20,7 +20,5 @@ var MercuryData = new PlanetData({ number: 1, name: "Mercury",
 							   
 (function () {
     var Page = new PlanetPage (MercuryData);
-    setTimeout( function() { Page.displayPage(PageTimeInterval.JD, PageTimeInterval.steps); }, 100);
-
-
+    Pages["MercuryPage"] = Page;
 })();

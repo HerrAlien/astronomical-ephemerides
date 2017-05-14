@@ -20,7 +20,5 @@ var VenusData = new PlanetData({ number: 2, name: "Venus",
 							   
 (function () {
     var Page = new PlanetPage (VenusData);
-    setTimeout( function() { Page.displayPage(PageTimeInterval.JD, PageTimeInterval.steps); }, 100);
-
-
+    Pages["VenusPage"] = Page;
 })();

@@ -20,8 +20,7 @@ var JupiterData = new PlanetData({ number: 4, name: "Jupiter",
 							   
 (function () {
     var Page = new PlanetPage (JupiterData);
-    setTimeout( function() { Page.displayPage(PageTimeInterval.JD, PageTimeInterval.steps); }, 100);
+        Pages["JupiterPage"] = Page;
 
-   Page.displayPage(AAJS.Date.DateToJD (2017, 1, 1, true), 380);
 
 })();

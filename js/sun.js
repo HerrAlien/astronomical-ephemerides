@@ -123,15 +123,15 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             }
         },
         
-        displaySunPage : function(JD, daysAfter) {
+        displayPage : function(JD, daysAfter) {
             if (!AAJS.AllDependenciesLoaded())
-                return setTimeout (function() { SunPage.displyaySunPage(JD, daysAfter); }, 100);
+                return setTimeout (function() { SunPage.displayPage(JD, daysAfter); }, 100);
             var i = 0;
             for (i = 0; i < daysAfter; i++)
                 SunPage.appendLine (SunPage.prepareLineForView(SunData.getDataForJD(JD + i)));
         }
     };
 
-    setTimeout( function() { SunPage.displaySunPage(PageTimeInterval.JD, PageTimeInterval.steps); }, 100);
+        Pages["SunPage"] = SunPage;
     
 })();

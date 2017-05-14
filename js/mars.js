@@ -19,8 +19,7 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
 
 (function () {
     var Page = new PlanetPage (MarsData);
-    setTimeout( function() { Page.displayPage(PageTimeInterval.JD, PageTimeInterval.steps); }, 100);
+    Pages["MarsPage"] = Page;
 
-   Page.displayPage(AAJS.Date.DateToJD (2017, 1, 1, true), 380);
 
 })();
