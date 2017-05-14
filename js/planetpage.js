@@ -55,6 +55,8 @@ function PlanetPage (planetDataSource) {
 	this.appendLine = function (dataArray) {
             var line = this.table.ownerDocument.createElement("tr");
             var tbody = this.table.getElementsByTagName("tbody")[0];
+            if (!tbody)
+                tbody = this.table;
             tbody.appendChild(line);
             
             var i = 0;

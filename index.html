@@ -55,28 +55,6 @@ Greenwich meridian, and P, B<sub>0</sub>, L<sub>0</sub> where:
     The table gives the apparent RA, Dec. diameter, the UT of transit across the
 Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
         <table id="Mercury" cellspacing="0" cellpadding="0" class="planetTable">
-            <tr class="fixed">
-                <th colspan="2">Date</th><th></th>
-                <th colspan="3">RA</th><th></th><th></th>
-                <th colspan="3">Dec.</th><th></th><th></th>
-                 <th>Diam.</th>
-                <th colspan="3">Transit</th><th></th><th></th>
-               <th>Delta</th>
-                <th>r</th>
-                <th>elongation</th>
-                <th>phase</th>
-            </tr>
-            <tr class="fixed">
-                <th></th><th></th>
-                <th>h</th><th>m</th><th>s</th>
-                <th>&deg;</th><th>'</th><th>''</th>
-                <th>''</th>
-                <th>h</th><th>m</th><th>s</th>
-                <th>A.U.</th>
-                <th>A.U.</th>
-                <th>&deg;</th>
-				<th></th>
-            </tr>
         </table>
     </div>
 
@@ -84,28 +62,6 @@ Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
     The table gives the apparent RA, Dec. diameter, the UT of transit across the
 Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
         <table id="Venus" cellspacing="0" cellpadding="0" class="planetTable">
-            <tr class="fixed">
-                <th >Date</th><th></th>
-                <th >RA</th><th></th><th></th>
-                <th >Dec.</th><th></th><th></th>
-                 <th>Diam.</th>
-                <th >Transit</th><th></th><th></th>
-               <th>Delta</th>
-                <th>r</th>
-                <th>elongation</th>
-                <th>phase</th>
-            </tr>
-            <tr class="fixed">
-                <th></th><th></th>
-                <th>h</th><th>m</th><th>s</th>
-                <th>&deg;</th><th>'</th><th>''</th>
-                <th>''</th>
-                <th>h</th><th>m</th><th>s</th>
-                <th>A.U.</th>
-                <th>A.U.</th>
-                <th>&deg;</th>
-				<th></th>
-            </tr>
         </table>
     </div>
 
@@ -113,58 +69,14 @@ Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
     The table gives the apparent RA, Dec. diameter, the UT of transit across the
 Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
         <table id="Mars" cellspacing="0" cellpadding="0" class="planetTable">
-            <tr class="fixed">
-                <th >Date</th><th></th>
-                <th >RA</th><th></th><th></th>
-                <th >Dec.</th><th></th><th></th>
-                 <th>Diam.</th>
-                <th >Transit</th><th></th><th></th>
-               <th>Delta</th>
-                <th>r</th>
-                <th>elongation</th>
-                <th>phase</th>
-            </tr>
-            <tr class="fixed">
-                <th></th><th></th>
-                <th>h</th><th>m</th><th>s</th>
-                <th>&deg;</th><th>'</th><th>''</th>
-                <th>''</th>
-                <th>h</th><th>m</th><th>s</th>
-                <th>A.U.</th>
-                <th>A.U.</th>
-                <th>&deg;</th>
-				<th></th>
-            </tr>
-        </table>
+       </table>
     </div>
 
     <div id="JupiterPage" class="page invisible">
     The table gives the apparent RA, Dec. diameter, the UT of transit across the
 Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
         <table id="Jupiter" cellspacing="0" cellpadding="0" class="planetTable">
-            <tr class="fixed">
-                <th >Date</th><th></th>
-                <th >RA</th><th></th><th></th>
-                <th >Dec.</th><th></th><th></th>
-                 <th>Diam.</th>
-                <th >Transit</th><th></th><th></th>
-               <th>Delta</th>
-                <th>r</th>
-                <th>elongation</th>
-                <th>phase</th>
-            </tr>
-            <tr class="fixed">
-                <th></th><th></th>
-                <th>h</th><th>m</th><th>s</th>
-                <th>&deg;</th><th>'</th><th>''</th>
-                <th>''</th>
-                <th>h</th><th>m</th><th>s</th>
-                <th>A.U.</th>
-                <th>A.U.</th>
-                <th>&deg;</th>
-				<th></th>
-            </tr>
-        </table>
+         </table>
     </div>
 
 	</body>
@@ -174,6 +86,61 @@ Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase.
 <script type="text/JavaScript" src="js/sun.js"></script>
 <script type="text/JavaScript" src="js/planetdata.js"></script>
 <script type="text/JavaScript" src="js/planetpage.js"></script>
+
+<script type="text/javascript">
+function addNodeChild (parent, type, content) {
+    var child = parent.ownerDocument.createElement(type);
+    parent.appendChild(child);
+    if (content)
+        child.textContent =  content;
+    return child;
+}
+function addPlanetTableHeader (table) {
+    var row1 = addNodeChild (table, "tr");
+    row1.classList.add ("fixed");    
+    var th = addNodeChild (row1, "th", "Date");
+    addNodeChild (row1, "th");    
+    th = addNodeChild (row1, "th", "RA");
+    addNodeChild (row1, "th");
+    addNodeChild (row1, "th");
+    th = addNodeChild (row1, "th", "Dec");
+    addNodeChild (row1, "th");
+    addNodeChild (row1, "th");
+    th = addNodeChild (row1, "th", "Diam.");
+    th = addNodeChild (row1, "th", "Transit");
+    addNodeChild (row1, "th");
+    addNodeChild (row1, "th");
+    th = addNodeChild (row1, "th", "Delta");
+    th = addNodeChild (row1, "th", "r");
+    th = addNodeChild (row1, "th", "Elongation");
+    th = addNodeChild (row1, "th", "Phase");
+    var row2 = addNodeChild (table, "tr");
+    row2.classList.add ("fixed");    
+    addNodeChild (row2, "th");
+    addNodeChild (row2, "th");
+    th = addNodeChild (row2, "th", "h");
+    th = addNodeChild (row2, "th", "m");
+    th = addNodeChild (row2, "th", "s");
+    th = addNodeChild (row2, "th", "\u00B0");
+    th = addNodeChild (row2, "th", "'");
+    th = addNodeChild (row2, "th", "''");
+    th = addNodeChild (row2, "th", "''");
+    th = addNodeChild (row2, "th", "h");
+    th = addNodeChild (row2, "th", "m");
+    th = addNodeChild (row2, "th", "s");
+    th = addNodeChild (row2, "th", "A.U.");
+    th = addNodeChild (row2, "th", "A.U.");
+    th = addNodeChild (row2, "th", "\u00B0");
+    th = addNodeChild (row2, "th");
+}
+
+addPlanetTableHeader (document.getElementById("Mercury"));
+addPlanetTableHeader (document.getElementById("Venus"));
+addPlanetTableHeader (document.getElementById("Mars"));
+addPlanetTableHeader (document.getElementById("Jupiter"));
+
+</script>
+
 <script type="text/JavaScript" src="js/mercury.js"></script>
 <script type="text/JavaScript" src="js/venus.js"></script>
 <script type="text/JavaScript" src="js/mars.js"></script>
