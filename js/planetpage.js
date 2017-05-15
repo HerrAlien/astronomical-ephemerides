@@ -84,9 +84,10 @@ function PlanetPage (planetDataSource) {
         return child;
     };
     
-    this.addPlanetTableHeader = function (table) {
+    this.addPlanetTableHeader = function (table, classes) {
         var row1 = this.addNodeChild (table, "tr");
-        row1.classList.add ("fixed");    
+        for (var i = 0; i < classes.length; i++)
+            row1.classList.add (classes[i]);    
         this.addNodeChild (row1, "th", "Date");
         this.addNodeChild (row1, "th");    
         this.addNodeChild (row1, "th", "RA");
@@ -104,7 +105,8 @@ function PlanetPage (planetDataSource) {
         this.addNodeChild (row1, "th", "Elongation");
         this.addNodeChild (row1, "th", "Phase");
         var row2 = this.addNodeChild (table, "tr");
-        row2.classList.add ("fixed");    
+        for (var i = 0; i < classes.length; i++)
+            row2.classList.add (classes[i]);    
         this.addNodeChild (row2, "th");
         this.addNodeChild (row2, "th");
         this.addNodeChild (row2, "th", "h");
@@ -122,7 +124,7 @@ function PlanetPage (planetDataSource) {
         this.addNodeChild (row2, "th", "\u00B0");
         this.addNodeChild (row2, "th");
     };
-    this.addPlanetTableHeader (this.table);
+    this.addPlanetTableHeader (this.table, ["fixed"]);
 
 	this.appendLine = function (dataArray) {
             var line = this.table.ownerDocument.createElement("tr");
@@ -155,6 +157,12 @@ function PlanetPage (planetDataSource) {
                             return;
                         pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD));
                     }
+                    
+                    pageObj.addPlanetTableHeader(pageObj.table, ["printOnly"]);
+                    pageObj.addNodeChild(pageObj.table, "tr", " ").classList.add("pagebreak");
+                    pageObj.addNodeChild(pageObj.table, "tr");
+                      pageObj.addPlanetTableHeader(pageObj.table, ["printOnly"]);
+                    
                     setTimeout (function() {delayedAppendData (JD, endJD, steps); },1 );
                 }
                 delayedAppendData (JD, JD + daysAfter, 15);

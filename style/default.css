@@ -130,7 +130,14 @@ background: #eeeeee;
     min-width: 30px;
 }
 
+    .pagebreak {
+        page-break-after: always;
+    }
+
 @media print {
+    table { page-break-inside:auto }
+    tr    { page-break-inside:avoid; page-break-after:avoid }
+
     .fixed {
         position: absolute;
         width: 100%;
@@ -141,15 +148,13 @@ background: #eeeeee;
         height: 20px;
         margin-top: 3px;
         margin-bottom: 3px;
+        
     }
     
-    tr.printOnly:nth-of-type(odd) {
-        border-top: solid 1px black;
+    .pagebreak {
+        page-break-after: always;
     }
-    
-    tr.printOnly:nth-of-type(even) {
-        border-bottom: solid 1px black;
-    }
+
 }
 
 
