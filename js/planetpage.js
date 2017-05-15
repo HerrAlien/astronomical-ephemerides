@@ -51,9 +51,24 @@ function PlanetPage (planetDataSource) {
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
             
             // is it east or is it west?
-            var cardinalCoordinateRelativeToSun = "E";
-            if (SunData.getRA(JD) < line[2] )
-                cardinalCoordinateRelativeToSun = "W";
+            var cardinalCoordinateRelativeToSun = "W";
+            
+            var sunRA = SunData.getRA(JD);
+            var planetRA = line[2];
+            // this is probably because we have one angle in q1, the other in q4.
+            if (Math.abs(sunRA - planetRA) >= 12) // hours ...
+            {
+                sunRA += 12;
+                planetRA += 12;
+                
+                if (sunRA > 24)
+                    sunRA -= 24;
+                if (planetRA > 24)
+                    planetRA -= 24;
+            }
+            
+            if (sunRA < planetRA )
+                cardinalCoordinateRelativeToSun = "E";
             
             displayableLine[di++] = AAJS.Numerical.RoundTo1Decimal (line[si++] * 180 / Math.PI) + " " + cardinalCoordinateRelativeToSun;
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
