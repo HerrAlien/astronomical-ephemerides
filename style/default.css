@@ -129,6 +129,15 @@ background: #eeeeee;
     min-width: 30px;
 }
 
+@media print {
+    .fixed {
+        position: absolute;
+        width: 100%;
+    }    
+
+}
+
+
 /** ---------------------------------- P L A N E T ------------------------------ **/
 .planetTable tr:nth-of-type(1), .planetTable tr:nth-of-type(2)
 {
