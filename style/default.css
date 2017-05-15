@@ -10,8 +10,9 @@
     position: fixed;
 }
 
-.page {
-
+.printOnly {
+    display: none;
+    height: 0px;
 }
 
 #menuContainer {
@@ -135,6 +136,20 @@ background: #eeeeee;
         width: 100%;
     }    
 
+    .printOnly {
+        display: table-row;
+        height: 20px;
+        margin-top: 3px;
+        margin-bottom: 3px;
+    }
+    
+    tr.printOnly:nth-of-type(odd) {
+        border-top: solid 1px black;
+    }
+    
+    tr.printOnly:nth-of-type(even) {
+        border-bottom: solid 1px black;
+    }
 }
 
 
