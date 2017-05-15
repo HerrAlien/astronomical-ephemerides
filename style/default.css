@@ -86,7 +86,7 @@ background: #eeeeee;
 }
 
 #Sun td:nth-of-type(2), #Sun td:nth-of-type(5), #Sun td:nth-of-type(8), #Sun td:nth-of-type(9), #Sun td:nth-of-type(11),
-#Sun td:nth-of-type(14), #Sun td:nth-of-type(15), #Sun td:nth-of-type(16) {
+#Sun td:nth-of-type(14), #Sun td:nth-of-type(15), #Sun td:nth-of-type(16), #Sun td:nth-of-type(17) {
     border-right: 1px solid black;
 }
 
@@ -118,7 +118,8 @@ background: #eeeeee;
 
 #Sun td:nth-of-type(5),#Sun th:nth-of-type(5),
 #Sun td:nth-of-type(8),#Sun th:nth-of-type(8),
-#Sun td:nth-of-type(11),#Sun th:nth-of-type(11)
+#Sun td:nth-of-type(11),#Sun th:nth-of-type(11),
+#Sun th:nth-child(18)
 {
     min-width: 42px;
 }

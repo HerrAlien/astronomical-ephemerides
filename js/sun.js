@@ -29,18 +29,19 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                 var radec = AAJS.Sun.EquatorialCoordinates(JD, true);
                 line[i++] = radec.X; // RA [h.hhhh]
                 line[i++] = radec.Y; // DEC [deg.dddd]
-				line[i++] = AAJS.Sun.Distance(JD, true); // [au]
+                var sunDistance = AAJS.Sun.Distance(JD, true);
+				line[i++] = sunDistance;// [au]
                 line[i++] = AAJS.Sun.Diameter(JD, true)/3600; // [deg.dddd]
                 // transit should be computed from the RA (LST to UTC conversion)
                 var jdOfTransit = AAJS.Date.ST2NextJD(radec.X, JD);
                 radec = AAJS.Sun.EquatorialCoordinates(jdOfTransit - 5 /(24 * 60), true);
                 jdOfTransit = AAJS.Date.ST2NextJD(radec.X, jdOfTransit);
-                var transitHour = 24 * (jdOfTransit - JD);
-                line[i++] = transitHour;
+                line[i++] = 24 * (jdOfTransit - JD);
                 var physical = AAJS.Sun.CalculatePhysicalDetails(JD, true);
                 line[i++] = physical.P; // [deg.dddd]
                 line[i++] = physical.B0; // [deg.dddd]
                 line[i++] = physical.L0; // [deg.dddd]
+                line[i++] = Math.atan2(6.371e+6,149597870700 * sunDistance) * 180/Math.PI; // [deg.dddd]
             }
             this.cache[JD] = line;
             return line;
@@ -105,6 +106,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
+            
+            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals(line[si++] * 3600); // just arcsecs
 
             return displayableLine;
         },
