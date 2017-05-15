@@ -52,6 +52,10 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 		getSunEarthDistance : function(JD) {
 			var line = this.getDataForJD(JD);
 			return line[4];
+		},
+        getRA : function(JD) {
+			var line = this.getDataForJD(JD);
+			return line[2];
 		}
     };
     SunData.initFromLocalStorage();

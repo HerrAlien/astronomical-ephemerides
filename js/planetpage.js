@@ -14,7 +14,7 @@ function PlanetPage (planetDataSource) {
         }
     };
 		
-	this.prepareLineForView = function (line) {
+	this.prepareLineForView = function (line, JD) {
             var displayableLine = [];
             // copy the day verbatim
             displayableLine[1] = line[1];
@@ -49,7 +49,13 @@ function PlanetPage (planetDataSource) {
             
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
-            displayableLine[di++] = AAJS.Numerical.RoundTo1Decimal (line[si++] * 180 / Math.PI);
+            
+            // is it east or is it west?
+            var cardinalCoordinateRelativeToSun = "E";
+            if (SunData.getRA(JD) < line[2] )
+                cardinalCoordinateRelativeToSun = "W";
+            
+            displayableLine[di++] = AAJS.Numerical.RoundTo1Decimal (line[si++] * 180 / Math.PI) + " " + cardinalCoordinateRelativeToSun;
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
 
             return displayableLine;
@@ -132,7 +138,7 @@ function PlanetPage (planetDataSource) {
                     for (i = 0; i < steps; i++, JD++) {
                         if (JD >= endJD)
                             return;
-                        pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD)));
+                        pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD));
                     }
                     setTimeout (function() {delayedAppendData (JD, endJD, steps); },1 );
                 }
