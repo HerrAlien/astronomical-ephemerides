@@ -41,7 +41,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                 line[i++] = physical.P; // [deg.dddd]
                 line[i++] = physical.B0; // [deg.dddd]
                 line[i++] = physical.L0; // [deg.dddd]
-                line[i++] = Math.atan2(6.371e+6,149597870700 * sunDistance) * 180/Math.PI; // [deg.dddd]
+                line[i++] = Math.atan2(6.378137e+6,149597870700 * sunDistance) * 180/Math.PI; // [deg.dddd]
             }
             this.cache[JD] = line;
             return line;
