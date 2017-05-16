@@ -18,7 +18,7 @@ function PlanetPage (planetDataSource) {
             var displayableLine = [];
             // copy the day verbatim
             displayableLine[1] = line[1];
-            if (line[1] == 1) { // first day of the month
+            if (line[1] == 1 || PageTimeInterval.stepSize > 1) { // first day of the month
                 var months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
                 displayableLine[0] = months[line[0]]; // set displayableLine[0] to the name of the month
             }
@@ -141,7 +141,7 @@ function PlanetPage (planetDataSource) {
             }
         };
 		
-		this.displayPage = function (JD, daysAfter) {
+		this.displayPage = function (JD, daysAfter, stepSize) {
             if (!AAJS.AllDependenciesLoaded())
                 return setTimeout (function() { this.displayPage(JD, daysAfter); }, 100);
             
@@ -152,7 +152,7 @@ function PlanetPage (planetDataSource) {
                         return;
                     
                     var i = 0;
-                    for (i = 0; i < steps; i++, JD++) {
+                    for (i = 0; i < steps; i++, JD+=stepSize) {
                         if (JD >= endJD)
                             return;
                         pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD));

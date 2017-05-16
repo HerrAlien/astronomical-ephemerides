@@ -83,7 +83,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             var displayableLine = [];
             // copy the day verbatim
             displayableLine[1] = line[1];
-            if (line[1] == 1) { // first day of the month
+            if (line[1] == 1  || PageTimeInterval.stepSize > 1) { // first day of the month
                 var months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
                 displayableLine[0] = months[line[0]]; // set displayableLine[0] to the name of the month
             }
@@ -190,9 +190,9 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             this.addNodeChild (row2, "th", "''");
     },
         
-        displayPage : function(JD, daysAfter) {
+        displayPage : function(JD, daysAfter, stepSize) {
             if (!AAJS.AllDependenciesLoaded())
-                return setTimeout (function() { SunPage.displayPage(JD, daysAfter); }, 100);
+                return setTimeout (function() { SunPage.displayPage(JD, daysAfter, stepSize); }, 100);
 
             if (!SunPage.tablePopulated) {
                 this.addTableHeader (this.table, ["fixed"]);
@@ -201,8 +201,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                         return;
                     
                     var i = 0;
-                    for (i = 0; i < steps; i++, JD++) {
-                        if (JD == endJD)
+                    for (i = 0; i < steps; i++, JD += stepSize) {
+                        if (JD >= endJD)
                             return;
                         SunPage.appendLine (SunPage.prepareLineForView(SunData.getDataForJD(JD)));
                     }
