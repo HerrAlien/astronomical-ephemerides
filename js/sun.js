@@ -179,7 +179,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             this.addNodeChild (row2, "th", "'");
             this.addNodeChild (row2, "th", "''");
             this.addNodeChild (row2, "th", "A.U.");
-            this.addNodeChild (row2, "th", "''");
+            this.addNodeChild (row2, "th", "'");
             this.addNodeChild (row2, "th", "''");
             this.addNodeChild (row2, "th", "h");
             this.addNodeChild (row2, "th", "m");
