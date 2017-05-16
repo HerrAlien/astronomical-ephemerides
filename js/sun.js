@@ -126,6 +126,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         appendLine : function (dataArray) {
             var line = this.table.ownerDocument.createElement("tr");
             var tbody = this.table.getElementsByTagName("tbody")[0];
+            if (!tbody)
+                tbody = this.table;
             tbody.appendChild(line);
             
             var i = 0;
@@ -135,12 +137,65 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                 td.textContent = dataArray[i];
             }
         },
+        addNodeChild : function (parent, type, content) {
+            var child = parent.ownerDocument.createElement(type);
+            parent.appendChild(child);
+            if (content)
+                child.textContent =  content;
+            return child;
+        },
+    
+        addTableHeader : function (table, classes) {
+            var row1 = this.addNodeChild (table, "tr");
+            for (var i = 0; i < classes.length; i++)
+                row1.classList.add (classes[i]);    
+            this.addNodeChild (row1, "th", "Date");
+            this.addNodeChild (row1, "th");    
+            this.addNodeChild (row1, "th", "RA");
+            this.addNodeChild (row1, "th");
+            this.addNodeChild (row1, "th");
+            this.addNodeChild (row1, "th", "Dec.");
+            this.addNodeChild (row1, "th");
+            this.addNodeChild (row1, "th");
+            this.addNodeChild (row1, "th", "r");
+            this.addNodeChild (row1, "th", "Diam.");
+            this.addNodeChild (row1, "th");
+            this.addNodeChild (row1, "th", "Transit");
+            this.addNodeChild (row1, "th");
+            this.addNodeChild (row1, "th");
+            this.addNodeChild (row1, "th", "P");
+            this.addNodeChild (row1, "th", "B0");
+            this.addNodeChild (row1, "th", "L0");
+            this.addNodeChild (row1, "th", "\u03C0");
+            var row2 = this.addNodeChild (table, "tr");
+            for (var i = 0; i < classes.length; i++)
+                row2.classList.add (classes[i]);    
+            this.addNodeChild (row2, "th");
+            this.addNodeChild (row2, "th");
+            this.addNodeChild (row2, "th", "h");
+            this.addNodeChild (row2, "th", "m");
+            this.addNodeChild (row2, "th", "s");
+            this.addNodeChild (row2, "th", "\u00B0");
+            this.addNodeChild (row2, "th", "'");
+            this.addNodeChild (row2, "th", "''");
+            this.addNodeChild (row2, "th", "A.U.");
+            this.addNodeChild (row2, "th", "''");
+            this.addNodeChild (row2, "th", "''");
+            this.addNodeChild (row2, "th", "h");
+            this.addNodeChild (row2, "th", "m");
+            this.addNodeChild (row2, "th", "s");
+            this.addNodeChild (row2, "th", "\u00B0");
+            this.addNodeChild (row2, "th", "\u00B0");
+            this.addNodeChild (row2, "th", "\u00B0");
+            this.addNodeChild (row2, "th", "''");
+    },
         
         displayPage : function(JD, daysAfter) {
             if (!AAJS.AllDependenciesLoaded())
                 return setTimeout (function() { SunPage.displayPage(JD, daysAfter); }, 100);
 
             if (!SunPage.tablePopulated) {
+                this.addTableHeader (this.table, ["fixed"]);
                 var delayedAppendData = function (JD, endJD, steps) {
                     if (JD == endJD)
                         return;
@@ -151,6 +206,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                             return;
                         SunPage.appendLine (SunPage.prepareLineForView(SunData.getDataForJD(JD)));
                     }
+                    SunPage.addTableHeader (SunPage.table, ["fixed", "printOnly"]);
                     setTimeout (function() {delayedAppendData (JD, endJD, steps); }, 1);
                 }
                 delayedAppendData (JD, JD + daysAfter, 15);
