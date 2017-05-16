@@ -24,7 +24,7 @@
         width:100%;
 }
 
-#menu li a {
+#menu li a, #getFromGeolocationAnchor {
     cursor: pointer;
     padding-right: 10px;
     text-decoration: underline;
@@ -78,6 +78,10 @@ background: #eeeeee;
  tr:nth-of-type(1),  tr:nth-of-type(2){
     background: #ffffff;
 	    height: 20px;
+}
+
+#latitudeInput, #longitudeInput, #altitudeInput {
+    width: 80px;
 }
 
 /** -------------------------------------- S U N -------------------------------- **/
