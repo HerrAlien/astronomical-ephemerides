@@ -34,9 +34,9 @@ var Location = {
         geolocation : document.getElementById("getFromGeolocationAnchor"),
 		
 		update: function () {
-			var attrMap = {"latitudeInput" : "latitude", 
-                            "longitudeInput" : "longitude", 
-                            "altitudeInput" : "enteredTime"};
+			var attrMap = {"lat" : "latitude", 
+                            "long" : "longitude", 
+                            "alt" : "altitude"};
 			for (var k in attrMap)
 				this[k].value = Location[attrMap[k]];
 
@@ -62,7 +62,10 @@ var Location = {
                     geoLocationAPI.getCurrentPosition (function (position) {
                         Location.Controls.lat.value = position.coords.latitude;
                         Location.Controls.long.value = position.coords.longitude;
-                        Location.Controls.alt.value = position.coords.altitude;
+                        if(!position.coords.altitude)
+                            Location.Controls.alt.value = 0;
+                        else
+                            Location.Controls.alt.value = position.coords.altitude;
 
                         Location.latitude = 1.0 * (Location.Controls.lat.value);
                         Location.altitude = 1.0 * (Location.Controls.alt.value);
