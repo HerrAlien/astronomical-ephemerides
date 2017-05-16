@@ -130,29 +130,19 @@ background: #eeeeee;
     min-width: 30px;
 }
 
-    .pagebreak {
-        page-break-after: always;
-    }
+.printOnly {
+        display: none;
+}
 
 @media print {
-    table { page-break-inside:auto }
-    tr    { page-break-inside:avoid; page-break-after:avoid }
 
     .fixed {
-        position: absolute;
+        position: relative;
         width: 100%;
-    }    
-
-    .printOnly {
-        display: table-row;
-        height: 20px;
-        margin-top: 3px;
-        margin-bottom: 3px;
-        
     }
     
-    .pagebreak {
-        page-break-after: always;
+    .printOnly {
+        display: table-row;
     }
 
 }

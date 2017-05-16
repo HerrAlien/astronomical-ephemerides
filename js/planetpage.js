@@ -158,10 +158,7 @@ function PlanetPage (planetDataSource) {
                         pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD));
                     }
                     
-                    pageObj.addPlanetTableHeader(pageObj.table, ["printOnly"]);
-                    pageObj.addNodeChild(pageObj.table, "tr", " ").classList.add("pagebreak");
-                    pageObj.addNodeChild(pageObj.table, "tr");
-                      pageObj.addPlanetTableHeader(pageObj.table, ["printOnly"]);
+                    pageObj.addPlanetTableHeader (pageObj.table, ["fixed", "printOnly"]);
                     
                     setTimeout (function() {delayedAppendData (JD, endJD, steps); },1 );
                 }
