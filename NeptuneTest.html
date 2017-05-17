@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <script type="text/javascript" src="js/aajs.js"></script>
+        <script type="text/javascript" src="js/sun.js"></script>
+ <script type="text/JavaScript" src="js/planetdata.js"></script>
+       <script type="text/javascript" src="js/neptune.js"></script>
+        <script type="text/javascript" src="testlib.js"></script>
+        <style>
+            p {
+                line-spacing: 2px;
+            }
+        </style>
+    </head>
+    <body>
+    </body>
+</html>
+<script type="text/javascript">
+         
+    (function () {
+            
+        
+        var tests = [
+		{
+            name : "Neptune Data for 2017-08-14",
+            input : AAJS.Date.DateToJD (2017, 8, 14, true),
+            expectedOutput : 
+            [8, // month
+            14,  // day. Decrease 1 to adjust from TLR to UTC by subtracting 3 hours
+            23 + (0 + 25/60)/60, // RA
+            -(7+(22+9/60)/60), // DEC
+            2.31 / 3600, // diameter in degrees
+			1+30/60, // transit time
+			29.0060, // delta
+			29.9474, // R
+            158* Math.PI/180, // elongation
+            1, // phase
+            ]
+            ,
+            actualOutput : [],
+            accurracy : [0, 0, 3e-5, 2e-4, 
+				4e-8,
+				5e-3,
+				1e-4,
+				2e-4,
+				2e-3,
+				5e-5,
+				],
+            test : function () {
+                this.actualOutput = NeptuneData.getDataForJD (this.input);
+
+                if (this.expectedOutput.length != this.actualOutput.length ||
+                    this.expectedOutput.length != this.accurracy.length)
+                    return false;
+                
+                var i = 0;
+                for (i = 0; i < this.expectedOutput.length; i++) {
+                    if (!testlib.doubleEq(this.actualOutput[i] , this.expectedOutput[i], this.accurracy[i]))
+                        return false;
+                }
+                
+                return true;
+            }
+        }
+
+        ];
+            
+        testlib.runTests (tests);
+            
+    })();
+            
+        </script>
