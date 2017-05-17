@@ -17,6 +17,18 @@
             
         var tests = [
 		{
+        /*
+        
+Positions
+Date       RA          Dec   Const- Mag-   Radius  Delta   Elonga-  Dia-   dRA   dDec   Illumi-    Rise   Transit   Set  
+                             ella. nitude                   tion   meter                nation            Time   h       
+2017     h  m   s    o  '  "         mag     ER      ER      o      '      "/h    "/h     lux      h  m   h  m   o   h  m 
+May 17  20:26:46.3 -17:56:10  Cap  -10.7  62.4168  62.090 111.8 W 30.00    1810  289.5   0.0112   --h--m  4h30m 21  9h13m
+
+
+0.01601995700188968583559488478821 ... parallax ...
+        */
+        
             name : "Topocentric Moon Data for 2017-05-17 03:00 UTC, lat. 50.8796, long. 4.7009, alt. 0",
             input : [AAJS.Date.DateToJD (2017, 5, 17, true) + (3+0/60)/24, 50.8796, 4.7009, 0],
             expectedOutput : 
@@ -35,7 +47,7 @@
             ]
             ,
             actualOutput : [],
-            accurracy : [/*0, 0,*/ 5e-3, 4e-3, 
+            accurracy : [/*0, 0,*/ 4e-3, 4e-3, 
                 3e-3,
                 /*2e-2,
 				7e-6,

@@ -32,7 +32,6 @@ function PlanetData(planet)
 																				this.planet.number, 
 																				true);
 				
-				//!! These are fairly low precision, need to investigate why ...
 				data[i++] = planetaryDetails.ApparentGeocentricRA;
 				data[i++] = planetaryDetails.ApparentGeocentricDeclination;
 				
@@ -44,7 +43,7 @@ function PlanetData(planet)
                 
                 for (var transitIterationIndex = 0; transitIterationIndex < 3; transitIterationIndex++)
                 {
-                    jdOfTransit = AAJS.Date.ST2NextJD(planetaryDetails.ApparentGeocentricRA, jdOfTransit);
+                    jdOfTransit = AAJS.Date.ST2NextJD(planetaryDetails.ApparentGeocentricRA, JD);
                     if (jdOfTransit - JD > 1)
                         jdOfTransit -= 1;
                     planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (jdOfTransit, this.planet.number, true);
