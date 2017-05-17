@@ -26,24 +26,24 @@
             expectedOutput : 
             [8, // month
             5,  // day
-            8 + 50.9/60, // RA
-            18+50/60, // DEC
-            3.5 / 3600, // diameter in degrees
+            8 + (50 + 54.4/60)/60, // RA
+            18+(49 + 42/60)/60, // DEC
+            3.52 / 3600, // diameter in degrees
 			11+55/60, // transit time
-			2.65815, // delta
-			1.64599, // R
+			2.65816, // delta
+			1.64604, // R
             3* Math.PI/180, // elongation
             1, // phase
             ]
             ,
             actualOutput : [],
-            accurracy : [0, 0, 7e-5, 6e-3, 
-				7e-6,
+            accurracy : [0, 0, 5e-5, 2e-4, 
+				1e-6,
 				2e-2,
-				7e-6,
-				5e-5,
+				5e-6,
+				6e-8,
 				1e-3,
-				1e-3,
+				3e-4,
 				],
             test : function () {
                 this.actualOutput = MarsData.getDataForJD (this.input);
