@@ -1,9 +1,6 @@
 <html>
     <head>
         <script type="text/javascript" src="js/aajs.js"></script>
-        <script type="text/javascript" src="js/sun.js"></script>
- <script type="text/JavaScript" src="js/planetdata.js"></script>
-       <script type="text/javascript" src="js/mars.js"></script>
         <script type="text/javascript" src="testlib.js"></script>
         <style>
             p {
@@ -15,58 +12,33 @@
     </body>
 </html>
 <script type="text/javascript">
-
-
-   AAJS['Moon']['PositionalEphemeris'] = function (JD, latitude, longitude) {
-        var L = AAJS.Moon.EclipticLongitude(JD);
-        var B = AAJS.Moon.EclipticLatitude(JD);
-        var Epsilon = AAJS.Nutation.TrueObliquityOfEcliptic(JD);
-        
-        var geocentricCoordinates = AAJS.CoordinateTransformation.Ecliptic2Equatorial(L, B, Epsilon);
-        
-        var LST = AAJS.Date.LST (JD, longitude) / 15; // in hours
-        var HA = LST - geocentricCoordinates.X;
-        HA = HA * 15 * Math.PI / 180;
-        
-        var gclat = latitude - 0.1924 * sin (2 * latitude * Math.PI/180);
-        gclat = gclat * Math.PI/180;
-        var rho = 0.99833 + 0.00167 * cos (2 * latitude * Math.PI/180);
-        
-        var g = Math.atan (Math.tan (gclat) / cos (HA));
-        var horizontalParallax  = AAJS.Moon.RadiusVectorToHorizontalParallax(AAJS.Moon.RadiusVector(JD)); // in km or in earth radii? in rads, minutes or degrees?
-        return {
-            "X" : geocentricCoordinates.X - (horizontalParallax * rho * cos(gclat) * sin(HA) / cos(geocentricCoordinates.Y * Math.PI/180)) * 180 / (Math.PI * 15),
-            "Y" : geocentricCoordinates.Y - horizontalParallax * rho * sin(gclat) * sin(g - geocentricCoordinates.Y * Math.PI/180) / sin(g) * 180 / Math.PI
-        };
-    };
-
          
     (function () {
             
         
         var tests = [
 		{
-            name : "Mars Data for 2017-08-05",
-            input : AAJS.Date.DateToJD (2017, 8, 5, true),
+            name : "Moon Data for 2017-05-17 03:00 UTC, lat. 50.8796, long. 4.7009",
+            input : [AAJS.Date.DateToJD (2017, 5, 17, true) + 3/24, 50.8796, 4.7009],
             expectedOutput : 
-            [8, // month
-            5,  // day
-            8 + 50.9/60, // RA
-            18+50/60, // DEC
+            [/*5, // month
+            17,  // day */
+            20 + (26+43.2/60)/60, // RA
+            -17+((-53-21/60)/60), // DEC
             //!! todo: insert here magnitude
             // 2.3,
-            3.5 / 3600, // diameter in degrees
-			11+55/60, // transit time
+            30 / 60, // semidiameter in degrees
+			/*  11+55/60, // transit time
 			2.65815, // delta
 			1.64599, // R
             3* Math.PI/180, // elongation
-            1, // phase
+            1, // phase */
             ]
             ,
             actualOutput : [],
-            accurracy : [0, 0, 7e-5, 6e-3, 
-				7e-6,
-				2e-2,
+            accurracy : [/*0, 0,*/ 6e-4, 5e-2, 
+                4e-3,
+                /*2e-2,
 				7e-6,
 				5e-5,
 				1e-3,
@@ -74,10 +46,11 @@
 				//5e-3, 
 				 //5e-2, 
 				// 1e-1, 
-				// 1e-3, 
+				// 1e-3, */
 				],
             test : function () {
-                this.actualOutput = MarsData.getDataForJD (this.input);
+            var data =  AAJS['Moon']['PositionalEphemeris'] (this.input[0],this.input[1],this.input[2]);
+                this.actualOutput = [data.RA, data.Dec, data.diameter];
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
