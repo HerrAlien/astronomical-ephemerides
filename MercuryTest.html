@@ -36,27 +36,27 @@
 				expectedOutput : 
 				[5, // month
 				2,  // day
-				1.5427777777777777777777777777778, // RA
-				8.0611111111111111111111111111111, // DEC
+				1+(32+33.1/60)/60, // RA
+				8+(02+21/60)/60, // DEC
 				//!! todo: insert here magnitude
 				// 2.3,
-				11.03 / 3600, // diameter in degrees
+				11.02 / 3600, // diameter in degrees
 				10 + 50 / 60.0, // transit
 				0.60982, // delta in AU
 				0.46380,
-				17.4* Math.PI/180, // elongation
+				17.5* Math.PI/180, // elongation
 				0.121, // phase
 				// 114.6, // central meridian
 				]
 				,
 				actualOutput : [],
-				accurracy : [0, 0, 3e-4, 3e-2, 
-				3e-6,
-				7e-3,
+				accurracy : [0, 0, 7e-6, 2e-4, 
+				2e-7,
+				6e-3,
 				2e-5,
 				2e-5,
-				2e-3, // too big ... way too big
-				1e-3,
+				5e-4, 
+				1e-4,
 				//5e-3, 
 				 //5e-2, 
 				// 1e-1, 
