@@ -18,8 +18,8 @@
         
         var tests = [
 		{
-            name : "Moon Data for 2017-05-17 03:00 UTC, lat. 50.8796, long. 4.7009",
-            input : [AAJS.Date.DateToJD (2017, 5, 17, true) + (3+0/60)/24, 50.8796, 4.7009],
+            name : "Moon Data for 2017-05-17 03:00 UTC, lat. 50.8796, long. 4.7009, alt. 0",
+            input : [AAJS.Date.DateToJD (2017, 5, 17, true) + (3+0/60)/24, 50.8796, 4.7009, 0],
             expectedOutput : 
             [/*5, // month
             17,  // day */
@@ -49,7 +49,7 @@
 				// 1e-3, */
 				],
             test : function () {
-            var data =  AAJS['Moon']['PositionalEphemeris'] (this.input[0],this.input[1],this.input[2]);
+            var data =  AAJS['Moon']['PositionalEphemeris'] (this.input[0],this.input[1],this.input[2], this.input[3]);
                 this.actualOutput = [data.RA, data.Dec, data.diameter];
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
