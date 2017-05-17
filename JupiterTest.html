@@ -26,30 +26,24 @@
             expectedOutput : 
             [8, // month
             5,  // day
-            13 + 7.1/60, // RA
-            -(5+52/60), // DEC
-            //!! todo: insert here magnitude
-            // 2.3,
-            33.93 / 3600, // diameter in degrees
+            13 + (6 + 32.3/60)/60, // RA
+            -(5+(48+18/60)/60), // DEC
+            33.92 / 3600, // diameter in degrees
 			16+9/60, // transit time
-			5.80290, // delta
-			5.44961, // R
+			5.80406, // delta
+			5.44960, // R
             64.8* Math.PI/180, // elongation
             0.99, // phase
             ]
             ,
             actualOutput : [],
-            accurracy : [0, 0, 1e-2, 7e-2, 
-				7e-5,
-				2e-3,
-				2e-3,
-				5e-5,
-				1e-3,
-				1e-2,
-				//5e-3, 
-				 //5e-2, 
-				// 1e-1, 
-				// 1e-3, 
+            accurracy : [0, 0, 2e-5, 1e-4, 
+				4e-7,
+				5e-3,
+				2e-5,
+				2e-6,
+				5e-4,
+				3e-3,
 				],
             test : function () {
                 this.actualOutput = JupiterData.getDataForJD (this.input);
