@@ -40,15 +40,16 @@ function PlanetData(planet)
 				
 				data[i++] = 2 *this.planet.semidiameterFunctionName(delta) / 3600;
 				
-				var jdOfTransit = AAJS.Date.ST2NextJD(planetaryDetails.ApparentGeocentricRA, JD);
-                if (jdOfTransit - JD > 1)
-                    jdOfTransit -= 1;
+				var jdOfTransit = JD;
                 
-		        planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (jdOfTransit, this.planet.number, true);
-		        jdOfTransit = AAJS.Date.ST2NextJD(planetaryDetails.ApparentGeocentricRA, jdOfTransit);
-                if (jdOfTransit - JD > 1)
-                    jdOfTransit -= 1;
-                
+                for (var transitIterationIndex = 0; transitIterationIndex < 3; transitIterationIndex++)
+                {
+                    jdOfTransit = AAJS.Date.ST2NextJD(planetaryDetails.ApparentGeocentricRA, JD);
+                    if (jdOfTransit - JD > 1)
+                        jdOfTransit -= 1;
+                    planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (jdOfTransit, this.planet.number, true);
+                }
+
 				var transitHour = 24 * (jdOfTransit - JD);
 				data[i++] = transitHour;
 				data[i++] = delta;
