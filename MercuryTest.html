@@ -38,15 +38,12 @@
 				2,  // day
 				1+(32+33.1/60)/60, // RA
 				8+(02+21/60)/60, // DEC
-				//!! todo: insert here magnitude
-				// 2.3,
 				11.02 / 3600, // diameter in degrees
 				10 + 50 / 60.0, // transit
 				0.60982, // delta in AU
 				0.46380,
 				17.5* Math.PI/180, // elongation
 				0.121, // phase
-				// 114.6, // central meridian
 				]
 				,
 				actualOutput : [],
@@ -57,10 +54,6 @@
 				2e-5,
 				5e-4, 
 				1e-4,
-				//5e-3, 
-				 //5e-2, 
-				// 1e-1, 
-				// 1e-3, 
 				],
 				test : function () {
 					this.actualOutput = MercuryData.getDataForJD (this.input);
