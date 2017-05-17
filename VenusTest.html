@@ -26,23 +26,23 @@
             expectedOutput : 
             [8, // month
             2,  // day
-            6 + (6 + 26.8/60)/ 60, // RA
-            21+(53+54/60)/60, // DEC
+            6 + (6 + 51.7/60)/ 60, // RA
+            21+(54+5/60)/60, // DEC
             14.46 / 3600, // diameter in degrees
 			9+24/60, // transit time
 			1.15387, // delta
 			0.72419, // R
-            38.4* Math.PI/180, // elongation
+            38.3* Math.PI/180, // elongation
             0.75, // phase
             ]
             ,
             actualOutput : [],
-            accurracy : [0, 0, 7e-3, 3e-3, 
+            accurracy : [0, 0, 6e-5, 7e-5, 
 				2e-6,
-				4e-2,
+				3e-3,
 				1e-5,
 				1e-5,
-				2e-3,
+				1e-3,
 				3e-3,
 				],
             test : function () {
