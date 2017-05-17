@@ -44,7 +44,7 @@ function PlanetData(planet)
                 
                 for (var transitIterationIndex = 0; transitIterationIndex < 3; transitIterationIndex++)
                 {
-                    jdOfTransit = AAJS.Date.ST2NextJD(planetaryDetails.ApparentGeocentricRA, JD);
+                    jdOfTransit = AAJS.Date.ST2NextJD(planetaryDetails.ApparentGeocentricRA, jdOfTransit);
                     if (jdOfTransit - JD > 1)
                         jdOfTransit -= 1;
                     planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (jdOfTransit, this.planet.number, true);
