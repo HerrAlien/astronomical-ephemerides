@@ -149,6 +149,19 @@ background: #eeeeee;
         display: table-row;
     }
 
+     tr.printOnly:nth-of-type(odd), tr.printOnly:nth-of-type(even){
+        background: #ffffff;
+        font-family : Courier;
+        font-size: 12px;
+        height: 14px;
+    }
+    
+    tr.printOnly:nth-of-type(odd) {
+        border-top: 1px solid black;
+    }
+    tr.printOnly:nth-of-type(even) {
+        border-bottom: 1px solid black;
+    }
 }
 
 
