@@ -18,6 +18,15 @@ var MoonData = {
     getDataForJD: function (JD) {
         var data = [];
         
+        var i = 0;
+        data[i++] = 5;
+        data[i++] = 17;
+        data[i++] = 18.3333;
+        data[i++] = -15.0234666;
+        data[i++] = 0.5113;
+        data[i++] = 20.02333;
+        data[i] = 0.96;
+        
         return data;
     }
     
@@ -39,6 +48,41 @@ var MoonData = {
         
         prepareLineForView : function (line) {
             var displayableLine = [];
+            // copy the day verbatim
+            displayableLine[1] = line[1];
+            if (line[1] == 1  || PageTimeInterval.stepSize > 1) { // first day of the month
+                var months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                displayableLine[0] = months[line[0]]; // set displayableLine[0] to the name of the month
+            }
+            else
+                displayableLine[0] = "";
+            
+            var di = 2;
+            var si = 2;
+            var sexagesimalRA = AAJS.Numerical.ToSexagesimal(line[si++]);
+            displayableLine[di++] = sexagesimalRA.Ord3 ;
+            displayableLine[di++] = sexagesimalRA.Ord2 
+            displayableLine[di++] = sexagesimalRA.Ord1;
+
+            var sexagesimalDec = AAJS.Numerical.ToSexagesimal(line[si++]);
+            displayableLine[di++] = sexagesimalDec.Ord3 ;
+            displayableLine[di++] = sexagesimalDec.Ord2;
+            displayableLine[di++] = sexagesimalDec.Ord1;
+			            
+            var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(line[si++]);
+            displayableLine[di++] = sexagesimalDiam.Ord2;
+            displayableLine[di++] = sexagesimalDiam.Ord1;
+            
+            var sexagesimalTransit = AAJS.Numerical.ToSexagesimal(line[si++]);
+            displayableLine[di++] = sexagesimalTransit.Ord3;
+            displayableLine[di++] = sexagesimalTransit.Ord2;
+            displayableLine[di++] = sexagesimalTransit.Ord1;
+            
+            var sexagesimalParallax = AAJS.Numerical.ToSexagesimal(line[si++]);
+            
+            displayableLine[di++] = sexagesimalParallax.Ord3;
+            displayableLine[di++] = sexagesimalParallax.Ord2;
+            displayableLine[di++] = sexagesimalParallax.Ord1;
 
             return displayableLine;
         },
