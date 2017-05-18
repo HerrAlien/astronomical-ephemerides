@@ -19,26 +19,27 @@
 		{
         /*
         
-Positions
+Positions, leuven, 00:00 UTC
+Moon
 Date       RA          Dec   Const- Mag-   Radius  Delta   Elonga-  Dia-   dRA   dDec   Illumi-    Rise   Transit   Set  
                              ella. nitude                   tion   meter                nation            Time   h       
 2017     h  m   s    o  '  "         mag     ER      ER      o      '      "/h    "/h     lux      h  m   h  m   o   h  m 
-May 17  20:26:46.3 -17:56:10  Cap  -10.7  62.4168  62.090 111.8 W 30.00    1810  289.5   0.0112   --h--m  4h30m 21  9h13m
+May 17  20:21:46.0 -18:04:41  Cap  -10.8  62.4926  62.478 113.2 W 29.97    1808  274.1  0.00054   --h--m  4h30m 21  9h13m
 
 
 0.01601995700188968583559488478821 ... parallax ...
         */
         
-            name : "Topocentric Moon Data for 2017-05-17 03:00 UTC, lat. 50.8796, long. 4.7009, alt. 0",
-            input : [AAJS.Date.DateToJD (2017, 5, 17, true) + (3+0/60)/24, 50.8796, 4.7009, 0],
+            name : "Topocentric Moon Data for 2017-05-17 00:00 UTC, lat. 50.8796, long. 4.7009, alt. 0",
+            input : [AAJS.Date.DateToJD (2017, 5, 17, true) + (0+0/60)/24, 50.8796, 4.7009, 0],
             expectedOutput : 
             [/*5, // month
             17,  // day */
-            20 + (26+57.3/60)/60, // RA
-            -(17+((55+48/60)/60)), // DEC
+            20 + (21+46/60)/60, // RA
+            -(18+((4+41/60)/60)), // DEC
             //!! todo: insert here magnitude
             // 2.3,
-            30.0 / 60, // semidiameter in degrees
+            29.97 / 60, // semidiameter in degrees
 			/*  11+55/60, // transit time
 			2.65815, // delta
 			1.64599, // R
@@ -47,8 +48,8 @@ May 17  20:26:46.3 -17:56:10  Cap  -10.7  62.4168  62.090 111.8 W 30.00    1810 
             ]
             ,
             actualOutput : [],
-            accurracy : [/*0, 0,*/ 4e-3, 4e-3, 
-                3e-3,
+            accurracy : [/*0, 0,*/ 1e-3, 3e-3, 
+                3e-4,
                 /*2e-2,
 				7e-6,
 				5e-5,
