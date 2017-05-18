@@ -129,6 +129,8 @@ var MoonData = {
             this.addNodeChild (row1, "th");
             this.addNodeChild (row1, "th", "\u03C0");
             var row2 = this.addNodeChild (table, "tr");
+            this.addNodeChild (row1, "th");
+            this.addNodeChild (row1, "th");
             for (var i = 0; i < classes.length; i++)
                 row2.classList.add (classes[i]);    
             this.addNodeChild (row2, "th");
@@ -146,6 +148,8 @@ var MoonData = {
             this.addNodeChild (row2, "th", "m");
             this.addNodeChild (row2, "th", "s");
 
+            this.addNodeChild (row2, "th", "\u00B0");
+            this.addNodeChild (row2, "th", "'");
             this.addNodeChild (row2, "th", "''");
     },
         
