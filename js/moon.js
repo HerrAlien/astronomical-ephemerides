@@ -15,18 +15,29 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var MoonData = {
-    getDataForJD: function (JD) {
-        var data = [];
+    cache : {},
+    getDataForJD : function (JD) {
+        var data = this.cache[JD];
+        if (!data) {
+            data = [];
         
-        var i = 0;
-        data[i++] = 5;
-        data[i++] = 17;
-        data[i++] = 18.3333;
-        data[i++] = -15.0234666;
-        data[i++] = 0.5113;
-        data[i++] = 20.02333;
-        data[i] = 0.96;
-        
+            var i = 0;
+            
+            var _date = AAJS.Date.JD2Date(JD);
+            // convert from JD to gregorian
+            data[i++] = _date.M;
+            data[i++] = _date.D;
+            
+            var posData = AAJS.Moon.PositionalEphemeris(JD, Location.latitude, Location.longitude, Location.altitude);
+                
+            data[i++] = posData.RA;
+            data[i++] = posData.Dec;
+            data[i++] = posData.diameter;
+            data[i++] = 20.02333;
+            data[i] = posData.parallax;
+            
+            this.cache[JD] = data;
+        }
         return data;
     }
     
