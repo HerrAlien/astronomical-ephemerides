@@ -20,9 +20,9 @@ along with this program.  If not, see https://www.gnu.org/licenses/agpl.html
 
 var Location = {
 	// this is the model
-	latitude : 45,
-	longitude :25,
-	altitude : 600,
+	latitude : 44.4268,
+	longitude :26.1025,
+	altitude : 200,
     
     onLocationUpdated : false,
 
