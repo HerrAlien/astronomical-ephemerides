@@ -22,11 +22,13 @@
         </ul>
 		<div class="clear">&nbsp;</div>
     </div>
-    <div id="locationPage">
+    <div id="settingsPage">
         <label>Latitude: <input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
         <label>Longitude: <input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
         <label>Altitude: <input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> or <a nohref="#" id="getFromGeolocationAnchor">get them from geolocation</a>.
-    
+        <Label>Start from: <input type="date" id="startingDate"></input></label>
+        <Label>print in increments of <input type="number" id="incrementDate"></input> days</label>
+        <Label>for <input type="number" id="numberOfDays"></input> days</label>
     </div>
     <div id="SunPage" class="page invisible">
     The table gives the apparent geocentric RA, Dec. and diameter of the Sun, the UT of transit across the
@@ -108,7 +110,7 @@ Greenwich meridian, and &pi; where:
 <script type="text/JavaScript" src="js/aajs.js"></script>
 
 <script type="text/JavaScript" >
-    var PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (2013, 1, 1, true), "steps" : 425, "stepSize" : 1 };
+    var PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (2017, 1, 1, true), "steps" : 425, "stepSize" : 1 };
     var Pages = {};
 </script>
 
