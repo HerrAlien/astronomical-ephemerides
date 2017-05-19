@@ -83,6 +83,12 @@ background: #eeeeee;
 #latitudeInput, #longitudeInput, #altitudeInput {
     width: 80px;
 }
+#startingDate {
+    width: 150px;
+} 
+#incrementDate, #numberOfDays {
+    width: 50px;
+}
 /** ----------------------------- M O O N --------------------------------------- **/
 #Moon tr:nth-of-type(1), #Moon tr:nth-of-type(2){
     width: 840px;
