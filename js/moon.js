@@ -30,8 +30,10 @@ var MoonData = {
             
             var posData = AAJS.Moon.PositionalEphemeris(JD, Location.latitude, Location.longitude, Location.altitude);
                 
-            data[i++] = posData.RA;
-            data[i++] = posData.Dec;
+            data[i++] = posData.RaGeo;
+            data[i++] = posData.DecGeo;
+            data[i++] = posData.RaTopo;
+            data[i++] = posData.DecTopo;
             data[i++] = posData.diameter;
             data[i++] = 20.02333;
             data[i] = posData.parallax;
@@ -70,16 +72,26 @@ var MoonData = {
             
             var di = 2;
             var si = 2;
-            var sexagesimalRA = AAJS.Numerical.ToSexagesimal(line[si++]);
-            displayableLine[di++] = sexagesimalRA.Ord3 ;
-            displayableLine[di++] = sexagesimalRA.Ord2 
-            displayableLine[di++] = sexagesimalRA.Ord1;
+            var sexagesimalRaGeo = AAJS.Numerical.ToSexagesimal(line[si++]);
+            displayableLine[di++] = sexagesimalRaGeo.Ord3 ;
+            displayableLine[di++] = sexagesimalRaGeo.Ord2 
+            displayableLine[di++] = sexagesimalRaGeo.Ord1;
 
-            var sexagesimalDec = AAJS.Numerical.ToSexagesimal(line[si++]);
-            displayableLine[di++] = sexagesimalDec.Ord3 ;
-            displayableLine[di++] = sexagesimalDec.Ord2;
-            displayableLine[di++] = sexagesimalDec.Ord1;
+            var sexagesimalDecGeo = AAJS.Numerical.ToSexagesimal(line[si++]);
+            displayableLine[di++] = sexagesimalDecGeo.Ord3 ;
+            displayableLine[di++] = sexagesimalDecGeo.Ord2;
+            displayableLine[di++] = sexagesimalDecGeo.Ord1;
 			            
+            var sexagesimalRaTopo = AAJS.Numerical.ToSexagesimal(line[si++]);
+            displayableLine[di++] = sexagesimalRaTopo.Ord3 ;
+            displayableLine[di++] = sexagesimalRaTopo.Ord2 
+            displayableLine[di++] = sexagesimalRaTopo.Ord1;
+
+            var sexagesimalDecTopo = AAJS.Numerical.ToSexagesimal(line[si++]);
+            displayableLine[di++] = sexagesimalDecTopo.Ord3 ;
+            displayableLine[di++] = sexagesimalDecTopo.Ord2;
+            displayableLine[di++] = sexagesimalDecTopo.Ord1;
+
             var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(line[si++]);
             displayableLine[di++] = sexagesimalDiam.Ord2;
             displayableLine[di++] = sexagesimalDiam.Ord1;
@@ -128,10 +140,16 @@ var MoonData = {
             this.addNodeChild (row1, "th", "Date");
             this.addNodeChild (row1, "th");    
             this.addNodeChild (row1, "th", "RA");
-            this.addNodeChild (row1, "th");
+            this.addNodeChild (row1, "th", "geo");
             this.addNodeChild (row1, "th");
             this.addNodeChild (row1, "th", "Dec.");
+            this.addNodeChild (row1, "th", "geo");
             this.addNodeChild (row1, "th");
+            this.addNodeChild (row1, "th", "RA");
+            this.addNodeChild (row1, "th", "topo");
+            this.addNodeChild (row1, "th");
+            this.addNodeChild (row1, "th", "Dec.");
+            this.addNodeChild (row1, "th", "topo");
             this.addNodeChild (row1, "th");
             this.addNodeChild (row1, "th", "Diam.");
             this.addNodeChild (row1, "th");
@@ -146,6 +164,13 @@ var MoonData = {
                 row2.classList.add (classes[i]);    
             this.addNodeChild (row2, "th");
             this.addNodeChild (row2, "th");
+            this.addNodeChild (row2, "th", "h");
+            this.addNodeChild (row2, "th", "m");
+            this.addNodeChild (row2, "th", "s");
+            this.addNodeChild (row2, "th", "\u00B0");
+            this.addNodeChild (row2, "th", "'");
+            this.addNodeChild (row2, "th", "''");
+
             this.addNodeChild (row2, "th", "h");
             this.addNodeChild (row2, "th", "m");
             this.addNodeChild (row2, "th", "s");
