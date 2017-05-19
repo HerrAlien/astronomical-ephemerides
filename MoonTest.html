@@ -54,7 +54,7 @@
 				],
             test : function () {
             var data =  AAJS['Moon']['PositionalEphemeris'] (this.input[0],this.input[1],this.input[2], this.input[3]);
-                this.actualOutput = [data.RA, data.Dec, data.diameter, data.R, data.parallax];
+                this.actualOutput = [data.RaTopo, data.DecTopo, data.diameter, data.R, data.parallax];
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
@@ -107,7 +107,7 @@
 				],
             test : function () {
             var data =  AAJS['Moon']['PositionalEphemeris'] (this.input[0],this.input[1],this.input[2], this.input[3]);
-                this.actualOutput = [data.RA, data.Dec, data.diameter, data.R, data.parallax];
+                this.actualOutput = [data.RaTopo, data.DecTopo, data.diameter, data.R, data.parallax];
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
