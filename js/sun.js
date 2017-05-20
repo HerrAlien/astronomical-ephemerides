@@ -73,10 +73,9 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         reset : function () {
             while (this.table.hasChildNodes()) {
                 var currentTr = this.table.lastElementChild;
-                if (currentTr.className == "fixed") // not the safest way
-                    break;
                 this.table.removeChild(currentTr);
             }
+            this.tablePopulated = false;
         },
         
         prepareLineForView : function (line) {

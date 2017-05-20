@@ -8,10 +8,9 @@ function PlanetPage (planetDataSource) {
 	this.reset = function () {
         while (this.table.hasChildNodes()) {
             var currentTr = this.table.lastElementChild;
-            if (currentTr.className == "fixed") // not the safest way
-                break;
             this.table.removeChild(currentTr);
         }
+        this.tablePopulated = false;
     };
 		
 	this.prepareLineForView = function (line, JD) {
