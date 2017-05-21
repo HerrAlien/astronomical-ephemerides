@@ -40,7 +40,7 @@ var MoonData = {
                 
             for (var transitIterationIndex = 0; transitIterationIndex < 3; transitIterationIndex++)
             {
-                jdOfTransit = AAJS.Date.ST2NextJD(posData.RaGeo, JD);
+                jdOfTransit = AAJS.Date.ST2NextJD(posData.RaTopo, JD);
                 if (jdOfTransit - JD > 1)
                     jdOfTransit -= 1;
                 posData = AAJS.Moon.PositionalEphemeris(jdOfTransit, Location.latitude, Location.longitude, Location.altitude);
