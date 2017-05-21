@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <script type="text/javascript" src="js/aajs.js"></script>
+        <script type="text/javascript" src="testlib.js"></script>
+        <style>
+            p {
+                line-spacing: 2px;
+            }
+        </style>
+    </head>
+    <body>
+    </body>
+</html>
+<script type="text/javascript">
+            
+    (function () {
+            
+        var tests = [
+        
+        {
+            name : "Date 2 JD and back 2 Date for 2017-01-01",
+            input : [2017, 1, 1],
+            expectedOutput : [2017, 1, 1],
+            actualOutput : [],
+            test : function () {
+               var jd = AAJS.Date.DateToJD (this.input[0], this.input[1], this.input[2], true);
+               var d = AAJS.Date.JD2Date (jd);
+               this.actualOutput = [d.Y, d.M, d.D];
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+
+       {
+            name : "Date 2 JD and back 2 Date for 2016-01-01",
+            input : [2016, 1, 1],
+            expectedOutput : [2016, 1, 1],
+            actualOutput : [],
+            test : function () {
+               var jd = AAJS.Date.DateToJD (this.input[0], this.input[1], this.input[2], true);
+               var d = AAJS.Date.JD2Date (jd);
+               this.actualOutput = [d.Y, d.M, d.D];
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+ 
+       {
+            name : "Date 2 JD and back 2 Date for 2012-01-01",
+            input : [2012, 1, 1],
+            expectedOutput : [2012, 1, 1],
+            actualOutput : [],
+            test : function () {
+               var jd = AAJS.Date.DateToJD (this.input[0], this.input[1], this.input[2], true);
+               var d = AAJS.Date.JD2Date (jd);
+               this.actualOutput = [d.Y, d.M, d.D];
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+
+       {
+            name : "Date 2 JD and back 2 Date for 1987-01-01",
+            input : [1987, 1, 1],
+            expectedOutput : [1987, 1, 1],
+            actualOutput : [],
+            test : function () {
+               var jd = AAJS.Date.DateToJD (this.input[0], this.input[1], this.input[2], true);
+               var d = AAJS.Date.JD2Date (jd);
+               this.actualOutput = [d.Y, d.M, d.D];
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+        // 2446796.5
+       {
+            name : "JD 2 date for 2446796.5, 1987-01-01",
+            input : 2446796.5,
+            expectedOutput : [1987, 1, 1],
+            actualOutput : [],
+            test : function () {
+               var d = AAJS.Date.JD2Date (this.input);
+               this.actualOutput = [d.Y, d.M, d.D];
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+        
+        // 2446796.5000000116
+       {
+            name : "JD 2 date for 2446796.5000000116, 1987-01-01",
+            input : 2446796.5000000116,
+            expectedOutput : [1987, 1, 1],
+            actualOutput : [],
+            test : function () {
+               var d = AAJS.Date.JD2Date (this.input);
+               this.actualOutput = [d.Y, d.M, d.D];
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+        ];
+            
+        testlib.runTests (tests);
+            
+    })();
+            
+        </script>
+
