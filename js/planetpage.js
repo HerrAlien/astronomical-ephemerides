@@ -5,10 +5,9 @@ function PlanetPage (planetDataSource) {
     }
     this.tablePopulated = false;
 	
-	this.reset = function () {
+    this.reset = function () {
         while (this.table.hasChildNodes()) {
-            var currentTr = this.table.lastElementChild;
-            this.table.removeChild(currentTr);
+            this.table.removeChild(this.table.firstChild);
         }
         this.tablePopulated = false;
     };

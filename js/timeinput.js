@@ -24,7 +24,7 @@ var TimeStepsData = {
     numberOfDays : 410,
     timestep : 1,
     
-    onTimestepUpdated : false,
+    onTimestepUpdated : Notifications.NewNoParameter(),
 
 	// these are the controls
 	Controls : {
@@ -36,39 +36,40 @@ var TimeStepsData = {
 			var attrMap = {"daysCountInput" : "numberOfDays", 
                             "stepSizeInput" : "timestep"};
 			for (var k in attrMap)
-				this[k].value = TimeStepsData[attrMap[k]];
+				TimeStepsData.Controls[k].value = TimeStepsData[attrMap[k]];
             
-            this.dateInput.valueAsDate = new Date (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, 0,0,0,0);
+            var dateToSet = new Date (TimeStepsData.yearToStart, TimeStepsData.monthToStart - 1, TimeStepsData.dayToStart, 3,0,0,1);
+            TimeStepsData.Controls.dateInput.valueAsDate = dateToSet;
 
             TimeStepsData.onTimestepUpdated.notify();
 		},
 		
 		init : function (){
-			this.dateInput.oninput = function () {
-                var selDate = this.dateInput.valueAsDate;
-                TimeStepsData.yearToStart = selDate.getFullYear();
-                TimeStepsData.monthToStart = 1 + selDate.getMonth();
-                TimeStepsData.dayToStart = selDate.getDate();
-                
+			TimeStepsData.Controls.dateInput.oninput = function () {
+                var selDate = TimeStepsData.Controls.dateInput.valueAsDate;
+                if (selDate) {
+                    TimeStepsData.yearToStart = selDate.getFullYear();
+                    TimeStepsData.monthToStart = 1 + selDate.getMonth();
+                    TimeStepsData.dayToStart = selDate.getDate();
+                }
                 TimeStepsData.onTimestepUpdated.notify();
             }
 			 
             this.daysCountInput.oninput = function () {
-                TimeStepsData.numberOfDays = this.daysCountInput.value;
+                TimeStepsData.numberOfDays = TimeStepsData.Controls.daysCountInput.value;
                 TimeStepsData.onTimestepUpdated.notify();
             }             
             this.stepSizeInput.oninput = function () {
-                TimeStepsData.timestep = this.stepSizeInput.value;
+                TimeStepsData.timestep = TimeStepsData.Controls.stepSizeInput.value;
                 TimeStepsData.onTimestepUpdated.notify();
             }             
 		}
 	},
 	
 	init : function () {
-		this.onTimestepUpdated = Notifications.NewNoParameter();
-		this.Controls.init();
-		this.Controls.update();
+		//this.onTimestepUpdated = Notifications.NewNoParameter();
+		TimeStepsData.Controls.init();
+		TimeStepsData.Controls.update();
 	}
 };
 
-TimeStepsData.init();

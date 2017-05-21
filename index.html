@@ -104,11 +104,24 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;.
 </html>
 <script type="text/JavaScript" src="js/notifications.js"></script>
 <script type="text/JavaScript" src="js/location.js"></script>
+<script type="text/JavaScript" src="js/timeinput.js"></script>
 <script type="text/JavaScript" src="js/aajs.js"></script>
 
 <script type="text/JavaScript" >
-    var PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (2017, 1, 1, true), "steps" : 425, "stepSize" : 1 };
+    var PageTimeInterval = {};
     var Pages = {};
+    
+    TimeStepsData.onTimestepUpdated.add (function () {
+        PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "steps" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
+        for (pageKey in Pages){
+            if (Pages[pageKey]) {
+                Pages[pageKey].reset();
+            }
+        }
+    });
+    
+    TimeStepsData.init();
+    
 </script>
 
 <script type="text/JavaScript" src="js/sun.js"></script>

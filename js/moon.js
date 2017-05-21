@@ -66,12 +66,11 @@ var MoonData = {
         tablePopulated : false,
         reset : function () {
             while (this.table.hasChildNodes()) {
-                var currentTr = this.table.lastElementChild;
-                this.table.removeChild(currentTr);
+                this.table.removeChild(this.table.firstChild);
             }
             this.tablePopulated = false;
         },
-        
+       
         prepareLineForView : function (line) {
             var displayableLine = [];
             // copy the day verbatim
