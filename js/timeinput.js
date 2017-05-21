@@ -38,7 +38,7 @@ var TimeStepsData = {
 			for (var k in attrMap)
 				TimeStepsData.Controls[k].value = TimeStepsData[attrMap[k]];
             
-            var dateToSet = new Date (TimeStepsData.yearToStart, TimeStepsData.monthToStart - 1, TimeStepsData.dayToStart, 3,0,0,1);
+            var dateToSet = new Date (TimeStepsData.yearToStart, TimeStepsData.monthToStart - 1, TimeStepsData.dayToStart, 0,0,0,0);
             TimeStepsData.Controls.dateInput.valueAsDate = dateToSet;
 
             TimeStepsData.onTimestepUpdated.notify();

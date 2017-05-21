@@ -122,7 +122,6 @@ function PlanetPage (planetDataSource) {
         this.addNodeChild (row2, "th", "\u00B0");
         this.addNodeChild (row2, "th");
     };
-    this.addPlanetTableHeader (this.table, ["fixed"]);
 
 	this.appendLine = function (dataArray) {
             var line = this.table.ownerDocument.createElement("tr");
@@ -144,6 +143,7 @@ function PlanetPage (planetDataSource) {
                 return setTimeout (function() { this.displayPage(JD, daysAfter); }, 100);
             
             if (!this.tablePopulated) {
+                this.addPlanetTableHeader (this.table, ["fixed"]);
                 var pageObj = this;
                 var delayedAppendData = function (JD, endJD, steps) {
                     if (JD >= endJD)
