@@ -59,11 +59,11 @@ var TimeStepsData = {
             }
 			 
             this.daysCountInput.oninput = function () {
-                TimeStepsData.numberOfDays = TimeStepsData.Controls.daysCountInput.value;
+                TimeStepsData.numberOfDays = TimeStepsData.Controls.daysCountInput.value * 1.0;
                 TimeStepsData.onTimestepUpdated.notify();
             }             
             this.stepSizeInput.oninput = function () {
-                TimeStepsData.timestep = TimeStepsData.Controls.stepSizeInput.value;
+                TimeStepsData.timestep = TimeStepsData.Controls.stepSizeInput.value * 1.0;
                 TimeStepsData.onTimestepUpdated.notify();
             }             
 		}
