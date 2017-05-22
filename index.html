@@ -8,6 +8,8 @@
 </head>
 
 <body>
+    <a nohref="#" id="MenuLink"><img src="images/menu.svg"></a>
+    <a nohref="#" id="SettingsLink"><img src="images/settings.svg"></a>
     <div id="menuContainer" class="page invisible">
         <ul id="menu">
             <li><a nohref="#" id="SunLink">Sun</a></li>
@@ -148,6 +150,9 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;.
     document.getElementById ("cancelSettingsChanges").addEventListener("click", function() {
         Location.Controls.update();
         TimeStepsData.Controls.update();
+
+        if (previousPage)
+            gotoPage(previousPage.id);
     });
 
     Location.init();
@@ -185,5 +190,7 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;.
    document.getElementById("UranusLink").onclick = function() { gotoPage("UranusPage"); }
    document.getElementById("NeptuneLink").onclick = function() { gotoPage("NeptunePage"); }
    document.getElementById("MoonLink").onclick = function() { gotoPage("MoonPage"); }
+   document.getElementById("MenuLink").onclick = function() { gotoPage("menuContainer"); }
+   document.getElementById("SettingsLink").onclick = function() { gotoPage("settingsPage"); }
 })();
 </script>
