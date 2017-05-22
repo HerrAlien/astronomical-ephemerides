@@ -17,14 +17,24 @@
 
 #MenuLink img {
     width: 48px;
+    cursor: pointer;
 }
 
 #SettingsLink img {
     width: 42px;
+    cursor: pointer;
 }
 
 #SettingsLink {
     float: right;
+}
+
+#pageTitle {
+    font-size: 32px;
+    margin-top: -20px;
+    font-family: Arial;
+    vertical-align: top;
+    margin-left: 32px;
 }
 
 #menuContainer {
