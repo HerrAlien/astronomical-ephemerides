@@ -39,23 +39,10 @@ var Location = {
                             "alt" : "altitude"};
 			for (var k in attrMap)
 				this[k].value = Location[attrMap[k]];
-
-            Location.onLocationUpdated.notify();
 		},
 		
 		init : function (){
-			this.lat.oninput = function () {
-                Location.latitude = 1.0 * Location.Controls.lat.value;
-                Location.onLocationUpdated.notify();
-            }
-			this.long.oninput = function () {
-                Location.longitude = 1.0 * Location.Controls.long.value;
-                Location.onLocationUpdated.notify();
-            }
-			this.alt.oninput = function () {
-                Location.altitude = Location.Controls.alt.value;
-                Location.onLocationUpdated.notify(); 
-            }
+
             this.geolocation.onclick = function () {
                 var geoLocationAPI = navigator.geolocation || window.navigator.geolocation;
                 if (geoLocationAPI) {
@@ -66,20 +53,24 @@ var Location = {
                             Location.Controls.alt.value = 0;
                         else
                             Location.Controls.alt.value = position.coords.altitude;
-
-                        Location.latitude = 1.0 * (Location.Controls.lat.value);
-                        Location.altitude = 1.0 * (Location.Controls.alt.value);
-                        Location.Controls.long.oninput();
                    });
                 }
-            }            
-		}
+            }
+		},
+        
+        commitUserValues : function () {
+            Location.latitude = 1.0 * Location.Controls.lat.value;
+            Location.longitude = 1.0 * Location.Controls.long.value;
+            Location.altitude = 1.0 * Location.Controls.alt.value;
+            Location.onLocationUpdated.notify();
+        }
 	},
 	
 	init : function () {
 		this.onLocationUpdated = Notifications.NewNoParameter();
 		this.Controls.init();
 		this.Controls.update();
+        this.onLocationUpdated.notify();
 	}
 };
 

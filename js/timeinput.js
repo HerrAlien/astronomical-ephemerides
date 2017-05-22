@@ -30,8 +30,6 @@ var TimeStepsData = {
 		dateInput : document.getElementById ("startingDate"),
 		daysCountInput: document.getElementById ("numberOfDays"),
         stepSizeInput: document.getElementById ("incrementDate"),
-        apply : document.getElementById ("applySettingsChanges"),
-        cancel : document.getElementById ("cancelSettingsChanges"),
 		
 		update: function () {
 			var attrMap = {"daysCountInput" : "numberOfDays", 
@@ -46,16 +44,6 @@ var TimeStepsData = {
             TimeStepsData.Controls.dateInput.valueAsDate = dateToSet;
 		},
         
-        init : function () {
-            TimeStepsData.Controls.apply.addEventListener("click", function() {
-                TimeStepsData.Controls.commitUserValues();
-            });
-            
-            TimeStepsData.Controls.cancel.addEventListener("click", function() {
-                TimeStepsData.Controls.update();
-            });
-        },
-		
         commitUserValues : function () {
             TimeStepsData.numberOfDays = TimeStepsData.Controls.daysCountInput.value * 1.0;
             TimeStepsData.timestep = TimeStepsData.Controls.stepSizeInput.value * 1.0;
@@ -70,7 +58,6 @@ var TimeStepsData = {
 	},
 	
 	init : function () {
-		TimeStepsData.Controls.init();
 		TimeStepsData.Controls.update();
         TimeStepsData.onTimestepUpdated.notify();
 	}

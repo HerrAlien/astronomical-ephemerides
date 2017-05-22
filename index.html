@@ -127,20 +127,30 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;.
         previousPage.classList.add ("visible");
         Pages[pageName].displayPage(PageTimeInterval.JD, PageTimeInterval.steps, PageTimeInterval.stepSize);
     }
-
-    TimeStepsData.onTimestepUpdated.add (function () {
+    
+    document.getElementById ("applySettingsChanges").addEventListener("click", function() {
+        Location.Controls.commitUserValues();
+        TimeStepsData.Controls.commitUserValues();
+        // copy from timesteps data
         PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "steps" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
         for (pageKey in Pages){
             if (Pages[pageKey]) {
                 Pages[pageKey].reset();
             }
         }
-        if (previousPage) {
+        if (previousPage)
             gotoPage(previousPage.id);
-        }
+
     });
     
+    document.getElementById ("cancelSettingsChanges").addEventListener("click", function() {
+        Location.Controls.update();
+        TimeStepsData.Controls.update();
+    });
+
+    Location.init();
     TimeStepsData.init();
+    PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "steps" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
     
 </script>
 
