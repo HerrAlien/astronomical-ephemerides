@@ -14,6 +14,7 @@
     <a nohref="#" id="SettingsLink"><img src="images/settings.svg"></a>
     <div id="menuContainer" class="page invisible" title="Menu">
         <ul id="menu">
+            <li><a nohref="#" id="HomeLink">Home</a></li>
             <li><a nohref="#" id="SunLink">Sun</a></li>
             <li><a nohref="#" id="MoonLink">Moon</a></li>
             <li><a nohref="#" id="MercuryLink">Mercury</a></li>
@@ -204,6 +205,7 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;. -->
    document.getElementById("MoonLink").onclick = function() { gotoPage("MoonPage"); }
    document.getElementById("MenuLink").onclick = function() { gotoPage("menuContainer"); }
    document.getElementById("SettingsLink").onclick = function() { gotoPage("settingsPage"); }
+   document.getElementById("HomeLink").onclick = function() { gotoPage("HomePage"); }
    
    gotoPage("HomePage");
 })();
