@@ -29,6 +29,8 @@
         <Label>Start from: <input type="date" id="startingDate"></input></label>
         <Label>print in increments of <input type="number" id="incrementDate"></input> days</label>
         <Label>for <input type="number" id="numberOfDays"></input> days</label>
+        <input type="button" id = "applySettingsChanges" value="Apply"></input>
+        <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
     </div>
     <div id="SunPage" class="page invisible">
     The table gives the apparent geocentric RA, Dec. and diameter of the Sun, the UT of transit across the
@@ -111,12 +113,30 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;.
     var PageTimeInterval = {};
     var Pages = {};
     
+    var previousPage = false;
+    var currentActiveLink = false;
+
+    function gotoPage(pageName) {
+        if (!!previousPage) {
+            previousPage.classList.remove ("visible");
+            previousPage.classList.add ("invisible");
+        }
+        
+        previousPage = document.getElementById(pageName); 
+        previousPage.classList.remove ("invisible"); 
+        previousPage.classList.add ("visible");
+        Pages[pageName].displayPage(PageTimeInterval.JD, PageTimeInterval.steps, PageTimeInterval.stepSize);
+    }
+
     TimeStepsData.onTimestepUpdated.add (function () {
         PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "steps" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
         for (pageKey in Pages){
             if (Pages[pageKey]) {
                 Pages[pageKey].reset();
             }
+        }
+        if (previousPage) {
+            gotoPage(previousPage.id);
         }
     });
     
@@ -142,22 +162,7 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;.
 
 <script type="text/JavaScript" >
 (function () {
-    
-    var previousPage = false;
-    var currentActiveLink = false;
-    
-    function gotoPage(pageName) {
-        if (!!previousPage) {
-            previousPage.classList.remove ("visible");
-            previousPage.classList.add ("invisible");
-        }
         
-        previousPage = document.getElementById(pageName); 
-        previousPage.classList.remove ("invisible"); 
-        previousPage.classList.add ("visible");
-        Pages[pageName].displayPage(PageTimeInterval.JD, PageTimeInterval.steps, PageTimeInterval.stepSize);
-    }
-    
     document.getElementById("SunLink").onclick = function() { gotoPage("SunPage"); }
     document.getElementById("MercuryLink").onclick = function() { gotoPage("MercuryPage"); }
     document.getElementById("VenusLink").onclick = function() { gotoPage("VenusPage"); }

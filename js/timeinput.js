@@ -26,11 +26,12 @@ var TimeStepsData = {
     
     onTimestepUpdated : Notifications.NewNoParameter(),
 
-	// these are the controls
 	Controls : {
 		dateInput : document.getElementById ("startingDate"),
 		daysCountInput: document.getElementById ("numberOfDays"),
         stepSizeInput: document.getElementById ("incrementDate"),
+        apply : document.getElementById ("applySettingsChanges"),
+        cancel : document.getElementById ("cancelSettingsChanges"),
 		
 		update: function () {
 			var attrMap = {"daysCountInput" : "numberOfDays", 
@@ -43,36 +44,35 @@ var TimeStepsData = {
             dateToSet.setUTCMonth(TimeStepsData.monthToStart-1);
             dateToSet.setUTCFullYear(TimeStepsData.yearToStart);
             TimeStepsData.Controls.dateInput.valueAsDate = dateToSet;
-
-            TimeStepsData.onTimestepUpdated.notify();
 		},
+        
+        init : function () {
+            TimeStepsData.Controls.apply.addEventListener("click", function() {
+                TimeStepsData.Controls.commitUserValues();
+            });
+            
+            TimeStepsData.Controls.cancel.addEventListener("click", function() {
+                TimeStepsData.Controls.update();
+            });
+        },
 		
-		init : function (){
-			TimeStepsData.Controls.dateInput.oninput = function () {
-                var selDate = TimeStepsData.Controls.dateInput.valueAsDate;
-                if (selDate) {
-                    TimeStepsData.yearToStart = selDate.getFullYear();
-                    TimeStepsData.monthToStart = 1 + selDate.getMonth();
-                    TimeStepsData.dayToStart = selDate.getDate();
-                }
-                TimeStepsData.onTimestepUpdated.notify();
+        commitUserValues : function () {
+            TimeStepsData.numberOfDays = TimeStepsData.Controls.daysCountInput.value * 1.0;
+            TimeStepsData.timestep = TimeStepsData.Controls.stepSizeInput.value * 1.0;
+            var selDate = TimeStepsData.Controls.dateInput.valueAsDate;
+            if (selDate) {
+                TimeStepsData.yearToStart = selDate.getFullYear();
+                TimeStepsData.monthToStart = 1 + selDate.getMonth();
+                TimeStepsData.dayToStart = selDate.getDate();
             }
-			 
-            this.daysCountInput.oninput = function () {
-                TimeStepsData.numberOfDays = TimeStepsData.Controls.daysCountInput.value * 1.0;
-                TimeStepsData.onTimestepUpdated.notify();
-            }             
-            this.stepSizeInput.oninput = function () {
-                TimeStepsData.timestep = TimeStepsData.Controls.stepSizeInput.value * 1.0;
-                TimeStepsData.onTimestepUpdated.notify();
-            }             
-		}
+            TimeStepsData.onTimestepUpdated.notify();
+        }
 	},
 	
 	init : function () {
-		//this.onTimestepUpdated = Notifications.NewNoParameter();
 		TimeStepsData.Controls.init();
 		TimeStepsData.Controls.update();
+        TimeStepsData.onTimestepUpdated.notify();
 	}
 };
 
