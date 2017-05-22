@@ -17,7 +17,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 var MoonData = {
     cache : {},
     getDataForJD : function (JD) {
-        var data = this.cache[JD];
+        var key = JSON.stringify([JD,Location.latitude, Location.longitude, Location.altitude]);
+        var data = this.cache[key];
         if (!data) {
             data = [];
         
@@ -52,7 +53,7 @@ var MoonData = {
             
             data[i] = posData.parallax;
             
-            this.cache[JD] = data;
+            this.cache[key] = data;
         }
         return data;
     }
