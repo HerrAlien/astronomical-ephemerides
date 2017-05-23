@@ -144,19 +144,16 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;. -->
     var previousPage = false;
     var currentActiveLink = false;
     
-    document.addEventListener("hashchange", function(){
-    
-    });
-
-    function gotoPage(pageName) {
+    window.addEventListener("hashchange", function(){
+        var hash = location.hash;
+        var pageName = hash.slice(1);
         previousPage = document.getElementById(pageName); 
 
         if (Pages[pageName]){
             Pages[pageName].displayPage(PageTimeInterval.JD, PageTimeInterval.steps, PageTimeInterval.stepSize);
         }
-        //document.getElementById("pageTitle").textContent = previousPage.title;
-    }
-    
+    }, false);
+
     document.getElementById ("applySettingsChanges").addEventListener("click", function() {
         Location.Controls.commitUserValues();
         TimeStepsData.Controls.commitUserValues();
@@ -167,8 +164,11 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;. -->
                 Pages[pageKey].reset();
             }
         }
-        if (previousPage)
-            gotoPage(previousPage.id);
+        if (previousPage) {
+            document.getElementById(previousPage.id).dispatchEvent(new MouseEvent("click",  { "view": window, 
+                                                      "bubbles": true, 
+                                                      "cancelable": false })); 
+        }
 
     });
     
@@ -176,13 +176,21 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;. -->
         Location.Controls.update();
         TimeStepsData.Controls.update();
 
-        if (previousPage)
-            gotoPage(previousPage.id);
+        if (previousPage) {
+            document.getElementById(previousPage.id).dispatchEvent(new MouseEvent("click",  { "view": window, 
+                                                      "bubbles": true, 
+                                                      "cancelable": false })); 
+        }
     });
 
     Location.init();
     TimeStepsData.init();
     PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "steps" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
+    
+    document.getElementById("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
+                                                      "bubbles": true, 
+                                                      "cancelable": false })); 
+
     
 </script>
 
@@ -200,27 +208,3 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;. -->
 <script type="text/JavaScript" src="js/neptune.js"></script>
 
 <script type="text/JavaScript" src="js/moon.js"></script>
-
-
-<script type="text/JavaScript" >
-(function () {
-        
-    document.getElementById("SunLink").onclick = function() { gotoPage("SunPage"); }
-    document.getElementById("MercuryLink").onclick = function() { gotoPage("MercuryPage"); }
-    document.getElementById("VenusLink").onclick = function() { gotoPage("VenusPage"); }
-    document.getElementById("MarsLink").onclick = function() { gotoPage("MarsPage"); }
-    document.getElementById("JupiterLink").onclick = function() { gotoPage("JupiterPage"); }
-    document.getElementById("SaturnLink").onclick = function() { gotoPage("SaturnPage"); }
-    
-    document.getElementById("UranusLink").onclick = function() { gotoPage("UranusPage"); }
-    document.getElementById("NeptuneLink").onclick = function() { gotoPage("NeptunePage"); }
-    document.getElementById("MoonLink").onclick = function() { gotoPage("MoonPage"); }
-    document.getElementById("MenuLink").onclick = function() { gotoPage("menuContainer"); }
-    document.getElementById("SettingsLink").onclick = function() { gotoPage("settingsPage"); }
-    document.getElementById("HomeLink").onclick = function() { gotoPage("HomePage"); }
-   
-    document.getElementById("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
-                                                      "bubbles": true, 
-                                                      "cancelable": false })); 
-})();
-</script>
