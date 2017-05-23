@@ -51,7 +51,7 @@
 				3e-3,
 				],
             test : function () {
-                this.actualOutput = VenusData.getDataForJD (this.input);
+                this.actualOutput = VenusData.getDataForJD (this.input).slice(0,10);
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)

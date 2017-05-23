@@ -51,7 +51,7 @@
 				6e-4,
 				],
             test : function () {
-                this.actualOutput = UranusData.getDataForJD (this.input);
+                this.actualOutput = UranusData.getDataForJD (this.input).slice(0,10);
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
