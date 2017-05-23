@@ -1,3 +1,8 @@
+body {
+    font-family: Verdana;
+    font-size: 14px;
+}
+
 .invisible {
     display: none;
 }
@@ -62,6 +67,10 @@
 
 #menu { 
     list-style-type:none;
+}
+
+#HomePage {
+    margin-top: 32px;
 }
 
 .clear {
