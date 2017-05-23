@@ -20,7 +20,12 @@ body {
     height: 0px;
 }
 
+#MenuLink {
+    float: left;
+}
+
 #MenuLink img {
+    margin-top: 2px;
     width: 48px;
     cursor: pointer;
 }
@@ -36,10 +41,10 @@ body {
 
 #pageTitle {
     font-size: 32px;
-    margin-top: -20px;
     font-family: Arial;
     vertical-align: top;
     margin-left: 32px;
+    float: left;
 }
 
 #menuContainer {
