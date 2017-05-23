@@ -34,11 +34,11 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                 line[i++] = AAJS.Sun.Diameter(JD, true)/3600; // [deg.dddd]
                 
                 // transit should be computed from the RA (LST to UTC conversion)
-                var jdOfTransit = AAJS.Date.ST2NextJD(radec.X, JD);
+                var jdOfTransit = AAJS.Date.LST2NextJD(radec.X, JD, Location.longitude);
                 if (jdOfTransit - JD > 1)
                     jdOfTransit -= 1;
                 radec = AAJS.Sun.EquatorialCoordinates(jdOfTransit, true);
-                jdOfTransit = AAJS.Date.ST2NextJD(radec.X, jdOfTransit);
+                jdOfTransit = AAJS.Date.LST2NextJD(radec.X, jdOfTransit, Location.longitude);
                 if (jdOfTransit - JD > 1)
                     jdOfTransit -= 1;
                 
