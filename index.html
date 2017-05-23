@@ -29,14 +29,16 @@
 		<div class="clear">&nbsp;</div>
     </div>
     <div id="settingsPage" class="page invisible" title="Settings">
-        <label>Latitude: <input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
-        <label>Longitude: <input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
-        <label>Altitude: <input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> or <a nohref="#" id="getFromGeolocationAnchor">get them from geolocation</a>.
-        <Label>Start from: <input type="date" id="startingDate"></input></label>
-        <Label>print in increments of <input type="number" id="incrementDate"></input> days</label>
-        <Label>for <input type="number" id="numberOfDays"></input> days</label>
+        <label>Latitude: <br><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
+        <label>Longitude: <br><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
+        <label>Altitude: <br><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
+        <Label>Start from: <br><input type="date" id="startingDate"></input></label>
+        <Label>increment in days: <br><input type="number" id="incrementDate"></input></label>
+        <Label>for number of days:<br><input type="number" id="numberOfDays"></input></label>
+        <div class="clear">&nbsp;</div>
         <input type="button" id = "applySettingsChanges" value="Apply"></input>
         <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
+        <div class="clear">&nbsp;</div>
     </div>
     
     <div id="HomePage" class="page invisible" title="Astronomical Ephemeris">

@@ -1,6 +1,6 @@
 body {
     font-family: Verdana;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .invisible {
@@ -56,10 +56,34 @@ body {
         width:100%;
 }
 
+#settingsPage label, #getFromGeolocationAnchor, #applySettingsChanges{
+    float: left;
+    margin-top: 16px;
+}
+
+#settingsPage label, #getFromGeolocationAnchor, #applySettingsChanges, #cancelSettingsChanges {
+    margin-left: 16px;
+}
+
+#cancelSettingsChanges {
+    float: right;
+}
+
+#applySettingsChanges, #cancelSettingsChanges {
+    margin-top: 32px;
+    height: 48px;
+    padding: 12px;
+    font-size: 16px;
+}
+
 #menu li a, #getFromGeolocationAnchor {
     cursor: pointer;
     padding-right: 10px;
     text-decoration: underline;
+}
+
+#getFromGeolocationAnchor {
+    height: 72px;
 }
 
 #menu li a:hover, #menu li a.current {
@@ -75,7 +99,7 @@ body {
 }
 
 #HomePage {
-    margin-top: 32px;
+    margin-top: 8px;
 }
 
 .clear {
@@ -116,6 +140,12 @@ background: #eeeeee;
 	    height: 20px;
 }
 
+input {
+    height: 32px;
+    font-size: 16px;
+    margin-top: 8px;
+}
+
 #latitudeInput, #longitudeInput, #altitudeInput {
     width: 80px;
 }
@@ -123,7 +153,7 @@ background: #eeeeee;
     width: 150px;
 } 
 #incrementDate, #numberOfDays {
-    width: 50px;
+    width: 120px;
 }
 /** ----------------------------- M O O N --------------------------------------- **/
 #Moon tr:nth-of-type(1), #Moon tr:nth-of-type(2){
