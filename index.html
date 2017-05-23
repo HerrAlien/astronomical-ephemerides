@@ -12,7 +12,7 @@
 <body>
     <a href="#menuContainer" id="MenuLink"><img src="images/menu.svg"></a>
     <a href="#settingsPage" id="SettingsLink"><img src="images/settings.svg"></a>
-    <div class="clear">&nbsp;</div>
+    <div class="clear maxWidth">&nbsp;</div>
     <div id="menuContainer" class="page" title="Menu">
         <span class="title">Menu</span>
         <ul id="menu">
@@ -34,6 +34,7 @@
         <label>Latitude: <br><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
         <label>Longitude: <br><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
         <label>Altitude: <br><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
+        <div class="clear">&nbsp;</div>
         <Label>Start from: <br><input type="date" id="startingDate"></input></label>
         <Label>increment in days: <br><input type="number" id="incrementDate"></input></label>
         <Label>for number of days:<br><input type="number" id="numberOfDays"></input></label>
@@ -135,12 +136,11 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;. -->
 <script type="text/JavaScript" src="js/notifications.js"></script>
 <script type="text/JavaScript" src="js/location.js"></script>
 <script type="text/JavaScript" src="js/timeinput.js"></script>
-<script type="text/JavaScript" src="js/aajs.js"></script>
 
 <script type="text/JavaScript" >
     var PageTimeInterval = {};
     var Pages = {};
-    
+
     var previousPage = false;
     var currentActiveLink = false;
     
@@ -149,7 +149,7 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;. -->
         var pageName = hash.slice(1);
         previousPage = document.getElementById(pageName); 
 
-        if (Pages[pageName]){
+        if (Pages[pageName] && PageTimeInterval.JD){
             Pages[pageName].displayPage(PageTimeInterval.JD, PageTimeInterval.steps, PageTimeInterval.stepSize);
         }
     }, false);
@@ -158,7 +158,9 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;. -->
         Location.Controls.commitUserValues();
         TimeStepsData.Controls.commitUserValues();
         // copy from timesteps data
-        PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "steps" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
+        if (typeof AAJS != 'undefined')
+            PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "steps" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
+            
         for (pageKey in Pages){
             if (Pages[pageKey]) {
                 Pages[pageKey].reset();
@@ -185,7 +187,7 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;. -->
 
     Location.init();
     TimeStepsData.init();
-    PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "steps" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
+    PageTimeInterval = { "JD" :  2457754.5, "steps" : 410, "stepSize" : 1 };
     
     document.getElementById("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
                                                       "bubbles": true, 
@@ -194,6 +196,7 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;. -->
     
 </script>
 
+<script type="text/JavaScript" src="js/aajs.js"></script>
 <script type="text/JavaScript" src="js/sun.js"></script>
 
 <script type="text/JavaScript" src="js/planetdata.js"></script>
