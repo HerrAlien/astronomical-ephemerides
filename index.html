@@ -10,25 +10,27 @@
 </head>
 
 <body>
-    <a nohref="#" id="MenuLink"><img src="images/menu.svg"></a><span id="pageTitle">Astronomical Ephemeris</span>
-    <a nohref="#" id="SettingsLink"><img src="images/settings.svg"></a>
+    <a href="#menuContainer" id="MenuLink"><img src="images/menu.svg"></a>
+    <a href="#settingsPage" id="SettingsLink"><img src="images/settings.svg"></a>
     <div class="clear">&nbsp;</div>
-    <div id="menuContainer" class="page invisible" title="Menu">
+    <div id="menuContainer" class="page" title="Menu">
+        <span class="title">Menu</span>
         <ul id="menu">
-            <li><a nohref="#" id="HomeLink">Home</a></li>
-            <li><a nohref="#" id="SunLink">Sun</a></li>
-            <li><a nohref="#" id="MoonLink">Moon</a></li>
-            <li><a nohref="#" id="MercuryLink">Mercury</a></li>
-            <li><a nohref="#" id="VenusLink">Venus</a></li>
-            <li><a nohref="#" id="MarsLink">Mars</a></li>
-            <li><a nohref="#" id="JupiterLink">Jupiter</a></li>
-            <li><a nohref="#" id="SaturnLink">Saturn</a></li>
-            <li><a nohref="#" id="UranusLink">Uranus</a></li>
-            <li><a nohref="#" id="NeptuneLink">Neptune</a></li>
+            <li><a href="#HomePage" id="HomeLink">Home</a></li>
+            <li><a href="#SunPage" id="SunLink">Sun</a></li>
+            <li><a href="#MoonPage" id="MoonLink">Moon</a></li>
+            <li><a href="#MercuryPage" id="MercuryLink">Mercury</a></li>
+            <li><a href="#VenusPage" id="VenusLink">Venus</a></li>
+            <li><a href="#MarsPage" id="MarsLink">Mars</a></li>
+            <li><a href="#JupiterPage" id="JupiterLink">Jupiter</a></li>
+            <li><a href="#SaturnPage" id="SaturnLink">Saturn</a></li>
+            <li><a href="#UranusPage" id="UranusLink">Uranus</a></li>
+            <li><a href="#NeptunePage" id="NeptuneLink">Neptune</a></li>
         </ul>
 		<div class="clear">&nbsp;</div>
     </div>
-    <div id="settingsPage" class="page invisible" title="Settings">
+    <div id="settingsPage" class="page" title="Settings">
+        <span class="title">Settings</span>
         <label>Latitude: <br><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
         <label>Longitude: <br><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
         <label>Altitude: <br><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
@@ -41,7 +43,8 @@
         <div class="clear">&nbsp;</div>
     </div>
     
-    <div id="HomePage" class="page invisible" title="Astronomical Ephemeris">
+    <div id="HomePage" class="page" title="Astronomical Ephemeris">
+    <span class="title">Astronomical Ephemeris</span>
     /ephemeris/ - a software astronomical almanach <br>
 <br>
 Copyright 2017 Herr_Alien &lt;alexandru.garofide@gmail.com&gt;
@@ -60,6 +63,8 @@ with this program. If not, see <a href="https://www.gnu.org/licenses/agpl.html" 
     </div>
     
     <div id="SunPage" class="page invisible" title="Sun">
+        <span class="title">Sun</span>
+
  <!--   The table gives the apparent geocentric RA, Dec. and diameter of the Sun, the UT of transit across the
 Greenwich meridian, and P, B<sub>0</sub>, L<sub>0</sub> and &pi; where:
         <ul>
@@ -72,44 +77,52 @@ Greenwich meridian, and P, B<sub>0</sub>, L<sub>0</sub> and &pi; where:
         <table id="Sun" cellspacing="0" cellpadding="0" >
          </table>
     </div>
-    <div id="MercuryPage" class="page invisible" title="Mercury">
+    <div id="MercuryPage" class="page" title="Mercury">
+        <span class="title">Mercury</span>
 <!--    The table gives the apparent geocentric RA, Dec., diameter, the UT of transit across the
 Greenwich meridian, distance to Earth, distance to the Sun, elongation, phase. -->
         <table id="Mercury" cellspacing="0" cellpadding="0" class="planetTable">
         </table>
     </div>
 
-    <div id="VenusPage" class="page invisible" title="Venus">
+    <div id="VenusPage" class="page" title="Venus">
+        <span class="title">Venus</span>
         <table id="Venus" cellspacing="0" cellpadding="0" class="planetTable">
         </table>
     </div>
 
-    <div id="MarsPage" class="page invisible" title="Mars">
+    <div id="MarsPage" class="page" title="Mars">
+        <span class="title">Mars</span>
         <table id="Mars" cellspacing="0" cellpadding="0" class="planetTable">
        </table>
     </div>
 
-    <div id="JupiterPage" class="page invisible" title="Jupiter">
+    <div id="JupiterPage" class="page" title="Jupiter">
+        <span class="title">Jupiter</span>
         <table id="Jupiter" cellspacing="0" cellpadding="0" class="planetTable">
          </table>
     </div>
 
-    <div id="SaturnPage" class="page invisible" title="Saturn">
+    <div id="SaturnPage" class="page" title="Saturn">
+        <span class="title">Saturn</span>
         <table id="Saturn" cellspacing="0" cellpadding="0" class="planetTable">
          </table>
     </div>
 
-   <div id="UranusPage" class="page invisible" title="Uranus">
+   <div id="UranusPage" class="page" title="Uranus">
+        <span class="title">Uranus</span>
         <table id="Uranus" cellspacing="0" cellpadding="0" class="planetTable">
          </table>
     </div>
 
-   <div id="NeptunePage" class="page invisible" title="Neptune">
+   <div id="NeptunePage" class="page" title="Neptune">
+        <span class="title">Neptune</span>
         <table id="Neptune" cellspacing="0" cellpadding="0" class="planetTable">
          </table>
     </div>
 
-   <div id="MoonPage" class="page invisible" title="Moon">
+   <div id="MoonPage" class="page" title="Moon">
+        <span class="title">Moon</span>
 <!--    The table gives the geocentric and topocentric equatorial coordinates, the diameter of the Moon, the UT of transit across the
 Greenwich meridian, and the equatorial horizontal parallax &pi;. -->
         <table id="Moon" cellspacing="0" cellpadding="0">
@@ -130,20 +143,18 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;. -->
     
     var previousPage = false;
     var currentActiveLink = false;
+    
+    document.addEventListener("hashchange", function(){
+    
+    });
 
     function gotoPage(pageName) {
-        if (!!previousPage) {
-            previousPage.classList.remove ("visible");
-            previousPage.classList.add ("invisible");
-        }
-        
         previousPage = document.getElementById(pageName); 
-        previousPage.classList.remove ("invisible"); 
-        previousPage.classList.add ("visible");
+
         if (Pages[pageName]){
             Pages[pageName].displayPage(PageTimeInterval.JD, PageTimeInterval.steps, PageTimeInterval.stepSize);
         }
-        document.getElementById("pageTitle").textContent = previousPage.title;
+        //document.getElementById("pageTitle").textContent = previousPage.title;
     }
     
     document.getElementById ("applySettingsChanges").addEventListener("click", function() {
@@ -197,17 +208,19 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;. -->
     document.getElementById("SunLink").onclick = function() { gotoPage("SunPage"); }
     document.getElementById("MercuryLink").onclick = function() { gotoPage("MercuryPage"); }
     document.getElementById("VenusLink").onclick = function() { gotoPage("VenusPage"); }
-   document.getElementById("MarsLink").onclick = function() { gotoPage("MarsPage"); }
-   document.getElementById("JupiterLink").onclick = function() { gotoPage("JupiterPage"); }
-   document.getElementById("SaturnLink").onclick = function() { gotoPage("SaturnPage"); }
+    document.getElementById("MarsLink").onclick = function() { gotoPage("MarsPage"); }
+    document.getElementById("JupiterLink").onclick = function() { gotoPage("JupiterPage"); }
+    document.getElementById("SaturnLink").onclick = function() { gotoPage("SaturnPage"); }
     
-   document.getElementById("UranusLink").onclick = function() { gotoPage("UranusPage"); }
-   document.getElementById("NeptuneLink").onclick = function() { gotoPage("NeptunePage"); }
-   document.getElementById("MoonLink").onclick = function() { gotoPage("MoonPage"); }
-   document.getElementById("MenuLink").onclick = function() { gotoPage("menuContainer"); }
-   document.getElementById("SettingsLink").onclick = function() { gotoPage("settingsPage"); }
-   document.getElementById("HomeLink").onclick = function() { gotoPage("HomePage"); }
+    document.getElementById("UranusLink").onclick = function() { gotoPage("UranusPage"); }
+    document.getElementById("NeptuneLink").onclick = function() { gotoPage("NeptunePage"); }
+    document.getElementById("MoonLink").onclick = function() { gotoPage("MoonPage"); }
+    document.getElementById("MenuLink").onclick = function() { gotoPage("menuContainer"); }
+    document.getElementById("SettingsLink").onclick = function() { gotoPage("settingsPage"); }
+    document.getElementById("HomeLink").onclick = function() { gotoPage("HomePage"); }
    
-   gotoPage("HomePage");
+    document.getElementById("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
+                                                      "bubbles": true, 
+                                                      "cancelable": false })); 
 })();
 </script>

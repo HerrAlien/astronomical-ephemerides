@@ -3,13 +3,14 @@ body {
     font-size: 16px;
 }
 
-.invisible {
+.page {
+    display: block;
+}
+
+.page:not(:target){
     display: none;
 }
 
-.visible {
-    display: block;
-}
 
 .fixed {
     position: fixed;
@@ -39,12 +40,14 @@ body {
     float: right;
 }
 
-#pageTitle {
-    font-size: 32px;
+#pageTitle, .title {
+font-size: 32px;
     font-family: Arial;
     vertical-align: top;
     margin-left: 32px;
-    float: left;
+    position: absolute;
+    top: 10px;
+    left: 50px;
 }
 
 #menuContainer {

@@ -4,15 +4,100 @@ function PlanetPage (planetDataSource) {
         this.table = document.getElementById(this.dataSource.planet.name);
     }
     this.tablePopulated = false;
-	
-    this.reset = function () {
+}
+
+(function(){
+    PlanetPage.prototype["displayPage"] = function (JD, daysAfter, stepSize) {
+            if (!AAJS.AllDependenciesLoaded())
+                return setTimeout (function() { this.displayPage(JD, daysAfter); }, 100);
+            
+            if (!this.tablePopulated) {
+                this.addPlanetTableHeader (this.table, ["fixed"]);
+                var pageObj = this;
+                var delayedAppendData = function (JD, endJD, steps) {
+                    if (JD >= endJD)
+                        return;
+                    
+                    var i = 0;
+                    for (i = 0; i < steps; i++, JD+=stepSize) {
+                        if (JD >= endJD)
+                            return;
+                        pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD));
+                    }
+                    
+                    pageObj.addPlanetTableHeader (pageObj.table, ["fixed", "printOnly"]);
+                    
+                    setTimeout (function() {delayedAppendData (JD, endJD, steps); },1 );
+                }
+                delayedAppendData (JD, JD + daysAfter, 15);
+                this.tablePopulated = true;
+            }
+        };
+    
+    PlanetPage.prototype["appendLine"] = function (dataArray) {
+            var line = this.table.ownerDocument.createElement("tr");
+            var tbody = this.table.getElementsByTagName("tbody")[0];
+            if (!tbody)
+                tbody = this.table;
+            tbody.appendChild(line);
+            
+            var i = 0;
+            for (i = 0; i < dataArray.length; i++) {
+                var td = line.ownerDocument.createElement("td");
+                line.appendChild(td);
+                td.textContent = dataArray[i];
+            }
+        };
+        
+    PlanetPage.prototype["addPlanetTableHeader"] = function (table, classes) {
+        var row1 = this.addNodeChild (table, "tr");
+        for (var i = 0; i < classes.length; i++)
+            row1.classList.add (classes[i]);    
+        this.addNodeChild (row1, "th", "Date");
+        this.addNodeChild (row1, "th");    
+        this.addNodeChild (row1, "th", "RA");
+        this.addNodeChild (row1, "th");
+        this.addNodeChild (row1, "th");
+        this.addNodeChild (row1, "th", "Dec");
+        this.addNodeChild (row1, "th");
+        this.addNodeChild (row1, "th");
+        this.addNodeChild (row1, "th", "Diam.");
+        this.addNodeChild (row1, "th", "Transit");
+        this.addNodeChild (row1, "th");
+        this.addNodeChild (row1, "th");
+        this.addNodeChild (row1, "th", "Delta");
+        this.addNodeChild (row1, "th", "r");
+        this.addNodeChild (row1, "th", "Elongation");
+        this.addNodeChild (row1, "th", "Phase");
+        var row2 = this.addNodeChild (table, "tr");
+        for (var i = 0; i < classes.length; i++)
+            row2.classList.add (classes[i]);    
+        this.addNodeChild (row2, "th");
+        this.addNodeChild (row2, "th");
+        this.addNodeChild (row2, "th", "h");
+        this.addNodeChild (row2, "th", "m");
+        this.addNodeChild (row2, "th", "s");
+        this.addNodeChild (row2, "th", "\u00B0");
+        this.addNodeChild (row2, "th", "'");
+        this.addNodeChild (row2, "th", "''");
+        this.addNodeChild (row2, "th", "''");
+        this.addNodeChild (row2, "th", "h");
+        this.addNodeChild (row2, "th", "m");
+        this.addNodeChild (row2, "th", "s");
+        this.addNodeChild (row2, "th", "A.U.");
+        this.addNodeChild (row2, "th", "A.U.");
+        this.addNodeChild (row2, "th", "\u00B0");
+        this.addNodeChild (row2, "th");
+    };
+
+    PlanetPage.prototype["reset"] = function () {
         while (this.table.hasChildNodes()) {
             this.table.removeChild(this.table.firstChild);
         }
         this.tablePopulated = false;
     };
 		
-	this.prepareLineForView = function (line, JD) {
+	PlanetPage.prototype["prepareLineForView"] = function (line, JD) {
             var displayableLine = [];
             // copy the day verbatim
             displayableLine[1] = line[1];
@@ -74,95 +159,12 @@ function PlanetPage (planetDataSource) {
             return displayableLine;
     };
     
-	this.addNodeChild = function (parent, type, content) {
+	PlanetPage.prototype["addNodeChild"] = function (parent, type, content) {
         var child = parent.ownerDocument.createElement(type);
         parent.appendChild(child);
         if (content)
             child.textContent =  content;
         return child;
     };
-    
-    this.addPlanetTableHeader = function (table, classes) {
-        var row1 = this.addNodeChild (table, "tr");
-        for (var i = 0; i < classes.length; i++)
-            row1.classList.add (classes[i]);    
-        this.addNodeChild (row1, "th", "Date");
-        this.addNodeChild (row1, "th");    
-        this.addNodeChild (row1, "th", "RA");
-        this.addNodeChild (row1, "th");
-        this.addNodeChild (row1, "th");
-        this.addNodeChild (row1, "th", "Dec");
-        this.addNodeChild (row1, "th");
-        this.addNodeChild (row1, "th");
-        this.addNodeChild (row1, "th", "Diam.");
-        this.addNodeChild (row1, "th", "Transit");
-        this.addNodeChild (row1, "th");
-        this.addNodeChild (row1, "th");
-        this.addNodeChild (row1, "th", "Delta");
-        this.addNodeChild (row1, "th", "r");
-        this.addNodeChild (row1, "th", "Elongation");
-        this.addNodeChild (row1, "th", "Phase");
-        var row2 = this.addNodeChild (table, "tr");
-        for (var i = 0; i < classes.length; i++)
-            row2.classList.add (classes[i]);    
-        this.addNodeChild (row2, "th");
-        this.addNodeChild (row2, "th");
-        this.addNodeChild (row2, "th", "h");
-        this.addNodeChild (row2, "th", "m");
-        this.addNodeChild (row2, "th", "s");
-        this.addNodeChild (row2, "th", "\u00B0");
-        this.addNodeChild (row2, "th", "'");
-        this.addNodeChild (row2, "th", "''");
-        this.addNodeChild (row2, "th", "''");
-        this.addNodeChild (row2, "th", "h");
-        this.addNodeChild (row2, "th", "m");
-        this.addNodeChild (row2, "th", "s");
-        this.addNodeChild (row2, "th", "A.U.");
-        this.addNodeChild (row2, "th", "A.U.");
-        this.addNodeChild (row2, "th", "\u00B0");
-        this.addNodeChild (row2, "th");
-    };
-
-	this.appendLine = function (dataArray) {
-            var line = this.table.ownerDocument.createElement("tr");
-            var tbody = this.table.getElementsByTagName("tbody")[0];
-            if (!tbody)
-                tbody = this.table;
-            tbody.appendChild(line);
-            
-            var i = 0;
-            for (i = 0; i < dataArray.length; i++) {
-                var td = line.ownerDocument.createElement("td");
-                line.appendChild(td);
-                td.textContent = dataArray[i];
-            }
-        };
-		
-		this.displayPage = function (JD, daysAfter, stepSize) {
-            if (!AAJS.AllDependenciesLoaded())
-                return setTimeout (function() { this.displayPage(JD, daysAfter); }, 100);
-            
-            if (!this.tablePopulated) {
-                this.addPlanetTableHeader (this.table, ["fixed"]);
-                var pageObj = this;
-                var delayedAppendData = function (JD, endJD, steps) {
-                    if (JD >= endJD)
-                        return;
-                    
-                    var i = 0;
-                    for (i = 0; i < steps; i++, JD+=stepSize) {
-                        if (JD >= endJD)
-                            return;
-                        pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD));
-                    }
-                    
-                    pageObj.addPlanetTableHeader (pageObj.table, ["fixed", "printOnly"]);
-                    
-                    setTimeout (function() {delayedAppendData (JD, endJD, steps); },1 );
-                }
-                delayedAppendData (JD, JD + daysAfter, 15);
-                this.tablePopulated = true;
-            }
-        };
-}							   
+})();						   
 	

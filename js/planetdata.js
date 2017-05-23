@@ -19,7 +19,10 @@ function PlanetData(planet)
 {
 	this.planet = planet;
 	this.cache = {};
-	this.getDataForJD = function (JD) {
+}
+
+(function(){
+    PlanetData.prototype["getDataForJD"] = function (JD) {
         var data = this.cache[JD];
             if (!data) {
 				data = [];
@@ -64,5 +67,5 @@ function PlanetData(planet)
 				this.cache[JD] = data;
 			}
 		return data;
-    }
-}
+    };
+})();
