@@ -117,7 +117,7 @@ tr:nth-of-type(2){
 }
 
 table {
-    margin-top: 50px;
+    margin-top: 32px;
     /* all tables must start hidden. */
     font-family : Courier;
     font-size: 14px;
