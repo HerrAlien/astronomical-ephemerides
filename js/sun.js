@@ -162,8 +162,10 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             this.addNodeChild (row1, "th");
             this.addNodeChild (row1, "th");
             this.addNodeChild (row1, "th", "P");
-            this.addNodeChild (row1, "th", "B0");
-            this.addNodeChild (row1, "th", "L0");
+            var th = this.addNodeChild (row1, "th", "B");
+            this.addNodeChild (th, "sub", "0");
+            th = this.addNodeChild (row1, "th", "L");
+            this.addNodeChild (th, "sub", "0");
             this.addNodeChild (row1, "th", "\u03C0");
             var row2 = this.addNodeChild (table, "tr");
             for (var i = 0; i < classes.length; i++)
