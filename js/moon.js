@@ -39,7 +39,7 @@ var MoonData = {
             
             var jdOfTransit = JD;
                 
-            for (var transitIterationIndex = 0; transitIterationIndex < 3; transitIterationIndex++)
+            for (var transitIterationIndex = 0; transitIterationIndex < 5; transitIterationIndex++)
             {
                 jdOfTransit = AAJS.Date.LST2NextJD(posData.RaTopo, JD, Location.longitude);
                 if (jdOfTransit - JD > 1)

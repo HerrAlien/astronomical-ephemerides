@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <script type="text/javascript" src="js/aajs.js"></script>
+        <script type="text/javascript" src="testlib.js"></script>
+        <script type="text/javascript">
+            var Pages = {};
+        </script>
+        
+        <script type="text/javascript" src="js/sun.js"></script>
+        <script type="text/javascript" src="js/moon.js"></script>
+        <style>
+            p {
+                line-spacing: 2px;
+            }
+        </style>
+    </head>
+    <body>
+    </body>
+</html>
+<script type="text/javascript">
+
+    var Location = { "latitude" : 44.42677, "longitude" : 26.10254, "altitude" : 200 };
+         
+    (function () {
+            
+        var tests = [
+        
+        {
+            name : "Sun transit time in UTC, for 2017-05-17, lat. 44.42677, long. 26.10254",
+            input : AAJS.Date.DateToJD (2017, 5, 17, true), 
+            expectedOutput : 10+12/60,
+            actualOutput : false,
+            test : function () {
+                var data = SunData.getDataForJD(this.input);
+                this.actualOutput = data [6];
+                return testlib.doubleEq(this.actualOutput , this.expectedOutput, 6e-4);
+            }
+        },
+
+        {
+            name : "Moon transit time in UTC, for 2017-05-17, lat. 44.42677, long. 26.10254",
+            input : AAJS.Date.DateToJD (2017, 5, 17, true), 
+            expectedOutput : 3+1/60,
+            actualOutput : false,
+            test : function () {
+                var data = MoonData.getDataForJD (this.input,Location.latitude,Location.longitude, Location.altitude);
+                this.actualOutput = data [7];
+                return testlib.doubleEq(this.actualOutput , this.expectedOutput, 8e-3);
+            }
+        },
+
+        ];
+            
+        testlib.runTests (tests);
+            
+    })();
+            
+        </script>
+

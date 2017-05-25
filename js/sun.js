@@ -37,10 +37,13 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                 var jdOfTransit = AAJS.Date.LST2NextJD(radec.X, JD, Location.longitude);
                 if (jdOfTransit - JD > 1)
                     jdOfTransit -= 1;
-                radec = AAJS.Sun.EquatorialCoordinates(jdOfTransit, true);
-                jdOfTransit = AAJS.Date.LST2NextJD(radec.X, jdOfTransit, Location.longitude);
-                if (jdOfTransit - JD > 1)
-                    jdOfTransit -= 1;
+                
+                for (var transitIndex = 0; transitIndex < 2; transitIndex++) {
+                    radec = AAJS.Sun.EquatorialCoordinates(jdOfTransit, true);
+                    jdOfTransit = AAJS.Date.LST2NextJD(radec.X, JD, Location.longitude);
+                    if (jdOfTransit - JD > 1)
+                        jdOfTransit -= 1;
+                }
                 
                 line[i++] = 24 * (jdOfTransit - JD);
                 var physical = AAJS.Sun.CalculatePhysicalDetails(JD, true);
@@ -76,6 +79,106 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             }
             this.tablePopulated = false;
         },
+        
+        tableHeaderInfo : {
+            "0" : {
+                    "1" : "Date",
+                    "2" : "",
+                    "longText" : "Date: month"
+                } ,
+
+            "1" : {
+                    "1" : "",
+                    "2" : "",
+                    "longText" : "Date: day"
+                },
+            "2" : {
+                    "1" : "RA",
+                    "2" : "h",
+                    "longText" : "Equatorial coordinates: Right Ascension"
+                },
+            "3" : {
+                    "1" : "",
+                    "2" : "m",
+                    "longText" : "Equatorial coordinates: Right Ascension"
+                },
+            "4" : {
+                    "1" : "",
+                    "2" : "s",
+                    "longText" : "Equatorial coordinates: Right Ascension"
+                },
+            "5" :  {
+                    "1" : "Dec.",
+                    "2" : "\u00B0",
+                    "longText" : "Equatorial coordinates: Declination"
+                },
+            "6" :  {
+                    "1" : "",
+                    "2" : "'",
+                    "longText" : "Equatorial coordinates: Declination"
+                },
+            "7" :  {
+                    "1" : "",
+                    "2" : "''",
+                    "longText" : "Equatorial coordinates: Declination"
+                },
+            "8" :  {
+                    "1" : "Delta",
+                    "2" : "A.U.",
+                    "longText" : "Distance to Earth, in astronomical units"
+                },
+            
+            "9" :  {
+                    "1" : "Diam.",
+                    "2" : "'",
+                    "longText" : "Apparent diameter of the Sun"
+                },
+            "10" :  {
+                    "1" : "",
+                    "2" : "''",
+                    "longText" : "Apparent diameter of the Sun"
+                },
+                
+            "11" : {
+                    "1" : "Transit",
+                    "2" : "h",
+                    "longText" : "The UTC time of the transit across the meridian"
+                },
+            "12" : {
+                    "1" : "",
+                    "2" : "m",
+                    "longText" : "The UTC time of the transit across the meridian"
+                },
+            "13" : {
+                    "1" : "",
+                    "2" : "s",
+                    "longText" : "The UTC time of the transit across the meridian"
+                },
+            "14" :  {
+                    "1" : "P",
+                    "2" : "\u00B0",
+                    "longText" : "Position angle of the N end of the axis of rotation. It is positive when east of the north point of the disk, negative if west."
+                },
+
+            "15" :  {
+                    "1" : "B",
+                    "2" : "\u00B0",
+                    "longText" : "Heliographic latitude of the centre of the disk."
+                },
+
+            "16" :  {
+                    "1" : "L",
+                    "2" : "\u00B0",
+                    "longText" : "Heliographic longitude of the centre of the disk."
+                },
+                // \u03C0
+            "17" :  {
+                    "1" : "\u03C0",
+                    "2" : "''",
+                    "longText" : "Equatorial horizontal parallax"
+                }
+
+            },
         
         prepareLineForView : function (line) {
             var displayableLine = [];
@@ -129,10 +232,12 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             tbody.appendChild(line);
             
             var i = 0;
+            var titleIndex = 0;
             for (i = 0; i < dataArray.length; i++) {
                 var td = line.ownerDocument.createElement("td");
                 line.appendChild(td);
                 td.textContent = dataArray[i];
+                td["title"] = this.tableHeaderInfo[titleIndex++ % 17].longText;
             }
         },
         addNodeChild : function (parent, type, content) {
@@ -144,50 +249,32 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         },
     
         addTableHeader : function (table, classes) {
+
             var row1 = this.addNodeChild (table, "tr");
             for (var i = 0; i < classes.length; i++)
                 row1.classList.add (classes[i]);    
-            this.addNodeChild (row1, "th", "Date");
-            this.addNodeChild (row1, "th");    
-            this.addNodeChild (row1, "th", "RA");
-            this.addNodeChild (row1, "th");
-            this.addNodeChild (row1, "th");
-            this.addNodeChild (row1, "th", "Dec.");
-            this.addNodeChild (row1, "th");
-            this.addNodeChild (row1, "th");
-            this.addNodeChild (row1, "th", "r");
-            this.addNodeChild (row1, "th", "Diam.");
-            this.addNodeChild (row1, "th");
-            this.addNodeChild (row1, "th", "Transit");
-            this.addNodeChild (row1, "th");
-            this.addNodeChild (row1, "th");
-            this.addNodeChild (row1, "th", "P");
-            var th = this.addNodeChild (row1, "th", "B");
-            this.addNodeChild (th, "sub", "0");
-            th = this.addNodeChild (row1, "th", "L");
-            this.addNodeChild (th, "sub", "0");
-            this.addNodeChild (row1, "th", "\u03C0");
+            
+            for (var i in this.tableHeaderInfo)
+            {
+                var th = this.addNodeChild (row1, "th", this.tableHeaderInfo[i]["1"]);
+                th["title"] = this.tableHeaderInfo[i].longText;
+                this.tableHeaderInfo[i]["element"] = th;
+            }
+
             var row2 = this.addNodeChild (table, "tr");
             for (var i = 0; i < classes.length; i++)
                 row2.classList.add (classes[i]);    
-            this.addNodeChild (row2, "th");
-            this.addNodeChild (row2, "th");
-            this.addNodeChild (row2, "th", "h");
-            this.addNodeChild (row2, "th", "m");
-            this.addNodeChild (row2, "th", "s");
-            this.addNodeChild (row2, "th", "\u00B0");
-            this.addNodeChild (row2, "th", "'");
-            this.addNodeChild (row2, "th", "''");
-            this.addNodeChild (row2, "th", "A.U.");
-            this.addNodeChild (row2, "th", "'");
-            this.addNodeChild (row2, "th", "''");
-            this.addNodeChild (row2, "th", "h");
-            this.addNodeChild (row2, "th", "m");
-            this.addNodeChild (row2, "th", "s");
-            this.addNodeChild (row2, "th", "\u00B0");
-            this.addNodeChild (row2, "th", "\u00B0");
-            this.addNodeChild (row2, "th", "\u00B0");
-            this.addNodeChild (row2, "th", "''");
+            
+            for (var i in this.tableHeaderInfo)
+            {
+                var th = this.addNodeChild (row2, "th", this.tableHeaderInfo[i]["2"]);
+                th["title"] = this.tableHeaderInfo[i].longText;
+            }
+            
+            // add some subscripts
+            this.addNodeChild (this.tableHeaderInfo["15"]["element"], "sub", "0");
+            this.addNodeChild (this.tableHeaderInfo["16"]["element"], "sub", "0");
+
     },
         
         displayPage : function(JD, daysAfter, stepSize) {
