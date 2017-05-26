@@ -179,7 +179,6 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                 }
 
             },
-        
         prepareLineForView : function (line) {
             var displayableLine = [];
             // copy the day verbatim
@@ -224,6 +223,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         },
         
         // this will probably become an utility available for every page
+        lastAppendedLine : false,
         appendLine : function (dataArray) {
             var line = this.table.ownerDocument.createElement("tr");
             var tbody = this.table.getElementsByTagName("tbody")[0];
@@ -233,12 +233,16 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             
             var i = 0;
             var titleIndex = 0;
+            var changedMonth = this.lastAppendedLine && dataArray[0] && this.lastAppendedLine[0] != dataArray[0];
             for (i = 0; i < dataArray.length; i++) {
                 var td = line.ownerDocument.createElement("td");
                 line.appendChild(td);
                 td.textContent = dataArray[i];
                 td["title"] = this.tableHeaderInfo[titleIndex++ % 17].longText;
+                if (changedMonth)
+                    td.classList.add("topBorder");
             }
+            this.lastAppendedLine = dataArray;
         },
         addNodeChild : function (parent, type, content) {
             var child = parent.ownerDocument.createElement(type);
@@ -281,6 +285,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             if (!AAJS.AllDependenciesLoaded())
                 return setTimeout (function() { SunPage.displayPage(JD, daysAfter, stepSize); }, 100);
 
+            this.lastAppendedLine = false;
             if (!SunPage.tablePopulated) {
                 this.addTableHeader (this.table, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
                 var delayedAppendData = function (JD, endJD, steps) {
