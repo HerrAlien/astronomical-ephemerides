@@ -170,7 +170,7 @@ input {
     
 /** ----------------------------- M O O N --------------------------------------- **/
 #Moon tr:nth-of-type(1), #Moon tr:nth-of-type(2){
-    width: 840px;
+    width: 766px;
 }
 
 #Moon td:nth-of-type(1),#Moon th:nth-of-type(1), 
@@ -202,7 +202,7 @@ input {
 #Moon td:nth-of-type(16),#Moon th:nth-of-type(16),
 #Moon td:nth-of-type(19),#Moon th:nth-of-type(19),
 #Moon td:nth-of-type(22),#Moon th:nth-of-type(22){
-    min-width: 42px;
+    min-width: 30px;
 }
 
 #Moon td:nth-of-type(2), #Moon td:nth-of-type(5), #Moon td:nth-of-type(8), #Moon td:nth-of-type(11), #Moon td:nth-of-type(14), #Moon td:nth-of-type(16), #Moon td:nth-of-type(19) {
