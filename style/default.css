@@ -1,6 +1,7 @@
 body {
     font-family: Verdana;
     font-size: 16px;
+    min-width: 810px;
 }
 
 .page {
@@ -294,12 +295,12 @@ input {
 /** ---------------------------------- P L A N E T ------------------------------ **/
 .planetTable tr:nth-of-type(1), .planetTable tr:nth-of-type(2)
 {
-    min-width: 858px;
+    width: 668px;
 }
 
 .planetTable td:nth-of-type(1),.planetTable th:nth-of-type(1), 
 .planetTable td:nth-of-type(2),.planetTable th:nth-of-type(2) {
-    min-width : 35px;
+    min-width : 30px;
 } 
 
 .planetTable td:nth-of-type(3),.planetTable th:nth-of-type(3), 
@@ -318,23 +319,21 @@ input {
 .planetTable td:nth-of-type(9),.planetTable th:nth-of-type(9), 
 .planetTable td:nth-of-type(12),.planetTable th:nth-of-type(12)
 {
-    min-width: 50px;
+    min-width: 30px;
 }
 
 .planetTable td:nth-of-type(13),.planetTable th:nth-of-type(13), 
 .planetTable td:nth-of-type(14),.planetTable th:nth-of-type(14), 
-.planetTable td:nth-of-type(15),.planetTable th:nth-of-type(15), 
 .planetTable td:nth-of-type(16),.planetTable th:nth-of-type(16) {
+    min-width: 50px;
+}
+.planetTable td:nth-of-type(15),.planetTable th:nth-of-type(15) {
     min-width : 86px;
 }
 
 .planetTable   tr:nth-child(1)  th:nth-child(11),
 .planetTable   tr:nth-child(1)  th:nth-child(12) {
-	min-width: 20px;
-}
-
-.planetTable tr:nth-child(1) th:nth-child(16) {
-    min-width: 100px;
+	min-width: 10px;
 }
 
 .planetTable td:nth-of-type(2) ,
