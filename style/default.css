@@ -11,17 +11,22 @@ body {
 }
 
 .page {
-    left: 0px;
     display: block;
     opacity: 1;
 }
 
 .page:not(:target){
-    left: -5000px;
     display: none;
     opacity: 0;
 }
 
+.page::after {
+    font-size: 10px;
+    display: block;
+    margin: 48px auto 10px auto;
+    text-align: center;
+    content: "Copyright 2017 by Alexandru Garofide.";
+ }
 
 .fixed {
     position: fixed;
