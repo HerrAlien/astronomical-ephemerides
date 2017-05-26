@@ -209,7 +209,7 @@ var MoonData = {
         
         displayPage : function(JD, daysAfter, stepSize) {
             if (!AAJS.AllDependenciesLoaded())
-                return setTimeout (function() { MoonPage.displayPage(JD, daysAfter, stepSize); }, 100);
+                return setTimeout (function() { MoonPage.displayPage(JD, daysAfter, stepSize); }, 300);
 
             this.lastAppendedLine = false;
             if (!MoonPage.tablePopulated) {
