@@ -1,7 +1,9 @@
 body {
     font-family: Verdana;
     font-size: 16px;
-    min-width: 820px;
+    width: 830px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .page {
@@ -42,14 +44,14 @@ body {
     float: right;
 }
 
-#pageTitle, .title {
+.title {
 font-size: 32px;
     font-family: Arial;
     vertical-align: top;
     margin-left: 32px;
-    position: absolute;
-    top: 10px;
-    left: 50px;
+    position: relative;
+    top: -40px;
+    left: 32px;
 }
 
 #menuContainer {
@@ -103,12 +105,9 @@ font-size: 32px;
     list-style-type:none;
 }
 
-#HomePage {
-    margin-top: 8px;
-}
-
 .clear {
 	clear: both;
+    height: 0px;
 }
 
 tr:nth-of-type(1){
@@ -122,8 +121,7 @@ tr:nth-of-type(2){
 }
 
 table {
-    margin-top: 32px;
-    /* all tables must start hidden. */
+    margin-top: 10px;
     font-family : Courier;
     font-size: 14px;
 }
@@ -212,7 +210,6 @@ input {
 
 
 /** -------------------------------------- S U N -------------------------------- **/
-
 #Sun tr:nth-of-type(1), #Sun tr:nth-of-type(2){
     min-width: 802px;
 }
