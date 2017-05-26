@@ -1,15 +1,25 @@
+* {
+    transition: 0.5s;
+}
+
 body {
     font-family: Verdana;
     font-size: 16px;
-    min-width: 820px;
+    width: 830px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .page {
+    left: 0px;
     display: block;
+    opacity: 1;
 }
 
 .page:not(:target){
+    left: -5000px;
     display: none;
+    opacity: 0;
 }
 
 
@@ -29,11 +39,13 @@ body {
 #MenuLink img {
     margin-top: 2px;
     width: 48px;
+    height: 48px;
     cursor: pointer;
 }
 
 #SettingsLink img {
     width: 42px;
+    height: 42px;
     cursor: pointer;
     margin-right: 5px;
 }
@@ -42,14 +54,14 @@ body {
     float: right;
 }
 
-#pageTitle, .title {
+.title {
 font-size: 32px;
     font-family: Arial;
     vertical-align: top;
     margin-left: 32px;
-    position: absolute;
-    top: 10px;
-    left: 50px;
+    position: relative;
+    top: -40px;
+    left: 32px;
 }
 
 #menuContainer {
@@ -103,27 +115,33 @@ font-size: 32px;
     list-style-type:none;
 }
 
-#HomePage {
-    margin-top: 8px;
-}
-
 .clear {
 	clear: both;
+    height: 0px;
 }
 
-tr:nth-of-type(1){
+tr.firstHeaderRow{
     margin-top: -41px;
     border-top: 1px solid black;
 }
 
-tr:nth-of-type(2){
+tr.secondHeaderRow {
     margin-top: -21px;
     border-bottom: 1px solid black;
 }
 
+tr.firstHeaderRowScrolled{
+    margin-top: -105px;
+    border-top: 1px solid black;
+}
+
+tr.secondHeaderRowScrolled{
+    margin-top: -85px;
+    border-bottom: 1px solid black;
+}
+
 table {
-    margin-top: 32px;
-    /* all tables must start hidden. */
+    margin-top: 10px;
     font-family : Courier;
     font-size: 14px;
 }
@@ -212,7 +230,6 @@ input {
 
 
 /** -------------------------------------- S U N -------------------------------- **/
-
 #Sun tr:nth-of-type(1), #Sun tr:nth-of-type(2){
     min-width: 802px;
 }

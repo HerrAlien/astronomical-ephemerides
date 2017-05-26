@@ -251,8 +251,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         addTableHeader : function (table, classes) {
 
             var row1 = this.addNodeChild (table, "tr");
-            for (var i = 0; i < classes.length; i++)
-                row1.classList.add (classes[i]);    
+            for (var i = 0; i < classes[0].length; i++)
+                row1.classList.add (classes[0][i]);    
             
             for (var i in this.tableHeaderInfo)
             {
@@ -262,8 +262,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             }
 
             var row2 = this.addNodeChild (table, "tr");
-            for (var i = 0; i < classes.length; i++)
-                row2.classList.add (classes[i]);    
+            for (var i = 0; i < classes[1].length; i++)
+                row2.classList.add (classes[1][i]);    
             
             for (var i in this.tableHeaderInfo)
             {
@@ -282,7 +282,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                 return setTimeout (function() { SunPage.displayPage(JD, daysAfter, stepSize); }, 100);
 
             if (!SunPage.tablePopulated) {
-                this.addTableHeader (this.table, ["fixed"]);
+                this.addTableHeader (this.table, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
                 var delayedAppendData = function (JD, endJD, steps) {
                     if (JD == endJD)
                         return;
@@ -293,7 +293,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                             return;
                         SunPage.appendLine (SunPage.prepareLineForView(SunData.getDataForJD(JD)));
                     }
-                    SunPage.addTableHeader (SunPage.table, ["fixed", "printOnly"]);
+                    SunPage.addTableHeader (SunPage.table, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
                     setTimeout (function() {delayedAppendData (JD, endJD, steps); }, 1);
                 }
                 delayedAppendData (JD, JD + daysAfter, 15);

@@ -148,8 +148,8 @@ var MoonData = {
     
         addTableHeader : function (table, classes) {
             var row1 = this.addNodeChild (table, "tr");
-            for (var i = 0; i < classes.length; i++)
-                row1.classList.add (classes[i]);    
+            for (var i = 0; i < classes[0].length; i++)
+                row1.classList.add (classes[0][i]);    
             this.addNodeChild (row1, "th", "Date");
             this.addNodeChild (row1, "th");    
             this.addNodeChild (row1, "th", "RA");
@@ -173,8 +173,8 @@ var MoonData = {
             var row2 = this.addNodeChild (table, "tr");
             this.addNodeChild (row1, "th");
             this.addNodeChild (row1, "th");
-            for (var i = 0; i < classes.length; i++)
-                row2.classList.add (classes[i]);    
+            for (var i = 0; i < classes[1].length; i++)
+                row2.classList.add (classes[1][i]);    
             this.addNodeChild (row2, "th");
             this.addNodeChild (row2, "th");
             this.addNodeChild (row2, "th", "h");
@@ -207,7 +207,7 @@ var MoonData = {
                 return setTimeout (function() { MoonPage.displayPage(JD, daysAfter, stepSize); }, 100);
 
             if (!MoonPage.tablePopulated) {
-                this.addTableHeader (this.table, ["fixed"]);
+                this.addTableHeader (this.table, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
                 var delayedAppendData = function (JD, endJD, steps) {
                     if (JD == endJD)
                         return;
@@ -218,7 +218,7 @@ var MoonData = {
                             return;
                         MoonPage.appendLine (MoonPage.prepareLineForView(MoonData.getDataForJD(JD)));
                     }
-                    MoonPage.addTableHeader (MoonPage.table, ["fixed", "printOnly"]);
+                    MoonPage.addTableHeader (MoonPage.table, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
                     setTimeout (function() {delayedAppendData (JD, endJD, steps); }, 1);
                 }
                 delayedAppendData (JD, JD + daysAfter, 15);
