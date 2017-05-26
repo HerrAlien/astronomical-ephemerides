@@ -95,15 +95,8 @@ var MoonData = {
             displayableLine[di++] = sexagesimalDecGeo.Ord2;
             displayableLine[di++] = sexagesimalDecGeo.Ord1;
 			            
-            var sexagesimalRaTopo = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
-            displayableLine[di++] = sexagesimalRaTopo.Ord3 ;
-            displayableLine[di++] = sexagesimalRaTopo.Ord2 
-            displayableLine[di++] = sexagesimalRaTopo.Ord1;
-
-            var sexagesimalDecTopo = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
-            displayableLine[di++] = sexagesimalDecTopo.Ord3 ;
-            displayableLine[di++] = sexagesimalDecTopo.Ord2;
-            displayableLine[di++] = sexagesimalDecTopo.Ord1;
+            si++;
+            si++;
 
             var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
             displayableLine[di++] = sexagesimalDiam.Ord2;
@@ -158,12 +151,6 @@ var MoonData = {
             this.addNodeChild (row1, "th", "Dec.");
             this.addNodeChild (row1, "th", "geo");
             this.addNodeChild (row1, "th");
-            this.addNodeChild (row1, "th", "RA");
-            this.addNodeChild (row1, "th", "topo");
-            this.addNodeChild (row1, "th");
-            this.addNodeChild (row1, "th", "Dec.");
-            this.addNodeChild (row1, "th", "topo");
-            this.addNodeChild (row1, "th");
             this.addNodeChild (row1, "th", "Diam.");
             this.addNodeChild (row1, "th");
             this.addNodeChild (row1, "th", "Transit");
@@ -177,13 +164,6 @@ var MoonData = {
                 row2.classList.add (classes[1][i]);    
             this.addNodeChild (row2, "th");
             this.addNodeChild (row2, "th");
-            this.addNodeChild (row2, "th", "h");
-            this.addNodeChild (row2, "th", "m");
-            this.addNodeChild (row2, "th", "s");
-            this.addNodeChild (row2, "th", "\u00B0");
-            this.addNodeChild (row2, "th", "'");
-            this.addNodeChild (row2, "th", "''");
-
             this.addNodeChild (row2, "th", "h");
             this.addNodeChild (row2, "th", "m");
             this.addNodeChild (row2, "th", "s");

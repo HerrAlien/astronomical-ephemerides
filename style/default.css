@@ -144,6 +144,8 @@ table {
     margin-top: 10px;
     font-family : Courier;
     font-size: 14px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
  td,  th {
@@ -189,7 +191,7 @@ input {
     
 /** ----------------------------- M O O N --------------------------------------- **/
 #Moon tr:nth-of-type(1), #Moon tr:nth-of-type(2){
-    width: 766px;
+    width: 560px;
 }
 
 #Moon td:nth-of-type(1),#Moon th:nth-of-type(1), 
@@ -203,28 +205,22 @@ input {
 #Moon td:nth-of-type(6),#Moon th:nth-of-type(6), 
 #Moon td:nth-of-type(7),#Moon th:nth-of-type(7),
 #Moon td:nth-of-type(9),#Moon th:nth-of-type(9), 
-#Moon td:nth-of-type(10),#Moon th:nth-of-type(10), 
+#Moon td:nth-of-type(11),#Moon th:nth-of-type(11), 
 #Moon td:nth-of-type(12),#Moon th:nth-of-type(12), 
-#Moon td:nth-of-type(13),#Moon th:nth-of-type(13), 
-#Moon td:nth-of-type(15),#Moon th:nth-of-type(15), 
-#Moon td:nth-of-type(17),#Moon th:nth-of-type(17), 
-#Moon td:nth-of-type(18),#Moon th:nth-of-type(18), 
-#Moon td:nth-of-type(20),#Moon th:nth-of-type(20), 
-#Moon td:nth-of-type(21),#Moon th:nth-of-type(21){
+#Moon td:nth-of-type(14),#Moon th:nth-of-type(14), 
+#Moon td:nth-of-type(15),#Moon th:nth-of-type(15){
     min-width : 30px;
 } 
 
 #Moon td:nth-of-type(5),#Moon th:nth-of-type(5),
 #Moon td:nth-of-type(8),#Moon th:nth-of-type(8),
-#Moon td:nth-of-type(11),#Moon th:nth-of-type(11),
-#Moon td:nth-of-type(14),#Moon th:nth-of-type(14),
-#Moon td:nth-of-type(16),#Moon th:nth-of-type(16),
-#Moon td:nth-of-type(19),#Moon th:nth-of-type(19),
-#Moon td:nth-of-type(22),#Moon th:nth-of-type(22){
+#Moon td:nth-of-type(10),#Moon th:nth-of-type(10),
+#Moon td:nth-of-type(13),#Moon th:nth-of-type(13),
+#Moon td:nth-of-type(16),#Moon th:nth-of-type(16){
     min-width: 30px;
 }
 
-#Moon td:nth-of-type(2), #Moon td:nth-of-type(5), #Moon td:nth-of-type(8), #Moon td:nth-of-type(11), #Moon td:nth-of-type(14), #Moon td:nth-of-type(16), #Moon td:nth-of-type(19) {
+#Moon td:nth-of-type(2), #Moon td:nth-of-type(5), #Moon td:nth-of-type(8), #Moon td:nth-of-type(10), #Moon td:nth-of-type(13) {
     border-right: 1px solid black;
 }
 
