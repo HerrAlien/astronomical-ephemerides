@@ -9,13 +9,15 @@ function PlanetPage (planetDataSource) {
 
 (function(){
     PlanetPage.prototype["displayPage"] = function (JD, daysAfter, stepSize) {
+            var pageObj = this;
             if (!AAJS.AllDependenciesLoaded())
-                return setTimeout (function() { this.displayPage(JD, daysAfter); }, 100);
+                return setTimeout (function() { pageObj.displayPage(JD, daysAfter, stepSize); }, 300);
             
             this.lastAppendedLine = false;
             if (!this.tablePopulated) {
+                this.reset();
                 this.addPlanetTableHeader (this.table, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
-                var pageObj = this;
+
                 var delayedAppendData = function (JD, endJD, steps) {
                     if (JD >= endJD)
                         return;

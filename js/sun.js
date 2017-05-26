@@ -283,10 +283,11 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         
         displayPage : function(JD, daysAfter, stepSize) {
             if (!AAJS.AllDependenciesLoaded())
-                return setTimeout (function() { SunPage.displayPage(JD, daysAfter, stepSize); }, 100);
+                return setTimeout (function() { SunPage.displayPage(JD, daysAfter, stepSize); }, 300);
 
             this.lastAppendedLine = false;
             if (!SunPage.tablePopulated) {
+                this.reset();
                 this.addTableHeader (this.table, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
                 var delayedAppendData = function (JD, endJD, steps) {
                     if (JD == endJD)

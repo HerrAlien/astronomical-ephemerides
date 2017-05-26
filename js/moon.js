@@ -189,10 +189,11 @@ var MoonData = {
         
         displayPage : function(JD, daysAfter, stepSize) {
             if (!AAJS.AllDependenciesLoaded())
-                return setTimeout (function() { MoonPage.displayPage(JD, daysAfter, stepSize); }, 100);
+                return setTimeout (function() { MoonPage.displayPage(JD, daysAfter, stepSize); }, 300);
 
             this.lastAppendedLine = false;
             if (!MoonPage.tablePopulated) {
+                this.reset();
                 this.addTableHeader (this.table, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
                 var delayedAppendData = function (JD, endJD, steps) {
                     if (JD == endJD)
