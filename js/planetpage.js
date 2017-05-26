@@ -4,6 +4,7 @@ function PlanetPage (planetDataSource) {
         this.table = document.getElementById(this.dataSource.planet.name);
     }
     this.tablePopulated = false;
+    this.lastAppendedLine = false;
 }
 
 (function(){
@@ -11,6 +12,7 @@ function PlanetPage (planetDataSource) {
             if (!AAJS.AllDependenciesLoaded())
                 return setTimeout (function() { this.displayPage(JD, daysAfter); }, 100);
             
+            this.lastAppendedLine = false;
             if (!this.tablePopulated) {
                 this.addPlanetTableHeader (this.table, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
                 var pageObj = this;
@@ -41,12 +43,16 @@ function PlanetPage (planetDataSource) {
                 tbody = this.table;
             tbody.appendChild(line);
             
+            var changedMonth = this.lastAppendedLine && dataArray[0] && this.lastAppendedLine[0] != dataArray[0];
             var i = 0;
             for (i = 0; i < dataArray.length; i++) {
                 var td = line.ownerDocument.createElement("td");
                 line.appendChild(td);
                 td.textContent = dataArray[i];
+                if (changedMonth)
+                    td.classList.add("topBorder");
             }
+            this.lastAppendedLine = dataArray;
         };
         
     PlanetPage.prototype["addPlanetTableHeader"] = function (table, classes) {

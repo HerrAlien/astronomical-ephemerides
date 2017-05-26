@@ -116,6 +116,7 @@ var MoonData = {
             return displayableLine;
         },
         
+        lastAppendedLine : false,
         // this will probably become an utility available for every page
         appendLine : function (dataArray) {
             var line = this.table.ownerDocument.createElement("tr");
@@ -124,12 +125,16 @@ var MoonData = {
                 tbody = this.table;
             tbody.appendChild(line);
             
+            var changedMonth = this.lastAppendedLine && dataArray[0] && this.lastAppendedLine[0] != dataArray[0];
             var i = 0;
             for (i = 0; i < dataArray.length; i++) {
                 var td = line.ownerDocument.createElement("td");
                 line.appendChild(td);
                 td.textContent = dataArray[i];
+                if (changedMonth)
+                    td.classList.add("topBorder");
             }
+            this.lastAppendedLine = dataArray;
         },
         addNodeChild : function (parent, type, content) {
             var child = parent.ownerDocument.createElement(type);
@@ -186,6 +191,7 @@ var MoonData = {
             if (!AAJS.AllDependenciesLoaded())
                 return setTimeout (function() { MoonPage.displayPage(JD, daysAfter, stepSize); }, 100);
 
+            this.lastAppendedLine = false;
             if (!MoonPage.tablePopulated) {
                 this.addTableHeader (this.table, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
                 var delayedAppendData = function (JD, endJD, steps) {

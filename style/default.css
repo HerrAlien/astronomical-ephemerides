@@ -195,8 +195,10 @@ input {
     width: 120px;
 }
 
-#credits{
+#credits, .topBorder{
     	border-top: 1px solid #000000;
+}
+#credits{
         width: 100%;
         padding-top: 10px;
         margin-top: 20px;
