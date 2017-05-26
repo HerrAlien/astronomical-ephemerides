@@ -85,36 +85,36 @@ var MoonData = {
             
             var di = 2;
             var si = 2;
-            var sexagesimalRaGeo = AAJS.Numerical.ToSexagesimal2(Math.round(line[si++] * 3600)/3600);
+            var sexagesimalRaGeo = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
             displayableLine[di++] = sexagesimalRaGeo.Ord3 ;
             displayableLine[di++] = sexagesimalRaGeo.Ord2 
             displayableLine[di++] = sexagesimalRaGeo.Ord1;
 
-            var sexagesimalDecGeo = AAJS.Numerical.ToSexagesimal2(Math.round(line[si++] * 3600)/3600);
+            var sexagesimalDecGeo = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
             displayableLine[di++] = sexagesimalDecGeo.Ord3 ;
             displayableLine[di++] = sexagesimalDecGeo.Ord2;
             displayableLine[di++] = sexagesimalDecGeo.Ord1;
 			            
-            var sexagesimalRaTopo = AAJS.Numerical.ToSexagesimal2(Math.round(line[si++] * 3600)/3600);
+            var sexagesimalRaTopo = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
             displayableLine[di++] = sexagesimalRaTopo.Ord3 ;
             displayableLine[di++] = sexagesimalRaTopo.Ord2 
             displayableLine[di++] = sexagesimalRaTopo.Ord1;
 
-            var sexagesimalDecTopo = AAJS.Numerical.ToSexagesimal2(Math.round(line[si++] * 3600)/3600);
+            var sexagesimalDecTopo = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
             displayableLine[di++] = sexagesimalDecTopo.Ord3 ;
             displayableLine[di++] = sexagesimalDecTopo.Ord2;
             displayableLine[di++] = sexagesimalDecTopo.Ord1;
 
-            var sexagesimalDiam = AAJS.Numerical.ToSexagesimal2(Math.round(line[si++] * 3600)/3600);
+            var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
             displayableLine[di++] = sexagesimalDiam.Ord2;
             displayableLine[di++] = sexagesimalDiam.Ord1;
             
-            var sexagesimalTransit = AAJS.Numerical.ToSexagesimal2(Math.round(line[si++] * 3600)/3600);
+            var sexagesimalTransit = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
             displayableLine[di++] = sexagesimalTransit.Ord3;
             displayableLine[di++] = sexagesimalTransit.Ord2;
             displayableLine[di++] = sexagesimalTransit.Ord1;
             
-            var sexagesimalParallax = AAJS.Numerical.ToSexagesimal2(Math.round(line[si++] * 3600)/3600);
+            var sexagesimalParallax = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
             
             displayableLine[di++] = sexagesimalParallax.Ord3;
             displayableLine[di++] = sexagesimalParallax.Ord2;
