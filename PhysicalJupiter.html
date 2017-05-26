@@ -25,9 +25,9 @@
         {
             name : "Phisical ephemeris data for Jupiter, 1988-01-12 00:00 UTC, lat. 44.6, long. 23.1, alt. 200, anuarul astronomic '88",
             input : AAJS.Date.DateToJD (1988, 1, 12, true),
-            expectedOutput : [2.76, 262.34, 120.93],
+            expectedOutput : [2.76, 261.8, 120.4],
             actualOutput : [],
-            accurracy : [4e-3,1.2,2],
+            accurracy : [4e-3,0.6, 0.6],
             test : function () {
             var data =  AAJS['Jupiter']['PhysicalDetails'] (this.input, true);
                 this.actualOutput = [data.EarthDeclination, data.CentralMeridianApparentLongitude_System1, data.CentralMeridianApparentLongitude_System2];
