@@ -14,6 +14,7 @@ function PlanetPage (planetDataSource) {
             
             this.lastAppendedLine = false;
             if (!this.tablePopulated) {
+                this.reset();
                 this.addPlanetTableHeader (this.table, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
                 var pageObj = this;
                 var delayedAppendData = function (JD, endJD, steps) {

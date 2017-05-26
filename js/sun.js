@@ -287,6 +287,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
             this.lastAppendedLine = false;
             if (!SunPage.tablePopulated) {
+                this.reset();
                 this.addTableHeader (this.table, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
                 var delayedAppendData = function (JD, endJD, steps) {
                     if (JD == endJD)
