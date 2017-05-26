@@ -32,15 +32,24 @@ body {
     height: 0px;
 }
 
-#MenuLink {
+#MenuLink, #HomeLinkButton {
     float: left;
 }
 
-#MenuLink img {
+
+#MenuLink img{
     margin-top: 2px;
+    cursor: pointer;
     width: 48px;
     height: 48px;
+}
+
+#HomeLinkButton img {
+    margin-top: 2px;
+    margin-right: 20px;
     cursor: pointer;
+    width: 40px;
+    height: 40px;
 }
 
 #SettingsLink img {
@@ -60,8 +69,8 @@ font-size: 32px;
     vertical-align: top;
     margin-left: 32px;
     position: relative;
-    top: -40px;
-    left: 32px;
+    top: -42px;
+    left: 100px;
 }
 
 #menuContainer {
