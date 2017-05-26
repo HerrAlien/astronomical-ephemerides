@@ -200,6 +200,29 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;. -->
     document.getElementById("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
                                                       "bubbles": true, 
                                                       "cancelable": false })); 
+                                                      
+    
+    window.addEventListener("scroll", function() {
+        if (previousPage) {
+            var pageObj = Pages [previousPage.id];
+            if (pageObj && pageObj.table) {
+                if (document.body.scrollTop >= 40) {
+                    // get the first two rows
+                    pageObj.table.rows[0].classList.remove ("firstHeaderRow");
+                    pageObj.table.rows[0].classList.add ("firstHeaderRowScrolled");
+
+                    pageObj.table.rows[1].classList.remove ("secondHeaderRow");
+                    pageObj.table.rows[1].classList.add ("secondHeaderRowScrolled");
+                } else {
+                    pageObj.table.rows[0].classList.add ("firstHeaderRow");
+                    pageObj.table.rows[0].classList.remove ("firstHeaderRowScrolled");
+
+                    pageObj.table.rows[1].classList.add ("secondHeaderRow");
+                    pageObj.table.rows[1].classList.remove ("secondHeaderRowScrolled");
+                }
+            }
+        }
+    });
 
     
 </script>

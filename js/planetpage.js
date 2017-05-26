@@ -12,7 +12,7 @@ function PlanetPage (planetDataSource) {
                 return setTimeout (function() { this.displayPage(JD, daysAfter); }, 100);
             
             if (!this.tablePopulated) {
-                this.addPlanetTableHeader (this.table, ["fixed"]);
+                this.addPlanetTableHeader (this.table, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
                 var pageObj = this;
                 var delayedAppendData = function (JD, endJD, steps) {
                     if (JD >= endJD)
@@ -25,7 +25,7 @@ function PlanetPage (planetDataSource) {
                         pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD));
                     }
                     
-                    pageObj.addPlanetTableHeader (pageObj.table, ["fixed", "printOnly"]);
+                    pageObj.addPlanetTableHeader (pageObj.table, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
                     
                     setTimeout (function() {delayedAppendData (JD, endJD, steps); },1 );
                 }
@@ -51,8 +51,8 @@ function PlanetPage (planetDataSource) {
         
     PlanetPage.prototype["addPlanetTableHeader"] = function (table, classes) {
         var row1 = this.addNodeChild (table, "tr");
-        for (var i = 0; i < classes.length; i++)
-            row1.classList.add (classes[i]);    
+        for (var i = 0; i < classes[0].length; i++)
+            row1.classList.add (classes[0][i]);    
         this.addNodeChild (row1, "th", "Date");
         this.addNodeChild (row1, "th");    
         this.addNodeChild (row1, "th", "RA");
@@ -70,8 +70,8 @@ function PlanetPage (planetDataSource) {
         this.addNodeChild (row1, "th", "Elongation");
         this.addNodeChild (row1, "th", "Phase");
         var row2 = this.addNodeChild (table, "tr");
-        for (var i = 0; i < classes.length; i++)
-            row2.classList.add (classes[i]);    
+        for (var i = 0; i < classes[1].length; i++)
+            row2.classList.add (classes[1][i]);    
         this.addNodeChild (row2, "th");
         this.addNodeChild (row2, "th");
         this.addNodeChild (row2, "th", "h");

@@ -1,3 +1,7 @@
+* {
+    transition: 0.5s;
+}
+
 body {
     font-family: Verdana;
     font-size: 16px;
@@ -7,11 +11,15 @@ body {
 }
 
 .page {
+    left: 0px;
     display: block;
+    opacity: 1;
 }
 
 .page:not(:target){
+    left: -5000px;
     display: none;
+    opacity: 0;
 }
 
 
@@ -31,11 +39,13 @@ body {
 #MenuLink img {
     margin-top: 2px;
     width: 48px;
+    height: 48px;
     cursor: pointer;
 }
 
 #SettingsLink img {
     width: 42px;
+    height: 42px;
     cursor: pointer;
     margin-right: 5px;
 }
@@ -110,13 +120,23 @@ font-size: 32px;
     height: 0px;
 }
 
-tr:nth-of-type(1){
+tr.firstHeaderRow{
     margin-top: -41px;
     border-top: 1px solid black;
 }
 
-tr:nth-of-type(2){
+tr.secondHeaderRow {
     margin-top: -21px;
+    border-bottom: 1px solid black;
+}
+
+tr.firstHeaderRowScrolled{
+    margin-top: -105px;
+    border-top: 1px solid black;
+}
+
+tr.secondHeaderRowScrolled{
+    margin-top: -85px;
     border-bottom: 1px solid black;
 }
 
