@@ -213,7 +213,7 @@ input {
 /** -------------------------------------- S U N -------------------------------- **/
 
 #Sun tr:nth-of-type(1), #Sun tr:nth-of-type(2){
-    min-width: 850px;
+    min-width: 802px;
 }
 
 #Sun td:nth-of-type(2), #Sun td:nth-of-type(5), #Sun td:nth-of-type(8), #Sun td:nth-of-type(9), #Sun td:nth-of-type(11),
@@ -240,7 +240,6 @@ input {
 } 
 
 #Sun td:nth-of-type(9),#Sun th:nth-of-type(9), 
-#Sun td:nth-of-type(14),#Sun th:nth-of-type(14), 
 #Sun td:nth-of-type(15),#Sun th:nth-of-type(15), 
 #Sun td:nth-of-type(16),#Sun th:nth-of-type(16), 
 #Sun td:nth-of-type(17),#Sun th:nth-of-type(17) {
@@ -250,14 +249,15 @@ input {
 #Sun td:nth-of-type(5),#Sun th:nth-of-type(5),
 #Sun td:nth-of-type(8),#Sun th:nth-of-type(8),
 #Sun td:nth-of-type(11),#Sun th:nth-of-type(11),
+#Sun td:nth-of-type(14),#Sun th:nth-of-type(14), 
 #Sun th:nth-child(18)
 {
-    min-width: 42px;
+    min-width: 30px;
 }
 
 #Sun tr:nth-of-type(1) th:nth-of-type(13),
 #Sun tr:nth-of-type(1) th:nth-of-type(14){
-    min-width: 30px;
+    min-width: 11px;
 }
 
 .printOnly {

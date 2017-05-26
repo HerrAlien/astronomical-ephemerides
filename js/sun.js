@@ -193,23 +193,23 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             
             var di = 2;
             var si = 2;
-            var sexagesimalRA = AAJS.Numerical.ToSexagesimal(line[si++]);
+            var sexagesimalRA = AAJS.Numerical.ToSexagesimal2(Math.round(line[si++] * 3600)/3600);
             displayableLine[di++] = sexagesimalRA.Ord3 ;
             displayableLine[di++] = sexagesimalRA.Ord2 
             displayableLine[di++] = sexagesimalRA.Ord1;
 
-            var sexagesimalDec = AAJS.Numerical.ToSexagesimal(line[si++]);
+            var sexagesimalDec = AAJS.Numerical.ToSexagesimal2(Math.round(line[si++] * 3600)/3600);
             displayableLine[di++] = sexagesimalDec.Ord3 ;
             displayableLine[di++] = sexagesimalDec.Ord2;
             displayableLine[di++] = sexagesimalDec.Ord1;
 			
 			displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals(line[si++]);
             
-            var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(line[si++]);
+            var sexagesimalDiam = AAJS.Numerical.ToSexagesimal2(Math.round(line[si++] * 3600)/3600);
             displayableLine[di++] = sexagesimalDiam.Ord2;
             displayableLine[di++] = sexagesimalDiam.Ord1;
             
-            var sexagesimalTransit = AAJS.Numerical.ToSexagesimal(line[si++]);
+            var sexagesimalTransit = AAJS.Numerical.ToSexagesimal2(Math.round(line[si++] * 3600)/3600);
             displayableLine[di++] = sexagesimalTransit.Ord3;
             displayableLine[di++] = sexagesimalTransit.Ord2;
             displayableLine[di++] = sexagesimalTransit.Ord1;
