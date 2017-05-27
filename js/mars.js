@@ -14,24 +14,32 @@ PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
-var MarsData = { 
-    basicPlanet: new PlanetData({ number: 3, name: "Mars", 
-                               semidiameterFunctionName : AAJS.Diameters.MarsSemidiameterB }),
-    getDataForJD : function (JD) {
-        var data = this.basicPlanet.getDataForJD(JD);
-        
-        var physicalData =  AAJS['Mars']['PhysicalDetails'] (JD);
+var MarsData = new PlanetData({ number: 3, name: "Mars", 
+                               semidiameterFunctionName : AAJS.Diameters.MarsSemidiameterB });
+
+// upgrade the object to handle physical data as well.
+(function () {    
+    MarsData['oldGetData'] = MarsData.getDataForJD;
+    MarsData['physicalDataCache'] = {};     
+    MarsData.getDataForJD = function (JD) {
+        var data = this.oldGetData(JD);            
+        var physicalData =  this.physicalDataCache[JD];
+        if (!physicalData) {
+            physicalData = AAJS['Mars']['PhysicalDetails'] (JD);
+            this.physicalDataCache[JD] = physicalData;
+        }
         data[data.length]  = physicalData.CentralMeridianLongitude;
         data[data.length]  = physicalData.EarthDeclination;
         data[data.length]  = physicalData.SunDeclination;
         data[data.length]  = physicalData.P;
         return data;
     }
-};
-
+})();
+    
+    
 (function () {
     var Page = new PlanetPage (MarsData);
     Pages["MarsPage"] = Page;
 
-
 })();
+

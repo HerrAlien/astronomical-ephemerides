@@ -5,9 +5,12 @@
         <script type="text/javascript">
             var Pages = {};
         </script>
+        <script type="text/JavaScript" src="js/planetdata.js"></script>
+        <script type="text/JavaScript" src="js/planetpage.js"></script>
         
         <script type="text/javascript" src="js/sun.js"></script>
         <script type="text/javascript" src="js/moon.js"></script>
+        <script type="text/javascript" src="js/mars.js"></script>
         <style>
             p {
                 line-spacing: 2px;
@@ -178,7 +181,51 @@
             }
         },
         
-            ];
+        {
+            name : "Mars position and physical data for 1988-08-07",
+            input : AAJS.Date.DateToJD (1988, 8, 17, true),
+            expectedOutput : 
+            [8, // month
+            17,  // day
+            0 + (47+47/60)/60, // RA
+            -(0+(24+1/60)/60), // DEC
+            19.72 / 3600, // diameter in degrees
+			3+21/60 - 2, // transit time
+			0.47461062356446715, // delta
+			1.3816790381381947, // R
+            2.326119685116676, // elongation
+            0.923, // phase
+            245.1
+            ]
+            ,
+            actualOutput : [],
+            accurracy : [0, 0, 2e-4, 2e-4, 
+				1e-5,
+				4e-3,
+				5e-6,
+				6e-8,
+				1e-3,
+				3e-4,
+                0.3
+				],
+            test : function () {
+                this.actualOutput = MarsData.getDataForJD (this.input).slice(0,11);
+
+                if (this.expectedOutput.length != this.actualOutput.length ||
+                    this.expectedOutput.length != this.accurracy.length)
+                    return false;
+                
+                var i = 0;
+                for (i = 0; i < this.expectedOutput.length; i++) {
+                    if (!testlib.doubleEq(this.actualOutput[i] , this.expectedOutput[i], this.accurracy[i]))
+                        return false;
+                }
+                
+                return true;
+            }
+        },
+
+        ];
             
         testlib.runTests (tests);
             
