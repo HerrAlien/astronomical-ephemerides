@@ -105,7 +105,80 @@
                     return true;
                 }
             },
-        ];
+
+        {
+            name : "Phisical ephemeris data for Jupiter, 1988-01-12 00:00 UTC, lat. 44.6, long. 23.1, alt. 200, anuarul astronomic '88",
+            input : AAJS.Date.DateToJD (1988, 1, 12, true),
+            expectedOutput : [2.76, 261.8, 120.4],
+            actualOutput : [],
+            accurracy : [4e-3,0.6, 0.6],
+            test : function () {
+            var data =  AAJS['Jupiter']['PhysicalDetails'] (this.input, true);
+                this.actualOutput = [data.EarthDeclination, data.CentralMeridianApparentLongitude_System1, data.CentralMeridianApparentLongitude_System2];
+
+                if (this.expectedOutput.length != this.actualOutput.length ||
+                    this.expectedOutput.length != this.accurracy.length)
+                    return false;
+                
+                var i = 0;
+                for (i = 0; i < this.expectedOutput.length; i++) {
+                    if (!testlib.doubleEq(this.actualOutput[i] , this.expectedOutput[i], this.accurracy[i]))
+                        return false;
+                }
+                
+                return true;
+            }
+        },
+        
+               {
+            name : "Phisical ephemeris data for Jupiter, 2017-05-17 00:00 UTC, lat. 44.6, long. 23.1, alt. 200, calc sky",
+            input : AAJS.Date.DateToJD (2017, 5, 17, true),
+            expectedOutput : [24.6, 103.1],
+            actualOutput : [],
+            accurracy : [5e-2, 1],
+            test : function () {
+            var data =  AAJS['Jupiter']['PhysicalDetails'] (this.input, true);
+                this.actualOutput = [data.P, data.CentralMeridianApparentLongitude_System1];
+
+                if (this.expectedOutput.length != this.actualOutput.length ||
+                    this.expectedOutput.length != this.accurracy.length)
+                    return false;
+                
+                var i = 0;
+                for (i = 0; i < this.expectedOutput.length; i++) {
+                    if (!testlib.doubleEq(this.actualOutput[i] , this.expectedOutput[i], this.accurracy[i]))
+                        return false;
+                }
+                
+                return true;
+            }
+        },
+        
+        {
+            name : "Phisical ephemeris data for Mars, 1988-01-14 00:00 UTC, lat. 44.6, long. 23.1, alt. 200, anuarul astronomic '88",
+            input : AAJS.Date.DateToJD (1988, 1, 14, true),
+            expectedOutput : [8.19, 175.9],
+            actualOutput : [],
+            accurracy : [1e-2,0.3],
+            test : function () {
+            var data =  AAJS['Mars']['PhysicalDetails'] (this.input, true);
+                this.actualOutput = [data.EarthDeclination, data.CentralMeridianLongitude];
+
+                if (this.expectedOutput.length != this.actualOutput.length ||
+                    this.expectedOutput.length != this.accurracy.length)
+                    return false;
+                
+                var i = 0;
+                for (i = 0; i < this.expectedOutput.length; i++) {
+                    if (!testlib.doubleEq(this.actualOutput[i] , this.expectedOutput[i], this.accurracy[i]))
+                        return false;
+                }
+                
+                return true;
+            }
+        },
+        
+            ];
             
         testlib.runTests (tests);
             
