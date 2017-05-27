@@ -1,0 +1,387 @@
+<html>
+    <head>
+        <script type="text/javascript" src="js/aajs.js"></script>
+        <script type="text/javascript" src="testlib.js"></script>
+
+        <script type="text/javascript">
+            var Pages = {};
+
+        var Location = {
+            latitude : 0,
+            longitude : 0,
+            altitude : 0
+        }; 
+            </script>
+
+
+
+        <script type="text/javascript" src="js/sun.js"></script>
+        <script type="text/JavaScript" src="js/planetdata.js"></script>
+       <script type="text/javascript" src="js/jupiter.js"></script>
+       <script type="text/javascript" src="js/mars.js"></script>
+       <script type="text/javascript" src="js/mercury.js"></script>
+       <script type="text/javascript" src="js/neptune.js"></script>
+       <script type="text/javascript" src="js/saturn.js"></script>
+        <script type="text/javascript" src="js/moon.js"></script>
+        <style>
+            p {
+                line-spacing: 2px;
+            }
+        </style>
+    </head>
+    <body>
+    </body>
+</html>
+<script type="text/javascript">
+         
+    (function () {
+            
+        var tests = [
+        
+        {
+            name : "Topocentric Moon Data for 2000-05-17 00:00 UTC, lat. 50.8796, long. 4.7009, alt. 0",
+            input : [AAJS.Date.DateToJD (2000, 5, 17, true) + (0+0/60)/24, 50.8796, 4.7009, 0],
+            expectedOutput : 
+            [/*5, // month
+            17,  // day */
+            14 + (41+11.8/60)/60, // RA
+            -(11+((23+36/60)/60)), // DEC
+            //!! todo: insert here magnitude
+            // 2.3,
+            30.16 / 60, // semidiameter in degrees
+            62.1009,
+            Math.atan2(1, 62.4926) * 180/Math.PI
+			/*  11+55/60, // transit time
+			2.65815, // delta
+			1.64599, // R
+            3* Math.PI/180, // elongation
+            1, // phase */
+            ]
+            ,
+            actualOutput : [],
+            accurracy : [/*0, 0,*/ 6e-4, 3e-3, 
+                5e-3,
+                2e-3,
+                7e-3,
+                /*2e-2,
+				7e-6,
+				5e-5,
+				1e-3,
+				1e-3,
+				//5e-3, 
+				 //5e-2, 
+				// 1e-1, 
+				// 1e-3, */
+				],
+            test : function () {
+            var data =  AAJS['Moon']['PositionalEphemeris'] (this.input[0],this.input[1],this.input[2], this.input[3]);
+                this.actualOutput = [data.RaTopo, data.DecTopo, data.diameter, data.R, data.parallax];
+
+                if (this.expectedOutput.length != this.actualOutput.length ||
+                    this.expectedOutput.length != this.accurracy.length)
+                    return false;
+                
+                var i = 0;
+                for (i = 0; i < this.expectedOutput.length; i++) {
+                    if (!testlib.doubleEq(this.actualOutput[i] , this.expectedOutput[i], this.accurracy[i]))
+                        return false;
+                }
+                
+                return true;
+            }
+        },
+
+        {
+            name : "Topocentric Moon Data for 2017-05-17 00:00 UTC, lat. 50.8796, long. 4.7009, alt. 0",
+            input : [AAJS.Date.DateToJD (2017, 5, 17, true) + (0+0/60)/24, 50.8796, 4.7009, 0],
+            expectedOutput : 
+            [/*5, // month
+            17,  // day */
+            20 + (21+46/60)/60, // RA
+            -(18+((4+41/60)/60)), // DEC
+            //!! todo: insert here magnitude
+            // 2.3,
+            29.97 / 60, // semidiameter in degrees
+            62.4926,
+            Math.atan2(1, 62.4926) * 180/Math.PI
+			/*  11+55/60, // transit time
+			2.65815, // delta
+			1.64599, // R
+            3* Math.PI/180, // elongation
+            1, // phase */
+            ]
+            ,
+            actualOutput : [],
+            accurracy : [/*0, 0,*/ 7e-4, 2e-3, 
+                1e-4,
+                7e-3,
+                3e-5,
+                /*2e-2,
+				7e-6,
+				5e-5,
+				1e-3,
+				1e-3,
+				//5e-3, 
+				 //5e-2, 
+				// 1e-1, 
+				// 1e-3, */
+				],
+            test : function () {
+            var data =  AAJS['Moon']['PositionalEphemeris'] (this.input[0],this.input[1],this.input[2], this.input[3]);
+                this.actualOutput = [data.RaTopo, data.DecTopo, data.diameter, data.R, data.parallax];
+
+                if (this.expectedOutput.length != this.actualOutput.length ||
+                    this.expectedOutput.length != this.accurracy.length)
+                    return false;
+                
+                var i = 0;
+                for (i = 0; i < this.expectedOutput.length; i++) {
+                    if (!testlib.doubleEq(this.actualOutput[i] , this.expectedOutput[i], this.accurracy[i]))
+                        return false;
+                }
+                
+                return true;
+            }
+        },
+        
+        {
+            name : "Geocentric Moon Data for 1992-04-12 00:00 UTC, lat. 0, long. 0, alt. 0",
+            input : AAJS.Date.DateToJD (1992, 4, 12, true),
+            expectedOutput :  [ 8 + (58+45.1/60)/60,  (13+((46+6/60)/60)) ],
+            actualOutput : [],
+            accurracy : [4e-5, 4e-5],
+            test : function () {
+            var data =  AAJS['Moon']['GeocentricEquatorialPosition'] (this.input);
+                this.actualOutput = [data.X, data.Y];
+
+                if (this.expectedOutput.length != this.actualOutput.length ||
+                    this.expectedOutput.length != this.accurracy.length)
+                    return false;
+                
+                var i = 0;
+                for (i = 0; i < this.expectedOutput.length; i++) {
+                    if (!testlib.doubleEq(this.actualOutput[i] , this.expectedOutput[i], this.accurracy[i]))
+                        return false;
+                }
+                
+                return true;
+            }
+        },
+
+        {
+            name : "Jupiter Data for 2017-08-05",
+            input : AAJS.Date.DateToJD (2017, 8, 5, true),
+            expectedOutput : 
+            [8, // month
+            5,  // day
+            13 + (6 + 32.3/60)/60, // RA
+            -(5+(48+18/60)/60), // DEC
+            33.92 / 3600, // diameter in degrees
+			16+9/60, // transit time
+			5.80406, // delta
+			5.44960, // R
+            64.8* Math.PI/180, // elongation
+            0.99, // phase
+            ]
+            ,
+            actualOutput : [],
+            accurracy : [0, 0, 2e-5, 1e-4, 
+				4e-7,
+				5e-3,
+				2e-5,
+				2e-6,
+				5e-4,
+				3e-3,
+				],
+            test : function () {
+                this.actualOutput = JupiterData.getDataForJD (this.input).slice(0,10);
+
+                if (this.expectedOutput.length != this.actualOutput.length ||
+                    this.expectedOutput.length != this.accurracy.length)
+                    return false;
+                
+                var i = 0;
+                for (i = 0; i < this.expectedOutput.length; i++) {
+                    if (!testlib.doubleEq(this.actualOutput[i] , this.expectedOutput[i], this.accurracy[i]))
+                        return false;
+                }
+                
+                return true;
+            }
+        },
+        
+        {
+            name : "Mars Data for 2017-08-05",
+            input : AAJS.Date.DateToJD (2017, 8, 5, true),
+            expectedOutput : 
+            [8, // month
+            5,  // day
+            8 + (50 + 54.4/60)/60, // RA
+            18+(49 + 42/60)/60, // DEC
+            3.52 / 3600, // diameter in degrees
+			11+55/60, // transit time
+			2.65816, // delta
+			1.64604, // R
+            3* Math.PI/180, // elongation
+            1, // phase
+            ]
+            ,
+            actualOutput : [],
+            accurracy : [0, 0, 5e-5, 2e-4, 
+				1e-6,
+				2e-2,
+				5e-6,
+				6e-8,
+				1e-3,
+				3e-4,
+				],
+            test : function () {
+                this.actualOutput = MarsData.getDataForJD (this.input).slice(0,10);
+
+                if (this.expectedOutput.length != this.actualOutput.length ||
+                    this.expectedOutput.length != this.accurracy.length)
+                    return false;
+                
+                var i = 0;
+                for (i = 0; i < this.expectedOutput.length; i++) {
+                    if (!testlib.doubleEq(this.actualOutput[i] , this.expectedOutput[i], this.accurracy[i]))
+                        return false;
+                }
+                
+                return true;
+            }
+        },
+        
+        {
+				name : "Mercury Data for 2017-05-02",
+				input : AAJS.Date.DateToJD (2017, 5, 2, true),
+				expectedOutput : 
+				[5, // month
+				2,  // day
+				1+(32+33.1/60)/60, // RA
+				8+(02+21/60)/60, // DEC
+				11.02 / 3600, // diameter in degrees
+				10 + 50 / 60.0, // transit
+				0.60982, // delta in AU
+				0.46380,
+				17.5* Math.PI/180, // elongation
+				0.121, // phase
+				]
+				,
+				actualOutput : [],
+				accurracy : [0, 0, 7e-6, 2e-4, 
+				2e-7,
+				6e-3,
+				2e-5,
+				2e-5,
+				5e-4, 
+				1e-4,
+				],
+				test : function () {
+					this.actualOutput = MercuryData.getDataForJD (this.input).slice(0,10);
+
+					if (this.expectedOutput.length != this.actualOutput.length ||
+						this.expectedOutput.length != this.accurracy.length)
+						return false;
+					
+					var i = 0;
+					for (i = 0; i < this.expectedOutput.length; i++) {
+						if (!testlib.doubleEq(this.actualOutput[i] , this.expectedOutput[i], this.accurracy[i]))
+							return false;
+					}
+					
+					return true;
+				}
+			},
+
+		{
+            name : "Neptune Data for 2017-08-14",
+            input : AAJS.Date.DateToJD (2017, 8, 14, true),
+            expectedOutput : 
+            [8, // month
+            14,  // day. Decrease 1 to adjust from TLR to UTC by subtracting 3 hours
+            23 + (0 + 25/60)/60, // RA
+            -(7+(22+9/60)/60), // DEC
+            2.31 / 3600, // diameter in degrees
+			1+30/60, // transit time
+			29.0060, // delta
+			29.9474, // R
+            158* Math.PI/180, // elongation
+            1, // phase
+            ]
+            ,
+            actualOutput : [],
+            accurracy : [0, 0, 3e-5, 2e-4, 
+				4e-8,
+				5e-3,
+				1e-4,
+				2e-4,
+				2e-3,
+				5e-5,
+				],
+            test : function () {
+                this.actualOutput = NeptuneData.getDataForJD (this.input).slice(0,10);
+
+                if (this.expectedOutput.length != this.actualOutput.length ||
+                    this.expectedOutput.length != this.accurracy.length)
+                    return false;
+                
+                var i = 0;
+                for (i = 0; i < this.expectedOutput.length; i++) {
+                    if (!testlib.doubleEq(this.actualOutput[i] , this.expectedOutput[i], this.accurracy[i]))
+                        return false;
+                }
+                
+                return true;
+            }
+        },
+		{
+            name : "Saturn Data for 2017-08-05",
+            input : AAJS.Date.DateToJD (2017, 8, 5, true),
+            expectedOutput : 
+            [8, // month
+            5,  // day
+            17 + (23 + 24.2/60)/60, // RA
+            -(21+(55+31/60)/60), // DEC
+            17.61 / 3600, // diameter in degrees
+			20+25/60, // transit time
+			9.39478, // delta
+			10.0605, // R
+            128.7* Math.PI/180, // elongation
+            0.998, // phase
+            ]
+            ,
+            actualOutput : [],
+            accurracy : [0, 0, 3e-5, 7e-5, 
+				7e-7,
+				3e-4,
+				2e-5,
+				5e-5,
+				4e-4,
+				1e-3,
+				],
+            test : function () {
+                this.actualOutput = SaturnData.getDataForJD (this.input).slice(0,10);
+
+                if (this.expectedOutput.length != this.actualOutput.length ||
+                    this.expectedOutput.length != this.accurracy.length)
+                    return false;
+                
+                var i = 0;
+                for (i = 0; i < this.expectedOutput.length; i++) {
+                    if (!testlib.doubleEq(this.actualOutput[i] , this.expectedOutput[i], this.accurracy[i]))
+                        return false;
+                }
+                
+                return true;
+            }
+        },
+        
+        ];
+            
+        testlib.runTests (tests);
+            
+    })();
+            
+        </script>
+
