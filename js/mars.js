@@ -19,10 +19,10 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
 
 // upgrade the object to handle physical data as well.
 (function () {    
-    MarsData['oldGetData'] = MarsData.getDataForJD;
+    MarsData['old_GetData'] = MarsData.getDataForJD;
     MarsData['physicalDataCache'] = {};     
     MarsData.getDataForJD = function (JD) {
-        var data = this.oldGetData(JD);            
+        var data = this.old_GetData(JD);            
         var physicalData =  this.physicalDataCache[JD];
         if (!physicalData) {
             physicalData = AAJS['Mars']['PhysicalDetails'] (JD);
@@ -40,6 +40,25 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
 (function () {
     var Page = new PlanetPage (MarsData);
     Pages["MarsPage"] = Page;
+    
+    Page["old_addPlanetTableHeader"] = Page.addPlanetTableHeader;
+    Page["old_prepareLineForView"] = Page.prepareLineForView;
+    
+    Page.addPlanetTableHeader = function (table, classes) {
+        var headerRows = this.old_addPlanetTableHeader(table, classes);
+        var th = this.addNodeChild (headerRows.row1, "th", "L");
+        this.addNodeChild (th, "sub", "0");
+        this.addNodeChild (headerRows.row1, "th", "E.D.");
+        this.addNodeChild (headerRows.row2, "th", "\u00B0");
+        this.addNodeChild (headerRows.row2, "th", "\u00B0");
+    }
+    
+    Page.prepareLineForView = function (line, JD) {
+        var preparedLine = this.old_prepareLineForView(line, JD);
+        preparedLine[preparedLine.length] = Math.round(line[10] * 10) / 10;
+        preparedLine[preparedLine.length] = Math.round(line[11] * 10) / 10;
+        return preparedLine;
+    }
 
 })();
 
