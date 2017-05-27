@@ -11,6 +11,8 @@
             longitude : 0,
             altitude : 0
         }; 
+        
+        function PlanetPage() {}
             </script>
 
 
@@ -90,7 +92,7 @@
 				3e-3,
 				],
             test : function () {
-                this.actualOutput = JupiterData.getDataForJD (this.input).slice(0,10);
+                this.actualOutput = JupiterData.getDataForJD (this.input);
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
@@ -132,7 +134,7 @@
 				3e-4,
 				],
             test : function () {
-                this.actualOutput = MarsData.getDataForJD (this.input).slice(0,10);
+                this.actualOutput = MarsData.getDataForJD (this.input);
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
@@ -174,7 +176,7 @@
 				1e-4,
 				],
 				test : function () {
-					this.actualOutput = MercuryData.getDataForJD (this.input).slice(0,10);
+					this.actualOutput = MercuryData.getDataForJD (this.input);
 
 					if (this.expectedOutput.length != this.actualOutput.length ||
 						this.expectedOutput.length != this.accurracy.length)
@@ -216,7 +218,7 @@
 				5e-5,
 				],
             test : function () {
-                this.actualOutput = NeptuneData.getDataForJD (this.input).slice(0,10);
+                this.actualOutput = NeptuneData.getDataForJD (this.input);
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
@@ -257,7 +259,7 @@
 				1e-3,
 				],
             test : function () {
-                this.actualOutput = SaturnData.getDataForJD (this.input).slice(0,10);
+                this.actualOutput = SaturnData.getDataForJD (this.input);
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
@@ -299,7 +301,7 @@
 				3e-3,
 				],
             test : function () {
-                this.actualOutput = VenusData.getDataForJD (this.input).slice(0,10);
+                this.actualOutput = VenusData.getDataForJD (this.input);
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
@@ -341,7 +343,7 @@
 				6e-4,
 				],
             test : function () {
-                this.actualOutput = UranusData.getDataForJD (this.input).slice(0,10);
+                this.actualOutput = UranusData.getDataForJD (this.input);
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)

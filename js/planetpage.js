@@ -96,6 +96,7 @@ function PlanetPage (planetDataSource) {
         this.addNodeChild (row2, "th", "A.U.");
         this.addNodeChild (row2, "th", "\u00B0");
         this.addNodeChild (row2, "th");
+        return {"row1" : row1, "row2" : row2 };
     };
 
     PlanetPage.prototype["reset"] = function () {
