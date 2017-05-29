@@ -48,7 +48,11 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
         var headerRows = this.old_addPlanetTableHeader(table, classes);
         var th = this.addNodeChild (headerRows.row1, "th", "L");
         this.addNodeChild (th, "sub", "0");
-        this.addNodeChild (headerRows.row1, "th", "E.D.");
+        this.addNodeChild (headerRows.row1, "th", "DE");
+        this.addNodeChild (headerRows.row1, "th", "DS");
+        this.addNodeChild (headerRows.row1, "th", "P");
+        this.addNodeChild (headerRows.row2, "th", "\u00B0");
+        this.addNodeChild (headerRows.row2, "th", "\u00B0");
         this.addNodeChild (headerRows.row2, "th", "\u00B0");
         this.addNodeChild (headerRows.row2, "th", "\u00B0");
     }
@@ -57,6 +61,8 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
         var preparedLine = this.old_prepareLineForView(line, JD);
         preparedLine[preparedLine.length] = Math.round(line[10] * 10) / 10;
         preparedLine[preparedLine.length] = Math.round(line[11] * 10) / 10;
+        preparedLine[preparedLine.length] = Math.round(line[12] * 10) / 10;
+        preparedLine[preparedLine.length] = Math.round(line[13] * 10) / 10;
         return preparedLine;
     }
 
