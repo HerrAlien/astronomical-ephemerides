@@ -212,7 +212,7 @@ input {
 }
 /** ----------------------------- M O O N --------------------------------------- **/
 #Moon tr:nth-of-type(1), #Moon tr:nth-of-type(2){
-    width: 766px;
+    width: 554px;
 }
 
 #Moon td:nth-of-type(1),#Moon th:nth-of-type(1), 
@@ -248,9 +248,17 @@ input {
     min-width : 25px;
 } 
 
-#Moon > tr:nth-of-type(1) > th:nth-child(2)
+#Moon > tr:nth-of-type(1) > th:nth-child(2),
+#Moon > tr:nth-of-type(1) > th:nth-child(11),
+#Moon > tr:nth-of-type(1) > th:nth-child(18),
+#Moon > tr:nth-of-type(1) > th:nth-child(19)
 {
     min-width: 5px;
+}
+
+#Moon > tr:nth-of-type(2) > th:nth-child(14)
+{
+    min-width: 30px;
 }
 
 #Moon td:nth-of-type(2), #Moon td:nth-of-type(5), #Moon td:nth-of-type(8), #Moon td:nth-of-type(11), #Moon td:nth-of-type(14), #Moon td:nth-of-type(16), #Moon td:nth-of-type(19) {
