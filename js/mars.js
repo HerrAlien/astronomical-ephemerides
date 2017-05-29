@@ -33,7 +33,7 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
         data[data.length]  = physicalData.SunDeclination;
         data[data.length]  = physicalData.P;
         return data;
-    }
+    };
 })();
     
     
@@ -41,20 +41,21 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
     var Page = new PlanetPage (MarsData);
     Pages["MarsPage"] = Page;
     
+   Page.tableHeaderInfo['16'] = { "0" : "L0", "1" : "\u00B0", "longText" : "Longitude of central meridian" };
+    Page.tableHeaderInfo['17'] = { "0" : "DE", "1" : "\u00B0", "longText" : "Planetocentric declination of Earth" };
+    Page.tableHeaderInfo['18'] = { "0" : "DS", "1" : "\u00B0", "longText" : "Planetocentric declination of the Sun" };
+    Page.tableHeaderInfo['19'] = { "0" : "P", "1" : "\u00B0", "longText" : "Position angle of the North Pole" };
+    
+
     Page["old_addPlanetTableHeader"] = Page.addPlanetTableHeader;
     Page["old_prepareLineForView"] = Page.prepareLineForView;
     
     Page.addPlanetTableHeader = function (table, classes) {
         var headerRows = this.old_addPlanetTableHeader(table, classes);
-        var th = this.addNodeChild (headerRows.row1, "th", "L");
-        this.addNodeChild (th, "sub", "0");
-        this.addNodeChild (headerRows.row1, "th", "DE");
-        this.addNodeChild (headerRows.row1, "th", "DS");
-        this.addNodeChild (headerRows.row1, "th", "P");
-        this.addNodeChild (headerRows.row2, "th", "\u00B0");
-        this.addNodeChild (headerRows.row2, "th", "\u00B0");
-        this.addNodeChild (headerRows.row2, "th", "\u00B0");
-        this.addNodeChild (headerRows.row2, "th", "\u00B0");
+        var cellL0 = headerRows.row1.cells[16];
+        cellL0.textContent = "L";
+        this.addNodeChild (cellL0, "sub", "0"); 
+        return headerRows;
     }
     
     Page.prepareLineForView = function (line, JD) {

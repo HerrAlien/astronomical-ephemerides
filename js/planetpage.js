@@ -5,6 +5,96 @@ function PlanetPage (planetDataSource) {
     }
     this.tablePopulated = false;
     this.lastAppendedLine = false;
+
+    this.tableHeaderInfo = {
+        "0" : {
+                "0" : "Date",
+                "1" : "",
+                "longText" : "Date: month"
+            } ,
+
+        "1" : {
+                "0" : "",
+                "1" : "",
+                "longText" : "Date: day"
+            },
+        "2" : {
+                "0" : "\u03B1",
+                "1" : "h",
+                "longText" : "Equatorial coordinates: Right Ascension"
+            },
+        "3" : {
+                "0" : "",
+                "1" : "m",
+                "longText" : "Equatorial coordinates: Right Ascension"
+            },
+        "4" : {
+                "0" : "",
+                "1" : "s",
+                "longText" : "Equatorial coordinates: Right Ascension"
+            },
+        "5" :  {
+                "0" : "\u03B4",
+                "1" : "\u00B0",
+                "longText" : "Equatorial coordinates: Declination"
+            },
+        "6" :  {
+                "0" : "",
+                "1" : "'",
+                "longText" : "Equatorial coordinates: Declination"
+            },
+        "7" :  {
+                "0" : "",
+                "1" : "''",
+                "longText" : "Equatorial coordinates: Declination"
+            },
+        "8" :  {
+                "0" : "\u03D5",
+                "1" : "''",
+                "longText" : "Apparent diameter"
+            },
+
+            
+        "9" : {
+                "0" : "Transit",
+                "1" : "h",
+                "longText" : "The UTC time of the transit across the meridian"
+            },
+        "10" : {
+                "0" : "",
+                "1" : "m",
+                "longText" : "The UTC time of the transit across the meridian"
+            },
+        "11" : {
+                "0" : "",
+                "1" : "s",
+                "longText" : "The UTC time of the transit across the meridian"
+            },
+
+            "12" :  {
+                "0" : "\u0394",
+                "1" : "A.U.",
+                "longText" : "Distance to Earth, in astronomical units"
+            },
+
+            "13" :  {
+                "0" : "R",
+                "1" : "A.U.",
+                "longText" : "Distance to Sun, in astronomical units"
+            },
+
+            "14" :  {
+                "0" : "Elong.",
+                "1" : "\u00B0",
+                "longText" : "Elongation angle from the Sun"
+            },
+
+        "15" :  {
+                "0" : "Phase",
+                "1" : "",
+                "longText" : "The phase of the planet (illuminated fraction of disk, as seen from Earth)"
+            }
+    };
 }
 
 (function(){
@@ -53,50 +143,26 @@ function PlanetPage (planetDataSource) {
                 td.textContent = dataArray[i];
                 if (changedMonth)
                     td.classList.add("topBorder");
+                td['title'] = this.tableHeaderInfo[i].longText;
             }
             this.lastAppendedLine = dataArray;
         };
         
     PlanetPage.prototype["addPlanetTableHeader"] = function (table, classes) {
-        var row1 = this.addNodeChild (table, "tr");
-        for (var i = 0; i < classes[0].length; i++)
-            row1.classList.add (classes[0][i]);    
-        this.addNodeChild (row1, "th", "Date");
-        this.addNodeChild (row1, "th");    
-        this.addNodeChild (row1, "th", "RA");
-        this.addNodeChild (row1, "th");
-        this.addNodeChild (row1, "th");
-        this.addNodeChild (row1, "th", "Dec");
-        this.addNodeChild (row1, "th");
-        this.addNodeChild (row1, "th");
-        this.addNodeChild (row1, "th", "D");
-        this.addNodeChild (row1, "th", "Transit");
-        this.addNodeChild (row1, "th");
-        this.addNodeChild (row1, "th");
-        this.addNodeChild (row1, "th", "Delta");
-        this.addNodeChild (row1, "th", "r");
-        this.addNodeChild (row1, "th", "Elong.");
-        this.addNodeChild (row1, "th", "Phase");
-        var row2 = this.addNodeChild (table, "tr");
-        for (var i = 0; i < classes[1].length; i++)
-            row2.classList.add (classes[1][i]);    
-        this.addNodeChild (row2, "th");
-        this.addNodeChild (row2, "th");
-        this.addNodeChild (row2, "th", "h");
-        this.addNodeChild (row2, "th", "m");
-        this.addNodeChild (row2, "th", "s");
-        this.addNodeChild (row2, "th", "\u00B0");
-        this.addNodeChild (row2, "th", "'");
-        this.addNodeChild (row2, "th", "''");
-        this.addNodeChild (row2, "th", "''");
-        this.addNodeChild (row2, "th", "h");
-        this.addNodeChild (row2, "th", "m");
-        this.addNodeChild (row2, "th", "s");
-        this.addNodeChild (row2, "th", "A.U.");
-        this.addNodeChild (row2, "th", "A.U.");
-        this.addNodeChild (row2, "th", "\u00B0");
-        this.addNodeChild (row2, "th");
-        return {"row1" : row1, "row2" : row2 };
+        var rows = [];
+        for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
+            var row = this.addNodeChild (table, "tr");
+            var rowClasses = classes[rowIndex];
+            for (var classIndex = 0; classIndex < rowClasses.length; classIndex++)
+                row.classList.add (rowClasses[classIndex]);
+
+            for (var headerKey in this.tableHeaderInfo) {
+                var th = this.addNodeChild (row, "th", this.tableHeaderInfo[headerKey][rowIndex]);
+                th['title'] = this.tableHeaderInfo[headerKey].longText;
+            }
+            rows[rowIndex] = row;
+        }
+        return {"row1" : rows[0], "row2" : rows[1] };
     };
 
     PlanetPage.prototype["reset"] = function () {
