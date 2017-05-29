@@ -1,4 +1,4 @@
-var testlib = testlib || {
+var testlib = {
     
         logTest: function  (test, passed)
         {
