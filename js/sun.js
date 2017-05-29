@@ -93,7 +93,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                     "longText" : "Date: day"
                 },
             "2" : {
-                    "1" : "RA",
+                    "1" : "\u03B1",
                     "2" : "h",
                     "longText" : "Equatorial coordinates: Right Ascension"
                 },
@@ -108,7 +108,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                     "longText" : "Equatorial coordinates: Right Ascension"
                 },
             "5" :  {
-                    "1" : "Dec.",
+                    "1" : "\u03B4",
                     "2" : "\u00B0",
                     "longText" : "Equatorial coordinates: Declination"
                 },
@@ -123,13 +123,13 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                     "longText" : "Equatorial coordinates: Declination"
                 },
             "8" :  {
-                    "1" : "Delta",
+                    "1" : "\u0394",
                     "2" : "A.U.",
                     "longText" : "Distance to Earth, in astronomical units"
                 },
             
             "9" :  {
-                    "1" : "Diam.",
+                    "1" : "\u03D5",
                     "2" : "'",
                     "longText" : "Apparent diameter of the Sun"
                 },

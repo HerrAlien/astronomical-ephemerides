@@ -298,7 +298,7 @@ input {
 
 #Sun tr:nth-of-type(1) th:nth-of-type(13),
 #Sun tr:nth-of-type(1) th:nth-of-type(14){
-    min-width: 11px;
+    min-width: 17px;
 }
 
 .printOnly {
