@@ -254,7 +254,7 @@ input {
 
 /** -------------------------------------- S U N -------------------------------- **/
 #Sun tr:nth-of-type(1), #Sun tr:nth-of-type(2){
-    min-width: 802px;
+    min-width: 622px;
 }
 
 #Sun td:nth-of-type(2), #Sun td:nth-of-type(5), #Sun td:nth-of-type(8), #Sun td:nth-of-type(9), #Sun td:nth-of-type(11),
@@ -264,33 +264,41 @@ input {
 
 #Sun td:nth-of-type(1),#Sun th:nth-of-type(1), 
 #Sun td:nth-of-type(2),#Sun th:nth-of-type(2) {
-    min-width : 35px;
+    min-width : 20px;
 } 
 
 #Sun td:nth-of-type(3),#Sun th:nth-of-type(3), 
 #Sun td:nth-of-type(4),#Sun th:nth-of-type(4),
+#Sun td:nth-of-type(5),#Sun th:nth-of-type(5),
 
-#Sun td:nth-of-type(6),#Sun th:nth-of-type(6), 
 #Sun td:nth-of-type(7),#Sun th:nth-of-type(7), 
 
 #Sun td:nth-of-type(10),#Sun th:nth-of-type(10), 
+#Sun td:nth-of-type(11),#Sun th:nth-of-type(11),
 
 #Sun td:nth-of-type(12),#Sun th:nth-of-type(12), 
-#Sun td:nth-of-type(13),#Sun th:nth-of-type(13){
-    min-width : 30px;
+#Sun td:nth-of-type(13),#Sun th:nth-of-type(13),
+#Sun td:nth-of-type(14),#Sun th:nth-of-type(14) 
+{
+    min-width : 20px;
 } 
 
-#Sun td:nth-of-type(9),#Sun th:nth-of-type(9), 
+#Sun td:nth-of-type(6),#Sun th:nth-of-type(6)
+{
+    min-width: 25px;
+}
+
+
+#Sun td:nth-of-type(9),#Sun th:nth-of-type(9)
+{
+    min-width: 50px;
+} 
 #Sun td:nth-of-type(15),#Sun th:nth-of-type(15), 
 #Sun td:nth-of-type(16),#Sun th:nth-of-type(16), 
 #Sun td:nth-of-type(17),#Sun th:nth-of-type(17) {
-    min-width : 70px;
+    min-width : 62px;
 }
 
-#Sun td:nth-of-type(5),#Sun th:nth-of-type(5),
-#Sun td:nth-of-type(8),#Sun th:nth-of-type(8),
-#Sun td:nth-of-type(11),#Sun th:nth-of-type(11),
-#Sun td:nth-of-type(14),#Sun th:nth-of-type(14), 
 #Sun th:nth-child(18)
 {
     min-width: 30px;
@@ -298,7 +306,15 @@ input {
 
 #Sun tr:nth-of-type(1) th:nth-of-type(13),
 #Sun tr:nth-of-type(1) th:nth-of-type(14){
-    min-width: 17px;
+    min-width: 1px;
+}
+
+#Sun tr:nth-of-type(1) th:nth-child(8) {
+    min-width: 15px;
+}
+
+#Sun tr:nth-of-type(2) th:nth-child(8) {
+    min-width: 25px;
 }
 
 .printOnly {
@@ -396,6 +412,13 @@ input {
 
 .planetTable > tr:nth-of-type(1) > th:nth-child(8) {
     min-width: 15px;    
+}
+.planetTable > tr:nth-of-type(2) > th:nth-child(8) {
+    min-width: 25px;    
+}
+
+.planetTable > tr:nth-of-type(1) > th:nth-child(15){
+    min-width : 76px;
 }
 
 /* ---------------------------- M A R S ------------------------------------ */
