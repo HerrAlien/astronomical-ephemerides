@@ -238,7 +238,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                 var td = line.ownerDocument.createElement("td");
                 line.appendChild(td);
                 td.textContent = dataArray[i];
-                td["title"] = this.tableHeaderInfo[titleIndex++ % 17].longText;
+                td["title"] = this.tableHeaderInfo[i].longText;
                 if (changedMonth)
                     td.classList.add("topBorder");
             }
