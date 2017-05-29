@@ -69,13 +69,13 @@ function PlanetPage (planetDataSource) {
         this.addNodeChild (row1, "th", "Dec");
         this.addNodeChild (row1, "th");
         this.addNodeChild (row1, "th");
-        this.addNodeChild (row1, "th", "Diam.");
+        this.addNodeChild (row1, "th", "D");
         this.addNodeChild (row1, "th", "Transit");
         this.addNodeChild (row1, "th");
         this.addNodeChild (row1, "th");
         this.addNodeChild (row1, "th", "Delta");
         this.addNodeChild (row1, "th", "r");
-        this.addNodeChild (row1, "th", "Elongation");
+        this.addNodeChild (row1, "th", "Elong.");
         this.addNodeChild (row1, "th", "Phase");
         var row2 = this.addNodeChild (table, "tr");
         for (var i = 0; i < classes[1].length; i++)

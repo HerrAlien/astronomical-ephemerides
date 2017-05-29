@@ -5,7 +5,8 @@
 body {
     font-family: Verdana;
     font-size: 16px;
-    width: 830px;
+    min-width: 830px;
+    max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -334,31 +335,33 @@ input {
 /** ---------------------------------- P L A N E T ------------------------------ **/
 .planetTable tr:nth-of-type(1), .planetTable tr:nth-of-type(2)
 {
-    width: 678px;
+    width: 600px;
 }
 
 .planetTable td:nth-of-type(1),.planetTable th:nth-of-type(1), 
 .planetTable td:nth-of-type(2),.planetTable th:nth-of-type(2) {
-    min-width : 30px;
+    min-width : 20px;
 } 
 
 .planetTable td:nth-of-type(3),.planetTable th:nth-of-type(3), 
 .planetTable td:nth-of-type(4),.planetTable th:nth-of-type(4),
 
-.planetTable td:nth-of-type(6),.planetTable th:nth-of-type(6), 
 .planetTable td:nth-of-type(7),.planetTable th:nth-of-type(7),
 .planetTable td:nth-of-type(10),.planetTable th:nth-of-type(10), 
 .planetTable td:nth-of-type(11),.planetTable th:nth-of-type(11)
 {
-    min-width : 30px;
+    min-width : 25px;
 } 
+.planetTable td:nth-of-type(6),.planetTable th:nth-of-type(6){
+    min-width: 30px;    
+}
 
 .planetTable td:nth-of-type(5),.planetTable th:nth-of-type(5),
 .planetTable td:nth-of-type(8),.planetTable th:nth-of-type(8),
 .planetTable td:nth-of-type(9),.planetTable th:nth-of-type(9), 
 .planetTable td:nth-of-type(12),.planetTable th:nth-of-type(12)
 {
-    min-width: 30px;
+    min-width: 25px;
 }
 
 .planetTable td:nth-of-type(13),.planetTable th:nth-of-type(13), 
@@ -369,7 +372,7 @@ input {
     min-width: 50px;
 }
 .planetTable td:nth-of-type(15),.planetTable th:nth-of-type(15) {
-    min-width : 86px;
+    min-width : 66px;
 }
 
 .planetTable   tr:nth-child(1)  th:nth-child(11),
@@ -388,17 +391,23 @@ input {
     border-right: solid 1px black;
 }
 
+.planetTable > tr:nth-of-type(1) > th:nth-child(8) {
+    min-width: 15px;    
+}
+
 /* ---------------------------- M A R S ------------------------------------ */
 #Mars tr:nth-of-type(1), #Mars tr:nth-of-type(2){
-    width: 780px;
+    width: 790px;
 }
-#Mars  td:nth-of-type(16), #Mars  td:nth-of-type(17){
+#Mars  td:nth-of-type(16), #Mars  td:nth-of-type(17), #Mars  td:nth-of-type(18), #Mars  td:nth-of-type(19){
     border-right: solid 1px black;
 }
 #Mars td:nth-of-type(17),#Mars th:nth-of-type(17) {
     min-width: 50px;
 }
 
-#Mars td:nth-of-type(18),#Mars th:nth-of-type(18) {
+#Mars td:nth-of-type(18),#Mars th:nth-of-type(18),
+#Mars td:nth-of-type(19),#Mars th:nth-of-type(19),
+#Mars td:nth-of-type(20),#Mars th:nth-of-type(20) {
     min-width: 40px;
 }
