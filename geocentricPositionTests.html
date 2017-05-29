@@ -83,7 +83,7 @@
             ]
             ,
             actualOutput : [],
-            accurracy : [0, 0, 2e-5, 1e-4, 
+            accurracy : [0, 0, 2e-5, 5e-5, 
 				4e-7,
 				5e-3,
 				2e-5,
@@ -93,17 +93,6 @@
 				],
             test : function () {
                 this.actualOutput = JupiterData.getDataForJD (this.input);
-                
-                this.actualOutput = [
-                this.actualOutput.RA,
-                this.actualOutput.Dec,
-                this.actualOutput.Diameter,
-                this.actualOutput.MeridianTransit,
-                this.actualOutput.DistanceToEarth,
-                this.actualOutput.DistanceToSun,
-                this.actualOutput.Elongation,
-                this.actualOutput.Phase
-                ];
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
@@ -145,17 +134,7 @@
 				3e-4,
 				],
             test : function () {
-                this.actualOutput = MarsData.getDataForJD (this.input);
-                this.actualOutput = [
-                this.actualOutput.RA,
-                this.actualOutput.Dec,
-                this.actualOutput.Diameter,
-                this.actualOutput.MeridianTransit,
-                this.actualOutput.DistanceToEarth,
-                this.actualOutput.DistanceToSun,
-                this.actualOutput.Elongation,
-                this.actualOutput.Phase
-                ];
+                this.actualOutput = MarsData.getDataForJD (this.input).slice(0,10);
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
@@ -198,17 +177,7 @@
 				],
 				test : function () {
 					this.actualOutput = MercuryData.getDataForJD (this.input);
-                this.actualOutput = [
-                this.actualOutput.RA,
-                this.actualOutput.Dec,
-                this.actualOutput.Diameter,
-                this.actualOutput.MeridianTransit,
-                this.actualOutput.DistanceToEarth,
-                this.actualOutput.DistanceToSun,
-                this.actualOutput.Elongation,
-                this.actualOutput.Phase
-                ];
-
+                    
 					if (this.expectedOutput.length != this.actualOutput.length ||
 						this.expectedOutput.length != this.accurracy.length)
 						return false;
@@ -250,17 +219,7 @@
 				],
             test : function () {
                 this.actualOutput = NeptuneData.getDataForJD (this.input);
-                this.actualOutput = [
-                this.actualOutput.RA,
-                this.actualOutput.Dec,
-                this.actualOutput.Diameter,
-                this.actualOutput.MeridianTransit,
-                this.actualOutput.DistanceToEarth,
-                this.actualOutput.DistanceToSun,
-                this.actualOutput.Elongation,
-                this.actualOutput.Phase
-                ];
-
+                
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
                     return false;
@@ -301,16 +260,6 @@
 				],
             test : function () {
                 this.actualOutput = SaturnData.getDataForJD (this.input);
-                this.actualOutput = [
-                this.actualOutput.RA,
-                this.actualOutput.Dec,
-                this.actualOutput.Diameter,
-                this.actualOutput.MeridianTransit,
-                this.actualOutput.DistanceToEarth,
-                this.actualOutput.DistanceToSun,
-                this.actualOutput.Elongation,
-                this.actualOutput.Phase
-                ];
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
@@ -353,16 +302,6 @@
 				],
             test : function () {
                 this.actualOutput = VenusData.getDataForJD (this.input);
-                this.actualOutput = [
-                this.actualOutput.RA,
-                this.actualOutput.Dec,
-                this.actualOutput.Diameter,
-                this.actualOutput.MeridianTransit,
-                this.actualOutput.DistanceToEarth,
-                this.actualOutput.DistanceToSun,
-                this.actualOutput.Elongation,
-                this.actualOutput.Phase
-                ];
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
@@ -405,16 +344,6 @@
 				],
             test : function () {
                 this.actualOutput = UranusData.getDataForJD (this.input);
-                this.actualOutput = [
-                this.actualOutput.RA,
-                this.actualOutput.Dec,
-                this.actualOutput.Diameter,
-                this.actualOutput.MeridianTransit,
-                this.actualOutput.DistanceToEarth,
-                this.actualOutput.DistanceToSun,
-                this.actualOutput.Elongation,
-                this.actualOutput.Phase
-                ];
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
