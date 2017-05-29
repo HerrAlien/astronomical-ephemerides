@@ -211,7 +211,19 @@
                 0.01
 				],
             test : function () {
-                this.actualOutput = MarsData.getDataForJD (this.input).slice(0,12);
+                this.actualOutput = MarsData.getDataForJD (this.input);
+                this.actualOutput = [
+                this.actualOutput.RA,
+                this.actualOutput.Dec,
+                this.actualOutput.Diameter,
+                this.actualOutput.MeridianTransit,
+                this.actualOutput.DistanceToEarth,
+                this.actualOutput.DistanceToSun,
+                this.actualOutput.Elongation,
+                this.actualOutput.Phase,
+                this.actualOutput.CentralMeridianLongitude,
+                this.actualOutput.EarthDeclination
+                ];
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
