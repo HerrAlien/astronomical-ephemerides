@@ -196,7 +196,9 @@
             2.326119685116676, // elongation
             0.923, // phase
             245.1,
-            -20.27
+            -20.27,
+            -24.12,
+            328.46
             ]
             ,
             actualOutput : [],
@@ -208,10 +210,12 @@
 				1e-3,
 				3e-4,
                 0.3,
+                0.01,
+                0.01,
                 0.01
 				],
             test : function () {
-                this.actualOutput = MarsData.getDataForJD (this.input).slice(0,12);
+                this.actualOutput = MarsData.getDataForJD (this.input);
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)

@@ -156,6 +156,7 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;. -->
 <script type="text/JavaScript" src="js/timeinput.js"></script>
 
 <script type="text/JavaScript" >
+    
     var PageTimeInterval = {};
     var Pages = {};
 
@@ -209,8 +210,7 @@ Greenwich meridian, and the equatorial horizontal parallax &pi;. -->
     
     document.getElementById("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
                                                       "bubbles": true, 
-                                                      "cancelable": false })); 
-                                                      
+                                                      "cancelable": false }));                                                       
     
     window.addEventListener("scroll", function() {
         if (previousPage) {

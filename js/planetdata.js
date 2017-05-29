@@ -22,50 +22,66 @@ function PlanetData(planet)
 }
 
 (function(){
-    PlanetData.prototype["getDataForJD"] = function (JD) {
+    PlanetData.prototype["getDataAsObjectForJD"] = function (JD) {
         var data = this.cache[JD];
             if (!data) {
-				data = [];
+				data = {};
 				var i = 0;
 				var dateOfJD =  AAJS.Date.JD2Date(JD);
-				data[i++] = dateOfJD.M;
-				data[i++] = dateOfJD.D;
+				data['Month'] = dateOfJD.M;
+				data['Day'] = dateOfJD.D;
 				
 				var planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (JD, 
 																				this.planet.number, 
 																				true);
 				
-				data[i++] = planetaryDetails.ApparentGeocentricRA;
-				data[i++] = planetaryDetails.ApparentGeocentricDeclination;
-				
-				var delta = planetaryDetails.ApparentGeocentricDistance;
-				
-				data[i++] = 2 *this.planet.semidiameterFunctionName(delta) / 3600;
+				data['RA'] = planetaryDetails.ApparentGeocentricRA;
+				data['Dec'] = planetaryDetails.ApparentGeocentricDeclination;
 				
 				var jdOfTransit = JD;
-                
+                var transitPlanetaryDetails = planetaryDetails;
                 for (var transitIterationIndex = 0; transitIterationIndex < 3; transitIterationIndex++)
                 {
-                    jdOfTransit = AAJS.Date.LST2NextJD(planetaryDetails.ApparentGeocentricRA, JD, Location.longitude);
+                    jdOfTransit = AAJS.Date.LST2NextJD(transitPlanetaryDetails.ApparentGeocentricRA, JD, Location.longitude);
                     if (jdOfTransit - JD > 1)
                         jdOfTransit -= 1;
-                    planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (jdOfTransit, this.planet.number, true);
+                    transitPlanetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (jdOfTransit, this.planet.number, true);
                 }
 
 				var transitHour = 24 * (jdOfTransit - JD);
-				data[i++] = transitHour;
-				data[i++] = delta;
+				data['MeridianTransit'] = transitHour;
 				
 				var sunEarthDistance = SunData.getSunEarthDistance(JD);
 				var r =  AAJS[this.planet.name].RadiusVector(JD, true);
-				data[i++] = r;
-				
+				data['DistanceToSun'] = r;
+								
+				var delta = planetaryDetails.ApparentGeocentricDistance;
+                data['DistanceToEarth'] = delta;
+				data['Diameter'] = 2 *this.planet.semidiameterFunctionName(delta) / 3600;
+
 				var cosElongationAngle = (delta * delta + sunEarthDistance * sunEarthDistance - r * r)/(2 * delta * sunEarthDistance);
-				data[i++] = Math.acos(cosElongationAngle);
+				data['Elongation'] = Math.acos(cosElongationAngle);
 				var cosPhaseAngle = (r*r + delta * delta - sunEarthDistance * sunEarthDistance)/(2 * delta * r);
-				data[i++] = 0.5 * (cosPhaseAngle + 1);
+				data['Phase'] = 0.5 * (cosPhaseAngle + 1);
 				this.cache[JD] = data;
 			}
 		return data;
     };
+    
+    // deprecated ...
+    PlanetData.prototype["getDataForJD"] = function (JD) {
+        var data = this.getDataAsObjectForJD(JD);
+		return [
+                data.Month,
+                data.Day,
+                data.RA,
+                data.Dec,
+                data.Diameter,
+                data.MeridianTransit,
+                data.DistanceToEarth,
+                data.DistanceToSun,
+                data.Elongation,
+                data.Phase
+                ];
+    };    
 })();
