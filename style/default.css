@@ -335,7 +335,7 @@ input {
 /** ---------------------------------- P L A N E T ------------------------------ **/
 .planetTable tr:nth-of-type(1), .planetTable tr:nth-of-type(2)
 {
-    width: 600px;
+    width: 542px;
 }
 
 .planetTable td:nth-of-type(1),.planetTable th:nth-of-type(1), 
@@ -345,20 +345,23 @@ input {
 
 .planetTable td:nth-of-type(3),.planetTable th:nth-of-type(3), 
 .planetTable td:nth-of-type(4),.planetTable th:nth-of-type(4),
-
-.planetTable td:nth-of-type(7),.planetTable th:nth-of-type(7),
+.planetTable td:nth-of-type(5),.planetTable th:nth-of-type(5),
+.planetTable td:nth-of-type(9),.planetTable th:nth-of-type(9), 
 .planetTable td:nth-of-type(10),.planetTable th:nth-of-type(10), 
 .planetTable td:nth-of-type(11),.planetTable th:nth-of-type(11)
 {
-    min-width : 25px;
+    min-width : 20px;
+} 
+
+.planetTable td:nth-of-type(7),.planetTable th:nth-of-type(7),
+.planetTable td:nth-of-type(8),.planetTable th:nth-of-type(8)
+{
+    min-width : 20px;
 } 
 .planetTable td:nth-of-type(6),.planetTable th:nth-of-type(6){
-    min-width: 30px;    
+    min-width: 25px;    
 }
 
-.planetTable td:nth-of-type(5),.planetTable th:nth-of-type(5),
-.planetTable td:nth-of-type(8),.planetTable th:nth-of-type(8),
-.planetTable td:nth-of-type(9),.planetTable th:nth-of-type(9), 
 .planetTable td:nth-of-type(12),.planetTable th:nth-of-type(12)
 {
     min-width: 25px;
@@ -369,7 +372,7 @@ input {
     min-width: 55px;
 }
 .planetTable td:nth-of-type(16),.planetTable th:nth-of-type(16) {
-    min-width: 50px;
+    min-width: 40px;
 }
 .planetTable td:nth-of-type(15),.planetTable th:nth-of-type(15) {
     min-width : 66px;
@@ -377,7 +380,7 @@ input {
 
 .planetTable   tr:nth-child(1)  th:nth-child(11),
 .planetTable   tr:nth-child(1)  th:nth-child(12) {
-	min-width: 10px;
+	min-width: 1px;
 }
 
 .planetTable td:nth-of-type(2) ,
@@ -397,7 +400,7 @@ input {
 
 /* ---------------------------- M A R S ------------------------------------ */
 #Mars tr:nth-of-type(1), #Mars tr:nth-of-type(2){
-    width: 790px;
+    width: 732px;
 }
 #Mars  td:nth-of-type(16), #Mars  td:nth-of-type(17), #Mars  td:nth-of-type(18), #Mars  td:nth-of-type(19){
     border-right: solid 1px black;
