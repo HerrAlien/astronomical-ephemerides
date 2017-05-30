@@ -71,121 +71,121 @@ var MoonData = {
         
         tableHeaderInfo : {
             "0" : {
-                    "1" : "Date",
-                    "2" : "",
+                    "0" : "Date",
+                    "1" : "",
                     "longText" : "Date: month"
                 } ,
 
             "1" : {
+                    "0" : "",
                     "1" : "",
-                    "2" : "",
                     "longText" : "Date: day"
                 },
             "2" : {
-                    "1" : "\u03B1",
-                    "2" : "h",
+                    "0" : "\u03B1",
+                    "1" : "h",
                     "longText" : "Geocentric equatorial coordinates: Right Ascension"
                 },
             "3" : {
-                    "1" : "",
-                    "2" : "m",
+                    "0" : "geo",
+                    "1" : "m",
                     "longText" : "Geocentric equatorial coordinates: Right Ascension"
                 },
             "4" : {
-                    "1" : "",
-                    "2" : "s",
+                    "0" : "",
+                    "1" : "s",
                     "longText" : "Geocentric equatorial oordinates: Right Ascension"
                 },
             "5" :  {
-                    "1" : "\u03B4",
-                    "2" : "\u00B0",
+                    "0" : "\u03B4",
+                    "1" : "\u00B0",
                     "longText" : "Geocentric equatorial coordinates: Declination"
                 },
             "6" :  {
-                    "1" : "",
-                    "2" : "'",
+                    "0" : "geo",
+                    "1" : "'",
                     "longText" : "Geocentric equatorial coordinates: Declination"
                 },
             "7" :  {
-                    "1" : "",
-                    "2" : "''",
+                    "0" : "",
+                    "1" : "''",
                     "longText" : "Geocentric equatorial coordinates: Declination"
                 },
 
             "8" : {
-                    "1" : "\u03B1",
-                    "2" : "h",
+                    "0" : "\u03B1",
+                    "1" : "h",
                     "longText" : "Topocentric equatorial coordinates: Right Ascension"
                 },
             "9" : {
-                    "1" : "",
-                    "2" : "m",
+                    "0" : "topo",
+                    "1" : "m",
                     "longText" : "Topocentric equatorial coordinates: Right Ascension"
                 },
             "10" : {
-                    "1" : "",
-                    "2" : "s",
+                    "0" : "",
+                    "1" : "s",
                     "longText" : "Topocentric equatorial oordinates: Right Ascension"
                 },
             "11" :  {
-                    "1" : "\u03B4",
-                    "2" : "\u00B0",
+                    "0" : "\u03B4",
+                    "1" : "\u00B0",
                     "longText" : "Topocentric equatorial coordinates: Declination"
                 },
             "12" :  {
-                    "1" : "",
-                    "2" : "'",
+                    "0" : "topo",
+                    "1" : "'",
                     "longText" : "Topocentric equatorial coordinates: Declination"
                 },
             "13" :  {
-                    "1" : "",
-                    "2" : "''",
+                    "0" : "",
+                    "1" : "''",
                     "longText" : "Topocentric equatorial coordinates: Declination"
                 },
 
            
             "14" :  {
-                    "1" : "\u03D5",
-                    "2" : "'",
+                    "0" : "\u03D5",
+                    "1" : "'",
                     "longText" : "Apparent diameter"
                 },
             "15" :  {
-                    "1" : "",
-                    "2" : "''",
+                    "0" : "",
+                    "1" : "''",
                     "longText" : "Apparent diameter"
                 },
                 
             "16" : {
-                    "1" : "Transit",
-                    "2" : "h",
+                    "0" : "Transit",
+                    "1" : "h",
                     "longText" : "The UTC time of the transit across the meridian"
                 },
             "17" : {
-                    "1" : "",
-                    "2" : "m",
+                    "0" : "",
+                    "1" : "m",
                     "longText" : "The UTC time of the transit across the meridian"
                 },
             "18" : {
-                    "1" : "",
-                    "2" : "s",
+                    "0" : "",
+                    "1" : "s",
                     "longText" : "The UTC time of the transit across the meridian"
                 },
  
             "19" :  {
-                    "1" : "\u03C0",
-                    "2" : "\u00B0",
+                    "0" : "\u03C0",
+                    "1" : "\u00B0",
                     "longText" : "Equatorial horizontal parallax"
                 },
                 
             "20" :  {
-                    "1" : "",
-                    "2" : "'",
+                    "0" : "",
+                    "1" : "'",
                     "longText" : "Equatorial horizontal parallax"
                 },
 
             "21" :  {
-                    "1" : "",
-                    "2" : "''",
+                    "0" : "",
+                    "1" : "''",
                     "longText" : "Equatorial horizontal parallax"
                 }
 
@@ -280,60 +280,22 @@ var MoonData = {
         },
     
         addTableHeader : function (table, classes) {
-            var row1 = this.addNodeChild (table, "tr");
-            for (var i = 0; i < classes[0].length; i++)
-                row1.classList.add (classes[0][i]);    
-            this.addNodeChild (row1, "th", "Date");
-            this.addNodeChild (row1, "th");    
-            this.addNodeChild (row1, "th", "\u03B1");
-            this.addNodeChild (row1, "th", "geo");
-            this.addNodeChild (row1, "th");
-            this.addNodeChild (row1, "th", "\u03B4");
-            this.addNodeChild (row1, "th", "geo");
-            this.addNodeChild (row1, "th");
-            this.addNodeChild (row1, "th", "\u03B1");
-            this.addNodeChild (row1, "th", "topo");
-            this.addNodeChild (row1, "th");
-            this.addNodeChild (row1, "th", "\u03B4");
-            this.addNodeChild (row1, "th", "topo");
-            this.addNodeChild (row1, "th");
-            this.addNodeChild (row1, "th", "\u03D5");
-            this.addNodeChild (row1, "th");
-            this.addNodeChild (row1, "th", "Transit");
-            this.addNodeChild (row1, "th");
-            this.addNodeChild (row1, "th");
-            this.addNodeChild (row1, "th", "\u03C0");
-            var row2 = this.addNodeChild (table, "tr");
-            this.addNodeChild (row1, "th");
-            this.addNodeChild (row1, "th");
-            for (var i = 0; i < classes[1].length; i++)
-                row2.classList.add (classes[1][i]);    
-            this.addNodeChild (row2, "th");
-            this.addNodeChild (row2, "th");
-            this.addNodeChild (row2, "th", "h");
-            this.addNodeChild (row2, "th", "m");
-            this.addNodeChild (row2, "th", "s");
-            this.addNodeChild (row2, "th", "\u00B0");
-            this.addNodeChild (row2, "th", "'");
-            this.addNodeChild (row2, "th", "''");
+            var rows = [];
+            for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
+                var row = this.addNodeChild (table, "tr");
+                var rowClasses = classes[rowIndex];
+                for (var classIndex = 0; classIndex < rowClasses.length; classIndex++)
+                    row.classList.add (rowClasses[classIndex]);
 
-            this.addNodeChild (row2, "th", "h");
-            this.addNodeChild (row2, "th", "m");
-            this.addNodeChild (row2, "th", "s");
-            this.addNodeChild (row2, "th", "\u00B0");
-            this.addNodeChild (row2, "th", "'");
-            this.addNodeChild (row2, "th", "''");
-
-            this.addNodeChild (row2, "th", "'");
-            this.addNodeChild (row2, "th", "''");
-            this.addNodeChild (row2, "th", "h");
-            this.addNodeChild (row2, "th", "m");
-            this.addNodeChild (row2, "th", "s");
-
-            this.addNodeChild (row2, "th", "\u00B0");
-            this.addNodeChild (row2, "th", "'");
-            this.addNodeChild (row2, "th", "''");
-    },
+                for (var headerKey in this.tableHeaderInfo) {
+                    var th = this.addNodeChild (row, "th", this.tableHeaderInfo[headerKey][rowIndex]);
+                    th['title'] = this.tableHeaderInfo[headerKey].longText;
+                    th.onclick = function () { alert (this.title); }
+                }
+                rows[rowIndex] = row;
+            }
+            return {"row1" : rows[0], "row2" : rows[1] };
+        },
         
         displayPage : function(JD, daysAfter, stepSize) {
             if (!AAJS.AllDependenciesLoaded())
