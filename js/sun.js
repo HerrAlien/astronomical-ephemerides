@@ -65,7 +65,10 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         getRA : function(JD) {
 			var line = this.getDataForJD(JD);
 			return line[2];
-		}
+		},
+        reset : function () {
+            this.cache = {};
+        }
     };
     SunData.initFromLocalStorage();
 
@@ -78,6 +81,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                 this.table.removeChild(this.table.firstChild);
             }
             this.tablePopulated = false;
+            SunData.reset();
         },
         
         tableHeaderInfo : {
@@ -263,6 +267,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                 var th = this.addNodeChild (row1, "th", this.tableHeaderInfo[i]["1"]);
                 th["title"] = this.tableHeaderInfo[i].longText;
                 this.tableHeaderInfo[i]["element"] = th;
+                th.onclick = function () { alert (this.title); }
             }
 
             var row2 = this.addNodeChild (table, "tr");
@@ -273,6 +278,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             {
                 var th = this.addNodeChild (row2, "th", this.tableHeaderInfo[i]["2"]);
                 th["title"] = this.tableHeaderInfo[i].longText;
+                th.onclick = function () { alert (this.title); }
             }
             
             // add some subscripts

@@ -168,6 +168,10 @@ table {
     padding: 2px;
 }
 
+th {
+    cursor: help;
+}
+
  tr:nth-of-type(odd) {
 background: #ffffff;
 }

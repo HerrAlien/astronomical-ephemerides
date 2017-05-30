@@ -159,6 +159,7 @@ function PlanetPage (planetDataSource) {
             for (var headerKey in this.tableHeaderInfo) {
                 var th = this.addNodeChild (row, "th", this.tableHeaderInfo[headerKey][rowIndex]);
                 th['title'] = this.tableHeaderInfo[headerKey].longText;
+                th.onclick = function () { alert (this.title); }
             }
             rows[rowIndex] = row;
         }
@@ -170,6 +171,8 @@ function PlanetPage (planetDataSource) {
             this.table.removeChild(this.table.firstChild);
         }
         this.tablePopulated = false;
+        // reset the data - transits depend on the longitude
+        this.dataSource.reset();
     };
 		
 	PlanetPage.prototype["prepareLineForView"] = function (line, JD) {

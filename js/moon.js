@@ -56,8 +56,11 @@ var MoonData = {
             this.cache[key] = data;
         }
         return data;
-    }
+    },
     
+    reset : function () {
+        this.cache = {};
+    }    
 };
     
 
@@ -65,11 +68,136 @@ var MoonData = {
     var MoonPage = {
         table : document.getElementById("Moon"),
         tablePopulated : false,
+        
+        tableHeaderInfo : {
+            "0" : {
+                    "1" : "Date",
+                    "2" : "",
+                    "longText" : "Date: month"
+                } ,
+
+            "1" : {
+                    "1" : "",
+                    "2" : "",
+                    "longText" : "Date: day"
+                },
+            "2" : {
+                    "1" : "\u03B1",
+                    "2" : "h",
+                    "longText" : "Geocentric equatorial coordinates: Right Ascension"
+                },
+            "3" : {
+                    "1" : "",
+                    "2" : "m",
+                    "longText" : "Geocentric equatorial coordinates: Right Ascension"
+                },
+            "4" : {
+                    "1" : "",
+                    "2" : "s",
+                    "longText" : "Geocentric equatorial oordinates: Right Ascension"
+                },
+            "5" :  {
+                    "1" : "\u03B4",
+                    "2" : "\u00B0",
+                    "longText" : "Geocentric equatorial coordinates: Declination"
+                },
+            "6" :  {
+                    "1" : "",
+                    "2" : "'",
+                    "longText" : "Geocentric equatorial coordinates: Declination"
+                },
+            "7" :  {
+                    "1" : "",
+                    "2" : "''",
+                    "longText" : "Geocentric equatorial coordinates: Declination"
+                },
+
+            "8" : {
+                    "1" : "\u03B1",
+                    "2" : "h",
+                    "longText" : "Topocentric equatorial coordinates: Right Ascension"
+                },
+            "9" : {
+                    "1" : "",
+                    "2" : "m",
+                    "longText" : "Topocentric equatorial coordinates: Right Ascension"
+                },
+            "10" : {
+                    "1" : "",
+                    "2" : "s",
+                    "longText" : "Topocentric equatorial oordinates: Right Ascension"
+                },
+            "11" :  {
+                    "1" : "\u03B4",
+                    "2" : "\u00B0",
+                    "longText" : "Topocentric equatorial coordinates: Declination"
+                },
+            "12" :  {
+                    "1" : "",
+                    "2" : "'",
+                    "longText" : "Topocentric equatorial coordinates: Declination"
+                },
+            "13" :  {
+                    "1" : "",
+                    "2" : "''",
+                    "longText" : "Topocentric equatorial coordinates: Declination"
+                },
+
+           
+            "14" :  {
+                    "1" : "\u03D5",
+                    "2" : "'",
+                    "longText" : "Apparent diameter"
+                },
+            "15" :  {
+                    "1" : "",
+                    "2" : "''",
+                    "longText" : "Apparent diameter"
+                },
+                
+            "16" : {
+                    "1" : "Transit",
+                    "2" : "h",
+                    "longText" : "The UTC time of the transit across the meridian"
+                },
+            "17" : {
+                    "1" : "",
+                    "2" : "m",
+                    "longText" : "The UTC time of the transit across the meridian"
+                },
+            "18" : {
+                    "1" : "",
+                    "2" : "s",
+                    "longText" : "The UTC time of the transit across the meridian"
+                },
+ 
+            "19" :  {
+                    "1" : "\u03C0",
+                    "2" : "\u00B0",
+                    "longText" : "Equatorial horizontal parallax"
+                },
+                
+            "20" :  {
+                    "1" : "",
+                    "2" : "'",
+                    "longText" : "Equatorial horizontal parallax"
+                },
+
+            "21" :  {
+                    "1" : "",
+                    "2" : "''",
+                    "longText" : "Equatorial horizontal parallax"
+                }
+
+
+            },
+ 
         reset : function () {
             while (this.table.hasChildNodes()) {
                 this.table.removeChild(this.table.firstChild);
             }
             this.tablePopulated = false;
+            MoonData.reset();
         },
        
         prepareLineForView : function (line) {

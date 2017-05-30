@@ -22,6 +22,9 @@ function PlanetData(planet)
 }
 
 (function(){
+    PlanetData.prototype["reset"] = function () {
+        this.cache = {};
+    }
     PlanetData.prototype["getDataAsObjectForJD"] = function (JD) {
         var data = this.cache[JD];
             if (!data) {
