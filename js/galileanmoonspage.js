@@ -38,7 +38,7 @@ var GalileanMoonsPage = {
         var stepSize = 1/24; // one hour.
         var numberOfSteps = numberOfDays / stepSize;
     
-        var width = 1000;
+        var width = 800;
         var height = Math.ceil (numberOfSteps);
         
         var hostSVG = this.hostElement.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -48,7 +48,7 @@ var GalileanMoonsPage = {
         this.hostElement.appendChild(hostSVG);
 
         var halfWidth = width/2;
-        var jupiterRadius = halfWidth / 30;
+        var jupiterRadius = halfWidth / 35;
 
         var paths = {'Io' : {'d' : '', 'color' : 'blue', 'lastPos' : {'X' : 0, 'Y' : 0} },
                     'Europa' : {'d' : '', 'color' : 'red', 'lastPos' : {'X' : 0, 'Y' : 0}}, 
@@ -72,6 +72,7 @@ var GalileanMoonsPage = {
                     paths[satelliteName].d = "M " + paths[satelliteName].lastPos.X + " " + paths[satelliteName].lastPos.Y;
                 
                 var planetInitialY = stepsCounter;
+                var dayLines = [];
                 
                 for (var i = 0 ; i < 30 && stepsCounter < numberOfSteps ; i++, currentJD += stepSize, stepsCounter++) {
                     var coords = GalileanMoonsData.getDataAsObjectForJD(currentJD, false);
@@ -81,27 +82,55 @@ var GalileanMoonsPage = {
                         paths[satelliteName].lastPos.Y = (coords[satelliteName].ApparentRectangularCoordinates.Y * jupiterRadius + stepsCounter)*1.0; // we move down ....
                         paths[satelliteName].d += " L " + paths[satelliteName].lastPos.X + " " + paths[satelliteName].lastPos.Y;
                     }
+                    
+                    if (coords.DayFraction < stepSize)
+                        dayLines[dayLines.length] = {
+                            "YCoord" : stepsCounter,
+                            "Month" : coords.Month,
+                            "Day" : coords.Day
+                        };
                 }
 
-                    for (var satelliteName in paths){
-                        var pathElem = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "path");
-                        pathElem.setAttribute("d", paths[satelliteName].d);
-                        pathElem.setAttribute("stroke", paths[satelliteName].color);
-                        pathElem.setAttribute("fill", 'none');
-                        pathElem.setAttribute("stroke-width", 2);
-                        hostSVG.appendChild(pathElem);
-                        pathElem.setAttribute("title", satelliteName);
-                    }
+                for (var satelliteName in paths){
+                    var pathElem = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "path");
+                    pathElem.setAttribute("d", paths[satelliteName].d);
+                    pathElem.setAttribute("stroke", paths[satelliteName].color);
+                    pathElem.setAttribute("fill", 'none');
+                    pathElem.setAttribute("stroke-width", 2);
+                    hostSVG.appendChild(pathElem);
+                    pathElem.setAttribute("title", satelliteName);
+                }
                     
-                 var planet = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "rect");
-            hostSVG.appendChild (planet);
-            planet.setAttribute ("fill", "orange");
-            planet.setAttribute ("x", halfWidth - jupiterRadius);
-            planet.setAttribute ("y", planetInitialY);
-            planet.setAttribute ("width", 2*jupiterRadius);
-            planet.setAttribute ("height", stepsCounter - planetInitialY);
-    
+                var planet = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "rect");
+                hostSVG.appendChild (planet);
+                planet.setAttribute ("fill", "orange");
+                planet.setAttribute ("x", halfWidth - jupiterRadius);
+                planet.setAttribute ("y", planetInitialY - 30);
+                planet.setAttribute ("width", 2*jupiterRadius);
+                planet.setAttribute ("height", stepsCounter - planetInitialY + 30);
                 
+                var months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                
+                for (var i = 0; i < dayLines.length; i++) {
+                    var line = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "rect");
+                    hostSVG.appendChild (line);
+                    line.setAttribute ("fill", "gray");
+                    line.setAttribute ("x", 0);
+                    line.setAttribute ("y", dayLines[i].YCoord);
+                    line.setAttribute ("width", width);
+                    line.setAttribute ("height", 1);
+                    
+                    var text = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "text");
+                    hostSVG.appendChild (text);
+                    text.setAttribute ("x", 10);
+                    text.setAttribute ("y", dayLines[i].YCoord);
+                    text.textContent = months[dayLines[i].Month] + " " + dayLines[i].Day;
+                    text.style["fontSize"] = "14px";
+                    text.style["fontFamily"] = "Arial";
+
+                    
+                } 
+                   
                 if (stepsCounter < numberOfSteps) {
                     setTimeout (getDataForPaths, 10);
                 } else {
