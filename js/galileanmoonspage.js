@@ -33,6 +33,10 @@ var GalileanMoonsPage = {
         if (this.pageRendered)
             return;
         
+        var pageObj = this;
+        if (!AAJS.AllDependenciesLoaded())
+            return setTimeout (function() { pageObj.displayPage(startJD, numberOfDays); }, 300);
+
         this.reset();
         
         var dayFraction = 48;
