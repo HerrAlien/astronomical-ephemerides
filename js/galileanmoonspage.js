@@ -48,7 +48,7 @@ var GalileanMoonsPage = {
         this.hostElement.appendChild(hostSVG);
 
         var halfWidth = width/2;
-        var jupiterSize = halfWidth / 30;
+        var jupiterRadius = halfWidth / 30;
 
         var paths = {'Io' : {'d' : '', 'color' : 'blue', 'lastPos' : {'X' : 0, 'Y' : 0} },
                     'Europa' : {'d' : '', 'color' : 'red', 'lastPos' : {'X' : 0, 'Y' : 0}}, 
@@ -58,8 +58,8 @@ var GalileanMoonsPage = {
         var coords = GalileanMoonsData.getDataAsObjectForJD(currentJD, false);        
         
         for (var satelliteName in paths){
-                paths[satelliteName].lastPos.X = (coords[satelliteName].ApparentRectangularCoordinates.X * jupiterSize + halfWidth)*1.0;
-                paths[satelliteName].lastPos.Y = (coords[satelliteName].ApparentRectangularCoordinates.Y * jupiterSize)*1.0; // we move down ....
+                paths[satelliteName].lastPos.X = (coords[satelliteName].ApparentRectangularCoordinates.X * jupiterRadius + halfWidth)*1.0;
+                paths[satelliteName].lastPos.Y = (coords[satelliteName].ApparentRectangularCoordinates.Y * jupiterRadius)*1.0; // we move down ....
         }
         currentJD += stepSize;
         
@@ -71,12 +71,14 @@ var GalileanMoonsPage = {
                 for (var satelliteName in paths)
                     paths[satelliteName].d = "M " + paths[satelliteName].lastPos.X + " " + paths[satelliteName].lastPos.Y;
                 
+                var planetInitialY = stepsCounter;
+                
                 for (var i = 0 ; i < 30 && stepsCounter < numberOfSteps ; i++, currentJD += stepSize, stepsCounter++) {
                     var coords = GalileanMoonsData.getDataAsObjectForJD(currentJD, false);
 
                     for (var satelliteName in paths){
-                        paths[satelliteName].lastPos.X = (coords[satelliteName].ApparentRectangularCoordinates.X * jupiterSize + halfWidth)*1.0;
-                        paths[satelliteName].lastPos.Y = (coords[satelliteName].ApparentRectangularCoordinates.Y * jupiterSize + stepsCounter)*1.0; // we move down ....
+                        paths[satelliteName].lastPos.X = (coords[satelliteName].ApparentRectangularCoordinates.X * jupiterRadius + halfWidth)*1.0;
+                        paths[satelliteName].lastPos.Y = (coords[satelliteName].ApparentRectangularCoordinates.Y * jupiterRadius + stepsCounter)*1.0; // we move down ....
                         paths[satelliteName].d += " L " + paths[satelliteName].lastPos.X + " " + paths[satelliteName].lastPos.Y;
                     }
                 }
@@ -84,12 +86,21 @@ var GalileanMoonsPage = {
                     for (var satelliteName in paths){
                         var pathElem = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "path");
                         pathElem.setAttribute("d", paths[satelliteName].d);
-                        pathElem.setAttribute("stroke", paths.color);
+                        pathElem.setAttribute("stroke", paths[satelliteName].color);
                         pathElem.setAttribute("fill", 'none');
                         pathElem.setAttribute("stroke-width", 2);
                         hostSVG.appendChild(pathElem);
                         pathElem.setAttribute("title", satelliteName);
                     }
+                    
+                 var planet = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "rect");
+            hostSVG.appendChild (planet);
+            planet.setAttribute ("fill", "orange");
+            planet.setAttribute ("x", halfWidth - jupiterRadius);
+            planet.setAttribute ("y", planetInitialY);
+            planet.setAttribute ("width", 2*jupiterRadius);
+            planet.setAttribute ("height", stepsCounter - planetInitialY);
+    
                 
                 if (stepsCounter < numberOfSteps) {
                     setTimeout (getDataForPaths, 10);
