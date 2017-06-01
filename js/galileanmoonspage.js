@@ -67,11 +67,12 @@ var GalileanMoonsPage = {
         
         var addNodeChild = PlanetPage.prototype["addNodeChild"];
         for (var satelliteName in paths){
-            var pathElem = addNodeChild(hostSVG, "path");
+            var pathElem = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "path");
             pathElem.setAttribute("d", paths[satelliteName]);
             pathElem.setAttribute("stroke", 'black');
             pathElem.setAttribute("fill", 'none');
             pathElem.setAttribute("stroke-width", 2);
+            hostSVG.appendChild(pathElem);
         }
         
         this.pageRendered = true;
