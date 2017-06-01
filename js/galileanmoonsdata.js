@@ -30,7 +30,7 @@ var GalileanMoonsData = {
 				var dateOfJD =  AAJS.Date.JD2Date(JD);
 				data['Month'] = dateOfJD.M;
 				data['Day'] = dateOfJD.D;
-                data['DayFraction'] = JD - Math.floor(JD);
+                data['DayFraction'] = (JD -0.5) - Math.floor(JD - 0.5);
 				
 				this.cache[JD] = data;
 			}
