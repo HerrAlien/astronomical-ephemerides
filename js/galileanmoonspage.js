@@ -34,7 +34,7 @@ var GalileanMoonsPage = {
             return;
         
         var stepSize = 1/24; // one hour.
-        var numberOfSteps = 30 / stepSize;
+        var numberOfSteps = numberOfDays / stepSize;
     
         var width = 1000;
         var height = Math.ceil (numberOfSteps);
@@ -51,32 +51,46 @@ var GalileanMoonsPage = {
         }
         currentJD += stepSize;
         
-        for (var i = 1; i < numberOfSteps; i++, currentJD += stepSize) {
-            var coords = GalileanMoonsData.getDataAsObjectForJD(currentJD, false);
-            for (var satelliteName in paths){
-                paths[satelliteName] += " L " + (coords[satelliteName].ApparentRectangularCoordinates.X * jupiterSize + halfWidth)*1.0
-                                      + " " + (coords[satelliteName].ApparentRectangularCoordinates.Y * jupiterSize + i)*1.0; // we move down ....
+        ( function (page) {
+            var stepsCounter = 1;
+            var satellitesPage = page;
+            function getDataForPaths () {
+                for (var i = 0 ; i < 30 && stepsCounter < numberOfSteps ; i++, currentJD += stepSize, stepsCounter++) {
+                    var coords = GalileanMoonsData.getDataAsObjectForJD(currentJD, false);
+                    for (var satelliteName in paths){
+                        paths[satelliteName] += " L " + (coords[satelliteName].ApparentRectangularCoordinates.X * jupiterSize + halfWidth)*1.0
+                                              + " " + (coords[satelliteName].ApparentRectangularCoordinates.Y * jupiterSize + stepsCounter)*1.0; // we move down ....
+                    }
+                }
+                
+                if (stepsCounter < numberOfSteps) {
+                    setTimeout (getDataForPaths, 10);
+                } else {
+                    satellitesPage.reset();
+                    var hostSVG = satellitesPage.hostElement.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "svg");
+                    hostSVG.setAttribute("width", width);
+                    hostSVG.setAttribute("height", height);
+                    hostSVG.setAttribute ("xmlns", "http://www.w3.org/2000/svg");
+                    satellitesPage.hostElement.appendChild(hostSVG);
+                          
+                    var addNodeChild = PlanetPage.prototype["addNodeChild"];
+                    for (var satelliteName in paths){
+                        var pathElem = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "path");
+                        pathElem.setAttribute("d", paths[satelliteName]);
+                        pathElem.setAttribute("stroke", 'black');
+                        pathElem.setAttribute("fill", 'none');
+                        pathElem.setAttribute("stroke-width", 2);
+                        hostSVG.appendChild(pathElem);
+                        pathElem.setAttribute("title", satelliteName);
+                    }
+        
+                    satellitesPage.pageRendered = true;
+
+                }
             }
-        }
-        
-        this.reset();
+            getDataForPaths();
+        })(this);
          
-        var hostSVG = this.hostElement.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "svg");
-        hostSVG.setAttribute("width", width);
-        hostSVG.setAttribute("height", height);
-        this.hostElement.appendChild(hostSVG);
-              
-        var addNodeChild = PlanetPage.prototype["addNodeChild"];
-        for (var satelliteName in paths){
-            var pathElem = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "path");
-            pathElem.setAttribute("d", paths[satelliteName]);
-            pathElem.setAttribute("stroke", 'black');
-            pathElem.setAttribute("fill", 'none');
-            pathElem.setAttribute("stroke-width", 2);
-            hostSVG.appendChild(pathElem);
-        }
-        
-        this.pageRendered = true;
     }
 };
 
