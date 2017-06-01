@@ -36,18 +36,12 @@ var GalileanMoonsPage = {
         var stepSize = 1/24; // one hour.
         var numberOfSteps = 30 / stepSize;
     
-        
-        this.reset();
-        
-        var hostSVG = this.hostElement;
         var width = 1000;
         var height = Math.ceil (numberOfSteps);
-        hostSVG.setAttribute("width", width);
-        hostSVG.setAttribute("height", height);
-       
+        
         var halfWidth = width/2;
         var jupiterSize = halfWidth / 30;
-        
+
         var paths = {'Io' : '', 'Europa' : '', 'Ganymede' : '', 'Callisto' : ''};
         var currentJD = startJD;
         var coords = GalileanMoonsData.getDataAsObjectForJD(currentJD, false);
@@ -65,6 +59,13 @@ var GalileanMoonsPage = {
             }
         }
         
+        this.reset();
+         
+        var hostSVG = this.hostElement.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "svg");
+        hostSVG.setAttribute("width", width);
+        hostSVG.setAttribute("height", height);
+        this.hostElement.appendChild(hostSVG);
+              
         var addNodeChild = PlanetPage.prototype["addNodeChild"];
         for (var satelliteName in paths){
             var pathElem = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "path");
