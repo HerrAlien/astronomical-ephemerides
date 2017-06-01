@@ -55,7 +55,7 @@ var GalileanMoonsPage = {
 
         var paths = {'Io' : {'d' : '', 'color' : 'blue', 'lastPos' : {'X' : 0, 'Y' : 0} },
                     'Europa' : {'d' : '', 'color' : 'red', 'lastPos' : {'X' : 0, 'Y' : 0}}, 
-                    'Ganymede' : {'d' : '', 'color' : 'lime', 'lastPos' : {'X' : 0, 'Y' : 0}}, 
+                    'Ganymede' : {'d' : '', 'color' : 'green', 'lastPos' : {'X' : 0, 'Y' : 0}}, 
                     'Callisto' : {'d' : '', 'color' : 'black', 'lastPos' : {'X' : 0, 'Y' : 0}}};
         var currentJD = startJD;
         var coords = GalileanMoonsData.getDataAsObjectForJD(currentJD, false);        
