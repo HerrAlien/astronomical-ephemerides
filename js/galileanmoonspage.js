@@ -33,21 +33,33 @@ var GalileanMoonsPage = {
         if (this.pageRendered)
             return;
         
+        this.reset();
+        
         var stepSize = 1/24; // one hour.
         var numberOfSteps = numberOfDays / stepSize;
     
         var width = 1000;
         var height = Math.ceil (numberOfSteps);
         
+        var hostSVG = this.hostElement.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "svg");
+        hostSVG.setAttribute("width", width);
+        hostSVG.setAttribute("height", height);
+        hostSVG.setAttribute ("xmlns", "http://www.w3.org/2000/svg");
+        this.hostElement.appendChild(hostSVG);
+
         var halfWidth = width/2;
         var jupiterSize = halfWidth / 30;
 
-        var paths = {'Io' : '', 'Europa' : '', 'Ganymede' : '', 'Callisto' : ''};
+        var paths = {'Io' : {'d' : '', 'color' : 'blue', 'lastPos' : {'X' : 0, 'Y' : 0} },
+                    'Europa' : {'d' : '', 'color' : 'red', 'lastPos' : {'X' : 0, 'Y' : 0}}, 
+                    'Ganymede' : {'d' : '', 'color' : 'lime', 'lastPos' : {'X' : 0, 'Y' : 0}}, 
+                    'Callisto' : {'d' : '', 'color' : 'black', 'lastPos' : {'X' : 0, 'Y' : 0}}};
         var currentJD = startJD;
-        var coords = GalileanMoonsData.getDataAsObjectForJD(currentJD, false);
+        var coords = GalileanMoonsData.getDataAsObjectForJD(currentJD, false);        
+        
         for (var satelliteName in paths){
-                paths[satelliteName] += "M " + (coords[satelliteName].ApparentRectangularCoordinates.X * jupiterSize + halfWidth)*1.0
-                                      + " " + (coords[satelliteName].ApparentRectangularCoordinates.Y * jupiterSize)*1.0; // we move down ....
+                paths[satelliteName].lastPos.X = (coords[satelliteName].ApparentRectangularCoordinates.X * jupiterSize + halfWidth)*1.0;
+                paths[satelliteName].lastPos.Y = (coords[satelliteName].ApparentRectangularCoordinates.Y * jupiterSize)*1.0; // we move down ....
         }
         currentJD += stepSize;
         
@@ -55,37 +67,34 @@ var GalileanMoonsPage = {
             var stepsCounter = 1;
             var satellitesPage = page;
             function getDataForPaths () {
+
+                for (var satelliteName in paths)
+                    paths[satelliteName].d = "M " + paths[satelliteName].lastPos.X + " " + paths[satelliteName].lastPos.Y;
+                
                 for (var i = 0 ; i < 30 && stepsCounter < numberOfSteps ; i++, currentJD += stepSize, stepsCounter++) {
                     var coords = GalileanMoonsData.getDataAsObjectForJD(currentJD, false);
+
                     for (var satelliteName in paths){
-                        paths[satelliteName] += " L " + (coords[satelliteName].ApparentRectangularCoordinates.X * jupiterSize + halfWidth)*1.0
-                                              + " " + (coords[satelliteName].ApparentRectangularCoordinates.Y * jupiterSize + stepsCounter)*1.0; // we move down ....
+                        paths[satelliteName].lastPos.X = (coords[satelliteName].ApparentRectangularCoordinates.X * jupiterSize + halfWidth)*1.0;
+                        paths[satelliteName].lastPos.Y = (coords[satelliteName].ApparentRectangularCoordinates.Y * jupiterSize + stepsCounter)*1.0; // we move down ....
+                        paths[satelliteName].d += " L " + paths[satelliteName].lastPos.X + " " + paths[satelliteName].lastPos.Y;
                     }
                 }
-                
-                if (stepsCounter < numberOfSteps) {
-                    setTimeout (getDataForPaths, 10);
-                } else {
-                    satellitesPage.reset();
-                    var hostSVG = satellitesPage.hostElement.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "svg");
-                    hostSVG.setAttribute("width", width);
-                    hostSVG.setAttribute("height", height);
-                    hostSVG.setAttribute ("xmlns", "http://www.w3.org/2000/svg");
-                    satellitesPage.hostElement.appendChild(hostSVG);
-                          
-                    var addNodeChild = PlanetPage.prototype["addNodeChild"];
+
                     for (var satelliteName in paths){
                         var pathElem = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "path");
-                        pathElem.setAttribute("d", paths[satelliteName]);
-                        pathElem.setAttribute("stroke", 'black');
+                        pathElem.setAttribute("d", paths[satelliteName].d);
+                        pathElem.setAttribute("stroke", paths.color);
                         pathElem.setAttribute("fill", 'none');
                         pathElem.setAttribute("stroke-width", 2);
                         hostSVG.appendChild(pathElem);
                         pathElem.setAttribute("title", satelliteName);
                     }
-        
+                
+                if (stepsCounter < numberOfSteps) {
+                    setTimeout (getDataForPaths, 10);
+                } else {
                     satellitesPage.pageRendered = true;
-
                 }
             }
             getDataForPaths();
