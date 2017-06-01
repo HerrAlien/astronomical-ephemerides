@@ -34,27 +34,45 @@ var GalileanMoonsPage = {
             return;
         
         var stepSize = 1/24; // one hour.
-        var numberOfSteps = numberOfDays / stepSize;
+        var numberOfSteps = 30 / stepSize;
     
-        var addNodeChild = PlanetPage.prototype["addNodeChild"];
-        var hostSVG = addNodeChild(this.hostElement, "svg");
-        hostSVG["xmlns"] = "http://www.w3.org/2000/svg";
-        hostSVG['width'] = 1000;
-        hostSVG['height'] = Math.ceil (numberOfSteps);
         
-        var jupiterSize = 900 / 27;
+        this.reset();
+        
+        var hostSVG = this.hostElement;
+        var width = 1000;
+        var height = Math.ceil (numberOfSteps);
+        hostSVG.setAttribute("width", width);
+        hostSVG.setAttribute("height", height);
+       
+        var halfWidth = width/2;
+        var jupiterSize = halfWidth / 30;
         
         var paths = {'Io' : '', 'Europa' : '', 'Ganymede' : '', 'Callisto' : ''};
         var currentJD = startJD;
-        for (var i = 0; i < numberOfSteps; i++, currentJD += stepSize) {
+        var coords = GalileanMoonsData.getDataAsObjectForJD(currentJD, false);
+        for (var satelliteName in paths){
+                paths[satelliteName] += "M " + (coords[satelliteName].ApparentRectangularCoordinates.X * jupiterSize + halfWidth)*1.0
+                                      + " " + (coords[satelliteName].ApparentRectangularCoordinates.Y * jupiterSize)*1.0; // we move down ....
+        }
+        currentJD += stepSize;
+        
+        for (var i = 1; i < numberOfSteps; i++, currentJD += stepSize) {
             var coords = GalileanMoonsData.getDataAsObjectForJD(currentJD, false);
             for (var satelliteName in paths){
-                paths[satelliteName] += " M " + coords[satelliteName].ApparentRectangularCoordinates.X * jupiterSize
-                                      + " " + coords[satelliteName].ApparentRectangularCoordinates.Y * jupiterSize + i; // we move down ....
+                paths[satelliteName] += " L " + (coords[satelliteName].ApparentRectangularCoordinates.X * jupiterSize + halfWidth)*1.0
+                                      + " " + (coords[satelliteName].ApparentRectangularCoordinates.Y * jupiterSize + i)*1.0; // we move down ....
             }
         }
         
-        
+        var addNodeChild = PlanetPage.prototype["addNodeChild"];
+        for (var satelliteName in paths){
+            var pathElem = addNodeChild(hostSVG, "path");
+            pathElem.setAttribute("d", paths[satelliteName]);
+            pathElem.setAttribute("stroke", 'black');
+            pathElem.setAttribute("fill", 'none');
+            pathElem.setAttribute("stroke-width", 2);
+        }
         
         this.pageRendered = true;
     }
