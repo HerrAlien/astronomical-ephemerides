@@ -15,4 +15,29 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 // planet object - {number, name, semidiameterFunctionName}
-var GalileanMoonsData = new MoonsData (AAJS.GalileanMoons.Calculate);
+function MoonsData (aajsDataFunction) {
+	this.cache = {};
+    this.aajsDataFunction = aajsDataFunction;
+}
+
+(function(){
+    MoonsData.prototype["reset"] = function () {
+        this.cache = {};
+    };
+    
+    MoonsData.prototype["getDataAsObjectForJD"] = function (JD, bHighPrecision) {
+        var data = this.cache[JD];
+            if (!data) {
+				data = this.aajsDataFunction(JD, bHighPrecision);
+
+				var dateOfJD =  AAJS.Date.JD2Date(JD);
+				data['Month'] = dateOfJD.M;
+				data['Day'] = dateOfJD.D;
+                data['DayFraction'] = (JD -0.5) - Math.floor(JD - 0.5);
+				
+				this.cache[JD] = data;
+			}
+		return data;
+    };
+    
+})();

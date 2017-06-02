@@ -15,4 +15,4 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 // planet object - {number, name, semidiameterFunctionName}
-var GalileanMoonsData = new MoonsData (AAJS.GalileanMoons.Calculate);
+var SaturnMoonsData = new MoonsData (AAJS.SaturnMoons.Calculate);
