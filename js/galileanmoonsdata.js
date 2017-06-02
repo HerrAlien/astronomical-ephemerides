@@ -35,24 +35,6 @@ var GalileanMoonsData = {
 				this.cache[JD] = data;
 			}
 		return data;
-    },
-    
-    // used for wavy thinggie ...
-    getDataForJD : function (JD, bHighPrecision) {
-        var data = this.getDataAsObjectForJD(JD, bHighPrecision);
-		return [
-                data.Month,
-                data.Day,
-                data.DayFraction,
-                data.Io.ApparentRectangularCoordinates.X,
-                data.Io.ApparentRectangularCoordinates.Y,
-                data.Europa.ApparentRectangularCoordinates.X,
-                data.Europa.ApparentRectangularCoordinates.Y,
-                data.Ganymede.ApparentRectangularCoordinates.X,
-                data.Ganymede.ApparentRectangularCoordinates.Y,
-                data.Callisto.ApparentRectangularCoordinates.X,
-                data.Callisto.ApparentRectangularCoordinates.Y
-                ];
-    }    
+    }
 };
 
