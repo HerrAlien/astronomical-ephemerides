@@ -29,9 +29,12 @@ function MoonsData (aajsDataFunction) {
         var data = this.cache[JD];
             if (!data) {
 				data = this.aajsDataFunction(JD, bHighPrecision);
-                data["ApparentElongation"] = Math.sqrt(data.ApparentRectangularCoordinates.X * data.ApparentRectangularCoordinates.X +
-                                                       data.ApparentRectangularCoordinates.Y * data.ApparentRectangularCoordinates.Y);
-
+                for (var moon in data) {
+                    data[moon].ApparentRectangularCoordinates["ApparentElongation"] = Math.sqrt(data[moon].ApparentRectangularCoordinates.X * data[moon].ApparentRectangularCoordinates.X +
+                                                       data[moon].ApparentRectangularCoordinates.Y * data[moon].ApparentRectangularCoordinates.Y);
+                }
+                
+                // when ApparentElongation is close or smaller than 1, we may have some events ..
 				var dateOfJD =  AAJS.Date.JD2Date(JD);
 				data['Month'] = dateOfJD.M;
 				data['Day'] = dateOfJD.D;
