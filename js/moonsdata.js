@@ -29,6 +29,8 @@ function MoonsData (aajsDataFunction) {
         var data = this.cache[JD];
             if (!data) {
 				data = this.aajsDataFunction(JD, bHighPrecision);
+                data["ApparentElongation"] = Math.sqrt(data.ApparentRectangularCoordinates.X * data.ApparentRectangularCoordinates.X +
+                                                       data.ApparentRectangularCoordinates.Y * data.ApparentRectangularCoordinates.Y);
 
 				var dateOfJD =  AAJS.Date.JD2Date(JD);
 				data['Month'] = dateOfJD.M;
