@@ -74,20 +74,24 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
         var currentJD = startJD;
         var coords = this.moonsData.getDataAsObjectForJD(currentJD, false);        
         
-        for (var satelliteName in this.paths){
-            this.paths[satelliteName].lastPos.X = coords[satelliteName].ApparentRectangularCoordinates.X * planetRadius;
-            this.paths[satelliteName].lastPos.Y = coords[satelliteName].ApparentRectangularCoordinates.Y * planetRadius;
-            this.paths[satelliteName].lastPos["elongation"] = Math.sqrt(this.paths[satelliteName].lastPos.X * this.paths[satelliteName].lastPos.X + this.paths[satelliteName].lastPos.Y * this.paths[satelliteName].lastPos.Y);
+        for (var satelliteName in this.paths) {
+                this.paths[satelliteName].lastPos.X = coords[satelliteName].ApparentRectangularCoordinates.X;
+                this.paths[satelliteName].lastPos['elongation'] = coords[satelliteName].ApparentRectangularCoordinates.ApparentElongation;
         }
         
-        ( function (page) {
-            var stepsCounter = 0;
+       ( function (page) {
+            var stepsCounter = 1;
             var satellitesPage = page;
             function getDataForPaths () {
 
-                for (var satelliteName in satellitesPage.paths)
-                    satellitesPage.paths[satelliteName].d = "M " + (satellitesPage.paths[satelliteName].lastPos.X+ halfWidth)*1.0 + " " 
-                                                            + (satellitesPage.paths[satelliteName].lastPos.Y+ stepsCounter + vPadding)*1.0;
+                for (var satelliteName in satellitesPage.paths) {
+                    var elongation = satellitesPage.paths[satelliteName].lastPos.elongation * planetRadius;
+                    if (satellitesPage.paths[satelliteName].lastPos.X < 0)
+                        elongation = -elongation;
+                    
+                     satellitesPage.paths[satelliteName].d = "M " + (elongation + halfWidth) + " " 
+                                                            + (stepsCounter -1 + vPadding);
+                }
                 
                 var planetInitialY = stepsCounter;
                 var dayLines = [];
@@ -96,20 +100,25 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
                     var coords = satellitesPage.moonsData.getDataAsObjectForJD(currentJD, false);
 
                     for (var satelliteName in satellitesPage.paths){
-                        satellitesPage.paths[satelliteName].lastPos.X = coords[satelliteName].ApparentRectangularCoordinates.X * planetRadius;
-                        satellitesPage.paths[satelliteName].lastPos.Y = coords[satelliteName].ApparentRectangularCoordinates.Y * planetRadius; // we move down ....
-                        satellitesPage.paths[satelliteName].lastPos["elongation"] = Math.sqrt(satellitesPage.paths[satelliteName].lastPos.X * satellitesPage.paths[satelliteName].lastPos.X + satellitesPage.paths[satelliteName].lastPos.Y * satellitesPage.paths[satelliteName].lastPos.Y);
 
-                        satellitesPage.paths[satelliteName].d += " L " + (satellitesPage.paths[satelliteName].lastPos.X+ halfWidth)*1.0 + " " 
-                                                                 + (satellitesPage.paths[satelliteName].lastPos.Y+ stepsCounter + vPadding)*1.0;
+                        satellitesPage.paths[satelliteName].lastPos['elongation'] = coords[satelliteName].ApparentRectangularCoordinates.ApparentElongation;
+                        satellitesPage.paths[satelliteName].lastPos.X = coords[satelliteName].ApparentRectangularCoordinates.X;
+                        
+                        var elongation = satellitesPage.paths[satelliteName].lastPos.elongation * planetRadius;
+                        if (satellitesPage.paths[satelliteName].lastPos.X < 0)
+                            elongation = -elongation;
+                    
+                        satellitesPage.paths[satelliteName].d += " L " + (elongation + halfWidth) + " " 
+                                                            + (stepsCounter + vPadding);
                     }
                     
-                    if (coords.DayFraction < stepSize)
+                    if (coords.DayFraction < stepSize){
                         dayLines[dayLines.length] = {
                             "YCoord" : stepsCounter + vPadding,
                             "Month" : coords.Month,
                             "Day" : coords.Day
                         };
+                    }
                 }
 
                 for (var satelliteName in satellitesPage.paths){
