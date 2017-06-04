@@ -74,40 +74,23 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
         var currentJD = startJD;
         var coords = this.moonsData.getDataAsObjectForJD(currentJD, false);        
         
-        // populate some past data - we need it to determine our position
-        for (var satelliteName in this.paths)
-            this.paths[satelliteName].lastPos["elongations"] = [];
-        
-        currentJD -= stepSize;
-        for (var i = 0; i < 3; i++, currentJD -= stepSize) {
-            var coords = this.moonsData.getDataAsObjectForJD(currentJD, false);
-            for (var satelliteName in this.paths)
-                this.paths[satelliteName].lastPos["elongations"][i] = coords[satelliteName].ApparentRectangularCoordinates.ApparentElongation * planetRadius;
-        }
-        
-        currentJD = startJD;
-        var coords = this.moonsData.getDataAsObjectForJD(currentJD, false);
         for (var satelliteName in this.paths) {
                 this.paths[satelliteName].lastPos.X = coords[satelliteName].ApparentRectangularCoordinates.X;
-                this.paths[satelliteName]['lastSign'] = this.paths[satelliteName].lastPos.X  > 0 ? 1.0 : -1.0;
+                this.paths[satelliteName].lastPos['elongation'] = coords[satelliteName].ApparentRectangularCoordinates.ApparentElongation;
         }
         
-        function atLocalMinimum (values) {
-            return values[0] > values[1] && values[1] < values[2];
-        }
-        
-        ( function (page) {
-            var stepsCounter = 0;
+       ( function (page) {
+            var stepsCounter = 1;
             var satellitesPage = page;
             function getDataForPaths () {
 
                 for (var satelliteName in satellitesPage.paths) {
-                    // determine the sign
-                    if (atLocalMinimum(satellitesPage.paths[satelliteName].lastPos["elongations"]))
-                        satellitesPage.paths[satelliteName]['lastSign'] *= -1;
+                    var elongation = satellitesPage.paths[satelliteName].lastPos.elongation * planetRadius;
+                    if (satellitesPage.paths[satelliteName].lastPos.X < 0)
+                        elongation = -elongation;
                     
-                    satellitesPage.paths[satelliteName].d = "M " + (satellitesPage.paths[satelliteName].lastPos.elongations[0] * satellitesPage.paths[satelliteName]['lastSign'] + halfWidth)*1.0 + " " 
-                                                            + (stepsCounter + vPadding)*1.0;
+                     satellitesPage.paths[satelliteName].d = "M " + (elongation + halfWidth) + " " 
+                                                            + (stepsCounter -1 + vPadding);
                 }
                 
                 var planetInitialY = stepsCounter;
@@ -118,27 +101,24 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
 
                     for (var satelliteName in satellitesPage.paths){
 
+                        satellitesPage.paths[satelliteName].lastPos['elongation'] = coords[satelliteName].ApparentRectangularCoordinates.ApparentElongation;
                         satellitesPage.paths[satelliteName].lastPos.X = coords[satelliteName].ApparentRectangularCoordinates.X;
                         
-                        satellitesPage.paths[satelliteName].lastPos["elongations"][2] = satellitesPage.paths[satelliteName].lastPos["elongations"][1];
-                        satellitesPage.paths[satelliteName].lastPos["elongations"][1] = satellitesPage.paths[satelliteName].lastPos["elongations"][0];
-                        satellitesPage.paths[satelliteName].lastPos["elongations"][0] = coords[satelliteName].ApparentRectangularCoordinates.ApparentElongation * planetRadius;
+                        var elongation = satellitesPage.paths[satelliteName].lastPos.elongation * planetRadius;
+                        if (satellitesPage.paths[satelliteName].lastPos.X < 0)
+                            elongation = -elongation;
                     
-                        // determine the sign
-                        if (atLocalMinimum(satellitesPage.paths[satelliteName].lastPos["elongations"]))
-                            satellitesPage.paths[satelliteName]['lastSign'] *=-1;
-                       
-                   
-                        satellitesPage.paths[satelliteName].d += " L " + (satellitesPage.paths[satelliteName].lastPos.elongations[0] * satellitesPage.paths[satelliteName]['lastSign'] + halfWidth)*1.0 + " " 
-                                                            + (stepsCounter + vPadding)*1.0;
+                        satellitesPage.paths[satelliteName].d += " L " + (elongation + halfWidth) + " " 
+                                                            + (stepsCounter + vPadding);
                     }
                     
-                    if (coords.DayFraction < stepSize)
+                    if (coords.DayFraction < stepSize){
                         dayLines[dayLines.length] = {
                             "YCoord" : stepsCounter + vPadding,
                             "Month" : coords.Month,
                             "Day" : coords.Day
                         };
+                    }
                 }
 
                 for (var satelliteName in satellitesPage.paths){
