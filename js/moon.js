@@ -51,7 +51,11 @@ var MoonData = {
 				data[i++] = transitHour;
 
             
-            data[i] = posData.parallax;
+            data[i++] = posData.parallax;
+            var selenographicCoordsOfSun = AAJS.Moon.CalculateSelenographicPositionOfSun (JD, true);
+            // colongitude
+            data[i++] = 90 - selenographicCoordsOfSun.l0;
+            data[i++] = selenographicCoordsOfSun.b0;
             
             this.cache[key] = data;
         }
@@ -187,7 +191,17 @@ var MoonData = {
                     "0" : "",
                     "1" : "''",
                     "longText" : "Equatorial horizontal parallax"
-                }
+                },
+            "22" :  {
+                    "0" : "90-l0",
+                    "1" : "\u00B0",
+                    "longText" : "colongitude of the Sun"
+                },
+            "23" :  {
+                    "0" : "b0",
+                    "1" : "\u00B0",
+                    "longText" : "latitude of the Sun"
+                },
 
 
             },
@@ -247,6 +261,9 @@ var MoonData = {
             displayableLine[di++] = sexagesimalParallax.Ord3;
             displayableLine[di++] = sexagesimalParallax.Ord2;
             displayableLine[di++] = sexagesimalParallax.Ord1;
+            
+            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
+            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
 
             return displayableLine;
         },
