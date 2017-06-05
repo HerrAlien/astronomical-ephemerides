@@ -111,7 +111,7 @@ function PlanetPage (planetDataSource) {
             this.lastAppendedLine = false;
             if (!this.tablePopulated) {
                 this.reset();
-                this.addPlanetTableHeader (this.table, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
+                this.addTableHeader (this.table, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
 
                 var delayedAppendData = function (JD, endJD, steps) {
                     if (JD >= endJD)
@@ -124,7 +124,7 @@ function PlanetPage (planetDataSource) {
                         pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD));
                     }
                     
-                    pageObj.addPlanetTableHeader (pageObj.table, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
+                    pageObj.addTableHeader (pageObj.table, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
                     
                     setTimeout (function() {delayedAppendData (JD, endJD, steps); },1 );
                 }
@@ -153,7 +153,7 @@ function PlanetPage (planetDataSource) {
             this.lastAppendedLine = dataArray;
         };
         
-    PlanetPage.prototype["addPlanetTableHeader"] = function (table, classes) {
+    PlanetPage.prototype["addTableHeader"] = function (table, classes) {
         var rows = [];
         for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
             var row = this.addNodeChild (table, "tr");
