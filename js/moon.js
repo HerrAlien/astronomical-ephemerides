@@ -311,7 +311,15 @@ var MoonData = {
                 }
                 rows[rowIndex] = row;
             }
-            return {"row1" : rows[0], "row2" : rows[1] };
+            
+            var result = {"row1" : rows[0], "row2" : rows[1] };
+            
+            result.row1.cells[22].textContent = "90-l";
+            this.addNodeChild(result.row1.cells[22], "sub", "0");
+            result.row1.cells[23].textContent = "b";
+            this.addNodeChild(result.row1.cells[23], "sub", "0");
+            
+            return result;
         },
         
         displayPage : function(JD, daysAfter, stepSize) {
