@@ -75,7 +75,7 @@ var MoonData = {
     var MoonPage = {
         table : document.getElementById("Moon"),
         tablePopulated : false,
-        
+        dataSource : MoonData,
         tableHeaderInfo : {
             "0" : {
                     "0" : "Date",
@@ -214,7 +214,7 @@ var MoonData = {
                 this.table.removeChild(this.table.firstChild);
             }
             this.tablePopulated = false;
-            MoonData.reset();
+            this.dataSource.reset();
         },
         
         lastDisplayedMonth : -1,
@@ -330,13 +330,15 @@ var MoonData = {
         },
         
         displayPage : function(JD, daysAfter, stepSize) {
+            var pageObj = this;
             if (!AAJS.AllDependenciesLoaded())
-                return setTimeout (function() { MoonPage.displayPage(JD, daysAfter, stepSize); }, 300);
+                return setTimeout (function() { pageObj.displayPage(JD, daysAfter, stepSize); }, 300);
 
             this.lastAppendedLine = false;
             if (!MoonPage.tablePopulated) {
                 this.reset();
                 this.addTableHeader (this.table, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
+                
                 var delayedAppendData = function (JD, endJD, steps) {
                     if (JD == endJD)
                         return;
@@ -345,13 +347,13 @@ var MoonData = {
                     for (i = 0; i < steps; i++, JD += stepSize) {
                         if (JD >= endJD)
                             return;
-                        MoonPage.appendLine (MoonPage.prepareLineForView(MoonData.getDataForJD(JD)));
+                        pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD)));
                     }
-                    MoonPage.addTableHeader (MoonPage.table, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
+                    pageObj.addTableHeader (pageObj.table, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
                     setTimeout (function() {delayedAppendData (JD, endJD, steps); }, 1);
                 }
                 delayedAppendData (JD, JD + daysAfter, 15);
-                MoonPage.tablePopulated = true;
+                pageObj.tablePopulated = true;
             }
         }
     };
