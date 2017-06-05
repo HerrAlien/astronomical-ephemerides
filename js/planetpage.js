@@ -95,9 +95,14 @@ function PlanetPage (planetDataSource) {
                 "longText" : "The phase of the planet (illuminated fraction of disk, as seen from Earth)"
             }
     };
+
+    this.lastDisplayedMonth = -1;
+    this.months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 }
 
 (function(){
+    
+    
     PlanetPage.prototype["displayPage"] = function (JD, daysAfter, stepSize) {
             var pageObj = this;
             if (!AAJS.AllDependenciesLoaded())
@@ -176,16 +181,18 @@ function PlanetPage (planetDataSource) {
     };
 		
 	PlanetPage.prototype["prepareLineForView"] = function (line, JD) {
-            var displayableLine = [];
+
+           var displayableLine = [];
+
+            displayableLine[0] = "";
+            if (line[0] != this.lastDisplayedMonth) { // first day of the month
+                displayableLine[0] = this.months[line[0]]; // set displayableLine[0] to the name of the month
+                this.lastDisplayedMonth = line[0];
+            }
+
             // copy the day verbatim
             displayableLine[1] = line[1];
-            if (line[1] == 1 || PageTimeInterval.stepSize > 1) { // first day of the month
-                var months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                displayableLine[0] = months[line[0]]; // set displayableLine[0] to the name of the month
-            }
-            else
-                displayableLine[0] = "";
-            
+           
             var di = 2;
             var si = 2;
             var sexagesimalRA = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);

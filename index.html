@@ -6,6 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Astronomical Ephemeris</title>
 	<link rel="stylesheet" type="text/css" href="style/default.css"  />
+    
+    <script type="text/javascript">
+        (function(){
+            var URL = document.URL;
+            if (URL.slice(-1) == '/') 
+                return;
+            if (URL.slice(-4) == 'html')
+                return;
+            location.href = URL + "/";
+        })();
+    </script>
 
 </head>
 

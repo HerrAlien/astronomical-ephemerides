@@ -51,7 +51,11 @@ var MoonData = {
 				data[i++] = transitHour;
 
             
-            data[i] = posData.parallax;
+            data[i++] = posData.parallax;
+            var selenographicCoordsOfSun = AAJS.Moon.CalculateSelenographicPositionOfSun (JD, true);
+            // colongitude
+            data[i++] = 90 - selenographicCoordsOfSun.l0;
+            data[i++] = selenographicCoordsOfSun.b0;
             
             this.cache[key] = data;
         }
@@ -187,7 +191,17 @@ var MoonData = {
                     "0" : "",
                     "1" : "''",
                     "longText" : "Equatorial horizontal parallax"
-                }
+                },
+            "22" :  {
+                    "0" : "90-l0",
+                    "1" : "\u00B0",
+                    "longText" : "colongitude of the Sun"
+                },
+            "23" :  {
+                    "0" : "b0",
+                    "1" : "\u00B0",
+                    "longText" : "latitude of the Sun"
+                },
 
 
             },
@@ -199,17 +213,21 @@ var MoonData = {
             this.tablePopulated = false;
             MoonData.reset();
         },
+        
+        lastDisplayedMonth : -1,
+        months : ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
        
         prepareLineForView : function (line) {
             var displayableLine = [];
+
+            displayableLine[0] = "";
+            if (line[0] != this.lastDisplayedMonth) { // first day of the month
+                displayableLine[0] = this.months[line[0]]; // set displayableLine[0] to the name of the month
+                this.lastDisplayedMonth = line[0];
+            }
+
             // copy the day verbatim
             displayableLine[1] = line[1];
-            if (line[1] == 1  || PageTimeInterval.stepSize > 1) { // first day of the month
-                var months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                displayableLine[0] = months[line[0]]; // set displayableLine[0] to the name of the month
-            }
-            else
-                displayableLine[0] = "";
             
             var di = 2;
             var si = 2;
@@ -247,6 +265,9 @@ var MoonData = {
             displayableLine[di++] = sexagesimalParallax.Ord3;
             displayableLine[di++] = sexagesimalParallax.Ord2;
             displayableLine[di++] = sexagesimalParallax.Ord1;
+            
+            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
+            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
 
             return displayableLine;
         },
@@ -294,7 +315,15 @@ var MoonData = {
                 }
                 rows[rowIndex] = row;
             }
-            return {"row1" : rows[0], "row2" : rows[1] };
+            
+            var result = {"row1" : rows[0], "row2" : rows[1] };
+            
+            result.row1.cells[22].textContent = "90-l";
+            this.addNodeChild(result.row1.cells[22], "sub", "0");
+            result.row1.cells[23].textContent = "b";
+            this.addNodeChild(result.row1.cells[23], "sub", "0");
+            
+            return result;
         },
         
         displayPage : function(JD, daysAfter, stepSize) {
