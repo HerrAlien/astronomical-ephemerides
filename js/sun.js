@@ -183,16 +183,20 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                 }
 
             },
+        lastDisplayedMonth : -1,
+        months : ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+       
         prepareLineForView : function (line) {
             var displayableLine = [];
+
+            displayableLine[0] = "";
+            if (line[0] != this.lastDisplayedMonth) { // first day of the month
+                displayableLine[0] = this.months[line[0]]; // set displayableLine[0] to the name of the month
+                this.lastDisplayedMonth = line[0];
+            }
+
             // copy the day verbatim
             displayableLine[1] = line[1];
-            if (line[1] == 1  || PageTimeInterval.stepSize > 1) { // first day of the month
-                var months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                displayableLine[0] = months[line[0]]; // set displayableLine[0] to the name of the month
-            }
-            else
-                displayableLine[0] = "";
             
             var di = 2;
             var si = 2;
