@@ -53,8 +53,11 @@ var MoonData = {
             
             data[i++] = posData.parallax;
             var selenographicCoordsOfSun = AAJS.Moon.CalculateSelenographicPositionOfSun (JD, true);
-            // colongitude
-            data[i++] = 90 - selenographicCoordsOfSun.l0;
+            var colongitude = 90 - selenographicCoordsOfSun.l0;
+            if (colongitude < 0)
+                colongitude += 360;
+            
+            data[i++] = colongitude;
             data[i++] = selenographicCoordsOfSun.b0;
             
             this.cache[key] = data;
