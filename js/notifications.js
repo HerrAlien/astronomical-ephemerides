@@ -32,7 +32,22 @@ var Notifications = {
 			}
 		};
 		return a;
+	},
+	NewOneParameter : function () { 
+		var a = {
+			_handlers : [],
+			add : function (handler) {
+				a._handlers.push (handler);
+			},
+			notify : function (param) {
+				var i = 0;
+				for (i = 0; i < a._handlers.length; i++)
+					a._handlers[i](param);
+			}
+		};
+		return a;
 	}
+
 };
 
 try {
