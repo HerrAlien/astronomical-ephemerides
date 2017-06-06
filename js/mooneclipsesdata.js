@@ -50,14 +50,14 @@ var MoonEclipsesData = {
         } while (Math.abs(oppositionTimeCorrection) > eps);
         
         return {
-                    "RaSun" : sunData[2],
+                    "RaSun" : sunData[2] * 15,
                     "DecSun" : sunData[3],
-                    "RaMoon" : moonData[2],
+                    "RaMoon" : moonData[2] * 15,
                     "DecMoon" : moonData[3],
                     
-                    "dRaSun" : (dSunData[2] - sunData[2]),
+                    "dRaSun" : (dSunData[2] - sunData[2]) * 15,
                     "dDecSun": (dSunData[3] - sunData[3]),
-                    "dRaMoon" : (dMoonData[2] - moonData[2]),
+                    "dRaMoon" : (dMoonData[2] - moonData[2]) * 15,
                     "dDecMoon": (dMoonData[3] - moonData[3]),
                     
                     "ParallaxSun" : sunData[10],
@@ -70,27 +70,29 @@ var MoonEclipsesData = {
             };
     },
     
-    getDates : function (startJD, endJD) {
-        // get a start K, and an end K
+    addTimingsAndRadii : function (opposition) {
+        // first, compute penumbral and umbral radii
+        // then compute the minimum distance between the center of the Moon and the axes of these cones
+        // if the minimum distance is smaller than one of the radii, we have an eclipse.
+    },
+    
+    computeEclipses : function (startJD, endJD) {
         var lastOpposition = this.getOppositionAroundJD(endJD);
         
         function calculateEclipseForJD (JD) {
             if (JD > lastOpposition.oppositionJD)
                 return;
-            
-            // check if k has an eclipse
-                var oppositionData = MoonEclipsesData.getOppositionAroundJD (JD);
-                oppositionData = MoonEclipsesData.AddTimingsAndRadii(oppositionData);
-                if (oppositionData.eclipse)
-                    setTimeout (function () { MoonEclipsesData.onNewEclipse.notify (oppositionData); }, 1);
-            }
-            
-            setTimeout (function () { calculateEclipseForJD (JD + MoonEclipsesData.sinodicPeriod); }, 1);
+                
+            var oppositionData = MoonEclipsesData.getOppositionAroundJD (JD);
+            oppositionData = MoonEclipsesData.addTimingsAndRadii(oppositionData);
+            if (oppositionData.eclipse)
+                setTimeout (function () { MoonEclipsesData.onNewEclipse.notify (oppositionData); }, 1);
         }
+        setTimeout (function () { calculateEclipseForJD (JD + MoonEclipsesData.sinodicPeriod); }, 1);
         
         calculateEclipseForJD (startJD);
-        
     },
+    
     reset : function () {
 
     }
