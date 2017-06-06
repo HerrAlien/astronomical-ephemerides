@@ -15,75 +15,84 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 // planet object - {number, name, semidiameterFunctionName}
-var MoonEclipsesData : {
+var MoonEclipsesData = {
     
-	onNewEclipse : Ntifications.NewOneParameter(),
+	onNewEclipse : Notifications.NewOneParameter(),
+    
+    sinodicPeriod : 29.530587981,
+    
+    getOppositionAroundJD : function (JD) {
+        var jd = JD;
+        var sunData = false;
+        var moonData = false;
+        var eps = 1e-4;
+        var dSunData = false;
+        var dMoonData = false;
+        var oppositionTimeCorrection = 0;
+        
+        do {
+            
+            var dJd = 1/24;
+            sunData = SunData.getDataForJD (jd);
+            moonData = MoonData.getDataForJD (jd);
+            
+            dSunData = SunData.getDataForJD (jd + dJd);
+            dMoonData = MoonData.getDataForJD (jd + dJd);
+            
+            var opposingSunRA = 12 + sunData[2];
+            if (opposingSunRA > 24)
+                opposingSunRA -= 24;
+            
+            oppositionTimeCorrection = (opposingSunRA - moonData[2]) /
+                                           ((dMoonData[2] - moonData[2]) - (dSunData[2] - sunData[2]));
+            jd += oppositionTimeCorrection/24;
+            
+        } while (Math.abs(oppositionTimeCorrection) > eps);
+        
+        return {
+                    "RaSun" : sunData[2],
+                    "DecSun" : sunData[3],
+                    "RaMoon" : moonData[2],
+                    "DecMoon" : moonData[3],
+                    
+                    "dRaSun" : (dSunData[2] - sunData[2]),
+                    "dDecSun": (dSunData[3] - sunData[3]),
+                    "dRaMoon" : (dMoonData[2] - moonData[2]),
+                    "dDecMoon": (dMoonData[3] - moonData[3]),
+                    
+                    "ParallaxSun" : sunData[10],
+                    "ParallaxMoon" : moonData[8],
+                    
+                    "MoonDiameter" : moonData[6],
+                    
+                    "oppositionJD" : jd,
+                    "eclipse" : false
+            };
+    },
     
     getDates : function (startJD, endJD) {
         // get a start K, and an end K
-        var startK = Math.floor(AAJS.Moon.kForJD (startJD)) + 0.5;
-        var endK = Math.floor(AAJS.Moon.kForJD (endJD)) - 0.5;
+        var lastOpposition = this.getOppositionAroundJD(endJD);
         
-        function checkK (k) {
-            if (k > endK)
+        function calculateEclipseForJD (JD) {
+            if (JD > lastOpposition.oppositionJD)
                 return;
             
             // check if k has an eclipse
-            var hasEclipse = false;
-            
-            if (hasEclipse) {
-                // get the JD for the k
-                var JD = AAJS.Moon.JDforK (k);
-                // check if this is the time of the opposition
-                var initialSunData = SunData.getDataForJD (JD);
-                var initialMoonData = MoonData.getDataForJD (JD);
-                var halfHourLaterJD = JD + 0.5/24;
-                var halfHourLaterSunData = SunData.getDataForJD (halfHourLaterJD);
-                var halfHourLaterMooonData = MoonData.getDataForJD (halfHourLaterJD);
-                var eclipseData = {
-                    "RaSun" : initialSunData[2],
-                    "DecSun" : initialSunData[3],
-                    "RaMoon" : initialMoonData[2],
-                    "DecMoon" : initialMoonData[3],
-                    
-                    "dRaSun" : 2* (halfHourLaterSunData[2] - initialSunData[2]),
-                    "dDecSun": 2* (halfHourLaterSunData[3] - initialSunData[3]),
-                    "dRaMoon" : 2* (oneHourLaterMoonData[2] - initialMoonData[2]),
-                    "dDecMoon": 2* (oneHourLaterMoonData[3] - initialMoonData[3]),
-                    
-                    "ParallaxSun" : initialSunData[10],
-                    "ParallaxMoon" : initialMoonData[8],
-                    
-                    "MoonDiameter" : initialMoonData[6],
-                    
-                    "oppositionJD" : JD
-                }
-                
-                var oppositionTimeCorrection = (12 + initialSunData[2] - initialMoonData[2]) /
-                                               (eclipseData.dRaMoon - eclipseData.dRaSun);
-                if (Math.abs (oppositionTimeCorrection) > 1/60) {
-                    eclipseData.oppositionJD = JD + oppositionTimeCorrection / 24;
-                    
-                    var sunData = SunData.getDataForJD (JD);
-                    var moonData = MoonData.getDataForJD (JD);
-                    eclipseData["RaSun"] = sunData[2];
-                    eclipseData["DecSun"] = sunData[3];
-                    eclipseData["RaMoon"] = moonData[2];
-                    eclipseData["DecMoon"] = moonData[3];
-                }
-                
-                eclipseData = MoonEclipsesData.AddTimingsAndRadii(eclipseData);
-                setTimeout (function () { MoonEclipsesData.onNewEclipse.notify (eclipseData); }, 1);
+                var oppositionData = MoonEclipsesData.getOppositionAroundJD (JD);
+                oppositionData = MoonEclipsesData.AddTimingsAndRadii(oppositionData);
+                if (oppositionData.eclipse)
+                    setTimeout (function () { MoonEclipsesData.onNewEclipse.notify (oppositionData); }, 1);
             }
             
-            
-            
-            setTimeout (function () { checkK (k + 1); }, 1);
+            setTimeout (function () { calculateEclipseForJD (JD + MoonEclipsesData.sinodicPeriod); }, 1);
         }
+        
+        calculateEclipseForJD (startJD);
         
     },
     reset : function () {
-        this.eclipsesDates = []
+
     }
 };
 
