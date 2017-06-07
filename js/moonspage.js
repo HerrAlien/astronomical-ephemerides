@@ -44,12 +44,13 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
     };
     
     MoonsPage.prototype["displayPage"] = function (startJD, numberOfDays) {
-        if (this.pageRendered)
-            return;
         
         var pageObj = this;
-        if (!AAJS.AllDependenciesLoaded())
+        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
             return setTimeout (function() { pageObj.displayPage(startJD, numberOfDays); }, 300);
+
+        if (this.pageRendered)
+            return;
 
         this.reset();
         
