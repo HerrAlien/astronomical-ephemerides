@@ -51,74 +51,26 @@
             actualOutput : false,
             test : function () {
                 var k = AAJS.Moon.kForJD (this.input);
-                this.output = AAJS.Moon.JDforK (k);
-                return this.output == this.expectedOutput;
+                this.actualOutput = AAJS.Moon.JDforK (k);
+                return this.actualOutput == this.expectedOutput;
             }
         },
 
+        {
+            name : "getOppositionAroundJD (1985-05-04)",
+            input : AAJS.Date.DateToJD (1985, 05, 04, true),
+            expectedOutput :  AAJS.Date.DateToJD (1985, 05, 04, true) + (19 + 36.3/60)/24,
+            actualOutput : false,
+            test : function () {
+                this.actualOutput = MoonEclipsesData.getOppositionAroundJD (this.input).oppositionJD;
+                return testlib.doubleEq (this.actualOutput, this.expectedOutput, 4e-3);
+            }
+        },
         
        ];
             
         testlib.runTests (tests);
     })();
-    
-    (function(){
-    
-    
-     function getOppositionAroundJD (JD) {
-        var jd = JD;
-        var sunData = false;
-        var moonData = false;
-        var eps = 1e-4;
-        var dSunData = false;
-        var dMoonData = false;
-        var oppositionTimeCorrection = 0;
-        
-        do {
-            
-            var dJd = 1/24;
-            sunData = SunData.getDataForJD (jd);
-            moonData = MoonData.getDataForJD (jd);
-            
-            dSunData = SunData.getDataForJD (jd + dJd);
-            dMoonData = MoonData.getDataForJD (jd + dJd);
-            
-            var opposingSunRA = 12 + sunData[2];
-            if (opposingSunRA > 24)
-                opposingSunRA -= 24;
-            
-            oppositionTimeCorrection = (opposingSunRA - moonData[2]) /
-                                           ((dMoonData[2] - moonData[2]) - (dSunData[2] - sunData[2]));
-            jd += oppositionTimeCorrection/24;
-            
-        }while (Math.abs(oppositionTimeCorrection) > eps);
-        
-        return {
-                    "RaSun" : sunData[2],
-                    "DecSun" : sunData[3],
-                    "RaMoon" : moonData[2],
-                    "DecMoon" : moonData[3],
-                    
-                    "dRaSun" : (dSunData[2] - sunData[2]),
-                    "dDecSun": (dSunData[3] - sunData[3]),
-                    "dRaMoon" : (dMoonData[2] - moonData[2]),
-                    "dDecMoon": (dMoonData[3] - moonData[3]),
-                    
-                    "ParallaxSun" : sunData[10],
-                    "ParallaxMoon" : moonData[8],
-                    
-                    "MoonDiameter" : moonData[6],
-                    
-                    "oppositionJD" : jd
-                }
-    };
-    
-    
-       var eData = getOppositionAroundJD (AAJS.Date.DateToJD (1992, 4, 1, true));
-                    var a = 0;
-                    a++; // 2448724.5 -> 2448729.8318841346 // 2448713.5-> 2448700.421977032
-    
-    })();
-            
+                
         </script>
 

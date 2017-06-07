@@ -32,7 +32,7 @@ var MoonEclipsesData = {
         
         do {
             
-            var dJd = 1/24;
+            var dJd = (1/24);
             sunData = SunData.getDataForJD (jd);
             moonData = MoonData.getDataForJD (jd);
             
@@ -43,9 +43,9 @@ var MoonEclipsesData = {
             if (opposingSunRA > 24)
                 opposingSunRA -= 24;
             
-            oppositionTimeCorrection = (opposingSunRA - moonData[2]) /
+            oppositionTimeCorrection = dJd * (opposingSunRA - moonData[2]) /
                                            ((dMoonData[2] - moonData[2]) - (dSunData[2] - sunData[2]));
-            jd += oppositionTimeCorrection/24;
+            jd += oppositionTimeCorrection;
             
         } while (Math.abs(oppositionTimeCorrection) > eps);
         
