@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var JupiterData = new PlanetData({ number: 4, name: "Jupiter", 
-                               semidiameterFunctionName : AAJS.Diameters.JupiterEquatorialSemidiameterB });
+                               semidiameterFunctionName :   function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.JupiterEquatorialSemidiameterB (delta); } } );				
 
 // upgrade the object to handle physical data as well.
 (function () {    

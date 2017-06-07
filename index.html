@@ -11,11 +11,8 @@
     <script type="text/javascript">
         (function(){
             var URL = document.URL;
-            if (URL.slice(-1) == '/') 
-                return;
-            if (URL.slice(-4) == 'html')
-                return;
-            location.href = URL + "/";
+            if (URL.slice(-9) == "ephemeris")
+                location.href = URL + "/";
         })();
     </script>
 
@@ -199,7 +196,7 @@
     var previousPage = false;
     var currentActiveLink = false;
     
-    window.addEventListener("hashchange", function(){
+    function onhashchange(){
         var hash = location.hash;
         var pageName = hash.slice(1);
         previousPage = document.getElementById(pageName); 
@@ -207,7 +204,9 @@
         if (Pages[pageName] && PageTimeInterval.JD){
             Pages[pageName].displayPage(PageTimeInterval.JD, PageTimeInterval.days, PageTimeInterval.stepSize);
         }
-    }, false);
+    }
+    
+    window.addEventListener("hashchange", onhashchange, false);
 
     document.getElementById ("applySettingsChanges").addEventListener("click", function() {
         Location.Controls.commitUserValues();
@@ -244,9 +243,11 @@
     TimeStepsData.init();
     PageTimeInterval = { "JD" :  2457754.5, "days" : 410, "stepSize" : 1 };
     
-    document.getElementById("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
-                                                      "bubbles": true, 
-                                                      "cancelable": false }));                                                       
+    if (!location.hash) {
+        document.getElementById("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
+                                                          "bubbles": true, 
+                                                          "cancelable": false }));
+    } 
     
     window.addEventListener("scroll", function() {
         if (previousPage) {
@@ -270,10 +271,9 @@
         }
     });
 
-    
 </script>
 
-<script type="text/JavaScript" src="js/aajs.js"></script>
+<script type="text/JavaScript" src="js/aajs.js" async=""></script>
 
 <script type="text/JavaScript" src="js/planetdata.js"></script>
 <script type="text/JavaScript" src="js/planetpage.js"></script>
@@ -294,3 +294,8 @@
 <script type="text/JavaScript" src="js/galileanmoonspage.js"></script>
 <script type="text/JavaScript" src="js/saturnmoonsdata.js"></script>
 <script type="text/JavaScript" src="js/saturnmoonspage.js"></script>
+
+<script>
+    if (location.hash)
+        setTimeout(onhashchange, 1);
+</script>
