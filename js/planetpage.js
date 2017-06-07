@@ -105,7 +105,7 @@ function PlanetPage (planetDataSource) {
     
     PlanetPage.prototype["displayPage"] = function (JD, daysAfter, stepSize) {
             var pageObj = this;
-            if (!AAJS.AllDependenciesLoaded())
+            if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
                 return setTimeout (function() { pageObj.displayPage(JD, daysAfter, stepSize); }, 300);
             
             this.lastAppendedLine = false;

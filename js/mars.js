@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var MarsData = new PlanetData({ number: 3, name: "Mars", 
-                               semidiameterFunctionName : AAJS.Diameters.MarsSemidiameterB });
+                               semidiameterFunctionName :  function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.MarsSemidiameterB(delta); } } );				
 
 // upgrade the object to handle physical data as well.
 (function () {    
