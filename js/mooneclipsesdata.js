@@ -64,6 +64,7 @@ var MoonEclipsesData = {
                     "ParallaxMoon" : moonData[8],
                     
                     "MoonDiameter" : moonData[6],
+                    "SunDiameter" : sunData[5],
                     
                     "oppositionJD" : jd,
                     "eclipse" : false
@@ -71,9 +72,72 @@ var MoonEclipsesData = {
     },
     
     addTimingsAndRadii : function (opposition) {
-        // first, compute penumbral and umbral radii
+        // first, compute penumbral and umbral radii. In degrees.
+        opposition['umbralRadius'] = 1.02 * (0.99833 * opposition.ParallaxMoon - opposition.SunDiameter/2 + opposition.ParallaxSun);
+        opposition['penumbralRadius'] = 1.02 * (0.99833 * opposition.ParallaxMoon + opposition.SunDiameter/2 + opposition.ParallaxSun);
+        
         // then compute the minimum distance between the center of the Moon and the axes of these cones
+        // - first, the equation of the line that describes the approximate motion of the moon
+        opposition['y0'] = opposition.DecMoon + opposition.DecSun;
+        opposition['dy'] = opposition.dDecMoon + opposition.dDecSun;
+        opposition['dx'] = (opposition.dRaMoon - opposition.dRaSun)*Math.cos(opposition.DecMoon * Math.PI / 180);
+        
+        opposition['slope'] = opposition['dy'] / opposition['dx'];
+
+        var denominatorAtMinimum = 1 + opposition['slope'] * opposition['slope'];
+        var xMinDistance = - (opposition['slope'] * y0) / denominatorAtMinimum;
+        var yMinDistance = y0 + opposition['slope'] * xMinDistance;
+        var minDistance = Math.sqrt (xMinDistance * xMinDistance + yMinDistance * yMinDistance);
         // if the minimum distance is smaller than one of the radii, we have an eclipse.
+        var umbralEclipse = minDistance <= opposition['umbralRadius'];
+        var penumbralEclipse = minDistance <= opposition['penumbralRadius'];
+        opposition['eclipse'] = umbralEclipse || penumbralEclipse;
+        
+        if (opposition['eclipse']) {
+            opposition['MoonPositions'] = {};
+            opposition['Timings'] = {};
+        }
+        
+        if (umbralEclipse) {
+            opposition['MoonPositions']['Umbral'] = MoonEclipsesData.computeMoonPositionsAtContact (opposition, opposition['umbralRadius']);
+            opposition['Timings']['Umbral'] = MoonEclipsesData.computeTimings (opposition, opposition['MoonPositions']['Umbral']);
+        }
+        
+        if (penumbralEclipse) {
+            opposition['MoonPositions']['Penumbral'] = MoonEclipsesData.computeMoonPositionsAtContact (opposition, opposition['penumbralRadius']);
+            opposition['Timings']['Penumbral'] = MoonEclipsesData.computeTimings (opposition, opposition['MoonPositions']['Penumbral']);
+        }
+    },
+    
+    computeMoonPositionsAtContact : function (opposition, coneRadius) {
+        var denominatorAtMinimum = 1 + opposition.slope * opposition.slope;
+        var discriminantAtExternalTangent = 4 * opposition.slope * opposition.slope * opposition.y0 * opposition.y0 -
+                           (4 * denominatorAtMinimum * (opposition.y0 + (coneRadius + opposition.MoonDiameter/2)*(coneRadius + opposition.MoonDiameter/2) ));
+        var results = {
+            "firstContact" : { "X" : (-2 * opposition.slope * opposition.y0 - Math.sqrt (discriminantAtExternalTangent)) / (2 * denominatorAtMinimum) },
+            "lastContact" : {"X" : (-2 * opposition.slope * opposition.y0 + Math.sqrt (discriminantAtExternalTangent)) / (2 * denominatorAtMinimum)}
+        };
+
+        var discriminantAtInternalTangent = 4 * opposition.slope * opposition.slope * opposition.y0 * opposition.y0 -
+                           (4 * denominatorAtMinimum * (opposition.y0 + (coneRadius - opposition.MoonDiameter/2)*(coneRadius - opposition.MoonDiameter/2) ));
+        results ['beginFullImmersion'] = { "X" : (-2 * opposition.slope * opposition.y0 - Math.sqrt (discriminantAtInternalTangent)) / (2 * denominatorAtMinimum) };
+        results ['endFullImmersion'] = { "X" : (-2 * opposition.slope * opposition.y0 + Math.sqrt (discriminantAtInternalTangent)) / (2 * denominatorAtMinimum) };
+
+        results ['firstContact']["Y"] = opposition.y0 + opposition.slope *  results ['firstContact']["X"];
+        results ['lastContact']["Y"] = opposition.y0 + opposition.slope *  results ['lastContact']["X"];
+        results ['beginFullImmersion']["Y"] = opposition.y0 + opposition.slope *  results ['beginFullImmersion']["X"];
+        results ['endFullImmersion']["Y"] = opposition.y0 + opposition.slope *  results ['endFullImmersion']["X"];
+        return results;
+    },
+    
+    computeTimings : function (opposition, moonPosAtContact) {
+        var result = {};
+        
+        for (var position in moonPosAtContact) {
+            result[position] = opposition.oppositionJD + moonPosAtContact[position].X / opposition.dx;
+        }
+        
+        return result;
     },
     
     computeEclipses : function (startJD, endJD) {
