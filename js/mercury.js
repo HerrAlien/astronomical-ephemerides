@@ -16,7 +16,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 
 var MercuryData = new PlanetData({ number: 1, name: "Mercury", 
-                               semidiameterFunctionName : AAJS.Diameters.MercurySemidiameterB });						   
+                               semidiameterFunctionName : function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.MercurySemidiameterB(delta); } } );						   
 							   
 (function () {
     var Page = new PlanetPage (MercuryData);

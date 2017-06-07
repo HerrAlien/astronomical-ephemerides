@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var VenusData = new PlanetData({ number: 2, name: "Venus", 
-                               semidiameterFunctionName : AAJS.Diameters.VenusSemidiameterB });
+                               semidiameterFunctionName :   function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.VenusSemidiameterB (delta); } } );		
 
 							   
 (function () {
