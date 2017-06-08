@@ -29,19 +29,13 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
     
     this.hostElement = document.getElementById(hostElemName);
     this.pageRendered = false;
-    this.moonsData = dataObject;
+    this.dataSource = dataObject;
     this.paths = pathsConfigs;
 }
 
 (function(){
     // clears up the rendered thing
-    MoonsPage.prototype["reset"] = function () {
-        while (this.hostElement.hasChildNodes()) {
-            this.hostElement.removeChild(this.hostElement.firstChild);
-        }
-        this.moonsData.reset();
-        this.pageRendered = false;
-    };
+    MoonsPage.prototype["reset"] = PlanetPage.prototype.reset;
     
     MoonsPage.prototype["displayPage"] = function (startJD, numberOfDays) {
         
@@ -73,7 +67,7 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
         var planetRadius = halfWidth / 35;
 
         var currentJD = startJD;
-        var coords = this.moonsData.getDataAsObjectForJD(currentJD, false);        
+        var coords = this.dataSource.getDataAsObjectForJD(currentJD, false);        
         
         for (var satelliteName in this.paths) {
                 this.paths[satelliteName].lastPos.X = coords[satelliteName].ApparentRectangularCoordinates.X;
@@ -98,7 +92,7 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
                 var dayLines = [];
                 
                 for (var i = 0 ; i < dayFraction && stepsCounter < numberOfSteps ; i++, currentJD += stepSize, stepsCounter++) {
-                    var coords = satellitesPage.moonsData.getDataAsObjectForJD(currentJD, false);
+                    var coords = satellitesPage.dataSource.getDataAsObjectForJD(currentJD, false);
 
                     for (var satelliteName in satellitesPage.paths){
 
