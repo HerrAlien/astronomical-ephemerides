@@ -16,7 +16,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var MoonEclipsesPage = {
 
-    hostElement : document.getElementById("MoonEclipsesPage"),
+    hostElement : document.getElementById("MoonEclipses"),
     pageRendered : false,
     dataObject : MoonEclipsesData,
 
@@ -50,6 +50,7 @@ var MoonEclipsesPage = {
     },
     
     drawNewEclipse : function (oppositionData) {
+        var addNodeChild = PlanetPage.prototype.addNodeChild;
         
     }
 }
