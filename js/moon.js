@@ -73,8 +73,8 @@ var MoonData = {
 
 (function(){    
     var MoonPage = {
-        table : document.getElementById("Moon"),
-        tablePopulated : false,
+        hostElement : document.getElementById("Moon"),
+        pageRendered : false,
         dataSource : MoonData,
         tableHeaderInfo : {
             "0" : {

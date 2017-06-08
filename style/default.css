@@ -201,7 +201,7 @@ table {
     padding: 2px;
 }
 
-th {
+.planetTable th {
     cursor: help;
 }
 
@@ -211,11 +211,6 @@ background: #ffffff;
 
  tr:nth-of-type(even) {
 background: #eeeeee;
-}
-
- tr:nth-of-type(1),  tr:nth-of-type(2){
-    background: #ffffff;
-	    height: 20px;
 }
 
 input {
@@ -408,6 +403,8 @@ input {
 .planetTable tr:nth-of-type(1), .planetTable tr:nth-of-type(2)
 {
     width: 543px;
+    background: #ffffff;
+	    height: 20px;
 }
 
 .planetTable td:nth-of-type(1),.planetTable th:nth-of-type(1), 
