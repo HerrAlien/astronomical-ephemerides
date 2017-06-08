@@ -90,25 +90,25 @@ var MoonEclipsesData = {
         var yMinDistance = opposition['y0'] + opposition['slope'] * xMinDistance;
         var minDistance = Math.sqrt (xMinDistance * xMinDistance + yMinDistance * yMinDistance);
         // if the minimum distance is smaller than one of the radii, we have an eclipse.
-        var umbralTotalEclipse = minDistance <= opposition['umbralRadius'];
-        var penumbralTotalEclipse = minDistance <= opposition['penumbralRadius'];
+        opposition['umbralTotalEclipse'] = minDistance <= opposition['umbralRadius'];
+        opposition['penumbralTotalEclipse'] = minDistance <= opposition['penumbralRadius'];
 
-        var umbralPartialEclipse = minDistance <= opposition['umbralRadius'] + 0.5 * opposition.MoonDiameter;
-        var penumbralPartialEclipse = minDistance <= opposition['penumbralRadius'] + 0.5 * opposition.MoonDiameter;
+        opposition['umbralPartialEclipse'] = minDistance <= opposition['umbralRadius'] + 0.5 * opposition.MoonDiameter;
+        opposition['penumbralPartialEclipse'] = minDistance <= opposition['penumbralRadius'] + 0.5 * opposition.MoonDiameter;
 
-        opposition['eclipse'] = umbralTotalEclipse || penumbralTotalEclipse || umbralPartialEclipse || penumbralPartialEclipse;
+        opposition['eclipse'] = opposition['umbralTotalEclipse'] || opposition['penumbralTotalEclipse'] || opposition['umbralPartialEclipse'] || opposition['penumbralPartialEclipse'];
         
         if (opposition['eclipse']) {
             opposition['MoonPositions'] = {};
             opposition['Timings'] = {};
         }
         
-        if (umbralPartialEclipse) {
+        if (opposition['umbralPartialEclipse']) {
             opposition['MoonPositions']['Umbral'] = MoonEclipsesData.computeMoonPositionsAtContact (opposition, opposition['umbralRadius']);
             opposition['Timings']['Umbral'] = MoonEclipsesData.computeTimings (opposition, opposition['MoonPositions']['Umbral']);
         }
         
-        if (penumbralPartialEclipse) {
+        if (opposition['penumbralPartialEclipse']) {
             opposition['MoonPositions']['Penumbral'] = MoonEclipsesData.computeMoonPositionsAtContact (opposition, opposition['penumbralRadius']);
             opposition['Timings']['Penumbral'] = MoonEclipsesData.computeTimings (opposition, opposition['MoonPositions']['Penumbral']);
         }
