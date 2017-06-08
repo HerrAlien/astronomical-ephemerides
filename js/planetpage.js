@@ -1,9 +1,9 @@
 function PlanetPage (planetDataSource) {
     if (planetDataSource) {
         this.dataSource = planetDataSource;
-        this.table = document.getElementById(this.dataSource.planet.name);
+        this.hostElement = document.getElementById(this.dataSource.planet.name);
     }
-    this.tablePopulated = false;
+    this.pageRendered = false;
     this.lastAppendedLine = false;
 
     this.tableHeaderInfo = {
@@ -109,9 +109,9 @@ function PlanetPage (planetDataSource) {
                 return setTimeout (function() { pageObj.displayPage(JD, daysAfter, stepSize); }, 300);
             
             this.lastAppendedLine = false;
-            if (!this.tablePopulated) {
+            if (!this.pageRendered) {
                 this.reset();
-                this.addTableHeader (this.table, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
+                this.addTableHeader (this.hostElement, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
 
                 var delayedAppendData = function (JD, endJD, steps) {
                     if (JD >= endJD)
@@ -124,20 +124,20 @@ function PlanetPage (planetDataSource) {
                         pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD));
                     }
                     
-                    pageObj.addTableHeader (pageObj.table, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
+                    pageObj.addTableHeader (pageObj.hostElement, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
                     
                     setTimeout (function() {delayedAppendData (JD, endJD, steps); },1 );
                 }
                 delayedAppendData (JD, JD + daysAfter, 15);
-                this.tablePopulated = true;
+                this.pageRendered = true;
             }
         };
     
     PlanetPage.prototype["appendLine"] = function (dataArray) {
-            var line = this.table.ownerDocument.createElement("tr");
-            var tbody = this.table.getElementsByTagName("tbody")[0];
+            var line = this.hostElement.ownerDocument.createElement("tr");
+            var tbody = this.hostElement.getElementsByTagName("tbody")[0];
             if (!tbody)
-                tbody = this.table;
+                tbody = this.hostElement;
             tbody.appendChild(line);
             
             var changedMonth = this.lastAppendedLine && dataArray[0] && this.lastAppendedLine[0] != dataArray[0];
@@ -172,10 +172,10 @@ function PlanetPage (planetDataSource) {
     };
 
     PlanetPage.prototype["reset"] = function () {
-        while (this.table.hasChildNodes()) {
-            this.table.removeChild(this.table.firstChild);
+        while (this.hostElement.hasChildNodes()) {
+            this.hostElement.removeChild(this.hostElement.firstChild);
         }
-        this.tablePopulated = false;
+        this.pageRendered = false;
         // reset the data - transits depend on the longitude
         this.dataSource.reset();
     };
