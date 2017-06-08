@@ -38,21 +38,45 @@ body {
     height: 0px;
 }
 
+#HomeLinkButton::after, #MenuLink::after, #SettingsLink::after {
+    font-size: 11px;
+    display: block;
+    margin: 2px auto 2px auto;
+    text-align: center;
+}
+
+#HomeLinkButton::after {
+    content: "Home";
+}
+
+#MenuLink::after {
+    content: "Menu";
+
+}
+
+#SettingsLink::after {
+    content: "Settings";
+}
+
 #MenuLink, #HomeLinkButton {
     float: left;
 }
 
-
-#MenuLink img{
+#MenuLink {
     margin-top: 2px;
+}
+#MenuLink img{
     cursor: pointer;
-    width: 48px;
-    height: 48px;
+    width: 50px;
+    height: auto;
+}
+
+#HomeLinkButton {
+    margin-top: 2px;
+    margin-right: 20px;
 }
 
 #HomeLinkButton img {
-    margin-top: 2px;
-    margin-right: 20px;
     cursor: pointer;
     width: 40px;
     height: 40px;
@@ -62,11 +86,11 @@ body {
     width: 42px;
     height: 42px;
     cursor: pointer;
-    margin-right: 5px;
 }
 
 #SettingsLink {
     float: right;
+    margin-right: 5px;
 }
 
 .title {
@@ -75,7 +99,7 @@ font-size: 32px;
     vertical-align: top;
     margin-left: 32px;
     position: relative;
-    top: -42px;
+    top: -50px;
     left: 100px;
 }
 
@@ -147,12 +171,12 @@ tr.secondHeaderRow {
 }
 
 tr.firstHeaderRowScrolled{
-    margin-top: -105px;
+    margin-top: -114px;
     border-top: 1px solid black;
 }
 
 tr.secondHeaderRowScrolled{
-    margin-top: -85px;
+    margin-top: -93px;
     border-bottom: 1px solid black;
 }
 
