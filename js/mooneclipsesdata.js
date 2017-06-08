@@ -114,14 +114,14 @@ var MoonEclipsesData = {
     computeMoonPositionsAtContact : function (opposition, coneRadius) {
         var denominatorAtMinimum = 1 + opposition.slope * opposition.slope;
         var discriminantAtExternalTangent = 4 * opposition.slope * opposition.slope * opposition.y0 * opposition.y0 -
-                           (4 * denominatorAtMinimum * (opposition.y0 + (coneRadius + opposition.MoonDiameter/2)*(coneRadius + opposition.MoonDiameter/2) ));
+                           (4 * denominatorAtMinimum * (opposition.y0 * opposition.y0 - (coneRadius + opposition.MoonDiameter/2)*(coneRadius + opposition.MoonDiameter/2) ));
         var results = {
             "firstContact" : { "X" : (-2 * opposition.slope * opposition.y0 - Math.sqrt (discriminantAtExternalTangent)) / (2 * denominatorAtMinimum) },
             "lastContact" : {"X" : (-2 * opposition.slope * opposition.y0 + Math.sqrt (discriminantAtExternalTangent)) / (2 * denominatorAtMinimum)}
         };
 
         var discriminantAtInternalTangent = 4 * opposition.slope * opposition.slope * opposition.y0 * opposition.y0 -
-                           (4 * denominatorAtMinimum * (opposition.y0 + (coneRadius - opposition.MoonDiameter/2)*(coneRadius - opposition.MoonDiameter/2) ));
+                           (4 * denominatorAtMinimum * (opposition.y0 * opposition.y0 - (coneRadius - opposition.MoonDiameter/2)*(coneRadius - opposition.MoonDiameter/2) ));
         results ['beginFullImmersion'] = { "X" : (-2 * opposition.slope * opposition.y0 - Math.sqrt (discriminantAtInternalTangent)) / (2 * denominatorAtMinimum) };
         results ['endFullImmersion'] = { "X" : (-2 * opposition.slope * opposition.y0 + Math.sqrt (discriminantAtInternalTangent)) / (2 * denominatorAtMinimum) };
 
@@ -136,7 +136,7 @@ var MoonEclipsesData = {
         var result = {};
         
         for (var position in moonPosAtContact) {
-            result[position] = opposition.oppositionJD + moonPosAtContact[position].X / opposition.dx;
+            result[position] = opposition.oppositionJD + (moonPosAtContact[position].X / opposition.dx)/24;
         }
         
         return result;
