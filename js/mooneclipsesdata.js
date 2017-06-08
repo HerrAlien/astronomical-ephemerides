@@ -149,21 +149,10 @@ var MoonEclipsesData = {
         return result;
     },
     
-    computeEclipses : function (startJD, endJD) {
-        var lastOpposition = this.getOppositionAroundJD(endJD);
-        
-        function calculateEclipseForJD (JD) {
-            if (JD > lastOpposition.oppositionJD)
-                return;
-                
-            var oppositionData = MoonEclipsesData.getOppositionAroundJD (JD);
-            oppositionData = MoonEclipsesData.addTimingsAndGeometry(oppositionData);
-            if (oppositionData.eclipse)
-                setTimeout (function () { MoonEclipsesData.onNewEclipse.notify (oppositionData); }, 1);
-        }
-        setTimeout (function () { calculateEclipseForJD (JD + MoonEclipsesData.sinodicPeriod); }, 1);
-        
-        calculateEclipseForJD (startJD);
+    calculateEclipseForJD : function (JD) {
+        var oppositionData = MoonEclipsesData.getOppositionAroundJD (JD);
+        oppositionData = MoonEclipsesData.addTimingsAndGeometry(oppositionData);
+        return oppositionData;
     },
     
     reset : function () {
