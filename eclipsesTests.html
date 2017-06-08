@@ -67,7 +67,64 @@
             }
         },
         
-       ];
+        {
+            name : "opposition data for 1985-05-04",
+            input : AAJS.Date.DateToJD (1985, 05, 04, true),
+            expectedOutput : {
+                    "RaSun" : (2 + (47 + 13.8/60)/60) * 15,
+                    "DecSun" : 16 + (7 + 21.7/60)/60,
+                    "RaMoon" : (14 + (47 + 13.8/60)/60) * 15,
+                    "DecMoon" : -(15 + (42 + 37.4/60)/60),
+                    
+                    "dRaSun" : 9.6/3600 * 15,
+                    "dDecSun": 43.3/3600,
+                    "dRaMoon" : (2 + 23.6/60)/60 * 15,
+                    "dDecMoon": -(15 + 15.7/60)/60,
+                    
+                    "ParallaxSun" : 8.72/3600,
+                    "ParallaxMoon" : (61 + 14.1/60)/60,
+                    
+                    "MoonDiameter" : 2 / 60 * (16 + 41/60),
+                    "SunDiameter" : 2 / 60 * (15 + 53/60),
+                    
+                    "oppositionJD" : AAJS.Date.DateToJD (1985, 05, 04, true) + (19 + 36.3/60)/24,
+                    "eclipse" : false
+            },
+                  
+            actualOutput : false,
+            errors : [4e-3, 
+                      2e-3, 
+                      5e-3, 
+                      3e-2, 
+                      
+                      2e-4, 
+                      1e-4, 
+                      1.1e-2, 
+                      2e-2, 
+                      
+                      2e-6, 
+                      4e-4, 
+                      
+                      5e-3, 
+                      1e-3, 
+                      
+                      4e-3, 
+                      0],
+            test : function () {
+                var i = 0;
+                this.actualOutput = MoonEclipsesData.getOppositionAroundJD (this.input);
+                for (var key in this.expectedOutput) {
+                    if (!testlib.doubleEq (this.actualOutput[key], 
+                                           this.expectedOutput[key], 
+                                           this.errors[i++])) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        },
+
+        ];
             
         testlib.runTests (tests);
     })();

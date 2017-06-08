@@ -107,6 +107,8 @@ var MoonEclipsesData = {
             opposition['MoonPositions']['Penumbral'] = MoonEclipsesData.computeMoonPositionsAtContact (opposition, opposition['penumbralRadius']);
             opposition['Timings']['Penumbral'] = MoonEclipsesData.computeTimings (opposition, opposition['MoonPositions']['Penumbral']);
         }
+        
+        return opposition;
     },
     
     computeMoonPositionsAtContact : function (opposition, coneRadius) {
