@@ -71,7 +71,7 @@ var MoonEclipsesData = {
             };
     },
     
-    addTimingsAndRadii : function (opposition) {
+    addTimingsAndGeometry : function (opposition) {
         // first, compute penumbral and umbral radii. In degrees.
         opposition['umbralRadius'] = 1.02 * (0.99833 * opposition.ParallaxMoon - opposition.SunDiameter/2 + opposition.ParallaxSun);
         opposition['penumbralRadius'] = 1.02 * (0.99833 * opposition.ParallaxMoon + opposition.SunDiameter/2 + opposition.ParallaxSun);
@@ -85,8 +85,8 @@ var MoonEclipsesData = {
         opposition['slope'] = opposition['dy'] / opposition['dx'];
 
         var denominatorAtMinimum = 1 + opposition['slope'] * opposition['slope'];
-        var xMinDistance = - (opposition['slope'] * y0) / denominatorAtMinimum;
-        var yMinDistance = y0 + opposition['slope'] * xMinDistance;
+        var xMinDistance = - (opposition['slope'] * opposition['y0']) / denominatorAtMinimum;
+        var yMinDistance = opposition['y0'] + opposition['slope'] * xMinDistance;
         var minDistance = Math.sqrt (xMinDistance * xMinDistance + yMinDistance * yMinDistance);
         // if the minimum distance is smaller than one of the radii, we have an eclipse.
         var umbralEclipse = minDistance <= opposition['umbralRadius'];
@@ -150,7 +150,7 @@ var MoonEclipsesData = {
                 return;
                 
             var oppositionData = MoonEclipsesData.getOppositionAroundJD (JD);
-            oppositionData = MoonEclipsesData.addTimingsAndRadii(oppositionData);
+            oppositionData = MoonEclipsesData.addTimingsAndGeometry(oppositionData);
             if (oppositionData.eclipse)
                 setTimeout (function () { MoonEclipsesData.onNewEclipse.notify (oppositionData); }, 1);
         }
