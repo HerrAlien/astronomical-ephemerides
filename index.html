@@ -252,20 +252,20 @@
     window.addEventListener("scroll", function() {
         if (previousPage) {
             var pageObj = Pages [previousPage.id];
-            if (pageObj && pageObj.table) {
+            if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
                 if (document.body.scrollTop >= 40) {
                     // get the first two rows
-                    pageObj.table.rows[0].classList.remove ("firstHeaderRow");
-                    pageObj.table.rows[0].classList.add ("firstHeaderRowScrolled");
+                    pageObj.hostElement.rows[0].classList.remove ("firstHeaderRow");
+                    pageObj.hostElement.rows[0].classList.add ("firstHeaderRowScrolled");
 
-                    pageObj.table.rows[1].classList.remove ("secondHeaderRow");
-                    pageObj.table.rows[1].classList.add ("secondHeaderRowScrolled");
+                    pageObj.hostElement.rows[1].classList.remove ("secondHeaderRow");
+                    pageObj.hostElement.rows[1].classList.add ("secondHeaderRowScrolled");
                 } else {
-                    pageObj.table.rows[0].classList.add ("firstHeaderRow");
-                    pageObj.table.rows[0].classList.remove ("firstHeaderRowScrolled");
+                    pageObj.hostElement.rows[0].classList.add ("firstHeaderRow");
+                    pageObj.hostElement.rows[0].classList.remove ("firstHeaderRowScrolled");
 
-                    pageObj.table.rows[1].classList.add ("secondHeaderRow");
-                    pageObj.table.rows[1].classList.remove ("secondHeaderRowScrolled");
+                    pageObj.hostElement.rows[1].classList.add ("secondHeaderRow");
+                    pageObj.hostElement.rows[1].classList.remove ("secondHeaderRowScrolled");
                 }
             }
         }

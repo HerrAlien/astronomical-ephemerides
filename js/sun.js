@@ -71,8 +71,8 @@ var SunData = {
     
 (function(){    
     var SunPage = {
-        table : document.getElementById("Sun"),
-        tablePopulated : false,
+        hostElement : document.getElementById("Sun"),
+        pageRendered : false,
         dataSource : SunData,
         tableHeaderInfo : {
             "0" : {
