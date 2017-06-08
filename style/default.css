@@ -38,11 +38,19 @@ body {
     height: 0px;
 }
 
-#HomeLinkButton::after, #MenuLink::after, #SettingsLink::after {
-    font-size: 11px;
-    display: block;
-    margin: 2px auto 2px auto;
+#HomeLinkButton, #MenuLink, #SettingsLink{
     text-align: center;
+}
+
+#HomeLinkButton::after, #MenuLink::after, #SettingsLink::after {
+    font-size: 12px;
+    display: block;
+    text-align: center;
+    color: #000000;
+}
+
+#HomeLinkButton::after, #SettingsLink::after {
+    margin: 2px auto 2px auto;
 }
 
 #HomeLinkButton::after {
@@ -51,7 +59,7 @@ body {
 
 #MenuLink::after {
     content: "Menu";
-
+    margin: 0px auto 2px auto;
 }
 
 #SettingsLink::after {
@@ -67,8 +75,8 @@ body {
 }
 #MenuLink img{
     cursor: pointer;
-    width: 50px;
-    height: auto;
+    width: 52px;
+    height: 42px;
 }
 
 #HomeLinkButton {
@@ -94,12 +102,12 @@ body {
 }
 
 .title {
-font-size: 32px;
+font-size: 36px;
     font-family: Arial;
     vertical-align: top;
     margin-left: 32px;
     position: relative;
-    top: -50px;
+    top: -54px;
     left: 100px;
 }
 
@@ -171,12 +179,12 @@ tr.secondHeaderRow {
 }
 
 tr.firstHeaderRowScrolled{
-    margin-top: -114px;
+    margin-top: -121px;
     border-top: 1px solid black;
 }
 
 tr.secondHeaderRowScrolled{
-    margin-top: -93px;
+    margin-top: -100px;
     border-bottom: 1px solid black;
 }
 
