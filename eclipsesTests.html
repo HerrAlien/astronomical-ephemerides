@@ -345,6 +345,43 @@
             }
         },
 
+       {
+            name : "umbral timimgs for eclipse 2017-08-07",
+            input : AAJS.Date.DateToJD (2017, 08, 07, true),
+            expectedOutput : {
+                    'firstContact' : AAJS.Date.DateToJD (2017, 08, 07, true) + (17 + (22+56/60)/60)/24,
+                    'beginFullImmersion' : false,
+                    'endFullImmersion' : false,
+                    'lastContact' : AAJS.Date.DateToJD (2017, 08, 07, true) + (19 + (18+9/60)/60)/24,
+                },
+                  
+            actualOutput : false,
+                      
+            timingErrors : [
+                    5e-4,
+                    0,
+                    0,
+                    1.7e-3
+                ],
+
+            test : function () {
+                var i = 0;
+                this.actualOutput = MoonEclipsesData.getOppositionAroundJD (this.input);
+                this.actualOutput = MoonEclipsesData.addTimingsAndGeometry (this.actualOutput);
+                this.actualOutput = this.actualOutput.Timings.Umbral;
+
+                for (var key in this.expectedOutput) {
+                    if (!testlib.doubleEq (this.actualOutput[key], 
+                                           this.expectedOutput[key], 
+                                           this.timingErrors[i++])) {
+                        return false;
+                    }
+                }
+                
+                return true;
+            }
+        },
+
         ];
             
         testlib.runTests (tests);

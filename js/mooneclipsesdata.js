@@ -29,10 +29,11 @@ var MoonEclipsesData = {
         var dSunData = false;
         var dMoonData = false;
         var oppositionTimeCorrection = 0;
+        var hourFraction  = 1;
+        var dJd = hourFraction/24;
         
         do {
             
-            var dJd = (1/24);
             sunData = SunData.getDataForJD (jd);
             moonData = MoonData.getDataForJD (jd);
             
@@ -55,10 +56,10 @@ var MoonEclipsesData = {
                     "RaMoon" : moonData[2] * 15,
                     "DecMoon" : moonData[3],
                     
-                    "dRaSun" : (dSunData[2] - sunData[2]) * 15,
-                    "dDecSun": (dSunData[3] - sunData[3]),
-                    "dRaMoon" : (dMoonData[2] - moonData[2]) * 15,
-                    "dDecMoon": (dMoonData[3] - moonData[3]),
+                    "dRaSun" : (dSunData[2] - sunData[2]) * 15 / hourFraction,
+                    "dDecSun": (dSunData[3] - sunData[3]) / hourFraction,
+                    "dRaMoon" : (dMoonData[2] - moonData[2]) * 15 / hourFraction,
+                    "dDecMoon": (dMoonData[3] - moonData[3]) / hourFraction,
                     
                     "ParallaxSun" : sunData[10],
                     "ParallaxMoon" : moonData[8],
@@ -89,21 +90,25 @@ var MoonEclipsesData = {
         var yMinDistance = opposition['y0'] + opposition['slope'] * xMinDistance;
         var minDistance = Math.sqrt (xMinDistance * xMinDistance + yMinDistance * yMinDistance);
         // if the minimum distance is smaller than one of the radii, we have an eclipse.
-        var umbralEclipse = minDistance <= opposition['umbralRadius'];
-        var penumbralEclipse = minDistance <= opposition['penumbralRadius'];
-        opposition['eclipse'] = umbralEclipse || penumbralEclipse;
+        var umbralTotalEclipse = minDistance <= opposition['umbralRadius'];
+        var penumbralTotalEclipse = minDistance <= opposition['penumbralRadius'];
+
+        var umbralPartialEclipse = minDistance <= opposition['umbralRadius'] + 0.5 * opposition.MoonDiameter;
+        var penumbralPartialEclipse = minDistance <= opposition['penumbralRadius'] + 0.5 * opposition.MoonDiameter;
+
+        opposition['eclipse'] = umbralTotalEclipse || penumbralTotalEclipse || umbralPartialEclipse || penumbralPartialEclipse;
         
         if (opposition['eclipse']) {
             opposition['MoonPositions'] = {};
             opposition['Timings'] = {};
         }
         
-        if (umbralEclipse) {
+        if (umbralPartialEclipse) {
             opposition['MoonPositions']['Umbral'] = MoonEclipsesData.computeMoonPositionsAtContact (opposition, opposition['umbralRadius']);
             opposition['Timings']['Umbral'] = MoonEclipsesData.computeTimings (opposition, opposition['MoonPositions']['Umbral']);
         }
         
-        if (penumbralEclipse) {
+        if (penumbralPartialEclipse) {
             opposition['MoonPositions']['Penumbral'] = MoonEclipsesData.computeMoonPositionsAtContact (opposition, opposition['penumbralRadius']);
             opposition['Timings']['Penumbral'] = MoonEclipsesData.computeTimings (opposition, opposition['MoonPositions']['Penumbral']);
         }
@@ -137,6 +142,8 @@ var MoonEclipsesData = {
         
         for (var position in moonPosAtContact) {
             result[position] = opposition.oppositionJD + (moonPosAtContact[position].X / opposition.dx)/24;
+            if (isNaN(result[position]))
+                result[position] = false;
         }
         
         return result;
