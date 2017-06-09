@@ -74,8 +74,14 @@ var MoonEclipsesPage = {
         
         // get the JD of the opposition
         var oppositionDateTime = yyyymmdd_hhmmOfJD(oppositionData.oppositionJD);
+        var description = "Eclipse through the penumbra";
+        if (oppositionData.umbralPartialEclipse)
+            description = "Partial eclipse";
+        if (oppositionData.umbralTotalEclipse)
+            description = "Total eclipse";
+        
 
-        addNodeChild (mainDiv, "h2", oppositionDateTime.date.Y + "-" + oppositionDateTime.date.M + "-" + oppositionDateTime.date.D);
+        addNodeChild (mainDiv, "h2", oppositionDateTime.date.Y + "-" + oppositionDateTime.date.M + "-" + oppositionDateTime.date.D + " " + description);
         
         var timingsTable = addNodeChild (mainDiv, "table");
         var headerRow = addNodeChild (timingsTable, "tr");
