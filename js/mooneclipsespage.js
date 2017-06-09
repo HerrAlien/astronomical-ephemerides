@@ -68,6 +68,7 @@ var MoonEclipsesPage = {
 
             if (sexagesimalTime.Ord3 < 10) sexagesimalTime.Ord3 = "0" + sexagesimalTime.Ord3;
             if (sexagesimalTime.Ord2 < 10) sexagesimalTime.Ord2 = "0" + sexagesimalTime.Ord2;
+            if (sexagesimalTime.Ord1 < 10) sexagesimalTime.Ord1 = "0" + sexagesimalTime.Ord1;
             
             return { 'date': dateOfJD, 'time' : sexagesimalTime };
         }
@@ -93,7 +94,7 @@ var MoonEclipsesPage = {
             var tr = addNodeChild (timingsTable, "tr");
             var dt = yyyymmdd_hhmmOfJD(JD);
             addNodeChild (tr, "td", description);
-            addNodeChild (tr, "td", dt.time.Ord3 + ":" +  dt.time.Ord2);
+            addNodeChild (tr, "td", dt.time.Ord3 + ":" +  dt.time.Ord2 + ":" +  dt.time.Ord1);
         }
         
         addTiming (oppositionData.Timings.Penumbral.firstContact, "Start of penumbral eclipse (TP1)", timingsTable);
