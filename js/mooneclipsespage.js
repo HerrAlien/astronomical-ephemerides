@@ -94,7 +94,7 @@ var MoonEclipsesPage = {
             var tr = addNodeChild (timingsTable, "tr");
             var dt = yyyymmdd_hhmmOfJD(JD);
             addNodeChild (tr, "td", description);
-            addNodeChild (tr, "td", dt.time.Ord3 + ":" +  dt.time.Ord2 + ":" +  dt.time.Ord1);
+            addNodeChild (tr, "td", dt.time.Ord3 + ":" +  dt.time.Ord2);
         }
         
         addTiming (oppositionData.Timings.Penumbral.firstContact, "Start of penumbral eclipse (TP1)", timingsTable);
