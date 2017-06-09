@@ -44,7 +44,7 @@ var MoonEclipsesPage = {
             if (oppositionData.eclipse) 
                 MoonEclipsesPage.drawNewEclipse (oppositionData);
             
-            setTimeout (function() { processJD(JD + MoonEclipsesPage.dataSource.sinodicPeriod); }, 1);
+            setTimeout (function() { processJD(oppositionData.oppositionJD + MoonEclipsesPage.dataSource.sinodicPeriod); }, 1);
         }
         
         processJD(startJD);
@@ -54,7 +54,7 @@ var MoonEclipsesPage = {
         var addNodeChild = PlanetPage.prototype.addNodeChild;
         
         function yyyymmdd_hhmmOfJD (JD) {
-            var fullDayJD = 0.5 + Math.floor(JD);
+            var fullDayJD = 0.5 + Math.floor(JD - 0.5);
             var dayFraction = JD - fullDayJD;
             if (dayFraction < 0) dayFraction += 1;
             
