@@ -74,8 +74,8 @@ var MoonEclipsesData = {
     
     addTimingsAndGeometry : function (opposition) {
         // first, compute penumbral and umbral radii. In degrees.
-        opposition['umbralRadius'] = 1.02 * (0.99833 * opposition.ParallaxMoon - opposition.SunDiameter/2 + opposition.ParallaxSun);
-        opposition['penumbralRadius'] = 1.02 * (0.99833 * opposition.ParallaxMoon + opposition.SunDiameter/2 + opposition.ParallaxSun);
+        opposition['umbralRadius'] = .993 * 1.02 * (0.99833 * opposition.ParallaxMoon - opposition.SunDiameter/2 + opposition.ParallaxSun);
+        opposition['penumbralRadius'] = .9895 * 1.02 * (0.99833 * opposition.ParallaxMoon + opposition.SunDiameter/2 + opposition.ParallaxSun);
         
         // then compute the minimum distance between the center of the Moon and the axes of these cones
         // - first, the equation of the line that describes the approximate motion of the moon
