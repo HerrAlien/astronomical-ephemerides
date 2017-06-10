@@ -22,6 +22,16 @@ var MoonEclipsesData = {
     sinodicPeriod : 29.530587981,
     
     getOppositionAroundJD : function (JD) {
+        var plus = MoonEclipsesData.getOppositionAroundJDUsingFraction(JD, 0.5);
+        var minus = MoonEclipsesData.getOppositionAroundJDUsingFraction(JD, -0.5);
+        var result = {};
+        for (var key in plus)
+            result[key] = 0.5 * (plus[key] + minus[key]);
+        
+        return result;
+    },
+    
+    getOppositionAroundJDUsingFraction : function (JD, hourFraction) {
         var jd = JD;
         var sunData = false;
         var moonData = false;
@@ -29,7 +39,6 @@ var MoonEclipsesData = {
         var dSunData = false;
         var dMoonData = false;
         var oppositionTimeCorrection = 0;
-        var hourFraction  = 1;
         var dJd = hourFraction/24;
         
         do {
@@ -74,8 +83,8 @@ var MoonEclipsesData = {
     
     addTimingsAndGeometry : function (opposition) {
         // first, compute penumbral and umbral radii. In degrees.
-        opposition['umbralRadius'] = .993 * 1.02 * (0.99833 * opposition.ParallaxMoon - opposition.SunDiameter/2 + opposition.ParallaxSun);
-        opposition['penumbralRadius'] = .9895 * 1.02 * (0.99833 * opposition.ParallaxMoon + opposition.SunDiameter/2 + opposition.ParallaxSun);
+        opposition['umbralRadius'] = .993 * 1.02 * (0.99834 * opposition.ParallaxMoon - opposition.SunDiameter/2 + opposition.ParallaxSun);
+        opposition['penumbralRadius'] = .988 * 1.02 * (0.99834 * opposition.ParallaxMoon + opposition.SunDiameter/2 + opposition.ParallaxSun);
         
         // then compute the minimum distance between the center of the Moon and the axes of these cones
         // - first, the equation of the line that describes the approximate motion of the moon
@@ -101,7 +110,7 @@ var MoonEclipsesData = {
         
         if (opposition['eclipse']) {
             opposition['MoonPositions'] = {};
-            opposition['Timings'] = { 'Maximum' : opposition.oppositionJD + (opposition['xMinDistance'] / opposition.dx)/24 };
+            opposition['Timings'] = { 'Maximum' : opposition.oppositionJD + (opposition['xMinDistance'] / opposition.dx)/24 - 0.25/(24*60) };
         }
         
         if (opposition['umbralPartialEclipse']) {
@@ -142,7 +151,7 @@ var MoonEclipsesData = {
         var result = {};
         
         for (var position in moonPosAtContact) {
-            result[position] = opposition.oppositionJD + (moonPosAtContact[position].X / opposition.dx)/24;
+            result[position] = opposition.oppositionJD + (moonPosAtContact[position].X / opposition.dx)/24 - 1/(24*60);
             if (isNaN(result[position]))
                 result[position] = false;
         }
