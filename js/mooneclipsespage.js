@@ -44,7 +44,7 @@ var MoonEclipsesPage = {
             if (oppositionData.eclipse) 
                 MoonEclipsesPage.drawNewEclipse (oppositionData);
             
-            setTimeout (function() { processJD(oppositionData.oppositionJD + MoonEclipsesPage.dataSource.sinodicPeriod); }, 1);
+            setTimeout (function() { processJD(oppositionData.JD + MoonEclipsesPage.dataSource.sinodicPeriod); }, 1);
         }
         
         processJD(startJD);
@@ -74,7 +74,7 @@ var MoonEclipsesPage = {
         }
         
         // get the JD of the opposition
-        var oppositionDateTime = yyyymmdd_hhmmOfJD(oppositionData.oppositionJD);
+        var oppositionDateTime = yyyymmdd_hhmmOfJD(oppositionData.JD);
         var description = "Eclipse through the penumbra";
         if (oppositionData.umbralPartialEclipse)
             description = "Partial eclipse";

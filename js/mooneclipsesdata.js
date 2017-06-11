@@ -31,26 +31,44 @@ var MoonEclipsesData = {
         return result;
     },
     
-    computeDeltas : function (JD1, JD2) {
+    eclipseInputsAroundJD : function (JD) {
         var result = {};
         
-        var sunData1 = SunData.getDataForJD (JD1);
-        var moonData1 = MoonData.getDataForJD (JD1);
+        var sunData = SunData.getDataForJD (JD);
+        var moonData = MoonData.getDataForJD (JD);
         
-        var  sunData2 = SunData.getDataForJD (JD2);
-        var moonData2 = MoonData.getDataForJD (JD2);
+        var hourFration = 0.5;
+        var dJd = hourFration /24.0;
+        var dT = 2 * hourFration;
         
-        var dT = (JD1 - JD2) * 24;
+        var  sunDataPlus = SunData.getDataForJD (JD + dJd);
+        var moonDataPlus = MoonData.getDataForJD (JD + dJd);
+        var  sunDataMinus = SunData.getDataForJD (JD - dJd);
+        var moonDataMinus = MoonData.getDataForJD (JD - dJd);
         
-        result["dRaSun"  ] = 15 * (sunData1[2] - sunData2[2]) / dT;
-        result["dDecSun" ] = (sunData1[3] - sunData2[3]) / dT;
-        result["dRaMoon" ] = 15 * (moonData1[2] - moonData2[2]) / dT;
-        result["dDecMoon"] = (moonData1[3] - moonData2[3]) / dT;
         
-        var meanMoonDec = 0.5 * (moonData1[3] + moonData2[3]);
+        result["dRaSun"  ] = 15 * (sunDataPlus[2] - sunDataMinus[2]) / dT;
+        result["dDecSun" ] = (sunDataPlus[3] - sunDataMinus[3]) / dT;
+        result["dRaMoon" ] = 15 * (moonDataPlus[2] - moonDataMinus[2]) / dT;
+        result["dDecMoon"] = (moonDataPlus[3] - moonDataMinus[3]) / dT;
         
-        result["dx"] = (result["dRaMoon"] - result["dRaSun"])*Math.cos(meanMoonDec * Math.PI / 180);
+        result["dx"] = (result["dRaMoon"] - result["dRaSun"])*Math.cos(moonData[3] * Math.PI / 180);
         result["dy" ] = result["dDecSun" ] + result["dDecMoon"];
+        
+        result ["y0"] = sunData[3] + moonData[3];
+        
+        result ['JD'] = JD;
+        result ["ParallaxSun"] = sunData[10];
+        result ["ParallaxMoon"] = moonData[8];
+
+        result ["MoonDiameter"] = moonData[6];
+        result ["SunDiameter"] = sunData[5];
+        
+        result ["RaSun"   ]= sunData[2] * 15;
+        result ["DecSun"  ]= sunData[3];
+        result ["RaMoon"  ]= moonData[2] * 15;
+        result ["DecMoon" ]= moonData[3];
+
         
         return result;
     },
@@ -100,7 +118,7 @@ var MoonEclipsesData = {
                     "MoonDiameter" : moonData[6],
                     "SunDiameter" : sunData[5],
                     
-                    "oppositionJD" : jd,
+                    "JD" : jd,
                     "eclipse" : false
             };
     },
@@ -109,9 +127,11 @@ var MoonEclipsesData = {
         
         opposition['dy'] = opposition.dDecMoon + opposition.dDecSun;
         opposition['dx'] = (opposition.dRaMoon - opposition.dRaSun)*Math.cos(opposition.DecMoon * Math.PI / 180);
+        opposition['y0'] = opposition.DecMoon + opposition.DecSun;
         return opposition;
     },
     
+    // needs an X0
     addTimingsAndGeometry : function (opposition) {
         // first, compute penumbral and umbral radii. In degrees.
         opposition['umbralRadius'] = 1.02 * (0.99834 * opposition.ParallaxMoon - opposition.SunDiameter/2 + opposition.ParallaxSun);
@@ -119,7 +139,6 @@ var MoonEclipsesData = {
         
         // then compute the minimum distance between the center of the Moon and the axes of these cones
         // - first, the equation of the line that describes the approximate motion of the moon
-        opposition['y0'] = opposition.DecMoon + opposition.DecSun;
         
         opposition['slope'] = opposition['dy'] / opposition['dx'];
 
@@ -142,7 +161,7 @@ var MoonEclipsesData = {
         
         if (opposition['eclipse']) {
             opposition['MoonPositions'] = {};
-            opposition['Timings'] = { 'Maximum' : opposition.oppositionJD + (opposition['xMinDistance'] / opposition.dx)/24 };
+            opposition['Timings'] = { 'Maximum' : opposition.JD + (opposition['xMinDistance'] / opposition.dx)/24 };
         }
         
         if (opposition['umbralPartialEclipse']) {
@@ -158,6 +177,7 @@ var MoonEclipsesData = {
         return opposition;
     },
     
+    // needs an X0
     computeMoonPositionsAtContact : function (opposition, coneRadius) {
         var denominatorAtMinimum = 1 + opposition.slope * opposition.slope;
         var discriminantAtExternalTangent = 4 * opposition.slope * opposition.slope * opposition.y0 * opposition.y0 -
@@ -183,18 +203,14 @@ var MoonEclipsesData = {
         var result = {};
         
         for (var position in moonPosAtContact) {
-            result[position] = opposition.oppositionJD + (moonPosAtContact[position].X / opposition.dx)/24;
+            result[position] = opposition.JD + (moonPosAtContact[position].X / opposition.dx)/24;
             if (isNaN(result[position]))
                 result[position] = false;
         }
         
         return result;
     },
-    
-    average : function (a1, a2) {
-        return 2 * a1 * a2 /(a1 + a2); // / (a1 + a2);
-    },
-    
+        
     clone : function (obj) {
         var res = {};
         for (var key in obj) {
@@ -210,6 +226,21 @@ var MoonEclipsesData = {
         var oppositionData = MoonEclipsesData.getOppositionAroundJD (JD);
         oppositionData = MoonEclipsesData.addInitialDeltas (oppositionData);
         oppositionData = MoonEclipsesData.addTimingsAndGeometry(oppositionData);
+        
+        if (oppositionData.eclipse) {
+        /* picewise linear:
+         - compute deltas around a given position
+         - compute X, Y based on the x0 and y0 corresponding to that position
+         - update that one timestamp.
+        */
+        
+        var p1 = MoonEclipsesData.eclipseInputsAroundJD (oppositionData['Timings']['Penumbral']['lastContact'] );
+        p1 =  MoonEclipsesData.addTimingsAndGeometry(p1);
+        oppositionData['Timings']['Penumbral']['lastContact']  = p1 ['Timings']['Penumbral']['lastContact'] ;
+        
+        
+        }
+       
         return oppositionData;
     },
     
