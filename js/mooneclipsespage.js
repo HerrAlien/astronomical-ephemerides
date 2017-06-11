@@ -130,6 +130,14 @@ var MoonEclipsesPage = {
         c.setAttribute ("stroke-width", 1);
     },
     
+    addLabel : function (svg, transformedPos, text) {
+        var textDOM = svg.ownerDocument.createElementNS ("http://www.w3.org/2000/svg", "text");
+        svg.appendChild(textDOM);
+        textDOM.setAttribute("x", transformedPos.X);
+        textDOM.setAttribute("y", transformedPos.Y);
+        textDOM.textContent = text;
+    },
+    
     displayGraph : function (oppositionData, mainDiv) {
         var namespace = "http://www.w3.org/2000/svg";
         var svg = mainDiv.ownerDocument.createElementNS(namespace, "svg");
@@ -142,11 +150,60 @@ var MoonEclipsesPage = {
         
         var halfwidth = 0.5 * size;
         
-        var pxPerDeg = (halfwidth - margin)/oppositionData.penumbralRadius;
+        var pxPerDeg = (halfwidth - margin )/(oppositionData.penumbralRadius + 2 * oppositionData.MoonDiameter );
         
         // penumbra and umbra circle
         MoonEclipsesPage.circle (svg, oppositionData.penumbralRadius * pxPerDeg, halfwidth, halfwidth, "#eeeeee", "#000000");
         MoonEclipsesPage.circle (svg, oppositionData.umbralRadius * pxPerDeg, halfwidth, halfwidth, "#CCCCCC", "#000000");
+        
+        // penumbral contacts
+        function moonPxCoords (contactData) {
+            return {
+                'X' : contactData.X * pxPerDeg + halfwidth,
+                'Y' : halfwidth - contactData.Y * pxPerDeg
+            };
+        }
+        
+
+        
+        var moonRadius =  oppositionData.MoonDiameter /2 * pxPerDeg;
+
+        var cp1 = moonPxCoords (oppositionData.MoonPositions.Penumbral.firstContact);
+        MoonEclipsesPage.circle (svg, moonRadius, cp1.X, cp1.Y, "none", "#000000");
+        MoonEclipsesPage.addLabel (svg, cp1, "TP1");
+                           
+        if (oppositionData.umbralPartialEclipse) {
+            var cu1 = moonPxCoords (oppositionData.MoonPositions.Umbral.firstContact);
+            MoonEclipsesPage.circle (svg, moonRadius, cu1.X, cu1.Y, "none", "#000000");
+            MoonEclipsesPage.addLabel (svg, cu1, "TU1");
+
+            if (oppositionData.umbralTotalEclipse) {
+                var cu2 = moonPxCoords (oppositionData.MoonPositions.Umbral.beginFullImmersion);
+                MoonEclipsesPage.circle (svg, moonRadius, cu2.X, cu2.Y, "none", "#000000");
+                MoonEclipsesPage.addLabel (svg, cu2, "TU2");
+            }
+        }
+        
+        // maximum ...
+         var cm = moonPxCoords ({'X' : oppositionData.xMinDistance, 'Y' : oppositionData.yMinDistance});
+         MoonEclipsesPage.circle (svg, moonRadius, cm.X, cm.Y, "none", "#000000");
+        MoonEclipsesPage.addLabel (svg, cm, "TM");
+        
+        if (oppositionData.umbralPartialEclipse) {
+            if (oppositionData.umbralTotalEclipse) {
+                var cu3 = moonPxCoords (oppositionData.MoonPositions.Umbral.endFullImmersion);
+                MoonEclipsesPage.circle (svg, moonRadius, cu3.X, cu3.Y, "none", "#000000");
+                MoonEclipsesPage.addLabel (svg, cu3, "TU3");
+            }
+                
+            var cu4 = moonPxCoords (oppositionData.MoonPositions.Umbral.lastContact);
+            MoonEclipsesPage.circle (svg, moonRadius, cu4.X, cu4.Y, "none", "#000000");
+            MoonEclipsesPage.addLabel (svg, cu4, "TU4");
+         }
+        
+        var cp4 = moonPxCoords (oppositionData.MoonPositions.Penumbral.lastContact);
+        MoonEclipsesPage.circle (svg, moonRadius, cp4.X, cp4.Y, "none", "#000000");
+        MoonEclipsesPage.addLabel (svg, cp4, "TP4");
 
     },
     
