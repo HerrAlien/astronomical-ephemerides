@@ -119,6 +119,37 @@ var MoonEclipsesPage = {
         addTiming (oppositionData.Timings.Penumbral.lastContact, "End of penumbral eclipse (TP4)", timingsTable);
     },
     
+    circle : function (svg, R, CX, CY, fillColor, strokeColor) {
+        var c = svg.ownerDocument.createElementNS ("http://www.w3.org/2000/svg", "circle");
+        svg.appendChild (c);
+        c.setAttribute ("cx", CX);
+        c.setAttribute ("cy", CY);
+        c.setAttribute ("r", R);
+        c.setAttribute ("fill", fillColor);
+        c.setAttribute ("stroke", strokeColor);
+        c.setAttribute ("stroke-width", 1);
+    },
+    
+    displayGraph : function (oppositionData, mainDiv) {
+        var namespace = "http://www.w3.org/2000/svg";
+        var svg = mainDiv.ownerDocument.createElementNS(namespace, "svg");
+        var size = 800;
+        svg.setAttribute("width", size);
+        svg.setAttribute("height", size);
+        mainDiv.appendChild(svg);
+        
+        var margin = 50;
+        
+        var halfwidth = 0.5 * size;
+        
+        var pxPerDeg = (halfwidth - margin)/oppositionData.penumbralRadius;
+        
+        // penumbra and umbra circle
+        MoonEclipsesPage.circle (svg, oppositionData.penumbralRadius * pxPerDeg, halfwidth, halfwidth, "#eeeeee", "#000000");
+        MoonEclipsesPage.circle (svg, oppositionData.umbralRadius * pxPerDeg, halfwidth, halfwidth, "#CCCCCC", "#000000");
+
+    },
+    
     drawNewEclipse : function (oppositionData) {
         var addNodeChild = PlanetPage.prototype.addNodeChild;
         
@@ -143,7 +174,7 @@ var MoonEclipsesPage = {
         mainDiv.classList.add("moonEclipse");
         
         MoonEclipsesPage.displayTimings (oppositionData, mainDiv);
- 
+        MoonEclipsesPage.displayGraph (oppositionData, mainDiv); 
     }
 }
 
