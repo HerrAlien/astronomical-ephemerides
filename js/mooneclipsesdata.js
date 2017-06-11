@@ -31,6 +31,30 @@ var MoonEclipsesData = {
         return result;
     },
     
+    computeDeltas : function (JD1, JD2) {
+        var result = {};
+        
+        var sunData1 = SunData.getDataForJD (JD1);
+        var moonData1 = MoonData.getDataForJD (JD1);
+        
+        var  sunData2 = SunData.getDataForJD (JD2);
+        var moonData2 = MoonData.getDataForJD (JD2);
+        
+        var dT = (JD1 - JD2) * 24;
+        
+        result["dRaSun"  ] = 15 * (sunData1[2] - sunData2[2]) / dT;
+        result["dDecSun" ] = (sunData1[3] - sunData2[3]) / dT;
+        result["dRaMoon" ] = 15 * (moonData1[2] - moonData2[2]) / dT;
+        result["dDecMoon"] = (moonData1[3] - moonData2[3]) / dT;
+        
+        var meanMoonDec = 0.5 * (moonData1[3] + moonData2[3]);
+        
+        result["dx"] = (result["dRaMoon"] - result["dRaSun"])*Math.cos(meanMoonDec * Math.PI / 180);
+        result["dy" ] = result["dDecSun" ] + result["dDecMoon"];
+        
+        return result;
+    },
+    
     getOppositionAroundJDUsingFraction : function (JD, hourFraction) {
         var jd = JD;
         var sunData = false;
@@ -81,6 +105,13 @@ var MoonEclipsesData = {
             };
     },
     
+    addDeltas : function (opposition) {
+        
+        opposition['dy'] = opposition.dDecMoon + opposition.dDecSun;
+        opposition['dx'] = (opposition.dRaMoon - opposition.dRaSun)*Math.cos(opposition.DecMoon * Math.PI / 180);
+        return opposition;
+    },
+    
     addTimingsAndGeometry : function (opposition) {
         // first, compute penumbral and umbral radii. In degrees.
         opposition['umbralRadius'] = .993 * 1.02 * (0.99834 * opposition.ParallaxMoon - opposition.SunDiameter/2 + opposition.ParallaxSun);
@@ -89,8 +120,6 @@ var MoonEclipsesData = {
         // then compute the minimum distance between the center of the Moon and the axes of these cones
         // - first, the equation of the line that describes the approximate motion of the moon
         opposition['y0'] = opposition.DecMoon + opposition.DecSun;
-        opposition['dy'] = opposition.dDecMoon + opposition.dDecSun;
-        opposition['dx'] = (opposition.dRaMoon - opposition.dRaSun)*Math.cos(opposition.DecMoon * Math.PI / 180);
         
         opposition['slope'] = opposition['dy'] / opposition['dx'];
 
@@ -113,7 +142,7 @@ var MoonEclipsesData = {
         
         if (opposition['eclipse']) {
             opposition['MoonPositions'] = {};
-            opposition['Timings'] = { 'Maximum' : opposition.oppositionJD + (opposition['xMinDistance'] / opposition.dx)/24 - 0.25/(24*60) };
+            opposition['Timings'] = { 'Maximum' : opposition.oppositionJD + (opposition['xMinDistance'] / opposition.dx)/24 };
         }
         
         if (opposition['umbralPartialEclipse']) {
@@ -154,12 +183,16 @@ var MoonEclipsesData = {
         var result = {};
         
         for (var position in moonPosAtContact) {
-            result[position] = opposition.oppositionJD + (moonPosAtContact[position].X / opposition.dx)/24 - 1/(24*60);
+            result[position] = opposition.oppositionJD + (moonPosAtContact[position].X / opposition.dx)/24;
             if (isNaN(result[position]))
                 result[position] = false;
         }
         
         return result;
+    },
+    
+    average : function (a1, a2) {
+        return 2 * a1 * a2 / (a1 + a2);
     },
     
     calculateEclipseForJD : function (JD) {
