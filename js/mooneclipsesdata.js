@@ -105,6 +105,9 @@ var MoonEclipsesData = {
 
         opposition['umbralPartialEclipse'] = opposition['minDistance'] <= opposition['umbralRadius'] + 0.5 * opposition.MoonDiameter;
         opposition['penumbralPartialEclipse'] = opposition['minDistance'] <= opposition['penumbralRadius'] + 0.5 * opposition.MoonDiameter;
+        
+        opposition['magnitude'] = (opposition['umbralRadius'] - opposition['minDistance'] + opposition.MoonDiameter/2) / opposition.MoonDiameter;
+        opposition['penumbralMagnitude'] = (opposition['penumbralRadius'] - opposition['minDistance'] + opposition.MoonDiameter/2) / opposition.MoonDiameter;
 
         opposition['eclipse'] = opposition['umbralTotalEclipse'] || opposition['penumbralTotalEclipse'] || opposition['umbralPartialEclipse'] || opposition['penumbralPartialEclipse'];
         
