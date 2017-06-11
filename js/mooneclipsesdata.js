@@ -105,7 +105,7 @@ var MoonEclipsesData = {
             };
     },
     
-    addDeltas : function (opposition) {
+    addInitialDeltas : function (opposition) {
         
         opposition['dy'] = opposition.dDecMoon + opposition.dDecSun;
         opposition['dx'] = (opposition.dRaMoon - opposition.dRaSun)*Math.cos(opposition.DecMoon * Math.PI / 180);
@@ -114,8 +114,8 @@ var MoonEclipsesData = {
     
     addTimingsAndGeometry : function (opposition) {
         // first, compute penumbral and umbral radii. In degrees.
-        opposition['umbralRadius'] = .993 * 1.02 * (0.99834 * opposition.ParallaxMoon - opposition.SunDiameter/2 + opposition.ParallaxSun);
-        opposition['penumbralRadius'] = .988 * 1.02 * (0.99834 * opposition.ParallaxMoon + opposition.SunDiameter/2 + opposition.ParallaxSun);
+        opposition['umbralRadius'] = 1.02 * (0.99834 * opposition.ParallaxMoon - opposition.SunDiameter/2 + opposition.ParallaxSun);
+        opposition['penumbralRadius'] = 1.02 * (0.99834 * opposition.ParallaxMoon + opposition.SunDiameter/2 + opposition.ParallaxSun);
         
         // then compute the minimum distance between the center of the Moon and the axes of these cones
         // - first, the equation of the line that describes the approximate motion of the moon
@@ -192,11 +192,23 @@ var MoonEclipsesData = {
     },
     
     average : function (a1, a2) {
-        return 2 * a1 * a2 / (a1 + a2);
+        return 2 * a1 * a2 /(a1 + a2); // / (a1 + a2);
+    },
+    
+    clone : function (obj) {
+        var res = {};
+        for (var key in obj) {
+            if (typeof obj[key] == 'Object')
+                res[key] = MoonEclipsesData.clone (obj[key]);
+            else
+                res[key] = obj[key];
+        }
+        return res;
     },
     
     calculateEclipseForJD : function (JD) {
         var oppositionData = MoonEclipsesData.getOppositionAroundJD (JD);
+        oppositionData = MoonEclipsesData.addInitialDeltas (oppositionData);
         oppositionData = MoonEclipsesData.addTimingsAndGeometry(oppositionData);
         return oppositionData;
     },
