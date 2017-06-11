@@ -527,6 +527,9 @@ input {
 .moonEclipse {
     margin-left: 10px;
     text-align: center;
+    border-top: solid 1px #000000;
+    margin-top: -1px;
+    border-bottom: solid 1px #000000;
 }
 
 .moonEclipse svg {
