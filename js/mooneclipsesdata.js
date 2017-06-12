@@ -22,11 +22,11 @@ var MoonEclipsesData = {
     sinodicPeriod : 29.530587981,
     
     getOppositionAroundJD : function (JD) {
-        var plus = MoonEclipsesData.getOppositionAroundJDUsingFraction(JD, 0.5);
-        var minus = MoonEclipsesData.getOppositionAroundJDUsingFraction(JD, -0.5);
-        var result = {};
-        for (var key in plus)
-            result[key] = 0.5 * (plus[key] + minus[key]);
+        var jd = MoonEclipsesData.getOppositionJD(JD);
+
+        var result = MoonEclipsesData.eclipseInputsAroundJD (jd);
+        result['JD'] = jd;
+        result['eclipse'] = false;
         
         return result;
     },
@@ -77,15 +77,15 @@ var MoonEclipsesData = {
         return result;
     },
     
-    getOppositionAroundJDUsingFraction : function (JD, hourFraction) {
-        var jd = JD;
+    getOppositionJD : function (startJD) {
+        var jd = startJD;
         var sunData = false;
         var moonData = false;
         var eps = 1e-4;
         var dSunData = false;
         var dMoonData = false;
         var oppositionTimeCorrection = 0;
-        var dJd = hourFraction/24;
+        var dJd = 0.5/24;
         
         do {
             
@@ -104,34 +104,7 @@ var MoonEclipsesData = {
             jd += oppositionTimeCorrection;
             
         } while (Math.abs(oppositionTimeCorrection) > eps);
-        
-        var opposition = {
-                    "RaSun" : sunData[2] * 15,
-                    "DecSun" : sunData[3],
-                    "RaMoon" : moonData[2] * 15,
-                    "DecMoon" : moonData[3],
-                    
-                    "dRaSun" : (dSunData[2] - sunData[2]) * 15 / hourFraction,
-                    "dDecSun": (dSunData[3] - sunData[3]) / hourFraction,
-                    "dRaMoon" : (dMoonData[2] - moonData[2]) * 15 / hourFraction,
-                    "dDecMoon": (dMoonData[3] - moonData[3]) / hourFraction,
-                    
-                    "ParallaxSun" : sunData[10],
-                    "ParallaxMoon" : moonData[8],
-                    
-                    "MoonDiameter" : moonData[6],
-                    "SunDiameter" : sunData[5],
-                    
-                    "JD" : jd,
-                    "eclipse" : false
-            };
-        opposition['dy'] = opposition.dDecMoon + opposition.dDecSun;
-        opposition['dx'] = (opposition.dRaMoon - opposition.dRaSun)*Math.cos(opposition.DecMoon * Math.PI / 180);
-        opposition['y0'] = opposition.DecMoon + opposition.DecSun;
-        opposition['x0'] = 0;
-        opposition['slope'] = opposition['dy'] / opposition['dx'];
-        return opposition;
-           
+        return jd;
     },
         
     // needs an X0
