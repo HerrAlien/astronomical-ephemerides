@@ -58,10 +58,36 @@ function MoonEclipse (JD) {
         this.dy  = this.dDecSun + this.dDecMoon;        
         this.slope = this.dy / this.dx;
         
-        this.umbralRadius = 1.02 * (0.99834 * this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
-        this.penumbralRadius = 1.02 * (0.99834 * this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
 }
 
+(function(){
+    MoonEclipse.prototype['computeMagnitudes'] = function () {
+        
+        this.umbralRadius = 1.02 * (0.99834 * this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
+        this.penumbralRadius = 1.02 * (0.99834 * this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
+
+        var denominatorAtMinimum = 1 + this.slope  * this.slope ;
+        
+        this.xMinDistance  = - (this.slope  * this.y0 ) / denominatorAtMinimum;
+        this.yMinDistance  = this.y0  + this.slope  * this.xMinDistance ;
+        this.minDistance  = Math.sqrt (this.xMinDistance  * this.xMinDistance  +
+                                               this.yMinDistance  * this.yMinDistance );
+                                               
+        // if the minimum distance is smaller than one of the radii, we have an eclipse.
+        this.umbralTotalEclipse  = this.minDistance  <= this.umbralRadius ;
+        this.penumbralTotalEclipse  = this.minDistance  <= this.penumbralRadius ;
+
+        this.umbralPartialEclipse  = this.minDistance  <= this.umbralRadius  + 0.5 * this.MoonDiameter;
+        this.penumbralPartialEclipse  = this.minDistance  <= this.penumbralRadius  + 0.5 * this.MoonDiameter;
+        
+        this.magnitude  = (this.umbralRadius  - this.minDistance  + this.MoonDiameter/2) / this.MoonDiameter;
+        this.penumbralMagnitude  = (this.penumbralRadius  - this.minDistance  + this.MoonDiameter/2) / this.MoonDiameter;
+
+        this.eclipse  = this.umbralTotalEclipse  || this.penumbralTotalEclipse  || this.umbralPartialEclipse  || this.penumbralPartialEclipse ;
+    }
+    
+    
+})();
 
 
 var MoonEclipsesData = {
@@ -73,15 +99,8 @@ var MoonEclipsesData = {
     getOppositionAroundJD : function (JD) {
         var jd = MoonEclipsesData.getOppositionJD(JD);
 
-        var result = MoonEclipsesData.eclipseInputsAroundJD (jd);
-        result['JD'] = jd;
+        var result = new MoonEclipse (jd);
         result['eclipse'] = false;
-        
-        return result;
-    },
-    
-    eclipseInputsAroundJD : function (JD) {
-        var result = new MoonEclipse (JD);
         return result;
     },
     
@@ -115,17 +134,14 @@ var MoonEclipsesData = {
         return jd;
     },
     
-    getEclipseMagnitudes : function (opposition) {
-        var result = {};
-    },
         
     // needs an X0
     addTimingsAndGeometry : function (opposition) {
-        // first, compute penumbral and umbral radii. In degrees.
         
         // then compute the minimum distance between the center of the Moon and the axes of these cones
         // - first, the equation of the line that describes the approximate motion of the moon
         
+        opposition.computeMagnitudes();
 
         var denominatorAtMinimum = 1 + opposition['slope'] * opposition['slope'];
         opposition['xMinDistance'] = - (opposition['slope'] * opposition['y0']) / denominatorAtMinimum;
