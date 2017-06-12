@@ -195,9 +195,13 @@ var MoonEclipsesData = {
             "firstContact" : { "X" : (-2 * opposition.slope * opposition.y0 - Math.sqrt (discriminantAtExternalTangent)) / (2 * denominatorAtMinimum) },
             "lastContact" : {"X" : (-2 * opposition.slope * opposition.y0 + Math.sqrt (discriminantAtExternalTangent)) / (2 * denominatorAtMinimum)}
         };
+        
+        var distanceAtInternalTangent = coneRadius - opposition.MoonDiameter/2;
+        squaredDistance = distanceAtInternalTangent * distanceAtInternalTangent;
 
-        var discriminantAtInternalTangent = 4 * opposition.slope * opposition.slope * opposition.y0 * opposition.y0 -
-                           (4 * denominatorAtMinimum * (opposition.y0 * opposition.y0 - (coneRadius - opposition.MoonDiameter/2)*(coneRadius - opposition.MoonDiameter/2) ));
+        var discriminantAtInternalTangent = 4 * (squaredSlope*squaredDistance - yResidue*yResidue + squaredDistance);
+        
+        
         results ['beginFullImmersion'] = { "X" : (-2 * opposition.slope * opposition.y0 - Math.sqrt (discriminantAtInternalTangent)) / (2 * denominatorAtMinimum) };
         results ['endFullImmersion'] = { "X" : (-2 * opposition.slope * opposition.y0 + Math.sqrt (discriminantAtInternalTangent)) / (2 * denominatorAtMinimum) };
 
