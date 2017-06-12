@@ -90,6 +90,9 @@ function MoonEclipse (JD) {
         return this.JD + ((X / this.dx) / 24);
     }
     
+    MoonEclipse.prototype['getYOnLineForX'] = function (X) {
+        return this.y0 + this.slope * (X - this.x0);
+    }
     
 })();
 
@@ -165,35 +168,45 @@ var MoonEclipsesData = {
         return opposition;
     },
     
-    // needs an X0
-    computeMoonPositionsAtContact : function (opposition, coneRadius) {
-        var distanceAtExternalTangent = coneRadius + opposition.MoonDiameter/2;
+    quadraticEquationSolutions : function (opposition, distance, deltaSigns) {
         
-        var squaredDistance = distanceAtExternalTangent * distanceAtExternalTangent;
+        var squaredDistance = distance * distance;
         var squaredSlope = opposition.slope * opposition.slope;
         var yResidue = opposition.y0 - opposition.slope * opposition.x0;
         var denominatorAtMinimum = 1 + squaredSlope;
         
         var discriminantAtExternalTangent = 4 * (squaredSlope*squaredDistance - yResidue*yResidue + squaredDistance);
         
-        var results = {
-            "firstContact" : { "X" : (-2 * opposition.slope * opposition.y0 - Math.sqrt (discriminantAtExternalTangent)) / (2 * denominatorAtMinimum) },
-            "lastContact" : {"X" : (-2 * opposition.slope * opposition.y0 + Math.sqrt (discriminantAtExternalTangent)) / (2 * denominatorAtMinimum)}
-        };
+        var x = [];
+        for (var i = 0; i < deltaSigns.length; i++) {
+            x[i] = (-2 * opposition.slope * opposition.y0 + deltaSigns[i] * Math.sqrt (discriminantAtExternalTangent)) / (2 * denominatorAtMinimum);
+        }
+        return x;
+    },
+    
+    // needs an X0
+    computeMoonPositionsAtContact : function (opposition, coneRadius) {
+        var results = {};
+        var distanceAtExternalTangent = coneRadius + opposition.MoonDiameter/2;
         
+        var externalXContacts = MoonEclipsesData.quadraticEquationSolutions (opposition, distanceAtExternalTangent, [-1, 1]);
+        
+        results["firstContact"] = { "X" : externalXContacts[0],
+                                    "Y" : opposition.getYOnLineForX (externalXContacts[0]) };
+        
+        results["lastContact"] = { "X" :  externalXContacts[1],
+                                    "Y" : opposition.getYOnLineForX (externalXContacts[1]) };
+                                    
+
         var distanceAtInternalTangent = coneRadius - opposition.MoonDiameter/2;
-        squaredDistance = distanceAtInternalTangent * distanceAtInternalTangent;
+        var internalXContacts = MoonEclipsesData.quadraticEquationSolutions (opposition, distanceAtInternalTangent, [-1, 1]);
 
-        var discriminantAtInternalTangent = 4 * (squaredSlope*squaredDistance - yResidue*yResidue + squaredDistance);
+        results["beginFullImmersion"] = { "X" :  internalXContacts[0],
+                                    "Y" : opposition.getYOnLineForX (internalXContacts[0]) };
         
+        results["endFullImmersion"] = { "X" :  internalXContacts[1],
+                                    "Y" : opposition.getYOnLineForX (internalXContacts[1]) };
         
-        results ['beginFullImmersion'] = { "X" : (-2 * opposition.slope * opposition.y0 - Math.sqrt (discriminantAtInternalTangent)) / (2 * denominatorAtMinimum) };
-        results ['endFullImmersion'] = { "X" : (-2 * opposition.slope * opposition.y0 + Math.sqrt (discriminantAtInternalTangent)) / (2 * denominatorAtMinimum) };
-
-        results ['firstContact']["Y"] = opposition.y0 + opposition.slope *  results ['firstContact']["X"];
-        results ['lastContact']["Y"] = opposition.y0 + opposition.slope *  results ['lastContact']["X"];
-        results ['beginFullImmersion']["Y"] = opposition.y0 + opposition.slope *  results ['beginFullImmersion']["X"];
-        results ['endFullImmersion']["Y"] = opposition.y0 + opposition.slope *  results ['endFullImmersion']["X"];
         return results;
     },
     
