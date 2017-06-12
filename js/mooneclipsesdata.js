@@ -58,14 +58,14 @@ function MoonEclipse (JD) {
         this.dy  = this.dDecSun + this.dDecMoon;        
         this.slope = this.dy / this.dx;
         
+        this.umbralRadius = 1.02 * (0.99834 * this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
+        this.penumbralRadius = 1.02 * (0.99834 * this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
 }
 
 (function(){
+    
     MoonEclipse.prototype['computeMagnitudes'] = function () {
         
-        this.umbralRadius = 1.02 * (0.99834 * this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
-        this.penumbralRadius = 1.02 * (0.99834 * this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
-
         var denominatorAtMinimum = 1 + this.slope  * this.slope ;
         
         this.xMinDistance  = - (this.slope  * this.y0 ) / denominatorAtMinimum;
