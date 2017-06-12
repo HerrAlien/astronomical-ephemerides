@@ -142,24 +142,6 @@ var MoonEclipsesData = {
         // - first, the equation of the line that describes the approximate motion of the moon
         
         opposition.computeMagnitudes();
-
-        var denominatorAtMinimum = 1 + opposition['slope'] * opposition['slope'];
-        opposition['xMinDistance'] = - (opposition['slope'] * opposition['y0']) / denominatorAtMinimum;
-        opposition['yMinDistance'] = opposition['y0'] + opposition['slope'] * opposition['xMinDistance'];
-        opposition['minDistance'] = Math.sqrt (opposition['xMinDistance'] * opposition['xMinDistance'] +
-                                               opposition['yMinDistance'] * opposition['yMinDistance']);
-                                               
-        // if the minimum distance is smaller than one of the radii, we have an eclipse.
-        opposition['umbralTotalEclipse'] = opposition['minDistance'] <= opposition['umbralRadius'];
-        opposition['penumbralTotalEclipse'] = opposition['minDistance'] <= opposition['penumbralRadius'];
-
-        opposition['umbralPartialEclipse'] = opposition['minDistance'] <= opposition['umbralRadius'] + 0.5 * opposition.MoonDiameter;
-        opposition['penumbralPartialEclipse'] = opposition['minDistance'] <= opposition['penumbralRadius'] + 0.5 * opposition.MoonDiameter;
-        
-        opposition['magnitude'] = (opposition['umbralRadius'] - opposition['minDistance'] + opposition.MoonDiameter/2) / opposition.MoonDiameter;
-        opposition['penumbralMagnitude'] = (opposition['penumbralRadius'] - opposition['minDistance'] + opposition.MoonDiameter/2) / opposition.MoonDiameter;
-
-        opposition['eclipse'] = opposition['umbralTotalEclipse'] || opposition['penumbralTotalEclipse'] || opposition['umbralPartialEclipse'] || opposition['penumbralPartialEclipse'];
         
         if (opposition['eclipse']) {
             opposition['MoonPositions'] = {};
