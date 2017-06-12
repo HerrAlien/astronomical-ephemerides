@@ -101,7 +101,7 @@ var MoonEclipsesData = {
             
         } while (Math.abs(oppositionTimeCorrection) > eps);
         
-        return {
+        var opposition = {
                     "RaSun" : sunData[2] * 15,
                     "DecSun" : sunData[3],
                     "RaMoon" : moonData[2] * 15,
@@ -121,16 +121,13 @@ var MoonEclipsesData = {
                     "JD" : jd,
                     "eclipse" : false
             };
-    },
-    
-    addInitialDeltas : function (opposition) {
-        
         opposition['dy'] = opposition.dDecMoon + opposition.dDecSun;
         opposition['dx'] = (opposition.dRaMoon - opposition.dRaSun)*Math.cos(opposition.DecMoon * Math.PI / 180);
         opposition['y0'] = opposition.DecMoon + opposition.DecSun;
         return opposition;
+           
     },
-    
+        
     // needs an X0
     addTimingsAndGeometry : function (opposition) {
         // first, compute penumbral and umbral radii. In degrees.
@@ -224,7 +221,6 @@ var MoonEclipsesData = {
     
     calculateEclipseForJD : function (JD) {
         var oppositionData = MoonEclipsesData.getOppositionAroundJD (JD);
-        oppositionData = MoonEclipsesData.addInitialDeltas (oppositionData);
         oppositionData = MoonEclipsesData.addTimingsAndGeometry(oppositionData);
         
         if (oppositionData.eclipse) {

@@ -62,7 +62,7 @@
             expectedOutput :  AAJS.Date.DateToJD (1985, 05, 04, true) + (19 + 36.3/60)/24,
             actualOutput : false,
             test : function () {
-                this.actualOutput = MoonEclipsesData.getOppositionAroundJD (this.input).oppositionJD;
+                this.actualOutput = MoonEclipsesData.getOppositionAroundJD (this.input).JD;
                 return testlib.doubleEq (this.actualOutput, this.expectedOutput, 4e-3);
             }
         },
@@ -87,7 +87,7 @@
                     "MoonDiameter" : 2 / 60 * (16 + 41/60),
                     "SunDiameter" : 2 / 60 * (15 + 53/60),
                     
-                    "oppositionJD" : AAJS.Date.DateToJD (1985, 05, 04, true) + (19 + 36.3/60)/24,
+                    "JD" : AAJS.Date.DateToJD (1985, 05, 04, true) + (19 + 36.3/60)/24,
                     "eclipse" : false
             },
                   
@@ -144,7 +144,7 @@
                     "MoonDiameter" : 2 / 60 * (16 + 41/60),
                     "SunDiameter" : 2 / 60 * (15 + 53/60),
                     
-                    "oppositionJD" : AAJS.Date.DateToJD (1985, 05, 04, true) + (19 + 36.3/60)/24,
+                    "JD" : AAJS.Date.DateToJD (1985, 05, 04, true) + (19 + 36.3/60)/24,
                     "eclipse" : true,
                     
                     'umbralRadius' : 46.3/60,
@@ -229,7 +229,7 @@
                     "MoonDiameter" : 2 / 60 * (16 + 41/60),
                     "SunDiameter" : 2 / 60 * (15 + 53/60),
                     
-                    "oppositionJD" : AAJS.Date.DateToJD (1985, 05, 04, true) + (19 + 36.3/60)/24,
+                    "JD" : AAJS.Date.DateToJD (1985, 05, 04, true) + (19 + 36.3/60)/24,
                     "eclipse" : true,
                     
                     'umbralRadius' : 46.3/60,
@@ -289,7 +289,7 @@
                     5e-4,
                     1.2e-3,
                     9e-4,
-                    9e-4
+                    2e-3
                 ],
 
             test : function () {
@@ -361,7 +361,7 @@
                     5e-4,
                     0,
                     0,
-                    1.7e-3
+                    2e-3
                 ],
 
             test : function () {
