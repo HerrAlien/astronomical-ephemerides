@@ -15,6 +15,55 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 // planet object - {number, name, semidiameterFunctionName}
+
+function MoonEclipse (JD) {
+    
+        var sunData = SunData.getDataForJD (JD);
+        var moonData = MoonData.getDataForJD (JD);
+        
+        var hourFration = 0.5;
+        var dJd = hourFration /24.0;
+        var dT = 2 * hourFration;
+        
+        var  sunDataPlus = SunData.getDataForJD (JD + dJd);
+        var moonDataPlus = MoonData.getDataForJD (JD + dJd);
+        var  sunDataMinus = SunData.getDataForJD (JD - dJd);
+        var moonDataMinus = MoonData.getDataForJD (JD - dJd);
+        
+        
+        this.dRaSun   = 15 * (sunDataPlus[2] - sunDataMinus[2]) / dT;
+        this.dDecSun  = (sunDataPlus[3] - sunDataMinus[3]) / dT;
+        this.dRaMoon  = 15 * (moonDataPlus[2] - moonDataMinus[2]) / dT;
+        this.dDecMoon = (moonDataPlus[3] - moonDataMinus[3]) / dT;
+                
+        this.JD = JD;
+        this.ParallaxSun = sunData[10];
+        this.ParallaxMoon = moonData[8];
+
+        this.MoonDiameter = moonData[6];
+        this.SunDiameter = sunData[5];
+
+        this.RaSun   = sunData[2] * 15;
+        this.DecSun  = sunData[3];
+        this.RaMoon  = moonData[2] * 15;
+        this.DecMoon = moonData[3];
+
+        var shadowRa = 180 + this.RaSun;
+        if (shadowRa > 360)
+            shadowRa -= 360;
+        
+        this.x0 = (shadowRa - this.RaMoon) * Math.cos(this.DecMoon * Math.PI / 180);;
+        this.y0 = this.DecSun + this.DecMoon;
+        this.dx = (this.dRaMoon - this.dRaSun)*Math.cos(this.DecMoon * Math.PI / 180);
+        this.dy  = this.dDecSun + this.dDecMoon;        
+        this.slope = this.dy / this.dx;
+        
+        this.umbralRadius = 1.02 * (0.99834 * this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
+        this.penumbralRadius = 1.02 * (0.99834 * this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
+}
+
+
+
 var MoonEclipsesData = {
     
 	onNewEclipse : Notifications.NewOneParameter(),
@@ -32,48 +81,7 @@ var MoonEclipsesData = {
     },
     
     eclipseInputsAroundJD : function (JD) {
-        var result = {};
-        
-        var sunData = SunData.getDataForJD (JD);
-        var moonData = MoonData.getDataForJD (JD);
-        
-        var hourFration = 0.5;
-        var dJd = hourFration /24.0;
-        var dT = 2 * hourFration;
-        
-        var  sunDataPlus = SunData.getDataForJD (JD + dJd);
-        var moonDataPlus = MoonData.getDataForJD (JD + dJd);
-        var  sunDataMinus = SunData.getDataForJD (JD - dJd);
-        var moonDataMinus = MoonData.getDataForJD (JD - dJd);
-        
-        
-        result["dRaSun"  ] = 15 * (sunDataPlus[2] - sunDataMinus[2]) / dT;
-        result["dDecSun" ] = (sunDataPlus[3] - sunDataMinus[3]) / dT;
-        result["dRaMoon" ] = 15 * (moonDataPlus[2] - moonDataMinus[2]) / dT;
-        result["dDecMoon"] = (moonDataPlus[3] - moonDataMinus[3]) / dT;
-                
-        result ['JD'] = JD;
-        result ["ParallaxSun"] = sunData[10];
-        result ["ParallaxMoon"] = moonData[8];
-
-        result ["MoonDiameter"] = moonData[6];
-        result ["SunDiameter"] = sunData[5];
-        
-        result ["RaSun"   ]= sunData[2] * 15;
-        result ["DecSun"  ]= sunData[3];
-        result ["RaMoon"  ]= moonData[2] * 15;
-        result ["DecMoon" ]= moonData[3];
-
-        var shadowRa = 180 + result ["RaSun"   ];
-        if (shadowRa > 360)
-            shadowRa -= 360;
-        
-        result['x0'] = (shadowRa - result ["RaMoon"  ])*Math.cos(result ["DecMoon" ] * Math.PI / 180);;
-        result ["y0"] = result ["DecSun"  ] + result ["DecMoon" ];
-        result["dx"] = (result["dRaMoon"] - result["dRaSun"])*Math.cos(result ["DecMoon" ] * Math.PI / 180);
-        result["dy" ] = result["dDecSun" ] + result["dDecMoon"];        
-        result['slope'] = result['dy'] / result['dx'];
-
+        var result = new MoonEclipse (JD);
         return result;
     },
     
@@ -106,12 +114,14 @@ var MoonEclipsesData = {
         } while (Math.abs(oppositionTimeCorrection) > eps);
         return jd;
     },
+    
+    getEclipseMagnitudes : function (opposition) {
+        var result = {};
+    },
         
     // needs an X0
     addTimingsAndGeometry : function (opposition) {
         // first, compute penumbral and umbral radii. In degrees.
-        opposition['umbralRadius'] = 1.02 * (0.99834 * opposition.ParallaxMoon - opposition.SunDiameter/2 + opposition.ParallaxSun);
-        opposition['penumbralRadius'] = 1.02 * (0.99834 * opposition.ParallaxMoon + opposition.SunDiameter/2 + opposition.ParallaxSun);
         
         // then compute the minimum distance between the center of the Moon and the axes of these cones
         // - first, the equation of the line that describes the approximate motion of the moon
