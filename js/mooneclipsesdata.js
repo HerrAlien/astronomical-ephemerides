@@ -51,12 +51,7 @@ var MoonEclipsesData = {
         result["dDecSun" ] = (sunDataPlus[3] - sunDataMinus[3]) / dT;
         result["dRaMoon" ] = 15 * (moonDataPlus[2] - moonDataMinus[2]) / dT;
         result["dDecMoon"] = (moonDataPlus[3] - moonDataMinus[3]) / dT;
-        
-        result["dx"] = (result["dRaMoon"] - result["dRaSun"])*Math.cos(moonData[3] * Math.PI / 180);
-        result["dy" ] = result["dDecSun" ] + result["dDecMoon"];
-        
-        result ["y0"] = sunData[3] + moonData[3];
-        
+                
         result ['JD'] = JD;
         result ["ParallaxSun"] = sunData[10];
         result ["ParallaxMoon"] = moonData[8];
@@ -69,7 +64,16 @@ var MoonEclipsesData = {
         result ["RaMoon"  ]= moonData[2] * 15;
         result ["DecMoon" ]= moonData[3];
 
+        var shadowRa = 180 + result ["RaSun"   ];
+        if (shadowRa > 360)
+            shadowRa -= 360;
         
+        result['x0'] = (shadowRa - result ["RaMoon"  ])*Math.cos(result ["DecMoon" ] * Math.PI / 180);;
+        result ["y0"] = result ["DecSun"  ] + result ["DecMoon" ];
+        result["dx"] = (result["dRaMoon"] - result["dRaSun"])*Math.cos(result ["DecMoon" ] * Math.PI / 180);
+        result["dy" ] = result["dDecSun" ] + result["dDecMoon"];        
+        result['slope'] = result['dy'] / result['dx'];
+
         return result;
     },
     
@@ -124,6 +128,8 @@ var MoonEclipsesData = {
         opposition['dy'] = opposition.dDecMoon + opposition.dDecSun;
         opposition['dx'] = (opposition.dRaMoon - opposition.dRaSun)*Math.cos(opposition.DecMoon * Math.PI / 180);
         opposition['y0'] = opposition.DecMoon + opposition.DecSun;
+        opposition['x0'] = 0;
+        opposition['slope'] = opposition['dy'] / opposition['dx'];
         return opposition;
            
     },
@@ -137,7 +143,6 @@ var MoonEclipsesData = {
         // then compute the minimum distance between the center of the Moon and the axes of these cones
         // - first, the equation of the line that describes the approximate motion of the moon
         
-        opposition['slope'] = opposition['dy'] / opposition['dx'];
 
         var denominatorAtMinimum = 1 + opposition['slope'] * opposition['slope'];
         opposition['xMinDistance'] = - (opposition['slope'] * opposition['y0']) / denominatorAtMinimum;
