@@ -86,6 +86,10 @@ function MoonEclipse (JD) {
         this.eclipse  = this.umbralTotalEclipse  || this.penumbralTotalEclipse  || this.umbralPartialEclipse  || this.penumbralPartialEclipse ;
     }
     
+    MoonEclipse.prototype['timeFromXPos'] = function (X) {
+        return this.JD + ((X / this.dx) / 24);
+    }
+    
     
 })();
 
@@ -197,7 +201,7 @@ var MoonEclipsesData = {
         var result = {};
         
         for (var position in moonPosAtContact) {
-            result[position] = opposition.JD + (moonPosAtContact[position].X / opposition.dx)/24;
+            result[position] = opposition.timeFromXPos( moonPosAtContact[position].X );
             if (isNaN(result[position]))
                 result[position] = false;
         }
