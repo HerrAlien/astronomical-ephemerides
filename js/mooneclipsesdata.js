@@ -21,7 +21,7 @@ function MoonEclipse (JD) {
         var sunData = SunData.getDataForJD (JD);
         var moonData = MoonData.getDataForJD (JD);
         
-        var hourFration = 0.5;
+        var hourFration = 0.25;
         var dJd = hourFration /24.0;
         var dT = 2 * hourFration;
         
@@ -52,7 +52,7 @@ function MoonEclipse (JD) {
         if (shadowRa > 360)
             shadowRa -= 360;
         
-        this.x0 = (shadowRa - this.RaMoon) * Math.cos(this.DecMoon * Math.PI / 180);;
+        this.x0 = (this.RaMoon - shadowRa) * Math.cos(this.DecMoon * Math.PI / 180);;
         this.y0 = this.DecSun + this.DecMoon;
         this.dx = (this.dRaMoon - this.dRaSun)*Math.cos(this.DecMoon * Math.PI / 180);
         this.dy  = this.dDecSun + this.dDecMoon;        
@@ -87,7 +87,7 @@ function MoonEclipse (JD) {
     }
     
     MoonEclipse.prototype['timeFromXPos'] = function (X) {
-        return this.JD + ((X / this.dx) / 24);
+        return this.JD + (((X - this.x0)/ this.dx) / 24);
     }
     
     MoonEclipse.prototype['getYOnLineForX'] = function (X) {
@@ -244,11 +244,15 @@ var MoonEclipsesData = {
          - update that one timestamp.
         */
         
-        var p1 = MoonEclipsesData.eclipseInputsAroundJD (oppositionData['Timings']['Penumbral']['lastContact'] );
-        p1 =  MoonEclipsesData.addTimingsAndGeometry(p1);
-        oppositionData['Timings']['Penumbral']['lastContact']  = p1 ['Timings']['Penumbral']['lastContact'] ;
+        var p1 = new MoonEclipse (oppositionData['Timings']['Penumbral']['firstContact']);
+        var distanceAtExternalTangent = p1.penumbralRadius + p1.MoonDiameter/2;
+        var p1Contacts = MoonEclipsesData.quadraticEquationSolutions (p1, distanceAtExternalTangent, [-1]);
+        oppositionData['Timings']['Penumbral']['firstContact'] = p1.timeFromXPos(p1Contacts[0]);
         
-        
+        p1 = new MoonEclipse (oppositionData['Timings']['Penumbral']['firstContact']);
+        distanceAtExternalTangent = p1.penumbralRadius + p1.MoonDiameter/2;
+        p1Contacts = MoonEclipsesData.quadraticEquationSolutions (p1, distanceAtExternalTangent, [-1]);
+        oppositionData['Timings']['Penumbral']['firstContact'] = p1.timeFromXPos(p1Contacts[0]);
         }
        
         return oppositionData;
