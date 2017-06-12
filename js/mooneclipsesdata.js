@@ -149,6 +149,7 @@ var MoonEclipsesData = {
         opposition['yMinDistance'] = opposition['y0'] + opposition['slope'] * opposition['xMinDistance'];
         opposition['minDistance'] = Math.sqrt (opposition['xMinDistance'] * opposition['xMinDistance'] +
                                                opposition['yMinDistance'] * opposition['yMinDistance']);
+                                               
         // if the minimum distance is smaller than one of the radii, we have an eclipse.
         opposition['umbralTotalEclipse'] = opposition['minDistance'] <= opposition['umbralRadius'];
         opposition['penumbralTotalEclipse'] = opposition['minDistance'] <= opposition['penumbralRadius'];
@@ -181,9 +182,15 @@ var MoonEclipsesData = {
     
     // needs an X0
     computeMoonPositionsAtContact : function (opposition, coneRadius) {
-        var denominatorAtMinimum = 1 + opposition.slope * opposition.slope;
-        var discriminantAtExternalTangent = 4 * opposition.slope * opposition.slope * opposition.y0 * opposition.y0 -
-                           (4 * denominatorAtMinimum * (opposition.y0 * opposition.y0 - (coneRadius + opposition.MoonDiameter/2)*(coneRadius + opposition.MoonDiameter/2) ));
+        var distanceAtExternalTangent = coneRadius + opposition.MoonDiameter/2;
+        
+        var squaredDistance = distanceAtExternalTangent * distanceAtExternalTangent;
+        var squaredSlope = opposition.slope * opposition.slope;
+        var yResidue = opposition.y0 - opposition.slope * opposition.x0;
+        var denominatorAtMinimum = 1 + squaredSlope;
+        
+        var discriminantAtExternalTangent = 4 * (squaredSlope*squaredDistance - yResidue*yResidue + squaredDistance);
+        
         var results = {
             "firstContact" : { "X" : (-2 * opposition.slope * opposition.y0 - Math.sqrt (discriminantAtExternalTangent)) / (2 * denominatorAtMinimum) },
             "lastContact" : {"X" : (-2 * opposition.slope * opposition.y0 + Math.sqrt (discriminantAtExternalTangent)) / (2 * denominatorAtMinimum)}
