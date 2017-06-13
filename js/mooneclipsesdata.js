@@ -36,7 +36,7 @@ function MoonEclipse (JD) {
         this.dRaMoon  = 15 * (moonDataPlus[2] - moonDataMinus[2]) / dT;
         this.dDecMoon = (moonDataPlus[3] - moonDataMinus[3]) / dT;
                 
-        this.JD = JD;
+        this.JD = JD - AAJS.DynamicalTime.DeltaT(JD)/(3600 * 24);
         this.ParallaxSun = sunData[10];
         this.ParallaxMoon = moonData[8];
 
@@ -73,15 +73,16 @@ function MoonEclipse (JD) {
         this.minDistance  = Math.sqrt (this.xMinDistance  * this.xMinDistance  +
                                                this.yMinDistance  * this.yMinDistance );
                                                
+        var moonRadius = 0.5 * this.MoonDiameter;
         // if the minimum distance is smaller than one of the radii, we have an eclipse.
-        this.umbralTotalEclipse  = this.minDistance  <= this.umbralRadius ;
-        this.penumbralTotalEclipse  = this.minDistance  <= this.penumbralRadius ;
+        this.umbralTotalEclipse  = this.minDistance  <= this.umbralRadius - moonRadius;
+        this.penumbralTotalEclipse  = this.minDistance  <= this.penumbralRadius - moonRadius;
 
-        this.umbralPartialEclipse  = this.minDistance  <= this.umbralRadius  + 0.5 * this.MoonDiameter;
-        this.penumbralPartialEclipse  = this.minDistance  <= this.penumbralRadius  + 0.5 * this.MoonDiameter;
+        this.umbralPartialEclipse  = this.minDistance  <= this.umbralRadius  + moonRadius;
+        this.penumbralPartialEclipse  = this.minDistance  <= this.penumbralRadius  + moonRadius;
         
-        this.magnitude  = (this.umbralRadius  - this.minDistance  + this.MoonDiameter/2) / this.MoonDiameter;
-        this.penumbralMagnitude  = (this.penumbralRadius  - this.minDistance  + this.MoonDiameter/2) / this.MoonDiameter;
+        this.magnitude  = (this.umbralRadius  - this.minDistance  + moonRadius) / this.MoonDiameter;
+        this.penumbralMagnitude  = (this.penumbralRadius  - this.minDistance  + moonRadius) / this.MoonDiameter;
 
         this.eclipse  = this.umbralTotalEclipse  || this.penumbralTotalEclipse  || this.umbralPartialEclipse  || this.penumbralPartialEclipse ;
     }
