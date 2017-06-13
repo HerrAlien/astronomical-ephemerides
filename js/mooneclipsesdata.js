@@ -58,8 +58,8 @@ function MoonEclipse (JD) {
         this.dy  = this.dDecSun + this.dDecMoon;        
         this.slope = this.dy / this.dx;
         
-        this.umbralRadius = 1.02 * (0.99834 * this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
-        this.penumbralRadius = 1.02 * (0.99834 * this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
+        this.umbralRadius = 0.993 * 1.02 * (0.99834 * this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
+        this.penumbralRadius = 0.988 * 1.02 * (0.99834 * this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
 }
 
 (function(){
@@ -92,6 +92,15 @@ function MoonEclipse (JD) {
     
     MoonEclipse.prototype['getYOnLineForX'] = function (X) {
         return this.y0 + this.slope * (X - this.x0);
+    }
+    
+    MoonEclipse.prototype['corectDeltas'] = function () {
+        var ang = Math.sqrt (this.x0 * this.x0 + this.y0*this.y0);
+        var cosAng = Math.cos (ang * Math.PI/180);
+        this.umbralRadius /=  cosAng;
+        this.penumbralRadius *= cosAng;
+        this.dx *= Math.cos(this.x0 * Math.PI/180);
+        this.dy *= Math.cos(this.y0 * Math.PI/180);
     }
     
 })();
@@ -179,7 +188,7 @@ var MoonEclipsesData = {
         
         var x = [];
         for (var i = 0; i < deltaSigns.length; i++) {
-            x[i] = (-2 * opposition.slope * opposition.y0 + deltaSigns[i] * Math.sqrt (discriminantAtExternalTangent)) / (2 * denominatorAtMinimum);
+            x[i] = (-2 * opposition.slope *yResidue + deltaSigns[i] * Math.sqrt (discriminantAtExternalTangent)) / (2 * denominatorAtMinimum);
         }
         return x;
     },
@@ -235,26 +244,7 @@ var MoonEclipsesData = {
     
     calculateEclipseForJD : function (JD) {
         var oppositionData = MoonEclipsesData.getOppositionAroundJD (JD);
-        oppositionData = MoonEclipsesData.addTimingsAndGeometry(oppositionData);
-        
-        if (oppositionData.eclipse) {
-        /* picewise linear:
-         - compute deltas around a given position
-         - compute X, Y based on the x0 and y0 corresponding to that position
-         - update that one timestamp.
-        */
-        
-        var p1 = new MoonEclipse (oppositionData['Timings']['Penumbral']['firstContact']);
-        var distanceAtExternalTangent = p1.penumbralRadius + p1.MoonDiameter/2;
-        var p1Contacts = MoonEclipsesData.quadraticEquationSolutions (p1, distanceAtExternalTangent, [-1]);
-        oppositionData['Timings']['Penumbral']['firstContact'] = p1.timeFromXPos(p1Contacts[0]);
-        
-        p1 = new MoonEclipse (oppositionData['Timings']['Penumbral']['firstContact']);
-        distanceAtExternalTangent = p1.penumbralRadius + p1.MoonDiameter/2;
-        p1Contacts = MoonEclipsesData.quadraticEquationSolutions (p1, distanceAtExternalTangent, [-1]);
-        oppositionData['Timings']['Penumbral']['firstContact'] = p1.timeFromXPos(p1Contacts[0]);
-        }
-       
+        oppositionData = MoonEclipsesData.addTimingsAndGeometry(oppositionData);       
         return oppositionData;
     },
     

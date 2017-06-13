@@ -63,7 +63,7 @@ var MoonEclipsesPage = {
             if (dateOfJD.M < 10) dateOfJD.M = "0" + dateOfJD.M;
             if (dateOfJD.D < 10) dateOfJD.D = "0" + dateOfJD.D;
             
-            var roundedTime = Math.round(dayFraction * 24 * 3600) / 3600;
+            var roundedTime = Math.round(dayFraction * 24 * 60) / 60;
             var sexagesimalTime = AAJS.Numerical.ToSexagesimal (roundedTime);
 
             if (sexagesimalTime.Ord3 < 10) sexagesimalTime.Ord3 = "0" + sexagesimalTime.Ord3;
@@ -95,7 +95,7 @@ var MoonEclipsesPage = {
             var tr = addNodeChild (timingsTable, "tr");
             var dt = yyyymmdd_hhmmOfJD(JD);
             addNodeChild (tr, "td", description);
-            addNodeChild (tr, "td", dt.time.Ord3 + ":" +  dt.time.Ord2+ ":" +  dt.time.Ord1);
+            addNodeChild (tr, "td", dt.time.Ord3 + ":" +  dt.time.Ord2);
         }
         
         addTiming (oppositionData.Timings.Penumbral.firstContact, "Start of penumbral eclipse (TP1)", timingsTable);
