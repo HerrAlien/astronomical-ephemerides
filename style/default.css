@@ -519,3 +519,19 @@ input {
     margin-left: auto;
     margin-right: auto;
 }
+
+#GalileanMoons, #SaturnMoons {
+    text-align: center;
+}
+
+.moonEclipse {
+    margin-left: 10px;
+    text-align: center;
+    border-top: solid 1px #000000;
+    margin-top: -1px;
+    border-bottom: solid 1px #000000;
+}
+
+.moonEclipse svg {
+    margin-top: 20px;
+}
