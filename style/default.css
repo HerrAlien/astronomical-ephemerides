@@ -38,11 +38,11 @@ body {
     height: 0px;
 }
 
-#HomeLinkButton, #MenuLink, #SettingsLink{
+#HomeLinkButton, #MenuLink, #SettingsLink, #DownloadLink{
     text-align: center;
 }
 
-#HomeLinkButton::after, #MenuLink::after, #SettingsLink::after {
+#HomeLinkButton::after, #MenuLink::after, #SettingsLink::after, #DownloadLink::after {
     font-size: 12px;
     display: block;
     text-align: center;
@@ -64,6 +64,17 @@ body {
 
 #SettingsLink::after {
     content: "Settings";
+}
+
+#DownloadLink::after {
+    content: "Download";
+}
+
+#DownloadLink img {
+    cursor: pointer;
+    width: 52px;
+    height: 42px;
+    margin-top: 2px;
 }
 
 #MenuLink, #HomeLinkButton {
@@ -97,9 +108,10 @@ body {
     cursor: pointer;
 }
 
-#SettingsLink {
+#SettingsLink, #DownloadLink {
     float: right;
     margin-right: 5px;
+    margin-left: 10px;
 }
 
 .title {
@@ -109,7 +121,7 @@ font-size: 36px;
     margin-left: 32px;
     position: relative;
     top: -54px;
-    left: 100px;
+    left: 50px;
 }
 
 #menuContainer {
