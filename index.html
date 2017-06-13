@@ -19,9 +19,10 @@
 </head>
 
 <body>
-    <a href="#HomePage" ><div id="HomeLinkButton"><img src="images/home-3.svg"></div></a>
+    <!-- <a href="#HomePage" ><div id="HomeLinkButton"><img src="images/home-3.svg"></div></a> -->
     <a href="#menuContainer"><div id="MenuLink"><img src="images/menu.svg"></div></a>
     <a href="#settingsPage"><div id="SettingsLink"><img src="images/settings.svg"></div></a>
+    <a href="zip/ephemeris.7z"><div id="DownloadLink"><img src="images/download.svg"></div></a>
     <div class="clear maxWidth">&nbsp;</div>
     <div id="menuContainer" class="page" title="Menu">
         <span class="title">Menu</span><br>
@@ -56,6 +57,14 @@
         <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
         <div class="clear">&nbsp;</div>
     </div>
+    
+    <div id="JSDisabledPage" title="Enable JavaScript">
+        <span class="title">Enable JavaScript</span>
+        <br/>
+        The page uses JavaScript to do all the computations. Please enable JavaScript from your browser's settings.
+        
+    </div>
+
     
     <div id="HomePage" class="page" title="Astronomical Ephemeris">
     <span class="title">Astronomical Ephemeris</span><br>
@@ -147,7 +156,7 @@
     </div>
 
    <div id="GalileanMoonsPage" class="page" title="Visibility of Galilean Moons">
-        <span class="title">Visibility of Galilean Moons</span>
+        <span class="title">Elongations of Galilean Moons</span>
         <br>The following colors were used to represent each moon:
         <ul>
             <li>Io is represented in <font color="blue"><b>blue color</b></font></li>
@@ -164,7 +173,7 @@
     </div>
 
    <div id="SaturnMoonsPage" class="page" title="Visibility of Saturn Moons">
-        <span class="title">Visibility of Saturn's Moons</span>
+        <span class="title">Elongations of Saturn's Moons</span>
         <br/>The following colors were used to represent each moon:
         <ul>
             <li>Mimas is represented in <font color="blue"><b>blue color</b></font></li>
@@ -198,6 +207,8 @@
 <script type="text/JavaScript" src="js/timeinput.js"></script>
 
 <script type="text/JavaScript" >
+    
+    document.getElementById("JSDisabledPage").style.display = "none";
     
     var PageTimeInterval = {};
     var Pages = {};
