@@ -221,8 +221,8 @@
         var pageName = hash.slice(1);
         previousPage = document.getElementById(pageName); 
 
-        if (Pages[pageName] && PageTimeInterval.JD){
-            Pages[pageName].displayPage(PageTimeInterval.JD, PageTimeInterval.days, PageTimeInterval.stepSize);
+        if (Pages[pageName]){
+            Pages[pageName].displayPage();
         }
     }
     
@@ -261,7 +261,7 @@
 
     Location.init();
     TimeStepsData.init();
-    PageTimeInterval = { "JD" :  2457754.5, "days" : 410, "stepSize" : 1 };
+    PageTimeInterval = { "JD" :  false, "days" : false, "stepSize" : false };
     
     if (!location.hash) {
         document.getElementById("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
@@ -290,7 +290,16 @@
             }
         }
     });
-
+    
+    function updateTimeAtAajsLoad() {
+        if (typeof AAJS != 'undefined')
+                PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
+        else
+            setTimeout (updateTimeAtAajsLoad, 300);
+    }
+    
+    updateTimeAtAajsLoad();
+    
 </script>
 
 <script type="text/JavaScript" src="js/aajs.js" async=""></script>

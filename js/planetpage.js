@@ -103,10 +103,14 @@ function PlanetPage (planetDataSource) {
 (function(){
     
     
-    PlanetPage.prototype["displayPage"] = function (JD, daysAfter, stepSize) {
+    PlanetPage.prototype["displayPage"] = function () {
             var pageObj = this;
-            if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
-                return setTimeout (function() { pageObj.displayPage(JD, daysAfter, stepSize); }, 300);
+            if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
+                return setTimeout (function() { pageObj.displayPage(); }, 300);
+            
+            var JD = PageTimeInterval.JD;
+            var daysAfter =  PageTimeInterval.days;
+            var stepSize = PageTimeInterval.stepSize;
             
             this.lastAppendedLine = false;
             if (!this.pageRendered) {
