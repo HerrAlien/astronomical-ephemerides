@@ -64,7 +64,7 @@ body {
     content: "Home";
 }
 
-#MenuLink::after {
+#MenuLinkDiv::after {
     content: "More ...";
     margin: -2px auto 2px auto;
 }
@@ -86,10 +86,10 @@ body {
     float: left;
 }
 
-#MenuLink {
+#MenuLinkDiv {
     margin-top: 2px;
 }
-#MenuLink img{
+#MenuLinkDiv img{
     width: 52px;
     height: 42px;
 }
@@ -165,7 +165,7 @@ font-size: 36px;
 }
 
 #promotedMenu a {
-    float: right;
+    float: left;
     margin-top: 20px;
     margin-left: 15px;
     text-decoration: none;
@@ -553,4 +553,23 @@ input {
 
 #HomePage {
     width: 800px;
+}
+
+
+@media (min-width: 1341px)  {
+    #MenuLink {
+        display: none;
+    }
+}
+
+@media  (max-width: 1340px) {
+    .leastImportant {
+        display: none;
+    }
+}
+
+@media  (max-width: 922px)  {
+    .leastImportant, .lessImportant{
+        display: none;
+    }
 }
