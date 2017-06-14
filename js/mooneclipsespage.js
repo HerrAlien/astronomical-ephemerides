@@ -23,10 +23,13 @@ var MoonEclipsesPage = {
     // clears up the rendered thing
     reset : PlanetPage.prototype.reset,
     
-    displayPage : function (startJD, numberOfDays) {
+    displayPage : function () {
         
-        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
-            return setTimeout (function() { MoonEclipsesPage.displayPage(startJD, numberOfDays); }, 300);
+        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
+            return setTimeout (function() { MoonEclipsesPage.displayPage(); }, 300);
+
+        var startJD = PageTimeInterval.JD;
+        var numberOfDays =  PageTimeInterval.days;
 
         if (MoonEclipsesPage.pageRendered)
             return;

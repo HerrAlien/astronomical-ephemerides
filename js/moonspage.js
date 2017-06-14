@@ -37,12 +37,15 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
     // clears up the rendered thing
     MoonsPage.prototype["reset"] = PlanetPage.prototype.reset;
     
-    MoonsPage.prototype["displayPage"] = function (startJD, numberOfDays) {
+    MoonsPage.prototype["displayPage"] = function () {
         
         var pageObj = this;
-        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
-            return setTimeout (function() { pageObj.displayPage(startJD, numberOfDays); }, 300);
+        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
+            return setTimeout (function() { pageObj.displayPage(); }, 300);
 
+        var startJD = PageTimeInterval.JD;
+        var numberOfDays =  PageTimeInterval.days;
+        
         if (this.pageRendered)
             return;
 
