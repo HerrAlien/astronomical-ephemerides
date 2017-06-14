@@ -550,3 +550,7 @@ input {
 .moonEclipse svg {
     margin-top: 20px;
 }
+
+#HomePage {
+    width: 800px;
+}
