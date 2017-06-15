@@ -41,15 +41,15 @@ function PlanetData(planet)
 				data['RA'] = planetaryDetails.ApparentGeocentricRA;
 				data['Dec'] = planetaryDetails.ApparentGeocentricDeclination;
 				
-				var jdOfTransit = JD;
-                var transitPlanetaryDetails = planetaryDetails;
-                for (var transitIterationIndex = 0; transitIterationIndex < 3; transitIterationIndex++)
-                {
-                    jdOfTransit = AAJS.Date.LST2NextJD(transitPlanetaryDetails.ApparentGeocentricRA, JD, Location.longitude);
-                    if (jdOfTransit - JD > 1)
-                        jdOfTransit -= 1;
-                    transitPlanetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (jdOfTransit, this.planet.number, true);
-                }
+                var planetNumber = this.planet.number;
+                var jdOfTransit = Transit (JD, function(jd) { 
+                
+                    var planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (JD, 
+																				planetNumber, 
+																				true);
+                    return {"X" : planetaryDetails.ApparentGeocentricRA, "Y" : planetaryDetails.ApparentGeocentricDeclination };
+                
+            }, 1/(24 * 36000)); 
 
 				var transitHour = 24 * (jdOfTransit - JD);
 				data['MeridianTransit'] = transitHour;
