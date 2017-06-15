@@ -28,4 +28,5 @@ var SaturnMoonsPage = new MoonsPage ( "SaturnMoons",
 );
 
 Pages["SaturnMoonsPage"] = SaturnMoonsPage;
+SaturnMoonsPage.planetFraction = 1/23.0;
 })();
