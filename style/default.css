@@ -122,6 +122,12 @@ font-size: 36px;
     font-size: 22px;
 }
 
+#settingsPage {
+    width: 100%;
+    max-width: 640px;
+    
+}
+
 #settingsPage label, #getFromGeolocationAnchor, #applySettingsChanges{
     float: left;
     margin-top: 16px;
