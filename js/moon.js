@@ -37,16 +37,13 @@ var MoonData = {
             data[i++] = posData.DecTopo;
             data[i++] = posData.diameter;
             
-            var jdOfTransit = JD;
+            var jdOfTransit = Transit (JD, function(jd) { 
                 
-            for (var transitIterationIndex = 0; transitIterationIndex < 5; transitIterationIndex++)
-            {
-                jdOfTransit = AAJS.Date.LST2NextJD(posData.RaTopo, JD, Location.longitude);
-                if (jdOfTransit - JD > 1)
-                    jdOfTransit -= 1;
-                posData = AAJS.Moon.PositionalEphemeris(jdOfTransit, Location.latitude, Location.longitude, Location.altitude);
-            }
-
+                var data = AAJS.Moon.PositionalEphemeris(jd, Location.latitude, Location.longitude, Location.altitude);
+                return {"X" : posData.RaGeo, "Y" : posData.DecGeo };
+                
+            }, 1/(24 * 3600)); 
+            
 				var transitHour = 24 * (jdOfTransit - JD);
 				data[i++] = transitHour;
 
