@@ -31,6 +31,7 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
     this.pageRendered = false;
     this.dataSource = dataObject;
     this.paths = pathsConfigs;
+    this.planetFraction = 1/32.0;
 }
 
 (function(){
@@ -67,7 +68,7 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
         this.hostElement.appendChild(hostSVG);
 
         var halfWidth = width/2;
-        var planetRadius = halfWidth / 35;
+        var planetRadius = halfWidth * this.planetFraction;
 
         var currentJD = startJD;
         var coords = this.dataSource.getDataAsObjectForJD(currentJD, false);        
