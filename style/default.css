@@ -17,6 +17,7 @@ body {
     padding-right: 10px;
     margin-left: auto;
     margin-right: auto;
+    margin-top:10px;
 }
 
 .page:not(:target){
@@ -194,12 +195,12 @@ tr.secondHeaderRow {
 }
 
 tr.firstHeaderRowScrolled{
-    margin-top: -161px;
+    margin-top: -171px;
     border-top: 1px solid black;
 }
 
 tr.secondHeaderRowScrolled{
-    margin-top: -141px;
+    margin-top: -151px;
     border-bottom: 1px solid black;
 }
 
