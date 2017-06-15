@@ -141,8 +141,8 @@
                     "JD" : AAJS.Date.DateToJD (1985, 05, 04, true) + (19 + 36.3/60)/24,
                     "eclipse" : true,
                     
-                    'umbralRadius' : 46.3/60,
-                    'penumbralRadius' : 78.7/60,
+                    'umbralRadius' : 0.993 * 46.3/60,
+                    'penumbralRadius' : 0.988 * 78.7/60,
 
                     'y0' : (24 + 44.4/60)/60,
                     'dy' : -14.54/60,
@@ -226,8 +226,8 @@
                     "JD" : AAJS.Date.DateToJD (1985, 05, 04, true) + (19 + 36.3/60)/24,
                     "eclipse" : true,
                     
-                    'umbralRadius' : 46.3/60,
-                    'penumbralRadius' : 78.7/60,
+                    'umbralRadius' : 0.993 * 46.3/60,
+                    'penumbralRadius' : 0.988 * 78.7/60,
 
                     'y0' : (24 + 44.4/60)/60,
                     'dy' : -14.54/60,
@@ -375,6 +375,61 @@
                 return true;
             }
         },
+        
+        
+/*
+Polynomial Besselian Elements: Total Solar Eclipse of 2017 Aug 21
+
+Polynomial Besselian Elements
+2017 Aug 21 at 18:00:00.0 TD (=t0)
+n	x	        y	        d	        l1	        l2	        μ
+0	-0.12958	0.48542	    11.8670	    0.54211	    -0.00403	89.2454
+1	0.54064	    -0.14164	-0.0136	    0.00012 	0.00012	    15.0039
+2	-0.00003	-0.00009	-0.0000	    -0.00001	-0.00001	0.0000
+3	-0.00001	0.00000	-	-	-	-
+Tan ƒ1	0.0046222
+Tan ƒ2	0.0045992
+
+
+Polynomial Besselian Elements: Partial Solar Eclipse of 2022 Oct 25
+
+Polynomial Besselian Elements
+2022 Oct 25 at 11:00:00.0 TD (=t0)
+n	x	        y	        d	        l1	        l2	        μ
+0	0.45479	    0.96877	    -12.1735	0.54990	    0.00372	    348.9823
+1	0.49555	    -0.23959	-0.0137	    -0.00012	-0.00011	15.0024
+2	0.00003	    0.00002	    0.0000	    -0.00001	-0.00001	-0.0000
+3	-0.00001	0.00000	-	-	-	-
+Tan ƒ1	0.0047019
+Tan ƒ2	0.0046785
+
+
+Polynomial Besselian Elements: Total Solar Eclipse of 2027 Aug 02
+
+Polynomial Besselian Elements
+2027 Aug 02 at 10:00:00.0 TD (=t0)
+n	x	        y	        d	        l1	        l2	        μ
+0	-0.01977	0.16007	1   7.7625	    0.53062	    -0.01546	328.4225
+1	0.54471	    -0.21116	-0.0102	    0.00001	    0.00001	    15.0021
+2	-0.00004	-0.00012	-0.0000	    -0.00001	-0.00001	0.0000
+3	-0.00001	0.00000	-	-	-	-
+Tan ƒ1	0.0046064
+Tan ƒ2	0.0045834
+
+Polynomial Besselian Elements: Annular Solar Eclipse of 2030 Jun 01
+
+Polynomial Besselian Elements
+2030 Jun 01 at 06:00:00.0 TD (=t0)
+n	x	        y	        d	        l1	        l2	        μ
+0	-0.26939	0.55197	    22.0613	    0.56617	    0.01991	    270.5399
+1	0.50564	    0.02101	    0.0056	    -0.00001	-0.00001	14.9997
+2	0.00002	    -0.00016	-0.0000	    -0.00001	-0.00001	-0.0000
+3	-0.00001	-0.00000	-	-	-	-
+Tan ƒ1	0.0046120
+Tan ƒ2	0.0045890
+
+
+*/        
 
         /*
         

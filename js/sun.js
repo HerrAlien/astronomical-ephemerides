@@ -14,7 +14,6 @@ PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
-
 var SunData = {
     cache : {},
     getDataForJD : function (JD) {
@@ -34,16 +33,8 @@ var SunData = {
             line[i++] = AAJS.Sun.Diameter(JD, true)/3600; // [deg.dddd]
             
             // transit should be computed from the RA (LST to UTC conversion)
-            var jdOfTransit = AAJS.Date.LST2NextJD(radec.X, JD, Location.longitude);
-            if (jdOfTransit - JD > 1)
-                jdOfTransit -= 1;
+            var jdOfTransit = Transit (JD, function(jd) { return AAJS.Sun.EquatorialCoordinates(jd, true); }, 1/(24 * 3600)); 
             
-            for (var transitIndex = 0; transitIndex < 2; transitIndex++) {
-                radec = AAJS.Sun.EquatorialCoordinates(jdOfTransit, true);
-                jdOfTransit = AAJS.Date.LST2NextJD(radec.X, JD, Location.longitude);
-                if (jdOfTransit - JD > 1)
-                    jdOfTransit -= 1;
-            }
             
             line[i++] = 24 * (jdOfTransit - JD);
             var physical = AAJS.Sun.CalculatePhysicalDetails(JD, true);
