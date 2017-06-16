@@ -587,7 +587,7 @@ input {
     }
 }
 
-@media  (max-width: 932px)  {
+@media  (max-width: 936px)  {
     .leastImportant, .lessImportant{
         display: none;
     }
