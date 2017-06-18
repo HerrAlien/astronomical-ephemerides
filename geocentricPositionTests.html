@@ -358,7 +358,69 @@
                 
                 return true;
             }
+        },
+        
+        
+        		{
+            name : "Uranus transit for 2017-08-14  lat. 0, long. 0, alt. 0",
+            input : AAJS.Date.DateToJD (2017, 8, 14, true),
+            expectedOutput :  4+16/60,
+            actualOutput : false,
+            
+            test : function () {
+               var yesterdayData = UranusData.getDataForJD (this.input - 1);
+                var todayData = UranusData.getDataForJD (this.input);
+               var tomorrowData = UranusData.getDataForJD (this.input + 1);
+
+                var resultData = AAJS.RiseTransitSet.Calculate (
+                yesterdayData[2] * 15,
+                yesterdayData[3],
+                todayData[2] * 15,
+                todayData[3],
+                tomorrowData[2] * 15,
+                tomorrowData[3],
+                Location.longitude,
+                Location.latitude,
+                -0.5667
+                );
+                
+                this.actualOutput = resultData.Transit;
+                return testlib.doubleEq (this.actualOutput, this.expectedOutput, 1e-5);
+            }
+        },
+
+       		{
+            name : "Venus rise, transit, set  for 1988-03-20  lat. 42.3333, long. 71.0833, alt. 0",
+            input : AAJS.Date.DateToJD (1988, 3, 20, true),
+            expectedOutput :  { "Rise" : .51766, "Transit" : .81980, "Set" : .12130 },
+            actualOutput : {},
+            
+            test : function () {
+               var yesterdayData = VenusData.getDataForJD (this.input - 1);
+                var todayData =    VenusData.getDataForJD (this.input);
+               var tomorrowData =  VenusData.getDataForJD (this.input + 1);
+
+                this.actualOutput = AAJS.RiseTransitSet.Calculate (this.input,
+                yesterdayData[2] * 15,
+                yesterdayData[3],
+                todayData[2] * 15,
+                todayData[3],
+                tomorrowData[2] * 15,
+                tomorrowData[3],
+                71.0833,
+                42.3333,
+                -0.5667
+                );
+                
+                for (var key in this.expectedOutput) {
+                if (!testlib.doubleEq (this.actualOutput[key], this.expectedOutput[key], 1e-5))
+                    return false;
+                }
+                return true;
+            }
         }
+
+
 
         
        ];
