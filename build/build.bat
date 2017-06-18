@@ -1,5 +1,5 @@
-set SRC=%~dp0\..\..\ephemeris
-set DST=%~dp0\ephemeris
+set SRC=%~dp0\..\..\ephemerides
+set DST=%~dp0\ephemerides
 
 mkdir "%DST%"
 mkdir "%DST%\style"
@@ -19,12 +19,12 @@ del /Q /F /S *.mem
 del /Q /F /S *.optimized
 del /Q /F /S *.nonoptimized
 
-7z a -y ephemeris.7z ephemeris
+7z a -y ephemerides.7z ephemerides
 
 cd "%DST%"
 del /F /Q /S *
 cd ..
 rd /S /Q "%DST%"
 
-copy ephemeris.7z ..\zip\ephemeris.7z
+copy ephemerides.7z ..\zip\ephemerides.7z
 del /Q /F /S *.7z
