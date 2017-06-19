@@ -153,6 +153,13 @@ function PlanetPage (planetDataSource) {
                 if (changedMonth)
                     td.classList.add("topBorder");
                 td['title'] = this.tableHeaderInfo[i].longText;
+                if (i > 1)
+                {
+                    if (i < 15)
+                        td.classList.add ("positionEphemeris");
+                    else
+                        td.classList.add ("physicalEphemeris");
+                }
             }
             this.lastAppendedLine = dataArray;
         };
@@ -169,6 +176,16 @@ function PlanetPage (planetDataSource) {
                 var th = this.addNodeChild (row, "th", this.tableHeaderInfo[headerKey][rowIndex]);
                 th['title'] = this.tableHeaderInfo[headerKey].longText;
                 th.onclick = function () { alert (this.title); }
+                
+                
+                if (headerKey > 1)
+                {
+                    if (headerKey < 15)
+                        th.classList.add ("positionEphemeris");
+                    else
+                        th.classList.add ("physicalEphemeris");
+                }
+
             }
             rows[rowIndex] = row;
         }
