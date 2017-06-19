@@ -373,11 +373,12 @@
                var tomorrowData = UranusData.getDataForJD (this.input + 1);
 
                 var resultData = AAJS.RiseTransitSet.Calculate (
-                yesterdayData[2] * 15,
+                this.input,
+                yesterdayData[2],
                 yesterdayData[3],
-                todayData[2] * 15,
+                todayData[2],
                 todayData[3],
-                tomorrowData[2] * 15,
+                tomorrowData[2],
                 tomorrowData[3],
                 Location.longitude,
                 Location.latitude,
@@ -385,14 +386,14 @@
                 );
                 
                 this.actualOutput = resultData.Transit;
-                return testlib.doubleEq (this.actualOutput, this.expectedOutput, 1e-5);
+                return testlib.doubleEq (this.actualOutput, this.expectedOutput, 8e-3);
             }
         },
 
        		{
             name : "Venus rise, transit, set  for 1988-03-20  lat. 42.3333, long. 71.0833, alt. 0",
             input : AAJS.Date.DateToJD (1988, 3, 20, true),
-            expectedOutput :  { "Rise" : .51766, "Transit" : .81980, "Set" : .12130 },
+            expectedOutput :  { "Rise" : .51766 * 24, "Transit" : .81980 * 24, "Set" : .12130 * 24 },
             actualOutput : {},
             
             test : function () {
@@ -413,7 +414,7 @@
                 );
                 
                 for (var key in this.expectedOutput) {
-                if (!testlib.doubleEq (this.actualOutput[key], this.expectedOutput[key], 1e-5))
+                if (!testlib.doubleEq (this.actualOutput[key], this.expectedOutput[key], 1.1e-4))
                     return false;
                 }
                 return true;
