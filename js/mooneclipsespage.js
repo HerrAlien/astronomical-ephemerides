@@ -85,7 +85,9 @@ var MoonEclipsesPage = {
             description = "Total eclipse";
         
 
-        addNodeChild (mainDiv, "h2", oppositionDateTime.date.Y + "-" + oppositionDateTime.date.M + "-" + oppositionDateTime.date.D + " " + description);
+        var eclipseTitle = addNodeChild (mainDiv, "span", oppositionDateTime.date.Y + "-" + oppositionDateTime.date.M + "-" + oppositionDateTime.date.D + " " + description);
+        eclipseTitle.classList.add("title");
+        addNodeChild (mainDiv, "br");
         addNodeChild (mainDiv, "span", "magnitude: " + AAJS.Numerical.RoundTo2Decimals(oppositionData.magnitude) + "; penumbral magnitude: " + AAJS.Numerical.RoundTo2Decimals(oppositionData.penumbralMagnitude));
         
         var timingsTable = addNodeChild (mainDiv, "table");
@@ -144,11 +146,18 @@ var MoonEclipsesPage = {
     
     displayGraph : function (oppositionData, mainDiv) {
         var namespace = "http://www.w3.org/2000/svg";
+        var viewportSvg = mainDiv.ownerDocument.createElementNS(namespace, "svg");        
         var svg = mainDiv.ownerDocument.createElementNS(namespace, "svg");
         var size = 800;
         svg.setAttribute("width", size);
         svg.setAttribute("height", size);
-        mainDiv.appendChild(svg);
+        
+        viewportSvg.classList.add("viewport");
+        viewportSvg.setAttribute("viewBox", "0 0 " + size + " " + size);
+        viewportSvg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+
+        viewportSvg.appendChild(svg);
+        mainDiv.appendChild(viewportSvg);
         
         var margin = 1;
         

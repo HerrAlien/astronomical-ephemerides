@@ -543,7 +543,7 @@ input {
     min-width: 50px;
 }
 
-#GalileanMoonsPage, #SaturnMoonsPage, #MoonEclipsesPage {
+#GalileanMoonsPage, #SaturnMoonsPage {
     width: 800px;
 }
 
@@ -556,15 +556,31 @@ input {
     text-align: center;
 }
 
+ #MoonEclipsesPage
+ {
+     width: 100%;
+     max-width: 810px;
+ }
+
 .moonEclipse {
     text-align: center;
     border-top: solid 1px #000000;
     margin-top: -1px;
+    margin-left: auto;
+    margin-right: auto;
     border-bottom: solid 1px #000000;
+    padding-top: 20px;
 }
 
-.moonEclipse svg {
+.moonEclipse svg.viewport {
+    width: 100%;
+    padding-top: 0.1%; /* 1:1 Aspect Ratio */
+
+    max-height: 800px;
+    max-width: 800px;
     margin-top: 20px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 #HomePage {

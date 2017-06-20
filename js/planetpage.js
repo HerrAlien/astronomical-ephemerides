@@ -152,7 +152,7 @@ function PlanetPage (planetDataSource) {
                 td.textContent = dataArray[i];
                 if (changedMonth)
                     td.classList.add("topBorder");
-                td['title'] = this.tableHeaderInfo[i].longText;
+
                 if (i > 1)
                 {
                     if (i < 15)
