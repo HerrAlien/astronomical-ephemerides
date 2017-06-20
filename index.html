@@ -16,6 +16,119 @@
         })();
     </script>
 
+    <style id="positionalStyle">
+
+@media (max-width: 810px) {
+
+    body {
+        min-width: 590px;
+    }
+
+    #JupiterPage, #MarsPage  {
+        width: 500px;
+    }
+
+    .physicalEphemeris, .physicalEphemerisTitle
+    {
+        display: none;
+    }
+
+    #Jupiter tr.firstHeaderRow, #Jupiter tr.firstHeaderRowScrolled,
+    #Jupiter tr.secondHeaderRow, #Jupiter tr.secondHeaderRowScrolled,
+    #Mars tr.firstHeaderRow,  #Mars tr.firstHeaderRowScrolled,
+    #Mars tr.secondHeaderRow, #Mars tr.secondHeaderRowScrolled
+    {
+        width: 485px;
+    }
+
+    #Jupiter tr td:nth-child(15), #Mars tr td:nth-child(15)
+    {
+        border-right: none;
+    }
+    
+    .swipeRight {
+        display: none;
+    }
+    
+    .swipeLeft {
+        display: block;
+        position: fixed;
+        height: 100%;
+        width: 32px;
+        right: 0px;
+        cursor: pointer;
+        border-top: solid 1px black;
+        border-bottom: solid 1px black;
+        border-left: solid 1px black;
+        background-image: url("images/left.png");
+        background-repeat: repeat-y;
+        z-index: 2;
+    }
+    
+    .positionEphemerisTitle {
+        display: inline;
+    }
+
+}
+    </style>    
+
+<style id="physicalStyle">
+
+@media (max-width: 810px) {
+    .positionEphemeris, positionEphemerisTitle
+    {
+        display: none;
+    }
+
+    #Jupiter tr.firstHeaderRow, #Jupiter tr.firstHeaderRowScrolled,
+    #Jupiter tr.secondHeaderRow, #Jupiter tr.secondHeaderRowScrolled
+    {
+        width: 350px;
+    }
+
+    .swipeRight {
+        display: block;
+        position: fixed;
+        height: 100%;
+        width: 32px;
+        left: 0px;
+        cursor: pointer;
+        z-index: 2;
+
+        border-top: solid 1px black;
+        border-bottom: solid 1px black;
+        border-right: solid 1px black;
+        background-image: url("images/right.png");
+        background-repeat: repeat-y;
+    }
+    
+    .swipeLeft {
+        display: none;
+    }
+    
+    .physicalEphemerisTitle {
+        display: inline;
+    }
+    
+    #JupiterPage, #MarsPage {
+        width: 500px;
+    }
+    
+
+    #Mars tr.firstHeaderRow,  #Mars tr.firstHeaderRowScrolled,
+    #Mars tr.secondHeaderRow, #Mars tr.secondHeaderRowScrolled
+    {
+        width: 290px;
+    }
+
+    body {
+        min-width: 590px;
+    }
+    
+    }
+    
+</style>   
+    
 </head>
 
 <body>
@@ -137,14 +250,16 @@
     </div>
 
     <div id="MarsPage" class="page" title="Mars">
-        <span class="title">Mars</span>
+        <div class="swipeRight"></div> <div class="swipeLeft"></div>
+        <span class="title">Mars</span><span class="title positionEphemerisTitle"> position ephemeris</span>  <span class="title physicalEphemerisTitle"> physical ephemeris</span>
         <table id="Mars" cellspacing="0" cellpadding="0" class="planetTable">
         <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
        </table>
     </div>
 
     <div id="JupiterPage" class="page" title="Jupiter">
-        <span class="title">Jupiter</span>
+        <div class="swipeRight"></div> <div class="swipeLeft"></div>
+        <span class="title">Jupiter</span><span class="title positionEphemerisTitle"> position ephemeris</span>  <span class="title physicalEphemerisTitle"> physical ephemeris</span>
         <table id="Jupiter" cellspacing="0" cellpadding="0" class="planetTable">
         <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
          </table>
@@ -322,6 +437,41 @@
     }
     
     updateTimeAtAajsLoad();
+    
+    
+    var physicalStyle = document.getElementById("physicalStyle");
+    var father = physicalStyle.parentNode;
+    var physicalStyleText = physicalStyle.textContent;
+    father.removeChild(physicalStyle);
+
+    var positionalStyle = document.getElementById("positionalStyle");
+    var positionalStyleText = positionalStyle.textContent;
+    father.removeChild(positionalStyle);
+    
+    var activeStyle = document.createElement("style");
+    activeStyle.textContent = positionalStyleText;
+    father.appendChild(activeStyle);
+    
+    var wasPositional = true;
+    
+    function toggleEphemeris(){
+        father.removeChild(activeStyle);
+        activeStyle = document.createElement("style");
+        if (wasPositional)
+            activeStyle.textContent = physicalStyleText;
+        else
+            activeStyle.textContent = positionalStyleText;
+        
+        father.appendChild(activeStyle);
+        wasPositional = !wasPositional;
+    }
+    
+    var pagesWithPhysicalEphemeris = ["JupiterPage", "MarsPage"];
+    for (var pageIndex = 0; pageIndex < pagesWithPhysicalEphemeris.length; pageIndex++){
+        var divs =  document.getElementById(pagesWithPhysicalEphemeris[pageIndex]).getElementsByTagName("div");
+        for (var i = 0; i < divs.length; i++)
+            divs[i].onclick = toggleEphemeris;
+    }
         
 </script>
 
