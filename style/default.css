@@ -134,12 +134,13 @@ font-size: 36px;
     margin-top: 16px;
 }
 
-#settingsPage label, #getFromGeolocationAnchor, #applySettingsChanges, #cancelSettingsChanges {
-    margin-left: 16px;
+#settingsPage label, #getFromGeolocationAnchor, #applySettingsChanges {
+    margin-left: 6px;
 }
 
 #cancelSettingsChanges {
     float: right;
+    margin-right: 16px;
 }
 
 #applySettingsChanges, #cancelSettingsChanges {
@@ -567,7 +568,7 @@ input {
 }
 
 #HomePage {
-    width: 800px;
+    width: 100%;
 }
 
 
@@ -595,6 +596,12 @@ input {
 
 @media  (max-width: 936px)  {
     .leastImportant, .lessImportant{
+        display: none;
+    }
+}
+
+@media  (max-width: 741px)  {
+    #promotedMenu{
         display: none;
     }
 }
