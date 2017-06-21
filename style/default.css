@@ -338,72 +338,72 @@ input {
 }
 
 /** -------------------------------------- S U N -------------------------------- **/
-#Sun tr:nth-of-type(1), #Sun tr:nth-of-type(2), #SunPage{
+#SunTable tr:nth-of-type(1), #SunTable tr:nth-of-type(2), #Sun{
     min-width: 622px;
 }
 
-#Sun td:nth-of-type(2), #Sun td:nth-of-type(5), #Sun td:nth-of-type(8), #Sun td:nth-of-type(9), #Sun td:nth-of-type(11),
-#Sun td:nth-of-type(14), #Sun td:nth-of-type(15), #Sun td:nth-of-type(16), #Sun td:nth-of-type(17) {
+#SunTable td:nth-of-type(2), #SunTable td:nth-of-type(5), #SunTable td:nth-of-type(8), #SunTable td:nth-of-type(9), #SunTable td:nth-of-type(11),
+#SunTable td:nth-of-type(14), #SunTable td:nth-of-type(15), #SunTable td:nth-of-type(16), #SunTable td:nth-of-type(17) {
     border-right: 1px solid black;
 }
 
-#Sun td:nth-of-type(12), #Sun td:nth-of-type(13) {
+#SunTable td:nth-of-type(12), #SunTable td:nth-of-type(13) {
     border-right: none;
 }
 
 
-#Sun td:nth-of-type(1),#Sun th:nth-of-type(1), 
-#Sun td:nth-of-type(2),#Sun th:nth-of-type(2) {
+#SunTable td:nth-of-type(1),#SunTable th:nth-of-type(1), 
+#SunTable td:nth-of-type(2),#SunTable th:nth-of-type(2) {
     min-width : 20px;
 } 
 
-#Sun td:nth-of-type(3),#Sun th:nth-of-type(3), 
-#Sun td:nth-of-type(4),#Sun th:nth-of-type(4),
-#Sun td:nth-of-type(5),#Sun th:nth-of-type(5),
+#SunTable td:nth-of-type(3),#SunTable th:nth-of-type(3), 
+#SunTable td:nth-of-type(4),#SunTable th:nth-of-type(4),
+#SunTable td:nth-of-type(5),#SunTable th:nth-of-type(5),
+                                
+#SunTable td:nth-of-type(7),#SunTable th:nth-of-type(7), 
 
-#Sun td:nth-of-type(7),#Sun th:nth-of-type(7), 
+#SunTable td:nth-of-type(10),#SunTable th:nth-of-type(10), 
+#SunTable td:nth-of-type(11),#SunTable th:nth-of-type(11),
 
-#Sun td:nth-of-type(10),#Sun th:nth-of-type(10), 
-#Sun td:nth-of-type(11),#Sun th:nth-of-type(11),
-
-#Sun td:nth-of-type(12),#Sun th:nth-of-type(12), 
-#Sun td:nth-of-type(13),#Sun th:nth-of-type(13),
-#Sun td:nth-of-type(14),#Sun th:nth-of-type(14) 
+#SunTable td:nth-of-type(12),#SunTable th:nth-of-type(12), 
+#SunTable td:nth-of-type(13),#SunTable th:nth-of-type(13),
+#SunTable td:nth-of-type(14),#SunTable th:nth-of-type(14) 
 {
     min-width : 20px;
 } 
 
-#Sun td:nth-of-type(6),#Sun th:nth-of-type(6)
+#SunTable td:nth-of-type(6),#SunTable th:nth-of-type(6)
 {
     min-width: 25px;
 }
 
 
-#Sun td:nth-of-type(9),#Sun th:nth-of-type(9)
+#SunTable td:nth-of-type(9),#SunTable th:nth-of-type(9)
 {
     min-width: 50px;
 } 
-#Sun td:nth-of-type(15),#Sun th:nth-of-type(15), 
-#Sun td:nth-of-type(16),#Sun th:nth-of-type(16), 
-#Sun td:nth-of-type(17),#Sun th:nth-of-type(17) {
+#SunTable td:nth-of-type(15),#SunTable th:nth-of-type(15), 
+#SunTable td:nth-of-type(16),#SunTable th:nth-of-type(16), 
+#SunTable td:nth-of-type(17),#SunTable th:nth-of-type(17) {
     min-width : 62px;
 }
 
-#Sun th:nth-child(18)
+#SunTable th:nth-child(18)
 {
     min-width: 30px;
 }
 
-#Sun tr:nth-of-type(1) th:nth-of-type(13),
-#Sun tr:nth-of-type(1) th:nth-of-type(14){
+#SunTable tr:nth-of-type(1) th:nth-of-type(13),
+#SunTable tr:nth-of-type(1) th:nth-of-type(14){
     min-width: 1px;
 }
 
-#Sun tr:nth-of-type(1) th:nth-child(8) {
+#SunTable tr:nth-of-type(1) th:nth-child(8) {
     min-width: 15px;
 }
 
-#Sun tr:nth-of-type(2) th:nth-child(8) {
+#SunTable tr:nth-of-type(2) th:nth-child(8) {
     min-width: 25px;
 }
 

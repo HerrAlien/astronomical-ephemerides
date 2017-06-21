@@ -61,8 +61,8 @@ var SunData = {
 
     
 (function(){    
-    var SunPage = {
-        hostElement : document.getElementById("Sun"),
+    var Sun = {
+        hostElement : document.getElementById("SunTable"),
         pageRendered : false,
         dataSource : SunData,
         tableHeaderInfo : {
@@ -229,6 +229,6 @@ var SunData = {
         displayPage : PlanetPage.prototype.displayPage
     };
 
-        Pages["SunPage"] = SunPage;
+        Pages["Sun"] = Sun;
     
 })();
