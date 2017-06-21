@@ -274,66 +274,66 @@ input {
     text-align: center;
 }
 /** ----------------------------- M O O N --------------------------------------- **/
-#Moon tr:nth-of-type(1), #Moon tr:nth-of-type(2), #MoonPage{
+#MoonTable tr:nth-of-type(1), #MoonTable tr:nth-of-type(2), #Moon{
     width: 672px;
 }
 
-#Moon td:nth-of-type(1),#Moon th:nth-of-type(1), 
-#Moon td:nth-of-type(2),#Moon th:nth-of-type(2) {
+#MoonTable td:nth-of-type(1),#Moon th:nth-of-type(1), 
+#MoonTable td:nth-of-type(2),#Moon th:nth-of-type(2) {
     min-width : 20px;
 } 
 
-#Moon td:nth-of-type(3),#Moon th:nth-of-type(3), 
-#Moon td:nth-of-type(4),#Moon th:nth-of-type(4),
-#Moon td:nth-of-type(5),#Moon th:nth-of-type(5),
-#Moon td:nth-of-type(7),#Moon th:nth-of-type(7),
-#Moon td:nth-of-type(8),#Moon th:nth-of-type(8),
-#Moon td:nth-of-type(9),#Moon th:nth-of-type(9), 
-#Moon td:nth-of-type(10),#Moon th:nth-of-type(10), 
-#Moon td:nth-of-type(11),#Moon th:nth-of-type(11),
-#Moon td:nth-of-type(13),#Moon th:nth-of-type(13), 
-#Moon td:nth-of-type(14),#Moon th:nth-of-type(14),
-#Moon td:nth-of-type(15),#Moon th:nth-of-type(15), 
-#Moon td:nth-of-type(16),#Moon th:nth-of-type(16),
-#Moon td:nth-of-type(17),#Moon th:nth-of-type(17), 
-#Moon td:nth-of-type(18),#Moon th:nth-of-type(18), 
-#Moon td:nth-of-type(19),#Moon th:nth-of-type(19),
-#Moon td:nth-of-type(21),#Moon th:nth-of-type(21),
-#Moon td:nth-of-type(22),#Moon th:nth-of-type(22)
+#MoonTable td:nth-of-type(3),#Moon th:nth-of-type(3), 
+#MoonTable td:nth-of-type(4),#Moon th:nth-of-type(4),
+#MoonTable td:nth-of-type(5),#Moon th:nth-of-type(5),
+#MoonTable td:nth-of-type(7),#Moon th:nth-of-type(7),
+#MoonTable td:nth-of-type(8),#Moon th:nth-of-type(8),
+#MoonTable td:nth-of-type(9),#Moon th:nth-of-type(9), 
+#MoonTable td:nth-of-type(10),#Moon th:nth-of-type(10), 
+#MoonTable td:nth-of-type(11),#Moon th:nth-of-type(11),
+#MoonTable td:nth-of-type(13),#Moon th:nth-of-type(13), 
+#MoonTable td:nth-of-type(14),#Moon th:nth-of-type(14),
+#MoonTable td:nth-of-type(15),#Moon th:nth-of-type(15), 
+#MoonTable td:nth-of-type(16),#Moon th:nth-of-type(16),
+#MoonTable td:nth-of-type(17),#Moon th:nth-of-type(17), 
+#MoonTable td:nth-of-type(18),#Moon th:nth-of-type(18), 
+#MoonTable td:nth-of-type(19),#Moon th:nth-of-type(19),
+#MoonTable td:nth-of-type(21),#Moon th:nth-of-type(21),
+#MoonTable td:nth-of-type(22),#Moon th:nth-of-type(22)
 {
     min-width: 20px;
 }
 
-#Moon td:nth-of-type(6),#Moon th:nth-of-type(6), 
-#Moon td:nth-of-type(12),#Moon th:nth-of-type(12), 
-#Moon td:nth-of-type(20),#Moon th:nth-of-type(20)
+#MoonTable td:nth-of-type(6),#Moon th:nth-of-type(6), 
+#MoonTable td:nth-of-type(12),#Moon th:nth-of-type(12), 
+#MoonTable td:nth-of-type(20),#Moon th:nth-of-type(20)
 {
     min-width : 25px;
 } 
 
-#Moon td:nth-of-type(23),#Moon th:nth-of-type(23),
-#Moon td:nth-of-type(24),#Moon th:nth-of-type(24) {
+#MoonTable td:nth-of-type(23),#Moon th:nth-of-type(23),
+#MoonTable td:nth-of-type(24),#Moon th:nth-of-type(24) {
     min-width: 52px;
 }
 
-#Moon > tr:nth-of-type(1) > th:nth-child(2),
-#Moon > tr:nth-of-type(1) > th:nth-child(11),
-#Moon > tr:nth-of-type(1) > th:nth-child(18),
-#Moon > tr:nth-of-type(1) > th:nth-child(19)
+#MoonTable > tr:nth-of-type(1) > th:nth-child(2),
+#MoonTable > tr:nth-of-type(1) > th:nth-child(11),
+#MoonTable > tr:nth-of-type(1) > th:nth-child(18),
+#MoonTable > tr:nth-of-type(1) > th:nth-child(19)
 {
     min-width: 5px;
 }
 
-#Moon > tr:nth-of-type(2) > th:nth-child(14)
+#MoonTable > tr:nth-of-type(2) > th:nth-child(14)
 {
     min-width: 30px;
 }
 
-#Moon td:nth-of-type(2), #Moon td:nth-of-type(5), #Moon td:nth-of-type(8), #Moon td:nth-of-type(11), #Moon td:nth-of-type(14), #Moon td:nth-of-type(16), #Moon td:nth-of-type(19), #Moon td:nth-of-type(22), #Moon td:nth-of-type(23) {
+#MoonTable td:nth-of-type(2), #MoonTable td:nth-of-type(5), #MoonTable td:nth-of-type(8), #MoonTable td:nth-of-type(11), #MoonTable td:nth-of-type(14), #MoonTable td:nth-of-type(16), #MoonTable td:nth-of-type(19), #MoonTable td:nth-of-type(22), #MoonTable td:nth-of-type(23) {
     border-right: 1px solid black;
 }
 
-#Moon td:nth-of-type(9), #Moon td:nth-of-type(12), #Moon td:nth-of-type(13), #Moon td:nth-of-type(15){
+#MoonTable td:nth-of-type(9), #MoonTable td:nth-of-type(12), #MoonTable td:nth-of-type(13), #MoonTable td:nth-of-type(15){
     border-right: none;
 }
 

@@ -70,7 +70,7 @@ var MoonData = {
 
 (function(){    
     var MoonPage = {
-        hostElement : document.getElementById("Moon"),
+        hostElement : document.getElementById("MoonTable"),
         pageRendered : false,
         dataSource : MoonData,
         tableHeaderInfo : {
@@ -209,7 +209,7 @@ var MoonData = {
         lastAppendedLine : false
     };
     
-    Pages["MoonPage"] = MoonPage;
+    Pages["Moon"] = MoonPage;
     
     MoonPage.reset = PlanetPage.prototype.reset;
     MoonPage.appendLine = PlanetPage.prototype.appendLine;
