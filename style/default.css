@@ -10,6 +10,16 @@ body {
     margin-right: auto;
 }
 
+#scroller {
+    position: fixed;
+    top: 70px;
+    bottom: 0;
+    overflow-y: auto;
+    min-width: 500px;
+    right: 5;
+    left: 0;
+}
+
 .page {
     display: block;
     opacity: 1;
@@ -23,6 +33,7 @@ body {
 .page:not(:target){
     display: none;
     opacity: 0;
+    height: 0%;
 }
 
 .page::after {
@@ -196,12 +207,12 @@ tr.secondHeaderRow {
 }
 
 tr.firstHeaderRowScrolled{
-    margin-top: -171px;
+    margin-top: -105px;
     border-top: 1px solid black;
 }
 
 tr.secondHeaderRowScrolled{
-    margin-top: -151px;
+    margin-top: -85px;
     border-bottom: 1px solid black;
 }
 
