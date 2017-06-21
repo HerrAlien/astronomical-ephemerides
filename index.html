@@ -164,182 +164,182 @@
     
     <div class="clear maxWidth">&nbsp;</div>
     <div id="scroller">
-    <div id="more" class="page" title="Menu">
-        <span class="title">Menu</span><br/>
-        <ul id="menuList">
-            <li><a href="#home" id="HomeLink">Home</a></li>
-            <li><a href="#Sun">Sun</a></li>
-            <li><a href="#MoonPage">Moon</a></li>
-            <li><a href="#Mercury">Mercury</a></li>
-            <li><a href="#Venus">Venus</a></li>
-            <li><a href="#Mars">Mars</a></li>
-            <li><a href="#Jupiter">Jupiter</a></li>
-            <li><a href="#Saturn">Saturn</a></li>
-            <li><a href="#Uranus">Uranus</a></li>
-            <li><a href="#Neptune">Neptune</a></li>
-            <li><a href="#GalileanMoons">Galilean Moons</a></li>
-            <li><a href="#SaturnMoons">Saturn Moons</a></li>
-            <li><a href="#LunarEclipses">Lunar Eclipses</a></li>
-        </ul>
-		<div class="clear">&nbsp;</div>
-    </div>
-    <div id="settings" class="page" title="Settings">
-        <span class="title">Settings</span><br/>
-        <label>Latitude [&deg;]: <br/><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
-        <label>Longitude [&deg;]: <br/><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
-        <label>Altitude [m]: <br/><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
-        <div class="clear">&nbsp;</div>
-        <Label>Start from: <br/><input type="date" id="startingDate"></input></label>
-        <Label>increment in days: <br/><input type="number" id="incrementDate"></input></label>
-        <Label>for number of days:<br/><input type="number" id="numberOfDays"></input></label>
-        <div class="clear">&nbsp;</div>
-        <input type="button" id = "applySettingsChanges" value="Apply"></input>
-        <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
-        <div class="clear">&nbsp;</div>
-    </div>
-    
-    <div id="JSDisabledPage" title="Enable JavaScript">
-        <span class="title">Enable JavaScript</span>
-        <br/>
-        The page uses JavaScript to do all the computations. Please enable JavaScript from your browser's settings.
-        
-    </div>
-
-    
-    <div id="home" class="page" title="Astronomical ephemerides">
-    <span class="title">Astronomical Ephemerides</span><br/><br/>
-        Astronomical Ephemerides - a JavaScript utility to calculate various solar system data. It uses an <a href="https://bitbucket.org/herr_alien/jsaaplus" target="_blank">Emscripten port</a> of the <a href="http://www.naughter.com/aa.html" target="_blank">AA+ library</a>. More about Emscripten <a href="http://kripken.github.io/emscripten-site/" target="_blank">here</a>.<br/>
-    <br/>
-    The following rules stand for the data computed by the application:
-    <ul>
-        <li>Unless specified otherwise, all times (transits, eclipses, occultations etc.) are in UTC.</li>
-        <li>Transits are computed for any given day as the first transit to occur after the given date. This means that they might occur in the following day.</li>
-    </ul>
-        <div id="credits">
-        Copyright (C) 2017  Herr_Alien &lt;alexandru.garofide@gmail.com&gt;<br/>
-    <br/>
-        This program is free software: you can redistribute it and/or modify
-        it under the terms of the GNU Affero General Public License as published by
-        the Free Software Foundation, either version 3 of the License, or
-        (at your option) any later version.<br/>
-    <br/>
-        This program is distributed in the hope that it will be useful,
-        but WITHOUT ANY WARRANTY; without even the implied warranty of
-        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-        GNU Affero General Public License for more details.<br/>
-    <br/>
-        You should have received a copy of the GNU Affero General Public License
-        along with this program.  If not, see &lt;<a href="https://www.gnu.org/licenses/agpl.html">https://www.gnu.org/licenses/agpl.html</a>&gt;.
+        <div id="more" class="page" title="Menu">
+            <span class="title">Menu</span><br/>
+            <ul id="menuList">
+                <li><a href="#home" id="HomeLink">Home</a></li>
+                <li><a href="#Sun">Sun</a></li>
+                <li><a href="#MoonPage">Moon</a></li>
+                <li><a href="#Mercury">Mercury</a></li>
+                <li><a href="#Venus">Venus</a></li>
+                <li><a href="#Mars">Mars</a></li>
+                <li><a href="#Jupiter">Jupiter</a></li>
+                <li><a href="#Saturn">Saturn</a></li>
+                <li><a href="#Uranus">Uranus</a></li>
+                <li><a href="#Neptune">Neptune</a></li>
+                <li><a href="#GalileanMoons">Galilean Moons</a></li>
+                <li><a href="#SaturnMoons">Saturn Moons</a></li>
+                <li><a href="#LunarEclipses">Lunar Eclipses</a></li>
+            </ul>
+            <div class="clear">&nbsp;</div>
         </div>
-    </div>
-    
-    <div id="Sun" class="page invisible" title="Sun">
-        <span class="title">Sun</span>
-        <table id="SunTable" cellspacing="0" cellpadding="0" class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-         </table>
-    </div>
-    <div id="Mercury" class="page" title="Mercury">
-        <span class="title">Mercury</span><br/>
-        <table id="MercuryTable" cellspacing="0" cellpadding="0" class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-        </table>
-    </div>
+        <div id="settings" class="page" title="Settings">
+            <span class="title">Settings</span><br/>
+            <label>Latitude [&deg;]: <br/><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
+            <label>Longitude [&deg;]: <br/><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
+            <label>Altitude [m]: <br/><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
+            <div class="clear">&nbsp;</div>
+            <Label>Start from: <br/><input type="date" id="startingDate"></input></label>
+            <Label>increment in days: <br/><input type="number" id="incrementDate"></input></label>
+            <Label>for number of days:<br/><input type="number" id="numberOfDays"></input></label>
+            <div class="clear">&nbsp;</div>
+            <input type="button" id = "applySettingsChanges" value="Apply"></input>
+            <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
+            <div class="clear">&nbsp;</div>
+        </div>
+        
+        <div id="JSDisabledPage" title="Enable JavaScript">
+            <span class="title">Enable JavaScript</span>
+            <br/>
+            The page uses JavaScript to do all the computations. Please enable JavaScript from your browser's settings.
+            
+        </div>
 
-    <div id="Venus" class="page" title="Venus">
-        <span class="title">Venus</span>
-        <table id="VenusTable" cellspacing="0" cellpadding="0" class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-        </table>
-    </div>
-
-    <div id="Mars" class="page" title="Mars">
-        <div class="swipeRight"></div> <div class="swipeLeft"></div>
-        <span class="title">Mars</span><span class="title positionEphemerisTitle"> position ephemeris</span>  <span class="title physicalEphemerisTitle"> physical ephemeris</span>
-        <table id="MarsTable" cellspacing="0" cellpadding="0" class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-       </table>
-    </div>
-
-    <div id="Jupiter" class="page" title="Jupiter">
-        <div class="swipeRight"></div> <div class="swipeLeft"></div>
-        <span class="title">Jupiter</span><span class="title positionEphemerisTitle"> position ephemeris</span>  <span class="title physicalEphemerisTitle"> physical ephemeris</span>
-        <table id="JupiterTable" cellspacing="0" cellpadding="0" class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-         </table>
-    </div>
-
-    <div id="Saturn" class="page" title="Saturn">
-        <span class="title">Saturn</span>
-        <table id="SaturnTable" cellspacing="0" cellpadding="0" class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-         </table>
-    </div>
-
-   <div id="Uranus" class="page" title="Uranus">
-        <span class="title">Uranus</span>
-        <table id="UranusTable" cellspacing="0" cellpadding="0" class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-         </table>
-    </div>
-
-   <div id="Neptune" class="page" title="Neptune">
-        <span class="title">Neptune</span>
-        <table id="NeptuneTable" cellspacing="0" cellpadding="0" class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-         </table>
-    </div>
-
-   <div id="Moon" class="page" title="Moon">
-        <span class="title">Moon</span>
-        <table id="MoonTable" cellspacing="0" cellpadding="0"  class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-         </table>
-    </div>
-
-   <div id="GalileanMoons" class="page" title="Visibility of Galilean Moons">
-        <span class="title">Elongations of Galilean Moons</span>
-        <br/>The following colors were used to represent each moon:
+        
+        <div id="home" class="page" title="Astronomical ephemerides">
+        <span class="title">Astronomical Ephemerides</span><br/><br/>
+            Astronomical Ephemerides - a JavaScript utility to calculate various solar system data. It uses an <a href="https://bitbucket.org/herr_alien/jsaaplus" target="_blank">Emscripten port</a> of the <a href="http://www.naughter.com/aa.html" target="_blank">AA+ library</a>. More about Emscripten <a href="http://kripken.github.io/emscripten-site/" target="_blank">here</a>.<br/>
+        <br/>
+        The following rules stand for the data computed by the application:
         <ul>
-            <li>Io is represented in <font color="blue"><b>blue color</b></font></li>
-            <li>Europa is represented in <font color="red"><b>red color</b></font></li>
-            <li>Ganymede is represented in <font color="green"><b>green color</b></font></li>
-            <li>Callisto is represented in <font color="black"><b>black color</b></font></li>
+            <li>Unless specified otherwise, all times (transits, eclipses, occultations etc.) are in UTC.</li>
+            <li>Transits are computed for any given day as the first transit to occur after the given date. This means that they might occur in the following day.</li>
         </ul>
-        Jupiter is represented in <font color="orange"><b>orange color</b></font>
+            <div id="credits">
+            Copyright (C) 2017  Herr_Alien &lt;alexandru.garofide@gmail.com&gt;<br/>
         <br/>
+            This program is free software: you can redistribute it and/or modify
+            it under the terms of the GNU Affero General Public License as published by
+            the Free Software Foundation, either version 3 of the License, or
+            (at your option) any later version.<br/>
         <br/>
-        <div id="GalileanMoonsContainer">
-            <div class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</div>
-         </div>
-    </div>
+            This program is distributed in the hope that it will be useful,
+            but WITHOUT ANY WARRANTY; without even the implied warranty of
+            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+            GNU Affero General Public License for more details.<br/>
+        <br/>
+            You should have received a copy of the GNU Affero General Public License
+            along with this program.  If not, see &lt;<a href="https://www.gnu.org/licenses/agpl.html">https://www.gnu.org/licenses/agpl.html</a>&gt;.
+            </div>
+        </div>
+        
+        <div id="Sun" class="page invisible" title="Sun">
+            <span class="title">Sun</span>
+            <table id="SunTable" cellspacing="0" cellpadding="0" class="planetTable">
+            <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+             </table>
+        </div>
+        <div id="Mercury" class="page" title="Mercury">
+            <span class="title">Mercury</span><br/>
+            <table id="MercuryTable" cellspacing="0" cellpadding="0" class="planetTable">
+            <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+            </table>
+        </div>
 
-   <div id="SaturnMoons" class="page" title="Visibility of Saturn Moons">
-        <span class="title">Elongations of Saturn's Moons</span>
-        <br/>The following colors were used to represent each moon:
-        <ul>
-            <li>Mimas is represented in <font color="blue"><b>blue color</b></font></li>
-            <li>Enceladus is represented in <font color="red"><b>red color</b></font></li>
-            <li>Tethys is represented in <font color="green"><b>green color</b></font></li>
-            <li>Dione is represented in <font color="black"><b>black color</b></font></li>
-            <li>Rhea is represented in <font color="magenta"><b>magenta color</b></font></li>
-            <li>Titan is represented in <font color="grey"><b>grey color</b></font></li>
-        </ul>
-        Saturn is represented in <font color="orange"><b>orange color</b></font>
-        <br/>
-        <br/>
-        <div id="SaturnMoonsContainer">
-            <div class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</div>
-         </div>
-    </div>
-    
-   <div id="LunarEclipses" class="page" title="Lunar Eclipses">
-        <span class="title">Lunar Eclipses</span>
-        <br/> Accuracy of the times displayed below is about 1 minute.
-        <br/> 
-        <br/> 
-        <div id="MoonEclipsesContainer" class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</div>
-    </div>
+        <div id="Venus" class="page" title="Venus">
+            <span class="title">Venus</span>
+            <table id="VenusTable" cellspacing="0" cellpadding="0" class="planetTable">
+            <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+            </table>
+        </div>
+
+        <div id="Mars" class="page" title="Mars">
+            <div class="swipeRight"></div> <div class="swipeLeft"></div>
+            <span class="title">Mars</span><span class="title positionEphemerisTitle"> position ephemeris</span>  <span class="title physicalEphemerisTitle"> physical ephemeris</span>
+            <table id="MarsTable" cellspacing="0" cellpadding="0" class="planetTable">
+            <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+           </table>
+        </div>
+
+        <div id="Jupiter" class="page" title="Jupiter">
+            <div class="swipeRight"></div> <div class="swipeLeft"></div>
+            <span class="title">Jupiter</span><span class="title positionEphemerisTitle"> position ephemeris</span>  <span class="title physicalEphemerisTitle"> physical ephemeris</span>
+            <table id="JupiterTable" cellspacing="0" cellpadding="0" class="planetTable">
+            <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+             </table>
+        </div>
+
+        <div id="Saturn" class="page" title="Saturn">
+            <span class="title">Saturn</span>
+            <table id="SaturnTable" cellspacing="0" cellpadding="0" class="planetTable">
+            <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+             </table>
+        </div>
+
+       <div id="Uranus" class="page" title="Uranus">
+            <span class="title">Uranus</span>
+            <table id="UranusTable" cellspacing="0" cellpadding="0" class="planetTable">
+            <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+             </table>
+        </div>
+
+       <div id="Neptune" class="page" title="Neptune">
+            <span class="title">Neptune</span>
+            <table id="NeptuneTable" cellspacing="0" cellpadding="0" class="planetTable">
+            <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+             </table>
+        </div>
+
+       <div id="Moon" class="page" title="Moon">
+            <span class="title">Moon</span>
+            <table id="MoonTable" cellspacing="0" cellpadding="0"  class="planetTable">
+            <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+             </table>
+        </div>
+
+       <div id="GalileanMoons" class="page" title="Visibility of Galilean Moons">
+            <span class="title">Elongations of Galilean Moons</span>
+            <br/>The following colors were used to represent each moon:
+            <ul>
+                <li>Io is represented in <font color="blue"><b>blue color</b></font></li>
+                <li>Europa is represented in <font color="red"><b>red color</b></font></li>
+                <li>Ganymede is represented in <font color="green"><b>green color</b></font></li>
+                <li>Callisto is represented in <font color="black"><b>black color</b></font></li>
+            </ul>
+            Jupiter is represented in <font color="orange"><b>orange color</b></font>
+            <br/>
+            <br/>
+            <div id="GalileanMoonsContainer">
+                <div class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</div>
+             </div>
+        </div>
+
+       <div id="SaturnMoons" class="page" title="Visibility of Saturn Moons">
+            <span class="title">Elongations of Saturn's Moons</span>
+            <br/>The following colors were used to represent each moon:
+            <ul>
+                <li>Mimas is represented in <font color="blue"><b>blue color</b></font></li>
+                <li>Enceladus is represented in <font color="red"><b>red color</b></font></li>
+                <li>Tethys is represented in <font color="green"><b>green color</b></font></li>
+                <li>Dione is represented in <font color="black"><b>black color</b></font></li>
+                <li>Rhea is represented in <font color="magenta"><b>magenta color</b></font></li>
+                <li>Titan is represented in <font color="grey"><b>grey color</b></font></li>
+            </ul>
+            Saturn is represented in <font color="orange"><b>orange color</b></font>
+            <br/>
+            <br/>
+            <div id="SaturnMoonsContainer">
+                <div class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</div>
+             </div>
+        </div>
+        
+       <div id="LunarEclipses" class="page" title="Lunar Eclipses">
+            <span class="title">Lunar Eclipses</span>
+            <br/> Accuracy of the times displayed below is about 1 minute.
+            <br/> 
+            <br/> 
+            <div id="MoonEclipsesContainer" class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</div>
+        </div>
 
     </div>
     
