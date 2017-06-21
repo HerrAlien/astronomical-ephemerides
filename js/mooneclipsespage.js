@@ -16,7 +16,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var MoonEclipsesPage = {
 
-    hostElement : document.getElementById("MoonEclipses"),
+    hostElement : document.getElementById("MoonEclipsesContainer"),
     pageRendered : false,
     dataSource : MoonEclipsesData,
 
@@ -227,4 +227,4 @@ var MoonEclipsesPage = {
     }
 }
 
-Pages["MoonEclipsesPage"] = MoonEclipsesPage;
+Pages["LunarEclipses"] = MoonEclipsesPage;
