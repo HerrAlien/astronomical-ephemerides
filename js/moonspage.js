@@ -62,10 +62,17 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
         var height = Math.ceil (numberOfSteps) + 2* vPadding;
         
         var hostSVG = this.hostElement.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "svg");
+        var viewportSvg = this.hostElement.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "svg");        
+
         hostSVG.setAttribute("width", width);
         hostSVG.setAttribute("height", height);
-        hostSVG.setAttribute ("xmlns", "http://www.w3.org/2000/svg");
-        this.hostElement.appendChild(hostSVG);
+        
+        viewportSvg.classList.add("viewport");
+        viewportSvg.setAttribute("viewBox", "0 0 " + width + " " + height);
+        viewportSvg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+
+        viewportSvg.appendChild(hostSVG);
+        this.hostElement.appendChild(viewportSvg);
 
         var halfWidth = width/2;
         var planetRadius = halfWidth * this.planetFraction;

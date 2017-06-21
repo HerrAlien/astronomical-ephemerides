@@ -555,7 +555,8 @@ input {
 }
 
 #GalileanMoons, #SaturnMoons {
-    width: 800px;
+    width: 100%;
+    max-width: 800px;
 }
 
 #GalileanMoonsContainer svg {
@@ -583,7 +584,7 @@ input {
     padding-top: 20px;
 }
 
-.moonEclipse svg.viewport {
+.viewport {
     width: 100%;
     padding-top: 0.1%; /* 1:1 Aspect Ratio */
     margin-top: 20px;
