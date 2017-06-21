@@ -15,8 +15,8 @@ body {
     top: 70px;
     bottom: 0;
     overflow-y: auto;
-    min-width: 500px;
-    right: 5;
+    min-width: 590px;
+    right: 0;
     left: 0;
 }
 
@@ -161,7 +161,7 @@ font-size: 36px;
     font-size: 16px;
 }
 
-#menu li a, #getFromGeolocationAnchor {
+#menuList li a, #getFromGeolocationAnchor {
     cursor: pointer;
     padding-right: 10px;
     text-decoration: underline;
@@ -171,15 +171,15 @@ font-size: 36px;
     height: 72px;
 }
 
-#menu li a:hover, #menu li a.current, #promotedMenu a:hover, #promotedMenu a.current{
+#menuList li a:hover, #menuList li a.current, #promotedMenu a:hover, #promotedMenu a.current{
     color: red;
 }
 
-#menu li {
+#menuList li {
     float: left;
 }
 
-#menu{ 
+#menuList{ 
     list-style-type:none;
 }
 
