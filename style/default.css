@@ -591,8 +591,9 @@ input {
     margin-right: 0px;
 }
 
-#HomePage {
+#home {
     width: 100%;
+    max-width: 800px;
 }
 
 
