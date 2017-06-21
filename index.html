@@ -24,12 +24,12 @@
         min-width: 590px;
     }
 
-    #JupiterPage, #MarsPage  {
+    #JupiterPage, #Mars  {
         width: 500px;
     }
 
     #JupiterPage .physicalEphemeris, #JupiterPage .physicalEphemerisTitle,
-    #MarsPage .physicalEphemeris, #MarsPage .physicalEphemerisTitle
+    #Mars .physicalEphemeris, #Mars .physicalEphemerisTitle
     {
         display: none;
     }
@@ -78,7 +78,7 @@
 @media (max-width: 810px) {
 
     #JupiterPage .positionEphemeris, #JupiterPage .positionEphemerisTitle,
-    #MarsPage .positionEphemeris, #MarsPage .positionEphemerisTitle
+    #Mars .positionEphemeris, #Mars .positionEphemerisTitle
     {
         display: none;
     }
@@ -113,7 +113,7 @@
         display: inline;
     }
     
-    #JupiterPage, #MarsPage {
+    #JupiterPage, #Mars {
         width: 500px;
     }
     
@@ -148,7 +148,7 @@
         <span class="lessImportant">
             <a href="#Mercury">Mercury</a>
             <a href="#Venus">Venus</a>
-            <a href="#MarsPage">Mars</a>
+            <a href="#Mars">Mars</a>
         </span>
             <a href="#JupiterPage">Jupiter</a>
         <span class="leastImportant">
@@ -172,7 +172,7 @@
             <li><a href="#MoonPage">Moon</a></li>
             <li><a href="#Mercury">Mercury</a></li>
             <li><a href="#Venus">Venus</a></li>
-            <li><a href="#MarsPage">Mars</a></li>
+            <li><a href="#Mars">Mars</a></li>
             <li><a href="#JupiterPage">Jupiter</a></li>
             <li><a href="#SaturnPage">Saturn</a></li>
             <li><a href="#UranusPage">Uranus</a></li>
@@ -253,10 +253,10 @@
         </table>
     </div>
 
-    <div id="MarsPage" class="page" title="Mars">
+    <div id="Mars" class="page" title="Mars">
         <div class="swipeRight"></div> <div class="swipeLeft"></div>
         <span class="title">Mars</span><span class="title positionEphemerisTitle"> position ephemeris</span>  <span class="title physicalEphemerisTitle"> physical ephemeris</span>
-        <table id="Mars" cellspacing="0" cellpadding="0" class="planetTable">
+        <table id="MarsTable" cellspacing="0" cellpadding="0" class="planetTable">
         <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
        </table>
     </div>
@@ -475,7 +475,7 @@
         wasPositional = !wasPositional;
     }
     
-    var pagesWithPhysicalEphemeris = ["JupiterPage", "MarsPage"];
+    var pagesWithPhysicalEphemeris = ["JupiterPage", "Mars"];
     for (var pageIndex = 0; pageIndex < pagesWithPhysicalEphemeris.length; pageIndex++){
         var divs =  document.getElementById(pagesWithPhysicalEphemeris[pageIndex]).getElementsByTagName("div");
         for (var i = 0; i < divs.length; i++)

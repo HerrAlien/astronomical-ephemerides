@@ -38,8 +38,8 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
     
     
 (function () {
-    var Page = new PlanetPage (MarsData);
-    Pages["MarsPage"] = Page;
+    var Page = new PlanetPage (MarsData, "MarsTable");
+    Pages["Mars"] = Page;
     
    Page.tableHeaderInfo['16'] = { "0" : "L0", "1" : "\u00B0", "longText" : "Longitude of central meridian" };
     Page.tableHeaderInfo['17'] = { "0" : "DE", "1" : "\u00B0", "longText" : "Planetocentric declination of Earth" };
