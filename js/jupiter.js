@@ -38,8 +38,8 @@ var JupiterData = new PlanetData({ number: 4, name: "Jupiter",
 })();
 							   
 (function () {
-    var Page = new PlanetPage (JupiterData);
-        Pages["JupiterPage"] = Page;
+    var Page = new PlanetPage (JupiterData, "JupiterTable");
+        Pages["Jupiter"] = Page;
 
     Page.tableHeaderInfo['16'] = { "0" : "L0-S1", "1" : "\u00B0", "longText" : "Longitude of central meridian, System 1" };
     Page.tableHeaderInfo['17'] = { "0" : "L0-S2", "1" : "\u00B0", "longText" : "Longitude of central meridian, System 2" };
