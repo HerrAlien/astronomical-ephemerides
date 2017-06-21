@@ -554,16 +554,16 @@ input {
     min-width: 50px;
 }
 
-#GalileanMoonsPage, #SaturnMoonsPage {
+#GalileanMoons, #SaturnMoonsPage {
     width: 800px;
 }
 
-#GalileanMoons svg {
+#GalileanMoonsContainer svg {
     margin-left: auto;
     margin-right: auto;
 }
 
-#GalileanMoons, #SaturnMoons {
+#GalileanMoonsContainer, #SaturnMoons {
     text-align: center;
 }
 
