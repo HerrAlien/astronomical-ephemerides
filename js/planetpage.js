@@ -1,8 +1,12 @@
-function PlanetPage (planetDataSource) {
+function PlanetPage (planetDataSource, tableName) {
     if (planetDataSource) {
         this.dataSource = planetDataSource;
         this.hostElement = document.getElementById(this.dataSource.planet.name);
     }
+    
+    if (tableName)
+        this.hostElement = document.getElementById(tableName);
+    
     this.pageRendered = false;
     this.lastAppendedLine = false;
 
