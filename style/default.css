@@ -128,24 +128,24 @@ font-size: 36px;
     margin-left: 0px;
 }
 
-#menuContainer {
+#more {
     width:100%;
     margin: 20px 50px;
     font-size: 22px;
 }
 
-#settingsPage {
+#settings {
     width: 100%;
     max-width: 640px;
     
 }
 
-#settingsPage label, #getFromGeolocationAnchor, #applySettingsChanges{
+#settings label, #getFromGeolocationAnchor, #applySettingsChanges{
     float: left;
     margin-top: 16px;
 }
 
-#settingsPage label, #getFromGeolocationAnchor, #applySettingsChanges {
+#settings label, #getFromGeolocationAnchor, #applySettingsChanges {
     margin-left: 6px;
 }
 
