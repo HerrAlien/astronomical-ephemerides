@@ -539,13 +539,13 @@ input {
 #Mars  td:nth-of-type(16), #Mars  td:nth-of-type(17), #Mars  td:nth-of-type(18), #Mars  td:nth-of-type(19){
     border-right: solid 1px black;
 }
-#Mars td:nth-of-type(17),#Mars th:nth-of-type(17) {
+#Mars td:nth-of-type(17){
     min-width: 50px;
 }
 
-#Mars td:nth-of-type(18),#Mars th:nth-of-type(18),
-#Mars td:nth-of-type(19),#Mars th:nth-of-type(19),
-#Mars td:nth-of-type(20),#Mars th:nth-of-type(20) {
+#Mars td:nth-of-type(18),
+#Mars td:nth-of-type(19),
+#Mars td:nth-of-type(20){
     min-width: 40px;
 }
 /* ---------------------------- J U P I T E R ---------------------- */
