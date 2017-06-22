@@ -470,6 +470,10 @@ input {
 	    height: 20px;
 }
 
+.minWidth1{
+	min-width: 1px;
+}
+
 .minWidth20
 {
     min-width : 20px;
@@ -480,9 +484,9 @@ input {
     min-width : 25px;
 }
 
-.minWidth55
+.minWidth40
 {
-    min-width: 55px;
+    min-width : 40px;
 }
 
 .minWidth45
@@ -490,13 +494,20 @@ input {
     min-width : 45px;
 }
 
+.minWidth50
+{
+    min-width: 50px;
+}
+
+.minWidth55
+{
+    min-width: 55px;
+}
+
 .minWidth62 {
     min-width : 62px;
 }
 
-.minWidth1{
-	min-width: 1px;
-}
 
 
 .planetTable td:nth-of-type(2) ,
@@ -546,19 +557,19 @@ input {
     border-right: solid 1px black;
 }
 
-#Jupiter td:nth-of-type(18),#Jupiter th:nth-of-type(18),
-#Jupiter td:nth-of-type(17),#Jupiter th:nth-of-type(17) {
+#Jupiter td:nth-of-type(18),
+#Jupiter td:nth-of-type(17) {
     min-width: 50px;
 }
 
-#Jupiter td:nth-of-type(19),#Jupiter th:nth-of-type(19),
-#Jupiter td:nth-of-type(20),#Jupiter th:nth-of-type(20),
-#Jupiter td:nth-of-type(20),#Jupiter th:nth-of-type(21) {
+#Jupiter td:nth-of-type(19),
+#Jupiter td:nth-of-type(20),
+#Jupiter td:nth-of-type(21){
     min-width: 40px;
 }
 
-#Jupiter td:nth-child(13), #Jupiter td:nth-child(13), 
-#Jupiter td:nth-child(14), #Jupiter td:nth-child(14){
+#Jupiter td:nth-child(13), 
+#Jupiter td:nth-child(14){
     min-width: 50px;
 }
 
