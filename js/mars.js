@@ -41,10 +41,10 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
     var Page = new PlanetPage (MarsData, "MarsTable");
     Pages["Mars"] = Page;
     
-   Page.tableHeaderInfo['16'] = { "0" : "L0", "1" : "\u00B0", "longText" : "Longitude of central meridian" };
-    Page.tableHeaderInfo['17'] = { "0" : "DE", "1" : "\u00B0", "longText" : "Planetocentric declination of Earth" };
-    Page.tableHeaderInfo['18'] = { "0" : "DS", "1" : "\u00B0", "longText" : "Planetocentric declination of the Sun" };
-    Page.tableHeaderInfo['19'] = { "0" : "P", "1" : "\u00B0", "longText" : "Position angle of the North Pole" };
+    Page.tableHeaderInfo['16'] = { "0" : {"text" : "L0"}, "1" : {"text" : "\u00B0"}, "longText" : "Longitude of central meridian" };
+    Page.tableHeaderInfo['17'] = { "0" : {"text" : "DE"}, "1" : {"text" : "\u00B0"}, "longText" : "Planetocentric declination of Earth" };
+    Page.tableHeaderInfo['18'] = { "0" : {"text" : "DS"}, "1" : {"text" : "\u00B0"}, "longText" : "Planetocentric declination of the Sun" };
+    Page.tableHeaderInfo['19'] = { "0" : {"text" : "P" }, "1" : {"text" : "\u00B0"}, "longText" : "Position angle of the North Pole" };
     
 
     Page["old_addPlanetTableHeader"] = Page.addPlanetTableHeader;

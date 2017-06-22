@@ -41,11 +41,11 @@ var JupiterData = new PlanetData({ number: 4, name: "Jupiter",
     var Page = new PlanetPage (JupiterData, "JupiterTable");
         Pages["Jupiter"] = Page;
 
-    Page.tableHeaderInfo['16'] = { "0" : "L0-S1", "1" : "\u00B0", "longText" : "Longitude of central meridian, System 1" };
-    Page.tableHeaderInfo['17'] = { "0" : "L0-S2", "1" : "\u00B0", "longText" : "Longitude of central meridian, System 2" };
-    Page.tableHeaderInfo['18'] = { "0" : "DE", "1" : "\u00B0", "longText" : "Planetocentric declination of Earth" };
-    Page.tableHeaderInfo['19'] = { "0" : "DS", "1" : "\u00B0", "longText" : "Planetocentric declination of the Sun" };
-    Page.tableHeaderInfo['20'] = { "0" : "P", "1" : "\u00B0", "longText" : "Position angle of the North Pole" };
+    Page.tableHeaderInfo['16'] = { "0" : {"text" : "L0-S1"}, "1" : {"text" : "\u00B0"}, "longText" : "Longitude of central meridian, System 1" };
+    Page.tableHeaderInfo['17'] = { "0" : {"text" :"L0-S2" }, "1" : {"text" : "\u00B0"}, "longText" : "Longitude of central meridian, System 2" };
+    Page.tableHeaderInfo['18'] = { "0" : {"text" :"DE"    }, "1" : {"text" : "\u00B0"}, "longText" : "Planetocentric declination of Earth" };
+    Page.tableHeaderInfo['19'] = { "0" : {"text" :"DS"    }, "1" : {"text" : "\u00B0"}, "longText" : "Planetocentric declination of the Sun" };
+    Page.tableHeaderInfo['20'] = { "0" : {"text" :"P"     }, "1" : {"text" : "\u00B0"}, "longText" : "Position angle of the North Pole" };
 
     Page["old_prepareLineForView"] = Page.prepareLineForView;
     Page.prepareLineForView = function (line, JD) {

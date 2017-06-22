@@ -12,101 +12,99 @@ function PlanetPage (planetDataSource, tableName) {
 
     this.tableHeaderInfo = {
         "0" : {
-                "0" : "Date",
-                "1" : "",
+                "0" : { "text" : "Date", "classes" : ["minWidth20"] },
+                "1" : { "text" : "", "classes" : ["minWidth20"] },
                 "longText" : "Date: month"
             } ,
 
         "1" : {
-                "0" : "",
-                "1" : "",
+                "0" : { "text" : "", "classes" : ["minWidth20"] },
+                "1" : { "text" : "", "classes" : ["minWidth20"] },
                 "longText" : "Date: day"
             },
         "2" : {
-                "0" : "\u03B1",
-                "1" : "h",
+                "0" : { "text" : "\u03B1", "classes" : ["minWidth20", "positionEphemeris"] },
+                "1" : { "text" : "h", "classes" : ["minWidth20", "positionEphemeris"] },
                 "longText" : "Equatorial coordinates: Right Ascension"
             },
         "3" : {
-                "0" : "",
-                "1" : "m",
+                "0" : { "text" : "", "classes" : ["minWidth20", "positionEphemeris"] },
+                "1" : { "text" : "m", "classes" : ["minWidth20", "positionEphemeris"] },
                 "longText" : "Equatorial coordinates: Right Ascension"
             },
         "4" : {
-                "0" : "",
-                "1" : "s",
+                "0" : { "text" : "", "classes" : ["minWidth20", "positionEphemeris"] },
+                "1" : { "text" : "s", "classes" : ["minWidth20", "positionEphemeris"] },
                 "longText" : "Equatorial coordinates: Right Ascension"
             },
         "5" :  {
-                "0" : "\u03B4",
-                "1" : "\u00B0",
+                "0" : { "text" : "\u03B4", "classes" : ["minWidth25", "positionEphemeris"] },
+                "1" : { "text" : "\u00B0", "classes" : ["minWidth25", "positionEphemeris"] },
                 "longText" : "Equatorial coordinates: Declination"
             },
         "6" :  {
-                "0" : "",
-                "1" : "'",
+                "0" : { "text" : "", "classes" : ["minWidth20" , "positionEphemeris"] },
+                "1" : { "text" : "'", "classes" : ["minWidth20", "positionEphemeris"] },
                 "longText" : "Equatorial coordinates: Declination"
             },
         "7" :  {
-                "0" : "",
-                "1" : "''",
+                "0" : { "text" : "", "classes" : ["minWidth15"  , "positionEphemeris"] },
+                "1" : { "text" : "''", "classes" : ["minWidth25", "positionEphemeris"] },
                 "longText" : "Equatorial coordinates: Declination"
             },
         "8" :  {
-                "0" : "\u03D5",
-                "1" : "''",
+                "0" : { "text" : "\u03D5", "classes" : ["minWidth20", "positionEphemeris"] },
+                "1" : { "text" : "''", "classes" : ["minWidth20"    , "positionEphemeris"] },
                 "longText" : "Apparent diameter"
             },
-
-            
         "9" : {
-                "0" : "Transit",
-                "1" : "h",
+                "0" : { "text" : "Transit", "classes" : ["minWidth20", "positionEphemeris"] },
+                "1" : { "text" : "h", "classes" : ["minWidth20"      , "positionEphemeris"] },
                 "longText" : "The UTC time of the transit across the meridian"
             },
         "10" : {
-                "0" : "",
-                "1" : "m",
+                "0" : { "text" : "", "classes" : ["minWidth1"  , "positionEphemeris"] },
+                "1" : { "text" : "m", "classes" : ["minWidth20", "positionEphemeris"] },
                 "longText" : "The UTC time of the transit across the meridian"
             },
         "11" : {
-                "0" : "",
-                "1" : "s",
+                "0" : { "text" : "", "classes" : ["minWidth1"  , "positionEphemeris"] },
+                "1" : { "text" : "s", "classes" : ["minWidth25", "positionEphemeris"] },
                 "longText" : "The UTC time of the transit across the meridian"
             },
 
             "12" :  {
-                "0" : "\u0394",
-                "1" : "A.U.",
+                "0" : { "text" : "\u0394", "classes" : ["minWidth55", "positionEphemeris"] },
+                "1" : { "text" : "A.U.", "classes" : ["minWidth55"  , "positionEphemeris"] },
                 "longText" : "Distance to Earth, in astronomical units"
             },
 
             "13" :  {
-                "0" : "R",
-                "1" : "A.U.",
+                "0" : { "text" : "R", "classes" : ["minWidth55"   , "positionEphemeris"] },
+                "1" : { "text" : "A.U.", "classes" : ["minWidth55", "positionEphemeris"] },
                 "longText" : "Distance to Sun, in astronomical units"
             },
 
             "14" :  {
-                "0" : "Elong.",
-                "1" : "\u00B0",
+                "0" : { "text" : "Elong", "classes" : ["minWidth70" , "positionEphemeris"] },
+                "1" : { "text" : "\u00B0", "classes" : ["minWidth62", "positionEphemeris"] },
                 "longText" : "Elongation angle from the Sun"
             },
 
         "15" :  {
-                "0" : "Phase",
-                "1" : "",
+                "0" : { "text" : "Phase", "classes" : ["minWidth45", "physicalEphemeris"] },
+                "1" : { "text" : "\u00B0", "classes" : ["minWidth45"     , "physicalEphemeris"] },
                 "longText" : "The phase of the planet (illuminated fraction of disk, as seen from Earth)"
             }
     };
-
+    
     this.lastDisplayedMonth = -1;
     this.months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     
-    this.columnClasses = ["minWidth20", "minWidth20", "minWidth20", "minWidth20", "minWidth20",
-                                       "minWidth25", "minWidth20", "minWidth20", "minWidth20", "minWidth20", 
-                                       "minWidth20", "minWidth25", "minWidth55", "minWidth55", "minWidth62",
-                                       "minWidth45"];
+    this.columnClasses = [ "minWidth20", "minWidth20", "minWidth20", "minWidth20", "minWidth20",
+                           "minWidth25", "minWidth20", "minWidth20", "minWidth20", "minWidth20", 
+                           "minWidth20", "minWidth25", "minWidth55", "minWidth55", "minWidth62",
+                           "minWidth45" ];
 }
 
 (function(){
@@ -125,17 +123,7 @@ function PlanetPage (planetDataSource, tableName) {
             if (!this.pageRendered) {
                 this.reset();
                 
-                var classes=false;
-                if (this.columnClasses) {
-                    classes = [];
-                    for (var i = 0; i < this.columnClasses.length; i++)
-                        classes[i] = this.columnClasses[i];
-                    
-                    classes[10] = "minWidth1";
-                    classes[11] = "minWidth1";
-                }
-                
-                this.addTableHeader (this.hostElement, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]], [classes, this.columnClasses] );
+                this.addTableHeader (this.hostElement, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
 
                 var firstLine = true;
                 
@@ -157,7 +145,7 @@ function PlanetPage (planetDataSource, tableName) {
                         pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD), dataRowClasses);
                     }
                     
-                    pageObj.addTableHeader (pageObj.hostElement, [["fixed", "printOnly"], ["fixed", "printOnly"]], [classes, pageObj.columnClasses]);
+                    pageObj.addTableHeader (pageObj.hostElement, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
                     
                     setTimeout (function() {delayedAppendData (JD, endJD, steps); },1 );
                 }
@@ -193,6 +181,8 @@ function PlanetPage (planetDataSource, tableName) {
                 if (!!classes && !!classes[i])
                     td.classList.add (classes[i])
 
+                
+
             }
             this.lastAppendedLine = dataArray;
         };
@@ -206,21 +196,16 @@ function PlanetPage (planetDataSource, tableName) {
                 row.classList.add (currentRowClasses[classIndex]);
 
             for (var headerKey in this.tableHeaderInfo) {
-                var th = this.addNodeChild (row, "th", this.tableHeaderInfo[headerKey][rowIndex]);
+                var th = this.addNodeChild (row, "th", this.tableHeaderInfo[headerKey][rowIndex]['text']);
                 th['title'] = this.tableHeaderInfo[headerKey].longText;
                 th.onclick = function () { alert (this.title); }
                 
-                
-                if (headerKey > 1)
+                var columnsClasses = this.tableHeaderInfo[headerKey][rowIndex]['classes']
+                if (!!columnsClasses)
                 {
-                    if (headerKey < 15)
-                        th.classList.add ("positionEphemeris");
-                    else
-                        th.classList.add ("physicalEphemeris");
+                    for (var columnsClassesIndex in columnsClasses)
+                        th.classList.add (columnsClasses[columnsClassesIndex]);
                 }
-                
-                if (!!columnClasses && !!columnClasses[rowIndex] && !!!!columnClasses[rowIndex][headerKey])
-                    th.classList.add (columnClasses[rowIndex][headerKey])
             }
             rows[rowIndex] = row;
         }
