@@ -1,5 +1,5 @@
 * {
-    transition: 0.15s;
+    transition: 0.5s;
 }
 
 body {
@@ -201,6 +201,7 @@ font-size: 36px;
 tr.firstHeaderRow{
     margin-top: -41px;
     border-top: 1px solid black;
+
 }
 
 tr.secondHeaderRow {
@@ -211,6 +212,7 @@ tr.secondHeaderRow {
 tr.firstHeaderRowScrolled{
     margin-top: -105px;
     border-top: 1px solid black;
+
 }
 
 tr.secondHeaderRowScrolled{
@@ -238,12 +240,17 @@ table {
     cursor: help;
 }
 
- tr:nth-of-type(odd) {
+tr:nth-of-type(odd) {
 background: #ffffff;
 }
 
  tr:nth-of-type(even) {
 background: #eeeeee;
+}
+
+tr.firstHeaderRow, tr.secondHeaderRow, tr.firstHeaderRowScrolled, tr.secondHeaderRowScrolled {
+    background: #ffffff;
+	height: 20px;    
 }
 
 input {
@@ -463,11 +470,10 @@ input {
 
 
 /** ---------------------------------- P L A N E T ------------------------------ **/
-.planetTable tr:nth-of-type(1), .planetTable tr:nth-of-type(2), .page
+.firstHeaderRow, .secondHeaderRow, .page,
+.firstHeaderRowScrolled, .secondHeaderRowScrolled
 {
     width: 543px;
-    background: #ffffff;
-	    height: 20px;
 }
 
 .minWidth1{
@@ -533,23 +539,24 @@ input {
 }
 
 /* ---------------------------- M A R S ------------------------------------ */
-#Mars tr:nth-of-type(1), #Mars tr:nth-of-type(2), #Mars{
+#MarsTable tr.firstHeaderRow, 
+#MarsTable tr.secondHeaderRow,
+#MarsTable tr.firstHeaderRowScrolled, 
+#MarsTable tr.secondHeaderRowScrolled, 
+#Mars{
     width: 732px;
 }
 #Mars  td:nth-of-type(16), #Mars  td:nth-of-type(17), #Mars  td:nth-of-type(18), #Mars  td:nth-of-type(19){
     border-right: solid 1px black;
 }
-#Mars td:nth-of-type(17){
-    min-width: 50px;
-}
 
-#Mars td:nth-of-type(18),
-#Mars td:nth-of-type(19),
-#Mars td:nth-of-type(20){
-    min-width: 40px;
-}
 /* ---------------------------- J U P I T E R ---------------------- */
-#Jupiter tr:nth-of-type(1), #Jupiter tr:nth-of-type(2), #Jupiter{
+#JupiterTable tr.firstHeaderRow, 
+#JupiterTable tr.secondHeaderRow,
+#JupiterTable tr.firstHeaderRowScrolled, 
+#JupiterTable tr.secondHeaderRowScrolled, 
+#Jupiter{
+
     width: 770px;
 }
 
