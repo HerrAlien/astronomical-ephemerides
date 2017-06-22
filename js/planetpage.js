@@ -125,12 +125,15 @@ function PlanetPage (planetDataSource, tableName) {
             if (!this.pageRendered) {
                 this.reset();
                 
-                var classes=[];
-                for (var i = 0; i < this.columnClasses.length; i++)
-                    classes[i] = this.columnClasses[i];
-                
-                classes[10] = "minWidth1";
-                classes[11] = "minWidth1";
+                var classes=false;
+                if (this.columnClasses) {
+                    classes = [];
+                    for (var i = 0; i < this.columnClasses.length; i++)
+                        classes[i] = this.columnClasses[i];
+                    
+                    classes[10] = "minWidth1";
+                    classes[11] = "minWidth1";
+                }
                 
                 this.addTableHeader (this.hostElement, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]], [classes, this.columnClasses] );
 

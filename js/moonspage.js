@@ -158,13 +158,11 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
                     
                     var text = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "text");
                     hostSVG.appendChild (text);
-                    text.setAttribute ("x", 10);
+                    text.setAttribute ("x", 0);
                     text.setAttribute ("y", dayLines[i].YCoord);
                     text.textContent = months[dayLines[i].Month] + " " + dayLines[i].Day;
-                    text.style["fontSize"] = "14px";
+                    text.style["fontSize"] = "20px";
                     text.style["fontFamily"] = "Arial";
-
-                    
                 } 
                    
                 if (stepsCounter < numberOfSteps) {
