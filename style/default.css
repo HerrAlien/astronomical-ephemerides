@@ -446,43 +446,27 @@ input {
 	    height: 20px;
 }
 
-.planetTable td:nth-of-type(1),.planetTable th:nth-of-type(1), 
-.planetTable td:nth-of-type(2),.planetTable th:nth-of-type(2) {
-    min-width : 20px;
-} 
-
-.planetTable td:nth-of-type(3),.planetTable th:nth-of-type(3), 
-.planetTable td:nth-of-type(4),.planetTable th:nth-of-type(4),
-.planetTable td:nth-of-type(5),.planetTable th:nth-of-type(5),
-.planetTable td:nth-of-type(9),.planetTable th:nth-of-type(9), 
-.planetTable td:nth-of-type(10),.planetTable th:nth-of-type(10), 
-.planetTable td:nth-of-type(11),.planetTable th:nth-of-type(11)
+.minWidth20
 {
     min-width : 20px;
-} 
-
-.planetTable td:nth-of-type(7),.planetTable th:nth-of-type(7),
-.planetTable td:nth-of-type(8),.planetTable th:nth-of-type(8)
-{
-    min-width : 20px;
-} 
-.planetTable td:nth-of-type(6),.planetTable th:nth-of-type(6){
-    min-width: 25px;    
 }
 
-.planetTable td:nth-of-type(12),.planetTable th:nth-of-type(12)
+.minWidth25
 {
-    min-width: 25px;
+    min-width : 25px;
 }
 
-.planetTable td:nth-of-type(13),.planetTable th:nth-of-type(13), 
-.planetTable td:nth-of-type(14),.planetTable th:nth-of-type(14) {
+.minWidth55
+{
     min-width: 55px;
 }
-.planetTable td:nth-of-type(16),.planetTable th:nth-of-type(16) {
-    min-width: 45px;
+
+.minWidth45
+{
+    min-width : 45px;
 }
-.planetTable td:nth-of-type(15),.planetTable th:nth-of-type(15) {
+
+.minWidth62 {
     min-width : 62px;
 }
 
@@ -490,6 +474,11 @@ input {
 .planetTable   tr:nth-child(1)  th:nth-child(12) {
 	min-width: 1px;
 }
+
+.minWidth1{
+	min-width: 1px;
+}
+
 
 .planetTable td:nth-of-type(2) ,
 .planetTable td:nth-of-type(5),

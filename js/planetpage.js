@@ -102,6 +102,11 @@ function PlanetPage (planetDataSource, tableName) {
 
     this.lastDisplayedMonth = -1;
     this.months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    
+    this.columnClasses = ["minWidth20", "minWidth20", "minWidth20", "minWidth20", "minWidth20",
+                                       "minWidth25", "minWidth20", "minWidth20", "minWidth20", "minWidth20", 
+                                       "minWidth20", "minWidth25", "minWidth55", "minWidth55", "minWidth62",
+                                       "minWidth45"];
 }
 
 (function(){
@@ -119,8 +124,18 @@ function PlanetPage (planetDataSource, tableName) {
             this.lastAppendedLine = false;
             if (!this.pageRendered) {
                 this.reset();
-                this.addTableHeader (this.hostElement, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
+                
+                var classes=[];
+                for (var i = 0; i < this.columnClasses.length; i++)
+                    classes[i] = this.columnClasses[i];
+                
+                classes[10] = "minWidth1";
+                classes[11] = "minWidth1";
+                
+                this.addTableHeader (this.hostElement, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]], [classes, this.columnClasses] );
 
+                var firstLine = true;
+                
                 var delayedAppendData = function (JD, endJD, steps) {
                     if (JD >= endJD)
                         return;
@@ -129,10 +144,17 @@ function PlanetPage (planetDataSource, tableName) {
                     for (i = 0; i < steps; i++, JD+=stepSize) {
                         if (JD >= endJD)
                             return;
-                        pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD));
+                        
+                        var dataRowClasses = false;
+                        if (i == 0 && firstLine) {
+                            firstLine = false;
+                            dataRowClasses = pageObj.columnClasses;
+                        }
+                        
+                        pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD), dataRowClasses);
                     }
                     
-                    pageObj.addTableHeader (pageObj.hostElement, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
+                    pageObj.addTableHeader (pageObj.hostElement, [["fixed", "printOnly"], ["fixed", "printOnly"]], [classes, pageObj.columnClasses]);
                     
                     setTimeout (function() {delayedAppendData (JD, endJD, steps); },1 );
                 }
@@ -141,7 +163,7 @@ function PlanetPage (planetDataSource, tableName) {
             }
         };
     
-    PlanetPage.prototype["appendLine"] = function (dataArray) {
+    PlanetPage.prototype["appendLine"] = function (dataArray, classes) {
             var line = this.hostElement.ownerDocument.createElement("tr");
             var tbody = this.hostElement.getElementsByTagName("tbody")[0];
             if (!tbody)
@@ -164,17 +186,21 @@ function PlanetPage (planetDataSource, tableName) {
                     else
                         td.classList.add ("physicalEphemeris");
                 }
+                
+                if (!!classes && !!classes[i])
+                    td.classList.add (classes[i])
+
             }
             this.lastAppendedLine = dataArray;
         };
         
-    PlanetPage.prototype["addTableHeader"] = function (table, classes) {
+    PlanetPage.prototype["addTableHeader"] = function (table, rowClasses, columnClasses) {
         var rows = [];
         for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
             var row = this.addNodeChild (table, "tr");
-            var rowClasses = classes[rowIndex];
+            var currentRowClasses = rowClasses[rowIndex];
             for (var classIndex = 0; classIndex < rowClasses.length; classIndex++)
-                row.classList.add (rowClasses[classIndex]);
+                row.classList.add (currentRowClasses[classIndex]);
 
             for (var headerKey in this.tableHeaderInfo) {
                 var th = this.addNodeChild (row, "th", this.tableHeaderInfo[headerKey][rowIndex]);
@@ -189,7 +215,9 @@ function PlanetPage (planetDataSource, tableName) {
                     else
                         th.classList.add ("physicalEphemeris");
                 }
-
+                
+                if (!!columnClasses && !!columnClasses[rowIndex] && !!!!columnClasses[rowIndex][headerKey])
+                    th.classList.add (columnClasses[rowIndex][headerKey])
             }
             rows[rowIndex] = row;
         }
