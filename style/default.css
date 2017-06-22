@@ -557,22 +557,6 @@ input {
     border-right: solid 1px black;
 }
 
-#Jupiter td:nth-of-type(18),
-#Jupiter td:nth-of-type(17) {
-    min-width: 50px;
-}
-
-#Jupiter td:nth-of-type(19),
-#Jupiter td:nth-of-type(20),
-#Jupiter td:nth-of-type(21){
-    min-width: 40px;
-}
-
-#Jupiter td:nth-child(13), 
-#Jupiter td:nth-child(14){
-    min-width: 50px;
-}
-
 #GalileanMoons, #SaturnMoons {
     width: 100%;
     max-width: 800px;
