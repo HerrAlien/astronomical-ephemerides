@@ -66,100 +66,100 @@ var SunData = {
         pageRendered : false,
         dataSource : SunData,
         tableHeaderInfo : {
-            "0" : {
-                    "0" : "Date",
-                    "1" : "",
-                    "longText" : "Date: month"
-                } ,
+        "0" : {
+                "0" : { "text" : "Date", "classes" : ["minWidth20"] },
+                "1" : { "text" : "", "classes" : ["minWidth20"] },
+                "longText" : "Date: month"
+            } ,
 
-            "1" : {
-                    "0" : "",
-                    "1" : "",
-                    "longText" : "Date: day"
-                },
+        "1" : {
+                "0" : { "text" : "", "classes" : ["minWidth5"] },
+                "1" : { "text" : "", "classes" : ["minWidth20"] },
+                "longText" : "Date: day"
+            },
             "2" : {
-                    "0" : "\u03B1",
-                    "1" : "h",
+                    "0" : { "text" :"\u03B1",  "classes" : ["minWidth20", "positionEphemeris"] },
+                    "1" : { "text" :"h"     ,  "classes" : ["minWidth20", "positionEphemeris"] },
                     "longText" : "Equatorial coordinates: Right Ascension"
                 },
             "3" : {
-                    "0" : "",
-                    "1" : "m",
+                    "0" : { "text" :"",  "classes" : ["minWidth20", "positionEphemeris"] },
+                    "1" : { "text" :"m", "classes" : ["minWidth20", "positionEphemeris"] },
                     "longText" : "Equatorial coordinates: Right Ascension"
                 },
             "4" : {
-                    "0" : "",
-                    "1" : "s",
+                    "0" : { "text" :"",  "classes" : ["minWidth20", "positionEphemeris"] },
+                    "1" : { "text" :"s", "classes" : ["minWidth20", "positionEphemeris"] },
                     "longText" : "Equatorial coordinates: Right Ascension"
                 },
             "5" :  {
-                    "0" : "\u03B4",
-                    "1" : "\u00B0",
+                    "0" : { "text" :"\u03B4", "classes" : ["minWidth20", "positionEphemeris"] },
+                    "1" : { "text" :"\u00B0", "classes" : ["minWidth20", "positionEphemeris"] },
                     "longText" : "Equatorial coordinates: Declination"
                 },
             "6" :  {
-                    "0" : "",
-                    "1" : "'",
+                    "0" : { "text" :"",  "classes" : ["minWidth20", "positionEphemeris"] },
+                    "1" : { "text" :"'", "classes" : ["minWidth20", "positionEphemeris"] },
                     "longText" : "Equatorial coordinates: Declination"
                 },
             "7" :  {
-                    "0" : "",
-                    "1" : "''",
+                    "0" : { "text" :"",   "classes" : ["minWidth20", "positionEphemeris"] },
+                    "1" : { "text" :"''", "classes" : ["minWidth20", "positionEphemeris"] },
                     "longText" : "Equatorial coordinates: Declination"
                 },
             "8" :  {
-                    "0" : "\u0394",
-                    "1" : "A.U.",
+                    "0" : { "text" :"\u0394", "classes" : ["minWidth20", "positionEphemeris"] },
+                    "1" : { "text" :"A.U.",   "classes" : ["minWidth20", "positionEphemeris"] },
                     "longText" : "Distance to Earth, in astronomical units"
                 },
             
             "9" :  {
-                    "0" : "\u03D5",
-                    "1" : "'",
+                    "0" : { "text" :"\u03D5", "classes" : ["minWidth20", "positionEphemeris"] },
+                    "1" : { "text" :"'",      "classes" : ["minWidth20", "positionEphemeris"] },
                     "longText" : "Apparent diameter of the Sun"
                 },
             "10" :  {
-                    "0" : "",
-                    "1" : "''",
+                    "0" : { "text" :"",    "classes" : ["minWidth20", "positionEphemeris"] },
+                    "1" : { "text" :"''",  "classes" : ["minWidth20", "positionEphemeris"] },
                     "longText" : "Apparent diameter of the Sun"
                 },
                 
             "11" : {
-                    "0" : "Transit",
-                    "1" : "h",
+                    "0" : { "text" :"Transit", "classes" : ["minWidth20", "positionEphemeris"] },
+                    "1" : { "text" :"h",       "classes" : ["minWidth20", "positionEphemeris"] },
                     "longText" : "The UTC time of the transit across the meridian"
                 },
             "12" : {
-                    "0" : "",
-                    "1" : "m",
+                    "0" : { "text" :"",   "classes" : ["minWidth20", "positionEphemeris"] },
+                    "1" : { "text" :"m",  "classes" : ["minWidth20", "positionEphemeris"] },
                     "longText" : "The UTC time of the transit across the meridian"
                 },
             "13" : {
-                    "0" : "",
-                    "1" : "s",
+                    "0" : { "text" :"",   "classes" : ["minWidth20", "positionEphemeris"] },
+                    "1" : { "text" :"s",  "classes" : ["minWidth20", "positionEphemeris"] },
                     "longText" : "The UTC time of the transit across the meridian"
                 },
             "14" :  {
-                    "0" : "P",
-                    "1" : "\u00B0",
+                    "0" : { "text" :"P",      "classes" : ["minWidth52", "physicalEphemeris"] },
+                    "1" : { "text" :"\u00B0", "classes" : ["minWidth52", "physicalEphemeris"] },
                     "longText" : "Position angle of the N end of the axis of rotation. It is positive when east of the north point of the disk, negative if west."
                 },
 
             "15" :  {
-                    "0" : "B",
-                    "1" : "\u00B0",
+                    "0" : { "text" :"B",      "classes" : ["minWidth52", "physicalEphemeris"] },
+                    "1" : { "text" :"\u00B0", "classes" : ["minWidth52", "physicalEphemeris"] },
                     "longText" : "Heliographic latitude of the centre of the disk."
                 },
 
             "16" :  {
-                    "0" : "L",
-                    "1" : "\u00B0",
+                    "0" : { "text" :"L",      "classes" : ["minWidth52", "physicalEphemeris"] },
+                    "1" : { "text" :"\u00B0", "classes" : ["minWidth52", "physicalEphemeris"] },
                     "longText" : "Heliographic longitude of the centre of the disk."
                 },
                 // \u03C0
             "17" :  {
-                    "0" : "\u03C0",
-                    "1" : "''",
+                    "0" : { "text" :"\u03C0", "classes" : ["minWidth52", "physicalEphemeris"] },
+                    "1" : { "text" :"''",     "classes" : ["minWidth52", "physicalEphemeris"] },
                     "longText" : "Equatorial horizontal parallax"
                 }
         },

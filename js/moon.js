@@ -182,24 +182,24 @@ var MoonData = {
                 },
                 
             "20" :  {
-                    "0" : { "text" :"" , "classes" : ["minWidth20", "positionEphemeris"] },
-                    "1" : { "text" :"'", "classes" : ["minWidth20", "positionEphemeris"] },
+                    "0" : { "text" :"" , "classes" : ["minWidth20", "physicalEphemeris"] },
+                    "1" : { "text" :"'", "classes" : ["minWidth20", "physicalEphemeris"] },
                     "longText" : "Equatorial horizontal parallax"
                 },
 
             "21" :  {
-                    "0" : { "text" :""  , "classes" : ["minWidth20", "positionEphemeris"] },
-                    "1" : { "text" :"''", "classes" : ["minWidth20", "positionEphemeris"] },
+                    "0" : { "text" :""  , "classes" : ["minWidth20", "physicalEphemeris"] },
+                    "1" : { "text" :"''", "classes" : ["minWidth20", "physicalEphemeris"] },
                     "longText" : "Equatorial horizontal parallax"
                 },
             "22" :  {
-                    "0" : { "text" :"90-l0" , "classes" : ["minWidth52", "positionEphemeris"] },
-                    "1" : { "text" :"\u00B0", "classes" : ["minWidth52", "positionEphemeris"] },
+                    "0" : { "text" :"90-l0" , "classes" : ["minWidth52", "physicalEphemeris"] },
+                    "1" : { "text" :"\u00B0", "classes" : ["minWidth52", "physicalEphemeris"] },
                     "longText" : "colongitude of the Sun"
                 },
             "23" :  {
-                    "0" : { "text" :"b0"    , "classes" : ["minWidth52", "positionEphemeris"] },
-                    "1" : { "text" :"\u00B0", "classes" : ["minWidth52", "positionEphemeris"] },
+                    "0" : { "text" :"b0"    , "classes" : ["minWidth52", "physicalEphemeris"] },
+                    "1" : { "text" :"\u00B0", "classes" : ["minWidth52", "physicalEphemeris"] },
                     "longText" : "latitude of the Sun"
                 },
         },
