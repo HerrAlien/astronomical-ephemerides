@@ -132,6 +132,8 @@ function PlanetPage (planetDataSource, tableName) {
                         return;
                     
                     var i = 0;
+                    var tBody = pageObj.hostElement.ownerDocument.createElement("tbody");
+                    
                     for (i = 0; i < steps; i++, JD+=stepSize) {
                         if (JD >= endJD)
                             return;
@@ -142,21 +144,22 @@ function PlanetPage (planetDataSource, tableName) {
                             dataRowClasses = pageObj.columnClasses;
                         }
                         
-                        pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD), dataRowClasses);
+                        pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD), dataRowClasses, tBody);
                     }
                     
-                    pageObj.addTableHeader (pageObj.hostElement, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
+                    pageObj.addTableHeader (tBody, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
+                    
+                    pageObj.hostElement.appendChild(tBody)
                     
                     setTimeout (function() {delayedAppendData (JD, endJD, steps); },1 );
                 }
-                delayedAppendData (JD, JD + daysAfter, 15);
+                delayedAppendData (JD, JD + daysAfter, 20);
                 this.pageRendered = true;
             }
         };
     
-    PlanetPage.prototype["appendLine"] = function (dataArray, classes) {
+    PlanetPage.prototype["appendLine"] = function (dataArray, classes, tbody) {
             var line = this.hostElement.ownerDocument.createElement("tr");
-            var tbody = this.hostElement.getElementsByTagName("tbody")[0];
             if (!tbody)
                 tbody = this.hostElement;
             tbody.appendChild(line);
