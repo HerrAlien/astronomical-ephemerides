@@ -345,59 +345,39 @@ input {
 }
 
 
-#SunTable td:nth-of-type(1),#SunTable th:nth-of-type(1), 
-#SunTable td:nth-of-type(2),#SunTable th:nth-of-type(2) {
-    min-width : 20px;
-} 
+#SunTable td:nth-of-type(1), 
+#SunTable td:nth-of-type(2), 
+#SunTable td:nth-of-type(3), 
+#SunTable td:nth-of-type(4), 
+#SunTable td:nth-of-type(5), 
+                             
+#SunTable td:nth-of-type(7), 
+#SunTable td:nth-of-type(8), 
 
-#SunTable td:nth-of-type(3),#SunTable th:nth-of-type(3), 
-#SunTable td:nth-of-type(4),#SunTable th:nth-of-type(4),
-#SunTable td:nth-of-type(5),#SunTable th:nth-of-type(5),
-                                
-#SunTable td:nth-of-type(7),#SunTable th:nth-of-type(7), 
+#SunTable td:nth-of-type(10), 
+#SunTable td:nth-of-type(11),
 
-#SunTable td:nth-of-type(10),#SunTable th:nth-of-type(10), 
-#SunTable td:nth-of-type(11),#SunTable th:nth-of-type(11),
-
-#SunTable td:nth-of-type(12),#SunTable th:nth-of-type(12), 
-#SunTable td:nth-of-type(13),#SunTable th:nth-of-type(13),
-#SunTable td:nth-of-type(14),#SunTable th:nth-of-type(14) 
+#SunTable td:nth-of-type(12), 
+#SunTable td:nth-of-type(13),
+#SunTable td:nth-of-type(14)
 {
     min-width : 20px;
 } 
 
-#SunTable td:nth-of-type(6),#SunTable th:nth-of-type(6)
+#SunTable td:nth-of-type(6)
 {
     min-width: 25px;
 }
 
 
-#SunTable td:nth-of-type(9),#SunTable th:nth-of-type(9)
+#SunTable td:nth-of-type(9)
 {
     min-width: 50px;
 } 
-#SunTable td:nth-of-type(15),#SunTable th:nth-of-type(15), 
-#SunTable td:nth-of-type(16),#SunTable th:nth-of-type(16), 
-#SunTable td:nth-of-type(17),#SunTable th:nth-of-type(17) {
+#SunTable td:nth-of-type(15), 
+#SunTable td:nth-of-type(16), 
+#SunTable td:nth-of-type(17){
     min-width : 62px;
-}
-
-#SunTable th:nth-child(18)
-{
-    min-width: 30px;
-}
-
-#SunTable tr:nth-of-type(1) th:nth-of-type(13),
-#SunTable tr:nth-of-type(1) th:nth-of-type(14){
-    min-width: 1px;
-}
-
-#SunTable tr:nth-of-type(1) th:nth-child(8) {
-    min-width: 15px;
-}
-
-#SunTable tr:nth-of-type(2) th:nth-child(8) {
-    min-width: 25px;
 }
 
 .printOnly {
@@ -467,6 +447,11 @@ input {
 .minWidth5
 {
     min-width: 5px;
+}
+
+.minWidth15
+{
+    min-width : 15px;
 }
 
 .minWidth20
