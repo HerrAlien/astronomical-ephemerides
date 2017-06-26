@@ -127,8 +127,7 @@ function PlanetPage (planetDataSource) {
                     for (i = 0; i < steps; i++, JD+=stepSize) {
                         if (JD >= endJD)
                             return;
-                        pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD));
-                        pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD), dataRowClasses, tBody);
+                        pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD), tBody);
                     }
                     
                     pageObj.addTableHeader (tBody, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
