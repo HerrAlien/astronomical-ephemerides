@@ -127,42 +127,45 @@ function PlanetPage (planetDataSource, tableName) {
 
                 var firstLine = true;
                 
-                var delayedAppendData = function (JD, endJD, steps) {
+                var hostElement = pageObj.hostElement;
+                var columnClasses = pageObj.columnClasses;
+                var dataSource = pageObj.dataSource;
+                
+                var delayedAppendData = function (JD, endJD, steps, hostElement, columnClasses, dataSource) {
                     if (JD >= endJD)
                         return;
                     
                     var i = 0;
-                    var tBody = pageObj.hostElement.ownerDocument.createDocumentFragment();
+                    var docFragment = hostElement.ownerDocument.createDocumentFragment();
                     
                     for (i = 0; i < steps; i++, JD+=stepSize) {
                         if (JD >= endJD)
                             return;
                         
                         var dataRowClasses = false;
-                        if (i == 0 && firstLine) {
+                        if (firstLine && i == 0) {
                             firstLine = false;
-                            dataRowClasses = pageObj.columnClasses;
+                            dataRowClasses = columnClasses;
                         }
                         
-                        pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD), dataRowClasses, tBody);
+                        pageObj.appendLine (pageObj.prepareLineForView(dataSource.getDataForJD(JD), JD), dataRowClasses, docFragment);
                     }
                     
-                    pageObj.addTableHeader (tBody, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
+                    pageObj.addTableHeader (docFragment, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
                     
-                    pageObj.hostElement.appendChild(tBody)
+                    hostElement.appendChild(docFragment);
                     
-                    setTimeout (function() {delayedAppendData (JD, endJD, steps); },1 );
+                    setTimeout (function() {delayedAppendData (JD, endJD, steps, hostElement, columnClasses, dataSource); },1 );
                 }
-                delayedAppendData (JD, JD + daysAfter, 20);
+                delayedAppendData (JD, JD + daysAfter, 20, hostElement, columnClasses, dataSource);
                 this.pageRendered = true;
             }
         };
     
-    PlanetPage.prototype["appendLine"] = function (dataArray, classes, tbody) {
+    PlanetPage.prototype["appendLine"] = function (dataArray, classes, docFragment) {
             var line = this.hostElement.ownerDocument.createElement("tr");
-            if (!tbody)
-                tbody = this.hostElement;
-            tbody.appendChild(line);
+            if (!docFragment)
+                docFragment = this.hostElement;
             
             var changedMonth = this.lastAppendedLine && dataArray[0] && this.lastAppendedLine[0] != dataArray[0];
             var i = 0;
@@ -183,10 +186,8 @@ function PlanetPage (planetDataSource, tableName) {
                 
                 if (!!classes && !!classes[i])
                     td.classList.add (classes[i])
-
-                
-
             }
+            docFragment.appendChild(line);
             this.lastAppendedLine = dataArray;
         };
         
