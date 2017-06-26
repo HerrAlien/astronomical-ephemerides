@@ -140,7 +140,7 @@ function PlanetPage (planetDataSource, tableName) {
                     
                     for (i = 0; i < steps; i++, JD+=stepSize) {
                         if (JD >= endJD)
-                            return;
+                            break;
                         
                         var dataRowClasses = false;
                         if (firstLine && i == 0) {
