@@ -129,7 +129,7 @@ function PlanetPage (planetDataSource) {
                     
                     for (i = 0; i < steps; i++, JD+=stepSize) {
                         if (JD >= endJD)
-                            return;
+                            break;
                         pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD), docFragment);
                     }
                     
