@@ -132,7 +132,7 @@ function PlanetPage (planetDataSource, tableName) {
                         return;
                     
                     var i = 0;
-                    var tBody = pageObj.hostElement.ownerDocument.createElement("tbody");
+                    var tBody = pageObj.hostElement.ownerDocument.createDocumentFragment();
                     
                     for (i = 0; i < steps; i++, JD+=stepSize) {
                         if (JD >= endJD)
