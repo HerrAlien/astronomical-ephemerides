@@ -117,32 +117,37 @@ function PlanetPage (planetDataSource) {
                 this.reset();
                 this.addTableHeader (this.hostElement, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
 
-                var delayedAppendData = function (JD, endJD, steps) {
+                var hostElement = pageObj.hostElement;
+                var dataSource = pageObj.dataSource;
+                
+                var delayedAppendData = function (JD, endJD, steps, hostElement, dataSource) {
                     if (JD >= endJD)
                         return;
                     
                     var i = 0;
+                    var docFragment = hostElement.ownerDocument.createDocumentFragment();
+                    
                     for (i = 0; i < steps; i++, JD+=stepSize) {
                         if (JD >= endJD)
-                            return;
-                        pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD));
+                            break;
+                        pageObj.appendLine (pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD), docFragment);
                     }
                     
-                    pageObj.addTableHeader (pageObj.hostElement, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
+                    pageObj.addTableHeader (docFragment, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
                     
-                    setTimeout (function() {delayedAppendData (JD, endJD, steps); },1 );
+                    hostElement.appendChild(docFragment);
+                    
+                    setTimeout (function() {delayedAppendData (JD, endJD, steps, hostElement, dataSource); },1 );
                 }
-                delayedAppendData (JD, JD + daysAfter, 15);
+                delayedAppendData (JD, JD + daysAfter, 20, hostElement, dataSource);
                 this.pageRendered = true;
             }
         };
     
-    PlanetPage.prototype["appendLine"] = function (dataArray) {
+    PlanetPage.prototype["appendLine"] = function (dataArray, classes, docFragment) {
             var line = this.hostElement.ownerDocument.createElement("tr");
-            var tbody = this.hostElement.getElementsByTagName("tbody")[0];
-            if (!tbody)
-                tbody = this.hostElement;
-            tbody.appendChild(line);
+            if (!docFragment)
+                docFragment = this.hostElement;
             
             var changedMonth = this.lastAppendedLine && dataArray[0] && this.lastAppendedLine[0] != dataArray[0];
             var i = 0;
@@ -154,6 +159,7 @@ function PlanetPage (planetDataSource) {
                     td.classList.add("topBorder");
                 td['title'] = this.tableHeaderInfo[i].longText;
             }
+            docFragment.appendChild(line);
             this.lastAppendedLine = dataArray;
         };
         
