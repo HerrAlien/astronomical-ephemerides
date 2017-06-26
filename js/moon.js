@@ -176,8 +176,8 @@ var MoonData = {
                 },
  
             "19" :  {
-                    "0" : { "text" :"\u03C0", "classes" : ["minWidth25", "positionEphemeris"] },
-                    "1" : { "text" :"\u00B0", "classes" : ["minWidth25", "positionEphemeris"] },
+                    "0" : { "text" :"\u03C0", "classes" : ["minWidth15", "positionEphemeris"] },
+                    "1" : { "text" :"\u00B0", "classes" : ["minWidth15", "positionEphemeris"] },
                     "longText" : "Equatorial horizontal parallax"
                 },
                 
@@ -203,6 +203,12 @@ var MoonData = {
                     "longText" : "latitude of the Sun"
                 },
         },
+        
+        columnClasses : ["minWidth20", "minWidth20", "minWidth20", "minWidth20", "minWidth20", 
+                         "minWidth25", "minWidth20", "minWidth20", "minWidth20", "minWidth20", 
+                         "minWidth20", "minWidth25", "minWidth20", "minWidth20", "minWidth20",
+                         "minWidth20", "minWidth20", "minWidth20", "minWidth20", "minWidth15",
+                         "minWidth20", "minWidth20", "minWidth52", "minWidth52"],
  
         lastDisplayedMonth : -1,
         months : ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
@@ -273,8 +279,8 @@ var MoonData = {
     
     MoonPage.oldHeaderFunc = PlanetPage.prototype.addTableHeader;
     
-    MoonPage.addTableHeader = function (table, classes) {            
-        var result = this.oldHeaderFunc(table, classes);
+    MoonPage.addTableHeader = function (table, classes, tBody) {            
+        var result = this.oldHeaderFunc(table, classes, tBody);
         result.row1.cells[22].textContent = "90-l";
         this.addNodeChild(result.row1.cells[22], "sub", "0");
         result.row1.cells[23].textContent = "b";

@@ -282,44 +282,12 @@ input {
 .loadingMemFileContents {
     text-align: center;
 }
+
 /** ----------------------------- M O O N --------------------------------------- **/
-#MoonTable tr:nth-of-type(1), #MoonTable tr:nth-of-type(2), #Moon{
-    width: 672px;
-}
-
-#MoonTable td:nth-of-type(1),
-#MoonTable td:nth-of-type(2),
-#MoonTable td:nth-of-type(3),
-#MoonTable td:nth-of-type(4),
-#MoonTable td:nth-of-type(5),
-#MoonTable td:nth-of-type(7),
-#MoonTable td:nth-of-type(8),
-#MoonTable td:nth-of-type(9),
-#MoonTable td:nth-of-type(10), 
-#MoonTable td:nth-of-type(11),
-#MoonTable td:nth-of-type(13), 
-#MoonTable td:nth-of-type(14),
-#MoonTable td:nth-of-type(15), 
-#MoonTable td:nth-of-type(16),
-#MoonTable td:nth-of-type(17), 
-#MoonTable td:nth-of-type(18), 
-#MoonTable td:nth-of-type(19),
-#MoonTable td:nth-of-type(21),
-#MoonTable td:nth-of-type(22)
+#MoonTable .firstHeaderRow, #MoonTable .secondHeaderRow,
+#MoonTable .firstHeaderRowScrolled, #MoonTable .secondHeaderRowScrolled
 {
-    min-width: 20px;
-}
-
-#MoonTable td:nth-of-type(6), 
-#MoonTable td:nth-of-type(12), 
-#MoonTable td:nth-of-type(20)
-{
-    min-width : 25px;
-} 
-
-#MoonTable td:nth-of-type(23),
-#MoonTable td:nth-of-type(24) {
-    min-width: 52px;
+    width: 662px;
 }
 
 #MoonTable td:nth-of-type(2), #MoonTable td:nth-of-type(5), #MoonTable td:nth-of-type(8), #MoonTable td:nth-of-type(11), #MoonTable td:nth-of-type(14), #MoonTable td:nth-of-type(16), #MoonTable td:nth-of-type(19), #MoonTable td:nth-of-type(22), #MoonTable td:nth-of-type(23) {
