@@ -19,57 +19,69 @@ function PlanetData(planet)
 {
 	this.planet = planet;
 	this.cache = {};
+    this.riseSetAngle = -0.5667; // degrees
 }
 
 (function(){
     PlanetData.prototype["reset"] = function () {
         this.cache = {};
     }
-    PlanetData.prototype["getDataAsObjectForJD"] = function (JD) {
+    PlanetData.prototype["getDataAsObjectForJD"] = function (JD, computeRiseTransitSet) {
         var data = this.cache[JD];
-            if (!data) {
-				data = {};
-				var i = 0;
-				var dateOfJD =  AAJS.Date.JD2Date(JD);
-				data['Month'] = dateOfJD.M;
-				data['Day'] = dateOfJD.D;
-				
-				var planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (JD, 
-																				this.planet.number, 
-																				true);
-				
-				data['RA'] = planetaryDetails.ApparentGeocentricRA;
-				data['Dec'] = planetaryDetails.ApparentGeocentricDeclination;
-				
-				var planetNumber = this.planet.number;
-                var jdOfTransit = Transit (JD, function(jd) { 
-                        var planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (jd, planetNumber, true);
-                        return {"X" : planetaryDetails.ApparentGeocentricRA, "Y" : planetaryDetails.ApparentGeocentricDeclination };
-                    }, 1/(24 * 36000)); 
+        if (!data) {
+			data = {};
+			var i = 0;
+			var dateOfJD =  AAJS.Date.JD2Date(JD);
+			data['Month'] = dateOfJD.M;
+			data['Day'] = dateOfJD.D;
+			
+			var planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (JD, 
+																			this.planet.number, 
+																			true);
+			
+			data['RA'] = planetaryDetails.ApparentGeocentricRA;
+			data['Dec'] = planetaryDetails.ApparentGeocentricDeclination;
+			
+			var planetNumber = this.planet.number;
+            
+            data['MeridianTransit'] = false;
+            data['Rise'] = false;
+            data['Set'] = false;
+			
+			var sunEarthDistance = SunData.getSunEarthDistance(JD);
+			var r =  AAJS[this.planet.name].RadiusVector(JD, true);
+			data['DistanceToSun'] = r;
+							
+			var delta = planetaryDetails.ApparentGeocentricDistance;
+            data['DistanceToEarth'] = delta;
+			data['Diameter'] = 2 *this.planet.semidiameterFunctionName(delta) / 3600;
 
-				var transitHour = 24 * (jdOfTransit - JD);
-				data['MeridianTransit'] = transitHour;
-				
-				var sunEarthDistance = SunData.getSunEarthDistance(JD);
-				var r =  AAJS[this.planet.name].RadiusVector(JD, true);
-				data['DistanceToSun'] = r;
-								
-				var delta = planetaryDetails.ApparentGeocentricDistance;
-                data['DistanceToEarth'] = delta;
-				data['Diameter'] = 2 *this.planet.semidiameterFunctionName(delta) / 3600;
+			var cosElongationAngle = (delta * delta + sunEarthDistance * sunEarthDistance - r * r)/(2 * delta * sunEarthDistance);
+			data['Elongation'] = Math.acos(cosElongationAngle);
+			var cosPhaseAngle = (r*r + delta * delta - sunEarthDistance * sunEarthDistance)/(2 * delta * r);
+			data['Phase'] = 0.5 * (cosPhaseAngle + 1);
+			this.cache[JD] = data;
+		}
+            
+        if (computeRiseTransitSet)
+        {    
+            var yData = this.getDataAsObjectForJD (JD - 1, false);
+            var tData = this.getDataAsObjectForJD (JD + 1, false);
+            var rts = AAJS.RiseTransitSet.Calculate (JD, yData['RA'], yData['Dec'], data['RA'], data['Dec'], tData['RA'], tData['Dec'], Location.longitude,
+            Location.latitude, this.riseSetAngle);
+            data['MeridianTransit'] = rts['Transit'];
+            data['Rise'] = rts['Rise'];
+            data['Set'] = rts['Set'];
 
-				var cosElongationAngle = (delta * delta + sunEarthDistance * sunEarthDistance - r * r)/(2 * delta * sunEarthDistance);
-				data['Elongation'] = Math.acos(cosElongationAngle);
-				var cosPhaseAngle = (r*r + delta * delta - sunEarthDistance * sunEarthDistance)/(2 * delta * r);
-				data['Phase'] = 0.5 * (cosPhaseAngle + 1);
-				this.cache[JD] = data;
-			}
+            this.cache[JD] = data;
+        }
+        
 		return data;
     };
     
     // deprecated ...
     PlanetData.prototype["getDataForJD"] = function (JD) {
-        var data = this.getDataAsObjectForJD(JD);
+        var data = this.getDataAsObjectForJD(JD, true);
 		return [
                 data.Month,
                 data.Day,
