@@ -22,7 +22,7 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
     MarsData['old_GetData'] = MarsData.getDataAsObjectForJD;
     MarsData.getDataAsObjectForJD = function (JD, computeRiseTransitSet) {
         var data = this.old_GetData(JD, computeRiseTransitSet);            
-        if (!data['CentralMeridianLongitude']) {
+        if (!data['EarthDeclination']) {
             var physicalData = AAJS['Mars']['PhysicalDetails'] (JD);
             for (var key in physicalData)
                 data[key] = physicalData[key];
