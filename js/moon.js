@@ -40,7 +40,7 @@ var MoonData = {
             var jdOfTransit = Transit (JD, function(jd) { 
                 
                 var data = AAJS.Moon.PositionalEphemeris(jd, Location.latitude, Location.longitude, Location.altitude);
-                return {"X" : posData.RaGeo, "Y" : posData.DecGeo };
+                return {"X" : data.RaGeo, "Y" : data.DecGeo };
                 
             }, 1/(24 * 3600)); 
             
