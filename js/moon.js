@@ -62,6 +62,46 @@ var MoonData = {
         return data;
     },
     
+   getDataAsObjectForJD : function (JD, computeRiseTransitSet) {
+        var data = this.cache[JD];
+        if (!data) {
+            data = {};
+        
+            var i = 0;
+            
+            var _date = AAJS.Date.JD2Date(JD);
+            // convert from JD to gregorian
+            data['Month'] = _date.M;
+            data['Day'] = _date.D;
+            
+            var posData = AAJS.Moon.PositionalEphemeris(JD, Location.latitude, Location.longitude, Location.altitude);
+            
+            for (var key in posData)
+                data[key] = posData[key];
+            
+            var jdOfTransit = Transit (JD, function(jd) { 
+                
+                var data = AAJS.Moon.PositionalEphemeris(jd, Location.latitude, Location.longitude, Location.altitude);
+                return {"X" : posData.RaGeo, "Y" : posData.DecGeo };
+                
+            }, 1/(24 * 3600)); 
+            
+			var transitHour = 24 * (jdOfTransit - JD);
+			data['MeridianTransit'] = transitHour;
+
+            var selenographicCoordsOfSun = AAJS.Moon.CalculateSelenographicPositionOfSun (JD, true);
+            var colongitude = 90 - selenographicCoordsOfSun.l0;
+            if (colongitude < 0)
+                colongitude += 360;
+            
+            data['Colongitude'] = colongitude;
+            data['b0'] = selenographicCoordsOfSun.b0;
+            
+            this.cache[key] = data;
+        }
+        return data;
+    },
+
     reset : function () {
         this.cache = {};
     }    
@@ -271,6 +311,62 @@ var MoonData = {
         return displayableLine;
     };
     
+    MoonPage.prepareOneDayDataObjectForView = function (obj) {
+        var displayableLine = [];
+
+        displayableLine[0] = "";
+        var month = obj.Month;
+        if (month != this.lastDisplayedMonth) { // first day of the month
+            displayableLine[0] = this.months[month]; // set displayableLine[0] to the name of the month
+            this.lastDisplayedMonth = month;
+        }
+
+        // copy the day verbatim
+        displayableLine[1] = obj.Day;
+        
+        var di = 2;
+        var si = 2;
+        var sexagesimalRaGeo = AAJS.Numerical.ToSexagesimal(Math.round(obj.RaGeo * 3600)/3600);
+        displayableLine[di++] = sexagesimalRaGeo.Ord3 ;
+        displayableLine[di++] = sexagesimalRaGeo.Ord2 
+        displayableLine[di++] = sexagesimalRaGeo.Ord1;
+
+        var sexagesimalDecGeo = AAJS.Numerical.ToSexagesimal(Math.round(obj.DecGeo * 3600)/3600);
+        displayableLine[di++] = sexagesimalDecGeo.Ord3 ;
+        displayableLine[di++] = sexagesimalDecGeo.Ord2;
+        displayableLine[di++] = sexagesimalDecGeo.Ord1;
+		            
+        var sexagesimalRaTopo = AAJS.Numerical.ToSexagesimal(Math.round(obj.RaTopo * 3600)/3600);
+        displayableLine[di++] = sexagesimalRaTopo.Ord3 ;
+        displayableLine[di++] = sexagesimalRaTopo.Ord2 
+        displayableLine[di++] = sexagesimalRaTopo.Ord1;
+
+        var sexagesimalDecTopo = AAJS.Numerical.ToSexagesimal(Math.round(obj.DecTopo * 3600)/3600);
+        displayableLine[di++] = sexagesimalDecTopo.Ord3 ;
+        displayableLine[di++] = sexagesimalDecTopo.Ord2;
+        displayableLine[di++] = sexagesimalDecTopo.Ord1;
+
+        var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(Math.round(obj.diameter * 3600)/3600);
+        displayableLine[di++] = sexagesimalDiam.Ord2;
+        displayableLine[di++] = sexagesimalDiam.Ord1;
+        
+        var sexagesimalTransit = AAJS.Numerical.ToSexagesimal(Math.round(obj.MeridianTransit * 3600)/3600);
+        displayableLine[di++] = sexagesimalTransit.Ord3;
+        displayableLine[di++] = sexagesimalTransit.Ord2;
+        displayableLine[di++] = sexagesimalTransit.Ord1;
+            
+        var sexagesimalParallax = AAJS.Numerical.ToSexagesimal(Math.round(obj.parallax * 3600)/3600);
+        
+        displayableLine[di++] = sexagesimalParallax.Ord3;
+        displayableLine[di++] = sexagesimalParallax.Ord2;
+        displayableLine[di++] = sexagesimalParallax.Ord1;
+        
+        displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.Colongitude);
+        displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.b0);
+
+        return displayableLine;
+    };
+
     MoonPage.oldHeaderFunc = PlanetPage.prototype.addTableHeader;
     
     MoonPage.addTableHeader = function (table, classes) {            
