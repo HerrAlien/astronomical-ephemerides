@@ -18,35 +18,35 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 function MoonEclipse (JD) {
     
-        var sunData = SunData.getDataForJD (JD);
-        var moonData = MoonData.getDataForJD (JD);
+        var sunData = SunData.getDataAsObjectForJD (JD);
+        var moonData = MoonData.getDataAsObjectForJD (JD);
         
         var hourFration = 0.25;
         var dJd = hourFration /24.0;
         var dT = 2 * hourFration;
         
-        var  sunDataPlus = SunData.getDataForJD (JD + dJd);
-        var moonDataPlus = MoonData.getDataForJD (JD + dJd);
-        var  sunDataMinus = SunData.getDataForJD (JD - dJd);
-        var moonDataMinus = MoonData.getDataForJD (JD - dJd);
+        var  sunDataPlus = SunData.getDataAsObjectForJD (JD + dJd);
+        var moonDataPlus = MoonData.getDataAsObjectForJD (JD + dJd);
+        var  sunDataMinus = SunData.getDataAsObjectForJD (JD - dJd);
+        var moonDataMinus = MoonData.getDataAsObjectForJD (JD - dJd);
         
         
-        this.dRaSun   = 15 * (sunDataPlus[2] - sunDataMinus[2]) / dT;
-        this.dDecSun  = (sunDataPlus[3] - sunDataMinus[3]) / dT;
-        this.dRaMoon  = 15 * (moonDataPlus[2] - moonDataMinus[2]) / dT;
-        this.dDecMoon = (moonDataPlus[3] - moonDataMinus[3]) / dT;
+        this.dRaSun   = 15 * (sunDataPlus.RA - sunDataMinus.RA) / dT;
+        this.dDecSun  = (sunDataPlus.Dec - sunDataMinus.Dec) / dT;
+        this.dRaMoon  = 15 * (moonDataPlus.RaGeo - moonDataMinus.RaGeo) / dT;
+        this.dDecMoon = (moonDataPlus.DecGeo - moonDataMinus.DecGeo) / dT;
                 
         this.JD = JD - AAJS.DynamicalTime.DeltaT(JD)/(3600 * 24);
-        this.ParallaxSun = sunData[10];
-        this.ParallaxMoon = moonData[8];
+        this.ParallaxSun = sunData.Parallax;
+        this.ParallaxMoon = moonData.parallax;
 
-        this.MoonDiameter = moonData[6];
-        this.SunDiameter = sunData[5];
+        this.MoonDiameter = moonData.diameter;
+        this.SunDiameter = sunData.Diameter;
 
-        this.RaSun   = sunData[2] * 15;
-        this.DecSun  = sunData[3];
-        this.RaMoon  = moonData[2] * 15;
-        this.DecMoon = moonData[3];
+        this.RaSun   = sunData.RA * 15;
+        this.DecSun  = sunData.Dec;
+        this.RaMoon  = moonData.RaGeo * 15;
+        this.DecMoon = moonData.DecGeo;
 
         var shadowRa = 180 + this.RaSun;
         if (shadowRa > 360)
@@ -133,18 +133,18 @@ var MoonEclipsesData = {
         
         do {
             
-            sunData = SunData.getDataForJD (jd);
-            moonData = MoonData.getDataForJD (jd);
+            sunData = SunData.getDataAsObjectForJD (jd);
+            moonData = MoonData.getDataAsObjectForJD (jd);
             
-            dSunData = SunData.getDataForJD (jd + dJd);
-            dMoonData = MoonData.getDataForJD (jd + dJd);
+            dSunData = SunData.getDataAsObjectForJD (jd + dJd);
+            dMoonData = MoonData.getDataAsObjectForJD (jd + dJd);
             
-            var opposingSunRA = 12 + sunData[2];
+            var opposingSunRA = 12 + sunData.RA;
             if (opposingSunRA > 24)
                 opposingSunRA -= 24;
             
-            oppositionTimeCorrection = dJd * (opposingSunRA - moonData[2]) /
-                                           ((dMoonData[2] - moonData[2]) - (dSunData[2] - sunData[2]));
+            oppositionTimeCorrection = dJd * (opposingSunRA - moonData.RaGeo) /
+                                           ((dMoonData.RaGeo - moonData.RaGeo) - (dSunData.RA - sunData.RA));
             jd += oppositionTimeCorrection;
             
         } while (Math.abs(oppositionTimeCorrection) > eps);
