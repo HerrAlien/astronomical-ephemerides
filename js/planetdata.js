@@ -79,20 +79,4 @@ function PlanetData(planet)
 		return data;
     };
     
-    // deprecated ...
-    PlanetData.prototype["getDataForJD"] = function (JD) {
-        var data = this.getDataAsObjectForJD(JD, true);
-		return [
-                data.Month,
-                data.Day,
-                data.RA,
-                data.Dec,
-                data.Diameter,
-                data.MeridianTransit,
-                data.DistanceToEarth,
-                data.DistanceToSun,
-                data.Elongation,
-                data.Phase
-                ];
-    };    
 })();
