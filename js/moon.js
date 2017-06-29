@@ -161,19 +161,19 @@ var MoonData = {
                 },
                 
             "16" : {
-                    "0" : { "text" :"Transit", "classes" : ["minWidth20", "positionEphemeris"] },
-                    "1" : { "text" :"h"      , "classes" : ["minWidth20", "positionEphemeris"] },
-                    "longText" : "The UTC time of the transit across the meridian"
+                    "0" : { "text" :"Rise", "classes" : ["minWidth50", "positionEphemeris"] },
+                    "1" : { "text" :"hh:mm"      , "classes" : ["minWidth50", "positionEphemeris"] },
+                    "longText" : "The UTC time of rise above horizon"
                 },
             "17" : {
-                    "0" : { "text" :"" , "classes" : ["minWidth5", "positionEphemeris"] },
-                    "1" : { "text" :"m", "classes" : ["minWidth20", "positionEphemeris"] },
+                    "0" : { "text" :"Transit" , "classes" : ["minWidth50", "positionEphemeris"] },
+                    "1" : { "text" :"hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
                     "longText" : "The UTC time of the transit across the meridian"
                 },
             "18" : {
-                    "0" : { "text" :"" , "classes" : ["minWidth5", "positionEphemeris"] },
-                    "1" : { "text" :"s", "classes" : ["minWidth20", "positionEphemeris"] },
-                    "longText" : "The UTC time of the transit across the meridian"
+                    "0" : { "text" :"Set" , "classes" : ["minWidth50", "positionEphemeris"] },
+                    "1" : { "text" :"hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
+                    "longText" : "The UTC time of setting"
                 },
  
             "19" :  {
@@ -261,10 +261,9 @@ var MoonData = {
         displayableLine[di++] = sexagesimalDiam.Ord2;
         displayableLine[di++] = sexagesimalDiam.Ord1;
         
-        var sexagesimalTransit = AAJS.Numerical.ToSexagesimal(Math.round(obj.MeridianTransit * 3600)/3600);
-        displayableLine[di++] = sexagesimalTransit.Ord3;
-        displayableLine[di++] = sexagesimalTransit.Ord2;
-        displayableLine[di++] = sexagesimalTransit.Ord1;
+        displayableLine[di++] = obj.bRiseValid ? this.timeToHhColumnMm(obj.Rise) : "N/A";
+        displayableLine[di++] = obj.bTransitValid ? this.timeToHhColumnMm(obj.MeridianTransit) : "N/A";
+        displayableLine[di++] = obj.bSetValid ? this.timeToHhColumnMm(obj.Set) : "N/A";
             
         var sexagesimalParallax = AAJS.Numerical.ToSexagesimal(Math.round(obj.parallax * 3600)/3600);
         
@@ -289,4 +288,6 @@ var MoonData = {
         
         return result;
     };
+    
+    MoonPage.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
 })();

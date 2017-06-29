@@ -58,19 +58,19 @@ function PlanetPage (planetDataSource, tableName) {
                 "longText" : "Apparent diameter"
             },
         "9" : {
-                "0" : { "text" : "Transit", "classes" : ["minWidth20", "positionEphemeris"] },
-                "1" : { "text" : "h", "classes" : ["minWidth20"      , "positionEphemeris"] },
-                "longText" : "The UTC time of the transit across the meridian"
+                "0" : { "text" : "Rise", "classes" : ["minWidth50", "positionEphemeris"] },
+                "1" : { "text" : "hh:mm", "classes" : ["minWidth50"      , "positionEphemeris"] },
+                "longText" : "The UTC time of rise above horizon"
             },
         "10" : {
-                "0" : { "text" : "", "classes" : ["minWidth1"  , "positionEphemeris"] },
-                "1" : { "text" : "m", "classes" : ["minWidth20", "positionEphemeris"] },
+                "0" : { "text" : "Transit", "classes" : ["minWidth50"  , "positionEphemeris"] },
+                "1" : { "text" : "hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
                 "longText" : "The UTC time of the transit across the meridian"
             },
         "11" : {
-                "0" : { "text" : "", "classes" : ["minWidth1"  , "positionEphemeris"] },
-                "1" : { "text" : "s", "classes" : ["minWidth25", "positionEphemeris"] },
-                "longText" : "The UTC time of the transit across the meridian"
+                "0" : { "text" : "Set", "classes" : ["minWidth50"  , "positionEphemeris"] },
+                "1" : { "text" : "hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
+                "longText" : "The UTC time of setting"
             },
 
             "12" :  {
@@ -315,15 +315,13 @@ function PlanetPage (planetDataSource, tableName) {
             displayableLine[di++] = sexagesimalDec.Ord2;
             displayableLine[di++] = sexagesimalDec.Ord1;
 			
-//			displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals(line[si++]);
-            
             var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(Math.round(obj.Diameter * 3600)/3600);
             displayableLine[di++] = sexagesimalDiam.Ord1;
             
             var sexagesimalTransit = AAJS.Numerical.ToSexagesimal(Math.round(obj.MeridianTransit * 3600)/3600);
-            displayableLine[di++] = sexagesimalTransit.Ord3;
-            displayableLine[di++] = sexagesimalTransit.Ord2;
-            displayableLine[di++] = sexagesimalTransit.Ord1;
+            displayableLine[di++] = obj.bRiseValid ? this.timeToHhColumnMm(obj.Rise) : "N/A";
+            displayableLine[di++] = obj.bTransitValid ? this.timeToHhColumnMm(obj.MeridianTransit) : "N/A";
+            displayableLine[di++] = obj.bSetValid ? this.timeToHhColumnMm(obj.Set) : "N/A";
             
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.DistanceToEarth);
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.DistanceToSun);
@@ -361,5 +359,13 @@ function PlanetPage (planetDataSource, tableName) {
             child.textContent =  content;
         return child;
     };
+    
+    PlanetPage.prototype["timeToHhColumnMm"] = function (timeHdotHhh) {
+        var roundedTime = Math.round(timeHdotHhh * 60) / 60;
+        var roundedTimeObj = AAJS.Numerical.ToSexagesimal (roundedTime);
+        return (roundedTimeObj.Ord3 >= 10 ? roundedTimeObj.Ord3 : "0" + roundedTimeObj.Ord3) + ":" +
+               (roundedTimeObj.Ord2 >= 10 ? roundedTimeObj.Ord2 : "0" + roundedTimeObj.Ord2)
+    }
+    
 })();						   
 	

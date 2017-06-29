@@ -282,6 +282,12 @@ input {
 .loadingMemFileContents {
     text-align: center;
 }
+#Moon td:nth-of-type(17),#Moon th:nth-of-type(17), 
+#Moon td:nth-of-type(18),#Moon th:nth-of-type(18), 
+#Moon td:nth-of-type(19),#Moon th:nth-of-type(19){
+    min-width: 50px;
+}
+
 
 /** ----------------------------- M O O N --------------------------------------- **/
 #MoonTable .firstHeaderRow, #MoonTable .secondHeaderRow,
@@ -291,6 +297,10 @@ input {
 }
 
 #MoonTable td:nth-of-type(2), #MoonTable td:nth-of-type(5), #MoonTable td:nth-of-type(8), #MoonTable td:nth-of-type(11), #MoonTable td:nth-of-type(14), #MoonTable td:nth-of-type(16), #MoonTable td:nth-of-type(19), #MoonTable td:nth-of-type(22), #MoonTable td:nth-of-type(23) {
+    border-right: none;
+}
+
+#Moon td:nth-of-type(2), #Moon td:nth-of-type(5), #Moon td:nth-of-type(8), #Moon td:nth-of-type(11), #Moon td:nth-of-type(14), #Moon td:nth-of-type(16), #Moon td:nth-of-type(17), #Moon td:nth-of-type(18), #Moon td:nth-of-type(19), #Moon td:nth-of-type(22), #Moon td:nth-of-type(23) {
     border-right: 1px solid black;
 }
 
@@ -300,7 +310,11 @@ input {
 
 /** -------------------------------------- S U N -------------------------------- **/
 #SunTable tr:nth-of-type(1), #SunTable tr:nth-of-type(2), #Sun{
-    min-width: 622px;
+    min-width: 717px;
+}
+
+#Sun td:nth-of-type(10) {
+    border-right: none;
 }
 
 #SunTable td:nth-of-type(2), #SunTable td:nth-of-type(5), #SunTable td:nth-of-type(8), #SunTable td:nth-of-type(9), #SunTable td:nth-of-type(11),
@@ -309,10 +323,6 @@ input {
 }
 
 #SunTable td:nth-of-type(12), #SunTable td:nth-of-type(13) {
-    border-right: none;
-}
-
-
 #SunTable td:nth-of-type(1), 
 #SunTable td:nth-of-type(2), 
 #SunTable td:nth-of-type(3), 
@@ -324,7 +334,6 @@ input {
 
 #SunTable td:nth-of-type(10), 
 #SunTable td:nth-of-type(11),
-
 #SunTable td:nth-of-type(12), 
 #SunTable td:nth-of-type(13),
 #SunTable td:nth-of-type(14)
@@ -333,6 +342,11 @@ input {
 } 
 
 #SunTable td:nth-of-type(6)
+#Sun td:nth-of-type(13),#Sun th:nth-of-type(13), 
+#Sun td:nth-of-type(14),#Sun th:nth-of-type(14) {
+        min-width: 50px;
+}
+
 {
     min-width: 25px;
 }
@@ -405,7 +419,7 @@ input {
 .firstHeaderRow, .secondHeaderRow, .page,
 .firstHeaderRowScrolled, .secondHeaderRowScrolled
 {
-    width: 543px;
+    width: 630px;
 }
 
 .minWidth1{
@@ -433,6 +447,7 @@ input {
 }
 
 .minWidth30
+.planetTable td:nth-of-type(11),.planetTable th:nth-of-type(11),
 {
     min-width: 30px;
 }
@@ -472,6 +487,8 @@ input {
 .planetTable td:nth-of-type(5),
 .planetTable td:nth-of-type(8),
 .planetTable td:nth-of-type(9),
+.planetTable td:nth-of-type(10),
+.planetTable td:nth-of-type(11),
 .planetTable td:nth-of-type(12),
 .planetTable td:nth-of-type(13),
 .planetTable td:nth-of-type(14),
@@ -496,7 +513,6 @@ input {
 #MarsTable tr.firstHeaderRowScrolled, 
 #MarsTable tr.secondHeaderRowScrolled, 
 #Mars{
-    width: 732px;
 }
 #Mars  td:nth-of-type(16), #Mars  td:nth-of-type(17), #Mars  td:nth-of-type(18), #Mars  td:nth-of-type(19){
     border-right: solid 1px black;
@@ -509,7 +525,6 @@ input {
 #JupiterTable tr.secondHeaderRowScrolled, 
 #Jupiter{
 
-    width: 770px;
 }
 
 #Jupiter  td:nth-of-type(16), #Jupiter  td:nth-of-type(17), #Jupiter  td:nth-of-type(18), #Jupiter  td:nth-of-type(19), #Jupiter  td:nth-of-type(20){
