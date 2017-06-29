@@ -148,7 +148,8 @@ function PlanetPage (planetDataSource, tableName) {
                             dataRowClasses = columnClasses;
                         }
                         
-                        pageObj.appendLine (pageObj.prepareLineForView(dataSource.getDataForJD(JD), JD), dataRowClasses, docFragment);
+                        var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JD, true), JD);
+                        pageObj.appendLine (preparedData, dataRowClasses, docFragment);
                     }
                     
                     pageObj.addTableHeader (docFragment, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
@@ -162,7 +163,7 @@ function PlanetPage (planetDataSource, tableName) {
             }
         };
     
-    PlanetPage.prototype["appendLine"] = function (dataArray, classes, docFragment) {
+    PlanetPage.prototype["appendLine"] = function (dataArray, docFragment) {
             var line = this.hostElement.ownerDocument.createElement("tr");
             if (!docFragment)
                 docFragment = this.hostElement;
@@ -289,6 +290,70 @@ function PlanetPage (planetDataSource, tableName) {
             return displayableLine;
     };
     
+	PlanetPage.prototype["prepareOneDayDataObjectForView"] = function (obj, JD) {
+
+           var displayableLine = [];
+
+            displayableLine[0] = "";
+            var month = obj.Month;
+            if (month != this.lastDisplayedMonth) { // first day of the month
+                displayableLine[0] = this.months[month]; // set displayableLine[0] to the name of the month
+                this.lastDisplayedMonth = month;
+            }
+
+            // copy the day verbatim
+            displayableLine[1] = obj.Day;
+           
+            var di = 2;
+            var sexagesimalRA = AAJS.Numerical.ToSexagesimal(Math.round(obj.RA * 3600)/3600);
+            displayableLine[di++] = sexagesimalRA.Ord3 ;
+            displayableLine[di++] = sexagesimalRA.Ord2 
+            displayableLine[di++] = sexagesimalRA.Ord1;
+
+            var sexagesimalDec = AAJS.Numerical.ToSexagesimal(Math.round(obj.Dec * 3600)/3600);
+            displayableLine[di++] = sexagesimalDec.Ord3 ;
+            displayableLine[di++] = sexagesimalDec.Ord2;
+            displayableLine[di++] = sexagesimalDec.Ord1;
+			
+//			displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals(line[si++]);
+            
+            var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(Math.round(obj.Diameter * 3600)/3600);
+            displayableLine[di++] = sexagesimalDiam.Ord1;
+            
+            var sexagesimalTransit = AAJS.Numerical.ToSexagesimal(Math.round(obj.MeridianTransit * 3600)/3600);
+            displayableLine[di++] = sexagesimalTransit.Ord3;
+            displayableLine[di++] = sexagesimalTransit.Ord2;
+            displayableLine[di++] = sexagesimalTransit.Ord1;
+            
+            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.DistanceToEarth);
+            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.DistanceToSun);
+            
+            // is it east or is it west?
+            var cardinalCoordinateRelativeToSun = "W";
+            
+            var sunRA = SunData.getRA(JD);
+            var planetRA = obj.RA;
+            // this is probably because we have one angle in q1, the other in q4.
+            if (Math.abs(sunRA - planetRA) >= 12) // hours ...
+            {
+                sunRA += 12;
+                planetRA += 12;
+                
+                if (sunRA > 24)
+                    sunRA -= 24;
+                if (planetRA > 24)
+                    planetRA -= 24;
+            }
+            
+            if (sunRA < planetRA )
+                cardinalCoordinateRelativeToSun = "E";
+            
+            displayableLine[di++] = AAJS.Numerical.RoundTo1Decimal (obj.Elongation * 180 / Math.PI) + " " + cardinalCoordinateRelativeToSun;
+            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.Phase);
+
+            return displayableLine;
+    };
+
 	PlanetPage.prototype["addNodeChild"] = function (parent, type, content) {
         var child = parent.ownerDocument.createElement(type);
         parent.appendChild(child);

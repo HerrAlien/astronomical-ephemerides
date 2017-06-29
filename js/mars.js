@@ -19,19 +19,15 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
 
 // upgrade the object to handle physical data as well.
 (function () {    
-    MarsData['old_GetData'] = MarsData.getDataForJD;
-    MarsData['physicalDataCache'] = {};     
-    MarsData.getDataForJD = function (JD) {
-        var data = this.old_GetData(JD);            
-        var physicalData =  this.physicalDataCache[JD];
-        if (!physicalData) {
-            physicalData = AAJS['Mars']['PhysicalDetails'] (JD);
-            this.physicalDataCache[JD] = physicalData;
+    MarsData['old_GetData'] = MarsData.getDataAsObjectForJD;
+    MarsData.getDataAsObjectForJD = function (JD, computeRiseTransitSet) {
+        var data = this.old_GetData(JD, computeRiseTransitSet);            
+        if (!data['EarthDeclination']) {
+            var physicalData = AAJS['Mars']['PhysicalDetails'] (JD);
+            for (var key in physicalData)
+                data[key] = physicalData[key];
+            this.cache[JD] = data;
         }
-        data[data.length]  = physicalData.CentralMeridianLongitude;
-        data[data.length]  = physicalData.EarthDeclination;
-        data[data.length]  = physicalData.SunDeclination;
-        data[data.length]  = physicalData.P;
         return data;
     };
 })();
@@ -48,7 +44,7 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
     Page.columnClasses = Page.columnClasses.concat(["minWidth50", "minWidth40", "minWidth40", "minWidth40"]);
 
     Page["old_addPlanetTableHeader"] = Page.addPlanetTableHeader;
-    Page["old_prepareLineForView"] = Page.prepareLineForView;
+    Page["old_prepareOneDayDataObjectForView"] = Page.prepareOneDayDataObjectForView;
     
     Page.addPlanetTableHeader = function (table, classes) {
         var headerRows = this.old_addPlanetTableHeader(table, classes);
@@ -58,12 +54,12 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
         return headerRows;
     }
     
-    Page.prepareLineForView = function (line, JD) {
-        var preparedLine = this.old_prepareLineForView(line, JD);
-        preparedLine[preparedLine.length] = Math.round(line[10] * 10) / 10;
-        preparedLine[preparedLine.length] = Math.round(line[11] * 10) / 10;
-        preparedLine[preparedLine.length] = Math.round(line[12] * 10) / 10;
-        preparedLine[preparedLine.length] = Math.round(line[13] * 10) / 10;
+    Page.prepareOneDayDataObjectForView = function (obj, JD) {
+        var preparedLine = this.old_prepareOneDayDataObjectForView(obj, JD);
+        preparedLine[preparedLine.length] = Math.round(obj.CentralMeridianLongitude * 10) / 10;
+        preparedLine[preparedLine.length] = Math.round(obj.EarthDeclination * 10) / 10;
+        preparedLine[preparedLine.length] = Math.round(obj.SunDeclination * 10) / 10;
+        preparedLine[preparedLine.length] = Math.round(obj.P * 10) / 10;
         return preparedLine;
     }
 
