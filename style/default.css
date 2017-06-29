@@ -505,7 +505,7 @@ input {
 
 /* ---------------------------- M A R S ------------------------------------ */
 #Mars tr:nth-of-type(1), #Mars tr:nth-of-type(2), #MarsPage{
-    width: 732px;
+    width: 820px;
 }
 #Mars  td:nth-of-type(16), #Mars  td:nth-of-type(17), #Mars  td:nth-of-type(18), #Mars  td:nth-of-type(19){
     border-right: solid 1px black;
@@ -521,7 +521,7 @@ input {
 }
 /* ---------------------------- J U P I T E R ---------------------- */
 #Jupiter tr:nth-of-type(1), #Jupiter tr:nth-of-type(2), #JupiterPage{
-    width: 770px;
+    width: 860px;
 }
 
 #Jupiter  td:nth-of-type(16), #Jupiter  td:nth-of-type(17), #Jupiter  td:nth-of-type(18), #Jupiter  td:nth-of-type(19), #Jupiter  td:nth-of-type(20){
