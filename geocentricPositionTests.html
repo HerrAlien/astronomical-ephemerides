@@ -397,9 +397,9 @@
             actualOutput : {},
             
             test : function () {
-               var yesterdayData = VenusData.getDataForJD (this.input - 1);
-                var todayData =    VenusData.getDataForJD (this.input);
-               var tomorrowData =  VenusData.getDataForJD (this.input + 1);
+                var yesterdayData = VenusData.getDataForJD (this.input - 1);
+                var todayData =     VenusData.getDataForJD (this.input);
+                var tomorrowData =  VenusData.getDataForJD (this.input + 1);
 
                 this.actualOutput = AAJS.RiseTransitSet.Calculate (this.input,
                 yesterdayData[2],

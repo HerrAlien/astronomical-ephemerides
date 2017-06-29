@@ -63,36 +63,23 @@ function PlanetData(planet)
 			this.cache[JD] = data;
 		}
             
-        if (computeRiseTransitSet)
-        {    
-            var yData = this.getDataAsObjectForJD (JD - 1, false);
-            var tData = this.getDataAsObjectForJD (JD + 1, false);
-            var rts = AAJS.RiseTransitSet.Calculate (JD, yData['RA'], yData['Dec'], data['RA'], data['Dec'], tData['RA'], tData['Dec'], -Location.longitude,
-            Location.latitude, this.riseSetAngle);
-            data['MeridianTransit'] = rts['Transit'];
-            data['Rise'] = rts['Rise'];
-            data['Set'] = rts['Set'];
-
+        if (computeRiseTransitSet) {
+            data = this.addRiseTransitSetData(JD, data);
             this.cache[JD] = data;
         }
         
 		return data;
     };
     
-    // deprecated ...
-    PlanetData.prototype["getDataForJD"] = function (JD) {
-        var data = this.getDataAsObjectForJD(JD, true);
-		return [
-                data.Month,
-                data.Day,
-                data.RA,
-                data.Dec,
-                data.Diameter,
-                data.MeridianTransit,
-                data.DistanceToEarth,
-                data.DistanceToSun,
-                data.Elongation,
-                data.Phase
-                ];
-    };    
+    PlanetData.prototype["addRiseTransitSetData"] = function (JD, currentData) {
+        var yData = this.getDataAsObjectForJD (JD - 1, false);
+        var tData = this.getDataAsObjectForJD (JD + 1, false);
+        var rts = AAJS.RiseTransitSet.Calculate (JD, yData['RA'], yData['Dec'], currentData['RA'], currentData['Dec'], tData['RA'], tData['Dec'], -Location.longitude,
+        Location.latitude, this.riseSetAngle);
+        currentData['MeridianTransit'] = rts['Transit'];
+        currentData['Rise'] = rts['Rise'];
+        currentData['Set'] = rts['Set'];
+        return currentData;
+    }
+    
 })();

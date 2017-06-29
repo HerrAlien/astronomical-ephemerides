@@ -16,48 +16,52 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var SunData = {
     cache : {},
-    getDataForJD : function (JD) {
-        var line = this.cache[JD];
-        if (!line) {
-            line = [];
-            var i = 0;
+
+    getDataAsObjectForJD : function (JD, computeRiseTransitSet) {
+        var data = this.cache[JD];
+        if (!data) {
+            data = {};
             var _date = AAJS.Date.JD2Date(JD);
             // convert from JD to gregorian
-            line[i++] = _date.M;
-            line[i++] = _date.D;
+            data['Month'] = _date.M;
+            data['Day'] = _date.D;
             var radec = AAJS.Sun.EquatorialCoordinates(JD, true);
-            line[i++] = radec.X; // RA [h.hhhh]
-            line[i++] = radec.Y; // DEC [deg.dddd]
+            data['RA'] = radec.X; // RA [h.hhhh]
+            data['Dec'] = radec.Y; // DEC [deg.dddd]
             var sunDistance = AAJS.Sun.Distance(JD, true);
-			line[i++] = sunDistance;// [au]
-            line[i++] = AAJS.Sun.Diameter(JD, true)/3600; // [deg.dddd]
+			data['DistanceToEarth'] = sunDistance;// [au]
+            data['Diameter'] = AAJS.Sun.Diameter(JD, true)/3600; // [deg.dddd]
             
-            // transit should be computed from the RA (LST to UTC conversion)
-            var jdOfTransit = Transit (JD, function(jd) { return AAJS.Sun.EquatorialCoordinates(jd, true); }, 1/(24 * 3600)); 
-            
-            
-            line[i++] = 24 * (jdOfTransit - JD);
+            data['MeridianTransit'] = false;
             var physical = AAJS.Sun.CalculatePhysicalDetails(JD, true);
-            line[i++] = physical.P; // [deg.dddd]
-            line[i++] = physical.B0; // [deg.dddd]
-            line[i++] = physical.L0; // [deg.dddd]
-            line[i++] = Math.atan2(6.378137e+6,149597870700 * sunDistance) * 180/Math.PI; // [deg.dddd]
+            data['P'] = physical.P; // [deg.dddd]
+            data['B0'] = physical.B0; // [deg.dddd]
+            data['L0'] = physical.L0; // [deg.dddd]
+            data['Parallax'] = Math.atan2(6.378137e+6,149597870700 * sunDistance) * 180/Math.PI; // [deg.dddd]
+            this.cache[JD] = data;
         }
-        this.cache[JD] = line;
-        return line;
+        
+        if (computeRiseTransitSet) {
+            data = this.addRiseTransitSetData(JD, data);
+            this.cache[JD] = data;
+        }
+        
+        return data;
     },
+
 	getSunEarthDistance : function(JD) {
-		var line = this.getDataForJD(JD);
-		return line[4];
+		var data = this.getDataAsObjectForJD(JD);
+		return data.DistanceToEarth;
 	},
     getRA : function(JD) {
-		var line = this.getDataForJD(JD);
-		return line[2];
+		var data = this.getDataAsObjectForJD(JD);
+		return data.RA;
 	},
     reset : function () {
         this.cache = {};
     },
-    riseSetAngle : -0.83333
+    riseSetAngle : -0.83333,
+    addRiseTransitSetData : PlanetData.prototype["addRiseTransitSetData"]
 };
 
     
@@ -170,51 +174,51 @@ var SunData = {
         lastAppendedLine : false,
        
         reset : PlanetPage.prototype.reset,
-
-        prepareLineForView : function (line) {
+       
+        prepareOneDayDataObjectForView : function (obj, JD) {
             var displayableLine = [];
 
             displayableLine[0] = "";
-            if (line[0] != this.lastDisplayedMonth) { // first day of the month
-                displayableLine[0] = this.months[line[0]]; // set displayableLine[0] to the name of the month
-                this.lastDisplayedMonth = line[0];
+            var month = obj.Month;
+            if (month != this.lastDisplayedMonth) { // first day of the month
+                displayableLine[0] = this.months[month]; // set displayableLine[0] to the name of the month
+                this.lastDisplayedMonth = month;
             }
 
             // copy the day verbatim
-            displayableLine[1] = line[1];
+            displayableLine[1] = obj.Day;
             
             var di = 2;
-            var si = 2;
-            var sexagesimalRA = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
+            var sexagesimalRA = AAJS.Numerical.ToSexagesimal(Math.round(obj.RA * 3600)/3600);
             displayableLine[di++] = sexagesimalRA.Ord3 ;
             displayableLine[di++] = sexagesimalRA.Ord2 
             displayableLine[di++] = sexagesimalRA.Ord1;
 
-            var sexagesimalDec = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
+            var sexagesimalDec = AAJS.Numerical.ToSexagesimal(Math.round(obj.Dec * 3600)/3600);
             displayableLine[di++] = sexagesimalDec.Ord3 ;
             displayableLine[di++] = sexagesimalDec.Ord2;
             displayableLine[di++] = sexagesimalDec.Ord1;
 			
-			displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals(line[si++]);
+			displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.DistanceToEarth);
             
-            var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
+            var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(Math.round(obj.Diameter * 3600)/3600);
             displayableLine[di++] = sexagesimalDiam.Ord2;
             displayableLine[di++] = sexagesimalDiam.Ord1;
             
-            var sexagesimalTransit = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
+            var sexagesimalTransit = AAJS.Numerical.ToSexagesimal(Math.round(obj.MeridianTransit * 3600)/3600);
             displayableLine[di++] = sexagesimalTransit.Ord3;
             displayableLine[di++] = sexagesimalTransit.Ord2;
             displayableLine[di++] = sexagesimalTransit.Ord1;
             
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
+            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.P);
+            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.B0);
+            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.L0);
             
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals(line[si++] * 3600); // just arcsecs
+            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals(obj.Parallax * 3600); // just arcsecs
 
             return displayableLine;
         },
-        
+
         appendLine : PlanetPage.prototype.appendLine,
         addNodeChild : PlanetPage.prototype.addNodeChild,
         oldAddHeader : PlanetPage.prototype.addTableHeader,
