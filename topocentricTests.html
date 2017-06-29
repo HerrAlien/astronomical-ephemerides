@@ -35,8 +35,8 @@
                 expectedOutput : 10+12/60,
                 actualOutput : false,
                 test : function () {
-                    var data = SunData.getDataForJD(this.input);
-                    this.actualOutput = data [6];
+                    var data = SunData.getDataAsObjectForJD(this.input, true);
+                    this.actualOutput = data.MeridianTransit;
                     return testlib.doubleEq(this.actualOutput , this.expectedOutput, 6e-4);
                 }
             },
@@ -47,8 +47,8 @@
                 expectedOutput : 3+1/60,
                 actualOutput : false,
                 test : function () {
-                    var data = MoonData.getDataForJD (this.input,Location.latitude,Location.longitude, Location.altitude);
-                    this.actualOutput = data [7];
+                    var data = MoonData.getDataAsObjectForJD (this.input, true);
+                    this.actualOutput = data.MeridianTransit;
                     return testlib.doubleEq(this.actualOutput , this.expectedOutput, 8e-3);
                 }
             },
@@ -216,8 +216,23 @@
                 0.01
 				],
             test : function () {
-                this.actualOutput = MarsData.getDataForJD (this.input);
-
+                var data = MarsData.getDataAsObjectForJD (this.input, true);
+                
+                this.actualOutput.push(data.Month);
+                this.actualOutput.push(data.Day);
+                this.actualOutput.push(data.RA);
+                this.actualOutput.push(data.Dec);
+                this.actualOutput.push(data.Diameter);
+                this.actualOutput.push(data.MeridianTransit);
+                this.actualOutput.push(data.DistanceToEarth);
+                this.actualOutput.push(data.DistanceToSun);
+                this.actualOutput.push(data.Elongation);
+                this.actualOutput.push(data.Phase);
+                this.actualOutput.push(data.CentralMeridianLongitude);
+                this.actualOutput.push(data.EarthDeclination);
+                this.actualOutput.push(data.SunDeclination);
+                this.actualOutput.push(data.P);
+                
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
                     return false;
