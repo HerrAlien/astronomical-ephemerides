@@ -263,7 +263,7 @@ input {
 }
 /** ----------------------------- M O O N --------------------------------------- **/
 #Moon tr:nth-of-type(1), #Moon tr:nth-of-type(2), #MoonPage{
-    width: 672px;
+    width: 767px;
 }
 
 #Moon td:nth-of-type(1),#Moon th:nth-of-type(1), 
@@ -283,13 +283,16 @@ input {
 #Moon td:nth-of-type(14),#Moon th:nth-of-type(14),
 #Moon td:nth-of-type(15),#Moon th:nth-of-type(15), 
 #Moon td:nth-of-type(16),#Moon th:nth-of-type(16),
-#Moon td:nth-of-type(17),#Moon th:nth-of-type(17), 
-#Moon td:nth-of-type(18),#Moon th:nth-of-type(18), 
-#Moon td:nth-of-type(19),#Moon th:nth-of-type(19),
 #Moon td:nth-of-type(21),#Moon th:nth-of-type(21),
 #Moon td:nth-of-type(22),#Moon th:nth-of-type(22)
 {
     min-width: 20px;
+}
+
+#Moon td:nth-of-type(17),#Moon th:nth-of-type(17), 
+#Moon td:nth-of-type(18),#Moon th:nth-of-type(18), 
+#Moon td:nth-of-type(19),#Moon th:nth-of-type(19){
+    min-width: 50px;
 }
 
 #Moon td:nth-of-type(6),#Moon th:nth-of-type(6), 
@@ -305,9 +308,7 @@ input {
 }
 
 #Moon > tr:nth-of-type(1) > th:nth-child(2),
-#Moon > tr:nth-of-type(1) > th:nth-child(11),
-#Moon > tr:nth-of-type(1) > th:nth-child(18),
-#Moon > tr:nth-of-type(1) > th:nth-child(19)
+#Moon > tr:nth-of-type(1) > th:nth-child(11)
 {
     min-width: 5px;
 }
@@ -317,7 +318,11 @@ input {
     min-width: 30px;
 }
 
-#Moon td:nth-of-type(2), #Moon td:nth-of-type(5), #Moon td:nth-of-type(8), #Moon td:nth-of-type(11), #Moon td:nth-of-type(14), #Moon td:nth-of-type(16), #Moon td:nth-of-type(19), #Moon td:nth-of-type(22), #Moon td:nth-of-type(23) {
+#Moon td:nth-of-type(10) {
+    border-right: none;
+}
+
+#Moon td:nth-of-type(2), #Moon td:nth-of-type(5), #Moon td:nth-of-type(8), #Moon td:nth-of-type(11), #Moon td:nth-of-type(14), #Moon td:nth-of-type(16), #Moon td:nth-of-type(17), #Moon td:nth-of-type(18), #Moon td:nth-of-type(19), #Moon td:nth-of-type(22), #Moon td:nth-of-type(23) {
     border-right: 1px solid black;
 }
 
