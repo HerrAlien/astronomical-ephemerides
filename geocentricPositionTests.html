@@ -17,9 +17,9 @@
 
 
 
+        <script type="text/JavaScript" src="js/planetdata.js"></script>
         <script type="text/JavaScript" src="js/risetransitset.js"></script>
         <script type="text/javascript" src="js/sun.js"></script>
-        <script type="text/JavaScript" src="js/planetdata.js"></script>
        <script type="text/javascript" src="js/jupiter.js"></script>
        <script type="text/javascript" src="js/mars.js"></script>
        <script type="text/javascript" src="js/mercury.js"></script>
@@ -93,7 +93,19 @@
 				3e-3,
 				],
             test : function () {
-                this.actualOutput = JupiterData.getDataForJD (this.input).slice(0,10);
+                var data = JupiterData.getDataAsObjectForJD (this.input, true);
+                
+                this.actualOutput.push(data.Month);
+                this.actualOutput.push(data.Day);
+                this.actualOutput.push(data.RA);
+                this.actualOutput.push(data.Dec);
+                this.actualOutput.push(data.Diameter);
+                this.actualOutput.push(data.MeridianTransit);
+                this.actualOutput.push(data.DistanceToEarth);
+                this.actualOutput.push(data.DistanceToSun);
+                this.actualOutput.push(data.Elongation);
+                this.actualOutput.push(data.Phase);
+
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
@@ -135,7 +147,19 @@
 				3e-4,
 				],
             test : function () {
-                this.actualOutput = MarsData.getDataForJD (this.input).slice(0,10);
+                var data = MarsData.getDataAsObjectForJD (this.input, true);
+                
+                this.actualOutput.push(data.Month);
+                this.actualOutput.push(data.Day);
+                this.actualOutput.push(data.RA);
+                this.actualOutput.push(data.Dec);
+                this.actualOutput.push(data.Diameter);
+                this.actualOutput.push(data.MeridianTransit);
+                this.actualOutput.push(data.DistanceToEarth);
+                this.actualOutput.push(data.DistanceToSun);
+                this.actualOutput.push(data.Elongation);
+                this.actualOutput.push(data.Phase);
+
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
@@ -177,7 +201,20 @@
 				1e-4,
 				],
 				test : function () {
-					this.actualOutput = MercuryData.getDataForJD (this.input);
+                    
+                                    var data = MercuryData.getDataAsObjectForJD (this.input, true);
+                
+                this.actualOutput.push(data.Month);
+                this.actualOutput.push(data.Day);
+                this.actualOutput.push(data.RA);
+                this.actualOutput.push(data.Dec);
+                this.actualOutput.push(data.Diameter);
+                this.actualOutput.push(data.MeridianTransit);
+                this.actualOutput.push(data.DistanceToEarth);
+                this.actualOutput.push(data.DistanceToSun);
+                this.actualOutput.push(data.Elongation);
+                this.actualOutput.push(data.Phase);
+
                     
 					if (this.expectedOutput.length != this.actualOutput.length ||
 						this.expectedOutput.length != this.accurracy.length)
@@ -219,7 +256,18 @@
 				5e-5,
 				],
             test : function () {
-                this.actualOutput = NeptuneData.getDataForJD (this.input);
+                                    var data = NeptuneData.getDataAsObjectForJD (this.input, true);
+                
+                this.actualOutput.push(data.Month);
+                this.actualOutput.push(data.Day);
+                this.actualOutput.push(data.RA);
+                this.actualOutput.push(data.Dec);
+                this.actualOutput.push(data.Diameter);
+                this.actualOutput.push(data.MeridianTransit);
+                this.actualOutput.push(data.DistanceToEarth);
+                this.actualOutput.push(data.DistanceToSun);
+                this.actualOutput.push(data.Elongation);
+                this.actualOutput.push(data.Phase);
                 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
@@ -260,7 +308,19 @@
 				1e-3,
 				],
             test : function () {
-                this.actualOutput = SaturnData.getDataForJD (this.input);
+
+                                    var data = SaturnData.getDataAsObjectForJD (this.input, true);
+                
+                this.actualOutput.push(data.Month);
+                this.actualOutput.push(data.Day);
+                this.actualOutput.push(data.RA);
+                this.actualOutput.push(data.Dec);
+                this.actualOutput.push(data.Diameter);
+                this.actualOutput.push(data.MeridianTransit);
+                this.actualOutput.push(data.DistanceToEarth);
+                this.actualOutput.push(data.DistanceToSun);
+                this.actualOutput.push(data.Elongation);
+                this.actualOutput.push(data.Phase);
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
@@ -302,7 +362,19 @@
 				3e-3,
 				],
             test : function () {
-                this.actualOutput = VenusData.getDataForJD (this.input);
+ 
+                                    var data = VenusData.getDataAsObjectForJD (this.input, true);
+                
+                this.actualOutput.push(data.Month);
+                this.actualOutput.push(data.Day);
+                this.actualOutput.push(data.RA);
+                this.actualOutput.push(data.Dec);
+                this.actualOutput.push(data.Diameter);
+                this.actualOutput.push(data.MeridianTransit);
+                this.actualOutput.push(data.DistanceToEarth);
+                this.actualOutput.push(data.DistanceToSun);
+                this.actualOutput.push(data.Elongation);
+                this.actualOutput.push(data.Phase);
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
@@ -344,7 +416,19 @@
 				6e-4,
 				],
             test : function () {
-                this.actualOutput = UranusData.getDataForJD (this.input);
+
+                                    var data = UranusData.getDataAsObjectForJD (this.input, true);
+                
+                this.actualOutput.push(data.Month);
+                this.actualOutput.push(data.Day);
+                this.actualOutput.push(data.RA);
+                this.actualOutput.push(data.Dec);
+                this.actualOutput.push(data.Diameter);
+                this.actualOutput.push(data.MeridianTransit);
+                this.actualOutput.push(data.DistanceToEarth);
+                this.actualOutput.push(data.DistanceToSun);
+                this.actualOutput.push(data.Elongation);
+                this.actualOutput.push(data.Phase);
 
                 if (this.expectedOutput.length != this.actualOutput.length ||
                     this.expectedOutput.length != this.accurracy.length)
@@ -361,35 +445,6 @@
         },
         
         
-        		{
-            name : "Uranus transit for 2017-08-14  lat. 0, long. 0, alt. 0",
-            input : AAJS.Date.DateToJD (2017, 8, 14, true),
-            expectedOutput :  4+16/60,
-            actualOutput : false,
-            
-            test : function () {
-               var yesterdayData = UranusData.getDataForJD (this.input - 1);
-                var todayData = UranusData.getDataForJD (this.input);
-               var tomorrowData = UranusData.getDataForJD (this.input + 1);
-
-                var resultData = AAJS.RiseTransitSet.Calculate (
-                this.input,
-                yesterdayData[2],
-                yesterdayData[3],
-                todayData[2],
-                todayData[3],
-                tomorrowData[2],
-                tomorrowData[3],
-                Location.longitude,
-                Location.latitude,
-                -0.5667
-                );
-                
-                this.actualOutput = resultData.Transit;
-                return testlib.doubleEq (this.actualOutput, this.expectedOutput, 8e-3);
-            }
-        },
-
        		{
             name : "Venus rise, transit, set  for 1988-03-20  lat. 42.3333, long. 71.0833, alt. 0",
             input : AAJS.Date.DateToJD (1988, 3, 20, true),
@@ -397,17 +452,17 @@
             actualOutput : {},
             
             test : function () {
-                var yesterdayData = VenusData.getDataForJD (this.input - 1);
-                var todayData =     VenusData.getDataForJD (this.input);
-                var tomorrowData =  VenusData.getDataForJD (this.input + 1);
+                var yesterdayData = VenusData.getDataAsObjectForJD (this.input - 1);
+                var todayData =     VenusData.getDataAsObjectForJD (this.input);
+                var tomorrowData =  VenusData.getDataAsObjectForJD (this.input + 1);
 
                 this.actualOutput = AAJS.RiseTransitSet.Calculate (this.input,
-                yesterdayData[2],
-                yesterdayData[3],
-                todayData[2],
-                todayData[3],
-                tomorrowData[2],
-                tomorrowData[3],
+                yesterdayData['RA'],
+                yesterdayData['Dec'],
+                todayData['RA'],
+                todayData['Dec'],
+                tomorrowData['RA'],
+                tomorrowData['Dec'],
                 71.0833,
                 42.3333,
                 -0.5667
