@@ -18,7 +18,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/agpl.html
 
 var TimeStepsData = {
 	// this is the model
-    yearToStart: 2017,
+    yearToStart: (function() { var date = new Date(); return  date.getFullYear(); })(),
     monthToStart : 1,
     dayToStart : 1,
     numberOfDays : 410,
