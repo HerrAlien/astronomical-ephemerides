@@ -58,19 +58,19 @@ function PlanetPage (planetDataSource, tableName) {
                 "longText" : "Apparent diameter"
             },
         "9" : {
-                "0" : { "text" : "Rise", "classes" : ["minWidth50", "positionEphemeris"] },
-                "1" : { "text" : "hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
-                "longText" : "The UTC time of rise above horizon"
+                   "0" : { "text" : "Rise", "classes" :  ["minWidth50", "positionEphemeris"] },
+                   "1" : { "text" : "hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
+                   "longText" : "The UTC time of rise above horizon"
             },
         "10" : {
-                "0" : { "text" : "Transit", "classes" : ["minWidth40"  , "positionEphemeris"] },
-                "1" : { "text" : "hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
-                "longText" : "The UTC time of the transit across the meridian"
+                   "0" : { "text" : "Transit", "classes" : ["minWidth40"  , "positionEphemeris"] },
+                   "1" : { "text" : "hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
+                   "longText" : "The UTC time of the transit across the meridian"
             },
         "11" : {
-                "0" : { "text" : "Set", "classes" : ["minWidth40"  , "positionEphemeris"] },
-                "1" : { "text" : "hh:mm", "classes" : ["minWidth55", "positionEphemeris"] },
-                "longText" : "The UTC time of setting"
+                   "0" : { "text" : "Set", "classes" : ["minWidth40"  , "positionEphemeris"] },
+                   "1" : { "text" : "hh:mm", "classes" : ["minWidth55", "positionEphemeris"] },
+                   "longText" : "The UTC time of setting"
             },
 
             "12" :  {

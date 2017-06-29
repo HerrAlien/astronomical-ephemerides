@@ -300,52 +300,12 @@ input {
 
 /** -------------------------------------- S U N -------------------------------- **/
 #SunTable tr:nth-of-type(1), #SunTable tr:nth-of-type(2), #Sun{
-    min-width: 622px;
+    min-width: 720px;
 }
 
 #SunTable td:nth-of-type(2), #SunTable td:nth-of-type(5), #SunTable td:nth-of-type(8), #SunTable td:nth-of-type(9), #SunTable td:nth-of-type(11),
-#SunTable td:nth-of-type(14), #SunTable td:nth-of-type(15), #SunTable td:nth-of-type(16), #SunTable td:nth-of-type(17) {
+#SunTable td:nth-of-type(14), #SunTable td:nth-of-type(15), #SunTable td:nth-of-type(16), #SunTable td:nth-of-type(17), #SunTable td:nth-of-type(12), #SunTable td:nth-of-type(13) {
     border-right: 1px solid black;
-}
-
-#SunTable td:nth-of-type(12), #SunTable td:nth-of-type(13) {
-    border-right: none;
-}
-
-
-#SunTable td:nth-of-type(1), 
-#SunTable td:nth-of-type(2), 
-#SunTable td:nth-of-type(3), 
-#SunTable td:nth-of-type(4), 
-#SunTable td:nth-of-type(5), 
-                             
-#SunTable td:nth-of-type(7), 
-#SunTable td:nth-of-type(8), 
-
-#SunTable td:nth-of-type(10), 
-#SunTable td:nth-of-type(11),
-
-#SunTable td:nth-of-type(12), 
-#SunTable td:nth-of-type(13),
-#SunTable td:nth-of-type(14)
-{
-    min-width : 20px;
-} 
-
-#SunTable td:nth-of-type(6)
-{
-    min-width: 25px;
-}
-
-
-#SunTable td:nth-of-type(9)
-{
-    min-width: 50px;
-} 
-#SunTable td:nth-of-type(15), 
-#SunTable td:nth-of-type(16), 
-#SunTable td:nth-of-type(17){
-    min-width : 62px;
 }
 
 .printOnly {

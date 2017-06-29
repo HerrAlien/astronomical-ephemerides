@@ -130,19 +130,19 @@ var SunData = {
                 },
                 
         "11" : {
-                    "0" : { "text" :"Rise", "classes" : ["minWidth50", "positionEphemeris"] },
-                    "1" : { "text" :"hh:mm",       "classes" : ["minWidth50", "positionEphemeris"] },
-                "longText" : "The UTC time of rise above horizon"
-            },
-        "12" : {
-                    "0" : { "text" :"Transit",   "classes" : ["minWidth50", "positionEphemeris"] },
-                    "1" : { "text" :"hh:mm",  "classes" : ["minWidth50", "positionEphemeris"] },
-                "longText" : "The UTC time of the transit across the meridian"
-            },
-        "13" : {
-                    "0" : { "text" :"Set",   "classes" : ["minWidth50", "positionEphemeris"] },
-                    "1" : { "text" :"hh:mm",  "classes" : ["minWidth50", "positionEphemeris"] },
-                "longText" : "The UTC time of setting"
+                    "0" : { "text" : "Rise", "classes" :  ["minWidth50", "positionEphemeris"] },
+                    "1" : { "text" : "hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
+                    "longText" : "The UTC time of rise above horizon"
+            },      
+        "12" : {    
+                    "0" : { "text" : "Transit", "classes" : ["minWidth40"  , "positionEphemeris"] },
+                    "1" : { "text" : "hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
+                    "longText" : "The UTC time of the transit across the meridian"
+            },      
+        "13" : {    
+                    "0" : { "text" : "Set", "classes" : ["minWidth40"  , "positionEphemeris"] },
+                    "1" : { "text" : "hh:mm", "classes" : ["minWidth55", "positionEphemeris"] },
+                    "longText" : "The UTC time of setting"
             },
             "14" :  {
                     "0" : { "text" :"P",      "classes" : ["minWidth62", "physicalEphemeris"] },
@@ -168,6 +168,12 @@ var SunData = {
                     "longText" : "Equatorial horizontal parallax"
                 }
         },
+        
+        columnClasses : [ "minWidth20", "minWidth20", "minWidth20", "minWidth20", "minWidth20",
+                           "minWidth25", "minWidth20", "minWidth20", "minWidth50", "minWidth20", 
+                           "minWidth20", "minWidth50", "minWidth50", "minWidth50", "minWidth62",
+                           "minWidth62", "minWidth62", "minWidth30" ],
+                           
         lastDisplayedMonth : -1,
         months : ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         // this will probably become an utility available for every page
