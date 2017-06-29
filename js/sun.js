@@ -61,7 +61,7 @@ var SunData = {
         this.cache = {};
     },
     riseSetAngle : -0.83333,
-    addRiseTransitSetData : PlanetData.prototype["addRiseTransitSetData"]
+    addRiseTransitSetData : PlanetData.prototype.addRiseTransitSetData
 };
 
     
@@ -230,9 +230,9 @@ var SunData = {
             return result;
         },
         
-        displayPage : PlanetPage.prototype.displayPage
+        displayPage : PlanetPage.prototype.displayPage,
+        timeToHhColumnMm : PlanetPage.prototype.timeToHhColumnMm
     };
-    SunPage.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
         Pages["Sun"] = Sun;
     
 })();
