@@ -32,11 +32,7 @@ var SunData = {
 			data['DistanceToEarth'] = sunDistance;// [au]
             data['Diameter'] = AAJS.Sun.Diameter(JD, true)/3600; // [deg.dddd]
             
-            // transit should be computed from the RA (LST to UTC conversion)
-            var jdOfTransit = Transit (JD, function(jd) { return AAJS.Sun.EquatorialCoordinates(jd, true); }, 1/(24 * 3600)); 
-            
-            
-            data['MeridianTransit'] = 24 * (jdOfTransit - JD);
+            data['MeridianTransit'] = false;
             var physical = AAJS.Sun.CalculatePhysicalDetails(JD, true);
             data['P'] = physical.P; // [deg.dddd]
             data['B0'] = physical.B0; // [deg.dddd]
@@ -44,6 +40,12 @@ var SunData = {
             data['Parallax'] = Math.atan2(6.378137e+6,149597870700 * sunDistance) * 180/Math.PI; // [deg.dddd]
             this.cache[JD] = data;
         }
+        
+        if (computeRiseTransitSet) {
+            data = this.addRiseTransitSetData(JD, data);
+            this.cache[JD] = data;
+        }
+        
         return data;
     },
 
@@ -58,7 +60,8 @@ var SunData = {
     reset : function () {
         this.cache = {};
     },
-    riseSetAngle : -0.83333
+    riseSetAngle : -0.83333,
+    addRiseTransitSetData : PlanetData.prototype["addRiseTransitSetData"]
 };
 
     

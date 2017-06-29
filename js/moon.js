@@ -34,15 +34,11 @@ var MoonData = {
             for (var key in posData)
                 data[key] = posData[key];
             
-            var jdOfTransit = Transit (JD, function(jd) { 
-                
-                var data = AAJS.Moon.PositionalEphemeris(jd, Location.latitude, Location.longitude, Location.altitude);
-                return {"X" : data.RaGeo, "Y" : data.DecGeo };
-                
-            }, 1/(24 * 3600)); 
+            // how about we rename the geo ones?
+            data ['RA'] = data['RaGeo'];
+            data ['Dec'] = data['DecGeo'];
             
-			var transitHour = 24 * (jdOfTransit - JD);
-			data['MeridianTransit'] = transitHour;
+			data['MeridianTransit'] = false;
 
             var selenographicCoordsOfSun = AAJS.Moon.CalculateSelenographicPositionOfSun (JD, true);
             var colongitude = 90 - selenographicCoordsOfSun.l0;
@@ -52,14 +48,24 @@ var MoonData = {
             data['Colongitude'] = colongitude;
             data['b0'] = selenographicCoordsOfSun.b0;
             
-            this.cache[key] = data;
+            this.cache[JD] = data;
         }
+        
+        if (computeRiseTransitSet) {
+            this.riseSetAngle = 0.7275 * data.parallax - 0.56666666666666666666666666666667;
+            data = this.addRiseTransitSetData(JD, data);
+            this.cache[JD] = data;
+        }
+
         return data;
     },
 
     reset : function () {
         this.cache = {};
-    }    
+    },
+
+    riseSetAngle : -0.83333,
+    addRiseTransitSetData : PlanetData.prototype["addRiseTransitSetData"]    
 };
     
 
