@@ -429,7 +429,7 @@ input {
 /** ---------------------------------- P L A N E T ------------------------------ **/
 .planetTable tr:nth-of-type(1), .planetTable tr:nth-of-type(2), .page
 {
-    width: 543px;
+    width: 630px;
     background: #ffffff;
 	    height: 20px;
 }
@@ -442,9 +442,7 @@ input {
 .planetTable td:nth-of-type(3),.planetTable th:nth-of-type(3), 
 .planetTable td:nth-of-type(4),.planetTable th:nth-of-type(4),
 .planetTable td:nth-of-type(5),.planetTable th:nth-of-type(5),
-.planetTable td:nth-of-type(9),.planetTable th:nth-of-type(9), 
-.planetTable td:nth-of-type(10),.planetTable th:nth-of-type(10), 
-.planetTable td:nth-of-type(11),.planetTable th:nth-of-type(11)
+.planetTable td:nth-of-type(9),.planetTable th:nth-of-type(9)
 {
     min-width : 20px;
 } 
@@ -458,9 +456,11 @@ input {
     min-width: 25px;    
 }
 
+.planetTable td:nth-of-type(10),.planetTable th:nth-of-type(10), 
+.planetTable td:nth-of-type(11),.planetTable th:nth-of-type(11),
 .planetTable td:nth-of-type(12),.planetTable th:nth-of-type(12)
 {
-    min-width: 25px;
+    min-width: 50px;
 }
 
 .planetTable td:nth-of-type(13),.planetTable th:nth-of-type(13), 
@@ -476,13 +476,15 @@ input {
 
 .planetTable   tr:nth-child(1)  th:nth-child(11),
 .planetTable   tr:nth-child(1)  th:nth-child(12) {
-	min-width: 1px;
+	min-width: 40px;
 }
 
 .planetTable td:nth-of-type(2) ,
 .planetTable td:nth-of-type(5),
 .planetTable td:nth-of-type(8),
 .planetTable td:nth-of-type(9),
+.planetTable td:nth-of-type(10),
+.planetTable td:nth-of-type(11),
 .planetTable td:nth-of-type(12),
 .planetTable td:nth-of-type(13),
 .planetTable td:nth-of-type(14),

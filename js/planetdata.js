@@ -79,6 +79,11 @@ function PlanetData(planet)
         currentData['MeridianTransit'] = rts['Transit'];
         currentData['Rise'] = rts['Rise'];
         currentData['Set'] = rts['Set'];
+
+        currentData['bTransitValid'] = rts['bTransitValid'];
+        currentData['bRiseValid'] = rts['bRiseValid'];
+        currentData['bSetValid'] = rts['bSetValid'];
+        
         return currentData;
     }
     
