@@ -163,7 +163,7 @@ function PlanetPage (planetDataSource, tableName) {
             }
         };
     
-    PlanetPage.prototype["appendLine"] = function (dataArray, docFragment) {
+    PlanetPage.prototype["appendLine"] = function (dataArray, classes, docFragment) {
             var line = this.hostElement.ownerDocument.createElement("tr");
             if (!docFragment)
                 docFragment = this.hostElement;
