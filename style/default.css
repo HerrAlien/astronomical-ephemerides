@@ -263,7 +263,7 @@ input {
 }
 /** ----------------------------- M O O N --------------------------------------- **/
 #Moon tr:nth-of-type(1), #Moon tr:nth-of-type(2), #MoonPage{
-    width: 672px;
+    width: 767px;
 }
 
 #Moon td:nth-of-type(1),#Moon th:nth-of-type(1), 
@@ -283,13 +283,16 @@ input {
 #Moon td:nth-of-type(14),#Moon th:nth-of-type(14),
 #Moon td:nth-of-type(15),#Moon th:nth-of-type(15), 
 #Moon td:nth-of-type(16),#Moon th:nth-of-type(16),
-#Moon td:nth-of-type(17),#Moon th:nth-of-type(17), 
-#Moon td:nth-of-type(18),#Moon th:nth-of-type(18), 
-#Moon td:nth-of-type(19),#Moon th:nth-of-type(19),
 #Moon td:nth-of-type(21),#Moon th:nth-of-type(21),
 #Moon td:nth-of-type(22),#Moon th:nth-of-type(22)
 {
     min-width: 20px;
+}
+
+#Moon td:nth-of-type(17),#Moon th:nth-of-type(17), 
+#Moon td:nth-of-type(18),#Moon th:nth-of-type(18), 
+#Moon td:nth-of-type(19),#Moon th:nth-of-type(19){
+    min-width: 50px;
 }
 
 #Moon td:nth-of-type(6),#Moon th:nth-of-type(6), 
@@ -305,9 +308,7 @@ input {
 }
 
 #Moon > tr:nth-of-type(1) > th:nth-child(2),
-#Moon > tr:nth-of-type(1) > th:nth-child(11),
-#Moon > tr:nth-of-type(1) > th:nth-child(18),
-#Moon > tr:nth-of-type(1) > th:nth-child(19)
+#Moon > tr:nth-of-type(1) > th:nth-child(11)
 {
     min-width: 5px;
 }
@@ -317,7 +318,11 @@ input {
     min-width: 30px;
 }
 
-#Moon td:nth-of-type(2), #Moon td:nth-of-type(5), #Moon td:nth-of-type(8), #Moon td:nth-of-type(11), #Moon td:nth-of-type(14), #Moon td:nth-of-type(16), #Moon td:nth-of-type(19), #Moon td:nth-of-type(22), #Moon td:nth-of-type(23) {
+#Moon td:nth-of-type(10) {
+    border-right: none;
+}
+
+#Moon td:nth-of-type(2), #Moon td:nth-of-type(5), #Moon td:nth-of-type(8), #Moon td:nth-of-type(11), #Moon td:nth-of-type(14), #Moon td:nth-of-type(16), #Moon td:nth-of-type(17), #Moon td:nth-of-type(18), #Moon td:nth-of-type(19), #Moon td:nth-of-type(22), #Moon td:nth-of-type(23) {
     border-right: 1px solid black;
 }
 
@@ -327,18 +332,18 @@ input {
 
 /** -------------------------------------- S U N -------------------------------- **/
 #Sun tr:nth-of-type(1), #Sun tr:nth-of-type(2), #SunPage{
-    min-width: 622px;
+    min-width: 717px;
 }
 
-#Sun td:nth-of-type(2), #Sun td:nth-of-type(5), #Sun td:nth-of-type(8), #Sun td:nth-of-type(9), #Sun td:nth-of-type(11),
-#Sun td:nth-of-type(14), #Sun td:nth-of-type(15), #Sun td:nth-of-type(16), #Sun td:nth-of-type(17) {
-    border-right: 1px solid black;
-}
-
-#Sun td:nth-of-type(12), #Sun td:nth-of-type(13) {
+#Sun td:nth-of-type(10) {
     border-right: none;
 }
 
+#Sun td:nth-of-type(2), #Sun td:nth-of-type(5), #Sun td:nth-of-type(8), #Sun td:nth-of-type(9), #Sun td:nth-of-type(11),
+#Sun td:nth-of-type(12), #Sun td:nth-of-type(13),
+#Sun td:nth-of-type(14), #Sun td:nth-of-type(15), #Sun td:nth-of-type(16), #Sun td:nth-of-type(17) {
+    border-right: 1px solid black;
+}
 
 #Sun td:nth-of-type(1),#Sun th:nth-of-type(1), 
 #Sun td:nth-of-type(2),#Sun th:nth-of-type(2) {
@@ -352,14 +357,17 @@ input {
 #Sun td:nth-of-type(7),#Sun th:nth-of-type(7), 
 
 #Sun td:nth-of-type(10),#Sun th:nth-of-type(10), 
-#Sun td:nth-of-type(11),#Sun th:nth-of-type(11),
-
-#Sun td:nth-of-type(12),#Sun th:nth-of-type(12), 
-#Sun td:nth-of-type(13),#Sun th:nth-of-type(13),
+#Sun td:nth-of-type(11),#Sun th:nth-of-type(11), 
 #Sun td:nth-of-type(14),#Sun th:nth-of-type(14) 
 {
     min-width : 20px;
 } 
+
+#Sun td:nth-of-type(12),#Sun th:nth-of-type(12),
+#Sun td:nth-of-type(13),#Sun th:nth-of-type(13), 
+#Sun td:nth-of-type(14),#Sun th:nth-of-type(14) {
+        min-width: 50px;
+}
 
 #Sun td:nth-of-type(6),#Sun th:nth-of-type(6)
 {
@@ -384,7 +392,7 @@ input {
 
 #Sun tr:nth-of-type(1) th:nth-of-type(13),
 #Sun tr:nth-of-type(1) th:nth-of-type(14){
-    min-width: 1px;
+    min-width: 40px;
 }
 
 #Sun tr:nth-of-type(1) th:nth-child(8) {
@@ -429,7 +437,7 @@ input {
 /** ---------------------------------- P L A N E T ------------------------------ **/
 .planetTable tr:nth-of-type(1), .planetTable tr:nth-of-type(2), .page
 {
-    width: 543px;
+    width: 630px;
     background: #ffffff;
 	    height: 20px;
 }
@@ -442,9 +450,7 @@ input {
 .planetTable td:nth-of-type(3),.planetTable th:nth-of-type(3), 
 .planetTable td:nth-of-type(4),.planetTable th:nth-of-type(4),
 .planetTable td:nth-of-type(5),.planetTable th:nth-of-type(5),
-.planetTable td:nth-of-type(9),.planetTable th:nth-of-type(9), 
-.planetTable td:nth-of-type(10),.planetTable th:nth-of-type(10), 
-.planetTable td:nth-of-type(11),.planetTable th:nth-of-type(11)
+.planetTable td:nth-of-type(9),.planetTable th:nth-of-type(9)
 {
     min-width : 20px;
 } 
@@ -458,9 +464,11 @@ input {
     min-width: 25px;    
 }
 
+.planetTable td:nth-of-type(10),.planetTable th:nth-of-type(10), 
+.planetTable td:nth-of-type(11),.planetTable th:nth-of-type(11),
 .planetTable td:nth-of-type(12),.planetTable th:nth-of-type(12)
 {
-    min-width: 25px;
+    min-width: 50px;
 }
 
 .planetTable td:nth-of-type(13),.planetTable th:nth-of-type(13), 
@@ -476,13 +484,15 @@ input {
 
 .planetTable   tr:nth-child(1)  th:nth-child(11),
 .planetTable   tr:nth-child(1)  th:nth-child(12) {
-	min-width: 1px;
+	min-width: 40px;
 }
 
 .planetTable td:nth-of-type(2) ,
 .planetTable td:nth-of-type(5),
 .planetTable td:nth-of-type(8),
 .planetTable td:nth-of-type(9),
+.planetTable td:nth-of-type(10),
+.planetTable td:nth-of-type(11),
 .planetTable td:nth-of-type(12),
 .planetTable td:nth-of-type(13),
 .planetTable td:nth-of-type(14),
@@ -503,7 +513,7 @@ input {
 
 /* ---------------------------- M A R S ------------------------------------ */
 #Mars tr:nth-of-type(1), #Mars tr:nth-of-type(2), #MarsPage{
-    width: 732px;
+    width: 820px;
 }
 #Mars  td:nth-of-type(16), #Mars  td:nth-of-type(17), #Mars  td:nth-of-type(18), #Mars  td:nth-of-type(19){
     border-right: solid 1px black;
@@ -519,7 +529,7 @@ input {
 }
 /* ---------------------------- J U P I T E R ---------------------- */
 #Jupiter tr:nth-of-type(1), #Jupiter tr:nth-of-type(2), #JupiterPage{
-    width: 770px;
+    width: 860px;
 }
 
 #Jupiter  td:nth-of-type(16), #Jupiter  td:nth-of-type(17), #Jupiter  td:nth-of-type(18), #Jupiter  td:nth-of-type(19), #Jupiter  td:nth-of-type(20){

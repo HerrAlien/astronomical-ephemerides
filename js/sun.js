@@ -129,21 +129,21 @@ var SunData = {
                     "longText" : "Apparent diameter of the Sun"
                 },
                 
-            "11" : {
-                    "0" : "Transit",
-                    "1" : "h",
-                    "longText" : "The UTC time of the transit across the meridian"
-                },
-            "12" : {
-                    "0" : "",
-                    "1" : "m",
-                    "longText" : "The UTC time of the transit across the meridian"
-                },
-            "13" : {
-                    "0" : "",
-                    "1" : "s",
-                    "longText" : "The UTC time of the transit across the meridian"
-                },
+        "11" : {
+                "0" : "Rise",
+                "1" : "hh:mm",
+                "longText" : "The UTC time of rise above horizon"
+            },
+        "12" : {
+                "0" : "Transit",
+                "1" : "hh:mm",
+                "longText" : "The UTC time of the transit across the meridian"
+            },
+        "13" : {
+                "0" : "Set",
+                "1" : "hh:mm",
+                "longText" : "The UTC time of setting"
+            },
             "14" :  {
                     "0" : "P",
                     "1" : "\u00B0",
@@ -205,10 +205,9 @@ var SunData = {
             displayableLine[di++] = sexagesimalDiam.Ord2;
             displayableLine[di++] = sexagesimalDiam.Ord1;
             
-            var sexagesimalTransit = AAJS.Numerical.ToSexagesimal(Math.round(obj.MeridianTransit * 3600)/3600);
-            displayableLine[di++] = sexagesimalTransit.Ord3;
-            displayableLine[di++] = sexagesimalTransit.Ord2;
-            displayableLine[di++] = sexagesimalTransit.Ord1;
+            displayableLine[di++] = obj.bRiseValid ? this.timeToHhColumnMm(obj.Rise) : "N/A";
+            displayableLine[di++] = obj.bTransitValid ? this.timeToHhColumnMm(obj.MeridianTransit) : "N/A";
+            displayableLine[di++] = obj.bSetValid ? this.timeToHhColumnMm(obj.Set) : "N/A";
             
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.P);
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.B0);
@@ -233,7 +232,7 @@ var SunData = {
         
         displayPage : PlanetPage.prototype.displayPage
     };
-
+    SunPage.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
         Pages["SunPage"] = SunPage;
     
 })();

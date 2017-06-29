@@ -161,19 +161,19 @@ var MoonData = {
                 },
                 
             "16" : {
-                    "0" : "Transit",
-                    "1" : "h",
-                    "longText" : "The UTC time of the transit across the meridian"
+                    "0" : "Rise",
+                    "1" : "hh:mm",
+                    "longText" : "The UTC time of rise above horizon"
                 },
             "17" : {
-                    "0" : "",
-                    "1" : "m",
+                    "0" : "Transit",
+                    "1" : "hh:mm",
                     "longText" : "The UTC time of the transit across the meridian"
                 },
             "18" : {
-                    "0" : "",
-                    "1" : "s",
-                    "longText" : "The UTC time of the transit across the meridian"
+                    "0" : "Set",
+                    "1" : "hh:mm",
+                    "longText" : "The UTC time of setting"
                 },
  
             "19" :  {
@@ -255,10 +255,9 @@ var MoonData = {
         displayableLine[di++] = sexagesimalDiam.Ord2;
         displayableLine[di++] = sexagesimalDiam.Ord1;
         
-        var sexagesimalTransit = AAJS.Numerical.ToSexagesimal(Math.round(obj.MeridianTransit * 3600)/3600);
-        displayableLine[di++] = sexagesimalTransit.Ord3;
-        displayableLine[di++] = sexagesimalTransit.Ord2;
-        displayableLine[di++] = sexagesimalTransit.Ord1;
+        displayableLine[di++] = obj.bRiseValid ? this.timeToHhColumnMm(obj.Rise) : "N/A";
+        displayableLine[di++] = obj.bTransitValid ? this.timeToHhColumnMm(obj.MeridianTransit) : "N/A";
+        displayableLine[di++] = obj.bSetValid ? this.timeToHhColumnMm(obj.Set) : "N/A";
             
         var sexagesimalParallax = AAJS.Numerical.ToSexagesimal(Math.round(obj.parallax * 3600)/3600);
         
@@ -283,4 +282,6 @@ var MoonData = {
         
         return result;
     };
+    
+    MoonPage.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
 })();
