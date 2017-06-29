@@ -57,7 +57,8 @@ var SunData = {
 	},
     reset : function () {
         this.cache = {};
-    }
+    },
+    riseSetAngle : -0.83333
 };
 
     
