@@ -43,9 +43,9 @@ var JupiterData = new PlanetData({ number: 4, name: "Jupiter",
     Page.tableHeaderInfo['19'] = { "0" : {"text" :"DS"    , "classes" : ["minWidth40", "physicalEphemeris"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physicalEphemeris"]}, "longText" : "Planetocentric declination of the Sun" };
     Page.tableHeaderInfo['20'] = { "0" : {"text" :"P"     , "classes" : ["minWidth40", "physicalEphemeris"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physicalEphemeris"]}, "longText" : "Position angle of the North Pole" };
     
-    Page.columnClasses = Page.columnClasses.concat(["minWidth50", "minWidth50", "minWidth40", "minWidth40", "minWidth40"]);
-    Page.columnClasses[12] = "minWidth50";
-    Page.columnClasses[13] = "minWidth50";
+    Page.firstDataRowColumnClasses = Page.firstDataRowColumnClasses.concat([["minWidth50"], ["minWidth50"], ["minWidth40"], ["minWidth40"], ["minWidth40"]]);
+    Page.firstDataRowColumnClasses[12] = ["minWidth50"];
+    Page.firstDataRowColumnClasses[13] = ["minWidth50"];
 
     Page["old_prepareOneDayDataObjectForView"] = Page.prepareOneDayDataObjectForView;
     Page.prepareOneDayDataObjectForView = function (obj, JD) {

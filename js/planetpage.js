@@ -101,10 +101,10 @@ function PlanetPage (planetDataSource, tableName) {
     this.lastDisplayedMonth = -1;
     this.months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     
-    this.columnClasses = [ "minWidth20", "minWidth20", "minWidth20", "minWidth20", "minWidth20",
-                           "minWidth25", "minWidth20", "minWidth20", "minWidth20", "minWidth50", 
-                           "minWidth50", "minWidth50", "minWidth55", "minWidth55", "minWidth62",
-                           "minWidth45" ];
+    this.firstDataRowColumnClasses = [ ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"],
+                           ["minWidth25"], ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth50"], 
+                           ["minWidth50"], ["minWidth50"], ["minWidth55"], ["minWidth55"], ["minWidth62"],
+                           ["minWidth45"] ];
 }
 
 (function(){
@@ -128,7 +128,7 @@ function PlanetPage (planetDataSource, tableName) {
                 var firstLine = true;
                 
                 var hostElement = pageObj.hostElement;
-                var columnClasses = pageObj.columnClasses;
+                var columnClasses = pageObj.firstDataRowColumnClasses;
                 var dataSource = pageObj.dataSource;
                 
                 var delayedAppendData = function (JD, endJD, steps, hostElement, columnClasses, dataSource) {
@@ -185,8 +185,11 @@ function PlanetPage (planetDataSource, tableName) {
                         td.classList.add ("physicalEphemeris");
                 }
                 
-                if (!!classes && !!classes[i])
-                    td.classList.add (classes[i])
+                if (!!classes && !!classes[i]) {
+                    var colClasses = classes[i];
+                    for (var classIndex = 0; classIndex < colClasses.length; classIndex++)
+                        td.classList.add (colClasses[classIndex]);
+                }
             }
             docFragment.appendChild(line);
             this.lastAppendedLine = dataArray;

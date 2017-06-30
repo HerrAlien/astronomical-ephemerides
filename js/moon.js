@@ -205,11 +205,11 @@ var MoonData = {
                 },
         },
         
-        columnClasses : ["minWidth20", "minWidth20", "minWidth20", "minWidth20", "minWidth20", 
-                         "minWidth25", "minWidth20", "minWidth20", "minWidth20", "minWidth20", 
-                         "minWidth20", "minWidth25", "minWidth20", "minWidth30", "minWidth20",
-                         "minWidth20", "minWidth50", "minWidth50", "minWidth50", "minWidth15",
-                         "minWidth20", "minWidth20", "minWidth52", "minWidth52"],
+        firstDataRowColumnClasses : [["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"], 
+                         ["minWidth25"], ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"], 
+                         ["minWidth20"], ["minWidth25"], ["minWidth20"], ["minWidth30"], ["minWidth20"],
+                         ["minWidth20"], ["minWidth50"], ["minWidth50"], ["minWidth50"], ["minWidth15"],
+                         ["minWidth20"], ["minWidth20"], ["minWidth52"], ["minWidth52"]],
  
         lastDisplayedMonth : -1,
         months : ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],

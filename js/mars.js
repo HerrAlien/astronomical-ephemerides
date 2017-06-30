@@ -41,7 +41,7 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
     Page.tableHeaderInfo['17'] = { "0" : {"text" : "DE", "classes" : ["minWidth40", "physicalEphemeris"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physicalEphemeris"]}, "longText" : "Planetocentric declination of Earth" };
     Page.tableHeaderInfo['18'] = { "0" : {"text" : "DS", "classes" : ["minWidth40", "physicalEphemeris"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physicalEphemeris"]}, "longText" : "Planetocentric declination of the Sun" };
     Page.tableHeaderInfo['19'] = { "0" : {"text" : "P" , "classes" : ["minWidth40", "physicalEphemeris"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physicalEphemeris"]}, "longText" : "Position angle of the North Pole" };
-    Page.columnClasses = Page.columnClasses.concat(["minWidth50", "minWidth40", "minWidth40", "minWidth40"]);
+    Page.firstDataRowColumnClasses = Page.firstDataRowColumnClasses.concat([["minWidth50"], ["minWidth40"], ["minWidth40"], ["minWidth40"]]);
 
     Page["old_addPlanetTableHeader"] = Page.addPlanetTableHeader;
     Page["old_prepareOneDayDataObjectForView"] = Page.prepareOneDayDataObjectForView;

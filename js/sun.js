@@ -169,10 +169,10 @@ var SunData = {
                 }
         },
         
-        columnClasses : [ "minWidth20", "minWidth20", "minWidth20", "minWidth20", "minWidth20",
-                           "minWidth25", "minWidth20", "minWidth20", "minWidth50", "minWidth20", 
-                           "minWidth20", "minWidth50", "minWidth50", "minWidth50", "minWidth62",
-                           "minWidth62", "minWidth62", "minWidth30" ],
+        firstDataRowColumnClasses : [ ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"],
+                          ["minWidth25"], ["minWidth20"], ["minWidth20"], ["minWidth50"], ["minWidth20"], 
+                          ["minWidth20"], ["minWidth50"], ["minWidth50"], ["minWidth50"], ["minWidth62"],
+                          ["minWidth62"], ["minWidth62"], ["minWidth30"] ],
                            
         lastDisplayedMonth : -1,
         months : ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
