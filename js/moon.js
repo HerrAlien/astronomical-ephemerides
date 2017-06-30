@@ -155,8 +155,8 @@ var MoonData = {
                     "longText" : "Apparent diameter"
                 },
             "15" :  {
-                    "0" : { "text" :""  , "classes" : ["minWidth20", "positionEphemeris"] },
-                    "1" : { "text" :"''", "classes" : ["minWidth20", "positionEphemeris"] },
+                    "0" : { "text" :""  , "classes" : ["minWidth15", "positionEphemeris"] },
+                    "1" : { "text" :"''", "classes" : ["minWidth30", "positionEphemeris"] },
                     "longText" : "Apparent diameter"
                 },
                 
@@ -171,7 +171,7 @@ var MoonData = {
                     "longText" : "The UTC time of the transit across the meridian"
                 },
             "18" : {
-                    "0" : { "text" :"Set" , "classes" : ["minWidth50", "positionEphemeris"] },
+                    "0" : { "text" :"Set" , "classes" : ["minWidth55", "positionEphemeris"] },
                     "1" : { "text" :"hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
                     "longText" : "The UTC time of setting"
                 },
@@ -207,8 +207,8 @@ var MoonData = {
         
         columnClasses : ["minWidth20", "minWidth20", "minWidth20", "minWidth20", "minWidth20", 
                          "minWidth25", "minWidth20", "minWidth20", "minWidth20", "minWidth20", 
-                         "minWidth20", "minWidth25", "minWidth20", "minWidth20", "minWidth20",
-                         "minWidth20", "minWidth20", "minWidth20", "minWidth20", "minWidth15",
+                         "minWidth20", "minWidth25", "minWidth20", "minWidth30", "minWidth20",
+                         "minWidth20", "minWidth50", "minWidth50", "minWidth50", "minWidth15",
                          "minWidth20", "minWidth20", "minWidth52", "minWidth52"],
  
         lastDisplayedMonth : -1,
