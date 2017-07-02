@@ -526,13 +526,6 @@ input {
     max-width: 800px;
 }
 
-
-.physicalEphemeris, .positionEphemeris
-{
-    display: table-cell;
-}
-
-
 @media (min-width: 1281px)  {
     #MenuLink, #MenuLinkDiv, #MenuLinkDiv img, #MenuLinkDiv::after {
         width: 0px;
@@ -559,8 +552,4 @@ input {
     #promotedMenu{
         display: none;
     }
-}
-
-.physicalEphemerisTitle, .positionEphemerisTitle {
-    display: none;
 }
