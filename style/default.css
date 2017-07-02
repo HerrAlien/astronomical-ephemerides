@@ -285,7 +285,7 @@ input {
 
 /** ----------------------------- M O O N --------------------------------------- **/
 #MoonTable .firstHeaderRow, #MoonTable .secondHeaderRow,
-#MoonTable .firstHeaderRowScrolled, #MoonTable .secondHeaderRowScrolled
+#MoonTable .firstHeaderRowScrolled, #MoonTable .secondHeaderRowScrolled, #Moon
 {
     width: 770px;
 }
