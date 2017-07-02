@@ -553,3 +553,7 @@ input {
         display: none;
     }
 }
+
+.positionEphemerisTitle, .physicalEphemerisTitle {
+    display: none;
+}
