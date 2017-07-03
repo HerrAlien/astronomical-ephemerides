@@ -20,6 +20,19 @@ body {
         right: 0;
         left: 0;
     }
+    
+    #jupiterHorizontalScroller {
+        width: 620px;
+        overflow-x: hidden;
+    }
+    
+    .showPositional {
+    }
+    
+    .showPhysical {
+        margin-left: -600px;
+        margin-right: auto;
+    }
 }
 
 .page {
