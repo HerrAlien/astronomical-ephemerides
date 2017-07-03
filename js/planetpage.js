@@ -23,77 +23,77 @@ function PlanetPage (planetDataSource, tableName) {
                 "longText" : "Date: day"
             },
         "2" : {
-                "0" : { "text" : "\u03B1", "classes" : ["minWidth20", "positionEphemeris"] },
-                "1" : { "text" : "h", "classes" : ["minWidth20", "positionEphemeris"] },
+                "0" : { "text" : "\u03B1", "classes" : ["minWidth20"] },
+                "1" : { "text" : "h", "classes" : ["minWidth20"] },
                 "longText" : "Equatorial coordinates: Right Ascension"
             },
         "3" : {
-                "0" : { "text" : "", "classes" : ["minWidth20", "positionEphemeris"] },
-                "1" : { "text" : "m", "classes" : ["minWidth20", "positionEphemeris"] },
+                "0" : { "text" : "", "classes" : ["minWidth20"] },
+                "1" : { "text" : "m", "classes" : ["minWidth20"] },
                 "longText" : "Equatorial coordinates: Right Ascension"
             },
         "4" : {
-                "0" : { "text" : "", "classes" : ["minWidth20", "positionEphemeris"] },
-                "1" : { "text" : "s", "classes" : ["minWidth20", "positionEphemeris"] },
+                "0" : { "text" : "", "classes" : ["minWidth20"] },
+                "1" : { "text" : "s", "classes" : ["minWidth20"] },
                 "longText" : "Equatorial coordinates: Right Ascension"
             },
         "5" :  {
-                "0" : { "text" : "\u03B4", "classes" : ["minWidth25", "positionEphemeris"] },
-                "1" : { "text" : "\u00B0", "classes" : ["minWidth25", "positionEphemeris"] },
+                "0" : { "text" : "\u03B4", "classes" : ["minWidth25"] },
+                "1" : { "text" : "\u00B0", "classes" : ["minWidth25"] },
                 "longText" : "Equatorial coordinates: Declination"
             },
         "6" :  {
-                "0" : { "text" : "", "classes" : ["minWidth20" , "positionEphemeris"] },
-                "1" : { "text" : "'", "classes" : ["minWidth20", "positionEphemeris"] },
+                "0" : { "text" : "", "classes" : ["minWidth20" ] },
+                "1" : { "text" : "'", "classes" : ["minWidth20"] },
                 "longText" : "Equatorial coordinates: Declination"
             },
         "7" :  {
-                "0" : { "text" : "", "classes" : ["minWidth15"  , "positionEphemeris"] },
-                "1" : { "text" : "''", "classes" : ["minWidth25", "positionEphemeris"] },
+                "0" : { "text" : "", "classes" : ["minWidth15"  ] },
+                "1" : { "text" : "''", "classes" : ["minWidth25"] },
                 "longText" : "Equatorial coordinates: Declination"
             },
         "8" :  {
-                "0" : { "text" : "\u03D5", "classes" : ["minWidth20", "positionEphemeris"] },
-                "1" : { "text" : "''", "classes" : ["minWidth20"    , "positionEphemeris"] },
+                "0" : { "text" : "\u03D5", "classes" : ["minWidth20"] },
+                "1" : { "text" : "''", "classes" : ["minWidth20"    ] },
                 "longText" : "Apparent diameter"
             },
         "9" : {
-                   "0" : { "text" : "Rise", "classes" :  ["minWidth50", "positionEphemeris"] },
-                   "1" : { "text" : "hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
+                   "0" : { "text" : "Rise", "classes" :  ["minWidth50"] },
+                   "1" : { "text" : "hh:mm", "classes" : ["minWidth50"] },
                    "longText" : "The UTC time of rise above horizon"
             },
         "10" : {
-                   "0" : { "text" : "Transit", "classes" : ["minWidth40"  , "positionEphemeris"] },
-                   "1" : { "text" : "hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
+                   "0" : { "text" : "Transit", "classes" : ["minWidth40"  ] },
+                   "1" : { "text" : "hh:mm", "classes" : ["minWidth50"] },
                    "longText" : "The UTC time of the transit across the meridian"
             },
         "11" : {
-                   "0" : { "text" : "Set", "classes" : ["minWidth40"  , "positionEphemeris"] },
-                   "1" : { "text" : "hh:mm", "classes" : ["minWidth55", "positionEphemeris"] },
+                   "0" : { "text" : "Set", "classes" : ["minWidth40"  ] },
+                   "1" : { "text" : "hh:mm", "classes" : ["minWidth55"] },
                    "longText" : "The UTC time of setting"
             },
 
             "12" :  {
-                "0" : { "text" : "\u0394", "classes" : ["minWidth55", "positionEphemeris"] },
-                "1" : { "text" : "A.U.", "classes" : ["minWidth55"  , "positionEphemeris"] },
+                "0" : { "text" : "\u0394", "classes" : ["minWidth55"] },
+                "1" : { "text" : "A.U.", "classes" : ["minWidth55"  ] },
                 "longText" : "Distance to Earth, in astronomical units"
             },
 
             "13" :  {
-                "0" : { "text" : "R", "classes" : ["minWidth55"   , "positionEphemeris"] },
-                "1" : { "text" : "A.U.", "classes" : ["minWidth55", "positionEphemeris"] },
+                "0" : { "text" : "R", "classes" : ["minWidth55"   ] },
+                "1" : { "text" : "A.U.", "classes" : ["minWidth55"] },
                 "longText" : "Distance to Sun, in astronomical units"
             },
 
             "14" :  {
-                "0" : { "text" : "Elong", "classes" : ["minWidth70" , "positionEphemeris"] },
-                "1" : { "text" : "\u00B0", "classes" : ["minWidth62", "positionEphemeris"] },
+                "0" : { "text" : "Elong", "classes" : ["minWidth70" ] },
+                "1" : { "text" : "\u00B0", "classes" : ["minWidth62"] },
                 "longText" : "Elongation angle from the Sun"
             },
 
         "15" :  {
-                "0" : { "text" : "Phase", "classes" : ["minWidth45", "physicalEphemeris"] },
-                "1" : { "text" : "\u00B0", "classes" : ["minWidth45"     , "physicalEphemeris"] },
+                "0" : { "text" : "Phase", "classes" : ["minWidth45"] },
+                "1" : { "text" : "\u00B0", "classes" : ["minWidth45"] },
                 "longText" : "The phase of the planet (illuminated fraction of disk, as seen from Earth)"
             }
     };

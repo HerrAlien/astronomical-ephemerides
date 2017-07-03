@@ -15,126 +15,7 @@
                 location.href = URL + "/";
         })();
     </script>
-    <!--
 
-    <style id="positionalStyle">
-
-@media screen and (max-width: 900px) {
-
-    body {
-        min-width: 590px;
-        width: 100%;
-    }
-
-    #Jupiter, #Mars  {
-        width: 580px;
-    }
-
-    #Jupiter .physicalEphemeris, #Jupiter .physicalEphemerisTitle,
-    #Mars .physicalEphemeris, #Mars .physicalEphemerisTitle
-    {
-        display: none;
-    }
-
-    #Jupiter tr.firstHeaderRow, #Jupiter tr.firstHeaderRowScrolled,
-    #Jupiter tr.secondHeaderRow, #Jupiter tr.secondHeaderRowScrolled,
-    #Mars tr.firstHeaderRow,  #Mars tr.firstHeaderRowScrolled,
-    #Mars tr.secondHeaderRow, #Mars tr.secondHeaderRowScrolled
-    {
-        width: 580px;
-    }
-
-    #Jupiter tr td:nth-child(15), #Mars tr td:nth-child(15)
-    {
-        border-right: none;
-    }
-    
-    .swipeRight {
-        display: none;
-    }
-    
-    .swipeLeft {
-        display: block;
-        position: fixed;
-        height: 100%;
-        width: 32px;
-        right: 15px;
-        cursor: pointer;
-        border-top: solid 1px black;
-        border-bottom: solid 1px black;
-        border-left: solid 1px black;
-        background-image: url("images/left.png");
-        background-repeat: repeat-y;
-        z-index: 2;
-    }
-    
-    .positionEphemerisTitle {
-        display: inline;
-    }
-
-}
-    </style>    
-
-<style id="physicalStyle">
-
-@media screen and (max-width: 900px) {
-
-    #Jupiter .positionEphemeris, #Jupiter .positionEphemerisTitle,
-    #Mars .positionEphemeris, #Mars .positionEphemerisTitle
-    {
-        display: none;
-    }
-
-    #Jupiter tr.firstHeaderRow, #Jupiter tr.firstHeaderRowScrolled,
-    #Jupiter tr.secondHeaderRow, #Jupiter tr.secondHeaderRowScrolled
-    {
-        width: 350px;
-    }
-
-    .swipeRight {
-        display: block;
-        position: fixed;
-        height: 100%;
-        width: 32px;
-        left: 0px;
-        cursor: pointer;
-        z-index: 2;
-
-        border-top: solid 1px black;
-        border-bottom: solid 1px black;
-        border-right: solid 1px black;
-        background-image: url("images/right.png");
-        background-repeat: repeat-y;
-    }
-    
-    .swipeLeft {
-        display: none;
-    }
-    
-    .physicalEphemerisTitle {
-        display: inline;
-    }
-    
-    #Jupiter, #Mars {
-        width: 500px;
-    }
-    
-
-    #Mars tr.firstHeaderRow,  #Mars tr.firstHeaderRowScrolled,
-    #Mars tr.secondHeaderRow, #Mars tr.secondHeaderRowScrolled
-    {
-        width: 290px;
-    }
-
-    body {
-        min-width: 590px;
-        width: 100%;
-    }
-    
-    }
-    
-</style>   
-    -->
 </head>
 
 <body>
@@ -275,20 +156,64 @@
                  </table>
              </div>
              
+          
              <script>
                 
                 var jupiterTable = document.getElementById("JupiterTable");
+                // get the header cells ....
+                var cellsToHide_physical = false;
+                var cellsToHide_positional = false;
+                
+                function updateCellsToHide() {
+                    cellsToHide_physical = [];
+                    cellsToHide_positional = [];
+                    for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
+                        var cells = jupiterTable.rows[rowIndex].cells;
+                        for (var colIndex = 16; colIndex < cells.length; colIndex++)
+                            cellsToHide_physical.push(cells[colIndex]);
+                        for (var colIndex = 0; colIndex < 16; colIndex++)
+                            cellsToHide_positional.push(cells[colIndex]);
+                    }
+                }
+                
+                
                 document.getElementById("jupiterPositional").onclick = function () {
                     jupiterTable.classList.remove ("showPhysical");
                     jupiterTable.classList.add ("showPositional");
+                    if (!cellsToHide_physical)
+                        updateCellsToHide();
+                        
+                    for (var i = 0; i < cellsToHide_physical.length; i++) {
+                        cellsToHide_physical[i].classList.remove("displayTableCell");
+                        cellsToHide_physical[i].classList.add("displayNone");
+                    }
+                        
+                    for (var i = 0; i < cellsToHide_positional.length; i++) {
+                        cellsToHide_positional[i].classList.remove("displayNone");
+                        cellsToHide_positional[i].classList.add("displayTableCell");
+                    }
                 }
              
                 document.getElementById("jupiterPhysical").onclick = function () {
                     jupiterTable.classList.remove ("showPositional");
                     jupiterTable.classList.add ("showPhysical");
+                    if (!cellsToHide_physical)
+                        updateCellsToHide();
+
+                    for (var i = 0; i < cellsToHide_physical.length; i++) {
+                        cellsToHide_physical[i].classList.remove("displayNone");  
+                        cellsToHide_physical[i].classList.add("displayTableCell");
+                    }
+                        
+                    for (var i = 0; i < cellsToHide_positional.length; i++) {
+                        cellsToHide_positional[i].classList.remove("displayTableCell");
+                        cellsToHide_positional[i].classList.add("displayNone");
+                    }
+                        
+                        
                 }
              </script>
-             
+         
         </div>
 
         <div id="Saturn" class="page" title="Saturn">
@@ -468,42 +393,7 @@
     }
     
     updateTimeAtAajsLoad();
-    
-    
-    var physicalStyle = document.getElementById("physicalStyle");
-    var father = physicalStyle.parentNode;
-    var physicalStyleText = physicalStyle.textContent;
-    father.removeChild(physicalStyle);
-
-    var positionalStyle = document.getElementById("positionalStyle");
-    var positionalStyleText = positionalStyle.textContent;
-    father.removeChild(positionalStyle);
-    
-    var activeStyle = document.createElement("style");
-    activeStyle.textContent = positionalStyleText;
-    father.appendChild(activeStyle);
-    
-    var wasPositional = true;
-    
-    function toggleEphemeris(){
-        father.removeChild(activeStyle);
-        activeStyle = document.createElement("style");
-        if (wasPositional)
-            activeStyle.textContent = physicalStyleText;
-        else
-            activeStyle.textContent = positionalStyleText;
-        
-        father.appendChild(activeStyle);
-        wasPositional = !wasPositional;
-    }
-    
-    var pagesWithPhysicalEphemeris = ["Jupiter", "Mars"];
-    for (var pageIndex = 0; pageIndex < pagesWithPhysicalEphemeris.length; pageIndex++){
-        var divs =  document.getElementById(pagesWithPhysicalEphemeris[pageIndex]).getElementsByTagName("div");
-        for (var i = 0; i < divs.length; i++)
-            divs[i].onclick = toggleEphemeris;
-    }
-        
+      
 </script>
 
 <script type="text/JavaScript" src="js/aajs.js" async=""></script>

@@ -570,3 +570,11 @@ input {
 .positionEphemerisTitle, .physicalEphemerisTitle {
     display: none;
 }
+
+.displayNone {
+    visibility: hidden;
+}
+
+.displayTableCell {
+    visibility: inherit;
+}
