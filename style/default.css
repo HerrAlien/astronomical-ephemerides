@@ -661,6 +661,7 @@ input {
 .physicalPositionalButtonsHolder {
     height: 40px; 
     width: 420px; 
+    display: inline-block;
 }
 
 .activeButton {
