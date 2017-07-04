@@ -95,6 +95,17 @@ function PlanetPage (planetDataSource, tableName) {
                 "0" : { "text" : "Phase", "classes" : ["minWidth45"] },
                 "1" : { "text" : "\u00B0", "classes" : ["minWidth45"] },
                 "longText" : "The phase of the planet (illuminated fraction of disk, as seen from Earth)"
+            },
+        "16" : {
+                "0" : { "text" : "Date", "classes" : ["minWidth20"] },
+                "1" : { "text" : "", "classes" : ["minWidth20"] },
+                "longText" : "Date: month"
+            } ,
+
+        "17" : {
+                "0" : { "text" : "", "classes" : ["minWidth20"] },
+                "1" : { "text" : "", "classes" : ["minWidth20"] },
+                "longText" : "Date: day"
             }
     };
     
