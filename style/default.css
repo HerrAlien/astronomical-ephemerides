@@ -609,7 +609,7 @@ input {
     #JupiterTable tr.secondHeaderRow,
     #JupiterTable tr.firstHeaderRowScrolled, 
     #JupiterTable tr.secondHeaderRowScrolled, 
-    #Jupiter, body{
+    #Jupiter{
         width: 635px;
         background: #ffffff;
     }
