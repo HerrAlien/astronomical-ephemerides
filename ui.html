@@ -18,6 +18,8 @@
             padding-left: 10px; 
             width: 190px; 
             text-align: center;        
+            cursor: pointer;
+            user-select: none;
         }
     
         .positionalButton {
@@ -32,7 +34,12 @@
         .physicalPositionalButtonsHolder {
             height: 40px; 
             width: 420px; 
-            cursor: pointer;
+        }
+        
+        .activeButton {
+            background: #000000;
+            color: #ffffff;
+            cursor: default;
         }
         
     </style>
@@ -45,7 +52,7 @@
 
 
     <div class="physicalPositionalButtonsHolder">
-        <div class="positionalButton">Positional ephemeris</div>
+        <div class="positionalButton activeButton">Positional ephemeris</div>
         <div class="physicalButton">Physical ephemeris</div>
     </div>
 
