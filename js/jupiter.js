@@ -37,8 +37,8 @@ var JupiterData = new PlanetData({ number: 4, name: "Jupiter",
     var Page = new PlanetPage (JupiterData, "JupiterTable");
         Pages["Jupiter"] = Page;
 
-    Page.tableHeaderInfo['16'] = { "0" : {"text" : "Date", "classes" :  ["minWidth20", "physSeenAtSmallWidth"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth"]}, "longText" : "Date: month" };
-    Page.tableHeaderInfo['17'] = { "0" : {"text" :"" , "classes" :      ["minWidth20", "physSeenAtSmallWidth"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth"]}, "longText" : "Date: day" };
+    Page.tableHeaderInfo['16'] = { "0" : {"text" : "Date", "classes" :  ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: month" };
+    Page.tableHeaderInfo['17'] = { "0" : {"text" :"" , "classes" :      ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: day" };
     Page.tableHeaderInfo['18'] = { "0" : {"text" : "L0-S1", "classes" : ["minWidth50", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth50", "physPosHidden"]}, "longText" : "Longitude of central meridian, System 1" };
     Page.tableHeaderInfo['19'] = { "0" : {"text" :"L0-S2" , "classes" : ["minWidth50", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth50", "physPosHidden"]}, "longText" : "Longitude of central meridian, System 2" };
     Page.tableHeaderInfo['20'] = { "0" : {"text" :"DE"    , "classes" : ["minWidth40", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physPosHidden"]}, "longText" : "Planetocentric declination of Earth" };

@@ -592,7 +592,7 @@ input {
         display: inline;
     }
     
-    .showPhysical .physSeenAtSmallWidth {
+    .physSeenAtSmallWidth {
         display: table-cell;
     }
     
