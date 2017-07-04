@@ -10,7 +10,7 @@ th {
 body {
     font-family: Verdana;
     font-size: 16px;
-    min-width: 610px;
+    min-width: 650px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -46,8 +46,8 @@ body {
 .showPositional #JupiterTable tr.secondHeaderRowScrolled, 
 .showPositional #Jupiter{
 
-    width: 935px;
-    background: #eeeeee;
+    width: 635px;
+    background: #ffffff;
 }
     
     .showPositional {
@@ -285,7 +285,7 @@ background: #eeeeee;
 
 tr.firstHeaderRow, tr.secondHeaderRow, tr.firstHeaderRowScrolled, tr.secondHeaderRowScrolled {
     background: #ffffff;
-	height: 20px;    
+	height: 21px;    
 }
 
 input {
