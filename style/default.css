@@ -40,15 +40,14 @@ body {
         overflow-x: hidden;
     }
 
-.showPositional #JupiterTable tr.firstHeaderRow, 
-.showPositional #JupiterTable tr.secondHeaderRow,
-.showPositional #JupiterTable tr.firstHeaderRowScrolled, 
-.showPositional #JupiterTable tr.secondHeaderRowScrolled, 
-.showPositional #Jupiter{
-
-    width: 635px;
-    background: #ffffff;
-}
+    .showPositional #JupiterTable tr.firstHeaderRow, 
+    .showPositional #JupiterTable tr.secondHeaderRow,
+    .showPositional #JupiterTable tr.firstHeaderRowScrolled, 
+    .showPositional #JupiterTable tr.secondHeaderRowScrolled, 
+    .showPositional #Jupiter{
+        width: 635px;
+        background: #ffffff;
+    }
     
     .showPositional {
     }
@@ -579,10 +578,6 @@ input {
     #promotedMenu{
         display: none;
     }
-}
-
-.positionEphemerisTitle, .physicalEphemerisTitle {
-    display: none;
 }
 
 .displayNone {
