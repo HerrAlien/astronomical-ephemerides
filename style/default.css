@@ -351,6 +351,10 @@ input {
 
 @media print {
 
+    .physicalPositionalButtonsHolder {
+        display: none;
+    }
+
     .fixed {
         position: relative;
         width: 100%;
@@ -629,4 +633,38 @@ input {
     #promotedMenu{
         display: none;
     }
+}
+
+
+    
+.positionalButton, .physicalButton {
+    height:23px; 
+    border: solid 1px #000000; 
+    float: left; 
+    padding-top: 2px; 
+    padding-left: 10px; 
+    width: 190px; 
+    text-align: center;        
+    cursor: pointer;
+    user-select: none;
+}
+
+.positionalButton {
+    border-radius: 5px 0px 0px 5px; 
+    padding-right: 10px; 
+}
+
+.physicalButton {
+    border-radius: 0px 5px 5px 0px;
+}
+
+.physicalPositionalButtonsHolder {
+    height: 40px; 
+    width: 420px; 
+}
+
+.activeButton {
+    background: #000000;
+    color: #ffffff;
+    cursor: default;
 }
