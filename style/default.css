@@ -552,6 +552,11 @@ input {
     max-width: 800px;
 }
 
+    .buttonsToSwitchPosPhys {
+        display: none;
+    }
+
+
 @media (min-width: 1281px)  {
     #MenuLink, #MenuLinkDiv, #MenuLinkDiv img, #MenuLinkDiv::after {
         width: 0px;
@@ -571,6 +576,10 @@ input {
 @media  (max-width: 936px)  {
     .leastImportant, .lessImportant{
         display: none;
+    }
+    
+    .buttonsToSwitchPosPhys {
+        display: inline;
     }
 }
 
