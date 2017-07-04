@@ -29,6 +29,15 @@ body {
         width: 620px;
         overflow-x: hidden;
     }
+
+.showPositional #JupiterTable tr.firstHeaderRow, 
+.showPositional #JupiterTable tr.secondHeaderRow,
+.showPositional #JupiterTable tr.firstHeaderRowScrolled, 
+.showPositional #JupiterTable tr.secondHeaderRowScrolled, 
+.showPositional #Jupiter{
+
+    width: 935px;
+}
     
     .showPositional {
     }
@@ -487,16 +496,8 @@ input {
 }
 
 /* ---------------------------- J U P I T E R ---------------------- */
-#JupiterTable tr.firstHeaderRow, 
-#JupiterTable tr.secondHeaderRow,
-#JupiterTable tr.firstHeaderRowScrolled, 
-#JupiterTable tr.secondHeaderRowScrolled, 
-#Jupiter{
 
-    width: 870px;
-}
-
-#Jupiter  td:nth-of-type(16), #Jupiter  td:nth-of-type(17), #Jupiter  td:nth-of-type(18), #Jupiter  td:nth-of-type(19), #Jupiter  td:nth-of-type(20){
+#Jupiter  td:nth-of-type(16), #Jupiter  td:nth-of-type(18), #Jupiter  td:nth-of-type(19), #Jupiter  td:nth-of-type(20), #Jupiter  td:nth-of-type(21), #Jupiter  td:nth-of-type(22){
     border-right: solid 1px black;
 }
 

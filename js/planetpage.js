@@ -95,19 +95,8 @@ function PlanetPage (planetDataSource, tableName) {
                 "0" : { "text" : "Phase", "classes" : ["minWidth45"] },
                 "1" : { "text" : "\u00B0", "classes" : ["minWidth45"] },
                 "longText" : "The phase of the planet (illuminated fraction of disk, as seen from Earth)"
-            },
-        "16" : {
-                "0" : { "text" : "Date", "classes" : ["minWidth20"] },
-                "1" : { "text" : "", "classes" : ["minWidth20"] },
-                "longText" : "Date: month"
-            } ,
-
-        "17" : {
-                "0" : { "text" : "", "classes" : ["minWidth20"] },
-                "1" : { "text" : "", "classes" : ["minWidth20"] },
-                "longText" : "Date: day"
             }
-    };
+        };
     
     this.lastDisplayedMonth = -1;
     this.months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -298,6 +287,9 @@ function PlanetPage (planetDataSource, tableName) {
             
             displayableLine[di++] = AAJS.Numerical.RoundTo1Decimal (obj.Elongation * 180 / Math.PI) + " " + cardinalCoordinateRelativeToSun;
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.Phase);
+            
+            displayableLine[di++] = displayableLine[0];
+            displayableLine[di++] = displayableLine[1];
 
             return displayableLine;
     };
