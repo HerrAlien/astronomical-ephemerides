@@ -507,6 +507,10 @@ input {
     border-right: solid 1px black;
 }
 
+#Jupiter {
+    width: 880px;
+}
+
 #GalileanMoons, #SaturnMoons {
     width: 100%;
     max-width: 800px;
@@ -588,7 +592,7 @@ input {
         display: inline;
     }
     
-    .physSeenAtSmallWidth {
+    .showPhysical .physSeenAtSmallWidth {
         display: table-cell;
     }
     
