@@ -18,14 +18,23 @@ body {
 @media screen {
     #scroller {
         position: fixed;
-        top: 70px;
         bottom: 0;
         overflow-y: auto;
         min-width: 590px;
         right: 0;
         left: 0;
+        z-index: 2;
+        background: #ffffff;
     }
     
+    .scrollerNoMenu {
+        top: 0px;
+    }
+    
+    .scrollerWithMenu {
+        top: 70px;
+    }
+
     #jupiterHorizontalScroller {
         width: 630px;
         overflow-x: hidden;

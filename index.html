@@ -47,7 +47,7 @@
     </div>
     
     <div class="clear maxWidth">&nbsp;</div>
-    <div id="scroller">
+    <div id="scroller" class="scrollerWithMenu">
         <div id="more" class="page" title="Menu">
             <span class="title">Menu</span><br/>
             <ul id="menuList">
@@ -362,8 +362,29 @@
     
     var scroller = window;
     scroller = document.getElementById("scroller");
+    var oldScrollerTop = 0;
+    var scrollerOnTop = false;
     
     scroller.addEventListener("scroll", function() {
+    
+        if (scroller.scrollTop > oldScrollerTop) {
+            if (!scrollerOnTop) {
+                scroller.classList.remove ("scrollerWithMenu");
+                scroller.classList.add ("scrollerNoMenu");
+                scrollerOnTop = true;
+            }
+        }
+        else {
+            if (scrollerOnTop) {
+                scroller.classList.remove ("scrollerNoMenu");
+                scroller.classList.add ("scrollerWithMenu");
+                scrollerOnTop = false;
+            }
+        }
+        
+            oldScrollerTop = scroller.scrollTop;
+       
+    
         if (previousPage) {
             var pageObj = Pages [previousPage.id];
             if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
