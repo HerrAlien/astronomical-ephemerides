@@ -4,6 +4,7 @@
 
 th {
     transition: 0s;
+    background: #ffffff;
 }
 
 body {
@@ -26,7 +27,7 @@ body {
     }
     
     #jupiterHorizontalScroller {
-        width: 620px;
+        width: 630px;
         overflow-x: hidden;
     }
 
@@ -37,13 +38,14 @@ body {
 .showPositional #Jupiter{
 
     width: 935px;
+    background: #eeeeee;
 }
     
     .showPositional {
     }
     
     .showPhysical {
-        margin-left: -600px;
+        margin-left: -634px;
         margin-right: auto;
     }
 }
@@ -226,24 +228,22 @@ font-size: 36px;
 
 tr.firstHeaderRow{
     margin-top: -41px;
-    border-top: 1px solid black;
-
+    background: #ffffff;
 }
 
 tr.secondHeaderRow {
     margin-top: -21px;
-    border-bottom: 1px solid black;
+    background: #ffffff;
 }
 
 tr.firstHeaderRowScrolled{
     margin-top: -105px;
-    border-top: 1px solid black;
-
+    background: #ffffff;
 }
 
 tr.secondHeaderRowScrolled{
     margin-top: -85px;
-    border-bottom: 1px solid black;
+    background: #ffffff;
 }
 
 table {

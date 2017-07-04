@@ -288,9 +288,6 @@ function PlanetPage (planetDataSource, tableName) {
             displayableLine[di++] = AAJS.Numerical.RoundTo1Decimal (obj.Elongation * 180 / Math.PI) + " " + cardinalCoordinateRelativeToSun;
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.Phase);
             
-            displayableLine[di++] = displayableLine[0];
-            displayableLine[di++] = displayableLine[1];
-
             return displayableLine;
     };
 
