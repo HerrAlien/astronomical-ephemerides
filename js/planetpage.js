@@ -191,71 +191,7 @@ function PlanetPage (planetDataSource) {
         // reset the data - transits depend on the longitude
         this.dataSource.reset();
     };
-		
-	PlanetPage.prototype["prepareLineForView"] = function (line, JD) {
-
-           var displayableLine = [];
-
-            displayableLine[0] = "";
-            if (line[0] != this.lastDisplayedMonth) { // first day of the month
-                displayableLine[0] = this.months[line[0]]; // set displayableLine[0] to the name of the month
-                this.lastDisplayedMonth = line[0];
-            }
-
-            // copy the day verbatim
-            displayableLine[1] = line[1];
-           
-            var di = 2;
-            var si = 2;
-            var sexagesimalRA = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
-            displayableLine[di++] = sexagesimalRA.Ord3 ;
-            displayableLine[di++] = sexagesimalRA.Ord2 
-            displayableLine[di++] = sexagesimalRA.Ord1;
-
-            var sexagesimalDec = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
-            displayableLine[di++] = sexagesimalDec.Ord3 ;
-            displayableLine[di++] = sexagesimalDec.Ord2;
-            displayableLine[di++] = sexagesimalDec.Ord1;
-			
-//			displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals(line[si++]);
-            
-            var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
-            displayableLine[di++] = sexagesimalDiam.Ord1;
-            
-            var sexagesimalTransit = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
-            displayableLine[di++] = sexagesimalTransit.Ord3;
-            displayableLine[di++] = sexagesimalTransit.Ord2;
-            displayableLine[di++] = sexagesimalTransit.Ord1;
-            
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
-            
-            // is it east or is it west?
-            var cardinalCoordinateRelativeToSun = "W";
-            
-            var sunRA = SunData.getRA(JD);
-            var planetRA = line[2];
-            // this is probably because we have one angle in q1, the other in q4.
-            if (Math.abs(sunRA - planetRA) >= 12) // hours ...
-            {
-                sunRA += 12;
-                planetRA += 12;
-                
-                if (sunRA > 24)
-                    sunRA -= 24;
-                if (planetRA > 24)
-                    planetRA -= 24;
-            }
-            
-            if (sunRA < planetRA )
-                cardinalCoordinateRelativeToSun = "E";
-            
-            displayableLine[di++] = AAJS.Numerical.RoundTo1Decimal (line[si++] * 180 / Math.PI) + " " + cardinalCoordinateRelativeToSun;
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
-
-            return displayableLine;
-    };
-    
+		   
 	PlanetPage.prototype["prepareOneDayDataObjectForView"] = function (obj, JD) {
 
            var displayableLine = [];
