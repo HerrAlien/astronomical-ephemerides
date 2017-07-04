@@ -36,7 +36,7 @@ body {
     }
 
     #jupiterHorizontalScroller {
-        width: 630px;
+        width: 880px;
         overflow-x: hidden;
     }
 
@@ -45,7 +45,7 @@ body {
     .showPositional #JupiterTable tr.firstHeaderRowScrolled, 
     .showPositional #JupiterTable tr.secondHeaderRowScrolled, 
     .showPositional #Jupiter{
-        width: 635px;
+        width: 880px;
         background: #ffffff;
     }
     
@@ -53,8 +53,6 @@ body {
     }
     
     .showPhysical {
-        margin-left: -634px;
-        margin-right: auto;
     }
 }
 
@@ -552,9 +550,17 @@ input {
     max-width: 800px;
 }
 
-    .buttonsToSwitchPosPhys {
-        display: none;
-    }
+.buttonsToSwitchPosPhys, .physSeenAtSmallWidth {
+    display: none;
+}
+
+.physPosHidden {
+    visibility: visible;
+}
+
+.physPosVisible {
+    visibility: visible;
+}
 
 
 @media (min-width: 1281px)  {
@@ -581,18 +587,39 @@ input {
     .buttonsToSwitchPosPhys {
         display: inline;
     }
+    
+    .physSeenAtSmallWidth {
+        display: table-cell;
+    }
+    
+    .physPosHidden {
+        visibility: hidden;
+    }
+
+    #jupiterHorizontalScroller {
+        width: 630px;
+        overflow-x: hidden;
+    }
+
+    .showPositional #JupiterTable tr.firstHeaderRow, 
+    .showPositional #JupiterTable tr.secondHeaderRow,
+    .showPositional #JupiterTable tr.firstHeaderRowScrolled, 
+    .showPositional #JupiterTable tr.secondHeaderRowScrolled, 
+    .showPositional #Jupiter{
+        width: 635px;
+        background: #ffffff;
+    }
+    
+    .showPhysical {
+        margin-left: -634px;
+        margin-right: auto;
+    }
+
+
 }
 
 @media  (max-width: 741px)  {
     #promotedMenu{
         display: none;
     }
-}
-
-.displayNone {
-    visibility: hidden;
-}
-
-.displayTableCell {
-    visibility: inherit;
 }

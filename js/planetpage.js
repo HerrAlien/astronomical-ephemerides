@@ -125,8 +125,6 @@ function PlanetPage (planetDataSource, tableName) {
                 
                 this.addTableHeader (this.hostElement, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
 
-                var firstLine = true;
-                
                 var hostElement = pageObj.hostElement;
                 var columnClasses = pageObj.firstDataRowColumnClasses;
                 var dataSource = pageObj.dataSource;
@@ -142,14 +140,8 @@ function PlanetPage (planetDataSource, tableName) {
                         if (JD >= endJD)
                             break;
                         
-                        var dataRowClasses = false;
-                        if (firstLine && i == 0) {
-                            firstLine = false;
-                            dataRowClasses = columnClasses;
-                        }
-                        
                         var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JD, true), JD);
-                        pageObj.appendLine (preparedData, dataRowClasses, docFragment);
+                        pageObj.appendLine (preparedData, columnClasses, docFragment);
                     }
                     
                     pageObj.addTableHeader (docFragment, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
