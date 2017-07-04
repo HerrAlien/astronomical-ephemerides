@@ -10,7 +10,7 @@ th {
 body {
     font-family: Verdana;
     font-size: 16px;
-    min-width: 770px;
+    min-width: 880px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -567,7 +567,7 @@ input {
 }
 
 
-@media (min-width: 1281px)  {
+@media screen and (min-width: 1281px)  {
     #MenuLink, #MenuLinkDiv, #MenuLinkDiv img, #MenuLinkDiv::after {
         width: 0px;
         height: 0px;
@@ -577,13 +577,13 @@ input {
     }
 }
 
-@media  (max-width: 1280px) {
+@media  screen and  (max-width: 1280px) {
     .leastImportant {
         display: none;
     }
 }
 
-@media  (max-width: 936px)  {
+@media  screen and  (max-width: 936px)  {
     .leastImportant, .lessImportant{
         display: none;
     }
@@ -605,15 +605,18 @@ input {
         overflow-x: hidden;
     }
 
-    .showPositional #JupiterTable tr.firstHeaderRow, 
-    .showPositional #JupiterTable tr.secondHeaderRow,
-    .showPositional #JupiterTable tr.firstHeaderRowScrolled, 
-    .showPositional #JupiterTable tr.secondHeaderRowScrolled, 
-    .showPositional #Jupiter{
+    #JupiterTable tr.firstHeaderRow, 
+    #JupiterTable tr.secondHeaderRow,
+    #JupiterTable tr.firstHeaderRowScrolled, 
+    #JupiterTable tr.secondHeaderRowScrolled, 
+    #Jupiter, body{
         width: 635px;
         background: #ffffff;
     }
     
+    body {
+        min-width: 635px;
+    }
     .showPhysical {
         margin-left: -634px;
         margin-right: auto;
@@ -622,7 +625,7 @@ input {
 
 }
 
-@media  (max-width: 741px)  {
+@media  screen and  (max-width: 741px)  {
     #promotedMenu{
         display: none;
     }
