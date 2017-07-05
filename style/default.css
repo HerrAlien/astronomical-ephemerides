@@ -621,14 +621,12 @@ input {
     }
     
     body {
-        min-width: 635px;
+        min-width: 800px;
     }
     .showPhysical {
         margin-left: -634px;
         margin-right: auto;
     }
-
-
 }
 
 @media  screen and  (max-width: 741px)  {
