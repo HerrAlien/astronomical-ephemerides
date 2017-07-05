@@ -34,18 +34,24 @@ var JupiterData = new PlanetData({ number: 4, name: "Jupiter",
     
 							   
 (function () {
-    var Page = new PlanetPage (JupiterData);
-        Pages["JupiterPage"] = Page;
+    var Page = new PlanetPage (JupiterData, "JupiterTable");
+        Pages["Jupiter"] = Page;
 
-    Page.tableHeaderInfo['16'] = { "0" : "L0-S1", "1" : "\u00B0", "longText" : "Longitude of central meridian, System 1" };
-    Page.tableHeaderInfo['17'] = { "0" : "L0-S2", "1" : "\u00B0", "longText" : "Longitude of central meridian, System 2" };
-    Page.tableHeaderInfo['18'] = { "0" : "DE", "1" : "\u00B0", "longText" : "Planetocentric declination of Earth" };
-    Page.tableHeaderInfo['19'] = { "0" : "DS", "1" : "\u00B0", "longText" : "Planetocentric declination of the Sun" };
-    Page.tableHeaderInfo['20'] = { "0" : "P", "1" : "\u00B0", "longText" : "Position angle of the North Pole" };
+    Page.tableHeaderInfo['16'] = { "0" : {"text" : "Date", "classes" :  ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: month" };
+    Page.tableHeaderInfo['17'] = { "0" : {"text" :"" , "classes" :      ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: day" };
+    Page.tableHeaderInfo['18'] = { "0" : {"text" : "L0-S1", "classes" : ["minWidth50", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth50", "physPosHidden"]}, "longText" : "Longitude of central meridian, System 1" };
+    Page.tableHeaderInfo['19'] = { "0" : {"text" :"L0-S2" , "classes" : ["minWidth50", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth50", "physPosHidden"]}, "longText" : "Longitude of central meridian, System 2" };
+    Page.tableHeaderInfo['20'] = { "0" : {"text" :"DE"    , "classes" : ["minWidth40", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physPosHidden"]}, "longText" : "Planetocentric declination of Earth" };
+    Page.tableHeaderInfo['21'] = { "0" : {"text" :"DS"    , "classes" : ["minWidth45", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth45", "physPosHidden"]}, "longText" : "Planetocentric declination of the Sun" };
+    Page.tableHeaderInfo['22'] = { "0" : {"text" :"P"     , "classes" : ["minWidth45", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth45", "physPosHidden"]}, "longText" : "Position angle of the North Pole" };
+    
+    Page.firstDataRowColumnClasses = Page.firstDataRowColumnClasses.concat([["minWidth20", "physSeenAtSmallWidth"], ["minWidth20", "physSeenAtSmallWidth"], ["minWidth50"], ["minWidth50"], ["minWidth40"], ["minWidth40"], ["minWidth40"]]);
 
     Page["old_prepareOneDayDataObjectForView"] = Page.prepareOneDayDataObjectForView;
     Page.prepareOneDayDataObjectForView = function (obj, JD) {
         var preparedLine = this.old_prepareOneDayDataObjectForView(obj, JD);
+        preparedLine[preparedLine.length] = preparedLine[0]
+        preparedLine[preparedLine.length] = preparedLine[1]
         preparedLine[preparedLine.length] = Math.round(obj.CentralMeridianApparentLongitude_System1 * 10) / 10;
         preparedLine[preparedLine.length] = Math.round(obj.CentralMeridianApparentLongitude_System2 * 10) / 10;
         preparedLine[preparedLine.length] = Math.round(obj.EarthDeclination * 10) / 10;

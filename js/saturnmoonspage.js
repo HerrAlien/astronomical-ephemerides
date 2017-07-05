@@ -17,7 +17,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 // planet object - {number, name, semidiameterFunctionName}
 
 (function(){
-var SaturnMoonsPage = new MoonsPage ( "SaturnMoons",
+var SaturnMoonsPage = new MoonsPage ( "SaturnMoonsContainer",
         SaturnMoonsData,
         {'Mimas' : {'d' : '', 'color' : 'blue', 'lastPos' : {'X' : 0, 'Y' : 0} },
                     'Enceladus' : {'d' : '', 'color' : 'red', 'lastPos' : {'X' : 0, 'Y' : 0}}, 
@@ -27,6 +27,6 @@ var SaturnMoonsPage = new MoonsPage ( "SaturnMoons",
                     'Titan' : {'d' : '', 'color' : 'grey', 'lastPos' : {'X' : 0, 'Y' : 0}}}
 );
 
-Pages["SaturnMoonsPage"] = SaturnMoonsPage;
+Pages["SaturnMoons"] = SaturnMoonsPage;
 SaturnMoonsPage.planetFraction = 1/23.0;
 })();

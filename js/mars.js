@@ -34,14 +34,16 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
     
     
 (function () {
-    var Page = new PlanetPage (MarsData);
-    Pages["MarsPage"] = Page;
+    var Page = new PlanetPage (MarsData, "MarsTable");
+    Pages["Mars"] = Page;
     
-   Page.tableHeaderInfo['16'] = { "0" : "L0", "1" : "\u00B0", "longText" : "Longitude of central meridian" };
-    Page.tableHeaderInfo['17'] = { "0" : "DE", "1" : "\u00B0", "longText" : "Planetocentric declination of Earth" };
-    Page.tableHeaderInfo['18'] = { "0" : "DS", "1" : "\u00B0", "longText" : "Planetocentric declination of the Sun" };
-    Page.tableHeaderInfo['19'] = { "0" : "P", "1" : "\u00B0", "longText" : "Position angle of the North Pole" };
-    
+    Page.tableHeaderInfo['16'] = { "0" : {"text" : "Date", "classes" :  ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: month" };
+    Page.tableHeaderInfo['17'] = { "0" : {"text" :"" , "classes" :      ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: day" };
+    Page.tableHeaderInfo['18'] = { "0" : {"text" : "L0", "classes" : ["minWidth50", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth50", "physPosHidden"]}, "longText" : "Longitude of central meridian" };
+    Page.tableHeaderInfo['19'] = { "0" : {"text" : "DE", "classes" : ["minWidth40", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physPosHidden"]}, "longText" : "Planetocentric declination of Earth" };
+    Page.tableHeaderInfo['20'] = { "0" : {"text" : "DS", "classes" : ["minWidth40", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physPosHidden"]}, "longText" : "Planetocentric declination of the Sun" };
+    Page.tableHeaderInfo['21'] = { "0" : {"text" : "P" , "classes" : ["minWidth40", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physPosHidden"]}, "longText" : "Position angle of the North Pole" };
+    Page.firstDataRowColumnClasses = Page.firstDataRowColumnClasses.concat([["minWidth20", "physSeenAtSmallWidth"], ["minWidth20", "physSeenAtSmallWidth"], ["minWidth50"], ["minWidth40"], ["minWidth40"], ["minWidth40"]]);
 
     Page["old_addPlanetTableHeader"] = Page.addPlanetTableHeader;
     Page["old_prepareOneDayDataObjectForView"] = Page.prepareOneDayDataObjectForView;
@@ -56,6 +58,8 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
     
     Page.prepareOneDayDataObjectForView = function (obj, JD) {
         var preparedLine = this.old_prepareOneDayDataObjectForView(obj, JD);
+        preparedLine[preparedLine.length] = preparedLine[0];
+        preparedLine[preparedLine.length] = preparedLine[1];
         preparedLine[preparedLine.length] = Math.round(obj.CentralMeridianLongitude * 10) / 10;
         preparedLine[preparedLine.length] = Math.round(obj.EarthDeclination * 10) / 10;
         preparedLine[preparedLine.length] = Math.round(obj.SunDeclination * 10) / 10;

@@ -1,103 +1,110 @@
-function PlanetPage (planetDataSource) {
+function PlanetPage (planetDataSource, tableName) {
     if (planetDataSource) {
         this.dataSource = planetDataSource;
         this.hostElement = document.getElementById(this.dataSource.planet.name);
     }
+    
+    if (tableName)
+        this.hostElement = document.getElementById(tableName);
+    
     this.pageRendered = false;
     this.lastAppendedLine = false;
 
     this.tableHeaderInfo = {
         "0" : {
-                "0" : "Date",
-                "1" : "",
+                "0" : { "text" : "Date", "classes" : ["minWidth20"] },
+                "1" : { "text" : "", "classes" : ["minWidth20"] },
                 "longText" : "Date: month"
             } ,
 
         "1" : {
-                "0" : "",
-                "1" : "",
+                "0" : { "text" : "", "classes" : ["minWidth20"] },
+                "1" : { "text" : "", "classes" : ["minWidth20"] },
                 "longText" : "Date: day"
             },
         "2" : {
-                "0" : "\u03B1",
-                "1" : "h",
+                "0" : { "text" : "\u03B1", "classes" : ["minWidth20"] },
+                "1" : { "text" : "h", "classes" : ["minWidth20"] },
                 "longText" : "Equatorial coordinates: Right Ascension"
             },
         "3" : {
-                "0" : "",
-                "1" : "m",
+                "0" : { "text" : "", "classes" : ["minWidth20"] },
+                "1" : { "text" : "m", "classes" : ["minWidth20"] },
                 "longText" : "Equatorial coordinates: Right Ascension"
             },
         "4" : {
-                "0" : "",
-                "1" : "s",
+                "0" : { "text" : "", "classes" : ["minWidth20"] },
+                "1" : { "text" : "s", "classes" : ["minWidth20"] },
                 "longText" : "Equatorial coordinates: Right Ascension"
             },
         "5" :  {
-                "0" : "\u03B4",
-                "1" : "\u00B0",
+                "0" : { "text" : "\u03B4", "classes" : ["minWidth25"] },
+                "1" : { "text" : "\u00B0", "classes" : ["minWidth25"] },
                 "longText" : "Equatorial coordinates: Declination"
             },
         "6" :  {
-                "0" : "",
-                "1" : "'",
+                "0" : { "text" : "", "classes" : ["minWidth20" ] },
+                "1" : { "text" : "'", "classes" : ["minWidth20"] },
                 "longText" : "Equatorial coordinates: Declination"
             },
         "7" :  {
-                "0" : "",
-                "1" : "''",
+                "0" : { "text" : "", "classes" : ["minWidth15"  ] },
+                "1" : { "text" : "''", "classes" : ["minWidth25"] },
                 "longText" : "Equatorial coordinates: Declination"
             },
         "8" :  {
-                "0" : "\u03D5",
-                "1" : "''",
+                "0" : { "text" : "\u03D5", "classes" : ["minWidth20"] },
+                "1" : { "text" : "''", "classes" : ["minWidth20"    ] },
                 "longText" : "Apparent diameter"
             },
-
-            
         "9" : {
-                "0" : "Rise",
-                "1" : "hh:mm",
-                "longText" : "The UTC time of rise above horizon"
+                   "0" : { "text" : "Rise", "classes" :  ["minWidth50"] },
+                   "1" : { "text" : "hh:mm", "classes" : ["minWidth50"] },
+                   "longText" : "The UTC time of rise above horizon"
             },
         "10" : {
-                "0" : "Transit",
-                "1" : "hh:mm",
-                "longText" : "The UTC time of the transit across the meridian"
+                   "0" : { "text" : "Transit", "classes" : ["minWidth40"  ] },
+                   "1" : { "text" : "hh:mm", "classes" : ["minWidth50"] },
+                   "longText" : "The UTC time of the transit across the meridian"
             },
         "11" : {
-                "0" : "Set",
-                "1" : "hh:mm",
-                "longText" : "The UTC time of setting"
+                   "0" : { "text" : "Set", "classes" : ["minWidth40"  ] },
+                   "1" : { "text" : "hh:mm", "classes" : ["minWidth55"] },
+                   "longText" : "The UTC time of setting"
             },
 
             "12" :  {
-                "0" : "\u0394",
-                "1" : "A.U.",
+                "0" : { "text" : "\u0394", "classes" : ["minWidth55"] },
+                "1" : { "text" : "A.U.", "classes" : ["minWidth55"  ] },
                 "longText" : "Distance to Earth, in astronomical units"
             },
 
             "13" :  {
-                "0" : "R",
-                "1" : "A.U.",
+                "0" : { "text" : "R", "classes" : ["minWidth55"   ] },
+                "1" : { "text" : "A.U.", "classes" : ["minWidth55"] },
                 "longText" : "Distance to Sun, in astronomical units"
             },
 
             "14" :  {
-                "0" : "Elong.",
-                "1" : "\u00B0",
+                "0" : { "text" : "Elong", "classes" : ["minWidth70" ] },
+                "1" : { "text" : "\u00B0", "classes" : ["minWidth62"] },
                 "longText" : "Elongation angle from the Sun"
             },
 
         "15" :  {
-                "0" : "Phase",
-                "1" : "",
+                "0" : { "text" : "Phase", "classes" : ["minWidth45"] },
+                "1" : { "text" : "\u00B0", "classes" : ["minWidth45"] },
                 "longText" : "The phase of the planet (illuminated fraction of disk, as seen from Earth)"
             }
-    };
-
+        };
+    
     this.lastDisplayedMonth = -1;
     this.months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    
+    this.firstDataRowColumnClasses = [ ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"],
+                           ["minWidth25"], ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth50"], 
+                           ["minWidth50"], ["minWidth50"], ["minWidth55"], ["minWidth55"], ["minWidth62"],
+                           ["minWidth45"] ];
 }
 
 (function(){
@@ -115,12 +122,14 @@ function PlanetPage (planetDataSource) {
             this.lastAppendedLine = false;
             if (!this.pageRendered) {
                 this.reset();
+                
                 this.addTableHeader (this.hostElement, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
 
                 var hostElement = pageObj.hostElement;
+                var columnClasses = pageObj.firstDataRowColumnClasses;
                 var dataSource = pageObj.dataSource;
                 
-                var delayedAppendData = function (JD, endJD, steps, hostElement, dataSource) {
+                var delayedAppendData = function (JD, endJD, steps, hostElement, columnClasses, dataSource) {
                     if (JD >= endJD)
                         return;
                     
@@ -132,22 +141,21 @@ function PlanetPage (planetDataSource) {
                             break;
                         
                         var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JD, true), JD);
-                        // preparedData = pageObj.prepareLineForView(pageObj.dataSource.getDataForJD(JD), JD);
-                        pageObj.appendLine (preparedData, docFragment);
+                        pageObj.appendLine (preparedData, columnClasses, docFragment);
                     }
                     
                     pageObj.addTableHeader (docFragment, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
                     
                     hostElement.appendChild(docFragment);
                     
-                    setTimeout (function() {delayedAppendData (JD, endJD, steps, hostElement, dataSource); },1 );
+                    setTimeout (function() {delayedAppendData (JD, endJD, steps, hostElement, columnClasses, dataSource); },1 );
                 }
-                delayedAppendData (JD, JD + daysAfter, 20, hostElement, dataSource);
+                delayedAppendData (JD, JD + daysAfter, 20, hostElement, columnClasses, dataSource);
                 this.pageRendered = true;
             }
         };
     
-    PlanetPage.prototype["appendLine"] = function (dataArray, docFragment) {
+    PlanetPage.prototype["appendLine"] = function (dataArray, classes, docFragment) {
             var line = this.hostElement.ownerDocument.createElement("tr");
             if (!docFragment)
                 docFragment = this.hostElement;
@@ -160,23 +168,44 @@ function PlanetPage (planetDataSource) {
                 td.textContent = dataArray[i];
                 if (changedMonth)
                     td.classList.add("topBorder");
+
+                if (i > 1)
+                {
+                    if (i < 15)
+                        td.classList.add ("positionEphemeris");
+                    else
+                        td.classList.add ("physicalEphemeris");
+                }
+                
+                if (!!classes && !!classes[i]) {
+                    var colClasses = classes[i];
+                    for (var classIndex = 0; classIndex < colClasses.length; classIndex++)
+                        td.classList.add (colClasses[classIndex]);
+                }
             }
             docFragment.appendChild(line);
             this.lastAppendedLine = dataArray;
         };
         
-    PlanetPage.prototype["addTableHeader"] = function (table, classes) {
+    PlanetPage.prototype["addTableHeader"] = function (table, rowClasses, columnClasses) {
         var rows = [];
         for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
             var row = this.addNodeChild (table, "tr");
-            var rowClasses = classes[rowIndex];
+            var currentRowClasses = rowClasses[rowIndex];
             for (var classIndex = 0; classIndex < rowClasses.length; classIndex++)
-                row.classList.add (rowClasses[classIndex]);
+                row.classList.add (currentRowClasses[classIndex]);
 
             for (var headerKey in this.tableHeaderInfo) {
-                var th = this.addNodeChild (row, "th", this.tableHeaderInfo[headerKey][rowIndex]);
+                var th = this.addNodeChild (row, "th", this.tableHeaderInfo[headerKey][rowIndex]['text']);
                 th['title'] = this.tableHeaderInfo[headerKey].longText;
                 th.onclick = function () { alert (this.title); }
+                
+                var columnsClasses = this.tableHeaderInfo[headerKey][rowIndex]['classes']
+                if (!!columnsClasses)
+                {
+                    for (var columnsClassesIndex in columnsClasses)
+                        th.classList.add (columnsClasses[columnsClassesIndex]);
+                }
             }
             rows[rowIndex] = row;
         }
@@ -191,71 +220,7 @@ function PlanetPage (planetDataSource) {
         // reset the data - transits depend on the longitude
         this.dataSource.reset();
     };
-		
-	PlanetPage.prototype["prepareLineForView"] = function (line, JD) {
-
-           var displayableLine = [];
-
-            displayableLine[0] = "";
-            if (line[0] != this.lastDisplayedMonth) { // first day of the month
-                displayableLine[0] = this.months[line[0]]; // set displayableLine[0] to the name of the month
-                this.lastDisplayedMonth = line[0];
-            }
-
-            // copy the day verbatim
-            displayableLine[1] = line[1];
-           
-            var di = 2;
-            var si = 2;
-            var sexagesimalRA = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
-            displayableLine[di++] = sexagesimalRA.Ord3 ;
-            displayableLine[di++] = sexagesimalRA.Ord2 
-            displayableLine[di++] = sexagesimalRA.Ord1;
-
-            var sexagesimalDec = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
-            displayableLine[di++] = sexagesimalDec.Ord3 ;
-            displayableLine[di++] = sexagesimalDec.Ord2;
-            displayableLine[di++] = sexagesimalDec.Ord1;
-			
-//			displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals(line[si++]);
-            
-            var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
-            displayableLine[di++] = sexagesimalDiam.Ord1;
-            
-            var sexagesimalTransit = AAJS.Numerical.ToSexagesimal(Math.round(line[si++] * 3600)/3600);
-            displayableLine[di++] = sexagesimalTransit.Ord3;
-            displayableLine[di++] = sexagesimalTransit.Ord2;
-            displayableLine[di++] = sexagesimalTransit.Ord1;
-            
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
-            
-            // is it east or is it west?
-            var cardinalCoordinateRelativeToSun = "W";
-            
-            var sunRA = SunData.getRA(JD);
-            var planetRA = line[2];
-            // this is probably because we have one angle in q1, the other in q4.
-            if (Math.abs(sunRA - planetRA) >= 12) // hours ...
-            {
-                sunRA += 12;
-                planetRA += 12;
-                
-                if (sunRA > 24)
-                    sunRA -= 24;
-                if (planetRA > 24)
-                    planetRA -= 24;
-            }
-            
-            if (sunRA < planetRA )
-                cardinalCoordinateRelativeToSun = "E";
-            
-            displayableLine[di++] = AAJS.Numerical.RoundTo1Decimal (line[si++] * 180 / Math.PI) + " " + cardinalCoordinateRelativeToSun;
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (line[si++]);
-
-            return displayableLine;
-    };
-    
+		   
 	PlanetPage.prototype["prepareOneDayDataObjectForView"] = function (obj, JD) {
 
            var displayableLine = [];
@@ -314,7 +279,7 @@ function PlanetPage (planetDataSource) {
             
             displayableLine[di++] = AAJS.Numerical.RoundTo1Decimal (obj.Elongation * 180 / Math.PI) + " " + cardinalCoordinateRelativeToSun;
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.Phase);
-
+            
             return displayableLine;
     };
 

@@ -19,8 +19,8 @@ var UranusData = new PlanetData({ number: 6, name: "Uranus",
 
 							   
 (function () {
-    var Page = new PlanetPage (UranusData);
-        Pages["UranusPage"] = Page;
+    var Page = new PlanetPage (UranusData, "UranusTable");
+        Pages["Uranus"] = Page;
 
 
 })();

@@ -17,7 +17,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 // planet object - {number, name, semidiameterFunctionName}
 
 (function(){
-var GalileanMoonsPage = new MoonsPage ( "GalileanMoons",
+var GalileanMoonsPage = new MoonsPage ( "GalileanMoonsContainer",
         GalileanMoonsData,
         {'Io' : {'d' : '', 'color' : 'blue', 'lastPos' : {'X' : 0, 'Y' : 0} },
                     'Europa' : {'d' : '', 'color' : 'red', 'lastPos' : {'X' : 0, 'Y' : 0}}, 
@@ -25,5 +25,5 @@ var GalileanMoonsPage = new MoonsPage ( "GalileanMoons",
                     'Callisto' : {'d' : '', 'color' : 'black', 'lastPos' : {'X' : 0, 'Y' : 0}}}
 );
 
-Pages["GalileanMoonsPage"] = GalileanMoonsPage;
+Pages["GalileanMoons"] = GalileanMoonsPage;
 })();

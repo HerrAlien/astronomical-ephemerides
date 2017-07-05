@@ -38,7 +38,7 @@ function PlanetData(planet)
 			var planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (JD, 
 																			this.planet.number, 
 																			true);
-			
+
 			data['RA'] = planetaryDetails.ApparentGeocentricRA;
 			data['Dec'] = planetaryDetails.ApparentGeocentricDeclination;
 			
