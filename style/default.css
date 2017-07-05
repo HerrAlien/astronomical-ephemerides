@@ -35,7 +35,7 @@ body {
         top: 70px;
     }
 
-    #jupiterHorizontalScroller {
+    #jupiterHorizontalScroller , #marsHorizontalScroller{
         width: 880px;
         overflow-x: hidden;
         margin-left: auto;
@@ -503,7 +503,7 @@ input {
 #Mars{
     width: 832px;
 }
-#Mars  td:nth-of-type(16), #Mars  td:nth-of-type(17), #Mars  td:nth-of-type(18), #Mars  td:nth-of-type(19){
+#Mars  td:nth-of-type(16), #Mars  td:nth-of-type(18), #Mars  td:nth-of-type(19), #Mars  td:nth-of-type(20), #Mars  td:nth-of-type(21){
     border-right: solid 1px black;
 }
 
@@ -606,7 +606,7 @@ input {
         visibility: hidden;
     }
 
-    #jupiterHorizontalScroller {
+    #jupiterHorizontalScroller, #marsHorizontalScroller {
         width: 630px;
     }
 
@@ -614,7 +614,12 @@ input {
     #JupiterTable tr.secondHeaderRow,
     #JupiterTable tr.firstHeaderRowScrolled, 
     #JupiterTable tr.secondHeaderRowScrolled, 
-    #Jupiter{
+    #Jupiter,
+    #MarsTable tr.firstHeaderRow, 
+    #MarsTable tr.secondHeaderRow,
+    #MarsTable tr.firstHeaderRowScrolled, 
+    #MarsTable tr.secondHeaderRowScrolled, 
+    #Mars    {
         width: 635px;
         background: #ffffff;
     }
