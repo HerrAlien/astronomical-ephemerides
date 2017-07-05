@@ -19,209 +19,320 @@
 </head>
 
 <body>
-    <a href="#HomePage"><div id="HomeLinkButton" class="topmenulink"><img src="images/home-3.svg"></div></a>
-    <a href="#settingsPage"><div id="SettingsLink" class="topmenulink"><img src="images/settings.svg"></div></a>
+    <a href="#home"><div id="HomeLinkButton" class="topmenulink"><img src="images/home-3.svg"></div></a>
+    <a href="#settings"><div id="SettingsLink" class="topmenulink"><img src="images/settings.svg"></div></a>
     <a href="zip/ephemerides.7z"><div id="DownloadLink" class="topmenulink"><img src="images/download.svg"></div></a>
-    <a href="#menuContainer" id="MenuLink"><div id="MenuLinkDiv" class="topmenulink"><img src="images/menu.svg"></div></a>
+    <a href="#more" id="MenuLink"><div id="MenuLinkDiv" class="topmenulink"><img src="images/menu.svg"></div></a>
     <div id="promotedMenu">
         <span class="leastImportant">
         </span>
-            <a href="#SunPage">Sun</a>
-            <a href="#MoonPage">Moon</a>
-            <a href="#MoonEclipsesPage">Moon Eclipses</a>
+            <a href="#Sun">Sun</a>
+            <a href="#Moon">Moon</a>
+            <a href="#LunarEclipses">Lunar Eclipses</a>
         <span class="lessImportant">
-            <a href="#MercuryPage">Mercury</a>
-            <a href="#VenusPage">Venus</a>
-            <a href="#MarsPage">Mars</a>
+            <a href="#Mercury">Mercury</a>
+            <a href="#Venus">Venus</a>
+            <a href="#Mars">Mars</a>
         </span>
-            <a href="#JupiterPage">Jupiter</a>
+            <a href="#Jupiter">Jupiter</a>
         <span class="leastImportant">
-            <a href="#GalileanMoonsPage">Galilean Moons</a>
+            <a href="#GalileanMoons">Galilean Moons</a>
         </span>
-            <a href="#SaturnPage">Saturn</a>
+            <a href="#Saturn">Saturn</a>
         <span class="leastImportant">
-            <a href="#SaturnMoonsPage">Saturn Moons</a>
-            <a href="#UranusPage">Uranus</a>
-            <a href="#NeptunePage">Neptune</a>
+            <a href="#SaturnMoons">Saturn Moons</a>
+            <a href="#Uranus">Uranus</a>
+            <a href="#Neptune">Neptune</a>
         </span>
     </div>
     
     <div class="clear maxWidth">&nbsp;</div>
-    <div id="menuContainer" class="page" title="Menu">
-        <span class="title">Menu</span><br/>
-        <ul id="menu">
-            <li><a href="#HomePage" id="HomeLink">Home</a></li>
-            <li><a href="#SunPage">Sun</a></li>
-            <li><a href="#MoonPage">Moon</a></li>
-            <li><a href="#MercuryPage">Mercury</a></li>
-            <li><a href="#VenusPage">Venus</a></li>
-            <li><a href="#MarsPage">Mars</a></li>
-            <li><a href="#JupiterPage">Jupiter</a></li>
-            <li><a href="#SaturnPage">Saturn</a></li>
-            <li><a href="#UranusPage">Uranus</a></li>
-            <li><a href="#NeptunePage">Neptune</a></li>
-            <li><a href="#GalileanMoonsPage">Galilean Moons</a></li>
-            <li><a href="#SaturnMoonsPage">Saturn Moons</a></li>
-            <li><a href="#MoonEclipsesPage">Moon Eclipses</a></li>
-        </ul>
-		<div class="clear">&nbsp;</div>
-    </div>
-    <div id="settingsPage" class="page" title="Settings">
-        <span class="title">Settings</span><br/>
-        <label>Latitude [&deg;]: <br/><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
-        <label>Longitude [&deg;]: <br/><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
-        <label>Altitude [m]: <br/><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
-        <div class="clear">&nbsp;</div>
-        <Label>Start from: <br/><input type="date" id="startingDate"></input></label>
-        <Label>increment in days: <br/><input type="number" id="incrementDate"></input></label>
-        <Label>for number of days:<br/><input type="number" id="numberOfDays"></input></label>
-        <div class="clear">&nbsp;</div>
-        <input type="button" id = "applySettingsChanges" value="Apply"></input>
-        <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
-        <div class="clear">&nbsp;</div>
-    </div>
-    
-    <div id="JSDisabledPage" title="Enable JavaScript">
-        <span class="title">Enable JavaScript</span>
-        <br/>
-        The page uses JavaScript to do all the computations. Please enable JavaScript from your browser's settings.
-        
-    </div>
-
-    
-    <div id="HomePage" class="page" title="Astronomical ephemerides">
-    <span class="title">Astronomical Ephemerides</span><br/><br/>
-        Astronomical Ephemerides - a JavaScript utility to calculate various solar system data. It uses an <a href="https://bitbucket.org/herr_alien/jsaaplus" target="_blank">Emscripten port</a> of the <a href="http://www.naughter.com/aa.html" target="_blank">AA+ library</a>. More about Emscripten <a href="http://kripken.github.io/emscripten-site/" target="_blank">here</a>.<br/>
-    <br/>
-    The following rules stand for the data computed by the application:
-    <ul>
-        <li>Unless specified otherwise, all times (transits, eclipses, occultations etc.) are in UTC.</li>
-        <li>Transits are computed for any given day as the first transit to occur after the given date. This means that they might occur in the following day.</li>
-    </ul>
-        <div id="credits">
-        Copyright (C) 2017  Herr_Alien &lt;alexandru.garofide@gmail.com&gt;<br/>
-    <br/>
-        This program is free software: you can redistribute it and/or modify
-        it under the terms of the GNU Affero General Public License as published by
-        the Free Software Foundation, either version 3 of the License, or
-        (at your option) any later version.<br/>
-    <br/>
-        This program is distributed in the hope that it will be useful,
-        but WITHOUT ANY WARRANTY; without even the implied warranty of
-        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-        GNU Affero General Public License for more details.<br/>
-    <br/>
-        You should have received a copy of the GNU Affero General Public License
-        along with this program.  If not, see &lt;<a href="https://www.gnu.org/licenses/agpl.html">https://www.gnu.org/licenses/agpl.html</a>&gt;.
+    <div id="scroller" class="scrollerWithMenu">
+        <div id="more" class="page" title="Menu">
+            <span class="title">Menu</span><br/>
+            <ul id="menuList">
+                <li><a href="#home" id="HomeLink">Home</a></li>
+                <li><a href="#Sun">Sun</a></li>
+                <li><a href="#Moon">Moon</a></li>
+                <li><a href="#Mercury">Mercury</a></li>
+                <li><a href="#Venus">Venus</a></li>
+                <li><a href="#Mars">Mars</a></li>
+                <li><a href="#Jupiter">Jupiter</a></li>
+                <li><a href="#Saturn">Saturn</a></li>
+                <li><a href="#Uranus">Uranus</a></li>
+                <li><a href="#Neptune">Neptune</a></li>
+                <li><a href="#GalileanMoons">Galilean Moons</a></li>
+                <li><a href="#SaturnMoons">Saturn Moons</a></li>
+                <li><a href="#LunarEclipses">Lunar Eclipses</a></li>
+            </ul>
+            <div class="clear">&nbsp;</div>
         </div>
+        <div id="settings" class="page" title="Settings">
+            <span class="title">Settings</span><br/>
+            <label>Latitude [&deg;]: <br/><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
+            <label>Longitude [&deg;]: <br/><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
+            <label>Altitude [m]: <br/><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
+            <div class="clear">&nbsp;</div>
+            <Label>Start from: <br/><input type="date" id="startingDate"></input></label>
+            <Label>increment in days: <br/><input type="number" id="incrementDate"></input></label>
+            <Label>for number of days:<br/><input type="number" id="numberOfDays"></input></label>
+            <div class="clear">&nbsp;</div>
+            <input type="button" id = "applySettingsChanges" value="Apply"></input>
+            <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
+            <div class="clear">&nbsp;</div>
+        </div>
+        
+        <div id="JSDisabledPage" title="Enable JavaScript">
+            <span class="title">Enable JavaScript</span>
+            <br/>
+            The page uses JavaScript to do all the computations. Please enable JavaScript from your browser's settings.
+            
+        </div>
+
+        
+        <div id="home" class="page" title="Astronomical ephemerides">
+        <span class="title">Astronomical Ephemerides</span><br/><br/>
+            Astronomical Ephemerides - a JavaScript utility to calculate various solar system data. It uses an <a href="https://bitbucket.org/herr_alien/jsaaplus" target="_blank">Emscripten port</a> of the <a href="http://www.naughter.com/aa.html" target="_blank">AA+ library</a>. More about Emscripten <a href="http://kripken.github.io/emscripten-site/" target="_blank">here</a>.<br/>
+        <br/>
+        The following rules stand for the data computed by the application:
+        <ul>
+            <li>Unless specified otherwise, all times (transits, eclipses, occultations etc.) are in UTC.</li>
+            <li>Transits are computed for any given day as the first transit to occur after the given date. This means that they might occur in the following day.</li>
+        </ul>
+            <div id="credits">
+            Copyright (C) 2017  Herr_Alien &lt;alexandru.garofide@gmail.com&gt;<br/>
+        <br/>
+            This program is free software: you can redistribute it and/or modify
+            it under the terms of the GNU Affero General Public License as published by
+            the Free Software Foundation, either version 3 of the License, or
+            (at your option) any later version.<br/>
+        <br/>
+            This program is distributed in the hope that it will be useful,
+            but WITHOUT ANY WARRANTY; without even the implied warranty of
+            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+            GNU Affero General Public License for more details.<br/>
+        <br/>
+            You should have received a copy of the GNU Affero General Public License
+            along with this program.  If not, see &lt;<a href="https://www.gnu.org/licenses/agpl.html">https://www.gnu.org/licenses/agpl.html</a>&gt;.
+            </div>
+        </div>
+        
+        <div id="Sun" class="page invisible" title="Sun">
+            <span class="title">Sun</span>
+            <table id="SunTable" cellspacing="0" cellpadding="0" class="planetTable">
+            <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+             </table>
+        </div>
+        <div id="Mercury" class="page" title="Mercury">
+            <span class="title">Mercury</span><br/>
+            <table id="MercuryTable" cellspacing="0" cellpadding="0" class="planetTable">
+            <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+            </table>
+        </div>
+
+        <div id="Venus" class="page" title="Venus">
+            <span class="title">Venus</span>
+            <table id="VenusTable" cellspacing="0" cellpadding="0" class="planetTable">
+            <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+            </table>
+        </div>
+
+        <div id="Mars" class="page" title="Mars">
+            <div class="swipeRight"></div> <div class="swipeLeft"></div>
+            <span class="title">Mars</span>
+            
+            <div id="marsHorizontalScroller">
+                <table id="MarsTable" cellspacing="0" cellpadding="0" class="planetTable">
+                <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+               </table>
+               
+                <div class="physicalPositionalButtonsHolder">
+                        <div id="jupiterPositional" class="positionalButton activeButton buttonsToSwitchPosPhys">Positional ephemeris</div>
+                        <div id="jupiterPhysical" class="physicalButton buttonsToSwitchPosPhys">Physical ephemeris</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="Jupiter" class="page" title="Jupiter">
+
+
+            <span class="title">Jupiter</span>
+            
+            
+            <div id="jupiterHorizontalScroller">
+                <table id="JupiterTable" cellspacing="0" cellpadding="0" class="planetTable showPositional">
+                <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+                 </table>
+                <div class="physicalPositionalButtonsHolder">
+                    <div id="jupiterPositional" class="positionalButton activeButton buttonsToSwitchPosPhys">Positional ephemeris</div>
+                    <div id="jupiterPhysical" class="physicalButton buttonsToSwitchPosPhys">Physical ephemeris</div>
+                </div>
+           </div>
+           
+
+             <script>
+             
+            function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
+                var pageElement = document.getElementById(pageId);
+                this.table = pageElement.getElementsByClassName("planetTable")[0];
+                this.cellsToHide_physical = false;
+                this.cellsToHide_positional = false;
+                
+                this.positionalButton = pageElement.getElementsByClassName("positionalButton")[0];
+                this.physicalButton = pageElement.getElementsByClassName("physicalButton")[0];
+                if (typeof firstPhysicalColumnIndex == 'undefined')
+                    this.firstPhysicalColumnIndex = 16;
+                else
+                    this.firstPhysicalColumnIndex = firstPhysicalColumnIndex;
+            }
+            
+            (function() {
+                PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
+                    this.cellsToHide_physical = [];
+                    this.cellsToHide_positional = [];
+                    for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
+                        var cells = this.table.rows[rowIndex].cells;
+                        for (var colIndex = 16; colIndex < cells.length; colIndex++)
+                            this.cellsToHide_physical.push(cells[colIndex]);
+                        for (var colIndex = 0; colIndex < 16; colIndex++)
+                            this.cellsToHide_positional.push(cells[colIndex]);
+                    }
+                }
+                
+                PhysicalPositionalToggler.prototype['init'] = function () {
+                
+                    var _togglerObj = this;
+                
+                    this.positionalButton.onclick = function () {
+                        var togglerObj = _togglerObj;
+                        togglerObj.positionalButton.classList.add("activeButton");
+                        togglerObj.physicalButton.classList.remove("activeButton");
+                        togglerObj.table.classList.remove ("showPhysical");
+                        togglerObj.table.classList.add ("showPositional");
+                        if (!togglerObj.cellsToHide_physical)
+                            togglerObj.updateCellsToHide();
+                            
+                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
+                            togglerObj.cellsToHide_physical[i].classList.remove("physPosVisible");
+                            togglerObj.cellsToHide_physical[i].classList.add("physPosHidden");
+                        }
+                            
+                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
+                            togglerObj.cellsToHide_positional[i].classList.remove("physPosHidden");
+                            togglerObj.cellsToHide_positional[i].classList.add("physPosVisible");
+                        }
+                    }
+                 
+                    this.physicalButton.onclick = function () {
+                        var togglerObj = _togglerObj;
+                        togglerObj.physicalButton.classList.add("activeButton");
+                        togglerObj.positionalButton.classList.remove("activeButton");
+
+                        togglerObj.table.classList.remove ("showPositional");
+                        togglerObj.table.classList.add ("showPhysical");
+                        if (!togglerObj.cellsToHide_physical)
+                            togglerObj.updateCellsToHide();
+
+                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
+                            togglerObj.cellsToHide_physical[i].classList.remove("physPosHidden");  
+                            togglerObj.cellsToHide_physical[i].classList.add("physPosVisible");
+                        }
+                            
+                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
+                            togglerObj.cellsToHide_positional[i].classList.remove("physPosVisible");
+                            togglerObj.cellsToHide_positional[i].classList.add("physPosHidden");
+                        }
+                    }
+                }
+            })();
+                
+            (function() {
+                var jupiterToggler = new PhysicalPositionalToggler("Jupiter");
+                jupiterToggler.init();
+
+                var marsToggler = new PhysicalPositionalToggler("Mars");
+                marsToggler.init();
+            })();    
+                
+             </script>
+         
+        </div>
+
+        <div id="Saturn" class="page" title="Saturn">
+            <span class="title">Saturn</span>
+            <table id="SaturnTable" cellspacing="0" cellpadding="0" class="planetTable">
+            <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+             </table>
+        </div>
+
+       <div id="Uranus" class="page" title="Uranus">
+            <span class="title">Uranus</span>
+            <table id="UranusTable" cellspacing="0" cellpadding="0" class="planetTable">
+            <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+             </table>
+        </div>
+
+       <div id="Neptune" class="page" title="Neptune">
+            <span class="title">Neptune</span>
+            <table id="NeptuneTable" cellspacing="0" cellpadding="0" class="planetTable">
+            <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+             </table>
+        </div>
+
+       <div id="Moon" class="page" title="Moon">
+            <span class="title">Moon</span>
+            <table id="MoonTable" cellspacing="0" cellpadding="0"  class="planetTable">
+            <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
+             </table>
+        </div>
+
+       <div id="GalileanMoons" class="page" title="Visibility of Galilean Moons">
+            <span class="title">Elongations of Galilean Moons</span>
+            <br/>The following colors were used to represent each moon:
+            <ul>
+                <li>Io is represented in <font color="blue"><b>blue color</b></font></li>
+                <li>Europa is represented in <font color="red"><b>red color</b></font></li>
+                <li>Ganymede is represented in <font color="green"><b>green color</b></font></li>
+                <li>Callisto is represented in <font color="black"><b>black color</b></font></li>
+            </ul>
+            Jupiter is represented in <font color="orange"><b>orange color</b></font>
+            <br/>
+            <br/>
+            <div id="GalileanMoonsContainer">
+                <div class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</div>
+             </div>
+        </div>
+
+       <div id="SaturnMoons" class="page" title="Visibility of Saturn Moons">
+            <span class="title">Elongations of Saturn's Moons</span>
+            <br/>The following colors were used to represent each moon:
+            <ul>
+                <li>Mimas is represented in <font color="blue"><b>blue color</b></font></li>
+                <li>Enceladus is represented in <font color="red"><b>red color</b></font></li>
+                <li>Tethys is represented in <font color="green"><b>green color</b></font></li>
+                <li>Dione is represented in <font color="black"><b>black color</b></font></li>
+                <li>Rhea is represented in <font color="magenta"><b>magenta color</b></font></li>
+                <li>Titan is represented in <font color="grey"><b>grey color</b></font></li>
+            </ul>
+            Saturn is represented in <font color="orange"><b>orange color</b></font>
+            <br/>
+            <br/>
+            <div id="SaturnMoonsContainer">
+                <div class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</div>
+             </div>
+        </div>
+        
+       <div id="LunarEclipses" class="page" title="Lunar Eclipses">
+            <span class="title">Lunar Eclipses</span>
+            <br/> Accuracy of the times displayed below is about 1 minute.
+            <br/> 
+            <br/> 
+            <div id="MoonEclipsesContainer" class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</div>
+        </div>
+
     </div>
     
-    <div id="SunPage" class="page invisible" title="Sun">
-        <span class="title">Sun</span>
-        <table id="Sun" cellspacing="0" cellpadding="0" class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-         </table>
-    </div>
-    <div id="MercuryPage" class="page" title="Mercury">
-        <span class="title">Mercury</span><br/>
-        <table id="Mercury" cellspacing="0" cellpadding="0" class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-        </table>
-    </div>
-
-    <div id="VenusPage" class="page" title="Venus">
-        <span class="title">Venus</span>
-        <table id="Venus" cellspacing="0" cellpadding="0" class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-        </table>
-    </div>
-
-    <div id="MarsPage" class="page" title="Mars">
-        <span class="title">Mars</span>
-        <table id="Mars" cellspacing="0" cellpadding="0" class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-       </table>
-    </div>
-
-    <div id="JupiterPage" class="page" title="Jupiter">
-        <span class="title">Jupiter</span>
-        <table id="Jupiter" cellspacing="0" cellpadding="0" class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-         </table>
-    </div>
-
-    <div id="SaturnPage" class="page" title="Saturn">
-        <span class="title">Saturn</span>
-        <table id="Saturn" cellspacing="0" cellpadding="0" class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-         </table>
-    </div>
-
-   <div id="UranusPage" class="page" title="Uranus">
-        <span class="title">Uranus</span>
-        <table id="Uranus" cellspacing="0" cellpadding="0" class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-         </table>
-    </div>
-
-   <div id="NeptunePage" class="page" title="Neptune">
-        <span class="title">Neptune</span>
-        <table id="Neptune" cellspacing="0" cellpadding="0" class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-         </table>
-    </div>
-
-   <div id="MoonPage" class="page" title="Moon">
-        <span class="title">Moon</span>
-        <table id="Moon" cellspacing="0" cellpadding="0"  class="planetTable">
-        <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
-         </table>
-    </div>
-
-   <div id="GalileanMoonsPage" class="page" title="Visibility of Galilean Moons">
-        <span class="title">Elongations of Galilean Moons</span>
-        <br/>The following colors were used to represent each moon:
-        <ul>
-            <li>Io is represented in <font color="blue"><b>blue color</b></font></li>
-            <li>Europa is represented in <font color="red"><b>red color</b></font></li>
-            <li>Ganymede is represented in <font color="green"><b>green color</b></font></li>
-            <li>Callisto is represented in <font color="black"><b>black color</b></font></li>
-        </ul>
-        Jupiter is represented in <font color="orange"><b>orange color</b></font>
-        <br/>
-        <br/>
-        <div id="GalileanMoons">
-            <div class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</div>
-         </div>
-    </div>
-
-   <div id="SaturnMoonsPage" class="page" title="Visibility of Saturn Moons">
-        <span class="title">Elongations of Saturn's Moons</span>
-        <br/>The following colors were used to represent each moon:
-        <ul>
-            <li>Mimas is represented in <font color="blue"><b>blue color</b></font></li>
-            <li>Enceladus is represented in <font color="red"><b>red color</b></font></li>
-            <li>Tethys is represented in <font color="green"><b>green color</b></font></li>
-            <li>Dione is represented in <font color="black"><b>black color</b></font></li>
-            <li>Rhea is represented in <font color="magenta"><b>magenta color</b></font></li>
-            <li>Titan is represented in <font color="grey"><b>grey color</b></font></li>
-        </ul>
-        Saturn is represented in <font color="orange"><b>orange color</b></font>
-        <br/>
-        <br/>
-        <div id="SaturnMoons">
-            <div class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</div>
-         </div>
-    </div>
-    
-   <div id="MoonEclipsesPage" class="page" title="Moon Eclipses">
-        <span class="title">Moon Eclipses</span>
-        <br/> Accuracy of the times displayed below is about 1 minute.
-        <br/> 
-        <br/> 
-        <div id="MoonEclipses" class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</div>
-    </div>
-
 	</body>
 
 </html>
@@ -292,11 +403,35 @@
                                                           "cancelable": false }));
     } 
     
-    window.addEventListener("scroll", function() {
+    var scroller = window;
+    scroller = document.getElementById("scroller");
+    var oldScrollerTop = 0;
+    var scrollerOnTop = false;
+    
+    scroller.addEventListener("scroll", function() {
+    
+        if (scroller.scrollTop > oldScrollerTop) {
+            if (!scrollerOnTop) {
+                scroller.classList.remove ("scrollerWithMenu");
+                scroller.classList.add ("scrollerNoMenu");
+                scrollerOnTop = true;
+            }
+        }
+        else {
+            if (scrollerOnTop) {
+                scroller.classList.remove ("scrollerNoMenu");
+                scroller.classList.add ("scrollerWithMenu");
+                scrollerOnTop = false;
+            }
+        }
+        
+            oldScrollerTop = scroller.scrollTop;
+       
+    
         if (previousPage) {
             var pageObj = Pages [previousPage.id];
             if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
-                if (document.body.scrollTop >= 110) {
+                if (scroller.scrollTop >= 110) {
                     // get the first two rows
                     pageObj.hostElement.rows[0].classList.remove ("firstHeaderRow");
                     pageObj.hostElement.rows[0].classList.add ("firstHeaderRowScrolled");
@@ -322,12 +457,10 @@
     }
     
     updateTimeAtAajsLoad();
-        
+      
 </script>
 
 <script type="text/JavaScript" src="js/aajs.js" async=""></script>
-
-<script type="text/JavaScript" src="js/risetransitset.js"></script>
 
 <script type="text/JavaScript" src="js/planetdata.js"></script>
 <script type="text/JavaScript" src="js/planetpage.js"></script>

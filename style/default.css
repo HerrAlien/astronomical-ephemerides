@@ -1,13 +1,61 @@
 * {
-    transition: 0.25s;
+    transition: 0.5s;
+}
+
+th {
+    transition: 0s;
+    background: #ffffff;
 }
 
 body {
     font-family: Verdana;
     font-size: 16px;
-    min-width: 830px;
+    min-width: 880px;
     margin-left: auto;
     margin-right: auto;
+}
+
+@media screen {
+    #scroller {
+        position: fixed;
+        bottom: 0;
+        overflow-y: auto;
+        min-width: 590px;
+        right: 0;
+        left: 0;
+        z-index: 2;
+        background: #ffffff;
+    }
+    
+    .scrollerNoMenu {
+        top: 0px;
+    }
+    
+    .scrollerWithMenu {
+        top: 70px;
+    }
+
+    #jupiterHorizontalScroller , #marsHorizontalScroller{
+        width: 880px;
+        overflow-x: hidden;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .showPositional #JupiterTable tr.firstHeaderRow, 
+    .showPositional #JupiterTable tr.secondHeaderRow,
+    .showPositional #JupiterTable tr.firstHeaderRowScrolled, 
+    .showPositional #JupiterTable tr.secondHeaderRowScrolled, 
+    .showPositional #Jupiter{
+        width: 880px;
+        background: #ffffff;
+    }
+    
+    .showPositional {
+    }
+    
+    .showPhysical {
+    }
 }
 
 .page {
@@ -23,6 +71,7 @@ body {
 .page:not(:target){
     display: none;
     opacity: 0;
+    height: 0%;
 }
 
 .page::after {
@@ -111,35 +160,36 @@ body {
 }
 
 .title {
-font-size: 36px;
+    font-size: 36px;
     font-family: Arial;
     vertical-align: top;
     margin-left: 0px;
 }
 
-#menuContainer {
+#more {
     width:100%;
-    margin: 20px 50px;
+    margin-top: 20px;
     font-size: 22px;
 }
 
-#settingsPage {
+#settings {
     width: 100%;
     max-width: 640px;
     
 }
 
-#settingsPage label, #getFromGeolocationAnchor, #applySettingsChanges{
+#settings label, #getFromGeolocationAnchor, #applySettingsChanges{
     float: left;
     margin-top: 16px;
 }
 
-#settingsPage label, #getFromGeolocationAnchor, #applySettingsChanges, #cancelSettingsChanges {
-    margin-left: 16px;
+#settings label, #getFromGeolocationAnchor, #applySettingsChanges {
+    margin-left: 6px;
 }
 
 #cancelSettingsChanges {
     float: right;
+    margin-right: 16px;
 }
 
 #applySettingsChanges, #cancelSettingsChanges {
@@ -149,7 +199,7 @@ font-size: 36px;
     font-size: 16px;
 }
 
-#menu li a, #getFromGeolocationAnchor {
+#menuList li a, #getFromGeolocationAnchor {
     cursor: pointer;
     padding-right: 10px;
     text-decoration: underline;
@@ -159,15 +209,15 @@ font-size: 36px;
     height: 72px;
 }
 
-#menu li a:hover, #menu li a.current, #promotedMenu a:hover, #promotedMenu a.current{
+#menuList li a:hover, #menuList li a.current, #promotedMenu a:hover, #promotedMenu a.current{
     color: red;
 }
 
-#menu li {
+#menuList li {
     float: left;
 }
 
-#menu{ 
+#menuList{ 
     list-style-type:none;
 }
 
@@ -185,23 +235,23 @@ font-size: 36px;
 }
 
 tr.firstHeaderRow{
-    margin-top: -41px;
-    border-top: 1px solid black;
+    margin-top: -47px;
+    background: #ffffff;
 }
 
 tr.secondHeaderRow {
-    margin-top: -21px;
-    border-bottom: 1px solid black;
+    margin-top: -27px;
+    background: #ffffff;
 }
 
 tr.firstHeaderRowScrolled{
-    margin-top: -171px;
-    border-top: 1px solid black;
+    margin-top: -105px;
+    background: #ffffff;
 }
 
 tr.secondHeaderRowScrolled{
-    margin-top: -151px;
-    border-bottom: 1px solid black;
+    margin-top: -85px;
+    background: #ffffff;
 }
 
 table {
@@ -224,12 +274,17 @@ table {
     cursor: help;
 }
 
- tr:nth-of-type(odd) {
+tr:nth-of-type(odd) {
 background: #ffffff;
 }
 
  tr:nth-of-type(even) {
 background: #eeeeee;
+}
+
+tr.firstHeaderRow, tr.secondHeaderRow, tr.firstHeaderRowScrolled, tr.secondHeaderRowScrolled {
+    background: #ffffff;
+	height: 21px;    
 }
 
 input {
@@ -261,146 +316,35 @@ input {
 .loadingMemFileContents {
     text-align: center;
 }
+
 /** ----------------------------- M O O N --------------------------------------- **/
-#Moon tr:nth-of-type(1), #Moon tr:nth-of-type(2), #MoonPage{
-    width: 767px;
-}
-
-#Moon td:nth-of-type(1),#Moon th:nth-of-type(1), 
-#Moon td:nth-of-type(2),#Moon th:nth-of-type(2) {
-    min-width : 20px;
-} 
-
-#Moon td:nth-of-type(3),#Moon th:nth-of-type(3), 
-#Moon td:nth-of-type(4),#Moon th:nth-of-type(4),
-#Moon td:nth-of-type(5),#Moon th:nth-of-type(5),
-#Moon td:nth-of-type(7),#Moon th:nth-of-type(7),
-#Moon td:nth-of-type(8),#Moon th:nth-of-type(8),
-#Moon td:nth-of-type(9),#Moon th:nth-of-type(9), 
-#Moon td:nth-of-type(10),#Moon th:nth-of-type(10), 
-#Moon td:nth-of-type(11),#Moon th:nth-of-type(11),
-#Moon td:nth-of-type(13),#Moon th:nth-of-type(13), 
-#Moon td:nth-of-type(14),#Moon th:nth-of-type(14),
-#Moon td:nth-of-type(15),#Moon th:nth-of-type(15), 
-#Moon td:nth-of-type(16),#Moon th:nth-of-type(16),
-#Moon td:nth-of-type(21),#Moon th:nth-of-type(21),
-#Moon td:nth-of-type(22),#Moon th:nth-of-type(22)
+#MoonTable .firstHeaderRow, #MoonTable .secondHeaderRow,
+#MoonTable .firstHeaderRowScrolled, #MoonTable .secondHeaderRowScrolled, #Moon
 {
-    min-width: 20px;
+    width: 770px;
 }
 
-#Moon td:nth-of-type(17),#Moon th:nth-of-type(17), 
-#Moon td:nth-of-type(18),#Moon th:nth-of-type(18), 
-#Moon td:nth-of-type(19),#Moon th:nth-of-type(19){
-    min-width: 50px;
-}
-
-#Moon td:nth-of-type(6),#Moon th:nth-of-type(6), 
-#Moon td:nth-of-type(12),#Moon th:nth-of-type(12), 
-#Moon td:nth-of-type(20),#Moon th:nth-of-type(20)
-{
-    min-width : 25px;
-} 
-
-#Moon td:nth-of-type(23),#Moon th:nth-of-type(23),
-#Moon td:nth-of-type(24),#Moon th:nth-of-type(24) {
-    min-width: 52px;
-}
-
-#Moon > tr:nth-of-type(1) > th:nth-child(2),
-#Moon > tr:nth-of-type(1) > th:nth-child(11)
-{
-    min-width: 5px;
-}
-
-#Moon > tr:nth-of-type(2) > th:nth-child(14)
-{
-    min-width: 30px;
-}
-
-#Moon td:nth-of-type(10) {
-    border-right: none;
-}
-
-#Moon td:nth-of-type(2), #Moon td:nth-of-type(5), #Moon td:nth-of-type(8), #Moon td:nth-of-type(11), #Moon td:nth-of-type(14), #Moon td:nth-of-type(16), #Moon td:nth-of-type(17), #Moon td:nth-of-type(18), #Moon td:nth-of-type(19), #Moon td:nth-of-type(22), #Moon td:nth-of-type(23) {
+#MoonTable td:nth-of-type(2), #MoonTable td:nth-of-type(5), #MoonTable td:nth-of-type(8), #MoonTable td:nth-of-type(11), #MoonTable td:nth-of-type(14), #MoonTable td:nth-of-type(16), #MoonTable td:nth-of-type(17), #MoonTable td:nth-of-type(18), #MoonTable td:nth-of-type(19), #MoonTable td:nth-of-type(22), #MoonTable td:nth-of-type(23) {
     border-right: 1px solid black;
 }
 
-#Moon td:nth-of-type(9), #Moon td:nth-of-type(12), #Moon td:nth-of-type(13), #Moon td:nth-of-type(15){
+#MoonTable td:nth-of-type(9), #MoonTable td:nth-of-type(10), #MoonTable td:nth-of-type(12), #MoonTable td:nth-of-type(13), #MoonTable td:nth-of-type(15){
     border-right: none;
 }
 
 /** -------------------------------------- S U N -------------------------------- **/
-#Sun tr:nth-of-type(1), #Sun tr:nth-of-type(2), #SunPage{
-    min-width: 717px;
+#SunTable .firstHeaderRow, #SunTable .secondHeaderRow,
+#SunTable .firstHeaderRowScrolled, #SunTable .secondHeaderRowScrolled, #Sun{
+    min-width: 720px;
 }
 
-#Sun td:nth-of-type(10) {
-    border-right: none;
-}
-
-#Sun td:nth-of-type(2), #Sun td:nth-of-type(5), #Sun td:nth-of-type(8), #Sun td:nth-of-type(9), #Sun td:nth-of-type(11),
-#Sun td:nth-of-type(12), #Sun td:nth-of-type(13),
-#Sun td:nth-of-type(14), #Sun td:nth-of-type(15), #Sun td:nth-of-type(16), #Sun td:nth-of-type(17) {
+#SunTable td:nth-of-type(2), #SunTable td:nth-of-type(5), #SunTable td:nth-of-type(8), #SunTable td:nth-of-type(9), #SunTable td:nth-of-type(11),
+#SunTable td:nth-of-type(14), #SunTable td:nth-of-type(15), #SunTable td:nth-of-type(16), #SunTable td:nth-of-type(17), #SunTable td:nth-of-type(12), #SunTable td:nth-of-type(13) {
     border-right: 1px solid black;
 }
 
-#Sun td:nth-of-type(1),#Sun th:nth-of-type(1), 
-#Sun td:nth-of-type(2),#Sun th:nth-of-type(2) {
-    min-width : 20px;
-} 
-
-#Sun td:nth-of-type(3),#Sun th:nth-of-type(3), 
-#Sun td:nth-of-type(4),#Sun th:nth-of-type(4),
-#Sun td:nth-of-type(5),#Sun th:nth-of-type(5),
-
-#Sun td:nth-of-type(7),#Sun th:nth-of-type(7), 
-
-#Sun td:nth-of-type(10),#Sun th:nth-of-type(10), 
-#Sun td:nth-of-type(11),#Sun th:nth-of-type(11), 
-#Sun td:nth-of-type(14),#Sun th:nth-of-type(14) 
-{
-    min-width : 20px;
-} 
-
-#Sun td:nth-of-type(12),#Sun th:nth-of-type(12),
-#Sun td:nth-of-type(13),#Sun th:nth-of-type(13), 
-#Sun td:nth-of-type(14),#Sun th:nth-of-type(14) {
-        min-width: 50px;
-}
-
-#Sun td:nth-of-type(6),#Sun th:nth-of-type(6)
-{
-    min-width: 25px;
-}
-
-
-#Sun td:nth-of-type(9),#Sun th:nth-of-type(9)
-{
-    min-width: 50px;
-} 
-#Sun td:nth-of-type(15),#Sun th:nth-of-type(15), 
-#Sun td:nth-of-type(16),#Sun th:nth-of-type(16), 
-#Sun td:nth-of-type(17),#Sun th:nth-of-type(17) {
-    min-width : 62px;
-}
-
-#Sun th:nth-child(18)
-{
-    min-width: 30px;
-}
-
-#Sun tr:nth-of-type(1) th:nth-of-type(13),
-#Sun tr:nth-of-type(1) th:nth-of-type(14){
-    min-width: 40px;
-}
-
-#Sun tr:nth-of-type(1) th:nth-child(8) {
-    min-width: 15px;
-}
-
-#Sun tr:nth-of-type(2) th:nth-child(8) {
-    min-width: 25px;
+#SunTable td:nth-of-type(10) {
+    border-right: none;
 }
 
 .printOnly {
@@ -408,6 +352,10 @@ input {
 }
 
 @media print {
+
+    .physicalPositionalButtonsHolder {
+        display: none;
+    }
 
     .fixed {
         position: relative;
@@ -431,62 +379,98 @@ input {
     tr.printOnly:nth-of-type(even) {
         border-bottom: 1px solid black;
     }
+    
+    #scroller {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    
+    #HomeLinkButton, #SettingsLink, #DownloadLink, #MenuLinkDiv {
+        display: none;
+    }
+    
+    .breakBefore {
+        page-break-before: always;
+        width: 100%;
+        height: 1px;
+        display: block;
+    }
+    
+    body {
+        page-break-inside: avoid;
+    }
+    
 }
 
 
 /** ---------------------------------- P L A N E T ------------------------------ **/
-.planetTable tr:nth-of-type(1), .planetTable tr:nth-of-type(2), .page
+.firstHeaderRow, .secondHeaderRow, .page,
+.firstHeaderRowScrolled, .secondHeaderRowScrolled
 {
-    width: 630px;
-    background: #ffffff;
-	    height: 20px;
+    width: 633px;
 }
 
-.planetTable td:nth-of-type(1),.planetTable th:nth-of-type(1), 
-.planetTable td:nth-of-type(2),.planetTable th:nth-of-type(2) {
-    min-width : 20px;
-} 
-
-.planetTable td:nth-of-type(3),.planetTable th:nth-of-type(3), 
-.planetTable td:nth-of-type(4),.planetTable th:nth-of-type(4),
-.planetTable td:nth-of-type(5),.planetTable th:nth-of-type(5),
-.planetTable td:nth-of-type(9),.planetTable th:nth-of-type(9)
-{
-    min-width : 20px;
-} 
-
-.planetTable td:nth-of-type(7),.planetTable th:nth-of-type(7),
-.planetTable td:nth-of-type(8),.planetTable th:nth-of-type(8)
-{
-    min-width : 20px;
-} 
-.planetTable td:nth-of-type(6),.planetTable th:nth-of-type(6){
-    min-width: 25px;    
+.minWidth1{
+	min-width: 1px;
 }
 
-.planetTable td:nth-of-type(10),.planetTable th:nth-of-type(10), 
-.planetTable td:nth-of-type(11),.planetTable th:nth-of-type(11),
-.planetTable td:nth-of-type(12),.planetTable th:nth-of-type(12)
+.minWidth5
+{
+    min-width: 5px;
+}
+
+.minWidth15
+{
+    min-width : 15px;
+}
+
+.minWidth20
+{
+    min-width : 20px;
+}
+
+.minWidth25
+{
+    min-width : 25px;
+}
+
+.minWidth30
+{
+    min-width: 30px;
+}
+
+.minWidth40
+{
+    min-width : 40px;
+}
+
+.minWidth45
+{
+    min-width : 45px;
+}
+
+.minWidth50
 {
     min-width: 50px;
 }
 
-.planetTable td:nth-of-type(13),.planetTable th:nth-of-type(13), 
-.planetTable td:nth-of-type(14),.planetTable th:nth-of-type(14) {
+.minWidth52
+{
+    min-width: 52px;
+}
+
+.minWidth55
+{
     min-width: 55px;
 }
-.planetTable td:nth-of-type(16),.planetTable th:nth-of-type(16) {
-    min-width: 45px;
-}
-.planetTable td:nth-of-type(15),.planetTable th:nth-of-type(15) {
+
+.minWidth62 {
     min-width : 62px;
 }
 
-.planetTable   tr:nth-child(1)  th:nth-child(11),
-.planetTable   tr:nth-child(1)  th:nth-child(12) {
-	min-width: 40px;
-}
 
+.borderRight,
 .planetTable td:nth-of-type(2) ,
 .planetTable td:nth-of-type(5),
 .planetTable td:nth-of-type(8),
@@ -500,88 +484,96 @@ input {
     border-right: solid 1px black;
 }
 
-.planetTable > tr:nth-of-type(1) > th:nth-child(8) {
+
+.minWidth15
+{
     min-width: 15px;    
 }
-.planetTable > tr:nth-of-type(2) > th:nth-child(8) {
-    min-width: 25px;    
-}
 
-.planetTable > tr:nth-of-type(1) > th:nth-child(15) {
+
+.minWidth70 {
     min-width:70px;
 }
 
 /* ---------------------------- M A R S ------------------------------------ */
-#Mars tr:nth-of-type(1), #Mars tr:nth-of-type(2), #MarsPage{
-    width: 820px;
+#MarsTable tr.firstHeaderRow, 
+#MarsTable tr.secondHeaderRow,
+#MarsTable tr.firstHeaderRowScrolled, 
+#MarsTable tr.secondHeaderRowScrolled, 
+#Mars{
+    width: 832px;
 }
-#Mars  td:nth-of-type(16), #Mars  td:nth-of-type(17), #Mars  td:nth-of-type(18), #Mars  td:nth-of-type(19){
+#Mars  td:nth-of-type(16), #Mars  td:nth-of-type(18), #Mars  td:nth-of-type(19), #Mars  td:nth-of-type(20), #Mars  td:nth-of-type(21){
     border-right: solid 1px black;
 }
-#Mars td:nth-of-type(17),#Mars th:nth-of-type(17) {
-    min-width: 50px;
-}
 
-#Mars td:nth-of-type(18),#Mars th:nth-of-type(18),
-#Mars td:nth-of-type(19),#Mars th:nth-of-type(19),
-#Mars td:nth-of-type(20),#Mars th:nth-of-type(20) {
-    min-width: 40px;
-}
 /* ---------------------------- J U P I T E R ---------------------- */
-#Jupiter tr:nth-of-type(1), #Jupiter tr:nth-of-type(2), #JupiterPage{
-    width: 860px;
-}
 
-#Jupiter  td:nth-of-type(16), #Jupiter  td:nth-of-type(17), #Jupiter  td:nth-of-type(18), #Jupiter  td:nth-of-type(19), #Jupiter  td:nth-of-type(20){
+#Jupiter  td:nth-of-type(16), #Jupiter  td:nth-of-type(18), #Jupiter  td:nth-of-type(19), #Jupiter  td:nth-of-type(20), #Jupiter  td:nth-of-type(21), #Jupiter  td:nth-of-type(22){
     border-right: solid 1px black;
 }
 
-#Jupiter td:nth-of-type(18),#Jupiter th:nth-of-type(18),
-#Jupiter td:nth-of-type(17),#Jupiter th:nth-of-type(17) {
-    min-width: 50px;
+#Jupiter {
+    width: 880px;
 }
 
-#Jupiter td:nth-of-type(19),#Jupiter th:nth-of-type(19),
-#Jupiter td:nth-of-type(20),#Jupiter th:nth-of-type(20),
-#Jupiter td:nth-of-type(20),#Jupiter th:nth-of-type(21) {
-    min-width: 40px;
+#GalileanMoons, #SaturnMoons {
+    width: 100%;
+    max-width: 800px;
 }
 
-#Jupiter td:nth-child(13), #Jupiter td:nth-child(13), 
-#Jupiter td:nth-child(14), #Jupiter td:nth-child(14){
-    min-width: 50px;
-}
-
-#GalileanMoonsPage, #SaturnMoonsPage, #MoonEclipsesPage {
-    width: 800px;
-}
-
-#GalileanMoons svg {
+#GalileanMoonsContainer svg {
     margin-left: auto;
     margin-right: auto;
 }
 
-#GalileanMoons, #SaturnMoons {
+#GalileanMoonsContainer, #SaturnMoonsContainer {
     text-align: center;
 }
+
+ #LunarEclipses
+ {
+     width: 100%;
+     max-width: 810px;
+ }
 
 .moonEclipse {
     text-align: center;
     border-top: solid 1px #000000;
     margin-top: -1px;
-    border-bottom: solid 1px #000000;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+    page-break-after: always;
 }
 
-.moonEclipse svg {
+.viewport {
+    width: 100%;
+    padding-top: 0.1%; /* 1:1 Aspect Ratio */
     margin-top: 20px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
-#HomePage {
-    width: 800px;
+#home {
+    width: 100%;
+    max-width: 800px;
+}
+
+.buttonsToSwitchPosPhys, .physSeenAtSmallWidth {
+    display: none;
+}
+
+.physPosHidden {
+    visibility: visible;
+}
+
+.physPosVisible {
+    visibility: visible;
 }
 
 
-@media (min-width: 1281px)  {
+@media screen and (min-width: 1281px)  {
     #MenuLink, #MenuLinkDiv, #MenuLinkDiv img, #MenuLinkDiv::after {
         width: 0px;
         height: 0px;
@@ -591,14 +583,95 @@ input {
     }
 }
 
-@media  (max-width: 1280px) {
+@media  screen and  (max-width: 1280px) {
     .leastImportant {
         display: none;
     }
 }
 
-@media  (max-width: 936px)  {
+@media  screen and  (max-width: 936px)  {
     .leastImportant, .lessImportant{
         display: none;
     }
+    
+    .buttonsToSwitchPosPhys {
+        display: inline;
+    }
+    
+    .physSeenAtSmallWidth {
+        display: table-cell;
+    }
+    
+    .physPosHidden {
+        visibility: hidden;
+    }
+
+    #jupiterHorizontalScroller, #marsHorizontalScroller {
+        width: 630px;
+    }
+
+    #JupiterTable tr.firstHeaderRow, 
+    #JupiterTable tr.secondHeaderRow,
+    #JupiterTable tr.firstHeaderRowScrolled, 
+    #JupiterTable tr.secondHeaderRowScrolled, 
+    #Jupiter,
+    #MarsTable tr.firstHeaderRow, 
+    #MarsTable tr.secondHeaderRow,
+    #MarsTable tr.firstHeaderRowScrolled, 
+    #MarsTable tr.secondHeaderRowScrolled, 
+    #Mars    {
+        width: 635px;
+        background: #ffffff;
+    }
+    
+    body {
+        min-width: 800px;
+    }
+    .showPhysical {
+        margin-left: -634px;
+        margin-right: auto;
+    }
+}
+
+@media  screen and  (max-width: 741px)  {
+    #promotedMenu{
+        display: none;
+    }
+}
+
+
+    
+.positionalButton, .physicalButton {
+    height:23px; 
+    border: solid 1px #000000; 
+    float: left; 
+    padding-top: 2px; 
+    padding-left: 5px; 
+    width: 170px; 
+    text-align: center;        
+    cursor: pointer;
+    user-select: none;
+}
+
+.positionalButton {
+    border-radius: 5px 0px 0px 5px; 
+    padding-right: 5px; 
+}
+
+.physicalButton {
+    border-radius: 0px 5px 5px 0px;
+}
+
+.physicalPositionalButtonsHolder {
+    position: fixed;
+    bottom: 0;
+    background: #ffffff;
+    padding: 2px 0px 2px 2px;
+    width: 100%;
+}
+
+.activeButton {
+    background: #000000;
+    color: #ffffff;
+    cursor: default;
 }
