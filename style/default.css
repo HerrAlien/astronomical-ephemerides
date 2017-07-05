@@ -662,11 +662,10 @@ input {
 
 .physicalPositionalButtonsHolder {
     position: fixed;
-    top: 30px;
-    left: 90px;
+    bottom: 0;
     background: #ffffff;
-    padding: 0px;
-    z-index: -1;
+    padding: 2px 0px 2px 2px;
+    width: 100%;
 }
 
 .activeButton {
