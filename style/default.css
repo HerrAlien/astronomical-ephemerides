@@ -608,7 +608,6 @@ input {
 
     #jupiterHorizontalScroller {
         width: 630px;
-        overflow-x: hidden;
     }
 
     #JupiterTable tr.firstHeaderRow, 
