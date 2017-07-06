@@ -56,6 +56,11 @@ body {
     
     .showPhysical {
     }
+    
+    .secondHeaderRow th, 
+    .secondHeaderRowScrolled th {
+        border-bottom: 1px solid #000000;
+    }
 }
 
 .page {
