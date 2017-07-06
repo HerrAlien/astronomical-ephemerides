@@ -75,8 +75,8 @@ body {
 
 .page:not(:target){
     display: none;
-    opacity: 0;
-    height: 0%;
+    position: fixed;
+    bottom: 0;
 }
 
 .page::after {
