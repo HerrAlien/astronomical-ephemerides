@@ -56,10 +56,11 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
         
         var stepSize = 1/dayFraction; // one hour.
         var numberOfSteps = numberOfDays / stepSize;
+        var yFactor = 2;
     
         var width = 800;
         var vPadding = 10;
-        var height = Math.ceil (numberOfSteps) + 2* vPadding;
+        var height = Math.ceil (yFactor * numberOfSteps) + 2* vPadding;
         
         var hostSVG = this.hostElement.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "svg");
         var viewportSvg = this.hostElement.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "svg");        
@@ -88,6 +89,13 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
        ( function (page) {
             var stepsCounter = 1;
             var satellitesPage = page;
+            
+            for (var satelliteName in satellitesPage.paths) {
+                satellitesPage.paths[satelliteName]['superiorConjunctions'] = [];
+                
+                satellitesPage.paths[satelliteName]['lastSuperiorConjunctionStart'] = false;
+            }
+                
             function getDataForPaths () {
 
                 for (var satelliteName in satellitesPage.paths) {
@@ -96,54 +104,83 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
                         elongation = -elongation;
                     
                      satellitesPage.paths[satelliteName].d = "M " + (elongation + halfWidth) + " " 
-                                                            + (stepsCounter -1 + vPadding);
+                                                            + (stepsCounter * yFactor -1 + vPadding);
                 }
                 
-                var planetInitialY = stepsCounter;
+                var planetInitialY = stepsCounter * yFactor;
                 var dayLines = [];
                 
                 for (var i = 0 ; i < dayFraction && stepsCounter < numberOfSteps ; i++, currentJD += stepSize, stepsCounter++) {
                     var coords = satellitesPage.dataSource.getDataAsObjectForJD(currentJD, false);
 
                     for (var satelliteName in satellitesPage.paths){
-
-                        satellitesPage.paths[satelliteName].lastPos['elongation'] = coords[satelliteName].ApparentRectangularCoordinates.ApparentElongation;
-                        satellitesPage.paths[satelliteName].lastPos.X = coords[satelliteName].ApparentRectangularCoordinates.X;
                         
-                        var elongation = satellitesPage.paths[satelliteName].lastPos.elongation * planetRadius;
+                        var currentSatellitePath = satellitesPage.paths[satelliteName];
+                        var currentSatelliteCoords = coords[satelliteName].ApparentRectangularCoordinates;
+
+                        currentSatellitePath.lastPos['elongation'] = currentSatelliteCoords.ApparentElongation;
+                        currentSatellitePath.lastPos.X = currentSatelliteCoords.X;
+                        
+                        var elongation = currentSatellitePath.lastPos.elongation * planetRadius;
                         if (satellitesPage.paths[satelliteName].lastPos.X < 0)
                             elongation = -elongation;
                     
-                        satellitesPage.paths[satelliteName].d += " L " + (elongation + halfWidth) + " " 
-                                                            + (stepsCounter + vPadding);
+                        currentSatellitePath.d += " L " + (elongation + halfWidth) + " " 
+                                                            + (stepsCounter * yFactor + vPadding);
+                        
+                        if (currentSatellitePath.lastPos.elongation < 1 && currentSatelliteCoords.Z > 0) {
+                            if (!currentSatellitePath['lastSuperiorConjunctionStart']) {
+                                satellitesPage.paths[satelliteName]['lastSuperiorConjunctionStart'] = {X: (elongation + halfWidth), Y: (stepsCounter * yFactor + vPadding)};
+                            }
+                        } 
+                            
+                        if (currentSatellitePath.lastPos.elongation >= 1 && currentSatellitePath['lastSuperiorConjunctionStart'] && currentSatelliteCoords.Z > 0) {
+
+                            satellitesPage.paths[satelliteName]['superiorConjunctions'].push({
+                                start: {X : currentSatellitePath['lastSuperiorConjunctionStart'].X, Y : currentSatellitePath['lastSuperiorConjunctionStart'].Y}, 
+                                end: {X: (elongation + halfWidth), Y: (stepsCounter * yFactor + vPadding)} });
+                            satellitesPage.paths[satelliteName]['lastSuperiorConjunctionStart'] = false;
+                        }
                     }
                     
                     if (coords.DayFraction < stepSize){
                         dayLines[dayLines.length] = {
-                            "YCoord" : stepsCounter + vPadding,
+                            "YCoord" : stepsCounter * yFactor + vPadding,
                             "Month" : coords.Month,
                             "Day" : coords.Day
                         };
                     }
                 }
 
+
+                var pathsHolder =  hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "g");
                 for (var satelliteName in satellitesPage.paths){
                     var pathElem = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "path");
                     pathElem.setAttribute("d", satellitesPage.paths[satelliteName].d);
                     pathElem.setAttribute("stroke", satellitesPage.paths[satelliteName].color);
                     pathElem.setAttribute("fill", 'none');
                     pathElem.setAttribute("stroke-width", 2);
-                    hostSVG.appendChild(pathElem);
+                    pathsHolder.appendChild(pathElem);
                     pathElem.setAttribute("title", satelliteName);
                 }
-                    
-                var planet = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "rect");
-                hostSVG.appendChild (planet);
-                planet.setAttribute ("fill", "orange");
-                planet.setAttribute ("x", halfWidth - planetRadius);
-                planet.setAttribute ("y", planetInitialY  + vPadding - 30);
-                planet.setAttribute ("width", 2*planetRadius);
-                planet.setAttribute ("height", stepsCounter - planetInitialY + vPadding + 30);
+                hostSVG.appendChild(pathsHolder);
+
+                var conjunctionsHolder =  hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "g");
+                for (var satelliteName in satellitesPage.paths){
+                    var superiorConjunctions = satellitesPage.paths[satelliteName]['superiorConjunctions'];
+                    for (var i = 0; i < superiorConjunctions.length; i++) {
+                        planet = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "line");
+                        conjunctionsHolder.appendChild (planet);
+                        planet.setAttribute ("stroke", "orange");
+                        planet.setAttribute ("stroke-width", 4);
+                        planet.setAttribute ("x1", superiorConjunctions[i].start.X);
+                        planet.setAttribute ("y1", superiorConjunctions[i].start.Y);
+                        planet.setAttribute ("x2", superiorConjunctions[i].end.X);
+                        planet.setAttribute ("y2", superiorConjunctions[i].end.Y);
+                    }
+                }
+                hostSVG.appendChild(conjunctionsHolder);
+
                 
                 var months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
                 
@@ -159,7 +196,7 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
                     var text = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "text");
                     hostSVG.appendChild (text);
                     text.setAttribute ("x", 0);
-                    text.setAttribute ("y", dayLines[i].YCoord);
+                    text.setAttribute ("y", dayLines[i].YCoord + 1);
                     text.textContent = months[dayLines[i].Month] + " " + dayLines[i].Day;
                     text.style["fontSize"] = "20px";
                     text.style["fontFamily"] = "Arial";
@@ -171,6 +208,17 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
                     satellitesPage.pageRendered = true;
                 }
             }
+            
+                var planetHolder = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "g");
+                var planet = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "rect");
+                planet.setAttribute ("fill", "orange");
+                planet.setAttribute ("x", halfWidth - planetRadius);
+                planet.setAttribute ("y", 0  + vPadding - 10);
+                planet.setAttribute ("width", 2*planetRadius);
+                planet.setAttribute ("height", numberOfSteps + vPadding + 10);
+                hostSVG.appendChild (planetHolder);
+                planetHolder.appendChild(planet);
+            
             getDataForPaths();
         })(this);
          
