@@ -56,11 +56,10 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
         
         var stepSize = 1/dayFraction; // one hour.
         var numberOfSteps = numberOfDays / stepSize;
-        var yFactor = 2;
     
         var width = 800;
         var vPadding = 10;
-        var height = Math.ceil (yFactor * numberOfSteps) + 2* vPadding;
+        var height = Math.ceil (numberOfSteps) + 2* vPadding;
         
         var hostSVG = this.hostElement.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "svg");
         var viewportSvg = this.hostElement.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "svg");        
@@ -104,13 +103,13 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
                         elongation = -elongation;
                     
                      satellitesPage.paths[satelliteName].d = "M " + (elongation + halfWidth) + " " 
-                                                            + (stepsCounter * yFactor -1 + vPadding);
+                                                            + (stepsCounter -1 + vPadding);
                 }
                 
-                var planetInitialY = stepsCounter * yFactor;
+                var planetInitialY = stepsCounter ;
                 var dayLines = [];
                 
-                for (var i = 0 ; i < dayFraction && stepsCounter < numberOfSteps ; i++, currentJD += stepSize, stepsCounter++) {
+                for (var i = 0 ; i < 10 * dayFraction && stepsCounter < numberOfSteps ; i++, currentJD += stepSize, stepsCounter++) {
                     var coords = satellitesPage.dataSource.getDataAsObjectForJD(currentJD, false);
 
                     for (var satelliteName in satellitesPage.paths){
@@ -124,13 +123,15 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
                         var elongation = currentSatellitePath.lastPos.elongation * planetRadius;
                         if (satellitesPage.paths[satelliteName].lastPos.X < 0)
                             elongation = -elongation;
+                        
+                        var currentX = elongation + halfWidth;
+                        var currentY = stepsCounter + vPadding;
                     
-                        currentSatellitePath.d += " L " + (elongation + halfWidth) + " " 
-                                                            + (stepsCounter * yFactor + vPadding);
+                        currentSatellitePath.d += " L " + currentX + " "  + currentY;
                         
                         if (currentSatellitePath.lastPos.elongation < 1 && currentSatelliteCoords.Z > 0) {
                             if (!currentSatellitePath['lastSuperiorConjunctionStart']) {
-                                satellitesPage.paths[satelliteName]['lastSuperiorConjunctionStart'] = {X: (elongation + halfWidth), Y: (stepsCounter * yFactor + vPadding)};
+                                satellitesPage.paths[satelliteName]['lastSuperiorConjunctionStart'] = {X: currentX, Y: currentY};
                             }
                         } 
                             
@@ -138,24 +139,25 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
 
                             satellitesPage.paths[satelliteName]['superiorConjunctions'].push({
                                 start: {X : currentSatellitePath['lastSuperiorConjunctionStart'].X, Y : currentSatellitePath['lastSuperiorConjunctionStart'].Y}, 
-                                end: {X: (elongation + halfWidth), Y: (stepsCounter * yFactor + vPadding)} });
+                                end: {X: currentX, Y: currentY} });
                             satellitesPage.paths[satelliteName]['lastSuperiorConjunctionStart'] = false;
                         }
                     }
                     
                     if (coords.DayFraction < stepSize){
                         dayLines[dayLines.length] = {
-                            "YCoord" : stepsCounter * yFactor + vPadding,
+                            "YCoord" : stepsCounter + vPadding,
                             "Month" : coords.Month,
                             "Day" : coords.Day
                         };
                     }
                 }
 
+                var ownerDoc = hostSVG.ownerDocument;
 
-                var pathsHolder =  hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "g");
+                var pathsHolder =  ownerDoc.createElementNS("http://www.w3.org/2000/svg", "g");
                 for (var satelliteName in satellitesPage.paths){
-                    var pathElem = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "path");
+                    var pathElem = ownerDoc.createElementNS("http://www.w3.org/2000/svg", "path");
                     pathElem.setAttribute("d", satellitesPage.paths[satelliteName].d);
                     pathElem.setAttribute("stroke", satellitesPage.paths[satelliteName].color);
                     pathElem.setAttribute("fill", 'none');
@@ -165,11 +167,11 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
                 }
                 hostSVG.appendChild(pathsHolder);
 
-                var conjunctionsHolder =  hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "g");
+                var conjunctionsHolder =  ownerDoc.createDocumentFragment();
                 for (var satelliteName in satellitesPage.paths){
                     var superiorConjunctions = satellitesPage.paths[satelliteName]['superiorConjunctions'];
                     for (var i = 0; i < superiorConjunctions.length; i++) {
-                        planet = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "line");
+                        planet = ownerDoc.createElementNS("http://www.w3.org/2000/svg", "line");
                         conjunctionsHolder.appendChild (planet);
                         planet.setAttribute ("stroke", "orange");
                         planet.setAttribute ("stroke-width", 4);
@@ -184,26 +186,29 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
                 
                 var months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
                 
+                var linesDF = ownerDoc.createDocumentFragment();
+                
                 for (var i = 0; i < dayLines.length; i++) {
-                    var line = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "rect");
-                    hostSVG.appendChild (line);
+                    var line = ownerDoc.createElementNS("http://www.w3.org/2000/svg", "rect");
+                    linesDF.appendChild (line);
                     line.setAttribute ("fill", "gray");
                     line.setAttribute ("x", 0);
                     line.setAttribute ("y", dayLines[i].YCoord);
                     line.setAttribute ("width", width);
                     line.setAttribute ("height", 1);
                     
-                    var text = hostSVG.ownerDocument.createElementNS("http://www.w3.org/2000/svg", "text");
-                    hostSVG.appendChild (text);
+                    var text = ownerDoc.createElementNS("http://www.w3.org/2000/svg", "text");
+                    linesDF.appendChild (text);
                     text.setAttribute ("x", 0);
                     text.setAttribute ("y", dayLines[i].YCoord + 1);
                     text.textContent = months[dayLines[i].Month] + " " + dayLines[i].Day;
                     text.style["fontSize"] = "20px";
                     text.style["fontFamily"] = "Arial";
                 } 
+                hostSVG.appendChild (linesDF);
                    
                 if (stepsCounter < numberOfSteps) {
-                    setTimeout (getDataForPaths, 10);
+                    setTimeout (getDataForPaths, 1);
                 } else {
                     satellitesPage.pageRendered = true;
                 }
