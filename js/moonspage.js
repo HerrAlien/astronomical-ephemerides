@@ -87,15 +87,16 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
         
        ( function (page) {
             var stepsCounter = 1;
-            var satellitesPage = page;
+            var _satellitesPage = page;
             
-            for (var satelliteName in satellitesPage.paths) {
-                satellitesPage.paths[satelliteName]['superiorConjunctions'] = [];
+            for (var satelliteName in _satellitesPage.paths) {
+                _satellitesPage.paths[satelliteName]['superiorConjunctions'] = [];
                 
-                satellitesPage.paths[satelliteName]['lastSuperiorConjunctionStart'] = false;
+                _satellitesPage.paths[satelliteName]['lastSuperiorConjunctionStart'] = false;
             }
                 
             function getDataForPaths () {
+                var satellitesPage = _satellitesPage;
 
                 for (var satelliteName in satellitesPage.paths) {
                     var elongation = satellitesPage.paths[satelliteName].lastPos.elongation * planetRadius;
@@ -109,7 +110,7 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
                 var planetInitialY = stepsCounter ;
                 var dayLines = [];
                 
-                for (var i = 0 ; i < 10 * dayFraction && stepsCounter < numberOfSteps ; i++, currentJD += stepSize, stepsCounter++) {
+                for (var i = 0 ; i < 5 * dayFraction && stepsCounter < numberOfSteps ; i++, currentJD += stepSize, stepsCounter++) {
                     var coords = satellitesPage.dataSource.getDataAsObjectForJD(currentJD, false);
 
                     for (var satelliteName in satellitesPage.paths){
