@@ -36,7 +36,7 @@ function MoonEclipse (JD) {
         this.dRaMoon  = 15 * (moonDataPlus.RaGeo - moonDataMinus.RaGeo) / dT;
         this.dDecMoon = (moonDataPlus.DecGeo - moonDataMinus.DecGeo) / dT;
                 
-        this.JD = JD - AAJS.DynamicalTime.DeltaT(JD)/(3600 * 24);
+        this.JD = JD ;
         this.ParallaxSun = sunData.Parallax;
         this.ParallaxMoon = moonData.parallax;
 
@@ -58,8 +58,8 @@ function MoonEclipse (JD) {
         this.dy  = this.dDecSun + this.dDecMoon;        
         this.slope = this.dy / this.dx;
         
-        this.umbralRadius = 0.993 * 1.02 * (0.99834 * this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
-        this.penumbralRadius = 0.988 * 1.02 * (0.99834 * this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
+        this.umbralRadius = 1.015 * (0.99834 * this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
+        this.penumbralRadius = 1.007 * (0.99834 * this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
 }
 
 (function(){

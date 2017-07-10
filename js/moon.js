@@ -16,9 +16,17 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var MoonData = {
     cache : {},
+    
+    toDUT : 0,
    
-   getDataAsObjectForJD : function (JD, computeRiseTransitSet) {
+   getDataAsObjectForJD : function (_JD, computeRiseTransitSet) {
+        if (!this.toDUT)
+            this.toDUT = AAJS.DynamicalTime.DeltaT(_JD)/(3600 * 24);
+        
+        var JD = _JD + this.toDUT;
+        
         var data = this.cache[JD];
+        
         if (!data) {
             data = {};
         
@@ -62,6 +70,7 @@ var MoonData = {
 
     reset : function () {
         this.cache = {};
+        this.toDUT = 0;
     },
 
     riseSetAngle : -0.83333,
