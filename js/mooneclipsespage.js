@@ -66,7 +66,7 @@ var MoonEclipsesPage = {
             if (dateOfJD.M < 10) dateOfJD.M = "0" + dateOfJD.M;
             if (dateOfJD.D < 10) dateOfJD.D = "0" + dateOfJD.D;
             
-            var roundedTime = Math.round(dayFraction * 24 * 3600) / 3600;
+            var roundedTime = Math.round(dayFraction * 24 * 60) / 60;
             var sexagesimalTime = AAJS.Numerical.ToSexagesimal (roundedTime);
 
             if (sexagesimalTime.Ord3 < 10) sexagesimalTime.Ord3 = "0" + sexagesimalTime.Ord3;
@@ -99,17 +99,18 @@ var MoonEclipsesPage = {
             var addNodeChild = PlanetPage.prototype.addNodeChild;
             var tr = addNodeChild (timingsTable, "tr");
             var dt = yyyymmdd_hhmmOfJD(JD);
+            
             addNodeChild (tr, "td", description);
-            addNodeChild (tr, "td", dt.time.Ord3 + ":" +  dt.time.Ord2 + ":" +  dt.time.Ord1);
+            addNodeChild (tr, "td", dt.time.Ord3 + ":" +  dt.time.Ord2);
         }
         
-        addTiming (oppositionData.Timings.Penumbral.firstContact, "Start of penumbral eclipse (TP1)", timingsTable);
+        addTiming (oppositionData.Timings.Penumbral.firstContact, "Penumbral Eclipse Begins (TP1)", timingsTable);
                    
         if (oppositionData.umbralPartialEclipse) {
-            addTiming (oppositionData.Timings.Umbral.firstContact, "Start of umbral eclipse (TU1)", timingsTable);
+            addTiming (oppositionData.Timings.Umbral.firstContact, "Partial Eclipse Begins (TU1)", timingsTable);
 
             if (oppositionData.umbralTotalEclipse)
-                addTiming (oppositionData.Timings.Umbral.beginFullImmersion, "Start of totality (TU2)", timingsTable);
+                addTiming (oppositionData.Timings.Umbral.beginFullImmersion, "Total Eclipse Begins (TU2)", timingsTable);
         }
         
         // maximum ...
@@ -117,12 +118,12 @@ var MoonEclipsesPage = {
         
         if (oppositionData.umbralPartialEclipse) {
             if (oppositionData.umbralTotalEclipse)
-                addTiming (oppositionData.Timings.Umbral.endFullImmersion,  "End of totality (TU3)", timingsTable);
+                addTiming (oppositionData.Timings.Umbral.endFullImmersion,  "Total Eclipse Ends (TU3)", timingsTable);
                        
-            addTiming (oppositionData.Timings.Umbral.lastContact, "End of umbral eclipse (TU4)", timingsTable);
+            addTiming (oppositionData.Timings.Umbral.lastContact, "Partial Eclipse Ends (TU4)", timingsTable);
         }
         
-        addTiming (oppositionData.Timings.Penumbral.lastContact, "End of penumbral eclipse (TP4)", timingsTable);
+        addTiming (oppositionData.Timings.Penumbral.lastContact, "Penumbral Eclipse Ends (TP4)", timingsTable);
     },
     
     circle : function (svg, R, CX, CY, fillColor, strokeColor) {
