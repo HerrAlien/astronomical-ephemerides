@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <svg width="800" height="800" xmlns="http://www.w3.org/2000/svg">
 
-<g  transform="translate(500,0) scale(0.4)">
+<g  transform="translate(440,0) scale(0.7)">
 
 	<path style="fill:#48BBEE;" d="M291.965,5.659c1.551,0.343,3.097,0.7,4.637,1.073C295.062,6.359,293.516,6.001,291.965,5.659z"/>
 	<path style="fill:#48BBEE;" d="M286.583,4.534c0.863,0.17,1.726,0.337,2.585,0.516C288.309,4.871,287.445,4.704,286.583,4.534z"/>
@@ -156,7 +156,7 @@
 		c0.202,0.185,0.409,0.363,0.614,0.543C135.568,339.521,143.802,342.674,152.373,342.797z"/>
 </g>
 
-<g transform="translate(310,120) scale(0.6)">
+<g transform="translate(200,190) scale(0.8)">
 <circle style="fill:#D4D4AA;" cx="256.003" cy="256.003" r="248"/>
 <g>
 	<circle style="fill:#84844A;" cx="288.003" cy="64.001" r="23.998"/>
@@ -227,7 +227,7 @@
 
 </g>
 
-<g transform="translate(-256,32) scale(2)">
+<g transform="translate(-700,32) scale(3.3)">
 
 
 <circle style="fill:#FEE187;" cx="256.001" cy="256.001" r="110.205"/>
