@@ -170,6 +170,15 @@ body {
 "Neptune";
 }
 
+#LunarEclipseLinkButton img {
+    height: 42px;
+    width: 58px;
+}
+
+#LunarEclipseLinkButton::after { content: 
+"Lunar Eclipses";
+}
+
 #DownloadLink img {
     width: 52px;
     height: 42px;
