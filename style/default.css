@@ -106,6 +106,7 @@ body {
 .topmenulink img{
     cursor: pointer;
     margin-top: 2px;
+    width: 42px;
 }
 
 .topmenulink::after {
@@ -130,6 +131,43 @@ body {
 
 #DownloadLink::after {
     content: "Download";
+}
+
+#SunLinkButton::after {
+     content: 
+"Sun";
+}
+
+#MoonLinkButton::after { content: 
+"Moon";
+}
+
+#MercuryLinkButton::after { content: 
+"Mercury";
+}
+
+#VenusLinkButton::after { content: 
+"Venus";
+}
+
+#MarsLinkButton::after { content: 
+"Mars";
+}
+
+#JupiterLinkButton::after { content: 
+"Jupiter";
+}
+
+#SaturnLinkButton::after { content: 
+"Saturn";
+}
+
+#UranusLinkButton::after { content: 
+"Uranus";
+}
+
+#NeptuneLinkButton::after { content: 
+"Neptune";
 }
 
 #DownloadLink img {
@@ -226,9 +264,13 @@ body {
     list-style-type:none;
 }
 
+#promotedMenu {
+    overflow: hidden;
+}
+
 #promotedMenu a {
     float: left;
-    margin-top: 20px;
+    margin-top: 2px;
     margin-left: 15px;
     text-decoration: none;
     color: #000000;

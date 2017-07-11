@@ -249,10 +249,9 @@ function PlanetPage (planetDataSource, tableName) {
             var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(Math.round(obj.Diameter * 3600)/3600);
             displayableLine[di++] = sexagesimalDiam.Ord1;
             
-            var sexagesimalTransit = AAJS.Numerical.ToSexagesimal(Math.round(obj.MeridianTransit * 3600)/3600);
-            displayableLine[di++] = obj.bRiseValid ? this.timeToHhColumnMm(obj.Rise) : "N/A";
-            displayableLine[di++] = obj.bTransitValid ? this.timeToHhColumnMm(obj.MeridianTransit) : "N/A";
-            displayableLine[di++] = obj.bSetValid ? this.timeToHhColumnMm(obj.Set) : "N/A";
+            displayableLine[di++] = this.timeToHhColumnMm(obj.Rise);
+            displayableLine[di++] = this.timeToHhColumnMm(obj.MeridianTransit);
+            displayableLine[di++] = this.timeToHhColumnMm(obj.Set);
             
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.DistanceToEarth);
             displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.DistanceToSun);
