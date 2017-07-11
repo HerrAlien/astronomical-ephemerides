@@ -178,6 +178,10 @@ body {
 "Solar Eclipses";
 }
 
+#GalileanMoonsLinkButton::after { content: 
+"Galilean Moons";
+}
+
 #DownloadLink img {
     width: 52px;
     height: 42px;
