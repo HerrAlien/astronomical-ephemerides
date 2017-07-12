@@ -438,7 +438,7 @@
         if (previousPage) {
             var pageObj = Pages [previousPage.id];
             if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
-                if (scroller.scrollTop >= 110) {
+                if (scroller.scrollTop >= 30) {
                     // get the first two rows
                     pageObj.hostElement.rows[0].classList.remove ("firstHeaderRow");
                     pageObj.hostElement.rows[0].classList.add ("firstHeaderRowScrolled");
