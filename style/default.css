@@ -97,124 +97,138 @@ body {
 }
 
 .topmenulink {
-    text-align: center;
     float: right;
     margin-right: 5px;
-    margin-left: 30px;
+    margin-left: 5px;
 }
 
-.topmenulink img{
+.linkButton {
+    text-align: center;
+}
+
+.linkButton img{
     cursor: pointer;
     margin-top: 2px;
     width: 42px;
 }
 
-.topmenulink::after {
+.linkButton::after {
     font-size: 12px;
     display: block;
     text-align: center;
     color: #000000;
 }
 
-#HomeLinkButton::after {
+.HomeLinkButton::after {
     content: "Home";
 }
 
-#MenuLinkDiv::after {
+.MenuLinkDiv::after {
     content: "More ...";
     margin: -2px auto 2px auto;
 }
 
-#SettingsLink::after {
+.SettingsLink::after {
     content: "Settings";
 }
 
-#DownloadLink::after {
+.DownloadLink::after {
     content: "Download";
 }
 
-#SunLinkButton::after {
+.SunLinkButton::after {
      content: 
 "Sun";
 }
 
-#MoonLinkButton::after { content: 
+.MoonLinkButton::after { content: 
 "Moon";
 }
 
-#MercuryLinkButton::after { content: 
+.MercuryLinkButton::after { content: 
 "Mercury";
 }
 
-#VenusLinkButton::after { content: 
+.VenusLinkButton::after { content: 
 "Venus";
 }
 
-#MarsLinkButton::after { content: 
+.MarsLinkButton::after { content: 
 "Mars";
 }
 
-#JupiterLinkButton::after { content: 
+.JupiterLinkButton::after { content: 
 "Jupiter";
 }
 
-#SaturnLinkButton::after { content: 
+.SaturnLinkButton::after { content: 
 "Saturn";
 }
 
-#UranusLinkButton::after { content: 
+.UranusLinkButton::after { content: 
 "Uranus";
 }
 
-#NeptuneLinkButton::after { content: 
+.NeptuneLinkButton::after { content: 
 "Neptune";
 }
 
-#LunarEclipseLinkButton::after { content: 
+.LunarEclipseLinkButton::after { content: 
 "Lunar Eclipses";
 }
 
-#SolarEclipseLinkButton::after { content: 
+.SolarEclipseLinkButton::after { content: 
 "Solar Eclipses";
 }
 
-#GalileanMoonsLinkButton::after { content: 
+.GalileanMoonsLinkButton::after { content: 
 "Galilean Moons";
 }
-#SaturnMoonsLinkButton::after { content: 
+.SaturnMoonsLinkButton::after { content: 
 "Saturn Moons";
 }
 
-#DownloadLink img {
+.DownloadLink.topmenulink img {
     width: 52px;
     height: 42px;
 }
 
-#HomeLinkButton {
+.HomeLinkButton {
     float: left;
-}
-
-#MenuLinkDiv {
-    margin-top: 2px;
-}
-#MenuLinkDiv img{
-    width: 52px;
-    height: 42px;
-}
-
-#HomeLinkButton {
     margin-top: 2px;
     margin-right: 20px;
 }
 
-#HomeLinkButton img {
+.MenuLinkDiv {
+    margin-top: 2px;
+}
+.MenuLinkDiv.topmenulink img{
+    width: 52px;
+    height: 42px;
+}
+
+.HomeLinkButton.topmenulink img {
     width: 40px;
     height: 40px;
 }
 
-#SettingsLink img {
+.SettingsLink.topmenulink img {
     width: 42px;
     height: 42px;
+}
+
+.largeButtons.linkButton::after {
+    font-size: 20px;
+}
+
+.largeButtons.linkButton img {
+    width: 80px;
+    height: 80px;
+}
+
+.largeButtons {
+    margin-right: 15px;
+    margin-left: 15px;
 }
 
 .title {
@@ -257,7 +271,11 @@ body {
     font-size: 16px;
 }
 
-#menuList li a, #getFromGeolocationAnchor {
+#menuList li a {
+    text-decoration: none;
+}
+
+#getFromGeolocationAnchor {
     cursor: pointer;
     padding-right: 10px;
     text-decoration: underline;
@@ -273,6 +291,7 @@ body {
 
 #menuList li {
     float: left;
+    margin-top: 20px;
 }
 
 #menuList{ 
@@ -448,7 +467,7 @@ input {
         height: 100%;
     }
     
-    #HomeLinkButton, #SettingsLink, #DownloadLink, #MenuLinkDiv {
+    .topmenulink {
         display: none;
     }
     
@@ -636,11 +655,11 @@ input {
 
 
 @media screen and (min-width: 1281px)  {
-    #MenuLink, #MenuLinkDiv, #MenuLinkDiv img, #MenuLinkDiv::after {
+    #MenuLink, .MenuLinkDiv.topmenulink, .MenuLinkDiv.topmenulink img, .MenuLinkDiv.topmenulink::after {
         width: 0px;
         height: 0px;
     }
-    #MenuLinkDiv::after {
+    .MenuLinkDiv.topmenulink::after {
         display: none;
     }
 }
