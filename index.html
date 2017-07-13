@@ -494,7 +494,7 @@
             if (typeof AAJS != 'undefined') {
                 var rightNow = new Date();
                 var y = rightNow.getUTCFullYear();
-                var m = rightNow.getUTCMonth();
+                var m = 1 + rightNow.getUTCMonth();
                 var d = rightNow.getUTCDate();
                 var h = rightNow.getUTCHours();
                 var jdBase = AAJS.Date.DateToJD (y, m, d, true);
@@ -527,8 +527,7 @@
             return y2 + 0.5 * n * (a + b + n * c);
         }
     })();
-    
-      
+          
 </script>
 
 <script type="text/JavaScript" src="js/aajs.js" async=""></script>
@@ -555,6 +554,34 @@
 
 <script type="text/JavaScript" src="js/mooneclipsesdata.js"></script>
 <script type="text/JavaScript" src="js/mooneclipsespage.js"></script>
+
+<script>
+    (function(){
+        // has common functionality with the page, considere refactoring some of it.
+        var sunRTViewer = document.getElementById("SunHomepageImmediateView");
+        var sunRTData = new DataForNow(SunData);
+        sunRTData.onDataUpdated.add (function(data) {
+        
+        
+            var oldLastMonth = Pages["Sun"].lastDisplayedMonth;
+            var displayableLine = Pages["Sun"].prepareOneDayDataObjectForView(data, 0);
+            Pages["Sun"].lastDisplayedMonth = oldLastMonth;
+            var di = 2;
+            var sexagesimalRA = AAJS.Numerical.ToSexagesimal(Math.round(data.RA * 3600000)/3600000);
+            displayableLine[di++] = sexagesimalRA.Ord3 ;
+            displayableLine[di++] = sexagesimalRA.Ord2 
+            displayableLine[di++] = sexagesimalRA.Ord1;
+
+            var sexagesimalDec = AAJS.Numerical.ToSexagesimal(Math.round(data.Dec * 3600000)/3600000);
+            displayableLine[di++] = sexagesimalDec.Ord3 ;
+            displayableLine[di++] = sexagesimalDec.Ord2;
+            displayableLine[di++] = sexagesimalDec.Ord1;
+            sunRTViewer.textContent = JSON.stringify(displayableLine);
+        });
+    })();
+    
+
+</script>
 
 <script>
     if (location.hash)
