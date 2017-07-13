@@ -356,11 +356,11 @@ table {
 }
 
 tr:nth-of-type(odd) {
-background: #ffffff;
+background: rgba(255,255,255,0.85);
 }
 
  tr:nth-of-type(even) {
-background: #eeeeee;
+background: rgba(220,220,220,0.85);
 }
 
 tr.firstHeaderRow, tr.secondHeaderRow, tr.firstHeaderRowScrolled, tr.secondHeaderRowScrolled {
@@ -399,6 +399,17 @@ input {
 }
 
 /** ----------------------------- M O O N --------------------------------------- **/
+@media screen {
+    #Moon {
+        background: url('../images/moon.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
+}
+
 #MoonTable .firstHeaderRow, #MoonTable .secondHeaderRow,
 #MoonTable .firstHeaderRowScrolled, #MoonTable .secondHeaderRowScrolled, #Moon
 {
@@ -414,9 +425,22 @@ input {
 }
 
 /** -------------------------------------- S U N -------------------------------- **/
+
 #SunTable .firstHeaderRow, #SunTable .secondHeaderRow,
 #SunTable .firstHeaderRowScrolled, #SunTable .secondHeaderRowScrolled, #Sun{
     min-width: 720px;
+}
+
+
+@media screen {
+    #Sun {
+        background: url('../images/sun.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
 }
 
 #SunTable td:nth-of-type(2), #SunTable td:nth-of-type(5), #SunTable td:nth-of-type(8), #SunTable td:nth-of-type(9), #SunTable td:nth-of-type(11),
@@ -576,7 +600,36 @@ input {
     min-width:70px;
 }
 
+@media screen {
+    #Mercury {
+        background: url('../images/mercury.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
+    #Venus {
+        background: url('../images/venus.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
+}
+
 /* ---------------------------- M A R S ------------------------------------ */
+@media screen {
+    #Mars {
+        background: url('../images/mars.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
+}
 #MarsTable tr.firstHeaderRow, 
 #MarsTable tr.secondHeaderRow,
 #MarsTable tr.firstHeaderRowScrolled, 
@@ -589,6 +642,17 @@ input {
 }
 
 /* ---------------------------- J U P I T E R ---------------------- */
+
+@media screen {
+    #Jupiter {
+        background: url('../images/jupiter.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
+}
 
 #Jupiter  td:nth-of-type(16), #Jupiter  td:nth-of-type(18), #Jupiter  td:nth-of-type(19), #Jupiter  td:nth-of-type(20), #Jupiter  td:nth-of-type(21), #Jupiter  td:nth-of-type(22){
     border-right: solid 1px black;
@@ -611,6 +675,35 @@ input {
 #GalileanMoonsContainer, #SaturnMoonsContainer {
     text-align: center;
 }
+
+
+@media screen {
+    #Saturn {
+        background: url('../images/saturn.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
+    #Uranus {
+        background: url('../images/uranus.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
+    #Neptune {
+        background: url('../images/neptune.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
+}
+
 
  #LunarEclipses
  {
