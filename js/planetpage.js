@@ -92,8 +92,8 @@ function PlanetPage (planetDataSource, tableName) {
             },
 
         "15" :  {
-                "0" : { "text" : "Phase", "classes" : ["minWidth45"] },
-                "1" : { "text" : "\u00B0", "classes" : ["minWidth45"] },
+                "0" : { "text" : "Phase", "classes" : ["minWidth50"] },
+                "1" : { "text" : "\u00B0", "classes" : ["minWidth50"] },
                 "longText" : "The phase of the planet (illuminated fraction of disk, as seen from Earth)"
             }
         };
