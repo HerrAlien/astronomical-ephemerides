@@ -356,11 +356,11 @@ table {
 }
 
 tr:nth-of-type(odd) {
-background: #ffffff;
+background: rgba(255,255,255,0.9);
 }
 
  tr:nth-of-type(even) {
-background: #eeeeee;
+background: rgba(220,220,220,0.9);
 }
 
 tr.firstHeaderRow, tr.secondHeaderRow, tr.firstHeaderRowScrolled, tr.secondHeaderRowScrolled {
@@ -405,6 +405,16 @@ input {
     width: 770px;
 }
 
+@media screen {
+    #Moon {
+        background: url('../images/moon.svg');
+        background-size: 60%;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
+}
 #MoonTable td:nth-of-type(2), #MoonTable td:nth-of-type(5), #MoonTable td:nth-of-type(8), #MoonTable td:nth-of-type(11), #MoonTable td:nth-of-type(14), #MoonTable td:nth-of-type(16), #MoonTable td:nth-of-type(17), #MoonTable td:nth-of-type(18), #MoonTable td:nth-of-type(19), #MoonTable td:nth-of-type(22), #MoonTable td:nth-of-type(23) {
     border-right: 1px solid black;
 }
