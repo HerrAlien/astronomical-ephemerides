@@ -474,6 +474,9 @@ input {
     min-width : 62px;
 }
 
+.minWidth65 {
+    min-width : 65px;
+}
 
 .borderRight,
 .planetTable td:nth-of-type(2) ,

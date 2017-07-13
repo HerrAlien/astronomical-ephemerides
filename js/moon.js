@@ -208,8 +208,8 @@ var MoonData = {
                     "longText" : "colongitude of the Sun"
                 },
             "23" :  {
-                    "0" : { "text" :"b0"    , "classes" : ["minWidth52", "physicalEphemeris"] },
-                    "1" : { "text" :"\u00B0", "classes" : ["minWidth52", "physicalEphemeris"] },
+                    "0" : { "text" :"b0"    , "classes" : ["minWidth65", "physicalEphemeris"] },
+                    "1" : { "text" :"\u00B0", "classes" : ["minWidth65", "physicalEphemeris"] },
                     "longText" : "latitude of the Sun"
                 },
         },
