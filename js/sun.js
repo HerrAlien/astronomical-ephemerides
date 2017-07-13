@@ -163,8 +163,8 @@ var SunData = {
                 },
                 // \u03C0
             "17" :  {
-                    "0" : { "text" :"\u03C0", "classes" : ["minWidth30", "physicalEphemeris"] },
-                    "1" : { "text" :"''",     "classes" : ["minWidth30", "physicalEphemeris"] },
+                    "0" : { "text" :"\u03C0", "classes" : ["minWidth50", "physicalEphemeris"] },
+                    "1" : { "text" :"''",     "classes" : ["minWidth50", "physicalEphemeris"] },
                     "longText" : "Equatorial horizontal parallax"
                 }
         },
