@@ -445,22 +445,24 @@
 
                     pageObj.hostElement.rows[1].classList.remove ("secondHeaderRow");
                     pageObj.hostElement.rows[1].classList.add ("secondHeaderRowScrolled");
-                    
-                    bottomMenu.classList.remove("scrolledDown");
-                    bottomMenu.classList.add("scrolledInPlace");
-                    
                 } else {
                     pageObj.hostElement.rows[0].classList.add ("firstHeaderRow");
                     pageObj.hostElement.rows[0].classList.remove ("firstHeaderRowScrolled");
 
                     pageObj.hostElement.rows[1].classList.add ("secondHeaderRow");
-                    pageObj.hostElement.rows[1].classList.remove ("secondHeaderRowScrolled");
-                    
-                    bottomMenu.classList.remove("scrolledInPlace");
-                    bottomMenu.classList.add("scrolledDown");
-
+                    pageObj.hostElement.rows[1].classList.remove ("secondHeaderRowScrolled");                    
                 }
             }
+            
+            if (document.body.scrollTop >= 30) {
+                    // get the first two rows
+                bottomMenu.classList.remove("scrolledDown");
+                bottomMenu.classList.add("scrolledInPlace");
+            } else {
+               bottomMenu.classList.remove("scrolledInPlace");
+               bottomMenu.classList.add("scrolledDown");
+            }
+
         }
     });
     
