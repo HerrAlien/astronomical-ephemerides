@@ -17,22 +17,8 @@ body {
 
 @media screen {
     #scroller {
-        position: fixed;
-        bottom: 0;
-        overflow-y: auto;
-        min-width: 590px;
-        right: 0;
-        left: 0;
         z-index: 2;
         background: #ffffff;
-    }
-    
-    .scrollerNoMenu {
-        top: 0px;
-    }
-    
-    .scrollerWithMenu {
-        top: 70px;
     }
 
     #jupiterHorizontalScroller , #marsHorizontalScroller{
@@ -250,12 +236,12 @@ tr.secondHeaderRow {
 }
 
 tr.firstHeaderRowScrolled{
-    margin-top: -105px;
+    margin-top: -175px;
     background: #ffffff;
 }
 
 tr.secondHeaderRowScrolled{
-    margin-top: -85px;
+    margin-top: -155px;
     background: #ffffff;
 }
 
