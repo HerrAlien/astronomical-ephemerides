@@ -457,18 +457,24 @@ input {
 }
 
 @media print {
-
-    .physicalPositionalButtonsHolder {
-        display: none;
-    }
-
+    
     .fixed {
         position: relative;
-        width: 100%;
     }
     
     .printOnly {
         display: table-row;
+    }
+
+
+    .screenOnly
+    {
+        font-size: 0px;
+        color: #ffffff;
+    }
+
+    .physicalPositionalButtonsHolder {
+        display: none;
     }
 
      tr.printOnly:nth-of-type(odd), tr.printOnly:nth-of-type(even){
@@ -478,11 +484,13 @@ input {
         height: 14px;
     }
     
-    tr.printOnly:nth-of-type(odd) {
+    tr.printOnly:nth-of-type(odd) th {
         border-top: 1px solid black;
+        padding: 0px;
     }
-    tr.printOnly:nth-of-type(even) {
+    tr.printOnly:nth-of-type(even) th {
         border-bottom: 1px solid black;
+        padding: 0px;
     }
     
     #scroller {
