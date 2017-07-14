@@ -15,10 +15,25 @@ body {
     margin-right: auto;
 }
 
+.scrolledDown {
+    bottom: -60px;
+}
+
+.scrolledInPlace {
+    bottom: 0px;
+}
+
 @media screen {
     #scroller {
         z-index: 2;
         background: #ffffff;
+    }
+    
+    .bottomMenu {
+        z-index: 2;
+        position: fixed;
+        background: #ffffff;
+        right: 10px;
     }
 
     #jupiterHorizontalScroller , #marsHorizontalScroller{
@@ -35,12 +50,6 @@ body {
     .showPositional #Jupiter{
         width: 880px;
         background: #ffffff;
-    }
-    
-    .showPositional {
-    }
-    
-    .showPhysical {
     }
     
     .secondHeaderRow th, 
@@ -336,10 +345,6 @@ input {
 
 #SunTable td:nth-of-type(10) {
     border-right: none;
-}
-
-.printOnly {
-        display: none;
 }
 
 @media print {
@@ -676,4 +681,9 @@ input {
     background: #000000;
     color: #ffffff;
     cursor: default;
+}
+
+#bottomMenu img {
+    width: 48px;
+    height: 48px;
 }
