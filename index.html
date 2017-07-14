@@ -417,9 +417,9 @@
                                                           "cancelable": false }));
     } 
         
-    scroller.addEventListener("scroll", function() {
+    window.addEventListener("scroll", function() {
     
-        if (scroller.scrollTop > oldScrollerTop) {
+/*        if (scroller.scrollTop > oldScrollerTop) {
             if (!scrollerOnTop) {
                 scroller.classList.remove ("scrollerWithMenu");
                 scroller.classList.add ("scrollerNoMenu");
@@ -436,11 +436,12 @@
         
             oldScrollerTop = scroller.scrollTop;
        
+    */       
     
         if (previousPage) {
             var pageObj = Pages [previousPage.id];
             if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
-                if (scroller.scrollTop >= 30) {
+                if (document.body.scrollTop >= 30) {
                     // get the first two rows
                     pageObj.hostElement.rows[0].classList.remove ("firstHeaderRow");
                     pageObj.hostElement.rows[0].classList.add ("firstHeaderRowScrolled");
