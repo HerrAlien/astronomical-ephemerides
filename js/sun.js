@@ -82,36 +82,36 @@ var SunData = {
                 "1" : { "text" : "", "classes" : ["minWidth20"] },
                 "longText" : "Date: day"
             },
-            "2" : {
-                    "0" : { "text" :"\u03B1",  "classes" : ["minWidth20", "positionEphemeris"] },
-                    "1" : { "text" :"h"     ,  "classes" : ["minWidth20", "positionEphemeris"] },
-                    "longText" : "Equatorial coordinates: Right Ascension"
-                },
-            "3" : {
-                    "0" : { "text" :"",  "classes" : ["minWidth20", "positionEphemeris"] },
-                    "1" : { "text" :"m", "classes" : ["minWidth20", "positionEphemeris"] },
-                    "longText" : "Equatorial coordinates: Right Ascension"
-                },
-            "4" : {
-                    "0" : { "text" :"",  "classes" : ["minWidth20", "positionEphemeris"] },
-                    "1" : { "text" :"s", "classes" : ["minWidth20", "positionEphemeris"] },
-                    "longText" : "Equatorial coordinates: Right Ascension"
-                },
-            "5" :  {
-                    "0" : { "text" :"\u03B4", "classes" : ["minWidth25", "positionEphemeris"] },
-                    "1" : { "text" :"\u00B0", "classes" : ["minWidth25", "positionEphemeris"] },
-                    "longText" : "Equatorial coordinates: Declination"
-                },
-            "6" :  {
-                    "0" : { "text" :"",  "classes" : ["minWidth20", "positionEphemeris"] },
-                    "1" : { "text" :"'", "classes" : ["minWidth20", "positionEphemeris"] },
-                    "longText" : "Equatorial coordinates: Declination"
-                },
-            "7" :  {
-                    "0" : { "text" :"",   "classes" : ["minWidth15", "positionEphemeris"] },
-                    "1" : { "text" :"''", "classes" : ["minWidth25", "positionEphemeris"] },
-                    "longText" : "Equatorial coordinates: Declination"
-                },
+        "2" : {
+                "0" : { "text" : "\u03B1", "classes" : ["minWidth20"] },
+                "1" : { "text" : "h", "classes" : ["minWidth20"] },
+                "longText" : "Equatorial coordinates: Right Ascension"
+            },
+        "3" : {
+                "0" : { "text" : "(RA)", "classes" : ["minWidth20"] },
+                "1" : { "text" : "m", "classes" : ["minWidth20"] },
+                "longText" : "Equatorial coordinates: Right Ascension"
+            },
+        "4" : {
+                "0" : { "text" : "", "classes" : ["minWidth10"] },
+                "1" : { "text" : "s", "classes" : ["minWidth20"] },
+                "longText" : "Equatorial coordinates: Right Ascension"
+            },
+        "5" :  {
+                "0" : { "text" : "\u03B4", "classes" : ["minWidth20"] },
+                "1" : { "text" : "\u00B0", "classes" : ["minWidth25"] },
+                "longText" : "Equatorial coordinates: Declination"
+            },
+        "6" :  {
+                "0" : { "text" : "(Dec)", "classes" : ["minWidth20" ] },
+                "1" : { "text" : "'", "classes" : ["minWidth20"] },
+                "longText" : "Equatorial coordinates: Declination"
+            },
+        "7" :  {
+                "0" : { "text" : "", "classes" : ["minWidth10"  ] },
+                "1" : { "text" : "''", "classes" : ["minWidth25"] },
+                "longText" : "Equatorial coordinates: Declination"
+            },
             "8" :  {
                     "0" : { "text" :"\u0394", "classes" : ["minWidth50", "positionEphemeris"] },
                     "1" : { "text" :"A.U.",   "classes" : ["minWidth50", "positionEphemeris"] },
