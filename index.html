@@ -330,6 +330,11 @@
             <br/> 
             <div id="MoonEclipsesContainer" class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</div>
         </div>
+        
+        <div id="bottomMenu" class="bottomMenu scrolledDown">
+            <a href="#settings"><div class="topmenulink"><img src="images/settings.svg"></div></a>
+            <a href="#more"><div class="topmenulink"><img src="images/menu.svg"></div></a>
+        </div>
 
     </div>
     
@@ -350,12 +355,6 @@
     var previousPage = false;
     var currentActiveLink = false;
     
-    var scroller = window;
-    scroller = document.getElementById("scroller");
-    var oldScrollerTop = 0;
-    var scrollerOnTop = false;
-
-
     function onhashchange(){
         var hash = location.hash;
         var pageName = hash.slice(1);
@@ -414,7 +413,8 @@
                                                           "bubbles": true, 
                                                           "cancelable": false }));
     } 
-        
+    
+    var bottomMenu = document.getElementById("bottomMenu");
     window.addEventListener("scroll", function() {
     
 /*        if (scroller.scrollTop > oldScrollerTop) {
@@ -435,7 +435,6 @@
             oldScrollerTop = scroller.scrollTop;
        
     */       
-    
         if (previousPage) {
             var pageObj = Pages [previousPage.id];
             if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
@@ -446,12 +445,20 @@
 
                     pageObj.hostElement.rows[1].classList.remove ("secondHeaderRow");
                     pageObj.hostElement.rows[1].classList.add ("secondHeaderRowScrolled");
+                    
+                    bottomMenu.classList.remove("scrolledDown");
+                    bottomMenu.classList.add("scrolledInPlace");
+                    
                 } else {
                     pageObj.hostElement.rows[0].classList.add ("firstHeaderRow");
                     pageObj.hostElement.rows[0].classList.remove ("firstHeaderRowScrolled");
 
                     pageObj.hostElement.rows[1].classList.add ("secondHeaderRow");
                     pageObj.hostElement.rows[1].classList.remove ("secondHeaderRowScrolled");
+                    
+                    bottomMenu.classList.remove("scrolledInPlace");
+                    bottomMenu.classList.add("scrolledDown");
+
                 }
             }
         }
