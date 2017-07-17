@@ -261,6 +261,10 @@ tr.secondHeaderRowScrolled{
     background: #ffffff;
 }
 
+tr.firstHeaderRow, tr.firstHeaderRowScrolled {
+    text-decoration: underline;
+}
+
 table {
     margin-top: 10px;
     font-family : Courier;
@@ -355,6 +359,10 @@ input {
 }
 
 @media print {
+    
+    a, tr.firstHeaderRow, tr.firstHeaderRowScrolled {
+    text-decoration: none;
+    }
     
     .fixed {
         position: relative;
