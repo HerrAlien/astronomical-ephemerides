@@ -335,8 +335,7 @@ input {
 
 /** ----------------------------- M O O N --------------------------------------- **/
 #MoonTable .firstHeaderRow, #MoonTable .secondHeaderRow,
-#MoonTable .firstHeaderRowScrolled, #MoonTable .secondHeaderRowScrolled, #Moon
-{
+#MoonTable .firstHeaderRowScrolled, #MoonTable .secondHeaderRowScrolled, #Moon {
     width: 770px;
 }
 
@@ -365,6 +364,10 @@ input {
 
 @media print {
     
+    .bottomMenu {
+        display: none;
+    }
+    
     a, tr.firstHeaderRow, tr.firstHeaderRowScrolled {
     text-decoration: none;
     }
@@ -378,8 +381,7 @@ input {
     }
 
 
-    .screenOnly
-    {
+    .screenOnly {
         font-size: 0px;
         color: #ffffff;
     }
@@ -430,8 +432,7 @@ input {
 
 /** ---------------------------------- P L A N E T ------------------------------ **/
 .firstHeaderRow, .secondHeaderRow, .page,
-.firstHeaderRowScrolled, .secondHeaderRowScrolled
-{
+.firstHeaderRowScrolled, .secondHeaderRowScrolled {
     width: 633px;
 }
 
@@ -439,53 +440,43 @@ input {
 	min-width: 1px;
 }
 
-.minWidth5
-{
+.minWidth5 {
     min-width: 5px;
 }
 
-.minWidth15
-{
+.minWidth15 {
     min-width : 15px;
 }
 
-.minWidth20
-{
+.minWidth20 {
     min-width : 20px;
 }
 
-.minWidth25
-{
+.minWidth25 {
     min-width : 25px;
 }
 
-.minWidth30
-{
+.minWidth30 {
     min-width: 30px;
 }
 
-.minWidth40
-{
+.minWidth40 {
     min-width : 40px;
 }
 
-.minWidth45
-{
+.minWidth45 {
     min-width : 45px;
 }
 
-.minWidth50
-{
+.minWidth50 {
     min-width: 50px;
 }
 
-.minWidth52
-{
+.minWidth52 {
     min-width: 52px;
 }
 
-.minWidth55
-{
+.minWidth55 {
     min-width: 55px;
 }
 
@@ -511,12 +502,9 @@ input {
     border-right: solid 1px black;
 }
 
-
-.minWidth15
-{
+.minWidth15 {
     min-width: 15px;    
 }
-
 
 .minWidth70 {
     min-width:70px;
@@ -558,8 +546,7 @@ input {
     text-align: center;
 }
 
- #LunarEclipses
- {
+ #LunarEclipses {
      width: 100%;
      max-width: 810px;
  }
