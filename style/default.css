@@ -24,7 +24,7 @@ body {
 }
 
 a:visited {
-    color: #770077;
+    color: #003377;
 }
 
 a {
@@ -120,10 +120,6 @@ a {
     text-decoration: underline;
 }
 
-#HomeLinkButton::after {
-    content: "Home";
-}
-
 #MenuLinkDiv::after {
     content: "More ...";
     margin: -2px auto 2px auto;
@@ -160,7 +156,7 @@ a {
 }
 
 #HomeLinkButton img {
-    width: 40px;
+    width: auto;
     height: 40px;
 }
 
@@ -587,7 +583,7 @@ input {
 }
 
 
-@media screen and (min-width: 1300px)  {
+@media screen and (min-width: 1371px)  {
     #MenuLink, #MenuLinkDiv, #MenuLinkDiv img, #MenuLinkDiv::after {
         width: 0px;
         height: 0px;
