@@ -69,9 +69,9 @@
 
 </g>
 
-<circle style="fill:#999999;" cx="2" cy="2" r="2"/>
-<circle style="fill:#999999;" cx="12" cy="12" r="2"/>
+<circle style="fill:#000000;" cx="2" cy="2" r="2"/>
+<circle style="fill:#000000;" cx="12" cy="12" r="2"/>
 <circle style="fill:#000000;" cx="36" cy="36" r="2"/>
-<circle style="fill:#999999;" cx="50" cy="50" r="2"/>
+<circle style="fill:#000000;" cx="50" cy="50" r="2"/>
 
 </svg>

@@ -102,7 +102,7 @@
 </g>
 </g>
 
-<circle style="fill:#999999;" cx="20" cy="480" r="20"/>
-<circle style="fill:#999999;" cx="480" cy="20" r="20"/>
+<circle style="fill:#000000;" cx="20" cy="480" r="20"/>
+<circle style="fill:#000000;" cx="480" cy="20" r="20"/>
 
 </svg>
