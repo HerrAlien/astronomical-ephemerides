@@ -748,7 +748,7 @@ input {
 }
 
 
-@media screen and (min-width: 1371px)  {
+@media screen and (min-width: 1451px)  {
     #MenuLink, .MenuLinkDiv.topmenulink, .MenuLinkDiv.topmenulink img, .MenuLinkDiv.topmenulink::after {
         width: 0px;
         height: 0px;
