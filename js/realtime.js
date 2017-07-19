@@ -112,7 +112,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         if (fractionPart < 10)
             fractionPart = "00" + fractionPart;
         else if (fractionPart < 100)
-            fractionPart = "00" + fractionPart;
+            fractionPart = "0" + fractionPart;
             
         return padToTens(intPart) + "." + fractionPart;
     }
