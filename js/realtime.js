@@ -102,7 +102,9 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     }
     
     function padToTens (a) {
-        return ((a < 10) ? "0" + a : a);
+        var isNegative = a < 0;
+        
+        return ((Math.abs(a) < 10) ?  (isNegative ? "-0" : "0") + Math.abs(a) : a);
     }
     
     function padToThousandth (a) {
