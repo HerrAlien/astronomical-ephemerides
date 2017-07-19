@@ -91,6 +91,26 @@
         
         <div id="home" class="page" title="Astronomical ephemerides">
         <span class="title">Astronomical Ephemerides</span><br/><br/>
+            <div id="SunHomepageImmediateView">    Sun
+            <div class="RA"></div>
+            <div class="Dec"></div>
+            </div>
+        
+            <div id="JupiterHomepageImmediateView">     Jupiter
+            <div class="RA"></div>
+            <div class="Dec"></div>
+            </div>
+        
+            <div id="MarsHomepageImmediateView">     Mars
+            <div class="RA"></div>
+            <div class="Dec"></div>
+            </div>
+
+            <div id="SaturnHomepageImmediateView">     Saturn
+            <div class="RA"></div>
+            <div class="Dec"></div>
+            </div>
+
             Astronomical Ephemerides - a JavaScript utility to calculate various solar system data. It uses an <a href="https://bitbucket.org/herr_alien/jsaaplus" target="_blank">Emscripten port</a> of the <a href="http://www.naughter.com/aa.html" target="_blank">AA+ library</a>. More about Emscripten <a href="http://kripken.github.io/emscripten-site/" target="_blank">here</a>.<br/>
         <br/>
         The following rules stand for the data computed by the application:
@@ -473,7 +493,8 @@
     }
     
     updateTimeAtAajsLoad();
-      
+    
+         
 </script>
 
 <script type="text/JavaScript" src="js/aajs.js" async=""></script>
@@ -500,6 +521,28 @@
 
 <script type="text/JavaScript" src="js/mooneclipsesdata.js"></script>
 <script type="text/JavaScript" src="js/mooneclipsespage.js"></script>
+<script type="text/JavaScript" src="js/realtime.js"></script>
+
+<script>
+
+    (function(){
+        // has common functionality with the page, considere refactoring some of it.
+        new RealTimeDataViewer(Pages["Sun"], 
+             document.getElementById("SunHomepageImmediateView"));
+
+       new RealTimeDataViewer(Pages["Jupiter"], 
+             document.getElementById("JupiterHomepageImmediateView"));
+
+        new RealTimeDataViewer(Pages["Mars"], 
+             document.getElementById("MarsHomepageImmediateView"));
+
+        new RealTimeDataViewer(Pages["Saturn"], 
+             document.getElementById("SaturnHomepageImmediateView"));
+
+             })();
+    
+
+</script>
 
 <script>
     if (location.hash)
