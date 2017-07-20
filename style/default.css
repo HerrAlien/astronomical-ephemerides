@@ -233,10 +233,11 @@ a {
 }
 
 .title {
-    font-size: 36px;
+    margin-top: 20px;
+    font-size: 30px;
     font-family: Arial;
-    vertical-align: top;
     margin-left: 0px;
+    display: block;
 }
 
 #more {
@@ -836,4 +837,76 @@ input {
 #bottomMenu img {
     width: 48px;
     height: 48px;
+}
+
+#rightNowFrontPage {
+    text-align: center;
+}
+
+#SunHomepageImmediateView {
+    background: url('../images/sun.svg');
+}
+
+#JupiterHomepageImmediateView {
+    background: url('../images/jupiter.svg');
+}
+
+#MarsHomepageImmediateView {
+    background: url('../images/mars.svg');
+}
+
+#SaturnHomepageImmediateView {
+    background: url('../images/saturn.svg');
+}
+
+#MoonHomepageImmediateView {
+    background: url('../images/moon.svg');
+}
+
+#VenusHomepageImmediateView {
+    background: url('../images/venus.svg');
+}
+
+#SunHomepageImmediateView, #JupiterHomepageImmediateView, 
+#MarsHomepageImmediateView, #SaturnHomepageImmediateView,
+#MoonHomepageImmediateView, #VenusHomepageImmediateView {
+    background-repeat: no-repeat;
+    background-size: 220px 220px;
+    width: 250px;
+    height: 250px;
+    border: 4px solid #888888;
+    border-radius: 10px;
+    text-align: center;
+    background-position: center;
+    float: left;
+    margin: 10px;
+}
+
+.RA::before {
+    content: "R.A. ";
+}
+
+.Dec::before {
+    content: "Dec. ";
+}
+
+.Dec::after {
+    content: "More ... ";
+    text-decoration: underline;
+    display: block;
+}
+
+.RA {
+    margin-top: 140px;
+}
+
+.realtimeTitle {
+    font-size: 26px;
+}
+
+.RA, .Dec {
+    font-size: 20px;
+}
+.RA, .Dec, .realtimeTitle {
+    background: rgba(255, 255, 255, 0.8);
 }
