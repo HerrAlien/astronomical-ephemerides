@@ -751,6 +751,29 @@ input {
     visibility: visible;
 }
 
+    .rightNowFrontPageWidget {
+        background-repeat: no-repeat;
+        background-size: 90% 90%;
+        width:  200px;
+        height: 200px;
+        border: 4px solid #888888;
+        border-radius: 10px;
+        text-align: center;
+        background-position: center;
+        float: left;
+        margin: 10px;
+    }
+    .RA {
+        margin-top: 110px;
+    }
+
+.realtimeTitle {
+    font-size: 20px;
+}
+
+.RA, .Dec {
+    font-size: 16px;
+}
 
 @media screen and (min-width: 1451px)  {
     #MenuLink, .MenuLinkDiv.topmenulink, .MenuLinkDiv.topmenulink img, .MenuLinkDiv.topmenulink::after {
@@ -800,6 +823,22 @@ input {
         margin-left: -634px;
         margin-right: auto;
     }
+    
+    .rightNowFrontPageWidget {
+        width:  320px;
+        height: 320px;
+    }
+    .RA {
+        margin-top: 170px;
+    }
+
+.realtimeTitle {
+    font-size: 40px;
+}
+
+.RA, .Dec {
+    font-size: 26px;
+}
 }
     
 .positionalButton, .physicalButton {
@@ -847,43 +886,29 @@ input {
 }
 
 #SunHomepageImmediateView {
-    background: url('../images/sun.svg');
+    background-image: url('../images/sun.svg');
 }
 
 #JupiterHomepageImmediateView {
-    background: url('../images/jupiter.svg');
+    background-image: url('../images/jupiter.svg');
 }
 
 #MarsHomepageImmediateView {
-    background: url('../images/mars.svg');
+    background-image: url('../images/mars.svg');
 }
 
 #SaturnHomepageImmediateView {
-    background: url('../images/saturn.svg');
+    background-image: url('../images/saturn.svg');
 }
 
 #MoonHomepageImmediateView {
-    background: url('../images/moon.svg');
+    background-image: url('../images/moon.svg');
 }
 
 #VenusHomepageImmediateView {
-    background: url('../images/venus.svg');
+    background-image: url('../images/venus.svg');
 }
 
-#SunHomepageImmediateView, #JupiterHomepageImmediateView, 
-#MarsHomepageImmediateView, #SaturnHomepageImmediateView,
-#MoonHomepageImmediateView, #VenusHomepageImmediateView {
-    background-repeat: no-repeat;
-    background-size: 280px 280px;
-    width:  320px;
-    height: 320px;
-    border: 4px solid #888888;
-    border-radius: 10px;
-    text-align: center;
-    background-position: center;
-    float: left;
-    margin: 10px;
-}
 
 .RA::before {
     content: "R.A. ";
@@ -899,17 +924,6 @@ input {
     display: block;
 }
 
-.RA {
-    margin-top: 170px;
-}
-
-.realtimeTitle {
-    font-size: 40px;
-}
-
-.RA, .Dec {
-    font-size: 26px;
-}
 .RA, .Dec, .realtimeTitle {
     background: rgba(255, 255, 255, 0.8);
 }
