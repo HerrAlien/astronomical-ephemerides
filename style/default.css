@@ -76,7 +76,7 @@ a {
     margin-right: auto;
     margin-top:10px;
     text-align: center;
-    width: 100%;
+    width: 95%;
 }
 
 .page:not(:target){
@@ -103,18 +103,22 @@ a {
 }
 
 .topmenulink {
-    text-align: center;
     float: right;
     margin-right: 5px;
-    margin-left: 30px;
+    margin-left: 5px;
 }
 
-.topmenulink img{
+.linkButton {
+    text-align: center;
+}
+
+.linkButton img{
     cursor: pointer;
     margin-top: 2px;
+    width: 42px;
 }
 
-.topmenulink::after {
+.linkButton::after {
     font-size: 12px;
     display: block;
     text-align: center;
@@ -122,56 +126,120 @@ a {
     text-decoration: underline;
 }
 
-#MenuLinkDiv::after {
+.MenuLinkDiv::after {
     content: "More ...";
     margin: -2px auto 2px auto;
 }
 
-#SettingsLink::after {
+.SettingsLink::after {
     content: "Settings";
 }
 
-#DownloadLink::after {
+.DownloadLink::after {
     content: "Download";
 }
 
-#DownloadLink img {
+.SunLinkButton::after {
+     content: 
+"Sun";
+}
+
+.MoonLinkButton::after { content: 
+"Moon";
+}
+
+.MercuryLinkButton::after { content: 
+"Mercury";
+}
+
+.VenusLinkButton::after { content: 
+"Venus";
+}
+
+.MarsLinkButton::after { content: 
+"Mars";
+}
+
+.JupiterLinkButton::after { content: 
+"Jupiter";
+}
+
+.SaturnLinkButton::after { content: 
+"Saturn";
+}
+
+.UranusLinkButton::after { content: 
+"Uranus";
+}
+
+.NeptuneLinkButton::after { content: 
+"Neptune";
+}
+
+.LunarEclipseLinkButton::after { content: 
+"Lunar Eclipses";
+}
+
+.SolarEclipseLinkButton::after { content: 
+"Solar Eclipses";
+}
+
+.GalileanMoonsLinkButton::after { content: 
+"Galilean Moons";
+}
+.SaturnMoonsLinkButton::after { content: 
+"Saturn Moons";
+}
+
+.DownloadLink.topmenulink img {
     width: 52px;
     height: 42px;
 }
 
-#HomeLinkButton {
+.HomeLinkButton {
     float: left;
-}
-
-#MenuLinkDiv {
-    margin-top: 2px;
-}
-#MenuLinkDiv img{
-    width: 52px;
-    height: 42px;
-}
-
-#HomeLinkButton {
     margin-top: 2px;
     margin-right: 20px;
 }
 
-#HomeLinkButton img {
+.MenuLinkDiv {
+    margin-top: 2px;
+}
+.MenuLinkDiv.topmenulink img{
+    width: 52px;
+    height: 42px;
+}
+
+.HomeLinkButton.topmenulink img {
     width: auto;
     height: 60px;
 }
 
-#SettingsLink img {
+.SettingsLink.topmenulink img {
     width: 42px;
     height: 42px;
 }
 
+.largeButtons.linkButton::after {
+    font-size: 20px;
+}
+
+.largeButtons.linkButton img {
+    width: 80px;
+    height: 80px;
+}
+
+.largeButtons {
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
 .title {
-    font-size: 36px;
+    margin-top: 20px;
+    font-size: 30px;
     font-family: Arial;
-    vertical-align: top;
     margin-left: 0px;
+    display: block;
 }
 
 #more {
@@ -208,7 +276,11 @@ a {
     font-size: 16px;
 }
 
-#menuList li a, #getFromGeolocationAnchor {
+#menuList li a {
+    text-decoration: none;
+}
+
+#getFromGeolocationAnchor {
     cursor: pointer;
     padding-right: 10px;
 }
@@ -223,6 +295,7 @@ a {
 
 #menuList li {
     float: left;
+    margin-top: 20px;
 }
 
 #menuList{ 
@@ -231,13 +304,13 @@ a {
 
 #promotedMenu a {
     float: left;
-    margin-top: 20px;
+    margin-top: 2px;
     margin-left: 15px;
 }
 
 #promotedMenu {
     overflow: hidden;
-    height: 40px;
+    height: 60px;
 }
 
 .clear {
@@ -290,11 +363,11 @@ table {
 }
 
 tr:nth-of-type(odd) {
-background: #ffffff;
+background: rgba(255,255,255,0.85);
 }
 
  tr:nth-of-type(even) {
-background: #eeeeee;
+background: rgba(220,220,220,0.85);
 }
 
 tr.firstHeaderRow, tr.secondHeaderRow, tr.firstHeaderRowScrolled, tr.secondHeaderRowScrolled {
@@ -333,6 +406,17 @@ input {
 }
 
 /** ----------------------------- M O O N --------------------------------------- **/
+@media screen {
+    #Moon {
+        background: url('../images/moon.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
+}
+
 #MoonTable .firstHeaderRow, #MoonTable .secondHeaderRow,
 #MoonTable .firstHeaderRowScrolled, #MoonTable .secondHeaderRowScrolled, #Moon {
     width: 770px;
@@ -347,9 +431,22 @@ input {
 }
 
 /** -------------------------------------- S U N -------------------------------- **/
+
 #SunTable .firstHeaderRow, #SunTable .secondHeaderRow,
 #SunTable .firstHeaderRowScrolled, #SunTable .secondHeaderRowScrolled, #Sun{
     min-width: 720px;
+}
+
+
+@media screen {
+    #Sun {
+        background: url('../images/sun.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
 }
 
 #SunTable td:nth-of-type(2), #SunTable td:nth-of-type(5), #SunTable td:nth-of-type(8), #SunTable td:nth-of-type(9), #SunTable td:nth-of-type(11),
@@ -411,7 +508,7 @@ input {
         height: 100%;
     }
     
-    #HomeLinkButton, #SettingsLink, #DownloadLink, #MenuLinkDiv {
+    .topmenulink {
         display: none;
     }
     
@@ -509,7 +606,36 @@ input {
     min-width:70px;
 }
 
+@media screen {
+    #Mercury {
+        background: url('../images/mercury.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
+    #Venus {
+        background: url('../images/venus.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
+}
+
 /* ---------------------------- M A R S ------------------------------------ */
+@media screen {
+    #Mars {
+        background: url('../images/mars.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
+}
 #MarsTable tr.firstHeaderRow, 
 #MarsTable tr.secondHeaderRow,
 #MarsTable tr.firstHeaderRowScrolled, 
@@ -522,6 +648,17 @@ input {
 }
 
 /* ---------------------------- J U P I T E R ---------------------- */
+
+@media screen {
+    #Jupiter {
+        background: url('../images/jupiter.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
+}
 
 #Jupiter  td:nth-of-type(16), #Jupiter  td:nth-of-type(18), #Jupiter  td:nth-of-type(19), #Jupiter  td:nth-of-type(20), #Jupiter  td:nth-of-type(21), #Jupiter  td:nth-of-type(22){
     border-right: solid 1px black;
@@ -545,6 +682,35 @@ input {
 #GalileanMoonsContainer, #SaturnMoonsContainer {
     text-align: center;
 }
+
+
+@media screen {
+    #Saturn {
+        background: url('../images/saturn.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
+    #Uranus {
+        background: url('../images/uranus.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
+    #Neptune {
+        background: url('../images/neptune.svg');
+        background-size: 500px;
+        background-repeat: no-repeat;
+        background-position-y: center;
+        background-attachment: fixed;
+        background-position-x: center;
+    }
+}
+
 
  #LunarEclipses {
      width: 100%;
@@ -570,8 +736,6 @@ input {
 }
 
 #home {
-    width: 100%;
-    max-width: 1024px;
     text-align: left;
 }
 
@@ -587,13 +751,36 @@ input {
     visibility: visible;
 }
 
+    .rightNowFrontPageWidget {
+        background-repeat: no-repeat;
+        background-size: 90% 90%;
+        width:  200px;
+        height: 200px;
+        border: 4px solid #888888;
+        border-radius: 10px;
+        text-align: center;
+        background-position: center;
+        float: left;
+        margin: 10px;
+    }
+    .RA {
+        margin-top: 110px;
+    }
 
-@media screen and (min-width: 1371px)  {
-    #MenuLink, #MenuLinkDiv, #MenuLinkDiv img, #MenuLinkDiv::after {
+.realtimeTitle {
+    font-size: 20px;
+}
+
+.RA, .Dec {
+    font-size: 16px;
+}
+
+@media screen and (min-width: 1451px)  {
+    #MenuLink, .MenuLinkDiv.topmenulink, .MenuLinkDiv.topmenulink img, .MenuLinkDiv.topmenulink::after {
         width: 0px;
         height: 0px;
     }
-    #MenuLinkDiv::after {
+    .MenuLinkDiv.topmenulink::after {
         display: none;
     }
 }
@@ -627,7 +814,6 @@ input {
     #MarsTable tr.secondHeaderRowScrolled, 
     #Mars    {
         width: 635px;
-        background: #ffffff;
     }
     
     body {
@@ -637,6 +823,22 @@ input {
         margin-left: -634px;
         margin-right: auto;
     }
+    
+    .rightNowFrontPageWidget {
+        width:  320px;
+        height: 320px;
+    }
+    .RA {
+        margin-top: 170px;
+    }
+
+.realtimeTitle {
+    font-size: 40px;
+}
+
+.RA, .Dec {
+    font-size: 26px;
+}
 }
     
 .positionalButton, .physicalButton {
@@ -677,4 +879,51 @@ input {
 #bottomMenu img {
     width: 48px;
     height: 48px;
+}
+
+#rightNowFrontPage {
+    text-align: center;
+}
+
+#SunHomepageImmediateView {
+    background-image: url('../images/sun.svg');
+}
+
+#JupiterHomepageImmediateView {
+    background-image: url('../images/jupiter.svg');
+}
+
+#MarsHomepageImmediateView {
+    background-image: url('../images/mars.svg');
+}
+
+#SaturnHomepageImmediateView {
+    background-image: url('../images/saturn.svg');
+}
+
+#MoonHomepageImmediateView {
+    background-image: url('../images/moon.svg');
+}
+
+#VenusHomepageImmediateView {
+    background-image: url('../images/venus.svg');
+}
+
+
+.RA::before {
+    content: "R.A. ";
+}
+
+.Dec::before {
+    content: "Dec. ";
+}
+
+.Dec::after {
+    content: "More ... ";
+    text-decoration: underline;
+    display: block;
+}
+
+.RA, .Dec, .realtimeTitle {
+    background: rgba(255, 255, 255, 0.8);
 }
