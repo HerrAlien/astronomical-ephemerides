@@ -75,6 +75,8 @@ a {
     margin-left: auto;
     margin-right: auto;
     margin-top:10px;
+    text-align: center;
+    width: 100%;
 }
 
 .page:not(:target){
@@ -181,6 +183,7 @@ a {
 #settings {
     width: 100%;
     max-width: 640px;
+    text-align: left;
     
 }
 
@@ -427,7 +430,7 @@ input {
 
 
 /** ---------------------------------- P L A N E T ------------------------------ **/
-.firstHeaderRow, .secondHeaderRow, .page,
+.firstHeaderRow, .secondHeaderRow, .planetTable,
 .firstHeaderRowScrolled, .secondHeaderRowScrolled {
     width: 633px;
 }
@@ -531,6 +534,7 @@ input {
 #GalileanMoons, #SaturnMoons {
     width: 100%;
     max-width: 800px;
+    text-align: left;
 }
 
 #GalileanMoonsContainer svg {
@@ -567,7 +571,8 @@ input {
 
 #home {
     width: 100%;
-    max-width: 800px;
+    max-width: 1024px;
+    text-align: left;
 }
 
 .buttonsToSwitchPosPhys, .physSeenAtSmallWidth {
