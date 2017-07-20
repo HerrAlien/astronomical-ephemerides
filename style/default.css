@@ -76,7 +76,7 @@ a {
     margin-right: auto;
     margin-top:10px;
     text-align: center;
-    width: 100%;
+    width: 95%;
 }
 
 .page:not(:target){
@@ -736,8 +736,6 @@ input {
 }
 
 #home {
-    width: 100%;
-    max-width: 1024px;
     text-align: left;
 }
 
