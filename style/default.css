@@ -760,7 +760,7 @@ input {
         border-radius: 10px;
         text-align: center;
         background-position: center;
-        float: left;
+        display: inline-block;
         margin: 10px;
     }
     .RA {
