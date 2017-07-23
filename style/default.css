@@ -757,7 +757,7 @@ input {
         width:  200px;
         height: 200px;
         border: 4px solid #888888;
-        border-radius: 10px;
+        border-radius: 10px 0px 10px 0px;
         text-align: center;
         background-position: center;
         display: inline-block;
@@ -926,4 +926,17 @@ input {
 
 .RA, .Dec, .realtimeTitle {
     background: rgba(255, 255, 255, 0.8);
+}
+
+#navigation {
+    display: none;
+}
+
+.navigation {
+display: block;
+margin: 0px 0px -10px 0px;
+padding-bottom: 7px;
+border: solid 1px #AAAAAA;
+border-radius: 8px 0px 8px 0px;
+background: #EEEEEE;
 }

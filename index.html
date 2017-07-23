@@ -19,6 +19,7 @@
 </head>
 
 <body>
+    <span id="navigation">
     <a href="#home"   id="HomeLink"><div class="HomeLinkButton topmenulink linkButton"><img src="images/logo.png"></div></a>
     <a href="#settings"><div class="SettingsLink topmenulink linkButton"><img src="images/settings.svg"></div></a>
     <a href="zip/ephemerides.7z"><div class="DownloadLink topmenulink linkButton"><img src="images/download.svg"></div></a>
@@ -39,6 +40,7 @@
             <a href="#Neptune"><div class="NeptuneLinkButton topmenulink linkButton"><img src="images/neptune.svg"></div></a>
 
     </div>
+    </span>
     
     <div class="clear maxWidth">&nbsp;</div>
     <div id="scroller" class="scrollerWithMenu">
@@ -85,6 +87,7 @@
 
         
         <div id="home" class="page" title="Astronomical ephemerides">
+            <span class="navigation"></span>
             <span class="title">Right now:</span>
             <div id="rightNowFrontPage">
             <a href="#Sun">
@@ -151,12 +154,14 @@
         </div>
         
         <div id="Sun" class="page invisible" title="Sun">
+            <span class="navigation"></span>
             <span class="title">Sun</span>
             <table id="SunTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
              </table>
         </div>
         <div id="Mercury" class="page" title="Mercury">
+            <span class="navigation"></span>
             <span class="title">Mercury</span>
             <table id="MercuryTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
@@ -164,6 +169,7 @@
         </div>
 
         <div id="Venus" class="page" title="Venus">
+            <span class="navigation"></span>
             <span class="title">Venus</span>
             <table id="VenusTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
@@ -171,6 +177,7 @@
         </div>
 
         <div id="Mars" class="page" title="Mars">
+            <span class="navigation"></span>
             <div class="swipeRight"></div> <div class="swipeLeft"></div>
             <span class="title">Mars</span>
             
@@ -188,10 +195,8 @@
         </div>
 
         <div id="Jupiter" class="page" title="Jupiter">
-
-
-            <span class="title">Jupiter</span>
-            
+            <span class="navigation"></span>
+            <span class="title">Jupiter</span>   
             
             <div id="jupiterHorizontalScroller">
                 <table id="JupiterTable" cellspacing="0" cellpadding="0" class="planetTable showPositional">
@@ -293,6 +298,7 @@
         </div>
 
         <div id="Saturn" class="page" title="Saturn">
+            <span class="navigation"></span>
             <span class="title">Saturn</span>
             <table id="SaturnTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
@@ -300,6 +306,7 @@
         </div>
 
        <div id="Uranus" class="page" title="Uranus">
+            <span class="navigation"></span>
             <span class="title">Uranus</span>
             <table id="UranusTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
@@ -307,6 +314,7 @@
         </div>
 
        <div id="Neptune" class="page" title="Neptune">
+            <span class="navigation"></span>
             <span class="title">Neptune</span>
             <table id="NeptuneTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
@@ -314,6 +322,7 @@
         </div>
 
        <div id="Moon" class="page" title="Moon">
+            <span class="navigation"></span>
             <span class="title">Moon</span>
             <table id="MoonTable" cellspacing="0" cellpadding="0"  class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif"><br/>Downloading initialization data ...</td></tr>
@@ -321,6 +330,7 @@
         </div>
 
        <div id="GalileanMoons" class="page" title="Visibility of Galilean Moons">
+            <span class="navigation"></span>
             <span class="title">Elongations of Galilean Moons</span>
             <br/>The following colors were used to represent each moon:
             <ul>
@@ -338,7 +348,8 @@
         </div>
 
        <div id="SaturnMoons" class="page" title="Visibility of Saturn Moons">
-            <span class="title">Elongations of Saturn's Moons</span>
+           <span class="navigation"></span>
+           <span class="title">Elongations of Saturn's Moons</span>
             <br/>The following colors were used to represent each moon:
             <ul>
                 <li>Mimas is represented in <font color="blue"><b>blue color</b></font></li>
@@ -357,6 +368,7 @@
         </div>
         
        <div id="LunarEclipses" class="page" title="Lunar Eclipses">
+            <span class="navigation"></span>
             <span class="title">Lunar Eclipses</span>
             <br/> Accuracy of the times displayed below is about 1 minute.
             <br/> 
@@ -505,6 +517,18 @@
     }
     
     updateTimeAtAajsLoad();
+    
+    (function() {
+        // update menus
+        var sourceMenu = document.getElementById("navigation");
+        var destMenus = document.getElementsByClassName("navigation");
+        for (var i = 0; i < destMenus.length; i++) {
+            var currentMenuDest = destMenus[i];
+            for (var sourceNodeIndex = 0; sourceNodeIndex < sourceMenu.children.length; sourceNodeIndex++) {
+                currentMenuDest.appendChild(sourceMenu.children[sourceNodeIndex].cloneNode(true));
+            }
+        }
+    })();
     
          
 </script>
