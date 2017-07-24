@@ -410,7 +410,7 @@ input {
 }
 
 #MoonTable .firstHeaderRow, #MoonTable .secondHeaderRow,
-#MoonTable .firstHeaderRowScrolled, #MoonTable .secondHeaderRowScrolled, #Moon {
+#MoonTable .firstHeaderRowScrolled, #MoonTable .secondHeaderRowScrolled {
     width: 770px;
 }
 
@@ -425,7 +425,7 @@ input {
 /** -------------------------------------- S U N -------------------------------- **/
 
 #SunTable .firstHeaderRow, #SunTable .secondHeaderRow,
-#SunTable .firstHeaderRowScrolled, #SunTable .secondHeaderRowScrolled, #Sun{
+#SunTable .firstHeaderRowScrolled, #SunTable .secondHeaderRowScrolled {
     min-width: 720px;
 }
 
@@ -599,8 +599,7 @@ input {
 #MarsTable tr.firstHeaderRow, 
 #MarsTable tr.secondHeaderRow,
 #MarsTable tr.firstHeaderRowScrolled, 
-#MarsTable tr.secondHeaderRowScrolled, 
-#Mars{
+#MarsTable tr.secondHeaderRowScrolled {
     width: 832px;
 }
 #Mars  td:nth-of-type(16), #Mars  td:nth-of-type(18), #Mars  td:nth-of-type(19), #Mars  td:nth-of-type(20), #Mars  td:nth-of-type(21){
@@ -616,14 +615,9 @@ input {
     border-right: solid 1px black;
 }
 
-#Jupiter {
-    width: 880px;
-}
-
 #GalileanMoons, #SaturnMoons {
-    width: 100%;
-    max-width: 800px;
-    text-align: left;
+    width: 95%;
+    text-align: center;
 }
 
 #GalileanMoonsContainer svg {
@@ -631,8 +625,11 @@ input {
     margin-right: auto;
 }
 
-#GalileanMoonsContainer, #SaturnMoonsContainer {
-    text-align: center;
+.satellitesContents {
+    text-align: left;
+    max-width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
@@ -641,8 +638,7 @@ input {
 
 
  #LunarEclipses {
-     width: 100%;
-     max-width: 810px;
+     width: 95%;
  }
 
 .moonEclipse {
