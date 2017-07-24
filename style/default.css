@@ -649,6 +649,7 @@ input {
     margin-right: auto;
     padding-top: 20px;
     page-break-after: always;
+    max-width: 1024px;
 }
 
 .viewport {
