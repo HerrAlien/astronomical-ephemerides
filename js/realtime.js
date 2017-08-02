@@ -19,7 +19,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         this.dataSource = dataSource;
         this.onDataUpdated = new Notifications.NewOneParameter();
         this.timerId = false;
-        this.updateTimeInterval = 500; // ms
+        this.updateTimeInterval = 1000; // ms
         this.fullHoursBetweenInterpolation = 1;
         this.start();
     }
