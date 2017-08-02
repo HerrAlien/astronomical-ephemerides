@@ -45,6 +45,7 @@
     <div class="clear maxWidth">&nbsp;</div>
     <div id="scroller" class="scrollerWithMenu">
         <div id="more" class="page" title="Menu">
+            <span class="navigation"></span>
             <span class="title">Menu</span>
             <ul id="menuList">
                 <li><a href="#Sun"><div             class="largeButtons SunLinkButton   linkButton"><img src="images/sun.svg"></div></a></li>
@@ -64,7 +65,9 @@
             <div class="clear">&nbsp;</div>
         </div>
         <div id="settings" class="page" title="Settings">
+            <span class="navigation"></span>
             <span class="title">Settings</span><br/>
+            <div id="settingsContainer">
             <label>Latitude [&deg;]: <br/><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
             <label>Longitude [&deg;]: <br/><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
             <label>Altitude [m]: <br/><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
@@ -76,6 +79,7 @@
             <input type="button" id = "applySettingsChanges" value="Apply"></input>
             <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
             <div class="clear">&nbsp;</div>
+            </div>
         </div>
         
         <div id="JSDisabledPage" title="Enable JavaScript">

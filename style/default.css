@@ -250,9 +250,15 @@ a {
 
 #settings {
     width: 100%;
+    text-align: center;
+}
+
+#settingsContainer {
     max-width: 640px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     text-align: left;
-    
 }
 
 #settings label, #getFromGeolocationAnchor, #applySettingsChanges{
