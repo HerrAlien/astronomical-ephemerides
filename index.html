@@ -570,6 +570,10 @@
 <script>
 
     (function(){
+    
+        for (var pageId in Pages)
+            Pages[pageId].reset();
+    
         // has common functionality with the page, considere refactoring some of it.
         new RealTimeDataViewer(Pages["Sun"], 
              document.getElementById("SunHomepageImmediateView"));
