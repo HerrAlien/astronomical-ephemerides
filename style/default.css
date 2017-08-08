@@ -243,13 +243,11 @@ a {
 }
 
 #more {
-    width:100%;
     margin-top: 20px;
     font-size: 22px;
 }
 
 #settings {
-    width: 100%;
     text-align: center;
 }
 
@@ -398,7 +396,7 @@ input {
 }
 
 #credits, .topBorder{
-    	border-top: 1px solid #000000;
+    	border-top: 1px solid #AAAAAA;
 }
 #credits{
         width: 100%;
@@ -622,7 +620,6 @@ input {
 }
 
 #GalileanMoons, #SaturnMoons {
-    width: 95%;
     text-align: center;
 }
 
@@ -643,13 +640,10 @@ input {
 }
 
 
- #LunarEclipses {
-     width: 95%;
- }
 
 .moonEclipse {
     text-align: center;
-    border-top: solid 1px #000000;
+    border-top: solid 1px #AAAAAA;
     margin-top: -1px;
     margin-left: auto;
     margin-right: auto;
@@ -660,6 +654,7 @@ input {
 
 .viewport {
     width: 100%;
+    max-width: 640px;
     padding-top: 0.1%; /* 1:1 Aspect Ratio */
     margin-top: 20px;
     margin-left: 0px;
@@ -687,8 +682,7 @@ input {
         background-size: 90% 90%;
         width:  200px;
         height: 200px;
-        border: 4px solid #888888;
-        border-radius: 10px 0px 10px 0px;
+        border-bottom: 1px solid #AAAAAA;
         text-align: center;
         background-position: center;
         display: inline-block;
@@ -867,7 +861,6 @@ input {
 display: block;
 margin: 0px 0px -10px 0px;
 padding-bottom: 7px;
-border: solid 1px #AAAAAA;
-border-radius: 8px 0px 8px 0px;
-background: #EEEEEE;
+border-bottom: solid 1px #AAAAAA;
+
 }
