@@ -426,7 +426,7 @@
     
     window.addEventListener("hashchange", onhashchange, false);
 
-    function onApplySettings() {
+    document.getElementById ("applySettingsChanges").addEventListener("click", function() {
         Location.Controls.commitUserValues();
         TimeStepsData.Controls.commitUserValues();
         // copy from timesteps data
@@ -443,9 +443,8 @@
                                                       "bubbles": true, 
                                                       "cancelable": false })); 
         }
-    }
-    
-    document.getElementById ("applySettingsChanges").addEventListener("click", onApplySettings);
+
+    });
     
     document.getElementById ("cancelSettingsChanges").addEventListener("click", function() {
         Location.Controls.update();
