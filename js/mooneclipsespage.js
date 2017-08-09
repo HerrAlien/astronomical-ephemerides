@@ -152,6 +152,7 @@ var MoonEclipsesPage = {
         var size = 800;
         svg.setAttribute("width", size);
         svg.setAttribute("height", size);
+        svg.setAttribute("alt", "Lunar Eclipse Graph");
         
         viewportSvg.classList.add("viewport");
         viewportSvg.setAttribute("viewBox", "0 0 " + size + " " + size);

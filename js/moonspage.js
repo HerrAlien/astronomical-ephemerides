@@ -66,6 +66,7 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
 
         hostSVG.setAttribute("width", width);
         hostSVG.setAttribute("height", height);
+        hostSVG.setAttribute("alt", "Satellites Elongation Graph");
         
         viewportSvg.classList.add("viewport");
         viewportSvg.setAttribute("viewBox", "0 0 " + width + " " + height);
