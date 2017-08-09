@@ -29,11 +29,17 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             if (this.timerId)
                 clearInterval(this.timerId);
             var obj = this;
+            
             this.timerId = setInterval (function() {  obj.updateData(); }, this.updateTimeInterval);
         }
         
         DataForNow.prototype['updateData'] = function () {
             if (typeof AAJS != 'undefined') {
+                
+                if (!PageTimeInterval) {
+                    onApplySettings();
+                }
+                
                 var rightNow = new Date();
                 var y = rightNow.getUTCFullYear();
                 var m = 1 + rightNow.getUTCMonth();
