@@ -226,6 +226,7 @@ a {
 
 .largeButtons.linkButton::after {
     font-size: 20px;
+    text-decoration: underline;
 }
 
 .largeButtons.linkButton img {
@@ -247,7 +248,6 @@ a {
 }
 
 #more {
-    margin-top: 20px;
     font-size: 22px;
 }
 
