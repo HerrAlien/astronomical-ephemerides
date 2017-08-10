@@ -24,7 +24,7 @@ var TimeStepsData = {
     numberOfDays : 410,
     timestep : 1,
     
-    onTimestepUpdated : Notifications.NewNoParameter(),
+    onTimestepUpdated : Notifications.New(),
 
 	Controls : {
 		dateInput : document.getElementById ("startingDate"),

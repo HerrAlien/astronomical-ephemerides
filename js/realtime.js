@@ -15,9 +15,24 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 // ---------------------------- model side ----------------------------------------
+
+var JDForRealTimeView = {
+    timerId : false,
+    updateTimeInterval : 1000,
+    start : function () {
+        if (this.timerId)
+            clearInterval(this.timerId);
+        this.timerId = setInterval (JDForRealTimeView.recomputeTimes, this.updateTimeInterval);
+    },
+    recomputeTimes : function () {
+        
+    }
+};
+
+
     function DataForNow(dataSource) {
         this.dataSource = dataSource;
-        this.onDataUpdated = new Notifications.NewOneParameter();
+        this.onDataUpdated = new Notifications.New();
         this.timerId = false;
         this.updateTimeInterval = 1000; // ms
         this.fullHoursBetweenInterpolation = 1;

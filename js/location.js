@@ -67,7 +67,7 @@ var Location = {
 	},
 	
 	init : function () {
-		this.onLocationUpdated = Notifications.NewNoParameter();
+		this.onLocationUpdated = Notifications.New();
 		this.Controls.init();
 		this.Controls.update();
         this.onLocationUpdated.notify();
