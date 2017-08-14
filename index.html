@@ -24,7 +24,7 @@
     <a href="#settings"><div class="SettingsLink topmenulink linkButton"><img src="images/settings.svg" alt="Settings"></div></a>
     <a href="zip/ephemerides.7z"><div class="DownloadLink topmenulink linkButton"><img src="images/download.svg" alt="Download"></div></a>
     <a href="#more" id="MenuLink"><div class="MenuLinkDiv topmenulink linkButton"><img src="images/menu.svg" alt="More ..."></div></a>
-    <div class="promotedMenu">
+    <div id="promotedMenu">
             <a href="#Sun"><div class="SunLinkButton topmenulink linkButton"><img src="images/sun.svg" alt="Sun"></div></a>
             <a href="#Moon"><div class="MoonLinkButton topmenulink linkButton"><img src="images/moon.svg" alt="Moon"></div></a>
             <a href="#Jupiter"><div class="JupiterLinkButton topmenulink linkButton"><img src="images/jupiter.svg" alt="Jupiter"></div></a>
@@ -184,6 +184,7 @@
             <span class="navigation"></span>
             <div class="swipeRight"></div> <div class="swipeLeft"></div>
             <h1>Mars</h1>
+            
             <div id="marsHorizontalScroller">
                 <table id="MarsTable" cellspacing="0" cellpadding="0" class="planetTable">
                 <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
@@ -200,6 +201,7 @@
         <div id="Jupiter" class="page">
             <span class="navigation"></span>
             <h1>Jupiter</h1>
+            
             <div id="jupiterHorizontalScroller">
                 <table id="JupiterTable" cellspacing="0" cellpadding="0" class="planetTable showPositional">
                 <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
@@ -466,22 +468,28 @@
     } 
     
     var bottomMenu = document.getElementById("bottomMenu");
-    
-    var topMenuButtonDivs = document.getElementsByClassName("topmenulink");
-    var promotedMenus = document.getElementsByClassName("promotedMenu");
-    
     window.addEventListener("scroll", function() {
-        
-        var scrollThreshold = 20;
+    
+/*      if (scroller.scrollTop > oldScrollerTop) {
+            if (!scrollerOnTop) {
+                scroller.classList.remove ("scrollerWithMenu");
+                scroller.classList.add ("scrollerNoMenu");
+                scrollerOnTop = true;
+            }
+        }
+        else {
+            if (scrollerOnTop) {
+                scroller.classList.remove ("scrollerNoMenu");
+                scroller.classList.add ("scrollerWithMenu");
+                scrollerOnTop = false;
+            }
+        }
+        oldScrollerTop = scroller.scrollTop; */       
         
         if (previousPage) {
             var pageObj = Pages [previousPage.id];
             if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
-                if (document.body.scrollTop >= scrollThreshold) {
-                    for (var i in topMenuButtonDivs)
-                        topMenuButtonDivs[i].classList.add("scrolledDown");
-                    for (var i in promotedMenus)
-                        promotedMenus[i].classList.add("scrolledDown");
+                if (document.body.scrollTop >= 20) {
                     // get the first two rows
                     pageObj.hostElement.rows[0].classList.remove ("firstHeaderRow");
                     pageObj.hostElement.rows[0].classList.add ("firstHeaderRowScrolled");
@@ -489,20 +497,15 @@
                     pageObj.hostElement.rows[1].classList.remove ("secondHeaderRow");
                     pageObj.hostElement.rows[1].classList.add ("secondHeaderRowScrolled");
                 } else {
-                    for (var i in topMenuButtonDivs)
-                        topMenuButtonDivs[i].classList.remove("scrolledDown");
-                    for (var i in promotedMenus)
-                        promotedMenus[i].classList.remove("scrolledDown");
-                    promotedMenu.classList.remove("scrolledDown");
                     pageObj.hostElement.rows[0].classList.add ("firstHeaderRow");
                     pageObj.hostElement.rows[0].classList.remove ("firstHeaderRowScrolled");
 
                     pageObj.hostElement.rows[1].classList.add ("secondHeaderRow");
                     pageObj.hostElement.rows[1].classList.remove ("secondHeaderRowScrolled");                    
-                 }
+                }
             }
             
-            if (document.body.scrollTop >= scrollThreshold) {
+            if (document.body.scrollTop >= 30) {
                     // get the first two rows
                 bottomMenu.classList.remove("scrolledDown");
                 bottomMenu.classList.add("scrolledInPlace");
