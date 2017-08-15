@@ -52,6 +52,8 @@ a {
         overflow-x: hidden;
         margin-left: auto;
         margin-right: auto;
+        margin-top: -20px;
+        padding-top: 0px;
     }
 
     .showPositional #JupiterTable tr.firstHeaderRow, 
@@ -742,12 +744,10 @@ input {
     #JupiterTable tr.secondHeaderRow,
     #JupiterTable tr.firstHeaderRowScrolled, 
     #JupiterTable tr.secondHeaderRowScrolled, 
-    #Jupiter,
     #MarsTable tr.firstHeaderRow, 
     #MarsTable tr.secondHeaderRow,
     #MarsTable tr.firstHeaderRowScrolled, 
-    #MarsTable tr.secondHeaderRowScrolled, 
-    #Mars    {
+    #MarsTable tr.secondHeaderRowScrolled  {
         width: 635px;
     }
     
