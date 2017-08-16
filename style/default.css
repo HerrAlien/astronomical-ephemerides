@@ -40,19 +40,11 @@ a {
         background: #ffffff;
     }
     
-    .bottomMenu {
-        z-index: 2;
-        position: fixed;
-        background: #ffffff;
-        right: 10px;
-    }
-
     #jupiterHorizontalScroller , #marsHorizontalScroller{
         width: 880px;
         overflow-x: hidden;
         margin-left: auto;
         margin-right: auto;
-        margin-top: -20px;
         padding-top: 0px;
     }
 
@@ -243,7 +235,7 @@ a {
 }
 
 h1 {
-    margin-top: 70px;
+    margin-top: 120px;
     margin-bottom: 0px;
     font-size: 50px;
     font-family: Arial;
@@ -343,12 +335,12 @@ tr.secondHeaderRow {
 }
 
 tr.firstHeaderRowScrolled{
-    margin-top: -166px;
+    margin-top: -126px;
     background: #ffffff;
 }
 
 tr.secondHeaderRowScrolled{
-    margin-top: -146px;
+    margin-top: -106px;
     background: #ffffff;
 }
 
@@ -457,10 +449,6 @@ input {
 }
 
 @media print {
-    
-    .bottomMenu {
-        display: none;
-    }
     
     a, tr.firstHeaderRow, tr.firstHeaderRowScrolled {
     text-decoration: none;
@@ -812,11 +800,6 @@ input {
     cursor: default;
 }
 
-#bottomMenu img {
-    width: 48px;
-    height: 48px;
-}
-
 #rightNowFrontPage {
     text-align: center;
 }
@@ -873,7 +856,10 @@ display: block;
 margin: 0px 0px -10px 0px;
 padding-bottom: 7px;
 border-bottom: solid 1px #AAAAAA;
-
+    position: fixed;
+    top: 0px;
+    width: 95%;
+    background: #ffffff;
 }
 
 .rightNowFrontPageWidget:hover {
