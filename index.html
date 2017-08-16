@@ -45,7 +45,6 @@
     <div class="clear maxWidth">&nbsp;</div>
     <div id="scroller" class="scrollerWithMenu">
         <div id="more" class="page">
-            <span class="navigation"></span>
             <h1>Menu</h1>
             <ul id="menuList">
                 <li><a href="#Sun"><div             class="largeButtons SunLinkButton   linkButton"><img src="images/sun.svg" alt="Sun"></div></a></li>
@@ -65,7 +64,6 @@
             <div class="clear">&nbsp;</div>
         </div>
         <div id="settings" class="page">
-            <span class="navigation"></span>
             <h1>Settings</h1>
             <div id="settingsContainer">
             <label>Latitude [&deg;]: <br/><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
@@ -90,7 +88,6 @@
 
         
         <div id="home" class="page">
-            <span class="navigation"></span>
             <h1>Right now:</h1>
             <div id="rightNowFrontPage">
             <a href="#Sun">
@@ -157,14 +154,12 @@
         </div>
         
         <div id="Sun" class="page invisible">
-            <span class="navigation"></span>
             <h1>Sun</h1>
             <table id="SunTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif"  alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
              </table>
         </div>
         <div id="Mercury" class="page">
-            <span class="navigation"></span>
             <h1>Mercury</h1>
             <table id="MercuryTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
@@ -172,7 +167,6 @@
         </div>
 
         <div id="Venus" class="page">
-            <span class="navigation"></span>
             <h1>Venus</h1>
             <table id="VenusTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
@@ -180,7 +174,6 @@
         </div>
 
         <div id="Mars" class="page">
-            <span class="navigation"></span>
             <div class="swipeRight"></div> <div class="swipeLeft"></div>
             <h1>Mars</h1>
             <div id="marsHorizontalScroller">
@@ -197,7 +190,6 @@
         </div>
 
         <div id="Jupiter" class="page">
-            <span class="navigation"></span>
             <h1>Jupiter</h1>
             <div id="jupiterHorizontalScroller">
                 <table id="JupiterTable" cellspacing="0" cellpadding="0" class="planetTable showPositional">
@@ -299,7 +291,6 @@
         </div>
 
         <div id="Saturn" class="page">
-            <span class="navigation"></span>
             <h1>Saturn</h1>
             <table id="SaturnTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
@@ -307,7 +298,6 @@
         </div>
 
        <div id="Uranus" class="page">
-            <span class="navigation"></span>
             <h1>Uranus</h1>
             <table id="UranusTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
@@ -315,7 +305,6 @@
         </div>
 
        <div id="Neptune" class="page">
-            <span class="navigation"></span>
             <h1>Neptune</h1>
             <table id="NeptuneTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
@@ -323,7 +312,6 @@
         </div>
 
        <div id="Moon" class="page">
-            <span class="navigation"></span>
             <h1>Moon</h1>
             <table id="MoonTable" cellspacing="0" cellpadding="0"  class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
@@ -331,7 +319,6 @@
         </div>
 
        <div id="GalileanMoons" class="page">
-            <span class="navigation"></span>
             <h1>Elongations of Galilean Moons</h1>
             <div class="satellitesContents">
             <br/>The following colors were used to represent each moon:
@@ -351,7 +338,6 @@
         </div>
 
        <div id="SaturnMoons" class="page">
-           <span class="navigation"></span>
            <h1>Elongations of Saturn's Moons</h1>
             <div class="satellitesContents">
             <br/>The following colors were used to represent each moon:
@@ -373,7 +359,6 @@
         </div>
         
        <div id="LunarEclipses" class="page">
-            <span class="navigation"></span>
             <h1>Lunar Eclipses</h1>
             <br/> Accuracy of the times displayed below is about 1 minute.
             <br/> 
@@ -401,6 +386,7 @@
     var currentActiveLink = false;
     
     function onhashchange(){
+        document.body.scrollTop = 0;
         var hash = location.hash;
         var pageName = hash.slice(1);
         previousPage = document.getElementById(pageName); 
@@ -518,7 +504,7 @@
     
     updateTimeAtAajsLoad();
     
-    (function() {
+/*    (function() {
         // update menus
         var sourceMenu = document.getElementById("navigation");
         var destMenus = document.getElementsByClassName("navigation");
@@ -529,7 +515,7 @@
             }
         }
     })();
-    
+    */
          
 </script>
 

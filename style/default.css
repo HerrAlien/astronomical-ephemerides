@@ -848,10 +848,6 @@ input {
 }
 
 #navigation {
-    display: none;
-}
-
-.navigation {
 display: block;
 margin: 0px 0px -10px 0px;
 padding-bottom: 7px;
