@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <span id="navigation">
+    <div id="navigation">
     <a href="#home"   id="HomeLink"><div class="HomeLinkButton topmenulink linkButton"><img src="images/logo.png" alt="Home"></div></a>
     <a href="#settings"><div class="SettingsLink topmenulink linkButton"><img src="images/settings.svg" alt="Settings"></div></a>
     <a href="zip/ephemerides.7z"><div class="DownloadLink topmenulink linkButton"><img src="images/download.svg" alt="Download"></div></a>
@@ -40,7 +40,7 @@
             <a href="#Neptune"><div class="NeptuneLinkButton topmenulink linkButton"><img src="images/neptune.svg" alt="Neptune"></div></a>
 
     </div>
-    </span>
+    </div>
     
     <div class="clear maxWidth">&nbsp;</div>
     <div id="scroller" class="scrollerWithMenu">
@@ -447,23 +447,6 @@
     
     var bottomMenu = document.getElementById("bottomMenu");
     window.addEventListener("scroll", function() {
-    
-/*      if (scroller.scrollTop > oldScrollerTop) {
-            if (!scrollerOnTop) {
-                scroller.classList.remove ("scrollerWithMenu");
-                scroller.classList.add ("scrollerNoMenu");
-                scrollerOnTop = true;
-            }
-        }
-        else {
-            if (scrollerOnTop) {
-                scroller.classList.remove ("scrollerNoMenu");
-                scroller.classList.add ("scrollerWithMenu");
-                scrollerOnTop = false;
-            }
-        }
-        oldScrollerTop = scroller.scrollTop; */       
-        
         if (previousPage) {
             var pageObj = Pages [previousPage.id];
             if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
@@ -481,17 +464,7 @@
                     pageObj.hostElement.rows[1].classList.add ("secondHeaderRow");
                     pageObj.hostElement.rows[1].classList.remove ("secondHeaderRowScrolled");                    
                 }
-            }
-            
-            if (document.body.scrollTop >= 30) {
-                    // get the first two rows
-                bottomMenu.classList.remove("scrolledDown");
-                bottomMenu.classList.add("scrolledInPlace");
-            } else {
-               bottomMenu.classList.remove("scrolledInPlace");
-               bottomMenu.classList.add("scrolledDown");
-            }
-
+            }            
         }
     });
     
