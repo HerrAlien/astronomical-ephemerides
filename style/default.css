@@ -380,6 +380,14 @@ tr.firstHeaderRow, tr.secondHeaderRow, tr.firstHeaderRowScrolled, tr.secondHeade
     z-index: 2;
 }
 
+tr.secondHeaderRowScrolled th {
+    box-shadow: 2px 2px 2px #CCCCCC;
+}
+
+tr.secondHeaderRowScrolled th:last-of-type {
+    box-shadow: 0px 2px 1px #CCCCCC;
+}
+
 input {
     height: 32px;
     font-size: 16px;
@@ -855,6 +863,7 @@ border-bottom: solid 1px #AAAAAA;
     width: 100%;
     background: #ffffff;
     z-index: 2;
+box-shadow: 1px 1px 1px #CCCCCC;
 }
 
 .rightNowFrontPageWidget:hover {
