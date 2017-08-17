@@ -19,7 +19,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/agpl.html
 */
 
 var Notifications = {
-	NewNoParameter : function () { 
+	New : function () { 
 		var a = {
 			_handlers : [],
 			add : function (handler) {
@@ -28,26 +28,11 @@ var Notifications = {
 			notify : function () {
 				var i = 0;
 				for (i = 0; i < a._handlers.length; i++)
-					a._handlers[i]();
-			}
-		};
-		return a;
-	},
-	NewOneParameter : function () { 
-		var a = {
-			_handlers : [],
-			add : function (handler) {
-				a._handlers.push (handler);
-			},
-			notify : function (param) {
-				var i = 0;
-				for (i = 0; i < a._handlers.length; i++)
-					a._handlers[i](param);
+					a._handlers[i].apply(this, arguments);
 			}
 		};
 		return a;
 	}
-
 };
 
 try {

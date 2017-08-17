@@ -15,47 +15,59 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 // ---------------------------- model side ----------------------------------------
+
+var JDForRealTimeView = {
+    timerId : false,
+    updateTimeInterval : 1000, // [ms]
+    start : function () {
+        if (this.timerId)
+            clearInterval(this.timerId);
+        this.timerId = setInterval (JDForRealTimeView.recomputeTimes, this.updateTimeInterval);
+    },
+    onRecomputedTimes : Notifications.New(),
+    recomputeTimes : function () {
+        if (typeof AAJS != 'undefined') {
+            var rightNow = new Date();
+            var y = rightNow.getUTCFullYear();
+            var m = 1 + rightNow.getUTCMonth();
+            var d = rightNow.getUTCDate();
+
+            var jdT2 = AAJS.Date.DateToJD (y, m, d, true);
+            var spanBetweenComputedTimes = 1; // [days] - one full day
+            // get the T1
+            var jdT1 = jdT2 - spanBetweenComputedTimes;
+            // get the T3
+            var jdT3 = jdT2 + spanBetweenComputedTimes;
+            var n = (rightNow.getUTCHours() + (rightNow.getUTCMinutes() + (rightNow.getUTCSeconds() + rightNow.getUTCMilliseconds()/1000)/60)/60)/24;
+            JDForRealTimeView.onRecomputedTimes.notify ({"T1" : jdT1, "T2" : jdT2, "T3" : jdT3, "n" : n});
+        }
+    }
+};
+
+
     function DataForNow(dataSource) {
         this.dataSource = dataSource;
-        this.onDataUpdated = new Notifications.NewOneParameter();
-        this.timerId = false;
-        this.updateTimeInterval = 1000; // ms
-        this.fullHoursBetweenInterpolation = 1;
+        this.onDataUpdated = new Notifications.New();
         this.start();
     }
     
     (function(){
         DataForNow.prototype['start'] = function() {
-            if (this.timerId)
-                clearInterval(this.timerId);
+            JDForRealTimeView.start();
             var obj = this;
-            this.timerId = setInterval (function() {  obj.updateData(); }, this.updateTimeInterval);
+            JDForRealTimeView.onRecomputedTimes.add (function(datesObj) { obj.updateData(datesObj); });
         }
         
-        DataForNow.prototype['updateData'] = function () {
+        DataForNow.prototype['updateData'] = function (datesObj) {
             if (typeof AAJS != 'undefined') {
-                var rightNow = new Date();
-                var y = rightNow.getUTCFullYear();
-                var m = 1 + rightNow.getUTCMonth();
-                var d = rightNow.getUTCDate();
-                var h = rightNow.getUTCHours();
-                var jdBase = AAJS.Date.DateToJD (y, m, d, true);
-                // get the T1
-                var jdT2 = jdBase + h/24;
-                var oneHourAsDay = 1/24;
-                var jdT1 = jdT2 - oneHourAsDay;
-                // get the T3
-                var jdT3 = jdT2 + oneHourAsDay;
-                var n = (rightNow.getUTCMinutes() + (rightNow.getUTCSeconds() + rightNow.getUTCMilliseconds()/1000)/60)/60;
-                
                 // get the data for each JD
-                var obj1 = this.dataSource.getDataAsObjectForJD (jdT1, true);
-                var obj2 = this.dataSource.getDataAsObjectForJD (jdT2, true);
-                var obj3 = this.dataSource.getDataAsObjectForJD (jdT3, true);
+                var obj1 = this.dataSource.getDataAsObjectForJD (datesObj.T1, true);
+                var obj2 = this.dataSource.getDataAsObjectForJD (datesObj.T2, true);
+                var obj3 = this.dataSource.getDataAsObjectForJD (datesObj.T3, true);
                 
                 var interpolatedObject = {};
                 for (var key in obj1) {
-                    interpolatedObject[key] = this.interpolate (n, obj1[key], obj2[key], obj3[key]);
+                    interpolatedObject[key] = this.interpolate (datesObj.n, obj1[key], obj2[key], obj3[key]);
                 }
                 
                 this.onDataUpdated.notify(interpolatedObject);

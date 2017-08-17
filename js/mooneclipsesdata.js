@@ -109,7 +109,7 @@ function MoonEclipse (JD) {
 
 var MoonEclipsesData = {
     
-	onNewEclipse : Notifications.NewOneParameter(),
+	onNewEclipse : Notifications.New(),
     
     sinodicPeriod : 29.530587981,
     

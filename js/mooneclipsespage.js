@@ -85,9 +85,7 @@ var MoonEclipsesPage = {
             description = "Total eclipse";
         
 
-        var eclipseTitle = addNodeChild (mainDiv, "span", oppositionDateTime.date.Y + "-" + oppositionDateTime.date.M + "-" + oppositionDateTime.date.D + " " + description);
-        eclipseTitle.classList.add("title");
-        addNodeChild (mainDiv, "br");
+        var eclipseTitle = addNodeChild (mainDiv, "h2", oppositionDateTime.date.Y + "-" + oppositionDateTime.date.M + "-" + oppositionDateTime.date.D + " " + description);
         addNodeChild (mainDiv, "span", "magnitude: " + AAJS.Numerical.RoundTo2Decimals(oppositionData.magnitude) + "; penumbral magnitude: " + AAJS.Numerical.RoundTo2Decimals(oppositionData.penumbralMagnitude));
         
         var timingsTable = addNodeChild (mainDiv, "table");
