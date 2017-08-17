@@ -42,7 +42,7 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
     Page.tableHeaderInfo['18'] = { "0" : {"text" : "L0", "classes" : ["minWidth50", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth50", "physPosHidden"]}, "longText" : "Longitude of central meridian" };
     Page.tableHeaderInfo['19'] = { "0" : {"text" : "DE", "classes" : ["minWidth40", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physPosHidden"]}, "longText" : "Planetocentric declination of Earth" };
     Page.tableHeaderInfo['20'] = { "0" : {"text" : "DS", "classes" : ["minWidth40", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physPosHidden"]}, "longText" : "Planetocentric declination of the Sun" };
-    Page.tableHeaderInfo['21'] = { "0" : {"text" : "P" , "classes" : ["minWidth40", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physPosHidden"]}, "longText" : "Position angle of the North Pole" };
+    Page.tableHeaderInfo['21'] = { "0" : {"text" : "P" , "classes" : ["minWidth55", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth55", "physPosHidden"]}, "longText" : "Position angle of the North Pole" };
     Page.firstDataRowColumnClasses = Page.firstDataRowColumnClasses.concat([["minWidth20", "physSeenAtSmallWidth"], ["minWidth20", "physSeenAtSmallWidth"], ["minWidth50"], ["minWidth40"], ["minWidth40"], ["minWidth40"]]);
 
     Page["old_addPlanetTableHeader"] = Page.addPlanetTableHeader;
