@@ -445,12 +445,14 @@
                                                           "cancelable": false }));
     } 
     
-    var bottomMenu = document.getElementById("bottomMenu");
+    var sourceMenu = document.getElementById("navigation");
     window.addEventListener("scroll", function() {
+        var scrolled = document.body.scrollTop >= 20;
+        
         if (previousPage) {
             var pageObj = Pages [previousPage.id];
             if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
-                if (document.body.scrollTop >= 20) {
+                if (scrolled) {
                     // get the first two rows
                     pageObj.hostElement.rows[0].classList.remove ("firstHeaderRow");
                     pageObj.hostElement.rows[0].classList.add ("firstHeaderRowScrolled");
@@ -463,9 +465,15 @@
 
                     pageObj.hostElement.rows[1].classList.add ("secondHeaderRow");
                     pageObj.hostElement.rows[1].classList.remove ("secondHeaderRowScrolled");                    
+                    sourceMenu.classList.remove ("withDropShadow");
                 }
             }            
         }
+        
+        if (scrolled)
+            sourceMenu.classList.add ("withDropShadow");
+        else 
+            sourceMenu.classList.remove ("withDropShadow");
     });
     
     function updateTimeAtAajsLoad() {
