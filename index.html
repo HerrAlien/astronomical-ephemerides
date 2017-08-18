@@ -385,6 +385,12 @@
     var previousPage = false;
     var currentActiveLink = false;
     
+    function gohome () {
+        document.getElementById("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
+                                                          "bubbles": true, 
+                                                          "cancelable": false }));
+    }
+    
     function onhashchange(){
         document.body.scrollTop = 0;
         var hash = location.hash;
@@ -416,11 +422,7 @@
                 Pages[pageKey].reset();
             }
         }
-        if (previousPage) {
-            document.getElementById(previousPage.id).dispatchEvent(new MouseEvent("click",  { "view": window, 
-                                                      "bubbles": true, 
-                                                      "cancelable": false })); 
-        }
+        gohome();
 
     });
     
@@ -428,11 +430,7 @@
         Location.Controls.update();
         TimeStepsData.Controls.update();
 
-        if (previousPage) {
-            document.getElementById(previousPage.id).dispatchEvent(new MouseEvent("click",  { "view": window, 
-                                                      "bubbles": true, 
-                                                      "cancelable": false })); 
-        }
+        gohome();
     });
 
     Location.init();
@@ -440,9 +438,7 @@
     PageTimeInterval = { "JD" :  false, "days" : false, "stepSize" : false };
     
     if (!location.hash) {
-        document.getElementById("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
-                                                          "bubbles": true, 
-                                                          "cancelable": false }));
+        gohome();
     } 
     
     var sourceMenu = document.getElementById("navigation");
