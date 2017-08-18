@@ -14,6 +14,7 @@ PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
+"use strict";
 
 var MercuryData = new PlanetData({ number: 1, name: "Mercury", 
                                semidiameterFunctionName : function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.MercurySemidiameterB(delta); } } );						   

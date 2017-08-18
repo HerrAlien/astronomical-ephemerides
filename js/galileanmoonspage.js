@@ -16,6 +16,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 // planet object - {number, name, semidiameterFunctionName}
 
+"use strict";
+
 (function(){
 var GalileanMoonsPage = new MoonsPage ( "GalileanMoonsContainer",
         GalileanMoonsData,

@@ -9,6 +9,9 @@
     <link rel="icon" type="image/png" href="images/ae-icon.png">
     
     <script type="text/javascript">
+        
+        "use strict";
+    
         (function(){
             var URL = document.URL;
             if (URL.slice(-11) == "ephemerides")
@@ -203,6 +206,8 @@
            
 
              <script>
+            
+            "use strict";
              
             function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
                 var pageElement = document.getElementById(pageId);
@@ -377,6 +382,7 @@
 
 <script type="text/JavaScript" >
     
+    "use strict";
     document.getElementById("JSDisabledPage").style.display = "none";
     
     var PageTimeInterval = {};
@@ -401,11 +407,10 @@
             Pages[pageName].displayPage();
         }
         
-        setTimeout(function () {
+/*        setTimeout(function () {
         scroller.classList.remove ("scrollerNoMenu");
         scroller.classList.add ("scrollerWithMenu");
-        scrollerOnTop = false;
-        }, 10);
+        }, 10); */
     }
     
     window.addEventListener("hashchange", onhashchange, false);
@@ -524,6 +529,8 @@
 
 <script>
 
+    "use strict";
+
     (function(){
     
         for (var pageId in Pages)
@@ -550,10 +557,6 @@
 
              })();
     
-
-</script>
-
-<script>
     if (location.hash)
         setTimeout(onhashchange, 1);
 </script>
