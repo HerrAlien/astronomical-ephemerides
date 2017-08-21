@@ -28,7 +28,9 @@ var JDForRealTimeView = {
     },
     onRecomputedTimes : Notifications.New(),
     recomputeTimes : function () {
-        if (typeof AAJS != 'undefined') {
+        if (typeof AAJS != 'undefined' && 
+            typeof AAJS['Date'] != 'undefined' && 
+            typeof AAJS['Date']['DateToJD'] != 'undefined') {
             var rightNow = new Date();
             var y = rightNow.getUTCFullYear();
             var m = 1 + rightNow.getUTCMonth();
