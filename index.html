@@ -422,7 +422,7 @@
         if (typeof AAJS != 'undefined')
             PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
             
-        for (pageKey in Pages){
+        for (var pageKey in Pages){
             if (Pages[pageKey]) {
                 Pages[pageKey].reset();
             }
