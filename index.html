@@ -9,6 +9,9 @@
     <link rel="icon" type="image/png" href="images/ae-icon.png">
     
     <script type="text/javascript">
+        
+        "use strict";
+    
         (function(){
             var URL = document.URL;
             if (URL.slice(-11) == "ephemerides")
@@ -203,6 +206,8 @@
            
 
              <script>
+            
+            "use strict";
              
             function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
                 var pageElement = document.getElementById(pageId);
@@ -377,6 +382,7 @@
 
 <script type="text/JavaScript" >
     
+    "use strict";
     document.getElementById("JSDisabledPage").style.display = "none";
     
     var PageTimeInterval = {};
@@ -384,6 +390,12 @@
 
     var previousPage = false;
     var currentActiveLink = false;
+    
+    function gohome () {
+        document.getElementById("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
+                                                          "bubbles": true, 
+                                                          "cancelable": false }));
+    }
     
     function onhashchange(){
         document.body.scrollTop = 0;
@@ -395,11 +407,10 @@
             Pages[pageName].displayPage();
         }
         
-        setTimeout(function () {
+/*        setTimeout(function () {
         scroller.classList.remove ("scrollerNoMenu");
         scroller.classList.add ("scrollerWithMenu");
-        scrollerOnTop = false;
-        }, 10);
+        }, 10); */
     }
     
     window.addEventListener("hashchange", onhashchange, false);
@@ -411,16 +422,12 @@
         if (typeof AAJS != 'undefined')
             PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
             
-        for (pageKey in Pages){
+        for (var pageKey in Pages){
             if (Pages[pageKey]) {
                 Pages[pageKey].reset();
             }
         }
-        if (previousPage) {
-            document.getElementById(previousPage.id).dispatchEvent(new MouseEvent("click",  { "view": window, 
-                                                      "bubbles": true, 
-                                                      "cancelable": false })); 
-        }
+        gohome();
 
     });
     
@@ -428,11 +435,7 @@
         Location.Controls.update();
         TimeStepsData.Controls.update();
 
-        if (previousPage) {
-            document.getElementById(previousPage.id).dispatchEvent(new MouseEvent("click",  { "view": window, 
-                                                      "bubbles": true, 
-                                                      "cancelable": false })); 
-        }
+        gohome();
     });
 
     Location.init();
@@ -440,9 +443,7 @@
     PageTimeInterval = { "JD" :  false, "days" : false, "stepSize" : false };
     
     if (!location.hash) {
-        document.getElementById("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
-                                                          "bubbles": true, 
-                                                          "cancelable": false }));
+        gohome();
     } 
     
     var sourceMenu = document.getElementById("navigation");
@@ -528,6 +529,8 @@
 
 <script>
 
+    "use strict";
+
     (function(){
     
         for (var pageId in Pages)
@@ -554,10 +557,6 @@
 
              })();
     
-
-</script>
-
-<script>
     if (location.hash)
         setTimeout(onhashchange, 1);
 </script>

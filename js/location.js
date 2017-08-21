@@ -18,6 +18,8 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see https://www.gnu.org/licenses/agpl.html
 */
 
+"use strict";
+
 var Location = {
 	// this is the model
 	latitude : 44.4268,

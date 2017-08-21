@@ -25,6 +25,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                     'Rhea' : {'d' : '', 'color' : 'magenta', 'lastPos' : {'X' : 0, 'Y' : 0}},
                     'Titan' : {'d' : '', 'color' : 'grey', 'lastPos' : {'X' : 0, 'Y' : 0}}};
                     */
+"use strict";
+
 function MoonsPage (hostElemName, dataObject, pathsConfigs){
     
     this.hostElement = document.getElementById(hostElemName);

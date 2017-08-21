@@ -15,4 +15,5 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 // planet object - {number, name, semidiameterFunctionName}
+"use strict";
 var GalileanMoonsData = new MoonsData (function (JD, highPrecision) { if (typeof AAJS != "undefined") return AAJS.GalileanMoons.Calculate(JD, highPrecision); } );
