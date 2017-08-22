@@ -33,18 +33,15 @@ var JDForRealTimeView = {
             var y = rightNow.getUTCFullYear();
             var m = 1 + rightNow.getUTCMonth();
             var d = rightNow.getUTCDate();
-            try {
-                var jdT2 = AAJS.Date.DateToJD (y, m, d, true);
-                var spanBetweenComputedTimes = 1; // [days] - one full day
-                // get the T1
-                var jdT1 = jdT2 - spanBetweenComputedTimes;
-                // get the T3
-                var jdT3 = jdT2 + spanBetweenComputedTimes;
-                var n = (rightNow.getUTCHours() + (rightNow.getUTCMinutes() + (rightNow.getUTCSeconds() + rightNow.getUTCMilliseconds()/1000)/60)/60)/24;
-                JDForRealTimeView.onRecomputedTimes.notify ({"T1" : jdT1, "T2" : jdT2, "T3" : jdT3, "n" : n});
-            } catch (e) {
-                // nothing ...
-            }
+
+            var jdT2 = AAJS.Date.DateToJD (y, m, d, true);
+            var spanBetweenComputedTimes = 1; // [days] - one full day
+            // get the T1
+            var jdT1 = jdT2 - spanBetweenComputedTimes;
+            // get the T3
+            var jdT3 = jdT2 + spanBetweenComputedTimes;
+            var n = (rightNow.getUTCHours() + (rightNow.getUTCMinutes() + (rightNow.getUTCSeconds() + rightNow.getUTCMilliseconds()/1000)/60)/60)/24;
+            JDForRealTimeView.onRecomputedTimes.notify ({"T1" : jdT1, "T2" : jdT2, "T3" : jdT3, "n" : n});
         }
     }
 };
@@ -69,10 +66,7 @@ var JDForRealTimeView = {
                 var obj1 = this.dataSource.getDataAsObjectForJD (datesObj.T1, true);
                 var obj2 = this.dataSource.getDataAsObjectForJD (datesObj.T2, true);
                 var obj3 = this.dataSource.getDataAsObjectForJD (datesObj.T3, true);
-                
-                if (!obj1 || !obj2 || !obj3)
-                    return;
-                
+
                 var interpolatedObject = {};
                 for (var key in obj1) {
                     interpolatedObject[key] = this.interpolate (datesObj.n, obj1[key], obj2[key], obj3[key]);

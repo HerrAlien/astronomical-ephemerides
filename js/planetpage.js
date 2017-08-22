@@ -159,10 +159,6 @@ function PlanetPage (planetDataSource, tableName) {
                             break;
                         
                         var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JD, true), JD);
-                        if (!preparedData) {
-                            setTimeout (function() {delayedAppendData (JD, endJD, steps, hostElement, columnClasses, dataSource); },1 );
-                            return;
-                        }
                         pageObj.appendLine (preparedData, columnClasses, docFragment);
                     }
                     
@@ -245,66 +241,63 @@ function PlanetPage (planetDataSource, tableName) {
 		   
 	PlanetPage.prototype["prepareOneDayDataObjectForView"] = function (obj, JD) {
 
-            if (!obj)
-                return false;
-            
-           var displayableLine = [];
+        var displayableLine = [];
 
-            displayableLine[0] = "";
-            var month = obj.Month;
-            if (month != this.lastDisplayedMonth) { // first day of the month
-                displayableLine[0] = this.months[month]; // set displayableLine[0] to the name of the month
-                this.lastDisplayedMonth = month;
-            }
+        displayableLine[0] = "";
+        var month = obj.Month;
+        if (month != this.lastDisplayedMonth) { // first day of the month
+            displayableLine[0] = this.months[month]; // set displayableLine[0] to the name of the month
+            this.lastDisplayedMonth = month;
+        }
 
-            // copy the day verbatim
-            displayableLine[1] = obj.Day;
-           
-            var di = 2;
-            var sexagesimalRA = AAJS.Numerical.ToSexagesimal(Math.round(obj.RA * 3600)/3600);
-            displayableLine[di++] = sexagesimalRA.Ord3 ;
-            displayableLine[di++] = sexagesimalRA.Ord2 
-            displayableLine[di++] = sexagesimalRA.Ord1;
+        // copy the day verbatim
+        displayableLine[1] = obj.Day;
+        
+        var di = 2;
+        var sexagesimalRA = AAJS.Numerical.ToSexagesimal(Math.round(obj.RA * 3600)/3600);
+        displayableLine[di++] = sexagesimalRA.Ord3 ;
+        displayableLine[di++] = sexagesimalRA.Ord2 
+        displayableLine[di++] = sexagesimalRA.Ord1;
 
-            var sexagesimalDec = AAJS.Numerical.ToSexagesimal(Math.round(obj.Dec * 3600)/3600);
-            displayableLine[di++] = sexagesimalDec.Ord3 ;
-            displayableLine[di++] = sexagesimalDec.Ord2;
-            displayableLine[di++] = sexagesimalDec.Ord1;
-			
-            var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(Math.round(obj.Diameter * 3600)/3600);
-            displayableLine[di++] = sexagesimalDiam.Ord1;
+        var sexagesimalDec = AAJS.Numerical.ToSexagesimal(Math.round(obj.Dec * 3600)/3600);
+        displayableLine[di++] = sexagesimalDec.Ord3 ;
+        displayableLine[di++] = sexagesimalDec.Ord2;
+        displayableLine[di++] = sexagesimalDec.Ord1;
+		
+        var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(Math.round(obj.Diameter * 3600)/3600);
+        displayableLine[di++] = sexagesimalDiam.Ord1;
+        
+        displayableLine[di++] = this.timeToHhColumnMm(obj.Rise);
+        displayableLine[di++] = this.timeToHhColumnMm(obj.MeridianTransit);
+        displayableLine[di++] = this.timeToHhColumnMm(obj.Set);
+        
+        displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.DistanceToEarth);
+        displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.DistanceToSun);
+        
+        // is it east or is it west?
+        var cardinalCoordinateRelativeToSun = "W";
+        
+        var sunRA = SunData.getRA(JD);
+        var planetRA = obj.RA;
+        // this is probably because we have one angle in q1, the other in q4.
+        if (Math.abs(sunRA - planetRA) >= 12) // hours ...
+        {
+            sunRA += 12;
+            planetRA += 12;
             
-            displayableLine[di++] = this.timeToHhColumnMm(obj.Rise);
-            displayableLine[di++] = this.timeToHhColumnMm(obj.MeridianTransit);
-            displayableLine[di++] = this.timeToHhColumnMm(obj.Set);
-            
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.DistanceToEarth);
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.DistanceToSun);
-            
-            // is it east or is it west?
-            var cardinalCoordinateRelativeToSun = "W";
-            
-            var sunRA = SunData.getRA(JD);
-            var planetRA = obj.RA;
-            // this is probably because we have one angle in q1, the other in q4.
-            if (Math.abs(sunRA - planetRA) >= 12) // hours ...
-            {
-                sunRA += 12;
-                planetRA += 12;
-                
-                if (sunRA > 24)
-                    sunRA -= 24;
-                if (planetRA > 24)
-                    planetRA -= 24;
-            }
-            
-            if (sunRA < planetRA )
-                cardinalCoordinateRelativeToSun = "E";
-            
-            displayableLine[di++] = AAJS.Numerical.RoundTo1Decimal (obj.Elongation * 180 / Math.PI) + " " + cardinalCoordinateRelativeToSun;
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.Phase);
-            
-            return displayableLine;
+            if (sunRA > 24)
+                sunRA -= 24;
+            if (planetRA > 24)
+                planetRA -= 24;
+        }
+        
+        if (sunRA < planetRA )
+            cardinalCoordinateRelativeToSun = "E";
+        
+        displayableLine[di++] = AAJS.Numerical.RoundTo1Decimal (obj.Elongation * 180 / Math.PI) + " " + cardinalCoordinateRelativeToSun;
+        displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.Phase);
+        
+        return displayableLine;
     };
 
 	PlanetPage.prototype["addNodeChild"] = function (parent, type, content) {

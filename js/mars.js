@@ -24,9 +24,6 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
     MarsData['old_GetData'] = MarsData.getDataAsObjectForJD;
     MarsData.getDataAsObjectForJD = function (JD, computeRiseTransitSet) {
         var data = this.old_GetData(JD, computeRiseTransitSet); 
-        if (!data)
-            return data;
-        
         if (!data['EarthDeclination']) {
             var physicalData = AAJS['Mars']['PhysicalDetails'] (JD);
             for (var key in physicalData)
@@ -63,8 +60,6 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
     
     Page.prepareOneDayDataObjectForView = function (obj, JD) {
         var preparedLine = this.old_prepareOneDayDataObjectForView(obj, JD);
-        if (!preparedLine)
-            return preparedLine;
         preparedLine[preparedLine.length] = preparedLine[0];
         preparedLine[preparedLine.length] = preparedLine[1];
         preparedLine[preparedLine.length] = Math.round(obj.CentralMeridianLongitude * 10) / 10;

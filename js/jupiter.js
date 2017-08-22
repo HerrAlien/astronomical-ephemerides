@@ -24,8 +24,6 @@ var JupiterData = new PlanetData({ number: 4, name: "Jupiter",
     JupiterData['old_GetData'] = JupiterData.getDataAsObjectForJD;
     JupiterData.getDataAsObjectForJD = function (JD, computeRiseTransitSet) {
         var data = this.old_GetData(JD, computeRiseTransitSet); 
-        if (!data)
-            return data;
         if (!data['EarthDeclination']) {
             var physicalData = AAJS['Jupiter']['PhysicalDetails'] (JD);
             for (var key in physicalData)
@@ -39,7 +37,7 @@ var JupiterData = new PlanetData({ number: 4, name: "Jupiter",
 							   
 (function () {
     var Page = new PlanetPage (JupiterData, "JupiterTable");
-        Pages["Jupiter"] = Page;
+    Pages["Jupiter"] = Page;
 
     Page.tableHeaderInfo['16'] = { "0" : {"text" : "Date", "classes" :  ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: month" };
     Page.tableHeaderInfo['17'] = { "0" : {"text" :"" , "classes" :      ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: day" };
@@ -54,8 +52,6 @@ var JupiterData = new PlanetData({ number: 4, name: "Jupiter",
     Page["old_prepareOneDayDataObjectForView"] = Page.prepareOneDayDataObjectForView;
     Page.prepareOneDayDataObjectForView = function (obj, JD) {
         var preparedLine = this.old_prepareOneDayDataObjectForView(obj, JD);
-        if (!preparedLine)
-            return preparedLine;
         preparedLine[preparedLine.length] = preparedLine[0]
         preparedLine[preparedLine.length] = preparedLine[1]
         preparedLine[preparedLine.length] = Math.round(obj.CentralMeridianApparentLongitude_System1 * 10) / 10;
