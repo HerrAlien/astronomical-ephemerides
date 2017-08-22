@@ -34,14 +34,17 @@ var JDForRealTimeView = {
             var m = 1 + rightNow.getUTCMonth();
             var d = rightNow.getUTCDate();
 
-            var jdT2 = AAJS.Date.DateToJD (y, m, d, true);
+            var jdT3 = AAJS.Date.DateToJD (y, m, d, true);
             var spanBetweenComputedTimes = 1; // [days] - one full day
             // get the T1
+            var jdT2 = jdT3 - spanBetweenComputedTimes;
             var jdT1 = jdT2 - spanBetweenComputedTimes;
             // get the T3
-            var jdT3 = jdT2 + spanBetweenComputedTimes;
+            var jdT4 = jdT3 + spanBetweenComputedTimes;
+            var jdT5 = jdT4 + spanBetweenComputedTimes;
+            
             var n = (rightNow.getUTCHours() + (rightNow.getUTCMinutes() + (rightNow.getUTCSeconds() + rightNow.getUTCMilliseconds()/1000)/60)/60)/24;
-            JDForRealTimeView.onRecomputedTimes.notify ({"T1" : jdT1, "T2" : jdT2, "T3" : jdT3, "n" : n});
+            JDForRealTimeView.onRecomputedTimes.notify ({"T1" : jdT1, "T2" : jdT2, "T3" : jdT3,"T4" : jdT4, "T5" : jdT5, "n" : n});
         }
     }
 };
@@ -66,21 +69,37 @@ var JDForRealTimeView = {
                 var obj1 = this.dataSource.getDataAsObjectForJD (datesObj.T1, true);
                 var obj2 = this.dataSource.getDataAsObjectForJD (datesObj.T2, true);
                 var obj3 = this.dataSource.getDataAsObjectForJD (datesObj.T3, true);
+                var obj4 = this.dataSource.getDataAsObjectForJD (datesObj.T4, true);
+                var obj5 = this.dataSource.getDataAsObjectForJD (datesObj.T5, true);
 
                 var interpolatedObject = {};
                 for (var key in obj1) {
-                    interpolatedObject[key] = this.interpolate (datesObj.n, obj1[key], obj2[key], obj3[key]);
+                    interpolatedObject[key] = this.interpolate (datesObj.n, obj1[key], obj2[key], obj3[key], obj4[key], obj5[key]);
                 }
                 
                 this.onDataUpdated.notify(interpolatedObject);
             }
         }
         
-        DataForNow.prototype['interpolate'] = function (n, y1, y2, y3) {
+        DataForNow.prototype['interpolate'] = function (n, y1, y2, y3, y4, y5) {
             var a = y2 - y1;
             var b = y3 - y2;
-            var c = y1 + y3 - 2 * y2;
-            return y2 + 0.5 * n * (a + b + n * c);
+            var c = y4 - y3;
+            var d = y5 - y4;
+            
+            var e = b - a;
+            var f = c - b;
+            var g = d - c;
+            
+            var h = f - e;
+            var j = g - f;
+            
+            var k = j - h;
+            
+            var n2 = n * n;
+            var n2decr = n2 - 1;
+            
+            return y3 + 0.5 * n * (b + c) + 0.5 * n2 * f + n * n2decr * (h + j)/ 12 + n2 * n2decr * k / 24;
         }
     })();
 
