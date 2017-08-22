@@ -36,6 +36,10 @@ var SunData = {
             
             data['MeridianTransit'] = false;
             var physical = AAJS.Sun.CalculatePhysicalDetails(JD, true);
+            
+            if (isNaN(physical.P) || isNaN (physical.B0) || isNaN (physical.L0))
+                return false;
+            
             data['P'] = physical.P; // [deg.dddd]
             data['B0'] = physical.B0; // [deg.dddd]
             data['L0'] = physical.L0; // [deg.dddd]
@@ -44,7 +48,11 @@ var SunData = {
         }
         
         if (computeRiseTransitSet) {
-            data = this.addRiseTransitSetData(JD, data);
+            try {
+                data = this.addRiseTransitSetData(JD, data);
+            } catch (e) {
+                data = false;
+            }
             this.cache[JD] = data;
         }
         

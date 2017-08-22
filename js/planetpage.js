@@ -130,7 +130,7 @@ function PlanetPage (planetDataSource, tableName) {
     
     PlanetPage.prototype["displayPage"] = function () {
             var pageObj = this;
-            if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
+            if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
                 return setTimeout (function() { pageObj.displayPage(); }, 300);
             
             var JD = PageTimeInterval.JD;
@@ -159,6 +159,10 @@ function PlanetPage (planetDataSource, tableName) {
                             break;
                         
                         var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JD, true), JD);
+                        if (!preparedData) {
+                            setTimeout (function() {delayedAppendData (JD, endJD, steps, hostElement, columnClasses, dataSource); },1 );
+                            return;
+                        }
                         pageObj.appendLine (preparedData, columnClasses, docFragment);
                     }
                     
@@ -241,6 +245,9 @@ function PlanetPage (planetDataSource, tableName) {
 		   
 	PlanetPage.prototype["prepareOneDayDataObjectForView"] = function (obj, JD) {
 
+            if (!obj)
+                return false;
+            
            var displayableLine = [];
 
             displayableLine[0] = "";

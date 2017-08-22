@@ -478,8 +478,13 @@
     });
     
     function updateTimeAtAajsLoad() {
-        if (typeof AAJS != 'undefined')
+        if (typeof AAJS != 'undefined') {
+            try {
                 PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
+            } catch (e) {
+                setTimeout (updateTimeAtAajsLoad, 300);
+            }
+        }
         else
             setTimeout (updateTimeAtAajsLoad, 300);
     }
