@@ -66,7 +66,6 @@ var SunData = {
     addRiseTransitSetData : PlanetData.prototype.addRiseTransitSetData
 };
 
-    
 (function(){    
     var Sun = {
         hostElement : document.getElementById("SunTable"),
@@ -238,7 +237,17 @@ var SunData = {
             return result;
         },
         
-        displayPage : PlanetPage.prototype.displayPage,
+        displayPage : function() {
+            var w = new Worker("js/sunworker.js");
+            w.onmessage = function(event) {
+                var data = event.data;
+                if ( !!data['docFragment'] )
+                    this.hostElement.appendChild(data['docFragment']);
+                
+                if (!!data['rendered'])
+                    this.pageRendered = true;
+            };
+        },
         timeToHhColumnMm : PlanetPage.prototype.timeToHhColumnMm
     };
         Pages["Sun"] = Sun;
