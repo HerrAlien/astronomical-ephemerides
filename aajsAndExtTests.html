@@ -12,6 +12,44 @@
     </body>
 </html>
 <script type="text/javascript">
+
+
+    function ValuesToPolynomialCoefficients (ValuesArray) {
+        var coefficients = [];
+        if (ValuesArray.length == 5) {
+        
+            coefficients[0] = ValuesArray[2];
+            coefficients[1] = 0;
+            coefficients[2] = 0;
+            coefficients[3] = 0;
+
+            var firstOrderDeltas = [];
+            for (var i = 0; i < ValuesArray.length - 1; i++) {
+            	firstOrderDeltas[i] = ValuesArray[i+1] - ValuesArray[i];
+            	coefficients[1] += firstOrderDeltas[i];
+            }
+
+			coefficients[1] = (firstOrderDeltas[1] + firstOrderDeltas[2]) / 2;
+
+			var secondOrderDeltas = [];
+			for (var i = 0; i < firstOrderDeltas.length-1; i++) {
+            	secondOrderDeltas[i] = firstOrderDeltas[i+1] - firstOrderDeltas[i];
+            }
+
+            coefficients[2] = secondOrderDeltas[1];
+            coefficients[2] /= 2;
+
+			for (var i = 0; i < secondOrderDeltas.length - 1; i++) {
+            	coefficients[3] += secondOrderDeltas[i+1] - secondOrderDeltas[i];
+            }
+
+            coefficients[3] /= (secondOrderDeltas.length - 1);
+            coefficients[3] /= 6;
+
+        }
+        
+        return coefficients;
+    }
             
     (function () {
             
@@ -103,6 +141,29 @@
 					return testlib.doubleEq(this.expectedOutput, this.actualOutput, 2e-6);
 				}
 			},
+            
+        {
+            name : "polynomial approximations for X^4+X^3+X^2+X+1 arround X=3",
+            input : {'value' : 3, 'func': function (x) {
+                return 1 + x + x*x + x*x*x + x*x*x*x;
+            }},
+            expectedOutput : [3*3*3*3 + 3*3*3 + 3*3 + 3 + 1,
+                             4 * 3*3*3 + 3 * 3*3 + 2*3 + 1,
+                             0.5* (12 * 3*3 + 6 *3 + 2),
+                             1/6.0 * (24 * 3 + 6)],
+            actualOutput : [],
+            test : function () {
+                var values = [this.input.func(this.input.value - 2),
+                              this.input.func(this.input.value - 1),
+                              this.input.func(this.input.value - 0),
+                              this.input.func(this.input.value + 1),
+                              this.input.func(this.input.value + 2)];
+                              
+               this.actualOutput = ValuesToPolynomialCoefficients(values);
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        }
+
         
         
         ];
