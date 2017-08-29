@@ -16,34 +16,14 @@
 
     function ValuesToPolynomialCoefficients (ValuesArray) {
         var coefficients = [];
-        if (ValuesArray.length == 5) {
+        if (ValuesArray.length >= 4) {
         
-            coefficients[0] = ValuesArray[2];
-            coefficients[1] = 0;
-            coefficients[2] = 0;
-            coefficients[3] = 0;
+            coefficients[0] = ValuesArray[0];
+            coefficients[1] = ValuesArray[1] - ValuesArray[0];
+            coefficients[2] = ValuesArray[2] - 2 * ValuesArray[1] + ValuesArray[0];
+            coefficients[3] = ValuesArray[3] - 3 * ValuesArray[2] + 3 * ValuesArray[1] - ValuesArray[0];
 
-            var firstOrderDeltas = [];
-            for (var i = 0; i < ValuesArray.length - 1; i++) {
-            	firstOrderDeltas[i] = ValuesArray[i+1] - ValuesArray[i];
-            	coefficients[1] += firstOrderDeltas[i];
-            }
-
-			coefficients[1] = (firstOrderDeltas[1] + firstOrderDeltas[2]) / 2;
-
-			var secondOrderDeltas = [];
-			for (var i = 0; i < firstOrderDeltas.length-1; i++) {
-            	secondOrderDeltas[i] = firstOrderDeltas[i+1] - firstOrderDeltas[i];
-            }
-
-            coefficients[2] = secondOrderDeltas[1];
             coefficients[2] /= 2;
-
-			for (var i = 0; i < secondOrderDeltas.length - 1; i++) {
-            	coefficients[3] += secondOrderDeltas[i+1] - secondOrderDeltas[i];
-            }
-
-            coefficients[3] /= (secondOrderDeltas.length - 1);
             coefficients[3] /= 6;
 
         }
@@ -143,28 +123,45 @@
 			},
             
         {
-            name : "polynomial approximations for X^4+X^3+X^2+X+1 arround X=3",
-            input : {'value' : 3, 'func': function (x) {
+            name : "polynomial approximations for X^4+X^3+X^2+X+1 arround X=123",
+            input : {'value' : 123, 'func': function (x) {
                 return 1 + x + x*x + x*x*x + x*x*x*x;
             }},
-            expectedOutput : [3*3*3*3 + 3*3*3 + 3*3 + 3 + 1,
-                             4 * 3*3*3 + 3 * 3*3 + 2*3 + 1,
-                             0.5* (12 * 3*3 + 6 *3 + 2),
-                             1/6.0 * (24 * 3 + 6)],
+            expectedOutput : (function(){
+                var inp = 123;
+                var func = function (x) {
+                return 1 + x + x*x + x*x*x + x*x*x*x;
+                }
+            
+                var firstDerivative = function (x) {
+                    return 1 + 2*x + 3*x*x + 4*x*x*x;
+                }
+                
+                var secondDerivative = function (x) {
+                    return 2 + 6 * x + 12 * x * x;
+                }
+                
+                var thirdDerivative = function (x) {
+                    return 6 + 24 * x;
+                }
+                
+                return [func(inp),
+                        firstDerivative(inp),
+                        0.5 * secondDerivative(inp),
+                        1/6.0 * thirdDerivative(inp)];
+            
+            })(),
             actualOutput : [],
             test : function () {
-                var values = [this.input.func(this.input.value - 2),
-                              this.input.func(this.input.value - 1),
-                              this.input.func(this.input.value - 0),
+                var values = [this.input.func(this.input.value + 0),
                               this.input.func(this.input.value + 1),
-                              this.input.func(this.input.value + 2)];
+                              this.input.func(this.input.value + 2),
+                              this.input.func(this.input.value + 3)];
                               
                this.actualOutput = ValuesToPolynomialCoefficients(values);
                return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
             }
-        }
-
-        
+        }        
         
         ];
             
