@@ -14,7 +14,7 @@
 <script type="text/javascript">
 
 
-    function ValuesToPolynomialCoefficients (ValuesArray) {
+    function ValuesToPolynomialCoefficients_Forward (ValuesArray) {
         var coefficients = [];
         if (ValuesArray.length >= 4) {
         
@@ -31,6 +31,37 @@
         return coefficients;
     }
             
+    function ValuesToPolynomialCoefficients_Backward (ValuesArray) {
+        var coefficients = [];
+        if (ValuesArray.length >= 4) {
+        
+            coefficients[0] = ValuesArray[3];
+            coefficients[1] = ValuesArray[3] - ValuesArray[2];
+            coefficients[2] = ValuesArray[3] - 2 * ValuesArray[2] + ValuesArray[1];
+            coefficients[3] = ValuesArray[3] - 3 * ValuesArray[2] + 3 * ValuesArray[1] - ValuesArray[0];
+
+            coefficients[2] /= 2;
+            coefficients[3] /= 6;
+
+        }
+        
+        return coefficients;
+    }
+    
+    function ValuesToPolynomialCoefficients_Average (ValuesArray) {
+    
+        var forwardValues = ValuesArray.slice (3, 7);
+        var backwardValues = ValuesArray.slice (0, 4);
+    
+        var forwards = ValuesToPolynomialCoefficients_Forward(forwardValues);
+        var backwards = ValuesToPolynomialCoefficients_Backward (backwardValues);
+
+        return [ 0.5 * (backwards[0] + forwards[0]),
+                 0.5 * (backwards[1] + forwards[1]),
+                 0.5 * (backwards[2] + forwards[2]),
+                 0.5 * (backwards[3] + forwards[3])];
+    }
+
     (function () {
             
         var tests = [
@@ -123,7 +154,7 @@
 			},
             
         {
-            name : "polynomial approximations for X^4+X^3+X^2+X+1 arround X=123",
+            name : "polynomial approximations for X^4+X^3+X^2+X+1 arround X=123, forward",
             input : {'value' : 123, 'func': function (x) {
                 return 1 + x + x*x + x*x*x + x*x*x*x;
             }},
@@ -158,11 +189,95 @@
                               this.input.func(this.input.value + 2),
                               this.input.func(this.input.value + 3)];
                               
-               this.actualOutput = ValuesToPolynomialCoefficients(values);
+               this.actualOutput = ValuesToPolynomialCoefficients_Forward(values);
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        }        ,
+        {
+            name : "polynomial approximations for X^4+X^3+X^2+X+1 arround X=123, backward",
+            input : {'value' : 123, 'func': function (x) {
+                return 1 + x + x*x + x*x*x + x*x*x*x;
+            }},
+            expectedOutput : (function(){
+                var inp = 123;
+                var func = function (x) {
+                return 1 + x + x*x + x*x*x + x*x*x*x;
+                }
+            
+                var firstDerivative = function (x) {
+                    return 1 + 2*x + 3*x*x + 4*x*x*x;
+                }
+                
+                var secondDerivative = function (x) {
+                    return 2 + 6 * x + 12 * x * x;
+                }
+                
+                var thirdDerivative = function (x) {
+                    return 6 + 24 * x;
+                }
+                
+                return [func(inp),
+                        firstDerivative(inp),
+                        0.5 * secondDerivative(inp),
+                        1/6.0 * thirdDerivative(inp)];
+            
+            })(),
+            actualOutput : [],
+            test : function () {
+                var values = [this.input.func(this.input.value - 3),
+                              this.input.func(this.input.value - 2),
+                              this.input.func(this.input.value - 1),
+                              this.input.func(this.input.value)];
+                              
+               this.actualOutput = ValuesToPolynomialCoefficients_Backward(values);
                return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
             }
         }        
-        
+                ,
+        {
+            name : "polynomial approximations for X^4+X^3+X^2+X+1 arround X=123, average",
+            input : {'value' : 123, 'func': function (x) {
+                return 1 + x + x*x + x*x*x + x*x*x*x;
+            }},
+            expectedOutput : (function(){
+                var inp = 123;
+                var func = function (x) {
+                return 1 + x + x*x + x*x*x + x*x*x*x;
+                }
+            
+                var firstDerivative = function (x) {
+                    return 1 + 2*x + 3*x*x + 4*x*x*x;
+                }
+                
+                var secondDerivative = function (x) {
+                    return 2 + 6 * x + 12 * x * x;
+                }
+                
+                var thirdDerivative = function (x) {
+                    return 6 + 24 * x;
+                }
+                
+                return [func(inp),
+                        firstDerivative(inp),
+                        0.5 * secondDerivative(inp),
+                        1/6.0 * thirdDerivative(inp)];
+            
+            })(),
+            actualOutput : [],
+            test : function () {
+                var values = [
+                                this.input.func(this.input.value - 3),
+                                this.input.func(this.input.value - 2),
+                                this.input.func(this.input.value - 1),
+                                this.input.func(this.input.value + 0),
+                              this.input.func(this.input.value + 1),
+                              this.input.func(this.input.value + 2),
+                              this.input.func(this.input.value + 3)];
+                              
+               this.actualOutput = ValuesToPolynomialCoefficients_Average(values);
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        } 
         ];
             
         testlib.runTests (tests);
