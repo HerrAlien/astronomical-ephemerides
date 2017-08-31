@@ -35,6 +35,71 @@
     </body>
 </html>
 <script type="text/javascript">
+
+    var SolarEclipses = {
+        ComputeOneFunctionValueForElements : function (jd) {
+            var values = {
+                "x"      : 0,
+                "y"      : 0,
+                "d"      : 0,
+                "mu"     : 0,
+                "l1"     : 0,
+                "l2"     : 0,
+                "tan_f1" : 0,
+                "tan_f2" : 0,
+            };
+            // do the computations
+            
+            return values;
+        },
+        
+        ComputeFunctionValuesForElements : function (jd) {
+            var functionValues = {
+                    "x"      : [0,0,0,0,0,0,0],
+                    "y"      : [0,0,0,0,0,0,0],
+                    "d"      : [0,0,0,0,0,0,0],
+                    "mu"     : [0,0,0,0,0,0,0],
+                    "l1"     : [0,0,0,0,0,0,0],
+                    "l2"     : [0,0,0,0,0,0,0],
+                    "tan_f1" : [0,0,0,0,0,0,0],
+                    "tan_f2" : [0,0,0,0,0,0,0]
+            };
+            
+            // compute 7 values, at time jd -3h, jd-2h, jd -1h, jd, jd + 1h, jd + 2h, jd + 3h
+            var oneHour = 1/24;
+            var startJD = jd - 3*oneHour;
+            var endJD = jd + 3*oneHour;
+            
+            var i = 0;
+            for (var currentJD = startJD; currentJD <= endJD; currentJD+= oneHour) {
+                var oneSetOfValues = this.ComputeOneFunctionValueForElements(currentJD);
+                for (var key in functionValues) {
+                    functionValues[key][i] = oneSetOfValues[key];
+                }
+                i++;
+            }
+            return functionValues;
+        },
+        
+        ComputeBesselianElements : function (jd) {
+            var elements = {};
+            var functionValues = this.ComputeFunctionValuesForElements(jd);
+            for (var key in functionValues)
+                elements[key] = AAJS.Numerical.ValuesToPolynomialCoefficients_Average(functionValues[key]);
+
+            function accumulate (acc, value) {
+                return acc + value;
+            }
+            
+            elements['tan_f1'] = 1/7 * elements['tan_f1'].reduce(accumulate, 0);
+            elements['tan_f2'] = 1/7 * elements['tan_f2'].reduce(accumulate, 0);
+             
+            return elements;
+        }
+    };
+
+
+
          
     (function () {
             
@@ -391,7 +456,32 @@ n	x	        y	        d	        l1	        l2	        μ
 3	-0.00001	0.00000	-	-	-	-
 Tan ƒ1	0.0046222
 Tan ƒ2	0.0045992
+*/
 
+{
+            name : "Besselian elements for eclipse 2017-08-21",
+            input : AAJS.Date.DateToJD (2017, 08, 21, true) + 0.75, // 18:00
+            expectedOutput : {
+                    "x"  : [-0.12958, 0.54064, -0.00003, -0.00001],
+                    "y"  : [0.48542, -0.14164, -0.00009, 0.00000 ],
+                    "d"  : [11.8670, -0.0136, 0, 0],
+                    "mu" : [89.2454, 15.0039, 0, 0],
+                    "l1" : [0.54211, 0.00012, -0.00001, 0],
+                    "l2" : [-0.00403, 0.00012, -0.00001, 0],
+                    "tan_f1" : 0.0046222,
+                    "tan_f2" : 0.0045992
+                },
+                  
+            actualOutput : false,
+                      
+            test : function () {
+                this.actualOutput = SolarEclipses.ComputeBesselianElements (this.input);
+                return JSON.stringify (this.actualOutput) == JSON.stringify (this.expectedOutput);
+            }
+        },
+
+
+/*
 
 Polynomial Besselian Elements: Partial Solar Eclipse of 2022 Oct 25
 
