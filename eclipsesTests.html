@@ -53,16 +53,21 @@
             var sunData  =  SunData.getDataAsObjectForJD(jd);
             var moonData = MoonData.getDataAsObjectForJD(jd);
             
+            var degra = Math.PI / 180;
+            var moonParallaxRads = moonData.parallax * degra;
+            
             // -------------------------------------------------
-            var r = 1 / Math.sin (moonData.parallax * Math.PI / 180);
-            var b = Math.sin(sunData.Parallax * Math.PI / 180) * r ;
+            var r = 1 / Math.sin (moonParallaxRads);
+            var b = Math.sin(sunData.Parallax * degra) * r ;
             values.d = sunData.Dec - (b / (1-b))*(moonData.DecGeo - sunData.Dec);
-            var a = sunData.RA - (b / (1-b))*Math.cos(moonData.DecGeo * Math.PI / 180)/Math.cos(sunData.Dec * Math.PI / 180) * (moonData.RaGeo - sunData.RA);
+            var a = sunData.RA - (b / (1-b))*Math.cos(moonData.DecGeo * degra)/Math.cos(sunData.Dec * degra) * (moonData.RaGeo - sunData.RA);
             values.mu = 15*(AAJS.Sidereal.ApparentGreenwichSiderealTime(jd) - a);
             
             // -------------------------------------------------
-            values.x = r * Math.cos(moonData.DecGeo * Math.PI / 180) * Math.sin((moonData.RaGeo - a) *15 * Math.PI / 180);
-            values.y = r * (Math.sin(moonData.DecGeo * Math.PI / 180) * Math.cos(values.d * Math.PI / 180)  - Math.cos(moonData.DecGeo * Math.PI / 180) * Math.sin(values.d * Math.PI / 180) * Math.cos((moonData.RaGeo - a) * 15* Math.PI / 180));
+            var moonRaMinusA_Rads = (moonData.RaGeo - a) * 15 * degra;
+
+            values.x = r * Math.cos(moonData.DecGeo * Math.PI / 180) * Math.sin(moonRaMinusA_Rads);
+            values.y = r * (Math.sin(moonData.DecGeo * Math.PI / 180) * Math.cos(values.d * Math.PI / 180)  - Math.cos(moonData.DecGeo * Math.PI / 180) * Math.sin(values.d * Math.PI / 180) * Math.cos(moonRaMinusA_Rads));
             
             return values;
         },
