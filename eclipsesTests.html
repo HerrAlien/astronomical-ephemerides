@@ -52,11 +52,17 @@
             
             var sunData  =  SunData.getDataAsObjectForJD(jd);
             var moonData = MoonData.getDataAsObjectForJD(jd);
+            
             // -------------------------------------------------
-            var b = Math.sin(sunData.Parallax) / Math.sin (moonData.parallax);
+            var r = 1 / Math.sin (moonData.parallax * Math.PI / 180);
+            var b = Math.sin(sunData.Parallax * Math.PI / 180) * r ;
             values.d = sunData.Dec - (b / (1-b))*(moonData.DecGeo - sunData.Dec);
-            var a = sunData.RA - (b / (1-b))*Math.cos(moonData.DecGeo)/Math.cos(sunData.Dec) * (moonData.RaGeo - sunData.RA);
+            var a = sunData.RA - (b / (1-b))*Math.cos(moonData.DecGeo * Math.PI / 180)/Math.cos(sunData.Dec * Math.PI / 180) * (moonData.RaGeo - sunData.RA);
             values.mu = 15*(AAJS.Sidereal.ApparentGreenwichSiderealTime(jd) - a);
+            
+            // -------------------------------------------------
+            values.x = r * Math.cos(moonData.DecGeo * Math.PI / 180) * Math.sin((moonData.RaGeo - a) *15 * Math.PI / 180);
+            values.y = r * (Math.sin(moonData.DecGeo * Math.PI / 180) * Math.cos(values.d * Math.PI / 180)  - Math.cos(moonData.DecGeo * Math.PI / 180) * Math.sin(values.d * Math.PI / 180) * Math.cos((moonData.RaGeo - a) * 15* Math.PI / 180));
             
             return values;
         },
