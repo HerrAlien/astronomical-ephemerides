@@ -118,5 +118,14 @@ var SolarEclipses = {
         elements['tan_f2'] = elements['tan_f2'][0];
          
         return elements;
+    },
+    
+    EclipseDataForJdInterval : function (jdStart, jdEnd) {
+        // find the JD  of the conjunction, then the k value
+        // check if you have an eclipse
+        // if yes, compute the besselian elements
+        /*
+            {"yyyy-mm-dd" : {"t0" : JD, "besselianElements" : the-elements}, ... }
+        */
     }
 };
