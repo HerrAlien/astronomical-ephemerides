@@ -18,14 +18,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var MoonData = {
     cache : {},
-    
-    toDUT : 0,
-   
-   getDataAsObjectForJD : function (_JD, computeRiseTransitSet) {
-        if (!this.toDUT)
-            this.toDUT = AAJS.DynamicalTime.DeltaT(_JD)/(3600 * 24);
-        
-        var JD = _JD + this.toDUT;
+       
+   getDataAsObjectForJD : function (JD, computeRiseTransitSet) {
         
         var data = this.cache[JD];
         
