@@ -55,20 +55,35 @@
             
             var degra = Math.PI / 180;
             var moonParallaxRads = moonData.parallax * degra;
+            var sunParallaxRads = sunData.Parallax * degra;
+            var moonDecRads = moonData.DecGeo * degra;
             
             // -------------------------------------------------
             var r = 1 / Math.sin (moonParallaxRads);
-            var b = Math.sin(sunData.Parallax * degra) * r ;
+            var b = Math.sin(sunParallaxRads) * r ;
             values.d = sunData.Dec - (b / (1-b))*(moonData.DecGeo - sunData.Dec);
-            var a = sunData.RA - (b / (1-b))*Math.cos(moonData.DecGeo * degra)/Math.cos(sunData.Dec * degra) * (moonData.RaGeo - sunData.RA);
+            var a = sunData.RA - (b / (1-b))*Math.cos(moonDecRads)/Math.cos(sunData.Dec * degra) * (moonData.RaGeo - sunData.RA);
             values.mu = 15*(AAJS.Sidereal.ApparentGreenwichSiderealTime(jd) - a);
             
             // -------------------------------------------------
+            var d = values.d * degra;
             var moonRaMinusA_Rads = (moonData.RaGeo - a) * 15 * degra;
 
-            values.x = r * Math.cos(moonData.DecGeo * Math.PI / 180) * Math.sin(moonRaMinusA_Rads);
-            values.y = r * (Math.sin(moonData.DecGeo * Math.PI / 180) * Math.cos(values.d * Math.PI / 180)  - Math.cos(moonData.DecGeo * Math.PI / 180) * Math.sin(values.d * Math.PI / 180) * Math.cos(moonRaMinusA_Rads));
+            values.x = r * Math.cos(moonDecRads) * Math.sin(moonRaMinusA_Rads);
+            values.y = r * (Math.sin(moonDecRads) * Math.cos(d) - Math.cos(moonDecRads) * Math.sin(d) * Math.cos(moonRaMinusA_Rads));
+            var z = r * (Math.sin(moonDecRads) * Math.sin(d) + Math.cos(moonDecRads) * Math.sin(d) * Math.cos(moonRaMinusA_Rads));
             
+            // -------------------------------------------------
+            var r_prime =  1 / Math.sin(sunParallaxRads);
+            var H = (sunData.Diameter / 2) * degra;
+            var g = 1- b;
+            var moonEarthRadiiRatio = 0.27227;
+            var f1 = Math.asin( (Math.sin(H) + moonEarthRadiiRatio*Math.sin(sunParallaxRads)) / ( g ) );
+            values.tan_f1 = Math.tan(f1);
+            
+            var f2 = Math.asin( (Math.sin(H) - moonEarthRadiiRatio*Math.sin(sunParallaxRads)) / ( g ) );
+            values.tan_f2 = Math.tan(f2);
+
             return values;
         },
         
@@ -110,8 +125,8 @@
                 return acc + value;
             }
             
-            elements['tan_f1'] = 1/7 * elements['tan_f1'].reduce(accumulate, 0);
-            elements['tan_f2'] = 1/7 * elements['tan_f2'].reduce(accumulate, 0);
+            elements['tan_f1'] = elements['tan_f1'][0];
+            elements['tan_f2'] = elements['tan_f2'][0];
              
             return elements;
         }
