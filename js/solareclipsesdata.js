@@ -120,6 +120,10 @@ var SolarEclipses = {
         return elements;
     },
     
+    sinodicPeriod : 29.530587981,
+    
+    //getConjunctionAroundDate
+    
     EclipseDataForJdInterval : function (jdStart, jdEnd) {
         // find the JD  of the conjunction, then the k value
         // check if you have an eclipse

@@ -54,6 +54,30 @@
         },
 
         {
+            name : "K at opposition",
+            input : AAJS.Date.DateToJD (1985, 05, 04, true) + (19 + 36.3/60)/24,
+            expectedOutput :  -181.5,
+            actualOutput : false,
+            test : function () {
+                var k = AAJS.Moon.kForJD (this.input);
+                this.actualOutput = Math.floor(k * 10)/10;
+                return this.actualOutput == this.expectedOutput;
+            }
+        },
+        
+        {
+            name : "K at conjunction",
+            input : AAJS.Date.DateToJD (2017, 08, 22, true),
+            expectedOutput :  218,
+            actualOutput : false,
+            test : function () {
+                var k = AAJS.Moon.kForJD (this.input);
+                this.actualOutput = Math.floor(k * 10)/10;
+                return this.actualOutput == this.expectedOutput;
+            }
+        },
+
+        {
             name : "getOppositionAroundJD (1985-05-04)",
             input : AAJS.Date.DateToJD (1985, 05, 04, true),
             expectedOutput :  AAJS.Date.DateToJD (1985, 05, 04, true) + (19 + 36.3/60)/24,
