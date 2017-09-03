@@ -21,6 +21,47 @@ var testlib = {
             return Math.abs(a - b) <= eps;
         },
         
+        doubleEqArr: function  (a, b, eps)
+        {
+            if (a.length != b.length)
+                return false;
+            for (var i = 0; i < a.length; i++)
+                if (!this.doubleEq(a[i], b[i], eps))
+                    return false;
+            return true;
+        },
+        
+        doubleEqObj : function (a, b, eps) {
+            if (typeof a != typeof b)
+                return false;
+            
+            if (typeof a === 'String')
+                return a == b;
+            
+            if (typeof a != 'Aray' && typeof a != 'Object')
+                return this.doubleEq(a, b, eps);
+            
+            for (var key in a) {
+                var typeof_b_key = typeof b[key];
+                if (typeof_b_key === 'undefined')
+                    return false;
+                if (ttypeof_b_key != typeof a[key])
+                    return false;
+                if (typeof_b_key === 'Object') {
+                    var keyAsObjs = this.doubleEqObj(a[key], b[key], eps);
+                    if (!keyAsObjs)
+                        return false;
+                }
+                if (typeof_b_key === 'Array') {
+                    var keyAsArrays = this.doubleEqArr(a[key], b[key], eps);
+                    if (!keyAsArrays)
+                        return false;
+                }
+            }
+            
+            return true;
+        },
+        
         runTests : function (tests)
         {
             var i = 0; 

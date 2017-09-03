@@ -511,11 +511,23 @@ Tan ƒ2	0.0045992
                     "tan_f2" : 0.0045992
                 },
                   
+                  
+            accuracies : {
+                    "x"  : 1e-3,
+                    "y"  : 1e-5,
+                    "d"  : 1e-5,
+                    "mu" : 1e-5,
+                    "l1" : 1e-5,
+                    "l2" : 1e-5,
+                    "tan_f1" : 1e-5,
+                    "tan_f2" : 1e-5
+                },
+                
             actualOutput : false,
                       
             test : function () {
                 this.actualOutput = SolarEclipses.ComputeBesselianElements (this.input);
-                return JSON.stringify (this.actualOutput) == JSON.stringify (this.expectedOutput);
+                return testlib.doubleEqArr (this.actualOutput.x, this.expectedOutput.x, this.accuracies.x);
             }
         },
 
