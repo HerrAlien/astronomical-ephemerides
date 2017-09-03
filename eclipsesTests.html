@@ -55,9 +55,7 @@
             // do the computations
             
             var sunData  =  SunData.getDataAsObjectForJD(jd);
-            // different DUT ...
-            var magic = 0.82*this.toDUT;
-            var moonData = MoonData.getDataAsObjectForJD(jd - magic);
+            var moonData = MoonData.getDataAsObjectForJD(jd);
             
             var degra = Math.PI / 180;
             var moonParallaxRads = moonData.parallax * degra;
@@ -519,7 +517,7 @@ Tan ƒ2	0.0045992
                   
                   
             accuracies : {
-                    "x"  : 1e-5,
+                    "x"  : 4e-4,
                     "y"  : 2e-4,
                     "d"  : 2e-4,
                     "mu" : 4e-5,
