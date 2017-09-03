@@ -71,18 +71,23 @@
 
             values.x = r * Math.cos(moonDecRads) * Math.sin(moonRaMinusA_Rads);
             values.y = r * (Math.sin(moonDecRads) * Math.cos(d) - Math.cos(moonDecRads) * Math.sin(d) * Math.cos(moonRaMinusA_Rads));
-            var z = r * (Math.sin(moonDecRads) * Math.sin(d) + Math.cos(moonDecRads) * Math.sin(d) * Math.cos(moonRaMinusA_Rads));
+            var z = r * (Math.sin(moonDecRads) * Math.sin(d) + Math.cos(moonDecRads) * Math.cos(d) * Math.cos(moonRaMinusA_Rads));
             
             // -------------------------------------------------
             var r_prime =  1 / Math.sin(sunParallaxRads);
             var H = (sunData.Diameter / 2) * degra;
             var g = 1- b;
             var moonEarthRadiiRatio = 0.27227;
+            // penumbral
             var f1 = Math.asin( (Math.sin(H) + moonEarthRadiiRatio*Math.sin(sunParallaxRads)) / ( g ) );
             values.tan_f1 = Math.tan(f1);
-            
+            // umbral
             var f2 = Math.asin( (Math.sin(H) - moonEarthRadiiRatio*Math.sin(sunParallaxRads)) / ( g ) );
             values.tan_f2 = Math.tan(f2);
+            
+            // --------------------------------------------------
+            values.l1 = z * values.tan_f1 + moonEarthRadiiRatio/Math.cos(f1);
+            values.l2 = z * values.tan_f2 - moonEarthRadiiRatio/Math.cos(f2);
 
             return values;
         },
