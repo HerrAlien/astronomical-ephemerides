@@ -21,7 +21,7 @@ var SolarEclipses = {
     ComputeOneFunctionValueForElements : function (jd) {
         if (!this.toDUT)
             this.toDUT = AAJS.DynamicalTime.DeltaT(jd)/(3600 * 24);
-            
+        
         var values = {
             "x"      : 0,
             "y"      : 0,
@@ -146,7 +146,7 @@ var SolarEclipsesPage = {
     // clears up the rendered thing
     reset : PlanetPage.prototype.reset,
     
-   displayPage : function () {
+    displayPage : function () {
         
         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
             return setTimeout (function() { SolarEclipsesPage.displayPage(); }, 300);
@@ -182,8 +182,46 @@ var SolarEclipsesPage = {
     },
 
     drawNewEclipse: function (eclipseData) {
+        var yyyymmdd_hhmmOfJD  = PlanetPage.prototype.yyyymmdd_hhmmOfJD;
+        
         var addNodeChild = PlanetPage.prototype.addNodeChild;
-        var mainDiv = addNodeChild(SolarEclipsesPage.hostElement, "div", JSON.stringify(eclipseData));
+        var mainDiv = addNodeChild(SolarEclipsesPage.hostElement, "div");
+        mainDiv.classList.add("solarEclipse");
+        var dateTime = yyyymmdd_hhmmOfJD(eclipseData.t0);
+        
+        var description = "";
+
+        var eclipseTitle = addNodeChild (mainDiv, "h2", dateTime.date.Y + "-" + dateTime.date.M + "-" + dateTime.date.D + " " + description);
+        var eclipseTitle = addNodeChild (mainDiv, "h3", "Besseliean elements:");
+        addNodeChild (mainDiv, "span", "T0 = " + dateTime.time.Ord3 + ":" +  dateTime.time.Ord2 + " UTC");
+        addNodeChild (mainDiv, "br");
+        addNodeChild (mainDiv, "span", "tan (f1) = " + Math.round(eclipseData.besselianElements.tan_f1 * 1e6)/1e6);
+        addNodeChild (mainDiv, "br");
+        addNodeChild (mainDiv, "span", "tan (f2) = " + Math.round(eclipseData.besselianElements.tan_f2 * 1e6)/1e6);
+        
+        var table = addNodeChild (mainDiv, "table");
+        var header = addNodeChild (table, "tr");
+
+        addNodeChild(header, "td", "order");
+        addNodeChild(header, "td", "x");
+        addNodeChild(header, "td", "y");
+        addNodeChild(header, "td", "\u03BC [\u00B0]");
+        addNodeChild(header, "td", "d [\u00B0]");
+        addNodeChild(header, "td", "l1");
+        addNodeChild(header, "td", "l2");
+        
+        for (var degree = 0; degree < eclipseData.besselianElements.x.length; degree++) {
+            var row = addNodeChild (table, "tr");
+            
+            addNodeChild(row, "td", degree + "" );
+            addNodeChild(row, "td", Math.round(1e6*eclipseData.besselianElements.x[degree])/1e6 + "");
+            addNodeChild(row, "td", Math.round(1e6*eclipseData.besselianElements.y[degree])/1e6 + "");
+            addNodeChild(row, "td", Math.round(1e6*eclipseData.besselianElements.mu[degree])/1e6 + "");
+            addNodeChild(row, "td", Math.round(1e6*eclipseData.besselianElements.d[degree])/1e6 + "");
+            addNodeChild(row, "td", Math.round(1e6*eclipseData.besselianElements.l1[degree])/1e6 + "");
+            addNodeChild(row, "td", Math.round(1e6*eclipseData.besselianElements.l2[degree])/1e6 + "");
+        }
+        
     }
     
 };
