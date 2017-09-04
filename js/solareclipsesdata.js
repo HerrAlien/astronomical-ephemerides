@@ -46,8 +46,13 @@ var SolarEclipses = {
         var r = 1 / Math.sin (moonParallaxRads);
         var b = Math.sin(sunParallaxRads) * r ;
         values.d = sunData.Dec - (b / (1-b))*(moonData.DecGeo - sunData.Dec);
+        if (values.d < 0)
+            values.d += 360;
+
         var a = sunData.RA - (b / (1-b))*Math.cos(moonDecRads)/Math.cos(sunData.Dec * degra) * (moonData.RaGeo - sunData.RA);
         values.mu = 15*(AAJS.Sidereal.ApparentGreenwichSiderealTime(jd) - a);
+        if (values.mu < 0)
+            values.mu += 360;
         
         // -------------------------------------------------
         var d = values.d * degra;
@@ -117,6 +122,9 @@ var SolarEclipses = {
         elements['tan_f1'] = elements['tan_f1'][0];
         elements['tan_f2'] = elements['tan_f2'][0];
          
+        elements['mu'][3] = 0;
+        elements['d'][3] = 0;
+         
         return elements;
     },
     
@@ -136,96 +144,4 @@ var SolarEclipses = {
     }
 
 };
-
-var SolarEclipsesPage = {
-    
-    dataSource : SolarEclipses,
-    hostElement : document.getElementById("SolarEclipsesContainer"),
-    pageRendered : false,
-
-    // clears up the rendered thing
-    reset : PlanetPage.prototype.reset,
-    
-    displayPage : function () {
-        
-        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
-            return setTimeout (function() { SolarEclipsesPage.displayPage(); }, 300);
-        
-        if (SolarEclipsesPage.pageRendered)
-            return;
-
-        var startJD = PageTimeInterval.JD;
-        var numberOfConjunctions =  Math.round(PageTimeInterval.days / MoonEclipsesPage.dataSource.sinodicPeriod);
-
-        var startK = AAJS.Moon.kForJD (startJD);
-        if (startK < 0)
-            startK = -1 * Math.ceil(Math.abs(startK));
-        else
-            startK = Math.ceil(Math.abs(startK));
-        
-        var endK = startK + numberOfConjunctions;
-        
-        function processK (k, endingK) {
-            if (k >= endingK) {
-                SolarEclipsesPage.pageRendered = true;
-                return;
-            }
-            
-            var eclipseData = SolarEclipsesPage.dataSource.EclipseDataForK (k);
-            if (eclipseData.bEclipse) 
-                SolarEclipsesPage.drawNewEclipse (eclipseData);
-            
-            setTimeout (function() { processK(k+1, endingK); }, 1);
-        } 
-        
-        processK(startK, endK);
-    },
-
-    drawNewEclipse: function (eclipseData) {
-        var yyyymmdd_hhmmOfJD  = PlanetPage.prototype.yyyymmdd_hhmmOfJD;
-        
-        var addNodeChild = PlanetPage.prototype.addNodeChild;
-        var mainDiv = addNodeChild(SolarEclipsesPage.hostElement, "div");
-        mainDiv.classList.add("solarEclipse");
-        var dateTime = yyyymmdd_hhmmOfJD(eclipseData.t0);
-        
-        var description = "";
-
-        var eclipseTitle = addNodeChild (mainDiv, "h2", dateTime.date.Y + "-" + dateTime.date.M + "-" + dateTime.date.D + " " + description);
-        var eclipseTitle = addNodeChild (mainDiv, "h3", "Besseliean elements:");
-        addNodeChild (mainDiv, "span", "T0 = " + dateTime.time.Ord3 + ":" +  dateTime.time.Ord2 + " UTC");
-        addNodeChild (mainDiv, "br");
-        addNodeChild (mainDiv, "span", "tan (f1) = " + Math.round(eclipseData.besselianElements.tan_f1 * 1e6)/1e6);
-        addNodeChild (mainDiv, "br");
-        addNodeChild (mainDiv, "span", "tan (f2) = " + Math.round(eclipseData.besselianElements.tan_f2 * 1e6)/1e6);
-        
-        var table = addNodeChild (mainDiv, "table");
-        var header = addNodeChild (table, "tr");
-
-        addNodeChild(header, "td", "order");
-        addNodeChild(header, "td", "x");
-        addNodeChild(header, "td", "y");
-        addNodeChild(header, "td", "\u03BC [\u00B0]");
-        addNodeChild(header, "td", "d [\u00B0]");
-        addNodeChild(header, "td", "l1");
-        addNodeChild(header, "td", "l2");
-        
-        for (var degree = 0; degree < eclipseData.besselianElements.x.length; degree++) {
-            var row = addNodeChild (table, "tr");
-            
-            addNodeChild(row, "td", degree + "" );
-            addNodeChild(row, "td", Math.round(1e6*eclipseData.besselianElements.x[degree])/1e6 + "");
-            addNodeChild(row, "td", Math.round(1e6*eclipseData.besselianElements.y[degree])/1e6 + "");
-            addNodeChild(row, "td", Math.round(1e6*eclipseData.besselianElements.mu[degree])/1e6 + "");
-            addNodeChild(row, "td", Math.round(1e6*eclipseData.besselianElements.d[degree])/1e6 + "");
-            addNodeChild(row, "td", Math.round(1e6*eclipseData.besselianElements.l1[degree])/1e6 + "");
-            addNodeChild(row, "td", Math.round(1e6*eclipseData.besselianElements.l2[degree])/1e6 + "");
-        }
-        
-    }
-    
-};
-
-Pages["SolarEclipses"] = SolarEclipsesPage;
-
 

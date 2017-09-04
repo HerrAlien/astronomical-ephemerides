@@ -371,9 +371,14 @@
         
        <div id="SolarEclipses" class="page">
             <h1>Solar Eclipses</h1>
-            <br/> Accuracy of the parameters displayed below is about 1e-4.
-            <br/> 
-            <br/> 
+            <div class="leftaligned">
+            To obtain the value of a given Besselian element for a given time T, you need to compute the values in the following maner:
+            <br/>
+            t = T - T0
+            <br/>
+            A(t) = A<sub>0</sub> + t * A<sub>1</sub> + t<sup>2</sup> * A<sub>2</sub> + t<sup>3</sup> * A<sub>3</sub>
+            </div>
+            
             <div id="SolarEclipsesContainer" class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</div>
         </div>
 
@@ -537,6 +542,7 @@
 <script type="text/JavaScript" src="js/mooneclipsesdata.js"></script>
 <script type="text/JavaScript" src="js/mooneclipsespage.js"></script>
 <script type="text/JavaScript" src="js/solareclipsesdata.js"></script>
+<script type="text/JavaScript" src="js/solareclipsespage.js"></script>
 <script type="text/JavaScript" src="js/realtime.js"></script>
 
 <script>
