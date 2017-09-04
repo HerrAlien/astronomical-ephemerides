@@ -76,6 +76,9 @@ var SolarEclipsesPage = {
             description += "Total ";
         if (eclipseData.isAnnular)
             description += "Annular ";
+        if (eclipseData.isAnnularTotal)
+            description += "Hybrid ";
+        description += "Eclipse";
         
         var decimalsFactor = 1e5; 
 
