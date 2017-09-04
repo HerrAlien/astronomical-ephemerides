@@ -25,6 +25,7 @@
 
        <script type="text/javascript" src="js/notifications.js"></script>
        <script type="text/javascript" src="js/mooneclipsesdata.js"></script>
+       <script type="text/javascript" src="js/solareclipsesdata.js"></script>
         <style>
             p {
                 line-spacing: 2px;
@@ -48,6 +49,30 @@
             test : function () {
                 var k = AAJS.Moon.kForJD (this.input);
                 this.actualOutput = AAJS.Moon.JDforK (k);
+                return this.actualOutput == this.expectedOutput;
+            }
+        },
+
+        {
+            name : "K at opposition",
+            input : AAJS.Date.DateToJD (1985, 05, 04, true) + (19 + 36.3/60)/24,
+            expectedOutput :  -181.5,
+            actualOutput : false,
+            test : function () {
+                var k = AAJS.Moon.kForJD (this.input);
+                this.actualOutput = Math.floor(k * 10)/10;
+                return this.actualOutput == this.expectedOutput;
+            }
+        },
+        
+        {
+            name : "K at conjunction",
+            input : AAJS.Date.DateToJD (2017, 08, 22, true),
+            expectedOutput :  218,
+            actualOutput : false,
+            test : function () {
+                var k = AAJS.Moon.kForJD (this.input);
+                this.actualOutput = Math.floor(k * 10)/10;
                 return this.actualOutput == this.expectedOutput;
             }
         },
@@ -391,7 +416,63 @@ n	x	        y	        d	        l1	        l2	        μ
 3	-0.00001	0.00000	-	-	-	-
 Tan ƒ1	0.0046222
 Tan ƒ2	0.0045992
+*/
 
+{
+            name : "Besselian elements for eclipse 2017-08-21",
+            input : AAJS.Date.DateToJD (2017, 08, 21, true) + 0.75, // 18:00
+            expectedOutput : {
+                    "x"  : [-0.12958, 0.54064, -0.00003, -0.00001], // earth radii
+                    "y"  : [0.48542, -0.14164, -0.00009, 0.00000 ], // earth radii
+                    "d"  : [11.8670, -0.0136, 0, 0],  // degrees
+                    "mu" : [89.2454, 15.0039, 0, 0],  // degrees
+                    "l1" : [0.54211, 0.00012, -0.00001, 0], // earth radii
+                    "l2" : [-0.00403, 0.00012, -0.00001, 0], // earth radii
+                    "tan_f1" : 0.0046222,
+                    "tan_f2" : 0.0045992
+                },
+                  
+                  
+            accuracies : {
+                    "x"  : 4e-4,
+                    "y"  : 2e-4,
+                    "d"  : 2e-4,
+                    "mu" : 4e-5,
+                    "l1" : 3e-4,
+                    "l2" : 4e-5,
+                    "tan_f1" : 1e-5,
+                    "tan_f2" : 1e-5
+                },
+                
+            actualOutput : false,
+                      
+            test : function () {
+                this.actualOutput = SolarEclipses.ComputeBesselianElements (this.input);
+                return testlib.doubleEqArr (this.actualOutput.x, 
+                                          this.expectedOutput.x, 
+                                              this.accuracies.x) &&
+                       testlib.doubleEqArr (this.actualOutput.y, 
+                                          this.expectedOutput.y, 
+                                              this.accuracies.y) &&
+                       testlib.doubleEqArr (this.actualOutput.d, 
+                                          this.expectedOutput.d, 
+                                              this.accuracies.d) &&
+                       testlib.doubleEqArr (this.actualOutput.mu, 
+                                          this.expectedOutput.mu, 
+                                              this.accuracies.mu) &&
+                       testlib.doubleEqArr (this.actualOutput.l1, 
+                                          this.expectedOutput.l1, 
+                                              this.accuracies.l1) &&
+                       testlib.doubleEqArr (this.actualOutput.l2, 
+                                          this.expectedOutput.l2, 
+                                              this.accuracies.l2) &&
+                        testlib.doubleEq (this.actualOutput.tan_f1, this.expectedOutput.tan_f1, this.accuracies.tan_f1) &&
+                        testlib.doubleEq (this.actualOutput.tan_f2, this.expectedOutput.tan_f2, this.accuracies.tan_f2);
+            }
+        },
+
+
+/*
 
 Polynomial Besselian Elements: Partial Solar Eclipse of 2022 Oct 25
 

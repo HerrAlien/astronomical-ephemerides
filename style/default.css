@@ -655,9 +655,7 @@ input {
 @media screen {
 }
 
-
-
-.moonEclipse {
+.moonEclipse, .solarEclipse {
     text-align: center;
     border-top: solid 1px #AAAAAA;
     margin-top: -1px;
@@ -668,15 +666,16 @@ input {
     max-width: 1024px;
 }
 
-.moonEclipse table {
+.moonEclipse table, .solarEclipse table {
     font-size: 18px;
+    margin-bottom: 20px;
 }
 
 .viewport {
     width: 100%;
     max-width: 640px;
     padding-top: 0.1%; /* 1:1 Aspect Ratio */
-    margin-top: 20px;
+    margin-top: 0px;
     margin-left: 0px;
     margin-right: 0px;
 }
@@ -723,7 +722,7 @@ input {
     font-size: 16px;
 }
 
-@media screen and (min-width: 1801px)  {
+@media screen and (min-width: 1980px)  {
     #MenuLink, .MenuLinkDiv.topmenulink, .MenuLinkDiv.topmenulink img, .MenuLinkDiv.topmenulink::after {
         width: 0px;
         height: 0px;
@@ -928,4 +927,17 @@ input[type=number]::-webkit-inner-spin-button {
 
 input[type=date]::-webkit-inner-spin-button {
   -webkit-appearance: none;
+}
+
+#SolarEclipses .leftaligned {
+    margin-top: 30px;
+    margin-bottom: 60px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1024px;
+}
+
+.leftaligned {
+    text-align: left;
 }

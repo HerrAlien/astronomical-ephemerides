@@ -58,25 +58,7 @@ var MoonEclipsesPage = {
     displayTimings : function (oppositionData, mainDiv) {
         var addNodeChild = PlanetPage.prototype.addNodeChild;
         
-        function yyyymmdd_hhmmOfJD (JD) {
-            var fullDayJD = 0.5 + Math.floor(JD - 0.5);
-            var dayFraction = JD - fullDayJD;
-            if (dayFraction < 0) dayFraction += 1;
-            
-            var dateOfJD =  AAJS.Date.JD2Date(fullDayJD);
-
-            if (dateOfJD.M < 10) dateOfJD.M = "0" + dateOfJD.M;
-            if (dateOfJD.D < 10) dateOfJD.D = "0" + dateOfJD.D;
-            
-            var roundedTime = Math.round(dayFraction * 24 * 60) / 60;
-            var sexagesimalTime = AAJS.Numerical.ToSexagesimal (roundedTime);
-
-            if (sexagesimalTime.Ord3 < 10) sexagesimalTime.Ord3 = "0" + sexagesimalTime.Ord3;
-            if (sexagesimalTime.Ord2 < 10) sexagesimalTime.Ord2 = "0" + sexagesimalTime.Ord2;
-            if (sexagesimalTime.Ord1 < 10) sexagesimalTime.Ord1 = "0" + sexagesimalTime.Ord1;
-            
-            return { 'date': dateOfJD, 'time' : sexagesimalTime };
-        }
+        var yyyymmdd_hhmmOfJD  = PlanetPage.prototype.yyyymmdd_hhmmOfJD;
         
         // get the JD of the opposition
         var oppositionDateTime = yyyymmdd_hhmmOfJD(oppositionData.JD);
