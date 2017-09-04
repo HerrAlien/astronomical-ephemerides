@@ -120,16 +120,74 @@ var SolarEclipses = {
         return elements;
     },
     
-    sinodicPeriod : 29.530587981,
-    
-    //getConjunctionAroundDate
-    
-    EclipseDataForJdInterval : function (jdStart, jdEnd) {
-        // find the JD  of the conjunction, then the k value
+    EclipseDataForK : function (k) {
         // check if you have an eclipse
-        // if yes, compute the besselian elements
-        /*
-            {"yyyy-mm-dd" : {"t0" : JD, "besselianElements" : the-elements}, ... }
-        */
+        var eclipseData = AAJS.Eclipses.CalculateSolar (k);
+        if (eclipseData.bEclipse) {
+            // if yes, compute the besselian elements
+            eclipseData["t0"] = Math.round (eclipseData.JdOfMaximumEclipse * 24) / 24;
+            eclipseData["besselianElements"] = this.ComputeBesselianElements(eclipseData["t0"]);
+        }
+        return eclipseData;
+    },
+
+    reset : function () {
+
     }
+
 };
+
+var SolarEclipsesPage = {
+    
+    dataSource : SolarEclipses,
+    hostElement : document.getElementById("SolarEclipsesContainer"),
+    pageRendered : false,
+
+    // clears up the rendered thing
+    reset : PlanetPage.prototype.reset,
+    
+   displayPage : function () {
+        
+        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
+            return setTimeout (function() { SolarEclipsesPage.displayPage(); }, 300);
+        
+        if (SolarEclipsesPage.pageRendered)
+            return;
+
+        var startJD = PageTimeInterval.JD;
+        var numberOfConjunctions =  Math.round(PageTimeInterval.days / MoonEclipsesPage.dataSource.sinodicPeriod);
+
+        var startK = AAJS.Moon.kForJD (startJD);
+        if (startK < 0)
+            startK = -1 * Math.ceil(Math.abs(startK));
+        else
+            startK = Math.ceil(Math.abs(startK));
+        
+        var endK = startK + numberOfConjunctions;
+        
+        function processK (k, endingK) {
+            if (k >= endingK) {
+                SolarEclipsesPage.pageRendered = true;
+                return;
+            }
+            
+            var eclipseData = SolarEclipsesPage.dataSource.EclipseDataForK (k);
+            if (eclipseData.bEclipse) 
+                SolarEclipsesPage.drawNewEclipse (eclipseData);
+            
+            setTimeout (function() { processK(k+1, endingK); }, 1);
+        } 
+        
+        processK(startK, endK);
+    },
+
+    drawNewEclipse: function (eclipseData) {
+        var addNodeChild = PlanetPage.prototype.addNodeChild;
+        var mainDiv = addNodeChild(SolarEclipsesPage.hostElement, "div", JSON.stringify(eclipseData));
+    }
+    
+};
+
+Pages["SolarEclipses"] = SolarEclipsesPage;
+
+

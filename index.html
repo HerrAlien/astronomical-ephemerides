@@ -32,7 +32,7 @@
             <a href="#Moon"><div class="MoonLinkButton topmenulink linkButton"><img src="images/moon.svg" alt="Moon"></div></a>
             <a href="#Jupiter"><div class="JupiterLinkButton topmenulink linkButton"><img src="images/jupiter.svg" alt="Jupiter"></div></a>
             <a href="#Saturn"><div class="SaturnLinkButton topmenulink linkButton"><img src="images/saturn.svg" alt="Saturn"></div></a>
-            <!-- <a nohref="#SolarEclipses"><div class="SolarEclipseLinkButton topmenulink linkButton"><img src="images/solar-eclipse.svg"  alt="Solar Eclipses"></div></a> -->
+            <a href="#SolarEclipses"><div class="SolarEclipseLinkButton topmenulink linkButton"><img src="images/solar-eclipse.svg"  alt="Solar Eclipses"></div></a>
             <a href="#LunarEclipses"><div class="LunarEclipseLinkButton topmenulink linkButton"><img src="images/lunar-eclipse.svg" alt="Lunar Eclipses"></div></a>
             <a href="#GalileanMoons"><div class="GalileanMoonsLinkButton topmenulink linkButton"><img src="images/galilean-moons.svg" alt="Galilean Moons"></div></a>
             <a href="#Mars"><div class="MarsLinkButton topmenulink linkButton"><img src="images/mars.svg" alt="Mars"></div></a>
@@ -53,7 +53,7 @@
                 <li><a href="#Sun"><div             class="largeButtons SunLinkButton   linkButton"><img src="images/sun.svg" alt="Sun"></div></a></li>
                 <li><a href="#Moon"><div            class="largeButtons MoonLinkButton   linkButton"><img src="images/moon.svg" alt="Moon"></div></a></li>
                 <li><a href="#LunarEclipses"><div   class="largeButtons LunarEclipseLinkButton   linkButton"><img src="images/lunar-eclipse.svg" alt="Lunar Eclipses"></div></a></li>
-                <!-- <li><a nohref="#SolarEclipses"><div class="largeButtons SolarEclipseLinkButton   linkButton"><img src="images/solar-eclipse.svg" alt="Solar Eclipses"></div></a></li> -->
+                <li><a href="#SolarEclipses"><div class="largeButtons SolarEclipseLinkButton   linkButton"><img src="images/solar-eclipse.svg" alt="Solar Eclipses"></div></a></li>
                 <li><a href="#Mercury"><div         class="largeButtons MercuryLinkButton   linkButton"><img src="images/mercury.svg" alt="Mercury"></div></a></li>
                 <li><a href="#Venus"><div           class="largeButtons VenusLinkButton   linkButton"><img src="images/venus.svg" alt="Venus"></div></a></li>
                 <li><a href="#Mars"><div            class="largeButtons MarsLinkButton   linkButton"><img src="images/mars.svg" alt="Mars"></div></a></li>
@@ -369,7 +369,15 @@
             <div id="MoonEclipsesContainer" class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</div>
         </div>
         
-    </div>
+       <div id="SolarEclipses" class="page">
+            <h1>Solar Eclipses</h1>
+            <br/> Accuracy of the parameters displayed below is about 1e-4.
+            <br/> 
+            <br/> 
+            <div id="SolarEclipsesContainer" class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</div>
+        </div>
+
+        </div>
     
 	</body>
 
@@ -528,6 +536,7 @@
 
 <script type="text/JavaScript" src="js/mooneclipsesdata.js"></script>
 <script type="text/JavaScript" src="js/mooneclipsespage.js"></script>
+<script type="text/JavaScript" src="js/solareclipsesdata.js"></script>
 <script type="text/JavaScript" src="js/realtime.js"></script>
 
 <script>

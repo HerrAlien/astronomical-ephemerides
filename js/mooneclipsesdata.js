@@ -112,8 +112,6 @@ function MoonEclipse (JD) {
 
 var MoonEclipsesData = {
     
-	onNewEclipse : Notifications.New(),
-    
     sinodicPeriod : 29.530587981,
     
     getOppositionAroundJD : function (JD) {
