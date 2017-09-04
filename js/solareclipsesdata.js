@@ -16,6 +16,72 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
+var polynomialFunctions = [
+    false, // this is the constant ...
+    function (x) { return x; },
+    function (x) { return x*x; },
+    function (x) { return x*x*x; }
+];
+
+function transposeMatrix (matrix) {
+    var transposed = [];
+    for (var i = 0; i < matrix[0].length; i++)
+        transposed[i] = [];
+    
+    for (var oldMatrixRowIndex = 0; oldMatrixRowIndex < matrix.length; oldMatrixRowIndex++) {
+        for (var oldMatrixColIndex = 0; oldMatrixColIndex < matrix[0].length; oldMatrixColIndex++) {
+            transposed[oldMatrixColIndex][oldMatrixRowIndex] = matrix[oldMatrixRowIndex][oldMatrixColIndex];
+        }        
+    }
+    
+}
+
+function ValuesToPolynomialCoefficients_LSF (values, arguments) {
+    
+    var X = [
+        [                      values[0], 
+        polynomialFunctions[1](arguments[0]), 
+        polynomialFunctions[2](arguments[0]), 
+        polynomialFunctions[3](arguments[0])],
+
+        [                      values[1], 
+        polynomialFunctions[1](arguments[1]), 
+        polynomialFunctions[2](arguments[1]), 
+        polynomialFunctions[3](arguments[1])],
+
+        [                      values[2], 
+        polynomialFunctions[1](arguments[2]), 
+        polynomialFunctions[2](arguments[2]), 
+        polynomialFunctions[3](arguments[2])],
+        
+        [                      values[3], 
+        polynomialFunctions[1](arguments[3]), 
+        polynomialFunctions[2](arguments[3]), 
+        polynomialFunctions[3](arguments[3])],
+        
+        [                      values[4], 
+        polynomialFunctions[1](arguments[4]), 
+        polynomialFunctions[2](arguments[4]), 
+        polynomialFunctions[3](arguments[4])],
+        
+        [                      values[5], 
+        polynomialFunctions[1](arguments[5]), 
+        polynomialFunctions[2](arguments[5]), 
+        polynomialFunctions[3](arguments[5])],
+        
+        [                      values[6], 
+        polynomialFunctions[1](arguments[6]), 
+        polynomialFunctions[2](arguments[6]), 
+        polynomialFunctions[3](arguments[6])]
+    ];
+    
+    var X_t = transposeMatrix(X);
+    
+    var multipliedTransposeWithSelf = multiplyMatrices (X_t, X);
+    var reversedMatrix = reverseMatrix (multipliedTransposeWithSelf);
+    
+}
+
 var SolarEclipses = {
     toDUT : 0,
     ComputeOneFunctionValueForElements : function (jd) {
