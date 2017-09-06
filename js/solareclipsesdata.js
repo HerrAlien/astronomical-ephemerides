@@ -16,13 +16,6 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
-var polynomialFunctions = [
-    false, // this is the constant ...
-    function (x) { return x; },
-    function (x) { return x*x; },
-    function (x) { return x*x*x; }
-];
-
 function transposeMatrix (matrix) {
     var transposed = [];
     for (var i = 0; i < matrix[0].length; i++)
@@ -36,44 +29,16 @@ function transposeMatrix (matrix) {
     
 }
 
-function ValuesToPolynomialCoefficients_LSF (values, arguments) {
+function ValuesToPolynomialCoefficients_LSF (values, arguments, polynomialDegree) {
+    var X = [];
+    for (var i = 0; i < arguments.length; i++)
+        X[i] = [];
     
-    var X = [
-        [                      values[0], 
-        polynomialFunctions[1](arguments[0]), 
-        polynomialFunctions[2](arguments[0]), 
-        polynomialFunctions[3](arguments[0])],
-
-        [                      values[1], 
-        polynomialFunctions[1](arguments[1]), 
-        polynomialFunctions[2](arguments[1]), 
-        polynomialFunctions[3](arguments[1])],
-
-        [                      values[2], 
-        polynomialFunctions[1](arguments[2]), 
-        polynomialFunctions[2](arguments[2]), 
-        polynomialFunctions[3](arguments[2])],
-        
-        [                      values[3], 
-        polynomialFunctions[1](arguments[3]), 
-        polynomialFunctions[2](arguments[3]), 
-        polynomialFunctions[3](arguments[3])],
-        
-        [                      values[4], 
-        polynomialFunctions[1](arguments[4]), 
-        polynomialFunctions[2](arguments[4]), 
-        polynomialFunctions[3](arguments[4])],
-        
-        [                      values[5], 
-        polynomialFunctions[1](arguments[5]), 
-        polynomialFunctions[2](arguments[5]), 
-        polynomialFunctions[3](arguments[5])],
-        
-        [                      values[6], 
-        polynomialFunctions[1](arguments[6]), 
-        polynomialFunctions[2](arguments[6]), 
-        polynomialFunctions[3](arguments[6])]
-    ];
+    for (var argIndex = 0; argIndex < arguments.length; argIndex++) {
+        for (var degree = 0; degree <= polynomialDegree; degree++ ) {
+            X[argIndex][degree] = Math.pow(arguments[argIndex], degree);
+        }
+    }
     
     var X_t = transposeMatrix(X);
     
