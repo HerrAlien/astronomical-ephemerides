@@ -461,8 +461,11 @@
     } 
     
     var sourceMenu = document.getElementById("navigation");
+    var oldScrollTop = 0;
+    
     window.addEventListener("scroll", function() {
-        var scrolled = document.body.scrollTop >= 20;
+        var scrolledTop = document.body.scrollTop;
+        var scrolled = scrolledTop >= 20;
         
         if (previousPage) {
             var pageObj = Pages [previousPage.id];
@@ -480,15 +483,30 @@
 
                     pageObj.hostElement.rows[1].classList.add ("secondHeaderRow");
                     pageObj.hostElement.rows[1].classList.remove ("secondHeaderRowScrolled");                    
-                    sourceMenu.classList.remove ("withDropShadow");
                 }
             }            
         }
         
-        if (scrolled)
+        if (scrolled) {
             sourceMenu.classList.add ("withDropShadow");
-        else 
+        } else {
             sourceMenu.classList.remove ("withDropShadow");
+        }
+        
+        // is it on a small screen?
+        if (scrolledTop > oldScrollTop) {
+            // scrolled down
+            sourceMenu.classList.add ("movedMenu");
+            pageObj.hostElement.rows[0].classList.add ("movedMenu");
+            pageObj.hostElement.rows[1].classList.add ("movedMenu");
+        } else {
+            // scrolled up
+            sourceMenu.classList.remove ("movedMenu");
+            pageObj.hostElement.rows[0].classList.remove ("movedMenu");
+            pageObj.hostElement.rows[1].classList.remove ("movedMenu");
+        }
+        
+        oldScrollTop = scrolledTop;
     });
     
     function updateTimeAtAajsLoad() {
