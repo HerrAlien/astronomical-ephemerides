@@ -497,13 +497,17 @@
         if (scrolledTop > oldScrollTop) {
             // scrolled down
             sourceMenu.classList.add ("movedMenu");
-            pageObj.hostElement.rows[0].classList.add ("movedMenu");
-            pageObj.hostElement.rows[1].classList.add ("movedMenu");
-        } else {
+            if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
+                pageObj.hostElement.rows[0].classList.add ("movedMenu");
+                pageObj.hostElement.rows[1].classList.add ("movedMenu");
+            }
+        } else if (scrolledTop < oldScrollTop - 20) {
             // scrolled up
             sourceMenu.classList.remove ("movedMenu");
-            pageObj.hostElement.rows[0].classList.remove ("movedMenu");
-            pageObj.hostElement.rows[1].classList.remove ("movedMenu");
+            if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
+                pageObj.hostElement.rows[0].classList.remove ("movedMenu");
+                pageObj.hostElement.rows[1].classList.remove ("movedMenu");
+            }
         }
         
         oldScrollTop = scrolledTop;
