@@ -34,6 +34,7 @@ var SolarEclipsesPage = {
         if (SolarEclipsesPage.pageRendered)
             return;
 
+        SolarEclipsesPage.reset();
         var startJD = PageTimeInterval.JD;
         var numberOfConjunctions =  Math.round(PageTimeInterval.days / MoonEclipsesPage.dataSource.sinodicPeriod);
 
