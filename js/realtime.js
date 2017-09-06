@@ -71,21 +71,47 @@ var JDForRealTimeView = {
                 var obj3 = this.dataSource.getDataAsObjectForJD (datesObj.T3, true);
                 var obj4 = this.dataSource.getDataAsObjectForJD (datesObj.T4, true);
                 var obj5 = this.dataSource.getDataAsObjectForJD (datesObj.T5, true);
+                
+                var interpolationLimits = {
+                    "RA" : 24
+                };
 
                 var interpolatedObject = {};
                 for (var key in obj1) {
-                    interpolatedObject[key] = this.interpolate (datesObj.n, obj1[key], obj2[key], obj3[key], obj4[key], obj5[key]);
+                    interpolatedObject[key] = this.interpolate (datesObj.n, obj1[key], obj2[key], obj3[key], obj4[key], obj5[key], interpolationLimits[key]);
                 }
                 
                 this.onDataUpdated.notify(interpolatedObject);
             }
         }
         
-        DataForNow.prototype['interpolate'] = function (n, y1, y2, y3, y4, y5) {
+        DataForNow.prototype['interpolate'] = function (n, y1, y2, y3, y4, y5, limit) {
+            
             var a = y2 - y1;
             var b = y3 - y2;
             var c = y4 - y3;
             var d = y5 - y4;
+            
+            if (!!limit) {
+                var halfLimit = 0.5 * limit;
+                if (Math.abs(a) > halfLimit || Math.abs(b) > halfLimit || Math.abs(c) > halfLimit || Math.abs(d) > halfLimit) {
+                    if (y1 < halfLimit)
+                        y1 += limit;
+                    if (y2 < halfLimit)
+                        y2 += limit;
+                    if (y3 < halfLimit)
+                        y3 += limit;
+                    if (y4 < halfLimit)
+                        y4 += limit;
+                    if (y5 < halfLimit)
+                        y5 += limit;
+                }
+                
+                a = y2 - y1;
+                b = y3 - y2;
+                c = y4 - y3;
+                d = y5 - y4;
+            }
             
             var e = b - a;
             var f = c - b;
@@ -99,7 +125,14 @@ var JDForRealTimeView = {
             var n2 = n * n;
             var n2decr = n2 - 1;
             
-            return y3 + 0.5 * n * (b + c) + 0.5 * n2 * f + n * n2decr * (h + j)/ 12 + n2 * n2decr * k / 24;
+            var res = y3 + 0.5 * n * (b + c) + 0.5 * n2 * f + n * n2decr * (h + j)/ 12 + n2 * n2decr * k / 24;
+            
+            if (!!limit) {
+                if (res > limit)
+                    res -= limit;
+            }
+            
+            return res;
         }
     })();
 
