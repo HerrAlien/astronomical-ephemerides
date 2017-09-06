@@ -23,11 +23,11 @@
 
 <body>
     <div id="navigation">
-    <a href="#home"   id="HomeLink"><div class="HomeLinkButton topmenulink linkButton"><img src="images/logo.png" alt="Home"></div></a>
-    <a href="#settings"><div class="SettingsLink topmenulink linkButton"><img src="images/settings.svg" alt="Settings"></div></a>
-    <a href="zip/ephemerides.7z"><div class="DownloadLink topmenulink linkButton"><img src="images/download.svg" alt="Download"></div></a>
-    <a href="#more" id="MenuLink"><div class="MenuLinkDiv topmenulink linkButton"><img src="images/menu.svg" alt="More ..."></div></a>
-    <div id="promotedMenu">
+        <a href="#home"   id="HomeLink"><div class="HomeLinkButton topmenulink linkButton"><img src="images/logo.png" alt="Home"></div></a>
+        <a href="#settings"><div class="SettingsLink topmenulink linkButton"><img src="images/settings.svg" alt="Settings"></div></a>
+        <a href="zip/ephemerides.7z"><div class="DownloadLink topmenulink linkButton"><img src="images/download.svg" alt="Download"></div></a>
+        <a href="#more" id="MenuLink"><div class="MenuLinkDiv topmenulink linkButton"><img src="images/menu.svg" alt="More ..."></div></a>
+        <div id="promotedMenu">
             <a href="#Sun"><div class="SunLinkButton topmenulink linkButton"><img src="images/sun.svg" alt="Sun"></div></a>
             <a href="#Moon"><div class="MoonLinkButton topmenulink linkButton"><img src="images/moon.svg" alt="Moon"></div></a>
             <a href="#Jupiter"><div class="JupiterLinkButton topmenulink linkButton"><img src="images/jupiter.svg" alt="Jupiter"></div></a>
@@ -41,8 +41,7 @@
             <a href="#Venus"><div class="VenusLinkButton topmenulink linkButton"><img src="images/venus.svg"  alt="Venus"></div></a>
             <a href="#Uranus"><div class="UranusLinkButton topmenulink linkButton"><img src="images/uranus.svg" alt="Uranus"></div></a>
             <a href="#Neptune"><div class="NeptuneLinkButton topmenulink linkButton"><img src="images/neptune.svg" alt="Neptune"></div></a>
-
-    </div>
+        </div>
     </div>
     
     <div class="clear maxWidth">&nbsp;</div>
@@ -442,15 +441,15 @@
                 Pages[pageKey].reset();
             }
         }
-        gohome();
 
+        alert("New settings applied.");
     });
     
     document.getElementById ("cancelSettingsChanges").addEventListener("click", function() {
         Location.Controls.update();
         TimeStepsData.Controls.update();
 
-        gohome();
+        alert("Changes discarded.");
     });
 
     Location.init();
