@@ -494,14 +494,14 @@
         }
         
         // is it on a small screen?
-        if (scrolledTop > oldScrollTop) {
+        if (scrolledTop > oldScrollTop && scrolledTop > 180 ) {
             // scrolled down
             sourceMenu.classList.add ("movedMenu");
             if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
                 pageObj.hostElement.rows[0].classList.add ("movedMenu");
                 pageObj.hostElement.rows[1].classList.add ("movedMenu");
             }
-        } else if (scrolledTop < oldScrollTop - 20) {
+        } else if (scrolledTop < oldScrollTop - 20 || scrolledTop < 180) {
             // scrolled up
             sourceMenu.classList.remove ("movedMenu");
             if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
