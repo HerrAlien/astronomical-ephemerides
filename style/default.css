@@ -785,6 +785,19 @@ input {
     .DownloadLink::after, .DownloadLink {
         display: none;
     }
+    
+    #navigation.movedMenu {
+        top: -120px;
+    }
+    
+    tr.firstHeaderRowScrolled.movedMenu {
+        top: 126;
+    }
+    tr.secondHeaderRowScrolled.movedMenu {
+        top: 126;
+    }
+    
+    
 }
     
 .positionalButton, .physicalButton {
@@ -874,7 +887,6 @@ margin: 0px 0px -10px 0px;
 padding-bottom: 7px;
 border-bottom: solid 1px #AAAAAA;
     position: fixed;
-    top: 0px;
     width: 100%;
     background: #ffffff;
     z-index: 2;
