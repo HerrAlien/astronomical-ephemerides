@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <script type="text/javascript" src="js/matrix.js"></script>
+        <script type="text/javascript" src="testlib.js"></script>
+        <style>
+            p {
+                line-spacing: 2px;
+            }
+        </style>
+    </head>
+    <body>
+    </body>
+</html>
+<script type="text/javascript">
+
+    (function () {
+            
+        var tests = [
+        
+        {
+            name : "[[1], [2]] * [[3, 4]] = [[3, 4], [6, 8]]",
+            input : {"m1" : [[1], [2]], "m2" : [[3, 4]]},
+            expectedOutput : [[3, 4], [6, 8]],
+            actualOutput : false,
+            test : function () {
+               this.actualOutput = Matrix.multiply(this.input.m1, this.input.m2);
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+
+        {
+            name : "[[3, 4]] * [[1], [2]]  = [[11]]",
+            input : {"m1" : [[3, 4]], "m2" : [[1], [2]]},
+            expectedOutput : [[11]],
+            actualOutput : false,
+            test : function () {
+               this.actualOutput = Matrix.multiply(this.input.m1, this.input.m2);
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+         
+        {
+            name : "[[3, 4]] * [[1], [2], [3]]  = exception",
+            input : {"m1" : [[3, 4]], "m2" : [[1], [2], [3]]},
+            expectedOutput : [[11]],
+            actualOutput : false,
+            test : function () {
+                try {
+                    this.actualOutput = Matrix.multiply(this.input.m1, this.input.m2);
+               } catch (e) {
+                    return true;
+               }
+               return false;
+            }
+        },
+
+        ];
+            
+        testlib.runTests (tests);
+            
+    })();
+            
+        </script>
+
