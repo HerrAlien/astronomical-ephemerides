@@ -16,14 +16,14 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
-function ValuesToPolynomialCoefficients_LSF (values, arguments, polynomialDegree) {
+function ValuesToPolynomialCoefficients_LSF (values, args, polynomialDegree) {
     var X = [];
-    for (var i = 0; i < arguments.length; i++)
+    for (var i = 0; i < args.length; i++)
         X[i] = [];
     
-    for (var argIndex = 0; argIndex < arguments.length; argIndex++) {
+    for (var argIndex = 0; argIndex < args.length; argIndex++) {
         for (var degree = 0; degree <= polynomialDegree; degree++ ) {
-            X[argIndex][degree] = Math.pow(arguments[argIndex], degree);
+            X[argIndex][degree] = Math.pow(args[argIndex], degree);
         }
     }
     
@@ -31,7 +31,20 @@ function ValuesToPolynomialCoefficients_LSF (values, arguments, polynomialDegree
     
     var multipliedTransposeWithSelf = Matrix.multiply (X_t, X);
     var reversedMatrix = Matrix.inverse (multipliedTransposeWithSelf);
+    var reversedMultipliedWTrannspose = Matrix.multiply(reversedMatrix, X_t);
     
+    var valuesColumnMatrix = [];
+    for (var i = 0; i < values.length; i++) {
+        valuesColumnMatrix[i] = [];
+        valuesColumnMatrix[i][0] = values[i];
+    }
+    
+    var coeffColumn = Matrix.multiply (reversedMultipliedWTrannspose, valuesColumnMatrix);
+    var res = [];
+    for (var i = 0; i < coeffColumn.length; i++)
+        res[i] = coeffColumn[i][0];
+    
+    return res;
 }
 
 var SolarEclipses = {
@@ -130,13 +143,11 @@ var SolarEclipses = {
     ComputeBesselianElements : function (jd) {
         var elements = {};
         var functionValues = this.ComputeFunctionValuesForElements(jd);
-        for (var key in functionValues)
-            elements[key] = AAJS.Numerical.ValuesToPolynomialCoefficients_Average(functionValues[key]);
-
-        function accumulate (acc, value) {
-            return acc + value;
+        for (var key in functionValues) {
+            //elements[key] = AAJS.Numerical.ValuesToPolynomialCoefficients_Average(functionValues[key]);
+            elements[key] = ValuesToPolynomialCoefficients_LSF(functionValues[key], [-3, -2, -1, 0, 1, 2, 3], 3);
         }
-        
+
         elements['tan_f1'] = elements['tan_f1'][0];
         elements['tan_f2'] = elements['tan_f2'][0];
          
