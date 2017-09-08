@@ -59,6 +59,11 @@ var Matrix = {
             targetMatrix[destinationRow][i] += targetMatrix[rowToAdd][i] * factor;
     },
     
+    scaleRow : function (targetMatrix, rowIndex, factor) {
+        for (var i = 0; i < targetMatrix[rowIndex].length; i++)
+            targetMatrix[rowIndex][i] *= factor;
+    },
+    
     inverse : function (matrix) {
         if (matrix.length != matrix[0].length)
             throw "Not a square matrix; has " + matrix.length + " rows and " + matrix[0].length + " columns!";
