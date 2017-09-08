@@ -31,6 +31,38 @@ var Matrix = {
             }        
         }
         return transposed;
-    }
+    },
     
+    swapRows : function (matrix, rowIndex1, rowIndex2) {
+        var tmp = matrix[rowIndex1];
+        matrix[rowIndex1] = matrix[rowIndex2];
+        matrix[rowIndex2] = tmp;
+        return matrix;
+    },
+    
+    appendUnitMatrix : function (targetMatrix) {
+        var rowsCount = targetMatrix.length;
+        var colsCount = targetMatrix[0].length;
+        for (var rowIndex = 0; rowIndex < rowsCount; rowIndex++) {
+            for (var colIndex = 0; colIndex < colsCount; colIndex++) {
+                var appendedValue = 0;
+                if (colIndex == rowIndex)
+                    appendedValue = 1;
+                
+                targetMatrix[rowIndex].push(appendedValue);
+            }
+        }
+    },
+    
+    inverse : function (matrix) {
+        if (matrix.length != matrix[0].length)
+            throw "Not a square matrix; has " + matrix.length + " rows and " + matrix[0].length + " columns!";
+        
+        
+        
+        
+        
+        
+    },
+        
 };

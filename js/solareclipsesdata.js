@@ -16,19 +16,6 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
-function transposeMatrix (matrix) {
-    var transposed = [];
-    for (var i = 0; i < matrix[0].length; i++)
-        transposed[i] = [];
-    
-    for (var oldMatrixRowIndex = 0; oldMatrixRowIndex < matrix.length; oldMatrixRowIndex++) {
-        for (var oldMatrixColIndex = 0; oldMatrixColIndex < matrix[0].length; oldMatrixColIndex++) {
-            transposed[oldMatrixColIndex][oldMatrixRowIndex] = matrix[oldMatrixRowIndex][oldMatrixColIndex];
-        }        
-    }
-    
-}
-
 function ValuesToPolynomialCoefficients_LSF (values, arguments, polynomialDegree) {
     var X = [];
     for (var i = 0; i < arguments.length; i++)
@@ -40,10 +27,10 @@ function ValuesToPolynomialCoefficients_LSF (values, arguments, polynomialDegree
         }
     }
     
-    var X_t = transposeMatrix(X);
+    var X_t = Matrix.transpose(X);
     
-    var multipliedTransposeWithSelf = multiplyMatrices (X_t, X);
-    var reversedMatrix = reverseMatrix (multipliedTransposeWithSelf);
+    var multipliedTransposeWithSelf = Matrix.multiply (X_t, X);
+    var reversedMatrix = Matrix.inverse (multipliedTransposeWithSelf);
     
 }
 
