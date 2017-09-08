@@ -150,6 +150,17 @@
             }
         },
 
+        {
+            name : "inverse [[4, 7], [2, 6]]",
+            input : [[4, 7], [2, 6]],
+            expectedOutput : [[0.6, -0.7], [-0.2, 0.4]],
+            actualOutput : false,
+            test : function () {
+               this.actualOutput = Matrix.inverse(this.input);
+               return Matrix.areEqual(this.expectedOutput, this.actualOutput, 1e-15);
+            }
+        },
+
         ];
             
         testlib.runTests (tests);
