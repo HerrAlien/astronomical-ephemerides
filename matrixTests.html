@@ -53,6 +53,39 @@
                return false;
             }
         },
+        
+        {
+            name : "transpose [[3, 4]]",
+            input : [[3, 4]],
+            expectedOutput : [[3], [4]],
+            actualOutput : false,
+            test : function () {
+               this.actualOutput = Matrix.transpose(this.input);
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+        
+        {
+            name : "transpose [[1], [2], [3]]",
+            input : [[1], [2], [3]],
+            expectedOutput : [[1, 2, 3]],
+            actualOutput : false,
+            test : function () {
+               this.actualOutput = Matrix.transpose(this.input);
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+
+        {
+            name : "transpose [[3, 4], [6, 8]]",
+            input : [[3, 4], [6, 8]],
+            expectedOutput : [[3, 6], [4, 8]],
+            actualOutput : false,
+            test : function () {
+               this.actualOutput = Matrix.transpose(this.input);
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
 
         ];
             
