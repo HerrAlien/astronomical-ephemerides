@@ -126,6 +126,18 @@
             }
         },
 
+        {
+            name : "accumulate row [[3, 4], [6, 8]], dest = 0, toAcc = 1, factor = -0.5",
+            input : {"m" : [[3, 4], [6, 8]], "dest" : 0, "toAdd" : 1, "factor" : -0.5 },
+            expectedOutput : [[0, 0], [6, 8]],
+            actualOutput : false,
+            test : function () {
+               Matrix.accumulateMultipliedRow(this.input.m, this.input.dest, this.input.toAdd, this.input.factor);
+               this.actualOutput = this.input.m;
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+
         ];
             
         testlib.runTests (tests);

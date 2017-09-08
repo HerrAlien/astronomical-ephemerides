@@ -54,6 +54,11 @@ var Matrix = {
         }
     },
     
+    accumulateMultipliedRow : function (targetMatrix, destinationRow, rowToAdd, factor) {
+        for (var i = 0; i < targetMatrix[destinationRow].length; i++)
+            targetMatrix[destinationRow][i] += targetMatrix[rowToAdd][i] * factor;
+    },
+    
     inverse : function (matrix) {
         if (matrix.length != matrix[0].length)
             throw "Not a square matrix; has " + matrix.length + " rows and " + matrix[0].length + " columns!";
