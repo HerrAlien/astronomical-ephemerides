@@ -48,11 +48,7 @@ function ValuesToPolynomialCoefficients_LSF (values, args, polynomialDegree) {
 }
 
 var SolarEclipses = {
-    toDUT : 0,
-    ComputeOneFunctionValueForElements : function (jd) {
-        if (!this.toDUT)
-            this.toDUT = AAJS.DynamicalTime.DeltaT(jd)/(3600 * 24);
-        
+    ComputeOneFunctionValueForElements : function (jd) {        
         var values = {
             "x"      : 0,
             "y"      : 0,
@@ -64,7 +60,7 @@ var SolarEclipses = {
             "tan_f2" : 0,
         };
         // do the computations
-        
+                
         var sunData  =  SunData.getDataAsObjectForJD(jd);
         var moonData = MoonData.getDataAsObjectForJD(jd);
         
