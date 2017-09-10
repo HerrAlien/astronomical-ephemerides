@@ -88,10 +88,10 @@ var Matrix = {
             // - swap it with the row that is placed at row index = current column index
             Matrix.swapRows(tmpMatrix, deservingRowIndex, colIndex);
             // - accumulate it to all the other rows, to reduce that row's column position to 0
-            var scaleFactor = 1/tmpMatrix[colIndex][colIndex];
             if (tmpMatrix[colIndex][colIndex] == 0)
-                scaleFactor = 1/(1e-14 + tmpMatrix[colIndex][colIndex]);
+                continue;
             
+            var scaleFactor = 1/tmpMatrix[colIndex][colIndex];
             for (var accumulateRowIndex = 0; accumulateRowIndex < tmpMatrix.length; accumulateRowIndex++) {
                 if (accumulateRowIndex == colIndex)
                     continue;
