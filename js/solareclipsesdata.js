@@ -16,12 +16,9 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
+
 var SolarEclipses = {
-    toDUT : 0,
-    ComputeOneFunctionValueForElements : function (jd) {
-        if (!this.toDUT)
-            this.toDUT = AAJS.DynamicalTime.DeltaT(jd)/(3600 * 24);
-        
+    ComputeOneFunctionValueForElements : function (jd) {        
         var values = {
             "x"      : 0,
             "y"      : 0,
@@ -33,7 +30,7 @@ var SolarEclipses = {
             "tan_f2" : 0,
         };
         // do the computations
-        
+                
         var sunData  =  SunData.getDataAsObjectForJD(jd);
         var moonData = MoonData.getDataAsObjectForJD(jd);
         
@@ -112,13 +109,11 @@ var SolarEclipses = {
     ComputeBesselianElements : function (jd) {
         var elements = {};
         var functionValues = this.ComputeFunctionValuesForElements(jd);
-        for (var key in functionValues)
-            elements[key] = AAJS.Numerical.ValuesToPolynomialCoefficients_Average(functionValues[key]);
-
-        function accumulate (acc, value) {
-            return acc + value;
+        for (var key in functionValues) {
+            //elements[key] = AAJS.Numerical.ValuesToPolynomialCoefficients_Average(functionValues[key]);
+            elements[key] = FunctionFitting.PolynomialLSF(functionValues[key], [-3, -2, -1, 0, 1, 2, 3], 3);
         }
-        
+
         elements['tan_f1'] = elements['tan_f1'][0];
         elements['tan_f2'] = elements['tan_f2'][0];
          

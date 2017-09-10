@@ -1,0 +1,171 @@
+<html>
+    <head>
+        <script type="text/javascript" src="js/matrix.js"></script>
+        <script type="text/javascript" src="testlib.js"></script>
+        <style>
+            p {
+                line-spacing: 2px;
+            }
+        </style>
+    </head>
+    <body>
+    </body>
+</html>
+<script type="text/javascript">
+
+    (function () {
+            
+        var tests = [
+        
+        {
+            name : "[[1], [2]] * [[3, 4]] = [[3, 4], [6, 8]]",
+            input : {"m1" : [[1], [2]], "m2" : [[3, 4]]},
+            expectedOutput : [[3, 4], [6, 8]],
+            actualOutput : false,
+            test : function () {
+               this.actualOutput = Matrix.multiply(this.input.m1, this.input.m2);
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+
+        {
+            name : "[[3, 4]] * [[1], [2]]  = [[11]]",
+            input : {"m1" : [[3, 4]], "m2" : [[1], [2]]},
+            expectedOutput : [[11]],
+            actualOutput : false,
+            test : function () {
+               this.actualOutput = Matrix.multiply(this.input.m1, this.input.m2);
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+         
+        {
+            name : "[[3, 4]] * [[1], [2], [3]]  = exception",
+            input : {"m1" : [[3, 4]], "m2" : [[1], [2], [3]]},
+            expectedOutput : "nobody cares",
+            actualOutput : false,
+            test : function () {
+                try {
+                    this.actualOutput = Matrix.multiply(this.input.m1, this.input.m2);
+               } catch (e) {
+                    return true;
+               }
+               return false;
+            }
+        },
+        
+        {
+            name : "transpose [[3, 4]]",
+            input : [[3, 4]],
+            expectedOutput : [[3], [4]],
+            actualOutput : false,
+            test : function () {
+               this.actualOutput = Matrix.transpose(this.input);
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+        
+        {
+            name : "transpose [[1], [2], [3]]",
+            input : [[1], [2], [3]],
+            expectedOutput : [[1, 2, 3]],
+            actualOutput : false,
+            test : function () {
+               this.actualOutput = Matrix.transpose(this.input);
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+
+        {
+            name : "transpose [[3, 4], [6, 8]]",
+            input : [[3, 4], [6, 8]],
+            expectedOutput : [[3, 6], [4, 8]],
+            actualOutput : false,
+            test : function () {
+               this.actualOutput = Matrix.transpose(this.input);
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+
+        {
+            name : "inverse [[3, 4]] = exception",
+            input : [[3, 4]],
+            expectedOutput : "nobody cares",
+            actualOutput : false,
+            test : function () {
+                try {
+                    this.actualOutput = Matrix.inverse(this.input);
+               } catch (e) {
+                    return true;
+               }
+               return false;
+            }
+        },
+
+        {
+            name : "swap rows [[3, 4], [6, 8]]",
+            input : [[3, 4], [6, 8]],
+            expectedOutput : [[6, 8], [3, 4]],
+            actualOutput : false,
+            test : function () {
+               Matrix.swapRows(this.input, 0, 1);
+               this.actualOutput = this.input;
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+
+        {
+            name : "append unit matrix [[3, 4], [6, 8]]",
+            input : [[3, 4], [6, 8]],
+            expectedOutput : [[3, 4, 1, 0], [6, 8, 0, 1]],
+            actualOutput : false,
+            test : function () {
+               Matrix.appendUnitMatrix(this.input);
+               this.actualOutput = this.input;
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+
+        {
+            name : "accumulate row [[3, 4], [6, 8]], dest = 0, toAcc = 1, factor = -0.5",
+            input : {"m" : [[3, 4], [6, 8]], "dest" : 0, "toAdd" : 1, "factor" : -0.5 },
+            expectedOutput : [[0, 0], [6, 8]],
+            actualOutput : false,
+            test : function () {
+               Matrix.accumulateMultipliedRow(this.input.m, this.input.dest, this.input.toAdd, this.input.factor);
+               this.actualOutput = this.input.m;
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+
+        {
+            name : "scale row [[3, 4], [6, 8]], dest = 0, factor = 2",
+            input : {"m" : [[3, 4], [6, 8]], "dest" : 0, "factor" : 2 },
+            expectedOutput : [[6, 8], [6, 8]],
+            actualOutput : false,
+            test : function () {
+               Matrix.scaleRow(this.input.m, this.input.dest, this.input.factor);
+               this.actualOutput = this.input.m;
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+
+        {
+            name : "inverse [[4, 7], [2, 6]]",
+            input : [[4, 7], [2, 6]],
+            expectedOutput : [[0.6, -0.7], [-0.2, 0.4]],
+            actualOutput : false,
+            test : function () {
+               this.actualOutput = Matrix.inverse(this.input);
+               return Matrix.areEqual(this.expectedOutput, this.actualOutput, 1e-15);
+            }
+        },
+
+        ];
+            
+        testlib.runTests (tests);
+            
+    })();
+            
+        </script>
+
