@@ -1,3 +1,21 @@
+/* ephemeris - a software astronomical almanach 
+
+Copyright 2017 Herr_Alien <alexandru.garofide@gmail.com>
+
+This program is free software: you can redistribute it and/or modify it under 
+the terms of the GNU Affero General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License along
+with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
+
+"use strict";
+
 var Matrix = {
     multiply : function (m_xy, m_yz) {
         // result is a matrix xz
@@ -82,13 +100,13 @@ var Matrix = {
             // - get the row with the largest value on that column.
             var deservingRowIndex = colIndex;
             for (var searchingRowIndex = deservingRowIndex; searchingRowIndex < tmpMatrix.length; searchingRowIndex++) {
-                if (tmpMatrix[searchingRowIndex][colIndex] > tmpMatrix[deservingRowIndex][colIndex])
+                if (Math.abs(tmpMatrix[searchingRowIndex][colIndex]) > Math.abs(tmpMatrix[deservingRowIndex][colIndex]))
                     deservingRowIndex = searchingRowIndex;
             }
             // - swap it with the row that is placed at row index = current column index
             Matrix.swapRows(tmpMatrix, deservingRowIndex, colIndex);
             // - accumulate it to all the other rows, to reduce that row's column position to 0
-            if (tmpMatrix[colIndex][colIndex] == 0)
+            if (Math.abs(tmpMatrix[colIndex][colIndex]) == 0)
                 continue;
             
             var scaleFactor = 1/tmpMatrix[colIndex][colIndex];
