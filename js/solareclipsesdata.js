@@ -103,6 +103,21 @@ var SolarEclipses = {
             }
             i++;
         }
+        
+        // the mu may wrap over 360
+        var wrappedValues = false;
+        for (var i = 0; i < functionValues.mu.length - 1 && !wrappedValues; i++) {
+            wrappedValues = Math.abs(functionValues.mu[i] - functionValues.mu[i+1]) > 180;
+        }
+            
+        if (wrappedValues) {
+            for (var i = 0; i < functionValues.mu.length; i++) {
+                if (functionValues.mu[i] < 180) {
+                    functionValues.mu[i] += 360;
+                }
+            }
+        }
+        
         return functionValues;
     },
     
@@ -116,7 +131,10 @@ var SolarEclipses = {
 
         elements['tan_f1'] = elements['tan_f1'][0];
         elements['tan_f2'] = elements['tan_f2'][0];
-         
+        
+        if (elements['mu'][0] > 360)
+            elements['mu'][0] -= 360;
+        
         elements['mu'][3] = 0;
         elements['d'][3] = 0;
          
