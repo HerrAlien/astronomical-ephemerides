@@ -16,6 +16,16 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
+var MoonOccultationWrapper = {
+    getDataAsObjectForJD : function (jd) {
+        var moonData = MoonData.getDataAsObjectForJD(jd);
+        moonData['Parallax'] = moonData.parallax;
+        moonData['RA'] = moonData.RaGeo;
+        moonData['Dec'] = moonData.DecGeo;
+        return moonData;
+    }
+}
+
 
 var SolarEclipses = {
     ComputeOneFunctionValueForElements : function (jd) {        
@@ -32,28 +42,28 @@ var SolarEclipses = {
         // do the computations
                 
         var sunData  =  SunData.getDataAsObjectForJD(jd);
-        var moonData = MoonData.getDataAsObjectForJD(jd);
+        var moonData = MoonOccultationWrapper.getDataAsObjectForJD(jd);
         
         var degra = Math.PI / 180;
-        var moonParallaxRads = moonData.parallax * degra;
+        var moonParallaxRads = moonData.Parallax * degra;
         var sunParallaxRads = sunData.Parallax * degra;
-        var moonDecRads = moonData.DecGeo* degra;
+        var moonDecRads = moonData.Dec* degra;
         
         // -------------------------------------------------
         var r = 1 / Math.sin (moonParallaxRads);
         var b = Math.sin(sunParallaxRads) * r ;
-        values.d = sunData.Dec - (b / (1-b))*(moonData.DecGeo - sunData.Dec);
+        values.d = sunData.Dec - (b / (1-b))*(moonData.Dec - sunData.Dec);
         if (values.d < 0)
             values.d += 360;
 
-        var a = sunData.RA - (b / (1-b))*Math.cos(moonDecRads)/Math.cos(sunData.Dec * degra) * (moonData.RaGeo - sunData.RA);
+        var a = sunData.RA - (b / (1-b))*Math.cos(moonDecRads)/Math.cos(sunData.Dec * degra) * (moonData.RA - sunData.RA);
         values.mu = 15*(AAJS.Sidereal.ApparentGreenwichSiderealTime(jd) - a);
         if (values.mu < 0)
             values.mu += 360;
         
         // -------------------------------------------------
         var d = values.d * degra;
-        var moonRaMinusA_Rads = ((moonData.RaGeo - a) * 15 ) * degra;
+        var moonRaMinusA_Rads = ((moonData.RA - a) * 15 ) * degra;
 
         values.x = r * Math.cos(moonDecRads) * Math.sin(moonRaMinusA_Rads);
         values.y = r * (Math.sin(moonDecRads) * Math.cos(d) - Math.cos(moonDecRads) * Math.sin(d) * Math.cos(moonRaMinusA_Rads));
