@@ -31,7 +31,7 @@ var SolarEclipses = {
         // do the computations
                 
         var sunData  =  SunData.getDataAsObjectForJD(jd);
-        var moonData = MoonOccultationWrapper.getDataAsObjectForJD(jd);
+        var moonData = MoonData.getDataAsObjectForJD(jd);
         
         var degra = Math.PI / 180;
         var moonParallaxRads = moonData.Parallax * degra;
