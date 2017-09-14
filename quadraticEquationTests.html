@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <script type="text/javascript" src="js/matrix.js"></script>
+        <script type="text/javascript" src="js/numerical.js"></script>
+        <script type="text/javascript" src="testlib.js"></script>
+        <style>
+            p {
+                line-spacing: 2px;
+            }
+        </style>
+    </head>
+    <body>
+    </body>
+</html>
+<script type="text/javascript">
+
+    (function () {
+            
+        var tests = [
+        
+        {
+            name : "X^2 - 7X + 12 => x1 = 3, x2 = 4",
+            input : {"a" : 1, "b" : -7, "c" : 12},
+            expectedOutput : {"x1" : {"real" : 3, "imaginary" : 0}, "x2" : {"real" : 4, "imaginary" : 0} },
+            actualOutput : false,
+            test : function () {
+            
+                var equation = new QuadraticEquation(this.input.a, this.input.b, this.input.c);
+               this.actualOutput = {"x1" : equation.x1, "x2" : equation.x2 };
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+
+        {
+            name : "5X^2 - 8X + 5 => x1 = 0.8 - 0.6i, x2 = 0.8 + 0.6i",
+            input : {"a" : 5, "b" : -8, "c" : 5},
+            expectedOutput : {"x1" : {"real" : 0.8, "imaginary" : -0.6}, "x2" : {"real" : 0.8, "imaginary" : 0.6} },
+            actualOutput : false,
+            test : function () {
+            
+                var equation = new QuadraticEquation(this.input.a, this.input.b, this.input.c);
+               this.actualOutput = {"x1" : equation.x1, "x2" : equation.x2 };
+               var eps = 1e-12;
+               return testlib.doubleEq(this.expectedOutput.x1.real, 
+                                         this.actualOutput.x1.real, eps) &&
+                      testlib.doubleEq(this.expectedOutput.x2.real, 
+                                         this.actualOutput.x2.real, eps) &&                                         
+                      testlib.doubleEq(this.expectedOutput.x2.imaginary, 
+                                         this.actualOutput.x2.imaginary, eps) &&
+                      testlib.doubleEq(this.expectedOutput.x1.imaginary, 
+                                         this.actualOutput.x1.imaginary, eps);
+            }
+        },
+
+        {
+            name : "X^2 - 2X + 1 => x1 = 1, x2 = 1",
+            input : {"a" : 1, "b" : -2, "c" : 1},
+            expectedOutput : {"x1" : {"real" : 1, "imaginary" : 0}, "x2" : {"real" : 1, "imaginary" : 0} },
+            actualOutput : false,
+            test : function () {
+            
+                var equation = new QuadraticEquation(this.input.a, this.input.b, this.input.c);
+               this.actualOutput = {"x1" : equation.x1, "x2" : equation.x2 };
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+
+        {
+            name : "X^2 + 2X + 1 => x1 = -1, x2 = -1",
+            input : {"a" : 1, "b" : 2, "c" : 1},
+            expectedOutput : {"x1" : {"real" : -1, "imaginary" : 0}, "x2" : {"real" : -1, "imaginary" : 0} },
+            actualOutput : false,
+            test : function () {
+            
+                var equation = new QuadraticEquation(this.input.a, this.input.b, this.input.c);
+               this.actualOutput = {"x1" : equation.x1, "x2" : equation.x2 };
+               return JSON.stringify(this.expectedOutput) == JSON.stringify(this.actualOutput);
+            }
+        },
+
+        ];
+            
+        testlib.runTests (tests);
+            
+    })();
+            
+        </script>
+

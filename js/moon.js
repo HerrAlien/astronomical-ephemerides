@@ -41,6 +41,7 @@ var MoonData = {
             // how about we rename the geo ones?
             data ['RA'] = data['RaGeo'];
             data ['Dec'] = data['DecGeo'];
+            data ['Parallax'] = data.parallax;
             
 			data['MeridianTransit'] = false;
 
@@ -72,7 +73,6 @@ var MoonData = {
     riseSetAngle : -0.83333,
     addRiseTransitSetData : PlanetData.prototype["addRiseTransitSetData"]    
 };
-    
 
 (function(){    
     var MoonPage = {

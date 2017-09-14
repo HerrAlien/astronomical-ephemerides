@@ -97,3 +97,33 @@ var FunctionFitting = {
     }
 
 };
+
+function QuadraticEquation (a, b, c) {
+    this.a = a;
+    this.b = b;
+    this.c = c;
+    
+    this.delta = this.b * this.b - 4 * this.a * this.c;
+    var hasRealSolutions = this.delta > 0;
+    
+    this.x1 = { "real" : NaN, "imaginary" : NaN };
+    this.x2 = { "real" : NaN, "imaginary" : NaN };
+    
+    var inverted2A = 1/(2 * this.a);
+    var realPart = -this.b * inverted2A;
+    this.x1.real = realPart;
+    this.x2.real = realPart;
+    
+    var absDelta = Math.abs(this.delta);
+    var potentiallyImaginaryPart = Math.sqrt(absDelta) * inverted2A;
+    
+    if (hasRealSolutions) {
+        this.x1.imaginary = 0;
+        this.x2.imaginary = 0;
+        this.x1.real -= potentiallyImaginaryPart;
+        this.x2.real += potentiallyImaginaryPart;
+    } else {
+        this.x1.imaginary = -potentiallyImaginaryPart;
+        this.x2.imaginary = potentiallyImaginaryPart;
+    }
+}

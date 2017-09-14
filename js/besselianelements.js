@@ -159,38 +159,3 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
     
 })();
 
-var SolarEclipses = {
-    ComputeBesselianElements : function (jd) {
-
-        var besselianEngine = new BesselianElements (MoonData, SunData, 0.27227, jd);
-        var elements = besselianEngine.leastSquareFitCoeff;
-        
-        elements['tan_f1'] = elements['tan_f1'][0];
-        elements['tan_f2'] = elements['tan_f2'][0];
-        
-        if (elements['mu'][0] > 360)
-            elements['mu'][0] -= 360;
-        
-        elements['mu'][3] = 0;
-        elements['d'][3] = 0;
-         
-        return elements;
-    },
-    
-    EclipseDataForK : function (k) {
-        // check if you have an eclipse
-        var eclipseData = AAJS.Eclipses.CalculateSolar (k);
-        if (eclipseData.bEclipse) {
-            // if yes, compute the besselian elements
-            eclipseData["t0"] = Math.round (eclipseData.JdOfMaximumEclipse * 24) / 24;
-            eclipseData["besselianElements"] = this.ComputeBesselianElements(eclipseData["t0"]);
-        }
-        return eclipseData;
-    },
-
-    reset : function () {
-
-    }
-
-};
-
