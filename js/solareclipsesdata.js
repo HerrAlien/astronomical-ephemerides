@@ -16,17 +16,6 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
-var MoonOccultationWrapper = {
-    getDataAsObjectForJD : function (jd) {
-        var moonData = MoonData.getDataAsObjectForJD(jd);
-        moonData['Parallax'] = moonData.parallax;
-        moonData['RA'] = moonData.RaGeo;
-        moonData['Dec'] = moonData.DecGeo;
-        return moonData;
-    }
-}
-
-
 var SolarEclipses = {
     ComputeOneFunctionValueForElements : function (jd) {        
         var values = {

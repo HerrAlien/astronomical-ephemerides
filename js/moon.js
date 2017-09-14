@@ -72,7 +72,16 @@ var MoonData = {
     riseSetAngle : -0.83333,
     addRiseTransitSetData : PlanetData.prototype["addRiseTransitSetData"]    
 };
-    
+
+var MoonOccultationWrapper = {
+    getDataAsObjectForJD : function (jd) {
+        var moonData = MoonData.getDataAsObjectForJD(jd);
+        moonData['Parallax'] = moonData.parallax;
+        moonData['RA'] = moonData.RaGeo;
+        moonData['Dec'] = moonData.DecGeo;
+        return moonData;
+    }
+};
 
 (function(){    
     var MoonPage = {
