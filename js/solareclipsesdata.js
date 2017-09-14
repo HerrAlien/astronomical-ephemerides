@@ -16,6 +16,51 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
+/*! occultor - typically the data object for the Moon, but it can be the data object of a
+               planet, when predicting transits
+    occulted - the object covered by the occultor. The data object for the Sun, for a solar
+               eclipse, but can be a star or a planet for occultations
+    occultorRadius - radius of the occultor object, in Earth radii.
+    jd - julian date around which we're computing the polynomial approximations
+*/
+function BesselianElements (occultor, occulted, occultorRadius, jd) {
+    this.timeBasedValues = {
+            "x"      : 0,
+            "y"      : 0,
+            "d"      : 0,
+            "mu"     : 0,
+            "l1"     : 0,
+            "l2"     : 0,
+            "tan_f1" : 0,
+            "tan_f2" : 0,
+    };
+    this.leastSquareFitCoeff = {
+            "x"      : 0,
+            "y"      : 0,
+            "d"      : 0,
+            "mu"     : 0,
+            "l1"     : 0,
+            "l2"     : 0,
+            "tan_f1" : 0,
+            "tan_f2" : 0,
+    };
+    
+    (function (jd) {
+        this.ComputeFunctionValuesForElements(jd);
+        
+        for (var key in this.timeBasedValues) {
+            this.leastSquareFitCoeff[key] = FunctionFitting.PolynomialLSF(this.timeBasedValues[key], [-3, -2, -1, 0, 1, 2, 3], 3);
+        }
+    })();
+}
+
+(function(){
+    BesselianElements.prototype['ComputeFunctionValuesForElements'] = function (jd) {
+        
+    }
+    
+})();
+
 var SolarEclipses = {
     ComputeOneFunctionValueForElements : function (jd) {        
         var values = {
