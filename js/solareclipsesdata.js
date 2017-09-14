@@ -79,22 +79,22 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
         var i = 0;
         for (var currentJD = startJD; currentJD <= endJD; currentJD+= oneHour) {
             var oneSetOfValues = this.ComputeOneFunctionValueForElements(currentJD);
-            for (var key in functionValues) {
-                functionValues[key][i] = oneSetOfValues[key];
+            for (var key in this.timeBasedValues) {
+                this.timeBasedValues[key][i] = oneSetOfValues[key];
             }
             i++;
         }
         
         // the mu may wrap over 360
         var wrappedValues = false;
-        for (var i = 0; i < functionValues.mu.length - 1 && !wrappedValues; i++) {
-            wrappedValues = Math.abs(functionValues.mu[i] - functionValues.mu[i+1]) > 180;
+        for (var i = 0; i < this.timeBasedValues.mu.length - 1 && !wrappedValues; i++) {
+            wrappedValues = Math.abs(this.timeBasedValues.mu[i] - this.timeBasedValues.mu[i+1]) > 180;
         }
             
         if (wrappedValues) {
-            for (var i = 0; i < functionValues.mu.length; i++) {
-                if (functionValues.mu[i] < 180) {
-                    functionValues.mu[i] += 360;
+            for (var i = 0; i < this.timeBasedValues.mu.length; i++) {
+                if (this.timeBasedValues.mu[i] < 180) {
+                    this.timeBasedValues.mu[i] += 360;
                 }
             }
         }
