@@ -475,12 +475,12 @@ Tan ƒ2	0.0045992
 
 
         {
-            name : "Besselian elements for eclipse 2017-02-26",
+            name : "Besselian elements for eclipse 2017-02-26 (wrap MU around 360)",
             input : AAJS.Date.DateToJD (2017, 02, 26, true) + 15/24, // 18:00
             expectedOutput : {
                     "x"  : [0.17594	, 0.52535, -0.00001, -0.00001], // earth radii
                     "y"  : [-0.42555, 0.15325, 0.00008, 0.00000 ], // earth radii
-                    "d"  : [-8.4917, 0.0153, 0, 0],  // degrees
+                    "d"  : [360-8.4917, 0.0153, 0, 0],  // degrees
                     "mu" : [41.7990, 15.0031, 0, 0],  // degrees
                     "l1" : [0.55249, -0.00013, -0.00001, 0], // earth radii
                     "l2" : [0.00630, -0.00013, -0.00001, 0], // earth radii
@@ -490,14 +490,14 @@ Tan ƒ2	0.0045992
                   
                   
             accuracies : {
-                    "x"  : 4e-4,
-                    "y"  : 1e-4,
-                    "d"  : 5e-5,
-                    "mu" : 5e-5,
+                    "x"  : 1.3e-3,
+                    "y"  : 4e-4,
+                    "d"  : 1e-4,
+                    "mu" : 1e-4,
                     "l1" : 3e-4,
-                    "l2" : 3e-5,
-                    "tan_f1" : 5e-9,
-                    "tan_f2" : 5e-9
+                    "l2" : 1e-4,
+                    "tan_f1" : 1e-5,
+                    "tan_f2" : 1e-5
                 },
                 
             actualOutput : false,
