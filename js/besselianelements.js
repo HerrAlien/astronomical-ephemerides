@@ -16,7 +16,25 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
-/*! occultor - typically the data object for the Moon, but it can be the data object of a
+function OccultedStar (RA, Dec) {
+    this.RA = RA;
+    this.Dec = Dec;
+    this.Parallax = 0;
+    this.Diameter = 0;
+    
+    this.getDataAsObjectForJD = function () {
+        return this;
+    }
+}
+
+/*! Both the occultor and the occulted need to provide the following method:
+
+    getDataAsObjectForJD : function (jd) -> { "RA": number-in-h-as-v.ddddd, 
+                                              "Dec": number-in-degrees-as-v.ddddd, 
+                                              "Parallax": number-in-degrees-as-v.ddddd, 
+                                              "Diameter": number-in-degrees-as-v.ddddd }
+
+    occultor - typically the data object for the Moon, but it can be the data object of a
                planet, when predicting transits
     occulted - the object covered by the occultor. The data object for the Sun, for a solar
                eclipse, but can be a star or a planet for occultations
@@ -45,6 +63,24 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
             "tan_f2" : NaN,
     };
     
+    this.localCircumstancesTimeBased = {
+        "x"         : NaN,
+        "y"         : NaN,
+        "z"         : NaN,
+        "l1"        : NaN,
+        "l2"        : NaN,
+        "delta"     : NaN
+    };
+    
+    this.localCircumstancesLSF = {
+        "x"         : NaN,
+        "y"         : NaN,
+        "z"         : NaN,
+        "l1"        : NaN,
+        "l2"        : NaN,
+        "delta"     : NaN
+    };
+    
     this.occultor = occultor;
     this.occulted = occulted;
     this.occultorRadius = occultorRadius;
@@ -54,6 +90,11 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
     for (var key in this.timeBasedValues) {
         this.leastSquareFitCoeff[key] = FunctionFitting.PolynomialLSF(this.timeBasedValues[key], [-3, -2, -1, 0, 1, 2, 3], 3);
     }
+    for (var key in this.localCircumstancesTimeBased) {
+        this.localCircumstancesLSF[key] = FunctionFitting.PolynomialLSF(this.localCircumstancesTimeBased[key], [-3, -2, -1, 0, 1, 2, 3], 3);
+    }
+    
+    // 
 }
 
 (function(){
@@ -69,6 +110,17 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
                 "tan_f2" : [0,0,0,0,0,0,0]
         };
         
+        this.localCircumstancesTimeBased = {
+                "x"     : [0,0,0,0,0,0,0],
+                "y"     : [0,0,0,0,0,0,0],
+                "z"     : [0,0,0,0,0,0,0],
+                "l1"    : [0,0,0,0,0,0,0],
+                "l2"    : [0,0,0,0,0,0,0],
+                "delta" : [0,0,0,0,0,0,0]
+        };            
+        
+        Location.recomputeGeocentricCoordinates();
+        
         // compute 7 values, at time jd -3h, jd-2h, jd -1h, jd, jd + 1h, jd + 2h, jd + 3h
         var oneHour = 1/24;
         var startJD = jd - 3*oneHour;
@@ -80,6 +132,11 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
             for (var key in this.timeBasedValues) {
                 this.timeBasedValues[key][i] = oneSetOfValues[key];
             }
+            
+            for (var key in this.localCircumstancesTimeBased ) {
+                this.localCircumstancesTimeBased[key][i] = oneSetOfValues.localCircumstances[key];
+            }
+            
             i++;
         }
         
@@ -108,6 +165,14 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
             "l2"     : 0,
             "tan_f1" : 0,
             "tan_f2" : 0,
+            "localCircumstances" : {
+                "x"      : 0,
+                "y"      : 0,
+                "z"      : 0,
+                "l1"     : 0,
+                "l2"     : 0,
+                "delta"  : 2
+            }
         };
         
         var occultedData  =  this.occulted.getDataAsObjectForJD(jd);
@@ -154,8 +219,20 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
         values.l1 = z * values.tan_f1 + occultorEarthRadiiRatio/Math.cos(f1);
         values.l2 = z * values.tan_f2 - occultorEarthRadiiRatio/Math.cos(f2);
         
+        var localHourAngleRads = (values.mu - (-Location.longitude)) * degra;
+        
+        values.localCircumstances.x = Location.rhoCosPhi*Math.sin(localHourAngleRads);
+        values.localCircumstances.y = Location.rhoSinPhi* Math.cos(d) - Location.rhoCosPhi* Math.sin(d) *Math.cos(localHourAngleRads);
+        values.localCircumstances.z = Location.rhoSinPhi* Math.sin(d) + Location.rhoCosPhi* Math.cos(d) *Math.cos(localHourAngleRads);
+        values.localCircumstances.l1 = values.l1 - values.localCircumstances.z * values.tan_f1;
+        values.localCircumstances.l2 = values.l2 - values.localCircumstances.z * values.tan_f2;
+        
+        var dx = values.x - values.localCircumstances.x;
+        var dy = values.y - values.localCircumstances.y;
+        
+        values.localCircumstances.delta = Math.sqrt( dx*dx + dy*dy);
+        
         return values;
-    }
-    
+    }    
 })();
 

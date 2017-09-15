@@ -26,6 +26,10 @@ var Location = {
 	longitude :26.1025,
 	altitude : 200,
     
+    rhoSinPhi : 0,
+    rhoCosPhi : 0,
+    geocentricCoordinatesUpToDate : false,
+    
     onLocationUpdated : false,
 
 	// these are the controls
@@ -58,15 +62,37 @@ var Location = {
                    });
                 }
             }
+            
+            var recomputeGeocentricCoordinatesUntilSuccess = function () {
+                Location.recomputeGeocentricCoordinates();
+                if (!Location.geocentricCoordinatesUpToDate) {
+                    setTimeout (recomputeGeocentricCoordinatesUntilSuccess, 200);
+                }
+            }
+            recomputeGeocentricCoordinatesUntilSuccess();
 		},
         
         commitUserValues : function () {
             Location.latitude = 1.0 * Location.Controls.lat.value;
             Location.longitude = 1.0 * Location.Controls.long.value;
             Location.altitude = 1.0 * Location.Controls.alt.value;
+            Location.geocentricCoordinatesUpToDate = false;
+            Location.recomputeGeocentricCoordinates();
             Location.onLocationUpdated.notify();
         }
 	},
+    
+    recomputeGeocentricCoordinates : function () {
+        if (Location.geocentricCoordinatesUpToDate)
+            return;
+        
+         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
+            return;
+        
+        Location.rhoSinPhi = AAJS.Globe.RadiusTimesSineGeocentricLatitude (Location.latitude, Location.altitude);
+        Location.rhoCosPhi = AAJS.Globe.RadiusTimesCosineGeocentricLatitude (Location.latitude, Location.altitude);
+        Location.geocentricCoordinatesUpToDate = true;
+    },
 	
 	init : function () {
 		this.onLocationUpdated = Notifications.New();
