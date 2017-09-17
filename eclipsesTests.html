@@ -8,12 +8,20 @@
         <script type="text/javascript">
             var Pages = {};
 
-        var Location = {
-            latitude : 0,
+         var Location = {
+            latitude  : 0,
             longitude : 0,
-            altitude : 0
+            altitude  : 0,
+            
+            rhoSinPhi : 0,
+            rhoCosPhi : 0,
+            recomputeGeocentricCoordinates : function () {
+            Location.rhoSinPhi = AAJS.Globe.RadiusTimesSineGeocentricLatitude (Location.latitude, Location.altitude);
+            Location.rhoCosPhi = AAJS.Globe.RadiusTimesCosineGeocentricLatitude (Location.latitude, Location.altitude);
+            }
+
         }; 
-        
+       
         function PlanetPage() {}
             </script>
 
