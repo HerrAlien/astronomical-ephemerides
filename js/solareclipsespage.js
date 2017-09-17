@@ -71,6 +71,7 @@ var SolarEclipsesPage = {
         var dateTime = yyyymmdd_hhmmOfJD(eclipseData.t0);
         
         var description = "";
+     
         if (eclipseData.isPartial)
             description += "Partial ";
         if (eclipseData.isTotal)
@@ -79,7 +80,15 @@ var SolarEclipsesPage = {
             description += "Annular ";
         if (eclipseData.isAnnularTotal)
             description += "Hybrid ";
-        description += "Eclipse";
+        description += "Eclipse.";
+        
+        if (eclipseData.besselianElements.besselianEngine.deltaLocalMax < Math.abs(eclipseData.besselianElements.besselianEngine.l2LocalMax)) {
+            description += " Visible as total from your location.";
+        } else if (eclipseData.besselianElements.besselianEngine.deltaLocalMax < Math.abs(eclipseData.besselianElements.besselianEngine.l1LocalMax)) {
+            description += " Visible as partial from your location.";
+        } else {
+            description += " Not visible from your location."
+        }
         
         var decimalsFactor = 1e5; 
 

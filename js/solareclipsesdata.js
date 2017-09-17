@@ -22,6 +22,8 @@ var SolarEclipses = {
         var besselianEngine = new BesselianElements (MoonData, SunData, 0.27227, jd);
         var elements = besselianEngine.leastSquareFitCoeff;
         
+        elements['besselianEngine'] = besselianEngine;
+        
         elements['tan_f1'] = elements['tan_f1'][0];
         elements['tan_f2'] = elements['tan_f2'][0];
         

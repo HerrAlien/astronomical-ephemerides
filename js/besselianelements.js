@@ -112,6 +112,7 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
             val += coeffs[i] * poweredTime;
             poweredTime *= time;
         }
+        return val;
     }
     
     this.deltaLocalMax = _poly (this.localCircumstancesLSF.delta, this.timeMinusT0OfMaxEclipse);
