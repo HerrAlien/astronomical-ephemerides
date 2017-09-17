@@ -99,6 +99,7 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
     var firstDerivativeEquals0 = new QuadraticEquation (3 * this.localCircumstancesLSF.delta[3], 2 * this.localCircumstancesLSF.delta[2], this.localCircumstancesLSF.delta[1]);
     
     this.timeMinusT0OfMinimum = firstDerivativeEquals0.x1.real;
+    // must use the time value within our interval [-3, 3]
     if (Math.abs(this.timeMinusT0OfMinimum) > 3)
         this.timeMinusT0OfMinimum = firstDerivativeEquals0.x2.real;
     
@@ -115,7 +116,10 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
     
     this.deltaMinimum = _poly (this.localCircumstancesLSF.delta, this.timeMinusT0OfMinimum);
     
-}
+    this.l1atMinimum = _poly (this.localCircumstancesLSF.l1, this.timeMinusT0OfMinimum);
+    
+    this.l2atMinimum = _poly (this.localCircumstancesLSF.l2, this.timeMinusT0OfMinimum);
+ }
 
 (function(){
     BesselianElements.prototype['ComputeFunctionValuesForElements'] = function (jd) {
