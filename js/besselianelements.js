@@ -94,7 +94,27 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
         this.localCircumstancesLSF[key] = FunctionFitting.PolynomialLSF(this.localCircumstancesTimeBased[key], [-3, -2, -1, 0, 1, 2, 3], 3);
     }
     
-    // 
+    // minimum distance ...
+    // eq is 3 * delta_coeff[3] , 2 * delta_coeff[2], delta_coeff[1] 
+    var firstDerivativeEquals0 = new QuadraticEquation (3 * this.localCircumstancesLSF.delta[3], 2 * this.localCircumstancesLSF.delta[2], this.localCircumstancesLSF.delta[1]);
+    
+    this.timeMinusT0OfMinimum = firstDerivativeEquals0.x1.real;
+    if (Math.abs(this.timeMinusT0OfMinimum) > 3)
+        this.timeMinusT0OfMinimum = firstDerivativeEquals0.x2.real;
+    
+    this.jdLocalMax = jd + this.timeMinusT0OfMinimum/24;
+    
+    function _poly (coeffs, time) {
+        var val = 0;
+        var poweredTime = 1;
+        for (var i = 0; i < coeffs.length;i++) {
+            val += coeffs[i] * poweredTime;
+            poweredTime *= time;
+        }
+    }
+    
+    this.deltaMinimum = _poly (this.localCircumstancesLSF.delta, this.timeMinusT0OfMinimum);
+    
 }
 
 (function(){
