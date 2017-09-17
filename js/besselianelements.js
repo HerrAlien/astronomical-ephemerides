@@ -98,12 +98,12 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
     // eq is 3 * delta_coeff[3] , 2 * delta_coeff[2], delta_coeff[1] 
     var firstDerivativeEquals0 = new QuadraticEquation (3 * this.localCircumstancesLSF.delta[3], 2 * this.localCircumstancesLSF.delta[2], this.localCircumstancesLSF.delta[1]);
     
-    this.timeMinusT0OfMinimum = firstDerivativeEquals0.x1.real;
+    this.timeMinusT0OfMaxEclipse = firstDerivativeEquals0.x1.real;
     // must use the time value within our interval [-3, 3]
-    if (Math.abs(this.timeMinusT0OfMinimum) > 3)
-        this.timeMinusT0OfMinimum = firstDerivativeEquals0.x2.real;
+    if (Math.abs(this.timeMinusT0OfMaxEclipse) > 3)
+        this.timeMinusT0OfMaxEclipse = firstDerivativeEquals0.x2.real;
     
-    this.jdLocalMax = jd + this.timeMinusT0OfMinimum/24;
+    this.jdLocalMax = jd + this.timeMinusT0OfMaxEclipse/24;
     
     function _poly (coeffs, time) {
         var val = 0;
@@ -114,11 +114,11 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
         }
     }
     
-    this.deltaMinimum = _poly (this.localCircumstancesLSF.delta, this.timeMinusT0OfMinimum);
+    this.deltaLocalMax = _poly (this.localCircumstancesLSF.delta, this.timeMinusT0OfMaxEclipse);
     
-    this.l1atMinimum = _poly (this.localCircumstancesLSF.l1, this.timeMinusT0OfMinimum);
+    this.l1LocalMax = _poly (this.localCircumstancesLSF.l1, this.timeMinusT0OfMaxEclipse);
     
-    this.l2atMinimum = _poly (this.localCircumstancesLSF.l2, this.timeMinusT0OfMinimum);
+    this.l2LocalMax = _poly (this.localCircumstancesLSF.l2, this.timeMinusT0OfMaxEclipse);
  }
 
 (function(){
