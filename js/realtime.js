@@ -152,17 +152,12 @@ var JDForRealTimeView = {
         var obj = this;
         this.rtData.onDataUpdated.add (function(data) {
         
-            /*var oldLastMonth = obj.page.lastDisplayedMonth;
-            var displayableLine = obj.page.prepareOneDayDataObjectForView(data, 0);
-            obj.page.lastDisplayedMonth = oldLastMonth;
-            */
-            
-            var sexagesimalRA = AAJS.Numerical.ToSexagesimal(Math.round(data.RA * 3600000)/3600000);
-            var sexagesimalDec = AAJS.Numerical.ToSexagesimal(Math.round(data.Dec * 3600000)/3600000);
-            
-            obj.viewRA.textContent = padToTens(sexagesimalRA.Ord3) + "h " +  padToTens(sexagesimalRA.Ord2) + "m " +  padToThousandth (sexagesimalRA.Ord1) + "s";
-            obj.viewDec.textContent = padToTens(sexagesimalDec.Ord3) + "\u00B0 " +  padToTens(sexagesimalDec.Ord2) + "' " +  padToThousandth (sexagesimalDec.Ord1) + "''";
-            
+            var decimals = 1e5;
+            var ra = Math.round(data.RA * decimals)/decimals;
+            var dec = Math.round(data.Dec * decimals)/decimals;
+
+            obj.viewRA.textContent = Math.floor(ra) + "h." + Math.round(decimals * (ra - Math.floor(ra)));
+            obj.viewDec.textContent = padToTens(dec >= 0 ? Math.floor(dec) : Math.ceil(dec)) + "\u00B0." + Math.round(decimals * (Math.abs(dec) - Math.floor(Math.abs(dec))));
             
         });
     }
