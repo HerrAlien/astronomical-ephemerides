@@ -716,6 +716,8 @@ input {
     border-bottom: 1px solid #AAAAAA;
     width: 100%;
     font-size: 30px;
+    text-decoration: underline;
+    padding-bottom: 5px;
 }
 
 .RA, .Dec {
@@ -775,11 +777,11 @@ input {
     }
 
     .realtimeTitle {
-        font-size: 40px;
+        font-size: 48px;
     }
 
     .RA, .Dec {
-        font-size: 26px;
+        font-size: 36px;
     }
     
     .DownloadLink::after, .DownloadLink {
@@ -870,12 +872,6 @@ input {
 
 .Dec::before {
     content: "Dec. ";
-}
-
-.Dec::after {
-    content: "More ... ";
-    text-decoration: underline;
-    display: block;
 }
 
 .RA, .Dec, .realtimeTitle {
