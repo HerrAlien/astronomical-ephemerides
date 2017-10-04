@@ -799,6 +799,32 @@ input {
         top: 126;
     }
     
+    .linkButton img {
+        width: 82px;
+    }
+    
+    .linkButton::after {
+        display: none;
+    }
+    
+    .MenuLinkDiv::after {
+        display: none;
+    }
+
+    .SettingsLink::after {
+        display: none;
+    }
+    
+    .MenuLinkDiv.topmenulink img{
+        width: 78px;
+        height: 82px;
+    }
+
+
+    .SettingsLink.topmenulink img {
+        width: 82px;
+        height: auto;
+    }
     
 }
     
