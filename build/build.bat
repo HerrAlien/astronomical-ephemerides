@@ -18,7 +18,7 @@ del /Q "%DST%\js\aajs.js"
 rem no longer needed, the optimized one is retrieved by the server
 rem via an http redirrect; this means that we can leave the local
 rem file to be the non optimized one.
-rem copy "%SRC%\js\aajs.js.nonoptimized" "%DST%\js\aajs.js"
+copy "%SRC%\js\aajs.js" "%DST%\js\aajs.js"
 
 del /Q /F /S *.mem
 del /Q /F /S *.optimized
