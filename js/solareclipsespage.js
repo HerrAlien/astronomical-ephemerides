@@ -94,26 +94,31 @@ var SolarEclipsesPage = {
         var table = addNodeChild (mainDiv, "table");
         var header = addNodeChild (table, "tr");
 
-        addNodeChild(header, "th", "order");
-        addNodeChild(header, "th", "x");
-        addNodeChild(header, "th", "y");
-        addNodeChild(header, "th", "\u03BC [\u00B0]");
-        addNodeChild(header, "th", "d [\u00B0]");
-        addNodeChild(header, "th", "l1");
-        addNodeChild(header, "th", "l2");
+        addNodeChild(header, "th", "");
+        addNodeChild(header, "th", "0");
+        addNodeChild(header, "th", "1");
+        addNodeChild(header, "th", "2");
+        addNodeChild(header, "th", "3");
         
-        for (var degree = 0; degree < eclipseData.besselianElements.x.length; degree++) {
+        var elements = {"x" : "x [earth radii]", 
+                        "y" : "y [earth radii]", 
+                        "mu" : "\u03BC [\u00B0]", 
+                        "d"  : "d [\u00B0]",
+                        "l1" : "l1 [earth radii]", 
+                        "l2" : "l2 [earth radii]"};
+        
+        function addRowDataForParameter (paramName) {
             var row = addNodeChild (table, "tr");
+            addNodeChild(row, "td", elements[paramName]);
             
-            addNodeChild(row, "td", degree + "" );
-            addNodeChild(row, "td", Math.round(decimalsFactor*eclipseData.besselianElements.x[degree]) /decimalsFactor + "");
-            addNodeChild(row, "td", Math.round(decimalsFactor*eclipseData.besselianElements.y[degree]) /decimalsFactor + "");
-            addNodeChild(row, "td", Math.round(decimalsFactor*eclipseData.besselianElements.mu[degree])/decimalsFactor + "");
-            addNodeChild(row, "td", Math.round(decimalsFactor*eclipseData.besselianElements.d[degree]) /decimalsFactor + "");
-            addNodeChild(row, "td", Math.round(decimalsFactor*eclipseData.besselianElements.l1[degree])/decimalsFactor + "");
-            addNodeChild(row, "td", Math.round(decimalsFactor*eclipseData.besselianElements.l2[degree])/decimalsFactor + "");
+            for (var degree = 0; degree < eclipseData.besselianElements[paramName].length; degree++) {
+                addNodeChild(row, "td",  Math.round(decimalsFactor*eclipseData.besselianElements[paramName][degree]) /decimalsFactor + "");
+            }
         }
         
+        for (var key in elements) {
+            addRowDataForParameter (key);
+        }        
     }
     
 };
