@@ -808,7 +808,7 @@ input {
         width: 82px;
     }
     
-    .linkButton::after {
+    .topmenulink::after {
         display: none;
     }
     
