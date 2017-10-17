@@ -802,10 +802,10 @@ input {
     }
     
     tr.firstHeaderRowScrolled.movedMenu {
-        top: 126;
+        top: 154;
     }
     tr.secondHeaderRowScrolled.movedMenu {
-        top: 126;
+        top: 154;
     }
     
     .linkButton img {
@@ -1002,4 +1002,22 @@ input[type=date]::-webkit-inner-spin-button {
 
 .leftaligned {
     text-align: left;
+}
+
+#showNavigationMenu {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#showNavigationMenuContainer {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    background: #ffffff;
+    text-align: center;
+    border-bottom: solid 1px #AAAAAA;
+}
+
+#showNavigationMenuContainer img {
+    height: 27px;
 }

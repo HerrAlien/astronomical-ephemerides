@@ -44,6 +44,7 @@
             <a href="#Neptune"><div class="NeptuneLinkButton topmenulink linkButton"><img src="images/neptune.svg" alt="Neptune"></div></a>
         </div>
     </div>
+    <a nohref="" id="showNavigationMenu"><div id="showNavigationMenuContainer"><img src="images/menu.svg"></div></a>
     
     <div class="clear maxWidth">&nbsp;</div>
     <div id="scroller" class="scrollerWithMenu">
@@ -471,9 +472,9 @@
     window.addEventListener("scroll", function() {
         var scrolledTop = document.body.scrollTop;
         var scrolled = scrolledTop >= 20;
-        
+        var pageObj = false;
         if (previousPage) {
-            var pageObj = Pages [previousPage.id];
+            pageObj = Pages [previousPage.id];
             if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
                 if (scrolled) {
                     // get the first two rows
@@ -518,6 +519,15 @@
         
         oldScrollTop = scrolledTop;
     });
+
+    document.getElementById("showNavigationMenu").onclick = function () {
+        var pageObj = Pages [previousPage.id];
+        sourceMenu.classList.remove ("movedMenu");
+        if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
+            pageObj.hostElement.rows[0].classList.remove ("movedMenu");
+            pageObj.hostElement.rows[1].classList.remove ("movedMenu");
+        }
+    }
     
     function updateTimeAtAajsLoad() {
         if (typeof AAJS != 'undefined') {
