@@ -94,9 +94,11 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
         this.localCircumstancesLSF[key] = FunctionFitting.PolynomialLSF(this.localCircumstancesTimeBased[key], [-3, -2, -1, 0, 1, 2, 3], 3);
     }
     
+    this.localCircumstancesLSF.delta = FunctionFitting.PolynomialLSF (this.localCircumstancesTimeBased.delta, [-3, -2, -1, 0, 1, 2, 3], 6);
     // minimum distance ...
     // eq is 3 * delta_coeff[3] , 2 * delta_coeff[2], delta_coeff[1] 
     var firstDerivativeEquals0 = new QuadraticEquation (3 * this.localCircumstancesLSF.delta[3], 2 * this.localCircumstancesLSF.delta[2], this.localCircumstancesLSF.delta[1]);
+    
     
     this.timeMinusT0OfMaxEclipse = firstDerivativeEquals0.x1.real;
     // must use the time value within our interval [-3, 3]
