@@ -615,7 +615,19 @@
         new RealTimeDataViewer(Pages["Venus"], 
              document.getElementById("VenusHomepageImmediateView"));
 
-             })();
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/ephemerides/serviceworker.js').then(function(registration) {
+              // Registration was successful
+              console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, function(err) {
+              // registration failed :(
+              console.log('ServiceWorker registration failed: ', err);
+            });
+          });
+        }             
+
+        })();
     
     if (location.hash)
         setTimeout(onhashchange, 1);
