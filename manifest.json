@@ -1,0 +1,20 @@
+{
+  "short_name": "Astronomical Ephemerides",
+  "name": "Astronomical Ephemerides",
+  "icons": [
+    {
+      "src": "images/ae-icon.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "images/ae-icon-144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    }
+  ],
+  "start_url": "index.html#home",
+  "display": "standalone",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff"
+}
