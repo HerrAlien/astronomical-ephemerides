@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 (function() {
-var CACHE_NAME = 'Cache-for-astronomical-ephemerides';
+var CACHE_NAME = 'Cache-for-astronomical-ephemerides-nodownload';
 var urlsToCache = [
 "/ephemerides/",
 "/ephemerides/index.html",
@@ -56,7 +56,6 @@ var urlsToCache = [
 "/ephemerides/js/aajs.js",
 "/ephemerides/images/menu.svg",
 "/ephemerides/images/ae-icon.png",
-"/ephemerides/images/download.svg",
 "/ephemerides/images/left.png",
 "/ephemerides/images/right.png",
 "/ephemerides/images/settings.svg",
@@ -83,7 +82,7 @@ var urlsToCache = [
 self.addEventListener('install', function(event) {
   // Perform install steps
   event.waitUntil(
-    caches.open("Cache-for-astronomical-ephemerides")
+    caches.open(CACHE_NAME)
       .then(function(cache) {
         console.log('Opened cache');
         return cache.addAll(urlsToCache);
@@ -102,6 +101,23 @@ self.addEventListener('fetch', function(event) {
         return fetch(event.request);
       }
     )
+  );
+});
+
+self.addEventListener('activate', function(event) {
+
+  var cacheWhitelist = [CACHE_NAME];
+
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(cacheName) {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
   );
 });
 
