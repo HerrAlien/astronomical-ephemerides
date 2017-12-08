@@ -13,7 +13,7 @@
       "sizes": "144x144"
     }
   ],
-  "start_url": "index.html#home",
+  "start_url": "/ephemerides/",
   "display": "standalone",
   "theme_color": "#ffffff",
   "background_color": "#ffffff"
