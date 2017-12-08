@@ -134,9 +134,6 @@ a {
     content: "Settings";
 }
 
-.DownloadLink::after {
-    content: "Download";
-}
 
 .SunLinkButton::after {
      content: 
@@ -188,11 +185,6 @@ a {
 }
 .SaturnMoonsLinkButton::after { content: 
 "Saturn Moons";
-}
-
-.DownloadLink.topmenulink img {
-    width: 78px;
-    height: 62px;
 }
 
 .HomeLinkButton {
@@ -792,11 +784,7 @@ input {
     .RA, .Dec {
         font-size: 36px;
     }
-    
-    .DownloadLink::after, .DownloadLink {
-        display: none;
-    }
-    
+        
     #navigation.movedMenu {
         top: -120px;
     }
