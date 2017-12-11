@@ -1,52 +1,5 @@
-/* first render */
-* {
-    transition: 0.125s;
-}
-
-th {
-    transition: 0s;
-    background: #ffffff;
-}
-
-/* first render */
-body {
-    font-family: Verdana;
-    font-size: 22px;
-    min-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 0px;
-    page-break-inside: avoid;
-}
-
-/* first render */
-.scrolledDown {
-    bottom: -60px;
-}
-
-/* first render */
-.scrolledInPlace {
-    bottom: 0px;
-}
-
-/* first render */
-a:visited {
-    color: #003377;
-}
-
-/* first render */
-a {
-    text-decoration: underline;
-    color: #000000;
-}
-
+   
 @media screen {
-/* first render */
-    #scroller {
-        z-index: 2;
-        background: #ffffff;
-    }
-    
     #jupiterHorizontalScroller , #marsHorizontalScroller{
         width: 880px;
         overflow-x: hidden;
@@ -70,182 +23,6 @@ a {
     }
 }
 
-/* first render */
-.page {
-    display: block;
-    opacity: 1;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top:2px;
-    text-align: center;
-    width: 95%;
-}
-
-/* first render */
-.page:not(:target){
-    display: none;
-    position: fixed;
-    bottom: 0;
-}
-
-/* first render */
-.page::after {
-    font-size: 14px;
-    display: block;
-    margin: 48px auto 10px auto;
-    text-align: center;
-    content: "Copyright 2017 by Alexandru Garofide.";
- }
-
-/* first render */
-.fixed {
-    position: fixed;
-}
-
-.printOnly {
-    display: none;
-    height: 0px;
-}
-
-/* first render */
-.topmenulink {
-    float: right;
-    margin-right: 5px;
-    margin-left: 5px;
-}
-
-/* first render */
-.linkButton {
-    text-align: center;
-}
-
-/* first render */
-.linkButton img{
-    cursor: pointer;
-    margin-top: 2px;
-    width: 62px;
-}
-
-/* first render */
-.linkButton:hover::after{
-    text-decoration: underline
-}
-
-/* first render */
-.linkButton::after {
-    font-size: 18px;
-    display: block;
-    text-align: center;
-    color: #000000;
-}
-
-/* first render */
-.MenuLinkDiv::after {
-    content: "More ...";
-    margin: -2px auto 2px auto;
-}
-
-/* first render */
-.SettingsLink::after {
-    content: "Settings";
-}
-
-/* first render */
-.SunLinkButton::after {
-     content: 
-"Sun";
-}
-
-/* first render */
-.MoonLinkButton::after { content: 
-"Moon";
-}
-
-/* first render */
-.MercuryLinkButton::after { content: 
-"Mercury";
-}
-
-/* first render */
-.VenusLinkButton::after { content: 
-"Venus";
-}
-
-/* first render */
-.MarsLinkButton::after { content: 
-"Mars";
-}
-
-/* first render */
-.JupiterLinkButton::after { content: 
-"Jupiter";
-}
-
-/* first render */
-.SaturnLinkButton::after { content: 
-"Saturn";
-}
-
-/* first render */
-.UranusLinkButton::after { content: 
-"Uranus";
-}
-
-/* first render */
-.NeptuneLinkButton::after { content: 
-"Neptune";
-}
-
-/* first render */
-.LunarEclipseLinkButton::after { content: 
-"Lunar Eclipses";
-}
-
-/* first render */
-.SolarEclipseLinkButton::after { content: 
-"Solar Eclipses";
-}
-
-/* first render */
-.GalileanMoonsLinkButton::after { content: 
-"Galilean Moons";
-}
-/* first render */
-.SaturnMoonsLinkButton::after { content: 
-"Saturn Moons";
-}
-
-/* first render */
-.HomeLinkButton {
-    float: left;
-    margin-top: 2px;
-    margin-right: 20px;
-}
-
-/* first render */
-.MenuLinkDiv {
-    margin-top: 2px;
-}
-/* first render */
-.MenuLinkDiv.topmenulink img{
-    width: 78px;
-    height: 62px;
-}
-
-/* first render */
-.HomeLinkButton.topmenulink img {
-    width: auto;
-    height: 90px;
-}
-
-/* first render */
-.SettingsLink.topmenulink img {
-    width: 62px;
-    height: 62px;
-}
-
 .largeButtons.linkButton::after {
     font-size: 30px;
     text-decoration: underline;
@@ -259,28 +36,6 @@ a {
 .largeButtons {
     margin-right: 15px;
     margin-left: 15px;
-}
-
-/* first render */
-h1 {
-    margin-top: 120px;
-    margin-bottom: 0px;
-    font-size: 50px;
-    font-family: Arial;
-    margin-left: auto;
-    display: block;
-    font-weight: normal;
-    margin-right: auto;
-}
-
-/* first render */
-h2 {
-    font-size: 40px;
-}
-
-/* first render */
-h3 {
-    font-size: 32px;
 }
 
 #more {
@@ -344,25 +99,6 @@ h3 {
 
 #menuList{ 
     list-style-type:none;
-}
-
-/* first render */
-#promotedMenu a {
-    float: left;
-    margin-top: 2px;
-    margin-left: 15px;
-}
-
-/* first render */
-#promotedMenu {
-    overflow: hidden;
-    height: 90px;
-}
-
-/* first render */
-.clear {
-	clear: both;
-    height: 0px;
 }
 
 tr.firstHeaderRow{
@@ -443,24 +179,6 @@ input {
 } 
 #incrementDate, #numberOfDays {
     width: 180px;
-}
-
-/* first render */
-#credits, .topBorder{
-    	border-top: 1px solid #AAAAAA;
-}
-
-/* first render */
-#credits{
-        width: 100%;
-        padding-top: 10px;
-        margin-top: 20px;
-        font-family: Courier;
-    }
-    
-/* first render */
-.loadingMemFileContents {
-    text-align: center;
 }
 
 /** ----------------------------- M O O N --------------------------------------- **/
@@ -712,10 +430,6 @@ input {
     margin-right: 0px;
 }
 
-/* first render */
-#home {
-    text-align: left;
-}
 
 .buttonsToSwitchPosPhys, .physSeenAtSmallWidth {
     display: none;
@@ -729,33 +443,6 @@ input {
     visibility: visible;
 }
 
-/* first render */
-    .rightNowFrontPageWidget {
-        background-repeat: no-repeat;
-        background-size: 90% 90%;
-        width:  200px;
-        height: 200px;
-        text-align: center;
-        background-position: center;
-        display: inline-block;
-        margin: 10px;
-    }
-/* first render */
-    .RA {
-        border-top: 1px solid #AAAAAA;
-        margin-top: 110px;
-    }
-
-/* first render */
-.realtimeTitle {
-    display: inline-block;
-    border-bottom: 1px solid #AAAAAA;
-    width: 100%;
-    font-size: 30px;
-    text-decoration: underline;
-    padding-bottom: 5px;
-}
-
 @media screen and (min-width: 1980px)  {
     #MenuLink, .MenuLinkDiv.topmenulink, .MenuLinkDiv.topmenulink img, .MenuLinkDiv.topmenulink::after {
         width: 0px;
@@ -765,12 +452,6 @@ input {
         display: none;
     }
 }
-
-/* first render */
-#HomeLinkMobile, #HomeLinkMobileNav {
-    display: none;
-}
-
 
 @media  screen and  (max-width: 936px)  {
     
@@ -806,30 +487,6 @@ input {
         margin-right: auto;
     }
     
-/* first render */
-    .rightNowFrontPageWidget {
-        width:  320px;
-        height: 320px;
-    }
-/* first render */
-    .RA {
-        margin-top: 170px;
-    }
-
-/* first render */
-    .realtimeTitle {
-        font-size: 48px;
-    }
-
-/* first render */
-    .RA, .Dec {
-        font-size: 36px;
-    }
-        
-/* first render */
-    #navigation.movedMenu {
-        top: -120px;
-    }
     
     tr.firstHeaderRowScrolled.movedMenu {
         top: 154;
@@ -838,62 +495,6 @@ input {
         top: 154;
     }
     
-/* first render */
-    .linkButton img {
-        width: 82px;
-    }
-    
-/* first render */
-    .topmenulink::after {
-        display: none;
-    }
-    
-/* first render */
-    .MenuLinkDiv::after {
-        display: none;
-    }
-
-/* first render */
-    .SettingsLink::after {
-        display: none;
-    }
-    
-/* first render */
-    .MenuLinkDiv.topmenulink img{
-        width: 78px;
-        height: 82px;
-    }
-
-
-/* first render */
-    .SettingsLink.topmenulink img {
-        width: 82px;
-        height: auto;
-    }
-    
-/* first render */
-    #HomeLinkMobile {
-        display: block;
-        margin-top: 140px;
-        margin-bottom: 40px;
-        width: 800px;
-        height: auto;
-    }
-    
-/* first render */
-    #HomeLink {
-        display: none;
-    }
-
-/* first render */
-    #home h1 {
-        margin-top: 20px;
-    }
-    
-/* first render */
-    #HomeLinkMobileNav {
-        display: block;
-    }
 }
     
 .positionalButton, .physicalButton {
@@ -929,57 +530,6 @@ input {
     background: #000000;
     color: #ffffff;
     cursor: default;
-}
-
-/* first render */
-#rightNowFrontPage {
-    text-align: center;
-}
-
-/* first render */
-#SunHomepageImmediateView {
-    background-image: url('../images/sun.svg');
-}
-
-/* first render */
-#JupiterHomepageImmediateView {
-    background-image: url('../images/jupiter.svg');
-}
-
-/* first render */
-#MarsHomepageImmediateView {
-    background-image: url('../images/mars.svg');
-}
-
-/* first render */
-#SaturnHomepageImmediateView {
-    background-image: url('../images/saturn.svg');
-}
-
-/* first render */
-#MoonHomepageImmediateView {
-    background-image: url('../images/moon.svg');
-}
-
-/* first render */
-#VenusHomepageImmediateView {
-    background-image: url('../images/venus.svg');
-}
-
-
-/* first render */
-.RA::before {
-    content: "R.A. ";
-}
-
-/* first render */
-.Dec::before {
-    content: "Dec. ";
-}
-
-/* first render */
-.RA, .Dec, .realtimeTitle {
-    background: rgba(255, 255, 255, 0.8);
 }
 
 label {
