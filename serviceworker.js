@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 (function() {
-var CACHE_NAME = 'Cache-for-astronomical-ephemerides-nodownload';
+var CACHE_NAME = 'Cache-for-astronomical-ephemerides-v9';
 var urlsToCache = [
 "/ephemerides/",
 "/ephemerides/index.html",
@@ -48,6 +48,7 @@ var urlsToCache = [
 "/ephemerides/js/risetransitset.js",
 "/ephemerides/js/saturnmoonsdata.js",
 "/ephemerides/js/aajs.js.mem",
+"/ephemerides/aajs.js.mem",
 "/ephemerides/js/saturnmoonspage.js",
 "/ephemerides/js/solareclipsespage.js.orig",
 "/ephemerides/js/aajs.js.optimized",
@@ -76,7 +77,10 @@ var urlsToCache = [
 "/ephemerides/images/uranus.svg",
 "/ephemerides/images/venus.svg",
 "/ephemerides/images/logomobilebanner.png",
-"/ephemerides/images/ae-icon-144.png"
+"/ephemerides/images/ae-icon-144.png",
+"/ephemerides/images/ae-icon-192.png",
+"/ephemerides/images/ae-icon-256.png",
+"/ephemerides/images/ae-icon-512.png"
 ];
 
 self.addEventListener('install', function(event) {
