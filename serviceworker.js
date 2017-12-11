@@ -48,6 +48,7 @@ var urlsToCache = [
 "/ephemerides/js/risetransitset.js",
 "/ephemerides/js/saturnmoonsdata.js",
 "/ephemerides/js/aajs.js.mem",
+"/ephemerides/aajs.js.mem",
 "/ephemerides/js/saturnmoonspage.js",
 "/ephemerides/js/solareclipsespage.js.orig",
 "/ephemerides/js/aajs.js.optimized",
