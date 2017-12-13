@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 (function() {
-var CACHE_NAME = 'Cache-for-astronomical-ephemerides-v9';
+var CACHE_NAME = 'Cache-for-astronomical-ephemerides-v10';
 var urlsToCache = [
 "/ephemerides/",
 "/ephemerides/index.html",
@@ -47,7 +47,6 @@ var urlsToCache = [
 "/ephemerides/js/moonspage.js",
 "/ephemerides/js/risetransitset.js",
 "/ephemerides/js/saturnmoonsdata.js",
-"/ephemerides/js/aajs.js.mem",
 "/ephemerides/aajs.js.mem",
 "/ephemerides/js/saturnmoonspage.js",
 "/ephemerides/js/solareclipsespage.js.orig",
