@@ -142,33 +142,35 @@ var MoonEclipsesData = {
             dMoonData = MoonData.getDataAsObjectForJD (jd + dJd);
             
             var opposingSunRA = 12 + sunData.RA;
-            if (opposingSunRA > 24)
-                opposingSunRA -= 24;
-            
-            var moonRA = moonData.RaGeo;
-            if (Math.abs(opposingSunRA - moonRA) > 12) {
-                if (opposingSunRA > 12) {
-                    if (moonRA < 12) {
-                        moonRA += 24;
-                    }
-                } else {
-                    if (moonRA > 12)
-                        opposingSunRA += 24;
-                }
+            var moonRA_1 = moonData.RaGeo;
+            if (Math.abs(opposingSunRA - moonRA_1) > 12){
+                if (opposingSunRA < moonRA_1)
+                    opposingSunRA += 24;
+                else
+                    moonRA_1 += 24;
             }
             
-            var dSunDataRA = dSunData.RA;
             var dMoonDataRA = dMoonData.RaGeo;
-            if (moonRA > 24 && dMoonDataRA < 12)
-                dMoonDataRA += 24;
+            var moonRA_2 = moonRA_1;
+            if (Math.abs(dMoonDataRA - moonRA_2) > 12){
+                if (dMoonDataRA < moonRA_2)
+                    dMoonDataRA += 24;
+                else
+                    moonRA_2 += 24;
+            }
+
+            var sunRA = sunData.RA;
+            var dSunDataRA = dSunData.RA;
             
-            if (Math.abs(dSunDataRA - sunData.RA) > 12) {
-                if (dSunDataRA < 12)
+            if (Math.abs(dSunDataRA - sunRA) > 12){
+                if (dSunDataRA < sunRA)
                     dSunDataRA += 24;
+                else
+                    sunRA += 24;
             }
             
-            oppositionTimeCorrection = dJd * (opposingSunRA - moonRA) /
-                                           ((dMoonDataRA - moonRA) - (dSunDataRA - sunData.RA));
+            oppositionTimeCorrection = dJd * (opposingSunRA - moonRA_1) /
+                                           ((dMoonDataRA - moonRA_2) - (dSunDataRA - sunRA));
             jd += oppositionTimeCorrection;
             counter++;
             if (counter > 25){
