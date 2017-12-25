@@ -14,7 +14,7 @@ PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 (function() {
-var CACHE_NAME = 'Cache-for-ephemerides-v12';
+var CACHE_NAME = 'Cache-for-ephemerides-v13';
 var urlsToCache = [
 "/ephemerides/",
 "/ephemerides/index.html",
