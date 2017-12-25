@@ -132,7 +132,7 @@ var MoonEclipsesData = {
         var oppositionTimeCorrection = 0;
         var dJd = 0.5/24;
         
-        var countrer = 0;
+        var counter = 0;
         do {
             
             sunData = SunData.getDataAsObjectForJD (jd);
@@ -146,21 +146,33 @@ var MoonEclipsesData = {
                 opposingSunRA -= 24;
             
             var moonRA = moonData.RaGeo;
-            if (opposingSunRA > 12) {
-                if (moonRA < 12) {
-                    moonRA += 24;
+            if (Math.abs(opposingSunRA - moonRA) > 12) {
+                if (opposingSunRA > 12) {
+                    if (moonRA < 12) {
+                        moonRA += 24;
+                    }
+                } else {
+                    if (moonRA > 12)
+                        opposingSunRA += 24;
                 }
-            } else {
-                if (moonRA > 12)
-                    opposingSunRA += 24;
+            }
+            
+            var dSunDataRA = dSunData.RA;
+            var dMoonDataRA = dMoonData.RaGeo;
+            if (moonRA > 24 && dMoonDataRA < 12)
+                dMoonDataRA += 24;
+            
+            if (Math.abs(dSunDataRA - sunData.RA) > 12) {
+                if (dSunDataRA < 12)
+                    dSunDataRA += 24;
             }
             
             oppositionTimeCorrection = dJd * (opposingSunRA - moonRA) /
-                                           ((dMoonData.RaGeo - moonRA) - (dSunData.RA - sunData.RA));
+                                           ((dMoonDataRA - moonRA) - (dSunDataRA - sunData.RA));
             jd += oppositionTimeCorrection;
-            countrer++;
-            if (countrer > 25){
-                throw "Cannot obtain JD for opposition";
+            counter++;
+            if (counter > 25){
+                throw "Cannot obtain JD for opposition JD=" + startJD;
             }
             
         } while (Math.abs(oppositionTimeCorrection) > eps);
