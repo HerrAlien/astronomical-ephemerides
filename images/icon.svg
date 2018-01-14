@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" width="512" height="512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512; background:#ff0000;" xml:space="preserve">
 <g>
 <!-- outline -->
 <circle style="fill:#ffffff;" cx="256.003" cy="256.003" r="256"/>
 
 </g>
      
-<g transform="scale(0.95) translate(12.8 12.8)">     
+<g transform="scale(0.9) translate(30 30)">     
      <circle style="fill:#CCCCCC;" cx="256.003" cy="256.003" r="248"/>
 <g>
 	<circle style="fill:#666666;" cx="288.003" cy="64.001" r="23.998"/>
@@ -78,7 +78,7 @@
 </g>
 
 <g>
-    <text x="-10" y="400" font-size="395px" font-family="Arial" font-weight="bold" stroke="#ffffff" stroke-width="10">AE</text>
+    <text x="-10" y="400" font-size="400px" font-family="Arial" font-weight="bold" stroke="#ffffff" stroke-width="20">AE</text>
 </g>
 
 </g>
