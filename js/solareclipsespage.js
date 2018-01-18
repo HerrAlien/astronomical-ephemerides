@@ -56,7 +56,7 @@ var SolarEclipsesPage = {
             if (eclipseData.bEclipse) 
                 SolarEclipsesPage.drawNewEclipse (eclipseData);
             
-            setTimeout (function() { processK(k+1, endingK); }, 1);
+            requestAnimationFrame (function() { processK(k+1, endingK); });
         } 
         
         processK(startK, endK);

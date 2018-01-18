@@ -166,7 +166,7 @@ function PlanetPage (planetDataSource, tableName) {
                     
                     hostElement.appendChild(docFragment);
                     
-                    setTimeout (function() {delayedAppendData (JD, endJD, steps, hostElement, columnClasses, dataSource); },1 );
+                    requestAnimationFrame (function() {delayedAppendData (JD, endJD, steps, hostElement, columnClasses, dataSource); });
                 }
                 delayedAppendData (JD, JD + daysAfter, 20, hostElement, columnClasses, dataSource);
                 this.pageRendered = true;
