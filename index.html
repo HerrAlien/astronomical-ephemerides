@@ -1056,7 +1056,7 @@ border-bottom: solid 1px #AAAAAA;
             }             
         }
 
-        if (navigator.storage && navigator.storage.persist){
+/*        if (navigator.storage && navigator.storage.persist){
             navigator.storage.persist().then(granted => {
                 if (granted) {
                     console.log("Storage will not be cleared except by explicit user action");
@@ -1067,7 +1067,8 @@ border-bottom: solid 1px #AAAAAA;
               }); 
         } else {
             registerWorker();
-        }
+        } */
+        registerWorker();
       })();
         
 </script>
