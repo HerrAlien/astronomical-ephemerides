@@ -100,12 +100,12 @@ var SolarEclipsesPage = {
         addNodeChild(header, "th", "2");
         addNodeChild(header, "th", "3");
         
-        var elements = {"x" : "x [earth radii]", 
-                        "y" : "y [earth radii]", 
-                        "mu" : "\u03BC [\u00B0]", 
-                        "d"  : "d [\u00B0]",
-                        "l1" : "l1 [earth radii]", 
-                        "l2" : "l2 [earth radii]"};
+        var elements = {"x" : "x", 
+                        "y" : "y", 
+                        "mu" : "\u03BC", 
+                        "d"  : "d",
+                        "l1" : "l1", 
+                        "l2" : "l2"};
         
         function addRowDataForParameter (paramName) {
             var row = addNodeChild (table, "tr");

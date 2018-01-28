@@ -414,11 +414,20 @@ input {
     padding-top: 20px;
     page-break-after: always;
     max-width: 1024px;
+    font-size: 25px;
+    padding: 20px;
 }
 
 .moonEclipse table, .solarEclipse table {
     margin-bottom: 20px;
-    font-size: 25px;
+    font-size: 30px;
+}
+
+.moonEclipse table td, .solarEclipse table td{
+    padding: 10px;
+}
+.solarEclipse table td{
+    text-align: right;
 }
 
 .viewport {
@@ -589,3 +598,8 @@ input[type=date]::-webkit-inner-spin-button {
     text-align: left;
 }
 
+#copyright {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 20px;
+}
