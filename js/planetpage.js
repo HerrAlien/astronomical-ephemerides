@@ -51,8 +51,8 @@ function PlanetPage (planetDataSource, tableName) {
                 "longText" : "Equatorial coordinates: Right Ascension"
             },
         "4" : {
-                "0" : { "text" : "", "classes" : ["minWidth10"] },
-                "1" : { "text" : "s", "classes" : ["minWidth20"] },
+                "0" : { "text" : "", "classes" : ["minWidth20"] },
+                "1" : { "text" : "s", "classes" : ["minWidth40"] },
                 "longText" : "Equatorial coordinates: Right Ascension"
             },
         "5" :  {
@@ -254,7 +254,7 @@ function PlanetPage (planetDataSource, tableName) {
         displayableLine[1] = obj.Day;
         
         var di = 2;
-        var sexagesimalRA = AAJS.Numerical.ToSexagesimal(Math.round(obj.RA * 3600)/3600);
+        var sexagesimalRA = AAJS.Numerical.ToSexagesimal(Math.round(obj.RA * 36000)/36000);
         displayableLine[di++] = sexagesimalRA.Ord3 ;
         displayableLine[di++] = sexagesimalRA.Ord2 
         displayableLine[di++] = sexagesimalRA.Ord1;

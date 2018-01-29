@@ -102,8 +102,8 @@ var MoonData = {
                 "longText" : "Equatorial coordinates: Right Ascension"
             },
         "4" : {
-                "0" : { "text" : "", "classes" : ["minWidth10"] },
-                "1" : { "text" : "s", "classes" : ["minWidth20"] },
+                "0" : { "text" : "", "classes" : ["minWidth20"] },
+                "1" : { "text" : "s", "classes" : ["minWidth40"] },
                 "longText" : "Equatorial coordinates: Right Ascension"
             },
         "5" :  {
@@ -133,8 +133,8 @@ var MoonData = {
                     "longText" : "Topocentric equatorial coordinates: Right Ascension"
                 },
             "10" : {
-                    "0" : { "text" :"" , "classes" : ["minWidth5", "positionEphemeris"] },
-                    "1" : { "text" :"s", "classes" : ["minWidth20", "positionEphemeris"] },
+                    "0" : { "text" :"" , "classes" : ["minWidth20", "positionEphemeris"] },
+                    "1" : { "text" :"s", "classes" : ["minWidth30", "positionEphemeris"] },
                     "longText" : "Topocentric equatorial oordinates: Right Ascension"
                 },
             "11" :  {
@@ -242,7 +242,7 @@ var MoonData = {
         displayableLine[1] = obj.Day;
         
         var di = 2;
-        var sexagesimalRaGeo = AAJS.Numerical.ToSexagesimal(Math.round(obj.RaGeo * 3600)/3600);
+        var sexagesimalRaGeo = AAJS.Numerical.ToSexagesimal(Math.round(obj.RaGeo * 36000)/36000);
         displayableLine[di++] = sexagesimalRaGeo.Ord3 ;
         displayableLine[di++] = sexagesimalRaGeo.Ord2 
         displayableLine[di++] = sexagesimalRaGeo.Ord1;
@@ -252,7 +252,7 @@ var MoonData = {
         displayableLine[di++] = sexagesimalDecGeo.Ord2;
         displayableLine[di++] = sexagesimalDecGeo.Ord1;
 		            
-        var sexagesimalRaTopo = AAJS.Numerical.ToSexagesimal(Math.round(obj.RaTopo * 3600)/3600);
+        var sexagesimalRaTopo = AAJS.Numerical.ToSexagesimal(Math.round(obj.RaTopo * 36000)/36000);
         displayableLine[di++] = sexagesimalRaTopo.Ord3 ;
         displayableLine[di++] = sexagesimalRaTopo.Ord2 
         displayableLine[di++] = sexagesimalRaTopo.Ord1;

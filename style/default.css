@@ -481,7 +481,7 @@ input {
     }
 
     #jupiterHorizontalScroller, #marsHorizontalScroller {
-        width: 630px;
+        width: 647px;
     }
 
     #JupiterTable tr.firstHeaderRow, 
@@ -496,7 +496,7 @@ input {
     }
     
     .showPhysical {
-        margin-left: -634px;
+        margin-left: -650px;
         margin-right: auto;
     }
     
