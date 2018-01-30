@@ -94,63 +94,63 @@ var MoonData = {
         "2" : {
                 "0" : { "text" : "\u03B1", "classes" : ["minWidth20"] },
                 "1" : { "text" : "h", "classes" : ["minWidth20"] },
-                "longText" : "Equatorial coordinates: Right Ascension"
+                "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "3" : {
                 "0" : { "text" : "(RA)", "classes" : ["minWidth20", "screenOnly"] },
                 "1" : { "text" : "m", "classes" : ["minWidth20"] },
-                "longText" : "Equatorial coordinates: Right Ascension"
+                "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "4" : {
                 "0" : { "text" : "", "classes" : ["minWidth20"] },
                 "1" : { "text" : "s", "classes" : ["minWidth40"] },
-                "longText" : "Equatorial coordinates: Right Ascension"
+                "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "5" :  {
                 "0" : { "text" : "\u03B4", "classes" : ["minWidth20"] },
                 "1" : { "text" : "\u00B0", "classes" : ["minWidth25"] },
-                "longText" : "Equatorial coordinates: Declination"
+                "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
         "6" :  {
                 "0" : { "text" : "(Dec)", "classes" : ["minWidth20" , "screenOnly"] },
                 "1" : { "text" : "'", "classes" : ["minWidth20"] },
-                "longText" : "Equatorial coordinates: Declination"
+                "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
         "7" :  {
                 "0" : { "text" : "", "classes" : ["minWidth10"  ] },
                 "1" : { "text" : "''", "classes" : ["minWidth25"] },
-                "longText" : "Equatorial coordinates: Declination"
+                "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
 
             "8" : {
                     "0" : { "text" :"\u03B1", "classes" : ["minWidth20", "positionEphemeris"] },
                     "1" : { "text" :"h"     , "classes" : ["minWidth20", "positionEphemeris"] },
-                    "longText" : "Topocentric equatorial coordinates: Right Ascension"
+                    "longText" : "Apparent topocentric equatorial coordinates: Right Ascension"
                 },
             "9" : {
                     "0" : { "text" :"topo", "classes" : ["minWidth20", "positionEphemeris"] },
                     "1" : { "text" :"m"   , "classes" : ["minWidth20", "positionEphemeris"] },
-                    "longText" : "Topocentric equatorial coordinates: Right Ascension"
+                    "longText" : "Apparent topocentric equatorial coordinates: Right Ascension"
                 },
             "10" : {
                     "0" : { "text" :"" , "classes" : ["minWidth20", "positionEphemeris"] },
                     "1" : { "text" :"s", "classes" : ["minWidth30", "positionEphemeris"] },
-                    "longText" : "Topocentric equatorial oordinates: Right Ascension"
+                    "longText" : "Apparent topocentric equatorial oordinates: Right Ascension"
                 },
             "11" :  {
                     "0" : { "text" :"\u03B4", "classes" : ["minWidth25", "positionEphemeris"] },
                     "1" : { "text" :"\u00B0", "classes" : ["minWidth25", "positionEphemeris"] },
-                    "longText" : "Topocentric equatorial coordinates: Declination"
+                    "longText" : "Apparent topocentric equatorial coordinates: Declination"
                 },
             "12" :  {
                     "0" : { "text" :"topo", "classes" : ["minWidth20", "positionEphemeris"] },
                     "1" : { "text" :"'"   , "classes" : ["minWidth20", "positionEphemeris"] },
-                    "longText" : "Topocentric equatorial coordinates: Declination"
+                    "longText" : "Apparent topocentric equatorial coordinates: Declination"
                 },
             "13" :  {
                     "0" : { "text" :""  , "classes" : ["minWidth20", "positionEphemeris"] },
                     "1" : { "text" :"''", "classes" : ["minWidth30", "positionEphemeris"] },
-                    "longText" : "Topocentric equatorial coordinates: Declination"
+                    "longText" : "Apparent topocentric equatorial coordinates: Declination"
                 },
 
            
