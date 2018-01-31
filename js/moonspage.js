@@ -212,7 +212,7 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
                 hostSVG.appendChild (linesDF);
                    
                 if (stepsCounter < numberOfSteps) {
-                    setTimeout (getDataForPaths, 1);
+                    requestAnimationFrame (getDataForPaths);
                 } else {
                     satellitesPage.pageRendered = true;
                 }

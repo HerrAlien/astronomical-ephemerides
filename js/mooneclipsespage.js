@@ -49,7 +49,7 @@ var MoonEclipsesPage = {
             if (oppositionData.eclipse) 
                 MoonEclipsesPage.drawNewEclipse (oppositionData);
             
-            setTimeout (function() { processJD(oppositionData.JD + MoonEclipsesPage.dataSource.sinodicPeriod); }, 1);
+            requestAnimationFrame (function() { processJD(oppositionData.JD + MoonEclipsesPage.dataSource.sinodicPeriod); });
         }
         
         processJD(startJD);
@@ -211,4 +211,4 @@ var MoonEclipsesPage = {
     }
 }
 
-Pages["LunarEclipses"] = MoonEclipsesPage;
+Pages["Lunar Eclipses"] = MoonEclipsesPage;

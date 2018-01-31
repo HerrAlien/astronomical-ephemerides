@@ -1,14 +1,29 @@
 <html lang="en-US">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=820">
+    <title>Astronomical Ephemerides</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=835" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="theme-color" content="#ffffff" />
-    <title>Astronomical Ephemerides</title>
+
+    <meta name="keywords" content="astronomy, planet position, ephemerides, ephemeris, eclipse, Sun, Moon, Mercury,
+    Venus, Mars, Jupiter, Saturn, Uranus, Neptune, positional ephemerides, physical ephemerides, eclipses, 
+    Galilean moons, Saturn moons, Europa, Ganymede, Io, Callisto, Titan, Rhea, Mimas, Enceladus, Tethys, Dione,
+    rise, transit, set, geocentric ephemerides, topocentric ephemerides, Besselian Elements" />
+
+    <meta name="description" content="A JavaScript utility to calculate ephemerides for the major planets of the solar system." />
+
 	<link rel="stylesheet" type="text/css" href="style/default.css" media="async-do-not-block" />
-    <link rel="icon" type="image/png" href="images/ae-icon.png">
-    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="images/ae-icon.png" />
+
+    <link rel="manifest" href="manifest.json" />
+
+    <link rel="apple-touch-icon" href="images/ae-icon-144.png" />
+    <link rel="apple-touch-startup-image" href="images/ae-icon-512.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff" />    
     
     <style>
     
@@ -73,14 +88,6 @@ th {
     bottom: 0;
 }
 
- .page::after {
-    font-size: 14px;
-    display: block;
-    margin: 48px auto 10px auto;
-    text-align: center;
-    content: "Copyright 2017 by Alexandru Garofide.";
- }
-
  .fixed {
     position: fixed;
 }
@@ -128,54 +135,54 @@ th {
 
  .SunLinkButton::after {
      content: 
-"Sun";
+ "Sun";
 }
 
  .MoonLinkButton::after { content: 
-"Moon";
+ "Moon";
 }
 
  .MercuryLinkButton::after { content: 
-"Mercury";
+ "Mercury";
 }
 
  .VenusLinkButton::after { content: 
-"Venus";
+ "Venus";
 }
 
  .MarsLinkButton::after { content: 
-"Mars";
+ "Mars";
 }
 
  .JupiterLinkButton::after { content: 
-"Jupiter";
+ "Jupiter";
 }
 
  .SaturnLinkButton::after { content: 
-"Saturn";
+ "Saturn";
 }
 
  .UranusLinkButton::after { content: 
-"Uranus";
+ "Uranus";
 }
 
  .NeptuneLinkButton::after { content: 
-"Neptune";
+ "Neptune";
 }
 
  .LunarEclipseLinkButton::after { content: 
-"Lunar Eclipses";
+ "Lunar Eclipses";
 }
 
  .SolarEclipseLinkButton::after { content: 
-"Solar Eclipses";
+ "Solar Eclipses";
 }
 
  .GalileanMoonsLinkButton::after { content: 
-"Galilean Moons";
+ "Galilean Moons";
 }
  .SaturnMoonsLinkButton::after { content: 
-"Saturn Moons";
+ "Saturn Moons";
 }
 
  .HomeLinkButton {
@@ -442,6 +449,54 @@ border-bottom: solid 1px #AAAAAA;
         })();
     </script>
 
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "WebApplication",
+  "name": "Astronomical Ephemerides",
+  "url": "https://herralien-apps.appspot.com/ephemerides/",
+  "sameAs" : "https://herralien-apps.appspot.com/ephemerides/#home",
+  "alternateName" : "Ephemerides",
+  "description": "A JavaScript utility to calculate ephemerides for the major planets of the solar system.",
+  "disambiguatingDescription" : "The application is not intended for astrology - although can be used for it.",
+  "applicationCategory" : "Science",
+  "applicationSubCategory" : "Astronomy",
+  "countriesSupported" : "all",
+  "license" : "https://www.gnu.org/licenses/agpl.html",
+  "isAccessibleForFree" : true,
+  "keywords" : "astronomy, planet position, ephemerides, ephemeris, eclipse, Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, positional ephemerides, physical ephemerides, eclipses,  Galilean moons, Saturn moons, Europa, Ganymede, Io, Callisto, Titan, Rhea, Mimas, Enceladus, Tethys, Dione, rise, transit, set, geocentric ephemerides, topocentric ephemerides, Besselian Elements",
+  
+  "inLanguage" : "en-US",
+  
+  "audience" : {
+    "audienceType" : "astronomers, stargazers"
+  },
+  
+  "author" : {
+    "@context": "http://schema.org/",
+  	"@type": "Person",
+    "name": "Alexandru Garofide",
+    "email" : "alexandru.garofide@gmail.com",
+    "givenName" : "Alexandru",
+    "familyName" : "Garofide"
+  },
+  
+  "copyrightHolder" : {
+    "@context": "http://schema.org/",
+  	"@type": "Person",
+    "name": "Alexandru Garofide",
+    "email" : "alexandru.garofide@gmail.com",
+    "givenName" : "Alexandru",
+    "familyName" : "Garofide"
+  },
+  
+  "copyrightYear" : 2018,
+  "softwareVersion" : "1.0",
+  "storageRequirements" : "7MB",
+  "browserRequirements" : "requires HTML5 support"
+}
+</script>
+
 </head>
 
 <body>
@@ -451,19 +506,19 @@ border-bottom: solid 1px #AAAAAA;
         <a href="#settings"><div class="SettingsLink topmenulink linkButton"><img src="images/settings.svg" alt="Settings"></div></a>
         <a href="#more" id="MenuLink"><div class="MenuLinkDiv topmenulink linkButton"><img src="images/menu.svg" alt="More ..."></div></a>
         <div id="promotedMenu">
-            <a href="#Sun"><div class="SunLinkButton topmenulink linkButton"><img src="images/sun.svg" alt="Sun"></div></a>
-            <a href="#Moon"><div class="MoonLinkButton topmenulink linkButton"><img src="images/moon.svg" alt="Moon"></div></a>
-            <a href="#Jupiter"><div class="JupiterLinkButton topmenulink linkButton"><img src="images/jupiter.svg" alt="Jupiter"></div></a>
-            <a href="#Saturn"><div class="SaturnLinkButton topmenulink linkButton"><img src="images/saturn.svg" alt="Saturn"></div></a>
-            <a href="#SolarEclipses"><div class="SolarEclipseLinkButton topmenulink linkButton"><img src="images/solar-eclipse.svg"  alt="Solar Eclipses"></div></a>
-            <a href="#LunarEclipses"><div class="LunarEclipseLinkButton topmenulink linkButton"><img src="images/lunar-eclipse.svg" alt="Lunar Eclipses"></div></a>
-            <a href="#GalileanMoons"><div class="GalileanMoonsLinkButton topmenulink linkButton"><img src="images/galilean-moons.svg" alt="Galilean Moons"></div></a>
-            <a href="#Mars"><div class="MarsLinkButton topmenulink linkButton"><img src="images/mars.svg" alt="Mars"></div></a>
-            <a href="#SaturnMoons"><div class="SaturnMoonsLinkButton topmenulink linkButton"><img src="images/saturn-moons.svg" alt="Moons of Saturn"></div></a>
-            <a href="#Mercury"><div class="MercuryLinkButton topmenulink linkButton"><img src="images/mercury.svg" alt="Mercury"></div></a>
-            <a href="#Venus"><div class="VenusLinkButton topmenulink linkButton"><img src="images/venus.svg"  alt="Venus"></div></a>
-            <a href="#Uranus"><div class="UranusLinkButton topmenulink linkButton"><img src="images/uranus.svg" alt="Uranus"></div></a>
-            <a href="#Neptune"><div class="NeptuneLinkButton topmenulink linkButton"><img src="images/neptune.svg" alt="Neptune"></div></a>
+            <a href="#Sun Ephemeris"><div class="SunLinkButton topmenulink linkButton"><img src="images/sun.svg" alt="Sun"></div></a>
+            <a href="#Moon Ephemeris"><div class="MoonLinkButton topmenulink linkButton"><img src="images/moon.svg" alt="Moon"></div></a>
+            <a href="#Jupiter Ephemeris"><div class="JupiterLinkButton topmenulink linkButton"><img src="images/jupiter.svg" alt="Jupiter"></div></a>
+            <a href="#Saturn Ephemeris"><div class="SaturnLinkButton topmenulink linkButton"><img src="images/saturn.svg" alt="Saturn"></div></a>
+            <a href="#Solar Eclipses"><div class="SolarEclipseLinkButton topmenulink linkButton"><img src="images/solar-eclipse.svg"  alt="Solar Eclipses"></div></a>
+            <a href="#Lunar Eclipses"><div class="LunarEclipseLinkButton topmenulink linkButton"><img src="images/lunar-eclipse.svg" alt="Lunar Eclipses"></div></a>
+            <a href="#Elongations of Galilean Moons"><div class="GalileanMoonsLinkButton topmenulink linkButton"><img src="images/galilean-moons.svg" alt="Galilean Moons"></div></a>
+            <a href="#Mars Ephemeris"><div class="MarsLinkButton topmenulink linkButton"><img src="images/mars.svg" alt="Mars"></div></a>
+            <a href="#Elongations of Saturn Moons"><div class="SaturnMoonsLinkButton topmenulink linkButton"><img src="images/saturn-moons.svg" alt="Moons of Saturn"></div></a>
+            <a href="#Mercury Ephemeris"><div class="MercuryLinkButton topmenulink linkButton"><img src="images/mercury.svg" alt="Mercury"></div></a>
+            <a href="#Venus Ephemeris"><div class="VenusLinkButton topmenulink linkButton"><img src="images/venus.svg"  alt="Venus"></div></a>
+            <a href="#Uranus Ephemeris"><div class="UranusLinkButton topmenulink linkButton"><img src="images/uranus.svg" alt="Uranus"></div></a>
+            <a href="#Neptune Ephemeris"><div class="NeptuneLinkButton topmenulink linkButton"><img src="images/neptune.svg" alt="Neptune"></div></a>
         </div>
     </div>
     <a nohref="" id="showNavigationMenu"><div id="showNavigationMenuContainer"><img src="images/menu.svg" alt="More ..."></div></a>
@@ -473,19 +528,19 @@ border-bottom: solid 1px #AAAAAA;
         <div id="more" class="page">
             <h1>Menu</h1>
             <ul id="menuList">
-                <li><a href="#Sun"><div             class="largeButtons SunLinkButton   linkButton"><img src="images/sun.svg" alt="Sun"></div></a></li>
-                <li><a href="#Moon"><div            class="largeButtons MoonLinkButton   linkButton"><img src="images/moon.svg" alt="Moon"></div></a></li>
-                <li><a href="#LunarEclipses"><div   class="largeButtons LunarEclipseLinkButton   linkButton"><img src="images/lunar-eclipse.svg" alt="Lunar Eclipses"></div></a></li>
-                <li><a href="#SolarEclipses"><div class="largeButtons SolarEclipseLinkButton   linkButton"><img src="images/solar-eclipse.svg" alt="Solar Eclipses"></div></a></li>
-                <li><a href="#Mercury"><div         class="largeButtons MercuryLinkButton   linkButton"><img src="images/mercury.svg" alt="Mercury"></div></a></li>
-                <li><a href="#Venus"><div           class="largeButtons VenusLinkButton   linkButton"><img src="images/venus.svg" alt="Venus"></div></a></li>
-                <li><a href="#Mars"><div            class="largeButtons MarsLinkButton   linkButton"><img src="images/mars.svg" alt="Mars"></div></a></li>
-                <li><a href="#Jupiter"><div         class="largeButtons JupiterLinkButton   linkButton"><img src="images/jupiter.svg" alt="Jupiter"></div></a></li>
-                <li><a href="#GalileanMoons"><div   class="largeButtons GalileanMoonsLinkButton   linkButton"><img src="images/galilean-moons.svg" alt="Galilean Moons"></div></a></li>
-                <li><a href="#Saturn"><div          class="largeButtons SaturnLinkButton   linkButton"><img src="images/saturn.svg" alt="Saturn"></div></a></li>
-                <li><a href="#SaturnMoons"><div     class="largeButtons SaturnMoonsLinkButton   linkButton"><img src="images/saturn-moons.svg" alt="Moons of Saturn"></div></a></li>
-                <li><a href="#Uranus"><div          class="largeButtons UranusLinkButton   linkButton"><img src="images/uranus.svg" alt="Uranus"></div></a></li>
-                <li><a href="#Neptune"><div         class="largeButtons NeptuneLinkButton   linkButton"><img src="images/neptune.svg" alt="Neptune"></div></a></li>
+                <li><a href="#Sun Ephemeris"><div             class="largeButtons SunLinkButton   linkButton"><img src="images/sun.svg" alt="Sun"></div></a></li>
+                <li><a href="#Moon Ephemeris"><div            class="largeButtons MoonLinkButton   linkButton"><img src="images/moon.svg" alt="Moon"></div></a></li>
+                <li><a href="#Lunar Eclipses"><div   class="largeButtons LunarEclipseLinkButton   linkButton"><img src="images/lunar-eclipse.svg" alt="Lunar Eclipses"></div></a></li>
+                <li><a href="#Solar Eclipses"><div class="largeButtons SolarEclipseLinkButton   linkButton"><img src="images/solar-eclipse.svg" alt="Solar Eclipses"></div></a></li>
+                <li><a href="#Mercury Ephemeris"><div         class="largeButtons MercuryLinkButton   linkButton"><img src="images/mercury.svg" alt="Mercury"></div></a></li>
+                <li><a href="#Venus Ephemeris"><div           class="largeButtons VenusLinkButton   linkButton"><img src="images/venus.svg" alt="Venus"></div></a></li>
+                <li><a href="#Mars Ephemeris"><div            class="largeButtons MarsLinkButton   linkButton"><img src="images/mars.svg" alt="Mars"></div></a></li>
+                <li><a href="#Jupiter Ephemeris"><div         class="largeButtons JupiterLinkButton   linkButton"><img src="images/jupiter.svg" alt="Jupiter"></div></a></li>
+                <li><a href="#Elongations of Galilean Moons"><div   class="largeButtons GalileanMoonsLinkButton   linkButton"><img src="images/galilean-moons.svg" alt="Galilean Moons"></div></a></li>
+                <li><a href="#Saturn Ephemeris"><div          class="largeButtons SaturnLinkButton   linkButton"><img src="images/saturn.svg" alt="Saturn"></div></a></li>
+                <li><a href="#Elongations of Saturn Moons"><div     class="largeButtons SaturnMoonsLinkButton   linkButton"><img src="images/saturn-moons.svg" alt="Moons of Saturn"></div></a></li>
+                <li><a href="#Uranus Ephemeris"><div          class="largeButtons UranusLinkButton   linkButton"><img src="images/uranus.svg" alt="Uranus"></div></a></li>
+                <li><a href="#Neptune Ephemeris"><div         class="largeButtons NeptuneLinkButton   linkButton"><img src="images/neptune.svg" alt="Neptune"></div></a></li>
             </ul>
             <div class="clear">&nbsp;</div>
         </div>
@@ -517,34 +572,34 @@ border-bottom: solid 1px #AAAAAA;
             <img src="images/logomobilebanner.png" alt="Home" id="HomeLinkMobile">
             <h1>Right now:</h1>
             <div id="rightNowFrontPage">
-            <a href="#Sun">
+            <a href="#Sun Ephemeris">
              <div class="rightNowFrontPageWidget" id="SunHomepageImmediateView"> <span class="realtimeTitle">
                       Sun</span>
                     <div class="RA">loading ...</div>
                     <div class="Dec">loading ...</div></div></a>
             
-            <a href="#Moon">
+            <a href="#Moon Ephemeris">
              <div  class="rightNowFrontPageWidget" id="MoonHomepageImmediateView"> <span class="realtimeTitle">
                       Moon</span>
                     <div class="RA">loading ...</div>
                     <div class="Dec">loading ...</div></div></a>
 
-            <a href="#Jupiter">
+            <a href="#Jupiter Ephemeris">
             <div  class="rightNowFrontPageWidget" id="JupiterHomepageImmediateView"> <span class="realtimeTitle">Jupiter</span>
                     <div class="RA">loading ...</div>
                     <div class="Dec">loading ...</div></div></a>
             
-            <a href="#Saturn">
+            <a href="#Saturn Ephemeris">
             <div  class="rightNowFrontPageWidget" id="SaturnHomepageImmediateView">   <span class="realtimeTitle">  Saturn</span>
                     <div class="RA">loading ...</div>
                     <div class="Dec">loading ...</div></div></a>
 
-            <a href="#Mars">
+            <a href="#Mars Ephemeris">
             <div  class="rightNowFrontPageWidget" id="MarsHomepageImmediateView">   <span class="realtimeTitle">  Mars</span>
                     <div class="RA">loading ...</div>
                     <div class="Dec">loading ...</div></div></a>
 
-            <a href="#Venus">
+            <a href="#Venus Ephemeris">
              <div  class="rightNowFrontPageWidget" id="VenusHomepageImmediateView"> <span class="realtimeTitle">
                       Venus</span>
                     <div class="RA">loading ...</div>
@@ -561,7 +616,7 @@ border-bottom: solid 1px #AAAAAA;
             <li>Transits are computed for any given day as the first transit to occur after the given date. This means that they might occur in the following day.</li>
         </ul>
             <div id="credits">
-            Copyright (C) 2017  Herr_Alien &lt;alexandru.garofide@gmail.com&gt;<br/>
+            Copyright (C) 2018  Alexandru Garofide &lt;<a href="mailto:alexandru.garofide@gmail.com">alexandru.garofide@gmail.com</a>&gt;<br/>
         <br/>
             This program is free software: you can redistribute it and/or modify
             it under the terms of the GNU Affero General Public License as published by
@@ -578,27 +633,27 @@ border-bottom: solid 1px #AAAAAA;
             </div>
         </div>
         
-        <div id="Sun" class="page invisible">
+        <div id="Sun Ephemeris" class="page invisible">
             <h1>Sun</h1>
             <table id="SunTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif"  alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
              </table>
         </div>
-        <div id="Mercury" class="page">
+        <div id="Mercury Ephemeris" class="page">
             <h1>Mercury</h1>
             <table id="MercuryTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
             </table>
         </div>
 
-        <div id="Venus" class="page">
+        <div id="Venus Ephemeris" class="page">
             <h1>Venus</h1>
             <table id="VenusTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
             </table>
         </div>
 
-        <div id="Mars" class="page">
+        <div id="Mars Ephemeris" class="page">
             <div class="swipeRight"></div> <div class="swipeLeft"></div>
             <h1>Mars</h1>
             <div id="marsHorizontalScroller">
@@ -614,7 +669,7 @@ border-bottom: solid 1px #AAAAAA;
 
         </div>
 
-        <div id="Jupiter" class="page">
+        <div id="Jupiter Ephemeris" class="page">
             <h1>Jupiter</h1>
             <div id="jupiterHorizontalScroller">
                 <table id="JupiterTable" cellspacing="0" cellpadding="0" class="planetTable showPositional">
@@ -706,10 +761,10 @@ border-bottom: solid 1px #AAAAAA;
             })();
                 
             (function() {
-                var jupiterToggler = new PhysicalPositionalToggler("Jupiter");
+                var jupiterToggler = new PhysicalPositionalToggler("Jupiter Ephemeris");
                 jupiterToggler.init();
 
-                var marsToggler = new PhysicalPositionalToggler("Mars");
+                var marsToggler = new PhysicalPositionalToggler("Mars Ephemeris");
                 marsToggler.init();
             })();    
                 
@@ -717,35 +772,35 @@ border-bottom: solid 1px #AAAAAA;
          
         </div>
 
-        <div id="Saturn" class="page">
+        <div id="Saturn Ephemeris" class="page">
             <h1>Saturn</h1>
             <table id="SaturnTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
              </table>
         </div>
 
-       <div id="Uranus" class="page">
+       <div id="Uranus Ephemeris" class="page">
             <h1>Uranus</h1>
             <table id="UranusTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
              </table>
         </div>
 
-       <div id="Neptune" class="page">
+       <div id="Neptune Ephemeris" class="page">
             <h1>Neptune</h1>
             <table id="NeptuneTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
              </table>
         </div>
 
-       <div id="Moon" class="page">
+       <div id="Moon Ephemeris" class="page">
             <h1>Moon</h1>
             <table id="MoonTable" cellspacing="0" cellpadding="0"  class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
              </table>
         </div>
 
-       <div id="GalileanMoons" class="page">
+       <div id="Elongations of Galilean Moons" class="page">
             <h1>Elongations of Galilean Moons</h1>
             <div class="satellitesContents">
             <br/>The following colors were used to represent each moon:
@@ -764,7 +819,7 @@ border-bottom: solid 1px #AAAAAA;
              </div>
         </div>
 
-       <div id="SaturnMoons" class="page">
+       <div id="Elongations of Saturn Moons" class="page">
            <h1>Elongations of Saturn's Moons</h1>
             <div class="satellitesContents">
             <br/>The following colors were used to represent each moon:
@@ -785,7 +840,7 @@ border-bottom: solid 1px #AAAAAA;
              </div>
         </div>
         
-       <div id="LunarEclipses" class="page">
+       <div id="Lunar Eclipses" class="page">
             <h1>Lunar Eclipses</h1>
             <br/> Accuracy of the times displayed below is about 1 minute.
             <br/> 
@@ -793,7 +848,7 @@ border-bottom: solid 1px #AAAAAA;
             <div id="MoonEclipsesContainer" class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</div>
         </div>
         
-       <div id="SolarEclipses" class="page">
+       <div id="Solar Eclipses" class="page">
             <h1>Solar Eclipses</h1>
             <div class="leftaligned">
             To obtain the value of a given Besselian element for a given time T, compute it in the following maner:
@@ -808,10 +863,18 @@ border-bottom: solid 1px #AAAAAA;
             <br/>
             <br/>
             The values from the table are valid for a time interval from T0-3h to T0+3h.
+            <br/>
+            <br/>
+            <b>x</b>, <b>y</b>, <b>l1</b> and <b>l2</b> are in Earth radii.<br/>
+            <b>&mu;</b> and <b>d</b> are in sexagesimal degrees (&deg;)
             </div>
             
             <div id="SolarEclipsesContainer" class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</div>
         </div>
+
+<div id="copyright">
+        Copyright 2018  Alexandru Garofide &lt;<a href="mailto:alexandru.garofide@gmail.com">alexandru.garofide@gmail.com</a>&gt;
+</div>
 
         </div>
     
@@ -1019,38 +1082,56 @@ border-bottom: solid 1px #AAAAAA;
     (function(){
     
         // has common functionality with the page, considere refactoring some of it.
-        new RealTimeDataViewer(Pages["Sun"], 
+        new RealTimeDataViewer(Pages["Sun Ephemeris"], 
              document.getElementById("SunHomepageImmediateView"));
 
-       new RealTimeDataViewer(Pages["Jupiter"], 
+       new RealTimeDataViewer(Pages["Jupiter Ephemeris"], 
              document.getElementById("JupiterHomepageImmediateView"));
 
-        new RealTimeDataViewer(Pages["Mars"], 
+        new RealTimeDataViewer(Pages["Mars Ephemeris"], 
              document.getElementById("MarsHomepageImmediateView"));
 
-        new RealTimeDataViewer(Pages["Saturn"], 
+        new RealTimeDataViewer(Pages["Saturn Ephemeris"], 
              document.getElementById("SaturnHomepageImmediateView"));
 
-        new RealTimeDataViewer(Pages["Moon"], 
+        new RealTimeDataViewer(Pages["Moon Ephemeris"], 
              document.getElementById("MoonHomepageImmediateView"));
 
-        new RealTimeDataViewer(Pages["Venus"], 
+        new RealTimeDataViewer(Pages["Venus Ephemeris"], 
              document.getElementById("VenusHomepageImmediateView"));
-
-        if ('serviceWorker' in navigator) {
-          window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/ephemerides/serviceworker.js').then(function(registration) {
-              // Registration was successful
-              console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            }, function(err) {
-              // registration failed :(
-              console.log('ServiceWorker registration failed: ', err);
-            });
-          });
-        }             
 
         })();
     
     if (location.hash)
         setTimeout(onhashchange, 1);
+
+
+      (function(){
+    
+        var registerWorker = function () {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
+                   console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                  // registration failed :(
+                  console.log('ServiceWorker registration failed: ', err);              
+                });
+            }             
+        }
+
+/*        if (navigator.storage && navigator.storage.persist){
+            navigator.storage.persist().then(granted => {
+                if (granted) {
+                    console.log("Storage will not be cleared except by explicit user action");
+                } else {
+                    console.log("Storage may be cleared by the UA under storage pressure.");
+                }
+                registerWorker();
+              }); 
+        } else {
+            registerWorker();
+        } */
+        registerWorker();
+      })();
+        
 </script>

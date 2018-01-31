@@ -21,5 +21,5 @@ var MercuryData = new PlanetData({ number: 1, name: "Mercury",
 							   
 (function () {
     var Page = new PlanetPage (MercuryData, "MercuryTable");
-    Pages["Mercury"] = Page;
+    Pages["Mercury Ephemeris"] = Page;
 })();
