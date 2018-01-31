@@ -37,7 +37,7 @@ var MarsData = new PlanetData({ number: 3, name: "Mars",
     
 (function () {
     var Page = new PlanetPage (MarsData, "MarsTable");
-    Pages["Mars"] = Page;
+    Pages["Mars Ephemeris"] = Page;
     
     Page.tableHeaderInfo['16'] = { "0" : {"text" : "Date", "classes" :  ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: month" };
     Page.tableHeaderInfo['17'] = { "0" : {"text" :"" , "classes" :      ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: day" };

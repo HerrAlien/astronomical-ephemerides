@@ -513,7 +513,7 @@ border-bottom: solid 1px #AAAAAA;
             <a href="#Solar Eclipses"><div class="SolarEclipseLinkButton topmenulink linkButton"><img src="images/solar-eclipse.svg"  alt="Solar Eclipses"></div></a>
             <a href="#Lunar Eclipses"><div class="LunarEclipseLinkButton topmenulink linkButton"><img src="images/lunar-eclipse.svg" alt="Lunar Eclipses"></div></a>
             <a href="#Elongations of Galilean Moons"><div class="GalileanMoonsLinkButton topmenulink linkButton"><img src="images/galilean-moons.svg" alt="Galilean Moons"></div></a>
-            <a href="#Mars"><div class="MarsLinkButton topmenulink linkButton"><img src="images/mars.svg" alt="Mars"></div></a>
+            <a href="#Mars Ephemeris"><div class="MarsLinkButton topmenulink linkButton"><img src="images/mars.svg" alt="Mars"></div></a>
             <a href="#Elongations of Saturn Moons"><div class="SaturnMoonsLinkButton topmenulink linkButton"><img src="images/saturn-moons.svg" alt="Moons of Saturn"></div></a>
             <a href="#Mercury"><div class="MercuryLinkButton topmenulink linkButton"><img src="images/mercury.svg" alt="Mercury"></div></a>
             <a href="#Venus"><div class="VenusLinkButton topmenulink linkButton"><img src="images/venus.svg"  alt="Venus"></div></a>
@@ -534,7 +534,7 @@ border-bottom: solid 1px #AAAAAA;
                 <li><a href="#Solar Eclipses"><div class="largeButtons SolarEclipseLinkButton   linkButton"><img src="images/solar-eclipse.svg" alt="Solar Eclipses"></div></a></li>
                 <li><a href="#Mercury"><div         class="largeButtons MercuryLinkButton   linkButton"><img src="images/mercury.svg" alt="Mercury"></div></a></li>
                 <li><a href="#Venus"><div           class="largeButtons VenusLinkButton   linkButton"><img src="images/venus.svg" alt="Venus"></div></a></li>
-                <li><a href="#Mars"><div            class="largeButtons MarsLinkButton   linkButton"><img src="images/mars.svg" alt="Mars"></div></a></li>
+                <li><a href="#Mars Ephemeris"><div            class="largeButtons MarsLinkButton   linkButton"><img src="images/mars.svg" alt="Mars"></div></a></li>
                 <li><a href="#Jupiter Ephemeris"><div         class="largeButtons JupiterLinkButton   linkButton"><img src="images/jupiter.svg" alt="Jupiter"></div></a></li>
                 <li><a href="#Elongations of Galilean Moons"><div   class="largeButtons GalileanMoonsLinkButton   linkButton"><img src="images/galilean-moons.svg" alt="Galilean Moons"></div></a></li>
                 <li><a href="#Saturn Ephemeris"><div          class="largeButtons SaturnLinkButton   linkButton"><img src="images/saturn.svg" alt="Saturn"></div></a></li>
@@ -594,7 +594,7 @@ border-bottom: solid 1px #AAAAAA;
                     <div class="RA">loading ...</div>
                     <div class="Dec">loading ...</div></div></a>
 
-            <a href="#Mars">
+            <a href="#Mars Ephemeris">
             <div  class="rightNowFrontPageWidget" id="MarsHomepageImmediateView">   <span class="realtimeTitle">  Mars</span>
                     <div class="RA">loading ...</div>
                     <div class="Dec">loading ...</div></div></a>
@@ -653,7 +653,7 @@ border-bottom: solid 1px #AAAAAA;
             </table>
         </div>
 
-        <div id="Mars" class="page">
+        <div id="Mars Ephemeris" class="page">
             <div class="swipeRight"></div> <div class="swipeLeft"></div>
             <h1>Mars</h1>
             <div id="marsHorizontalScroller">
@@ -764,7 +764,7 @@ border-bottom: solid 1px #AAAAAA;
                 var jupiterToggler = new PhysicalPositionalToggler("Jupiter Ephemeris");
                 jupiterToggler.init();
 
-                var marsToggler = new PhysicalPositionalToggler("Mars");
+                var marsToggler = new PhysicalPositionalToggler("Mars Ephemeris");
                 marsToggler.init();
             })();    
                 
@@ -1088,7 +1088,7 @@ border-bottom: solid 1px #AAAAAA;
        new RealTimeDataViewer(Pages["Jupiter Ephemeris"], 
              document.getElementById("JupiterHomepageImmediateView"));
 
-        new RealTimeDataViewer(Pages["Mars"], 
+        new RealTimeDataViewer(Pages["Mars Ephemeris"], 
              document.getElementById("MarsHomepageImmediateView"));
 
         new RealTimeDataViewer(Pages["Saturn Ephemeris"], 

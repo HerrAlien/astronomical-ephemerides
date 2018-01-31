@@ -382,7 +382,11 @@ input {
 #MarsTable tr.secondHeaderRowScrolled {
     width: 832px;
 }
-#Mars  td:nth-of-type(16), #Mars  td:nth-of-type(18), #Mars  td:nth-of-type(19), #Mars  td:nth-of-type(20), #Mars  td:nth-of-type(21){
+#MarsTable td:nth-of-type(16), 
+#MarsTable td:nth-of-type(18), 
+#MarsTable td:nth-of-type(19), 
+#MarsTable td:nth-of-type(20), 
+#MarsTable td:nth-of-type(21){
     border-right: solid 1px black;
 }
 
