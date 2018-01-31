@@ -241,6 +241,6 @@ var SunData = {
         displayPage : PlanetPage.prototype.displayPage,
         timeToHhColumnMm : PlanetPage.prototype.timeToHhColumnMm
     };
-        Pages["Sun"] = Sun;
+        Pages["Sun Ephemeris"] = Sun;
     
 })();

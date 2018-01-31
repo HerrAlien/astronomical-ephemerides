@@ -27,6 +27,6 @@ var SaturnMoonsPage = new MoonsPage ( "SaturnMoonsContainer",
                     'Titan' : {'d' : '', 'color' : 'grey', 'lastPos' : {'X' : 0, 'Y' : 0}}}
 );
 
-Pages["SaturnMoons"] = SaturnMoonsPage;
+Pages["Elongations of Saturn Moons"] = SaturnMoonsPage;
 SaturnMoonsPage.planetFraction = 1/23.0;
 })();

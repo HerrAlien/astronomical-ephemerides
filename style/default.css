@@ -382,17 +382,25 @@ input {
 #MarsTable tr.secondHeaderRowScrolled {
     width: 832px;
 }
-#Mars  td:nth-of-type(16), #Mars  td:nth-of-type(18), #Mars  td:nth-of-type(19), #Mars  td:nth-of-type(20), #Mars  td:nth-of-type(21){
+#MarsTable td:nth-of-type(16), 
+#MarsTable td:nth-of-type(18), 
+#MarsTable td:nth-of-type(19), 
+#MarsTable td:nth-of-type(20), 
+#MarsTable td:nth-of-type(21){
     border-right: solid 1px black;
 }
 
 /* ---------------------------- J U P I T E R ---------------------- */
-
-#Jupiter  td:nth-of-type(16), #Jupiter  td:nth-of-type(18), #Jupiter  td:nth-of-type(19), #Jupiter  td:nth-of-type(20), #Jupiter  td:nth-of-type(21), #Jupiter  td:nth-of-type(22){
+#JupiterTable td:nth-of-type(16), 
+#JupiterTable td:nth-of-type(18), 
+#JupiterTable td:nth-of-type(19), 
+#JupiterTable td:nth-of-type(20), 
+#JupiterTable td:nth-of-type(21), 
+#JupiterTable td:nth-of-type(22){
     border-right: solid 1px black;
 }
 
-#GalileanMoons, #SaturnMoons {
+#Elongations of Galilean Moons, #Elongations of Saturn Moons {
     text-align: center;
 }
 
@@ -589,7 +597,7 @@ input[type=date]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-#SolarEclipses .leftaligned {
+#Solar Eclipses .leftaligned {
     margin-top: 30px;
     margin-bottom: 60px;
     width: 80%;

@@ -22,7 +22,7 @@ var NeptuneData = new PlanetData({ number: 7, name: "Neptune",
 							   
 (function () {
     var Page = new PlanetPage (NeptuneData, "NeptuneTable");
-        Pages["Neptune"] = Page;
+        Pages["Neptune Ephemeris"] = Page;
 
 
 })();

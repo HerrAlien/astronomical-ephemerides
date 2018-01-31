@@ -211,4 +211,4 @@ var MoonEclipsesPage = {
     }
 }
 
-Pages["LunarEclipses"] = MoonEclipsesPage;
+Pages["Lunar Eclipses"] = MoonEclipsesPage;

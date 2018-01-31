@@ -123,5 +123,5 @@ var SolarEclipsesPage = {
     
 };
 
-Pages["SolarEclipses"] = SolarEclipsesPage;
+Pages["Solar Eclipses"] = SolarEclipsesPage;
 
