@@ -610,7 +610,7 @@ input[type=date]::-webkit-inner-spin-button {
     text-align: left;
 }
 
-#copyright {
+#footer {
     margin-top: 40px;
     text-align: center;
     font-size: 20px;
@@ -618,4 +618,12 @@ input[type=date]::-webkit-inner-spin-button {
 
 #credits, #home {
     text-align: justify;
+}
+
+#privacy {
+    max-width: 835px;
+}
+
+#privacy h1 {
+    margin-bottom: 40px;
 }

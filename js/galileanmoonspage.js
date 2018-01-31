@@ -27,5 +27,5 @@ var GalileanMoonsPage = new MoonsPage ( "GalileanMoonsContainer",
                     'Callisto' : {'d' : '', 'color' : 'black', 'lastPos' : {'X' : 0, 'Y' : 0}}}
 );
 
-Pages["Galilean Moons"] = GalileanMoonsPage;
+Pages["Elongations of Galilean Moons"] = GalileanMoonsPage;
 })();
