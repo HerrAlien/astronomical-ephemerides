@@ -22,5 +22,5 @@ var VenusData = new PlanetData({ number: 2, name: "Venus",
 							   
 (function () {
     var Page = new PlanetPage (VenusData, "VenusTable");
-    Pages["Venus"] = Page;
+    Pages["Venus Ephemeris"] = Page;
 })();
