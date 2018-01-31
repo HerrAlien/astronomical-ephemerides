@@ -37,7 +37,7 @@ var JupiterData = new PlanetData({ number: 4, name: "Jupiter",
 							   
 (function () {
     var Page = new PlanetPage (JupiterData, "JupiterTable");
-    Pages["Jupiter"] = Page;
+    Pages["Jupiter Ephemeris"] = Page;
 
     Page.tableHeaderInfo['16'] = { "0" : {"text" : "Date", "classes" :  ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: month" };
     Page.tableHeaderInfo['17'] = { "0" : {"text" :"" , "classes" :      ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: day" };

@@ -22,7 +22,7 @@ var UranusData = new PlanetData({ number: 6, name: "Uranus",
 							   
 (function () {
     var Page = new PlanetPage (UranusData, "UranusTable");
-        Pages["Uranus"] = Page;
+        Pages["Uranus Ephemeris"] = Page;
 
 
 })();

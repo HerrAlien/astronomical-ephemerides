@@ -1,7 +1,7 @@
    
 @media screen {
     #jupiterHorizontalScroller , #marsHorizontalScroller{
-        width: 880px;
+        width: 890px;
         overflow-x: hidden;
         margin-left: auto;
         margin-right: auto;
@@ -116,7 +116,7 @@ tr.firstHeaderRowScrolled{
 }
 
 tr.secondHeaderRowScrolled{
-    margin-top: -106px;
+    margin-top: -108px;
 }
 
 tr.firstHeaderRow, tr.firstHeaderRowScrolled {
@@ -284,6 +284,10 @@ input {
     tr.secondHeaderRow th{
         border-bottom: solid 1px #000000;
     }
+
+    #showNavigationMenuContainer {
+        display: none;
+    }
 }
 
 
@@ -378,17 +382,25 @@ input {
 #MarsTable tr.secondHeaderRowScrolled {
     width: 832px;
 }
-#Mars  td:nth-of-type(16), #Mars  td:nth-of-type(18), #Mars  td:nth-of-type(19), #Mars  td:nth-of-type(20), #Mars  td:nth-of-type(21){
+#MarsTable td:nth-of-type(16), 
+#MarsTable td:nth-of-type(18), 
+#MarsTable td:nth-of-type(19), 
+#MarsTable td:nth-of-type(20), 
+#MarsTable td:nth-of-type(21){
     border-right: solid 1px black;
 }
 
 /* ---------------------------- J U P I T E R ---------------------- */
-
-#Jupiter  td:nth-of-type(16), #Jupiter  td:nth-of-type(18), #Jupiter  td:nth-of-type(19), #Jupiter  td:nth-of-type(20), #Jupiter  td:nth-of-type(21), #Jupiter  td:nth-of-type(22){
+#JupiterTable td:nth-of-type(16), 
+#JupiterTable td:nth-of-type(18), 
+#JupiterTable td:nth-of-type(19), 
+#JupiterTable td:nth-of-type(20), 
+#JupiterTable td:nth-of-type(21), 
+#JupiterTable td:nth-of-type(22){
     border-right: solid 1px black;
 }
 
-#GalileanMoons, #SaturnMoons {
+#Elongations of Galilean Moons, #Elongations of Saturn Moons {
     text-align: center;
 }
 
@@ -414,11 +426,20 @@ input {
     padding-top: 20px;
     page-break-after: always;
     max-width: 1024px;
+    font-size: 25px;
+    padding: 20px;
 }
 
 .moonEclipse table, .solarEclipse table {
     margin-bottom: 20px;
-    font-size: 25px;
+    font-size: 30px;
+}
+
+.moonEclipse table td, .solarEclipse table td{
+    padding: 10px;
+}
+.solarEclipse table td{
+    text-align: right;
 }
 
 .viewport {
@@ -468,7 +489,7 @@ input {
     }
 
     #jupiterHorizontalScroller, #marsHorizontalScroller {
-        width: 630px;
+        width: 647px;
     }
 
     #JupiterTable tr.firstHeaderRow, 
@@ -483,7 +504,7 @@ input {
     }
     
     .showPhysical {
-        margin-left: -634px;
+        margin-left: -650px;
         margin-right: auto;
     }
     
@@ -576,7 +597,7 @@ input[type=date]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-#SolarEclipses .leftaligned {
+#Solar Eclipses .leftaligned {
     margin-top: 30px;
     margin-bottom: 60px;
     width: 80%;
@@ -589,3 +610,12 @@ input[type=date]::-webkit-inner-spin-button {
     text-align: left;
 }
 
+#copyright {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+
+#credits, #home {
+    text-align: justify;
+}
