@@ -456,7 +456,7 @@ border-bottom: solid 1px #AAAAAA;
         <a href="#settings"><div class="SettingsLink topmenulink linkButton"><img src="images/settings.svg" alt="Settings"></div></a>
         <a href="#more" id="MenuLink"><div class="MenuLinkDiv topmenulink linkButton"><img src="images/menu.svg" alt="More ..."></div></a>
         <div id="promotedMenu">
-            <a href="#Sun"><div class="SunLinkButton topmenulink linkButton"><img src="images/sun.svg" alt="Sun"></div></a>
+            <a href="#Sun Ephemeris"><div class="SunLinkButton topmenulink linkButton"><img src="images/sun.svg" alt="Sun"></div></a>
             <a href="#Moon"><div class="MoonLinkButton topmenulink linkButton"><img src="images/moon.svg" alt="Moon"></div></a>
             <a href="#Jupiter"><div class="JupiterLinkButton topmenulink linkButton"><img src="images/jupiter.svg" alt="Jupiter"></div></a>
             <a href="#Saturn"><div class="SaturnLinkButton topmenulink linkButton"><img src="images/saturn.svg" alt="Saturn"></div></a>
@@ -478,7 +478,7 @@ border-bottom: solid 1px #AAAAAA;
         <div id="more" class="page">
             <h1>Menu</h1>
             <ul id="menuList">
-                <li><a href="#Sun"><div             class="largeButtons SunLinkButton   linkButton"><img src="images/sun.svg" alt="Sun"></div></a></li>
+                <li><a href="#Sun Ephemeris"><div             class="largeButtons SunLinkButton   linkButton"><img src="images/sun.svg" alt="Sun"></div></a></li>
                 <li><a href="#Moon"><div            class="largeButtons MoonLinkButton   linkButton"><img src="images/moon.svg" alt="Moon"></div></a></li>
                 <li><a href="#LunarEclipses"><div   class="largeButtons LunarEclipseLinkButton   linkButton"><img src="images/lunar-eclipse.svg" alt="Lunar Eclipses"></div></a></li>
                 <li><a href="#SolarEclipses"><div class="largeButtons SolarEclipseLinkButton   linkButton"><img src="images/solar-eclipse.svg" alt="Solar Eclipses"></div></a></li>
@@ -522,7 +522,7 @@ border-bottom: solid 1px #AAAAAA;
             <img src="images/logomobilebanner.png" alt="Home" id="HomeLinkMobile">
             <h1>Right now:</h1>
             <div id="rightNowFrontPage">
-            <a href="#Sun">
+            <a href="#Sun Ephemeris">
              <div class="rightNowFrontPageWidget" id="SunHomepageImmediateView"> <span class="realtimeTitle">
                       Sun</span>
                     <div class="RA">loading ...</div>
@@ -583,7 +583,7 @@ border-bottom: solid 1px #AAAAAA;
             </div>
         </div>
         
-        <div id="Sun" class="page invisible">
+        <div id="Sun Ephemeris" class="page invisible">
             <h1>Sun</h1>
             <table id="SunTable" cellspacing="0" cellpadding="0" class="planetTable">
             <tr><td class="loadingMemFileContents"><img src="images/loading.gif"  alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
@@ -1032,7 +1032,7 @@ border-bottom: solid 1px #AAAAAA;
     (function(){
     
         // has common functionality with the page, considere refactoring some of it.
-        new RealTimeDataViewer(Pages["Sun"], 
+        new RealTimeDataViewer(Pages["Sun Ephemeris"], 
              document.getElementById("SunHomepageImmediateView"));
 
        new RealTimeDataViewer(Pages["Jupiter"], 
