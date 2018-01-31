@@ -22,7 +22,7 @@ var SaturnData = new PlanetData({ number: 5, name: "Saturn",
 							   
 (function () {
     var Page = new PlanetPage (SaturnData, "SaturnTable");
-        Pages["Saturn"] = Page;
+        Pages["Saturn Ephemeris"] = Page;
 
 
 })();
