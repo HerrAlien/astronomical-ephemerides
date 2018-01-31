@@ -4,14 +4,16 @@
     <title>Astronomical Ephemerides</title>
 
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=835" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="theme-color" content="#ffffff" />
 
     <meta name="keywords" content="astronomy, planet position, ephemerides, ephemeris, eclipse, Sun, Moon, Mercury,
     Venus, Mars, Jupiter, Saturn, Uranus, Neptune, positional ephemerides, physical ephemerides, eclipses, 
     Galilean moons, Saturn moons, Europa, Ganymede, Io, Callisto, Titan, Rhea, Mimas, Enceladus, Tethys, Dione,
-    rise, transit, set, geocentric ephemerides, topocentric ephemerides, Besselian" />
+    rise, transit, set, geocentric ephemerides, topocentric ephemerides, Besselian Elements" />
+
+    <meta name="description" content="A JavaScript utility to calculate ephemerides for the major planets of the solar system." />
 
 	<link rel="stylesheet" type="text/css" href="style/default.css" media="async-do-not-block" />
     <link rel="icon" type="image/png" href="images/ae-icon.png" />
@@ -447,6 +449,54 @@ border-bottom: solid 1px #AAAAAA;
         })();
     </script>
 
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "WebApplication",
+  "name": "Astronomical Ephemerides",
+  "url": "https://herralien-apps.appspot.com/ephemerides/",
+  "sameAs" : "https://herralien-apps.appspot.com/ephemerides/#home",
+  "alternateName" : "Ephemerides",
+  "description": "A JavaScript utility to calculate ephemerides for the major planets of the solar system.",
+  "disambiguatingDescription" : "The application is not intended for astrology - although can be used for it.",
+  "applicationCategory" : "Science",
+  "applicationSubCategory" : "Astronomy",
+  "countriesSupported" : "all",
+  "license" : "https://www.gnu.org/licenses/agpl.html",
+  "isAccessibleForFree" : true,
+  "keywords" : "astronomy, planet position, ephemerides, ephemeris, eclipse, Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, positional ephemerides, physical ephemerides, eclipses,  Galilean moons, Saturn moons, Europa, Ganymede, Io, Callisto, Titan, Rhea, Mimas, Enceladus, Tethys, Dione, rise, transit, set, geocentric ephemerides, topocentric ephemerides, Besselian Elements",
+  
+  "inLanguage" : "en-US",
+  
+  "audience" : {
+    "audienceType" : "astronomers, stargazers"
+  },
+  
+  "author" : {
+    "@context": "http://schema.org/",
+  	"@type": "Person",
+    "name": "Alexandru Garofide",
+    "email" : "alexandru.garofide@gmail.com",
+    "givenName" : "Alexandru",
+    "familyName" : "Garofide"
+  },
+  
+  "copyrightHolder" : {
+    "@context": "http://schema.org/",
+  	"@type": "Person",
+    "name": "Alexandru Garofide",
+    "email" : "alexandru.garofide@gmail.com",
+    "givenName" : "Alexandru",
+    "familyName" : "Garofide"
+  },
+  
+  "copyrightYear" : 2018,
+  "softwareVersion" : "1.0",
+  "storageRequirements" : "7MB",
+  "browserRequirements" : "requires HTML5 support"
+}
+</script>
+
 </head>
 
 <body>
@@ -460,7 +510,7 @@ border-bottom: solid 1px #AAAAAA;
             <a href="#Moon Ephemeris"><div class="MoonLinkButton topmenulink linkButton"><img src="images/moon.svg" alt="Moon"></div></a>
             <a href="#Jupiter Ephemeris"><div class="JupiterLinkButton topmenulink linkButton"><img src="images/jupiter.svg" alt="Jupiter"></div></a>
             <a href="#Saturn Ephemeris"><div class="SaturnLinkButton topmenulink linkButton"><img src="images/saturn.svg" alt="Saturn"></div></a>
-            <a href="#SolarEclipses"><div class="SolarEclipseLinkButton topmenulink linkButton"><img src="images/solar-eclipse.svg"  alt="Solar Eclipses"></div></a>
+            <a href="#Solar Eclipses"><div class="SolarEclipseLinkButton topmenulink linkButton"><img src="images/solar-eclipse.svg"  alt="Solar Eclipses"></div></a>
             <a href="#LunarEclipses"><div class="LunarEclipseLinkButton topmenulink linkButton"><img src="images/lunar-eclipse.svg" alt="Lunar Eclipses"></div></a>
             <a href="#GalileanMoons"><div class="GalileanMoonsLinkButton topmenulink linkButton"><img src="images/galilean-moons.svg" alt="Galilean Moons"></div></a>
             <a href="#Mars"><div class="MarsLinkButton topmenulink linkButton"><img src="images/mars.svg" alt="Mars"></div></a>
@@ -481,7 +531,7 @@ border-bottom: solid 1px #AAAAAA;
                 <li><a href="#Sun Ephemeris"><div             class="largeButtons SunLinkButton   linkButton"><img src="images/sun.svg" alt="Sun"></div></a></li>
                 <li><a href="#Moon Ephemeris"><div            class="largeButtons MoonLinkButton   linkButton"><img src="images/moon.svg" alt="Moon"></div></a></li>
                 <li><a href="#LunarEclipses"><div   class="largeButtons LunarEclipseLinkButton   linkButton"><img src="images/lunar-eclipse.svg" alt="Lunar Eclipses"></div></a></li>
-                <li><a href="#SolarEclipses"><div class="largeButtons SolarEclipseLinkButton   linkButton"><img src="images/solar-eclipse.svg" alt="Solar Eclipses"></div></a></li>
+                <li><a href="#Solar Eclipses"><div class="largeButtons SolarEclipseLinkButton   linkButton"><img src="images/solar-eclipse.svg" alt="Solar Eclipses"></div></a></li>
                 <li><a href="#Mercury"><div         class="largeButtons MercuryLinkButton   linkButton"><img src="images/mercury.svg" alt="Mercury"></div></a></li>
                 <li><a href="#Venus"><div           class="largeButtons VenusLinkButton   linkButton"><img src="images/venus.svg" alt="Venus"></div></a></li>
                 <li><a href="#Mars"><div            class="largeButtons MarsLinkButton   linkButton"><img src="images/mars.svg" alt="Mars"></div></a></li>
@@ -798,7 +848,7 @@ border-bottom: solid 1px #AAAAAA;
             <div id="MoonEclipsesContainer" class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</div>
         </div>
         
-       <div id="SolarEclipses" class="page">
+       <div id="Solar Eclipses" class="page">
             <h1>Solar Eclipses</h1>
             <div class="leftaligned">
             To obtain the value of a given Besselian element for a given time T, compute it in the following maner:
