@@ -387,8 +387,12 @@ input {
 }
 
 /* ---------------------------- J U P I T E R ---------------------- */
-
-#Jupiter  td:nth-of-type(16), #Jupiter  td:nth-of-type(18), #Jupiter  td:nth-of-type(19), #Jupiter  td:nth-of-type(20), #Jupiter  td:nth-of-type(21), #Jupiter  td:nth-of-type(22){
+#JupiterTable td:nth-of-type(16), 
+#JupiterTable td:nth-of-type(18), 
+#JupiterTable td:nth-of-type(19), 
+#JupiterTable td:nth-of-type(20), 
+#JupiterTable td:nth-of-type(21), 
+#JupiterTable td:nth-of-type(22){
     border-right: solid 1px black;
 }
 
