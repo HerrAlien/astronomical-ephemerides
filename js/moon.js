@@ -221,7 +221,7 @@ var MoonData = {
         lastAppendedLine : false
     };
     
-    Pages["Moon"] = MoonPage;
+    Pages["Moon Ephemeris"] = MoonPage;
     
     MoonPage.reset = PlanetPage.prototype.reset;
     MoonPage.appendLine = PlanetPage.prototype.appendLine;
