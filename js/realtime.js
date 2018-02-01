@@ -152,30 +152,35 @@ var JDForRealTimeView = {
         var obj = this;
         this.rtData.onDataUpdated.add (function(data) {
         
-            var decimals = 1e5;
+            var decimalsNum = 5;
+            var decimals = Math.pow(10, decimalsNum);
             var ra = Math.round(data.RA * decimals)/decimals;
             var dec = Math.round(data.Dec * decimals)/decimals;
 
-            obj.viewRA.textContent = Math.floor(ra) + "h." + Math.round(decimals * (ra - Math.floor(ra)));
-            obj.viewDec.textContent = padToTens(dec >= 0 ? Math.floor(dec) : Math.ceil(dec)) + "\u00B0." + Math.round(decimals * (Math.abs(dec) - Math.floor(Math.abs(dec))));
+            obj.viewRA.textContent = Math.floor(ra) + "h." + padToOrder(Math.floor(decimals * (ra - Math.floor(ra))), decimalsNum);
+            obj.viewDec.textContent = padToTens(dec >= 0 ? Math.floor(dec) : Math.ceil(dec)) + "\u00B0." + padToOrder(Math.round(decimals * (Math.abs(dec) - Math.floor(Math.abs(dec)))), decimalsNum);
             
         });
     }
+
+    function padToOrder (number, order) {
+        if (order < 2) {
+            return "" + number;
+        }
+
+        var absNum = Math.abs(number);
+        var threshold = Math.pow(10, Math.floor(order - 1));
+        var res = "";
+
+        for (var i = 1; (i < order) && (absNum < threshold); i++, threshold *= 0.1) {
+            res += "0";
+        }
+        if (number < 0) {
+            res = "-" + res;
+        }
+        return res + "" + absNum;
+    }
     
     function padToTens (a) {
-        var isNegative = a < 0;
-        
-        return ((Math.abs(a) < 10) ?  (isNegative ? "-0" : "0") + Math.abs(a) : a);
-    }
-    
-    function padToThousandth (a) {
-        var intPart = Math.floor(a);
-        var fractionPart = Math.floor(1000 * (a - intPart));
-        fractionPart =  Math.abs(fractionPart);
-        if (fractionPart < 10)
-            fractionPart = "00" + fractionPart;
-        else if (fractionPart < 100)
-            fractionPart = "0" + fractionPart;
-            
-        return padToTens(intPart) + "." + fractionPart;
-    }
+        return padToOrder(a, 2);
+    }   
