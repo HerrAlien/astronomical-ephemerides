@@ -620,10 +620,10 @@ input[type=date]::-webkit-inner-spin-button {
     text-align: justify;
 }
 
-#privacy {
+#error404, #privacy {
     max-width: 835px;
 }
 
-#privacy h1 {
+#privacy h1, #error404 h1 {
     margin-bottom: 40px;
 }
