@@ -8,10 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="theme-color" content="#ffffff" />
 
-    <meta name="keywords" content="astronomy, planet position, ephemerides, ephemeris, eclipse, Sun, Moon, Mercury,
-    Venus, Mars, Jupiter, Saturn, Uranus, Neptune, positional ephemerides, physical ephemerides, eclipses, 
-    Galilean moons, Saturn moons, Europa, Ganymede, Io, Callisto, Titan, Rhea, Mimas, Enceladus, Tethys, Dione,
-    rise, transit, set, geocentric ephemerides, topocentric ephemerides, Besselian Elements" />
+    <meta name="keywords" content="astronomy, astronomical, planet position, ephemerides, ephemeris, eclipse, Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, positional, physical, eclipses, 
+    Galilean moons, Saturn moons, Europa, Ganymede, Io, Callisto, Titan, Rhea, Mimas, Enceladus, Tethys, Dione, rise, transit, set, geocentric, topocentric, Besselian, Elements, data, tables, almanac, equatorial, 
+    coordinates, right ascension, RA, declination, dec, position, angle, elongation" />
 
     <meta name="description" content="A JavaScript utility to calculate ephemerides for the major planets of the solar system." />
 
@@ -460,14 +459,17 @@ border-bottom: solid 1px #AAAAAA;
   "alternateName" : "Ephemerides",
   "description": "A JavaScript utility to calculate ephemerides for the major planets of the solar system.",
   "disambiguatingDescription" : "The application is not intended for astrology - although can be used for it.",
+
+    "screenshot": "https://herralien-apps.appspot.com/ephemerides/images/screenshot-landscape.png",
+
   "applicationCategory" : "Science",
   "applicationSubCategory" : "Astronomy",
   "countriesSupported" : "all",
   "license" : "https://www.gnu.org/licenses/agpl.html",
   "operatingSystem" : "any",
   "isAccessibleForFree" : true,
-  "keywords" : "astronomy, planet position, ephemerides, ephemeris, eclipse, Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, positional ephemerides, physical ephemerides, eclipses,  Galilean moons, Saturn moons, Europa, Ganymede, Io, Callisto, Titan, Rhea, Mimas, Enceladus, Tethys, Dione, rise, transit, set, geocentric ephemerides, topocentric ephemerides, Besselian Elements",
-  
+  "keywords" : "astronomy, astronomical, planet position, ephemerides, ephemeris, eclipse, Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, positional, physical, eclipses, Galilean moons, Saturn moons, Europa, Ganymede, Io, Callisto, Titan, Rhea, Mimas, Enceladus, Tethys, Dione, rise, transit, set, geocentric, topocentric, Besselian, Elements, data, tables, almanac, equatorial, coordinates, right ascension, RA, declination, dec, position, angle, elongation",
+    
   "inLanguage" : "en-US",
   
   "audience" : {
@@ -570,6 +572,10 @@ border-bottom: solid 1px #AAAAAA;
             
         </div>
 
+        <script type="text/JavaScript">
+            "use strict";
+            document.getElementById("JSDisabledPage").style.display = "none";
+        </script>
         
         <div id="home" class="page">
             <img src="images/logomobilebanner.png" alt="Home" id="HomeLinkMobile">
@@ -882,6 +888,13 @@ border-bottom: solid 1px #AAAAAA;
             </div>
         </div>
 
+       <div id="error404" class="page">
+            <h1>Resource does not exist</h1>
+            <div class="leftaligned">
+                The requested resource (<span id="404requestedresource"></span>) is not available.
+                Consider trying one of the following suggestions, or <a href="#home" alt="Home">go back to the main page</a>.
+            </div>
+        </div>
 
 <div id="footer">
 <a href="#privacy">Privacy Policy</a> | <a href="mailto:alexandru.garofide@gmail.com">Contact us</a><br>
@@ -901,11 +914,15 @@ border-bottom: solid 1px #AAAAAA;
 
 <script type="text/JavaScript" >
     
-    "use strict";
-    document.getElementById("JSDisabledPage").style.display = "none";
-    
     var PageTimeInterval = {};
-    var Pages = {};
+    var Pages = {"addPlainPages" : function(titles){
+        for (var i = 0; i < titles.length; i++) {
+            var title = titles[i];
+            Pages[title] = {"displayPage" : function() {}};
+        }
+    }};
+
+    Pages.addPlainPages(["more", "settings", "home", "privacy"]);
 
     var previousPage = false;
     var currentActiveLink = false;
@@ -916,20 +933,26 @@ border-bottom: solid 1px #AAAAAA;
                                                           "cancelable": false }));
     }
     
+    function error404(pageName) {
+        document.getElementById("404requestedresource").textContent = pageName;
+    }
+
     function onhashchange(){
         document.body.scrollTop = 0;
         var hash = location.hash;
         var pageName = hash.slice(1);
+        if (pageName == "error404") {
+            return;
+        }
+
         previousPage = document.getElementById(pageName); 
 
         if (Pages[pageName]){
             Pages[pageName].displayPage();
+        } else {
+            error404 (pageName);
+            window.location.href = "#error404"
         }
-        
-/*        setTimeout(function () {
-        scroller.classList.remove ("scrollerNoMenu");
-        scroller.classList.add ("scrollerWithMenu");
-        }, 10); */
     }
     
     window.addEventListener("hashchange", onhashchange, false);
