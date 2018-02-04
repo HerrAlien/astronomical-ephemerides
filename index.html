@@ -888,11 +888,13 @@ border-bottom: solid 1px #AAAAAA;
             </div>
         </div>
 
-       <div id="error404" class="page">
-            <h1>Resource does not exist</h1>
+       <div id="Search results" class="page">
+            <h1>No page with this name</h1>
             <div class="leftaligned">
-                The requested resource (<span id="404requestedresource"></span>) is not available.
+                The requested page (<span id="requestedresource"></span>) does not exist.
                 Consider trying one of the following suggestions, or <a href="#home" alt="Home">go back to the main page</a>.
+                <ul id="searchsuggestions">
+                </ul>
             </div>
         </div>
 
@@ -911,6 +913,7 @@ border-bottom: solid 1px #AAAAAA;
 <script type="text/JavaScript" src="js/notifications.js"></script>
 <script type="text/JavaScript" src="js/location.js"></script>
 <script type="text/JavaScript" src="js/timeinput.js"></script>
+<script type="text/JavaScript" src="js/pagerank.js"></script>
 
 <script type="text/JavaScript" >
     
@@ -933,30 +936,6 @@ border-bottom: solid 1px #AAAAAA;
                                                           "cancelable": false }));
     }
     
-    function error404(pageName) {
-        document.getElementById("404requestedresource").textContent = pageName;
-    }
-
-    function onhashchange(){
-        document.body.scrollTop = 0;
-        var hash = location.hash;
-        var pageName = hash.slice(1);
-        if (pageName == "error404") {
-            return;
-        }
-
-        previousPage = document.getElementById(pageName); 
-
-        if (Pages[pageName]){
-            Pages[pageName].displayPage();
-        } else {
-            error404 (pageName);
-            window.location.href = "#error404"
-        }
-    }
-    
-    window.addEventListener("hashchange", onhashchange, false);
-
     document.getElementById ("applySettingsChanges").addEventListener("click", function() {
         Location.Controls.commitUserValues();
         TimeStepsData.Controls.commitUserValues();
@@ -1138,6 +1117,39 @@ border-bottom: solid 1px #AAAAAA;
 
         })();
     
+    function error404(pageName) {
+        document.getElementById("requestedresource").textContent = pageName;
+        var list = document.getElementById("searchsuggestions");
+        while(list.hasChildNodes()) {
+          list.removeChild(list.firstChild);
+        }
+        var rankedPages = PageRank.rank(pageName.split(" "));
+        for (var i = 0; i < rankedPages.length; i++) {
+          var anchor = PlanetPage.prototype["addNodeChild"](list, "a");
+          anchor.setAttribute ("href", "#" + rankedPages[i]);
+          PlanetPage.prototype["addNodeChild"](anchor, "li", rankedPages[i]);
+        }
+    }
+
+    function onhashchange(){
+        document.body.scrollTop = 0;
+        var hash = location.hash;
+        var pageName = hash.slice(1);
+        if (pageName == "Search results") {
+            return;
+        }
+
+        previousPage = document.getElementById(pageName); 
+
+        if (Pages[pageName]){
+            Pages[pageName].displayPage();
+        } else {
+            error404 (pageName);
+            window.location.href = "#Search results"
+        }
+    }
+    
+    window.addEventListener("hashchange", onhashchange, false);
     if (location.hash)
         setTimeout(onhashchange, 1);
 
