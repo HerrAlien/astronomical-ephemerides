@@ -921,7 +921,7 @@ border-bottom: solid 1px #AAAAAA;
     var Pages = {"addPlainPages" : function(titles){
         for (var i = 0; i < titles.length; i++) {
             var title = titles[i];
-            Pages[title] = {"displayPage" : function() {}};
+            Pages[title] = {"displayPage" : function(){}};
         }
     }};
 
@@ -944,8 +944,9 @@ border-bottom: solid 1px #AAAAAA;
             PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
             
         for (var pageKey in Pages){
-            if (Pages[pageKey]) {
-                Pages[pageKey].reset();
+            var entry = Pages[pageKey];
+            if (entry && entry.reset) {
+                entry.reset();
             }
         }
 
