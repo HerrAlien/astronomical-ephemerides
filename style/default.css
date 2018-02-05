@@ -623,7 +623,7 @@ input[type=date]::-webkit-inner-spin-button {
     max-width: 835px;
 }
 
-#privacy h1, #error404 h1 {
+#privacy h1, #error404 h1, #Search\20 results h1{
     margin-bottom: 40px;
 }
 
