@@ -82,14 +82,18 @@ var PageRank = {
 
     computeRank : function (searchTerms, keywords) {
         var rank = 0;
+        var dirrectIncrement = 1;
+        var reverseToDirrectRatio = 0.25;
+        var reverseIncrement = reverseToDirrectRatio * dirrectIncrement;
+
         for (var i = 0; i < searchTerms.length; i++) {
             if (PageRank.arrayContainsSubstring(searchTerms[i], keywords)) {
-                rank++;
+                rank += dirrectIncrement;
             }
         }
         for (var i = 0; i < keywords.length; i++) {
             if (PageRank.arrayContainsSubstring(keywords[i], searchTerms)) {
-                rank += 0.25;
+                rank += reverseIncrement;
             }
         }
         return rank;
