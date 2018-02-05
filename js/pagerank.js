@@ -56,10 +56,12 @@ var PageRank = {
                     continue;
                 }
                 var extraKeywords = JSON.stringify(obj).toUpperCase().replace(/"/g, ' ').replace(/{/g, ' ').replace(/,/g, ' ')
-                                    .replace(/[/g, ' ').replace(/}/g, ' ').replace(/]/g, ' ').replace(/:/g, ' ').split(' ');
+                                    .replace(/[/g, ' ').replace(/}/g, ' ').replace(/]/g, ' ').replace(/:/g, ' ').replace(/]]/g, ' ')
+                                    .split(' ');
                 for (var i = 0; i < extraKeywords.length; i++) {
                     var extrakeyword = extraKeywords[i].trim();
-                    if (extrakeyword != "" && isNaN(extrakeyword) && keywords.indexOf(extrakeyword) < 0) {
+                    if (extrakeyword != "" && isNaN(extrakeyword) && keywords.indexOf(extrakeyword) < 0 &&
+                        extrakeyword.length > 1) {
                         keywords.push(extrakeyword);
                     }
                 }
