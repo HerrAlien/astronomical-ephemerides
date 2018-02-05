@@ -18,6 +18,10 @@ var PageRank = {
     // returns an array of page names, in order of likelyhood of being the
     // result the user expected.
     rank : function (searchTerms) {
+        var caseInsensitiveSearchTerms = [];
+        for (var i = 0; i < searchTerms.length; i++) {
+            caseInsensitiveSearchTerms.push(searchTerms[i].toUpperCase());
+        }
         var rankedPages = [];
         var pagesAray = [];
         for (key in Pages) {
@@ -25,7 +29,7 @@ var PageRank = {
                 Pages[key]['PageRankKeywords'] = PageRank.getPageKeywords(key);
             }
             pagesAray.push({name : key, 
-                            rank: PageRank.computeRank(searchTerms, Pages[key]['PageRankKeywords'])});
+                            rank: PageRank.computeRank(caseInsensitiveSearchTerms, Pages[key]['PageRankKeywords'])});
         }
         pagesAray.sort(function(entryA, entryB){ 
             return entryB.rank - entryA.rank; 
@@ -51,7 +55,14 @@ var PageRank = {
                 if (typeof obj == "function") {
                     continue;
                 }
-                keywords.push(JSON.stringify(obj).toUpperCase());
+                var extraKeywords = JSON.stringify(obj).toUpperCase().replace(/"/g, ' ').replace(/{/g, ' ').replace(/,/g, ' ')
+                                    .replace(/[/g, ' ').replace(/}/g, ' ').replace(/]/g, ' ').replace(/:/g, ' ').split(' ');
+                for (var i = 0; i < extraKeywords.length; i++) {
+                    var extrakeyword = extraKeywords[i].trim();
+                    if (extrakeyword != "" && isNaN(extrakeyword) && keywords.indexOf(extrakeyword) < 0) {
+                        keywords.push(extrakeyword);
+                    }
+                }
             }
         }
 
@@ -60,7 +71,7 @@ var PageRank = {
 
     arrayContainsSubstring : function (term, arr) {
       for (var i = 0; i < arr.length; i++) {
-          if (arr[i].indexOf(term) >= 0) {
+          if (arr[i].startsWith(term)) {
               return true;
           }
       }
@@ -69,17 +80,13 @@ var PageRank = {
 
     computeRank : function (searchTerms, keywords) {
         var rank = 0;
-        var caseInsensitiveSearchTerms = [];
         for (var i = 0; i < searchTerms.length; i++) {
-            caseInsensitiveSearchTerms.push(searchTerms[i].toUpperCase());
-        }
-        for (var i = 0; i < caseInsensitiveSearchTerms.length; i++) {
-            if (PageRank.arrayContainsSubstring(caseInsensitiveSearchTerms[i], keywords)) {
+            if (PageRank.arrayContainsSubstring(searchTerms[i], keywords)) {
                 rank++;
             }
         }
         for (var i = 0; i < keywords.length; i++) {
-            if (PageRank.arrayContainsSubstring(keywords[i], caseInsensitiveSearchTerms)) {
+            if (PageRank.arrayContainsSubstring(keywords[i], searchTerms)) {
                 rank += 0.25;
             }
         }
