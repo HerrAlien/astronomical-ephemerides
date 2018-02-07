@@ -1,6 +1,7 @@
 <html lang="en-US">
 
 <head>
+
     <title>Astronomical Ephemerides</title>
 
     <meta charset="UTF-8" />
@@ -1154,34 +1155,20 @@ border-bottom: solid 1px #AAAAAA;
     window.addEventListener("hashchange", onhashchange, false);
     if (location.hash)
         setTimeout(onhashchange, 1);
-
-
-      (function(){
-    
-        var registerWorker = function () {
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
-                   console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, function(err) {
-                  // registration failed :(
-                  console.log('ServiceWorker registration failed: ', err);              
-                });
-            }             
-        }
-
-/*        if (navigator.storage && navigator.storage.persist){
-            navigator.storage.persist().then(granted => {
-                if (granted) {
-                    console.log("Storage will not be cleared except by explicit user action");
-                } else {
-                    console.log("Storage may be cleared by the UA under storage pressure.");
-                }
-                registerWorker();
-              }); 
-        } else {
-            registerWorker();
-        } */
-        registerWorker();
-      })();
         
+
+  (function(){
+
+    var registerWorker = function () {
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
+               console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, function(err) {
+              // registration failed :(
+              console.log('ServiceWorker registration failed: ', err);              
+            });
+        }             
+    }
+    registerWorker();
+  })();
 </script>
