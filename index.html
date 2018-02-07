@@ -1127,9 +1127,9 @@ border-bottom: solid 1px #AAAAAA;
         }
         var rankedPages = PageRank.rank(pageName.split(" "));
         for (var i = 0; i < rankedPages.length; i++) {
-          var anchor = PlanetPage.prototype["addNodeChild"](list, "a");
-          anchor.setAttribute ("href", "#" + rankedPages[i]);
-          PlanetPage.prototype["addNodeChild"](anchor, "li", rankedPages[i]);
+            var li = PlanetPage.prototype["addNodeChild"](list, "li");
+            var anchor = PlanetPage.prototype["addNodeChild"](li, "a", rankedPages[i]);
+            anchor.setAttribute ("href", "#" + rankedPages[i]);
         }
     }
 
