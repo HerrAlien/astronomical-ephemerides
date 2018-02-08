@@ -1159,6 +1159,12 @@ border-bottom: solid 1px #AAAAAA;
 
   (function(){
 
+    try {
+        localStorage.setItem(document.location.href, document.location.href);
+    } catch (err) {
+        console.log("No local storage available ...");
+    }
+
     var registerWorker = function () {
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
