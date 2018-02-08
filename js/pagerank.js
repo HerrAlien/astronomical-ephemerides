@@ -56,10 +56,12 @@ var PageRank = {
                     continue;
                 }
                 var extraKeywords = JSON.stringify(obj).toUpperCase().replace(/"/g, ' ').replace(/{/g, ' ').replace(/,/g, ' ')
-                                    .replace(/[/g, ' ').replace(/}/g, ' ').replace(/]/g, ' ').replace(/:/g, ' ').split(' ');
+                                    .replace(/[/g, ' ').replace(/}/g, ' ').replace(/]/g, ' ').replace(/:/g, ' ').replace(/]]/g, ' ')
+                                    .split(' ');
                 for (var i = 0; i < extraKeywords.length; i++) {
                     var extrakeyword = extraKeywords[i].trim();
-                    if (extrakeyword != "" && isNaN(extrakeyword) && keywords.indexOf(extrakeyword) < 0) {
+                    if (extrakeyword != "" && isNaN(extrakeyword) && keywords.indexOf(extrakeyword) < 0 &&
+                        extrakeyword.length > 1) {
                         keywords.push(extrakeyword);
                     }
                 }
@@ -80,14 +82,18 @@ var PageRank = {
 
     computeRank : function (searchTerms, keywords) {
         var rank = 0;
+        var dirrectIncrement = 1;
+        var reverseToDirrectRatio = 0.25;
+        var reverseIncrement = reverseToDirrectRatio * dirrectIncrement;
+
         for (var i = 0; i < searchTerms.length; i++) {
             if (PageRank.arrayContainsSubstring(searchTerms[i], keywords)) {
-                rank++;
+                rank += dirrectIncrement;
             }
         }
         for (var i = 0; i < keywords.length; i++) {
             if (PageRank.arrayContainsSubstring(keywords[i], searchTerms)) {
-                rank += 0.25;
+                rank += reverseIncrement;
             }
         }
         return rank;
