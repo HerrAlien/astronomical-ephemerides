@@ -85,7 +85,7 @@ th {
 }
 
  .linkButton:hover::after{
-    text-decoration: underline
+    text-decoration: underline;
 }
 
  .linkButton::after {
@@ -901,7 +901,7 @@ input {
     visibility: visible;
 }
 
-@media screen and (min-width: 1840px)  {
+@media screen and (min-width: 1900px)  {
     #MenuLink, .MenuLinkDiv.topmenulink, .MenuLinkDiv.topmenulink img, .MenuLinkDiv.topmenulink::after {
         width: 0px;
         height: 0px;
@@ -1067,4 +1067,68 @@ input[type=date]::-webkit-inner-spin-button {
 
 #Search\20 results ul li{
     margin-bottom: 20px;
+}
+
+#searchArea a{
+    cursor: pointer;
+}
+
+#searchArea {
+    display: inline-block;
+    padding: 0px;
+    margin: 20px 0px 0px 0px;
+    float: right;
+    /* expanded */
+}
+
+#searchArea img {
+    width:62px;
+    float: left;
+    margin-left: 10px;
+}
+
+#searchArea input {
+    height: 50px;
+    top: 0px;
+    float: left;
+    font-size: 36px;
+    max-width: 220px;
+}
+
+#searchArea::after{
+    display: none;
+}
+
+@media  screen and  (min-width: 937px) {
+#searchArea {
+    margin: 12px 0px 0px 0px;
+    float: right;
+    /* expanded */
+}
+
+#searchArea img {
+    width:52px;
+    float: left;
+    margin-left: 10px;
+}
+
+#searchArea input {
+    height: 40px;
+    float: left;
+    font-size: 32px;
+    max-width: 220px;
+}
+
+#searchArea::after{
+    content: "Search";
+    display: block;
+    font-size: 18px;
+    text-align: right;
+    cursor: pointer;
+}
+
+#searchArea:hover::after{
+    text-decoration: underline;
+}
+
 }
