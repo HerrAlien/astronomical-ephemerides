@@ -734,6 +734,12 @@
     }
 
     function onhashchange(){
+
+        var searchFormInput = document.getElementById("searchTerms"); 
+        searchFormInput.classList.remove("visible");
+        searchFormInput.classList.add("hidden");
+        searchFormInput.value = "";
+
         document.body.scrollTop = 0;
         var hash = location.hash;
         var pageName = hash.slice(1);
