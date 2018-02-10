@@ -151,17 +151,38 @@
         <div id="settings" class="page">
             <h1>Settings</h1>
             <div id="settingsContainer">
-            <label>Latitude [&deg;]: <br/><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
-            <label>Longitude [&deg;]: <br/><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
-            <label>Altitude [m]: <br/><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
-            <div class="clear">&nbsp;</div>
-            <Label>Start from: <br/><input type="date" id="startingDate"></input></label>
-            <Label>increment in days: <br/><input type="number" id="incrementDate"></input></label>
-            <Label>for number of days:<br/><input type="number" id="numberOfDays"></input></label>
-            <div class="clear">&nbsp;</div>
-            <input type="button" id = "applySettingsChanges" value="Apply"></input>
-            <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
-            <div class="clear">&nbsp;</div>
+              <h2>Location and time intervals</h2>
+              <label>Latitude [&deg;]: <br/><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
+              <label>Longitude [&deg;]: <br/><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
+              <label>Altitude [m]: <br/><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
+              <div class="clear">&nbsp;</div>
+              <Label>Start from: <br/><input type="date" id="startingDate"></input></label>
+              <Label>increment in days: <br/><input type="number" id="incrementDate"></input></label>
+              <Label>for number of days:<br/><input type="number" id="numberOfDays"></input></label>
+              <div class="clear">&nbsp;</div>
+              <input type="button" id = "applySettingsChanges" value="Apply"></input>
+              <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
+              <div class="clear">&nbsp;</div>
+
+              <h2>Real Time</h2>
+              
+              <div class="rtsettings">
+                <h3>Sun</h3>
+                <input type="checkbox"></input>
+                
+                <div class="clear">&nbsp;</div>
+                <div class="row">
+                  <label>RA </label><input type="checkbox"></input>
+                </div>
+
+                <div class="clear">&nbsp;</div>
+                <div class="row">
+                  <label>Dec </label><input type="checkbox"></input>
+                </div>
+                
+              </div>
+              <div class="clear">&nbsp;</div>
+
             </div>
         </div>
         
