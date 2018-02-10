@@ -82,7 +82,7 @@ var PageRank = {
 
     arrayHasSubstring : function (term, arr) {
       for (var i = 0; i < arr.length; i++) {
-          if (arr[i].indexOf(term) >= 0) {
+          if (arr[i].indexOf(term) >= 0 && Math.abs(arr[i].length - term.length) < 3) {
               return true;
           }
       }
