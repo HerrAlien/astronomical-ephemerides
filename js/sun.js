@@ -149,19 +149,19 @@ var SunData = {
             "14" :  {
                     "0" : { "text" :"P",      "classes" : ["minWidth62", "physicalEphemeris"] },
                     "1" : { "text" :"\u00B0", "classes" : ["minWidth62", "physicalEphemeris"] },
-                    "longText" : "Position angle of the N end of the axis of rotation. It is positive when east of the north point of the disk, negative if west."
+                    "longText" : "Position angle of the N end of the axis of rotation (physical ephemeris). It is positive when east of the north point of the disk, negative if west."
                 },
 
             "15" :  {
                     "0" : { "text" :"B",      "classes" : ["minWidth62", "physicalEphemeris"] },
                     "1" : { "text" :"\u00B0", "classes" : ["minWidth62", "physicalEphemeris"] },
-                    "longText" : "Heliographic latitude of the centre of the disk."
+                    "longText" : "Heliographic latitude of the centre of the disk (physical ephemeris)."
                 },
 
             "16" :  {
                     "0" : { "text" :"L",      "classes" : ["minWidth62", "physicalEphemeris"] },
                     "1" : { "text" :"\u00B0", "classes" : ["minWidth62", "physicalEphemeris"] },
-                    "longText" : "Heliographic longitude of the centre of the disk."
+                    "longText" : "Heliographic longitude of the centre of the disk (physical ephemeris)."
                 },
                 // \u03C0
             "17" :  {

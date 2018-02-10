@@ -201,12 +201,12 @@ var MoonData = {
             "22" :  {
                     "0" : { "text" :"90-l0" , "classes" : ["minWidth52", "physicalEphemeris"] },
                     "1" : { "text" :"\u00B0", "classes" : ["minWidth52", "physicalEphemeris"] },
-                    "longText" : "colongitude of the Sun"
+                    "longText" : "colongitude of the Sun (physical ephemeris)"
                 },
             "23" :  {
                     "0" : { "text" :"b0"    , "classes" : ["minWidth65", "physicalEphemeris"] },
                     "1" : { "text" :"\u00B0", "classes" : ["minWidth65", "physicalEphemeris"] },
-                    "longText" : "latitude of the Sun"
+                    "longText" : "latitude of the Sun (physical ephemeris)"
                 },
         },
         

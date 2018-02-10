@@ -71,9 +71,18 @@ var PageRank = {
         return keywords;
     },
 
-    arrayContainsSubstring : function (term, arr) {
+    arrayHasBeginWithSubstring : function (term, arr) {
       for (var i = 0; i < arr.length; i++) {
           if (arr[i].startsWith(term)) {
+              return true;
+          }
+      }
+      return false;  
+    },
+
+    arrayHasSubstring : function (term, arr) {
+      for (var i = 0; i < arr.length; i++) {
+          if (arr[i].indexOf(term) >= 0) {
               return true;
           }
       }
@@ -85,15 +94,23 @@ var PageRank = {
         var dirrectIncrement = 1;
         var reverseToDirrectRatio = 0.25;
         var reverseIncrement = reverseToDirrectRatio * dirrectIncrement;
+        var dirrecSubstringIncrement = reverseIncrement * reverseToDirrectRatio;
+        var reverseSubstringIncrement = dirrecSubstringIncrement * reverseToDirrectRatio;
 
         for (var i = 0; i < searchTerms.length; i++) {
-            if (PageRank.arrayContainsSubstring(searchTerms[i], keywords)) {
+            if (PageRank.arrayHasBeginWithSubstring(searchTerms[i], keywords)) {
                 rank += dirrectIncrement;
+            }
+            if (PageRank.arrayHasSubstring(searchTerms[i], keywords)) {
+                rank += dirrecSubstringIncrement;
             }
         }
         for (var i = 0; i < keywords.length; i++) {
-            if (PageRank.arrayContainsSubstring(keywords[i], searchTerms)) {
+            if (PageRank.arrayHasBeginWithSubstring(keywords[i], searchTerms)) {
                 rank += reverseIncrement;
+            }
+            if (PageRank.arrayHasSubstring(keywords[i], searchTerms)) {
+                rank += reverseSubstringIncrement;
             }
         }
         return rank;
