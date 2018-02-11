@@ -243,7 +243,6 @@ th {
 	clear: both;
     height: 0px;
 }
-
     
  #credits, .topBorder{
     	border-top: 1px solid #AAAAAA;
@@ -366,27 +365,27 @@ th {
     text-align: center;
 }
 
- #SunHomepageImmediateView {
+.SunBackground {
     background-image: url('images/sun.svg');
 }
 
- #JupiterHomepageImmediateView {
+.JupiterBackground {
     background-image: url('images/jupiter.svg');
 }
 
- #MarsHomepageImmediateView {
+.MarsBackground {
     background-image: url('images/mars.svg');
 }
 
- #SaturnHomepageImmediateView {
+.SaturnBackground {
     background-image: url('images/saturn.svg');
 }
 
- #MoonHomepageImmediateView {
+.MoonBackground {
     background-image: url('images/moon.svg');
 }
 
- #VenusHomepageImmediateView {
+.VenusBackground {
     background-image: url('images/venus.svg');
 }
 
@@ -469,6 +468,65 @@ border-bottom: solid 1px #AAAAAA;
 
 #searchArea a{
     cursor: pointer;
+}
+
+ .HomeLinkButton {
+    float: left;
+    margin-top: 2px;
+    margin-right: 0px;
+}
+
+ .MenuLinkDiv {
+    margin-top: 2px;
+}
+ .MenuLinkDiv.topmenulink img{
+    width: 78px;
+    height: 62px;
+}
+
+ .HomeLinkButton.topmenulink img {
+    width: auto;
+    height: 90px;
+}
+
+ .SettingsLink.topmenulink img {
+    width: 62px;
+    height: 62px;
+}
+
+ h1 {
+    margin-top: 120px;
+    margin-bottom: 0px;
+    font-size: 50px;
+    font-family: Arial;
+    margin-left: auto;
+    display: block;
+    font-weight: normal;
+    margin-right: auto;
+}
+
+ h2 {
+    font-size: 40px;
+}
+
+ h3 {
+    font-size: 32px;
+}
+    
+ #promotedMenu a {
+    float: left;
+    margin-top: 2px;
+    margin-left: 15px;
+}
+
+ #promotedMenu {
+    overflow: hidden;
+    height: 90px;
+}
+
+ .clear {
+	clear: both;
+    height: 0px;
 }
     
     </style>
@@ -647,34 +705,34 @@ border-bottom: solid 1px #AAAAAA;
             <h1>Right now:</h1>
             <div id="rightNowFrontPage">
             <a href="#Sun Ephemeris">
-             <div class="rightNowFrontPageWidget" id="SunHomepageImmediateView"> <span class="realtimeTitle">
+             <div class="rightNowFrontPageWidget SunBackground" id="SunHomepageImmediateView"> <span class="realtimeTitle">
                       Sun</span>
                     <div class="RA">loading ...</div>
                     <div class="Dec">loading ...</div></div></a>
             
             <a href="#Moon Ephemeris">
-             <div  class="rightNowFrontPageWidget" id="MoonHomepageImmediateView"> <span class="realtimeTitle">
+             <div  class="rightNowFrontPageWidget MoonBackground" id="MoonHomepageImmediateView"> <span class="realtimeTitle">
                       Moon</span>
                     <div class="RA">loading ...</div>
                     <div class="Dec">loading ...</div></div></a>
 
             <a href="#Jupiter Ephemeris">
-            <div  class="rightNowFrontPageWidget" id="JupiterHomepageImmediateView"> <span class="realtimeTitle">Jupiter</span>
+            <div  class="rightNowFrontPageWidget JupiterBackground" id="JupiterHomepageImmediateView"> <span class="realtimeTitle">Jupiter</span>
                     <div class="RA">loading ...</div>
                     <div class="Dec">loading ...</div></div></a>
             
             <a href="#Saturn Ephemeris">
-            <div  class="rightNowFrontPageWidget" id="SaturnHomepageImmediateView">   <span class="realtimeTitle">  Saturn</span>
+            <div  class="rightNowFrontPageWidget SaturnBackground" id="SaturnHomepageImmediateView">   <span class="realtimeTitle">  Saturn</span>
                     <div class="RA">loading ...</div>
                     <div class="Dec">loading ...</div></div></a>
 
             <a href="#Mars Ephemeris">
-            <div  class="rightNowFrontPageWidget" id="MarsHomepageImmediateView">   <span class="realtimeTitle">  Mars</span>
+            <div  class="rightNowFrontPageWidget MarsBackground" id="MarsHomepageImmediateView">   <span class="realtimeTitle">  Mars</span>
                     <div class="RA">loading ...</div>
                     <div class="Dec">loading ...</div></div></a>
 
             <a href="#Venus Ephemeris">
-             <div  class="rightNowFrontPageWidget" id="VenusHomepageImmediateView"> <span class="realtimeTitle">
+             <div  class="rightNowFrontPageWidget VenusBackground" id="VenusHomepageImmediateView"> <span class="realtimeTitle">
                       Venus</span>
                     <div class="RA">loading ...</div>
                     <div class="Dec">loading ...</div></div></a>
