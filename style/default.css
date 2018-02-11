@@ -592,7 +592,7 @@ label {
     font-size: 18px;
 }
 
-label input {
+label input, #searchTerms {
     border-top: none;
     border-left: none;
     border-right: none;
@@ -609,7 +609,7 @@ label input:hover {
     color: #003377;
 }
 
-label input:focus, label input:hover {
+label input:focus, label input:hover, #searchTerms {
     outline: none;
     transition: 0.25s;
     border-color: #003377;
