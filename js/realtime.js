@@ -156,6 +156,7 @@ var JDForRealTimeView = {
             var name = this.allKeys[i].name;
             this.allViews[name] = this.view.getElementsByClassName(name)[0];
         }
+        // TODO: on a settings notification, update the visibility ...
         
         this.rtData = new DataForNow(this.page.dataSource);
         var obj = this;
