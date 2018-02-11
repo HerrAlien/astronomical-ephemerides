@@ -144,9 +144,18 @@ var JDForRealTimeView = {
      function RealTimeDataViewer (page, viewElement) {
         this.page = page;
         this.view = viewElement;
-        
-        this.viewRA = this.view.getElementsByClassName("RA")[0];
-        this.viewDec = this.view.getElementsByClassName("Dec")[0];
+
+        // views, per daya key
+        // TODO: get the keys!
+        this.allKeys = [{name: "RA", unit: "h"} , 
+                        {name: "Dec", unit: "\u00B0" }];
+        // TODO: this needs to be updated as the settings change.
+
+        this.allViews = {};
+        for (var i = 0; i < this.allKeys.length; i++) {
+            var name = this.allKeys[i].name;
+            this.allViews[name] = this.view.getElementsByClassName(name)[0];
+        }
         
         this.rtData = new DataForNow(this.page.dataSource);
         var obj = this;
@@ -154,12 +163,16 @@ var JDForRealTimeView = {
         
             var decimalsNum = 5;
             var decimals = Math.pow(10, decimalsNum);
-            var ra = Math.round(data.RA * decimals)/decimals;
-            var dec = Math.round(data.Dec * decimals)/decimals;
-
-            obj.viewRA.textContent = Math.floor(ra) + "h." + padToOrder(Math.floor(decimals * (ra - Math.floor(ra))), decimalsNum);
-            obj.viewDec.textContent = padToTens(dec >= 0 ? Math.floor(dec) : Math.ceil(dec)) + "\u00B0." + padToOrder(Math.round(decimals * (Math.abs(dec) - Math.floor(Math.abs(dec)))), decimalsNum);
             
+            for (var i = 0; i < obj.allKeys.length; i++) {
+                var key = obj.allKeys[i];
+                var name = key.name;
+                var keyData = Math.round(data[name] * decimals)/decimals;
+                obj.allViews[name].textContent = Math.floor(keyData) + 
+                                                  key.unit + "." +
+                                                  padToOrder(Math.floor(decimals * (keyData - Math.floor(keyData))), decimalsNum);
+            }   
+
         });
     }
 
@@ -183,4 +196,6 @@ var JDForRealTimeView = {
     
     function padToTens (a) {
         return padToOrder(a, 2);
-    }   
+    }  
+
+     
