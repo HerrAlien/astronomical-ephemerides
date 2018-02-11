@@ -141,8 +141,8 @@ var JDForRealTimeView = {
 
 // ---------------------------- view side ----------------------------------------    
  
-     function RealTimeDataViewer (page, viewElement) {
-        this.page = page;
+     function RealTimeDataViewer (pageName, viewElement) {
+        this.page = Pages[pageName];
         this.view = viewElement;
 
         // views, per daya key
@@ -177,6 +177,46 @@ var JDForRealTimeView = {
         });
     }
 
+    function CreateRtDomForPage (pageName) {
+        // same host
+        var host = document.getElementById("rightNowFrontPage");
+        
+        var createdDoms = {};
+
+        createdDoms['a'] = CreateDom (host, "a");
+        createdDoms['a'].setAttribute("href", "#" + pageName);
+        var div = CreateDom(createdDoms['a'], "div");
+
+        div.classList.add ("rightNowFrontPageWidget");
+
+        // TODO: the background class.
+        // TODO: this should be from the page object.
+        var objectName = pageName.substr(0, pageName.indexOf(" "));
+        realTimeBackgroundClassName = objectName + "Background"; // horrible, get it from the page object,
+        // like Pages[pageName]["realTimeBackgroundClassName"]
+
+        div.classList.add(realTimeBackgroundClassName);
+
+        var span = CreateDom(div, "span", objectName);
+        span.classList.add("realtimeTitle");
+
+        // TODO: this is for all keys ...
+        for (var key in Pages[pageName].dataSource.getDataAsObjectForJD(0, false)) {
+            createdDoms[key] = CreateDom(div, "div", "loading ...");
+            createdDoms[key].classList.add(key);
+        }
+
+        return createdDoms;
+    }
+    
+    function CreateDom (parent, type, content) {
+        var child = parent.ownerDocument.createElement(type);
+        parent.appendChild(child);
+        if (content)
+            child.textContent =  content;
+        return child;
+    }
+
     function padToOrder (number, order) {
         if (order < 2) {
             return "" + number;
@@ -198,5 +238,3 @@ var JDForRealTimeView = {
     function padToTens (a) {
         return padToOrder(a, 2);
     }  
-
-     

@@ -704,42 +704,43 @@ border-bottom: solid 1px #AAAAAA;
             <img src="images/logomobilebanner.png" alt="Home" id="HomeLinkMobile">
             <h1>Right now:</h1>
             <div id="rightNowFrontPage">
-            <a href="#Sun Ephemeris">
-             <div class="rightNowFrontPageWidget SunBackground" id="SunHomepageImmediateView"> <span class="realtimeTitle">
-                      Sun</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
             
-            <a href="#Moon Ephemeris">
-             <div  class="rightNowFrontPageWidget MoonBackground" id="MoonHomepageImmediateView"> <span class="realtimeTitle">
-                      Moon</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
+                <a href="#Sun Ephemeris">
+                 <div class="rightNowFrontPageWidget SunBackground" id="SunHomepageImmediateView"> <span class="realtimeTitle">
+                          Sun</span>
+                        <div class="RA">loading ...</div>
+                        <div class="Dec">loading ...</div></div></a>
 
-            <a href="#Jupiter Ephemeris">
-            <div  class="rightNowFrontPageWidget JupiterBackground" id="JupiterHomepageImmediateView"> <span class="realtimeTitle">Jupiter</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
-            
-            <a href="#Saturn Ephemeris">
-            <div  class="rightNowFrontPageWidget SaturnBackground" id="SaturnHomepageImmediateView">   <span class="realtimeTitle">  Saturn</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
+                <a href="#Moon Ephemeris">
+                 <div  class="rightNowFrontPageWidget MoonBackground" id="MoonHomepageImmediateView"> <span class="realtimeTitle">
+                          Moon</span>
+                        <div class="RA">loading ...</div>
+                        <div class="Dec">loading ...</div></div></a>
 
-            <a href="#Mars Ephemeris">
-            <div  class="rightNowFrontPageWidget MarsBackground" id="MarsHomepageImmediateView">   <span class="realtimeTitle">  Mars</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
+                <a href="#Jupiter Ephemeris">
+                <div  class="rightNowFrontPageWidget JupiterBackground" id="JupiterHomepageImmediateView"> <span class="realtimeTitle">Jupiter</span>
+                        <div class="RA">loading ...</div>
+                        <div class="Dec">loading ...</div></div></a>
 
-            <a href="#Venus Ephemeris">
-             <div  class="rightNowFrontPageWidget VenusBackground" id="VenusHomepageImmediateView"> <span class="realtimeTitle">
-                      Venus</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
+                <a href="#Saturn Ephemeris">
+                <div  class="rightNowFrontPageWidget SaturnBackground" id="SaturnHomepageImmediateView">   <span class="realtimeTitle">  Saturn</span>
+                        <div class="RA">loading ...</div>
+                        <div class="Dec">loading ...</div></div></a>
 
-            <div class="clear maxWidth">&nbsp;</div>
-        </div>
-        <br/>
+                <a href="#Mars Ephemeris">
+                <div  class="rightNowFrontPageWidget MarsBackground" id="MarsHomepageImmediateView">   <span class="realtimeTitle">  Mars</span>
+                        <div class="RA">loading ...</div>
+                        <div class="Dec">loading ...</div></div></a>
+
+                <a href="#Venus Ephemeris">
+                 <div  class="rightNowFrontPageWidget VenusBackground" id="VenusHomepageImmediateView"> <span class="realtimeTitle">
+                          Venus</span>
+                        <div class="RA">loading ...</div>
+                        <div class="Dec">loading ...</div></div></a>
+
+                <div class="clear maxWidth">&nbsp;</div>
+            </div>
+            <br/>
             Astronomical Ephemerides is a JavaScript utility to calculate ephemerides for the major planets of the solar system. It uses an <a href="https://bitbucket.org/herr_alien/jsaaplus" target="_blank" rel="noopener" title="opens in a new window">Emscripten port</a> of the <a href="http://www.naughter.com/aa.html" target="_blank" rel="noopener" title="opens in a new window">AA+ library</a>. More about Emscripten <a href="http://kripken.github.io/emscripten-site/" target="_blank" rel="noopener" title="opens in a new window">here</a>.<br/>
         <br/>
         The following rules stand for the data computed by the application:
@@ -1223,22 +1224,22 @@ border-bottom: solid 1px #AAAAAA;
     (function(){
     
         // has common functionality with the page, considere refactoring some of it.
-        new RealTimeDataViewer(Pages["Sun Ephemeris"], 
+        new RealTimeDataViewer("Sun Ephemeris", 
              document.getElementById("SunHomepageImmediateView"));
 
-       new RealTimeDataViewer(Pages["Jupiter Ephemeris"], 
+       new RealTimeDataViewer("Jupiter Ephemeris", 
              document.getElementById("JupiterHomepageImmediateView"));
 
-        new RealTimeDataViewer(Pages["Mars Ephemeris"], 
+        new RealTimeDataViewer("Mars Ephemeris", 
              document.getElementById("MarsHomepageImmediateView"));
 
-        new RealTimeDataViewer(Pages["Saturn Ephemeris"], 
+        new RealTimeDataViewer("Saturn Ephemeris", 
              document.getElementById("SaturnHomepageImmediateView"));
 
-        new RealTimeDataViewer(Pages["Moon Ephemeris"], 
+        new RealTimeDataViewer("Moon Ephemeris", 
              document.getElementById("MoonHomepageImmediateView"));
 
-        new RealTimeDataViewer(Pages["Venus Ephemeris"], 
+        new RealTimeDataViewer("Venus Ephemeris", 
              document.getElementById("VenusHomepageImmediateView"));
 
         })();
