@@ -178,7 +178,7 @@ var JDForRealTimeView = {
         });
 
         var onKeyAdded = function (key, dom) {
-            obj.allKeys.push ({"name" : key, "unit": "*", "decimalsNum" : 5});
+            obj.allKeys.push ({"name" : key, "unit": "*", "decimalsNum" : 2});
             obj.allViews [key] = dom;
         }
 
