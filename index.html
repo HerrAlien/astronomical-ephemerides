@@ -1186,24 +1186,11 @@ border-bottom: solid 1px #AAAAAA;
 
     (function(){
     
-        // has common functionality with the page, considere refactoring some of it.
-        new RealTimeDataViewer("Sun Ephemeris", 
-             document.getElementById("SunHomepageImmediateView"));
-
-       new RealTimeDataViewer("Jupiter Ephemeris", 
-             document.getElementById("JupiterHomepageImmediateView"));
-
-        new RealTimeDataViewer("Mars Ephemeris", 
-             document.getElementById("MarsHomepageImmediateView"));
-
-        new RealTimeDataViewer("Saturn Ephemeris", 
-             document.getElementById("SaturnHomepageImmediateView"));
-
-        new RealTimeDataViewer("Moon Ephemeris", 
-             document.getElementById("MoonHomepageImmediateView"));
-
-        new RealTimeDataViewer("Venus Ephemeris", 
-             document.getElementById("VenusHomepageImmediateView"));
+       for (var pageName in Pages) {
+           if (Pages[pageName]["tableHeaderInfo"]) {
+               new RealTimeDataViewer (pageName);
+           }
+       }
 
         })();
     

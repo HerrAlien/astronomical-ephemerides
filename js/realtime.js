@@ -141,7 +141,7 @@ var JDForRealTimeView = {
 
 // ---------------------------- view side ----------------------------------------    
  
-     function RealTimeDataViewer (pageName, viewElement) {
+     function RealTimeDataViewer (pageName) {
         this.page = Pages[pageName];
         var doms = CreateLinkDom (pageName);
         this.view = doms["a"];
