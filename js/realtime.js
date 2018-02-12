@@ -143,12 +143,13 @@ var JDForRealTimeView = {
  
      function RealTimeDataViewer (pageName, viewElement) {
         this.page = Pages[pageName];
-        this.view = viewElement;
+        var doms = CreateLinkDom (pageName);
+        this.view = doms["a"];
 
         // views, per daya key
         // TODO: get the keys!
-        this.allKeys = [{name: "RA", unit: "h", decimalsNum : 5} , 
-                        {name: "Dec", unit: "\u00B0", decimalsNum : 5 }];
+        this.allKeys = [{"name": "RA", "unit": "h", "decimalsNum" : 5} , 
+                        {"name": "Dec", "unit": "\u00B0", "decimalsNum" : 5 }];
 
         this.allViews = {};
         for (var i = 0; i < this.allKeys.length; i++) {
@@ -175,10 +176,16 @@ var JDForRealTimeView = {
             }   
 
         });
+
+        var onKeyAdded = function (key, dom) {
+            obj.allKeys.push ({"name" : key, "unit": "*", "decimalsNum" : 5});
+            obj.allViews [key] = dom;
+        }
+
+        CreateRtDomForPage (doms['div'], pageName, onKeyAdded);
     }
 
-    function CreateRtDomForPage (pageName) {
-        // same host
+    function CreateLinkDom (pageName) {
         var host = document.getElementById("rightNowFrontPage");
         
         var createdDoms = {};
@@ -186,28 +193,37 @@ var JDForRealTimeView = {
         createdDoms['a'] = CreateDom (host, "a");
         createdDoms['a'].setAttribute("href", "#" + pageName);
         var div = CreateDom(createdDoms['a'], "div");
+        createdDoms['div'] = div;
 
         div.classList.add ("rightNowFrontPageWidget");
 
         // TODO: the background class.
         // TODO: this should be from the page object.
         var objectName = pageName.substr(0, pageName.indexOf(" "));
-        realTimeBackgroundClassName = objectName + "Background"; // horrible, get it from the page object,
+        var realTimeBackgroundClassName = objectName + "Background"; // horrible, get it from the page object,
         // like Pages[pageName]["realTimeBackgroundClassName"]
 
         div.classList.add(realTimeBackgroundClassName);
 
         var span = CreateDom(div, "span", objectName);
         span.classList.add("realtimeTitle");
-
-        // TODO: this is for all keys ...
-        // This wil throw initially. Can't really subscribe to data notifications untill then.
-        for (var key in Pages[pageName].dataSource.getDataAsObjectForJD(0, false)) {
-            createdDoms[key] = CreateDom(div, "div", "loading ...");
-            createdDoms[key].classList.add(key);
-        }
-
         return createdDoms;
+    };
+
+    function CreateRtDomForPage (domHost, pageName, onViewAdded) {
+        // same host
+        try {
+            // TODO: this is for all keys ...
+            // This wil throw initially. Notifications will not update the view.
+            for (var key in Pages[pageName].dataSource.getDataAsObjectForJD(0, false)) {
+                var createdDom = CreateDom(domHost, "div", "loading ...");
+                createdDom.classList.add(key);
+                onViewAdded (key, createdDom);
+            }
+
+        } catch (err) {
+            setTimeout (function() { CreateRtDomForPage(domHost, pageName, onViewAdded); }, 100);
+        }
     }
     
     function CreateDom (parent, type, content) {
