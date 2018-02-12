@@ -284,7 +284,12 @@ th {
     text-decoration: underline;
     padding-bottom: 5px;
      margin-bottom: 60px;
-}    
+}  
+
+.rightNowFrontPageWidget .Month,
+.rightNowFrontPageWidget .Day {
+    display: none;
+}
     
  #HomeLinkMobile, #HomeLinkMobileNav {
     display: none;
@@ -515,7 +520,7 @@ border-bottom: solid 1px #AAAAAA;
     }
 
     .rightNowFrontPageWidget::-webkit-scrollbar {
-        width: 0px;
+        width: 3px;
     }
 
 }
@@ -562,14 +567,48 @@ border-bottom: solid 1px #AAAAAA;
 
 
  .RA::before {
-    content: "R.A. ";
+    content: "\03B1: ";
 }
 
  .Dec::before {
-    content: "Dec. ";
+    content: "\03B4: ";
 }
 
+ .DistanceToEarth::before {
+    content: "\0394: ";
+ }
 
+ .Diameter::before {
+     content: "\03C6: ";
+ }
+
+ .MeridianTransit::before {
+     content: "Transit: ";
+ }
+
+.P::before {
+    content: "N Pole PA: ";
+}
+
+.B0::before {
+    content: "Latitude of center: ";
+}
+
+.L0::before {
+    content: "Longitude of center: ";
+}
+
+.Parallax::before {
+    content: "\03C0: ";
+}
+
+.Rise::before {
+    content: "Rise: ";
+}
+
+.Set::before {
+    content: "Set: ";
+}
    
     </style>
     
