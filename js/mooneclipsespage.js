@@ -208,7 +208,9 @@ var MoonEclipsesPage = {
         
         MoonEclipsesPage.displayTimings (oppositionData, mainDiv);
         MoonEclipsesPage.displayGraph (oppositionData, mainDiv); 
-    }
+    },
+    keywordsArray : ["Shadow", "Umbra", "Penumbra", "Partial", "Total", "Eclipse",
+                      "Contact", "First", "Last"]
 }
 
 Pages["Lunar Eclipses"] = MoonEclipsesPage;

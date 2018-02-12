@@ -114,7 +114,7 @@ th {
 }
 
  .linkButton:hover::after{
-    text-decoration: underline
+    text-decoration: underline;
 }
 
  .linkButton::after {
@@ -188,7 +188,7 @@ th {
  .HomeLinkButton {
     float: left;
     margin-top: 2px;
-    margin-right: 20px;
+    margin-right: 0px;
 }
 
  .MenuLinkDiv {
@@ -243,6 +243,7 @@ th {
 	clear: both;
     height: 0px;
 }
+
     
  #credits, .topBorder{
     	border-top: 1px solid #AAAAAA;
@@ -435,6 +436,41 @@ border-bottom: solid 1px #AAAAAA;
     height: 27px;
 }
 
+
+#searchArea {
+    display: inline-block;
+    padding: 0px;
+    margin: 20px 0px 0px 0px;
+    float: right;
+    /* expanded */
+}
+
+#searchArea img {
+    width:62px;
+    float: left;
+    margin-left: 10px;
+}
+
+#searchArea input {
+    height: 50px;
+    top: 0px;
+    float: left;
+    font-size: 36px;
+    width: 220px;
+}
+
+#searchArea input.hidden {
+    display: none;
+}
+
+#searchArea input.visible {
+    display: block;
+}
+
+#searchArea a{
+    cursor: pointer;
+}
+    
     </style>
     
     
@@ -511,6 +547,10 @@ border-bottom: solid 1px #AAAAAA;
         <a href="#home"   id="HomeLinkMobileNav"><div class="HomeLinkButton topmenulink linkButton"><img src="images/home-3.svg" alt="Home"></div></a>
         <a href="#settings"><div class="SettingsLink topmenulink linkButton"><img src="images/settings.svg" alt="Settings"></div></a>
         <a href="#more" id="MenuLink"><div class="MenuLinkDiv topmenulink linkButton"><img src="images/menu.svg" alt="More ..."></div></a>
+        <div id="searchArea">
+            <input type="text" class="hidden" id="searchTerms" placeholder="   [Search]"/>
+            <a nohref="" id="searchButton"><img src="images/magnifying-glass.svg" alt="Search" /></a>
+        </div>
         <div id="promotedMenu">
             <a href="#Sun Ephemeris"><div class="SunLinkButton topmenulink linkButton"><img src="images/sun.svg" alt="Sun"></div></a>
             <a href="#Moon Ephemeris"><div class="MoonLinkButton topmenulink linkButton"><img src="images/moon.svg" alt="Moon"></div></a>
@@ -530,7 +570,7 @@ border-bottom: solid 1px #AAAAAA;
     <a nohref="" id="showNavigationMenu"><div id="showNavigationMenuContainer"><img src="images/menu.svg" alt="More ..."></div></a>
     
     <div class="clear maxWidth">&nbsp;</div>
-    <div id="scroller" class="scrollerWithMenu">
+    <div id="scroller">
         <div id="more" class="page">
             <h1>Menu</h1>
             <ul id="menuList">
@@ -1092,6 +1132,7 @@ border-bottom: solid 1px #AAAAAA;
 <script type="text/JavaScript" src="js/solareclipsesdata.js"></script>
 <script type="text/JavaScript" src="js/solareclipsespage.js"></script>
 <script type="text/JavaScript" src="js/realtime.js"></script>
+<script type="text/JavaScript" src="js/searchform.js"></script>
 
 <script>
 
@@ -1135,6 +1176,12 @@ border-bottom: solid 1px #AAAAAA;
     }
 
     function onhashchange(){
+
+        var searchFormInput = document.getElementById("searchTerms"); 
+        searchFormInput.classList.remove("visible");
+        searchFormInput.classList.add("hidden");
+        searchFormInput.value = "";
+
         document.body.scrollTop = 0;
         var hash = location.hash;
         var pageName = hash.slice(1);
