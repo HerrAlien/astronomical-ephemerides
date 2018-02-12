@@ -147,31 +147,31 @@ var JDForRealTimeView = {
 
         // views, per daya key
         // TODO: get the keys!
-        this.allKeys = [{name: "RA", unit: "h"} , 
-                        {name: "Dec", unit: "\u00B0" }];
-        // TODO: this needs to be updated as the settings change.
+        this.allKeys = [{name: "RA", unit: "h", decimalsNum : 5} , 
+                        {name: "Dec", unit: "\u00B0", decimalsNum : 5 }];
 
         this.allViews = {};
         for (var i = 0; i < this.allKeys.length; i++) {
             var name = this.allKeys[i].name;
             this.allViews[name] = this.view.getElementsByClassName(name)[0];
         }
-        // TODO: on a settings notification, update the visibility ...
+        // TODO: on a settings notification, update the visibility for all entries in this.allViews
         
         this.rtData = new DataForNow(this.page.dataSource);
         var obj = this;
         this.rtData.onDataUpdated.add (function(data) {
         
-            var decimalsNum = 5;
-            var decimals = Math.pow(10, decimalsNum);
             
             for (var i = 0; i < obj.allKeys.length; i++) {
                 var key = obj.allKeys[i];
+                var decimals = Math.pow(10, key.decimalsNum);
                 var name = key.name;
                 var keyData = Math.round(data[name] * decimals)/decimals;
-                obj.allViews[name].textContent = Math.floor(keyData) + 
-                                                  key.unit + "." +
-                                                  padToOrder(Math.floor(decimals * (keyData - Math.floor(keyData))), decimalsNum);
+                if (obj.allViews[name]) {
+                    obj.allViews[name].textContent = Math.floor(keyData) + 
+                                                      key.unit + "." +
+                                                      padToOrder(Math.floor(decimals * (keyData - Math.floor(keyData))), key.decimalsNum);
+                }
             }   
 
         });
@@ -201,6 +201,7 @@ var JDForRealTimeView = {
         span.classList.add("realtimeTitle");
 
         // TODO: this is for all keys ...
+        // This wil throw initially. Can't really subscribe to data notifications untill then.
         for (var key in Pages[pageName].dataSource.getDataAsObjectForJD(0, false)) {
             createdDoms[key] = CreateDom(div, "div", "loading ...");
             createdDoms[key].classList.add(key);
