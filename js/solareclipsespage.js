@@ -119,7 +119,9 @@ var SolarEclipsesPage = {
         for (var key in elements) {
             addRowDataForParameter (key);
         }        
-    }
+    },
+    keywordsArray : ["Besselian", "Elements", "Shadow", "Umbra", "Penumbra", "Antumbra", "Partial", "Total", "Annular", "Eclipse",
+                      "Contact", "First", "Last"]
     
 };
 
