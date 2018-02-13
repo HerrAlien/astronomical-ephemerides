@@ -1102,8 +1102,6 @@ border-bottom: solid 1px #AAAAAA;
          
 </script>
 
-<script type="text/JavaScript" src="js/aajs.js" async=""></script>
-
 <script type="text/javascript" src="js/matrix.js"></script>
 <script type="text/javascript" src="js/numerical.js"></script>
 <script type="text/JavaScript" src="js/planetdata.js"></script>
@@ -1204,18 +1202,35 @@ border-bottom: solid 1px #AAAAAA;
         setTimeout(onhashchange, 1);
         
 
+    function injectAAJS() {
+        var scr = document.createElement ("script");
+        scr.setAttribute ("type", "text/javascript");
+        scr.setAttribute("src", "js/aajs.js");
+        document.documentElement.appendChild(scr);
+    }
+
+   window.addEventListener('message', event => { 
+        console.log(event);
+        injectAAJS();
+   }, false);
+
+
   (function(){
     var registerWorker = function () {
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-               (registration.installing || registration.active).postMessage ({"action" : "fetchAndCache", "parameter" : "aajs.js.mem"});
+               var worker = (registration.installing || registration.active);
+               worker.postMessage ({"action" : "cache", "parameter" : "aajs.js.mem"});
             }, function(err) {
               // registration failed :(
               console.log('ServiceWorker registration failed: ', err);              
             });
-        }             
+        } else {
+            injectAAJS();
+        }              
     }
     registerWorker();
+
   })();
 </script>
