@@ -272,7 +272,6 @@ th {
         background-position: center;
         display: inline-block;
         margin: 10px;
-        overflow-y: hidden;
         overflow-x: hidden;
     }
 
@@ -281,9 +280,13 @@ th {
     border-bottom: 1px solid #AAAAAA;
     width: 100%;
     font-size: 30px;
-    text-decoration: underline;
+    text-decoration: none;
     padding-bottom: 5px;
  }  
+
+ .realtimeTitle:hover {
+     text-decoration: underline;
+ }
 
 .rightNowFrontPageWidget .Month,
 .rightNowFrontPageWidget .Day {
@@ -299,29 +302,28 @@ th {
     background: rgba(255, 255, 255, 0.8);
     margin-left: 10px;
     width: 100%;
+    cursor: pointer;
 }
 
 .scrollableRT {
-    overflow-y: auto;
-    height: 100%;
     padding-top: 60px;
 }
 
-.rightNowFrontPageWidget::-webkit-scrollbar {
+.scrollableRT::-webkit-scrollbar {
     width: 6px;
 }
 
 /* Handle */
-.rightNowFrontPageWidget::-webkit-scrollbar-thumb {
+.scrollableRT::-webkit-scrollbar-thumb {
     background: #888; 
 }
 
 /* Handle on hover */
-.rightNowFrontPageWidget::-webkit-scrollbar-thumb:hover {
+.scrollableRT::-webkit-scrollbar-thumb:hover {
     background: #555; 
 }
 
-.rightNowFrontPageWidget::-webkit-scrollbar-track {
+.scrollableRT::-webkit-scrollbar-track {
     background: #FFFFFF; 
 }
 
@@ -469,6 +471,7 @@ border-bottom: solid 1px #AAAAAA;
 
      .realtimeTitle {
         font-size: 48px;
+        text-decoration: underline;
     }
 
      .rightNowFrontPageWidget div {
@@ -526,7 +529,7 @@ border-bottom: solid 1px #AAAAAA;
         display: block;
     }
 
-    .rightNowFrontPageWidget::-webkit-scrollbar {
+    .scrollableRT::-webkit-scrollbar {
         width: 3px;
     }
 
