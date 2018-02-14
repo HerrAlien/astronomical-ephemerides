@@ -32,18 +32,21 @@ function PlanetPage (planetDataSource, tableName) {
         "0" : {
                 "0" : { "text" : "Date", "classes" : ["minWidth20"] },
                 "1" : { "text" : "", "classes" : ["minWidth20"] },
-                "longText" : "Date: month"
+                "longText" : "Date: month",
+                "dataKey" : 'Month'
             } ,
 
         "1" : {
                 "0" : { "text" : "", "classes" : ["minWidth20"] },
                 "1" : { "text" : "", "classes" : ["minWidth20"] },
-                "longText" : "Date: day"
+                "longText" : "Date: day",
+                "dataKey" : 'Day'
             },
         "2" : {
                 "0" : { "text" : "\u03B1", "classes" : ["minWidth20"] },
                 "1" : { "text" : "h", "classes" : ["minWidth20"] },
-                "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
+                "longText" : "Apparent geocentric equatorial coordinates: Right Ascension",
+                "dataKey" : 'RA'
             },
         "3" : {
                 "0" : { "text" : "(RA)", "classes" : ["minWidth20", "screenOnly"] },
@@ -58,7 +61,8 @@ function PlanetPage (planetDataSource, tableName) {
         "5" :  {
                 "0" : { "text" : "\u03B4", "classes" : ["minWidth20"] },
                 "1" : { "text" : "\u00B0", "classes" : ["minWidth25"] },
-                "longText" : "Apparent geocentric equatorial coordinates: Declination"
+                "longText" : "Apparent geocentric equatorial coordinates: Declination",
+                "dataKey" : 'Dec'
             },
         "6" :  {
                 "0" : { "text" : "(Dec)", "classes" : ["minWidth20", "screenOnly" ] },
@@ -73,46 +77,54 @@ function PlanetPage (planetDataSource, tableName) {
         "8" :  {
                 "0" : { "text" : "\u03D5", "classes" : ["minWidth20"] },
                 "1" : { "text" : "''", "classes" : ["minWidth20"    ] },
-                "longText" : "Apparent diameter"
+                "longText" : "Apparent diameter",
+                "dataKey" : 'Diameter'
             },
         "9" : {
                    "0" : { "text" : "Rise", "classes" :  ["minWidth50"] },
                    "1" : { "text" : "hh:mm", "classes" : ["minWidth50"] },
-                   "longText" : "The UTC time of rise above horizon"
+                   "longText" : "The UTC time of rise above horizon",
+                "dataKey" : 'Rise'
             },
         "10" : {
                    "0" : { "text" : "Transit", "classes" : ["minWidth40"  ] },
                    "1" : { "text" : "hh:mm", "classes" : ["minWidth50"] },
-                   "longText" : "The UTC time of the transit across the meridian"
+                   "longText" : "The UTC time of the transit across the meridian",
+                "dataKey" : 'MeridianTransit'
             },
         "11" : {
                    "0" : { "text" : "Set", "classes" : ["minWidth40"  ] },
                    "1" : { "text" : "hh:mm", "classes" : ["minWidth55"] },
-                   "longText" : "The UTC time of setting"
+                   "longText" : "The UTC time of setting",
+                "dataKey" : 'Set'
             },
 
             "12" :  {
                 "0" : { "text" : "\u0394", "classes" : ["minWidth55"] },
                 "1" : { "text" : "A.U.", "classes" : ["minWidth55"  ] },
-                "longText" : "Distance to Earth, in astronomical units"
+                "longText" : "Distance to Earth, in astronomical units",
+                "dataKey" : 'DistanceToEarth'
             },
 
             "13" :  {
                 "0" : { "text" : "R", "classes" : ["minWidth55"   ] },
                 "1" : { "text" : "A.U.", "classes" : ["minWidth55"] },
-                "longText" : "Distance to Sun, in astronomical units"
+                "longText" : "Distance to Sun, in astronomical units",
+                "dataKey" : 'DistanceToSun'
             },
 
             "14" :  {
                 "0" : { "text" : "Elong", "classes" : ["minWidth70" ] },
                 "1" : { "text" : "\u00B0", "classes" : ["minWidth62"] },
-                "longText" : "Elongation angle from the Sun"
+                "longText" : "Elongation angle from the Sun",
+                "dataKey" : 'Elongation'
             },
 
         "15" :  {
                 "0" : { "text" : "Phase", "classes" : ["minWidth50"] },
                 "1" : { "text" : "\u00B0", "classes" : ["minWidth50"] },
-                "longText" : "The phase of the planet (illuminated fraction of disk, as seen from Earth)"
+                "longText" : "The phase of the planet (illuminated fraction of disk, as seen from Earth)",
+                "dataKey" : 'Phase'
             }
         };
     
