@@ -148,8 +148,7 @@ var JDForRealTimeView = {
 
         // views, per daya key
         // TODO: get the keys!
-        this.allKeys = [{"name": "RA", "unit": "h", "decimalsNum" : 5} , 
-                        {"name": "Dec", "unit": "\u00B0", "decimalsNum" : 5 }];
+        this.allKeys = [];
 
         this.allViews = {};
         for (var i = 0; i < this.allKeys.length; i++) {
@@ -167,10 +166,10 @@ var JDForRealTimeView = {
                 var key = obj.allKeys[i];
                 var decimals = Math.pow(10, key.decimalsNum);
                 var name = key.name;
-                var keyData = Math.round(data[name] * decimals)/decimals;
+                var keyData = Math.round(key.factor * data[name] * decimals)/decimals;
                 if (obj.allViews[name]) {
                     obj.allViews[name].textContent = Math.floor(keyData) + 
-                                                      key.unit + "." +
+                                                      key.unit + " ." +
                                                       padToOrder(Math.floor(decimals * (keyData - Math.floor(keyData))), key.decimalsNum);
                 }
             }   
@@ -178,8 +177,8 @@ var JDForRealTimeView = {
         });
 
         var onKeyAdded = function (key, dom) {
-            obj.allKeys.push ({"name" : key, "unit": "\u00B0", "decimalsNum" : 2});
-            obj.allViews [key] = dom;
+            obj.allKeys.push (key);
+            obj.allViews [key.name] = dom;
         }
 
         CreateRtDomForPage (doms['div'], pageName, onKeyAdded);
@@ -218,7 +217,26 @@ var JDForRealTimeView = {
             for (var key in Pages[pageName].dataSource.getDataAsObjectForJD(0, false)) {
                 var createdDom = CreateDom(domHost, "div", "loading ...");
                 createdDom.classList.add(key);
-                onViewAdded (key, createdDom);
+
+                var unit = "\u00B0";
+                var scaleFactor = 1;
+                for (var tableKey in Pages[pageName].tableHeaderInfo) {
+                    if (key == Pages[pageName].tableHeaderInfo[tableKey].dataKey) {
+                        unit = Pages[pageName].tableHeaderInfo[tableKey]["1"]["text"];
+                        createdDom.setAttribute("alt", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
+                        createdDom.setAttribute("title", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
+                    }
+                }
+                
+                if (unit == "'") {
+                    scaleFactor = 60;
+                } else if (unit == "''") {
+                    scaleFactor = 3600;
+                }else if (unit == "hh:mm") {
+                    unit = "h";
+                }
+
+                onViewAdded ({"name" : key, "unit": unit, "decimalsNum" : 4, "factor" : scaleFactor}, createdDom);
             }
 
         } catch (err) {
