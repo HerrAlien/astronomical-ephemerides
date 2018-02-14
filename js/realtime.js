@@ -190,14 +190,16 @@ var JDForRealTimeView = {
         this.reset();
     }
 
+    function alertDivTitle() {
+        alert (this.title);
+    }
+
     function CreateLinkDom (pageName) {
         var host = document.getElementById("rightNowFrontPage");
         
         var createdDoms = {};
 
-        createdDoms['a'] = CreateDom (host, "a");
-        createdDoms['a'].setAttribute("href", "#" + pageName);
-        var div = CreateDom(createdDoms['a'], "div");
+        var div = CreateDom(host, "div");
         createdDoms['div'] = div;
 
         div.classList.add ("rightNowFrontPageWidget");
@@ -210,7 +212,11 @@ var JDForRealTimeView = {
 
         div.classList.add(realTimeBackgroundClassName);
 
-        var span = CreateDom(div, "span", objectName);
+        createdDoms['a'] = CreateDom (div, "a");
+        createdDoms['a'].setAttribute("href", "#" + pageName);
+
+
+        var span = CreateDom(createdDoms['a'], "span", objectName);
         span.classList.add("realtimeTitle");
         return createdDoms;
     };
@@ -231,6 +237,7 @@ var JDForRealTimeView = {
                         unit = Pages[pageName].tableHeaderInfo[tableKey]["1"]["text"];
                         createdDom.setAttribute("alt", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
                         createdDom.setAttribute("title", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
+                        createdDom.onclick = alertDivTitle;
                     }
                 }
                 
