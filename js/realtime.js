@@ -236,7 +236,7 @@ var JDForRealTimeView = {
                     unit = "h";
                 }
 
-                onViewAdded ({"name" : key, "unit": unit, "decimalsNum" : 4, "factor" : scaleFactor}, createdDom);
+                onViewAdded ({"name" : key, "unit": unit, "decimalsNum" : 3, "factor" : scaleFactor}, createdDom);
             }
 
         } catch (err) {
