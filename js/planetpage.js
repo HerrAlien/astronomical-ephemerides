@@ -101,14 +101,14 @@ function PlanetPage (planetDataSource, tableName) {
 
             "12" :  {
                 "0" : { "text" : "\u0394", "classes" : ["minWidth55"] },
-                "1" : { "text" : "A.U.", "classes" : ["minWidth55"  ] },
+                "1" : { "text" : "au", "classes" : ["minWidth55"  ] },
                 "longText" : "Distance to Earth, in astronomical units",
                 "dataKey" : 'DistanceToEarth'
             },
 
             "13" :  {
                 "0" : { "text" : "R", "classes" : ["minWidth55"   ] },
-                "1" : { "text" : "A.U.", "classes" : ["minWidth55"] },
+                "1" : { "text" : "au", "classes" : ["minWidth55"] },
                 "longText" : "Distance to Sun, in astronomical units",
                 "dataKey" : 'DistanceToSun'
             },

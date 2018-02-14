@@ -298,7 +298,6 @@ th {
 .rightNowFrontPageWidget div,
 .realtimeTitle {
     background: rgba(255, 255, 255, 0.8);
-    display: block;
     margin-left: 10px;
     width: 100%;
 }
@@ -391,6 +390,10 @@ border-bottom: solid 1px #AAAAAA;
 
 #searchArea a{
     cursor: pointer;
+}
+
+.hidden {
+    display: none;
 }
 
  .HomeLinkButton {
@@ -610,6 +613,58 @@ border-bottom: solid 1px #AAAAAA;
     content: "Set: ";
 }
    
+.DistanceToSun::before {
+    content: "R: ";
+}
+
+.Elongation::before {
+    content: "Elongation: "
+}
+
+.Phase::before {
+    content: "Phase: "
+}
+
+.EarthDeclination::before {
+    content: "DE: "
+}
+
+.SunDeclination::before {
+    content: "DS: "
+}
+
+.CentralMeridianLongitude::before {
+    content: "L0: "
+}
+
+.CentralMeridianApparentLongitude_System1::before {
+    content: "L0-S1: "
+}
+
+.CentralMeridianApparentLongitude_System2::before {
+    content: "L0-S2: "
+}
+
+.RaGeo::before {
+    content: "\03B1: ";
+}
+
+.DecGeo::before {
+    content: "\03B4: ";
+}
+
+.RaTopo::before {
+    content: "\03B1  topo: "
+}
+
+.DecTopo::before {
+    content: "\03B4  topo: "
+}
+
+.Colongitude::before {
+    content: "90-l0: "
+}
+
     </style>
     
     

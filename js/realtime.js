@@ -143,45 +143,51 @@ var JDForRealTimeView = {
  
      function RealTimeDataViewer (pageName) {
         this.page = Pages[pageName];
-        var doms = CreateLinkDom (pageName);
-        this.view = doms["a"];
 
-        // views, per daya key
-        // TODO: get the keys!
-        this.allKeys = [];
+        this.reset = function() {
 
-        this.allViews = {};
-        for (var i = 0; i < this.allKeys.length; i++) {
-            var name = this.allKeys[i].name;
-            this.allViews[name] = this.view.getElementsByClassName(name)[0];
+            var doms = CreateLinkDom (pageName);
+            this.view = doms["a"];
+
+            // views, per daya key
+            // TODO: get the keys!
+            this.allKeys = [];
+
+            this.allViews = {};
+            for (var i = 0; i < this.allKeys.length; i++) {
+                var name = this.allKeys[i].name;
+                this.allViews[name] = this.view.getElementsByClassName(name)[0];
+            }
+            // TODO: on a settings notification, update the visibility for all entries in this.allViews
+
+            this.rtData = new DataForNow(this.page.dataSource);
+            var obj = this;
+            this.rtData.onDataUpdated.add (function(data) {
+
+
+                for (var i = 0; i < obj.allKeys.length; i++) {
+                    var key = obj.allKeys[i];
+                    var decimals = Math.pow(10, key.decimalsNum);
+                    var name = key.name;
+                    var keyData = Math.round(key.factor * data[name] * decimals)/decimals;
+                    if (obj.allViews[name]) {
+                        obj.allViews[name].textContent = Math.floor(keyData) + 
+                                                          key.unit + "." +
+                                                          padToOrder(Math.floor(decimals * (keyData - Math.floor(keyData))), key.decimalsNum);
+                    }
+                }   
+
+            });
+
+            var onKeyAdded = function (key, dom) {
+                obj.allKeys.push (key);
+                obj.allViews [key.name] = dom;
+            }
+
+            CreateRtDomForPage (doms['div'], pageName, onKeyAdded);
         }
-        // TODO: on a settings notification, update the visibility for all entries in this.allViews
-        
-        this.rtData = new DataForNow(this.page.dataSource);
-        var obj = this;
-        this.rtData.onDataUpdated.add (function(data) {
-        
-            
-            for (var i = 0; i < obj.allKeys.length; i++) {
-                var key = obj.allKeys[i];
-                var decimals = Math.pow(10, key.decimalsNum);
-                var name = key.name;
-                var keyData = Math.round(key.factor * data[name] * decimals)/decimals;
-                if (obj.allViews[name]) {
-                    obj.allViews[name].textContent = Math.floor(keyData) + 
-                                                      key.unit + " ." +
-                                                      padToOrder(Math.floor(decimals * (keyData - Math.floor(keyData))), key.decimalsNum);
-                }
-            }   
 
-        });
-
-        var onKeyAdded = function (key, dom) {
-            obj.allKeys.push (key);
-            obj.allViews [key.name] = dom;
-        }
-
-        CreateRtDomForPage (doms['div'], pageName, onKeyAdded);
+        this.reset();
     }
 
     function CreateLinkDom (pageName) {
@@ -236,6 +242,13 @@ var JDForRealTimeView = {
                     unit = "h";
                 }
 
+                var decimalsNum = GetNumberOfDecimals (pageName, key);
+                if (IsVisible(pageName, key)) {
+                    createdDom.classList.remove ("hidden");
+                } else {
+                    createdDom.classList.add ("hidden");
+                }
+
                 onViewAdded ({"name" : key, "unit": unit, "decimalsNum" : 3, "factor" : scaleFactor}, createdDom);
             }
 
@@ -243,7 +256,27 @@ var JDForRealTimeView = {
             setTimeout (function() { CreateRtDomForPage(domHost, pageName, onViewAdded); }, 100);
         }
     }
+
+    function GetNumberOfDecimals (pageName, key) {
+        return 3;
+    }
     
+    function IsVisible(pageName, key) {
+        if (pageName == "Jupiter Ephemeris") {
+            if (key == "CentralMeridianGeometricLongitude_System1" || 
+                key == "CentralMeridianGeometricLongitude_System2" ) {
+                    return false;
+                }
+        }
+        if (pageName == "Moon Ephemeris") {
+            if (key == "RA" || key == "Dec" ) {
+                    return false;
+                }
+        }
+
+        return true;
+    }
+
     function CreateDom (parent, type, content) {
         var child = parent.ownerDocument.createElement(type);
         parent.appendChild(child);

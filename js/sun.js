@@ -120,7 +120,7 @@ var SunData = {
             },
             "8" :  {
                     "0" : { "text" :"\u0394", "classes" : ["minWidth50", "positionEphemeris"] },
-                    "1" : { "text" :"A.U.",   "classes" : ["minWidth50", "positionEphemeris"] },
+                    "1" : { "text" :"au",   "classes" : ["minWidth50", "positionEphemeris"] },
                     "longText" : "Distance to Earth, in astronomical units",
                 "dataKey" : 'DistanceToEarth'
                 },
