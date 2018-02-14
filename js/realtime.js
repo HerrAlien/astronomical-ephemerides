@@ -183,8 +183,9 @@ var JDForRealTimeView = {
                 obj.allKeys.push (key);
                 obj.allViews [key.name] = dom;
             }
-
-            CreateRtDomForPage (doms['div'], pageName, onKeyAdded);
+            var scrollableDiv = CreateDom (doms['div'], "div");
+            scrollableDiv.classList.add ("scrollableRT");
+            CreateRtDomForPage (scrollableDiv, pageName, onKeyAdded);
         }
 
         this.reset();
