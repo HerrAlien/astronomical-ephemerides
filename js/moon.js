@@ -83,18 +83,21 @@ var MoonData = {
         "0" : {
                 "0" : { "text" : "Date", "classes" : ["minWidth20"] },
                 "1" : { "text" : "", "classes" : ["minWidth20"] },
-                "longText" : "Date: month"
+                "longText" : "Date: month",
+                "dataKey" : 'Month'
             } ,
 
         "1" : {
                 "0" : { "text" : "", "classes" : ["minWidth20"] },
                 "1" : { "text" : "", "classes" : ["minWidth20"] },
-                "longText" : "Date: day"
+                "longText" : "Date: day",
+                "dataKey" : 'Day'
             },
         "2" : {
                 "0" : { "text" : "\u03B1", "classes" : ["minWidth20"] },
                 "1" : { "text" : "h", "classes" : ["minWidth20"] },
-                "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
+                "longText" : "Apparent geocentric equatorial coordinates: Right Ascension",
+                "dataKey" : 'RA'
             },
         "3" : {
                 "0" : { "text" : "(RA)", "classes" : ["minWidth20", "screenOnly"] },
@@ -109,7 +112,8 @@ var MoonData = {
         "5" :  {
                 "0" : { "text" : "\u03B4", "classes" : ["minWidth20"] },
                 "1" : { "text" : "\u00B0", "classes" : ["minWidth25"] },
-                "longText" : "Apparent geocentric equatorial coordinates: Declination"
+                "longText" : "Apparent geocentric equatorial coordinates: Declination",
+                "dataKey" : 'Dec'
             },
         "6" :  {
                 "0" : { "text" : "(Dec)", "classes" : ["minWidth20" , "screenOnly"] },
@@ -125,7 +129,8 @@ var MoonData = {
             "8" : {
                     "0" : { "text" :"\u03B1", "classes" : ["minWidth20", "positionEphemeris"] },
                     "1" : { "text" :"h"     , "classes" : ["minWidth20", "positionEphemeris"] },
-                    "longText" : "Apparent topocentric equatorial coordinates: Right Ascension"
+                    "longText" : "Apparent topocentric equatorial coordinates: Right Ascension",
+                    "dataKey" : "RaTopo"
                 },
             "9" : {
                     "0" : { "text" :"topo", "classes" : ["minWidth20", "positionEphemeris"] },
@@ -140,7 +145,8 @@ var MoonData = {
             "11" :  {
                     "0" : { "text" :"\u03B4", "classes" : ["minWidth25", "positionEphemeris"] },
                     "1" : { "text" :"\u00B0", "classes" : ["minWidth25", "positionEphemeris"] },
-                    "longText" : "Apparent topocentric equatorial coordinates: Declination"
+                    "longText" : "Apparent topocentric equatorial coordinates: Declination",
+                    "dataKey" : "DecTopo"
                 },
             "12" :  {
                     "0" : { "text" :"topo", "classes" : ["minWidth20", "positionEphemeris"] },
@@ -157,7 +163,8 @@ var MoonData = {
             "14" :  {
                     "0" : { "text" :"\u03D5", "classes" : ["minWidth20", "positionEphemeris"] },
                     "1" : { "text" :"'"     , "classes" : ["minWidth20", "positionEphemeris"] },
-                    "longText" : "Apparent diameter"
+                    "longText" : "Apparent diameter",
+                "dataKey" : 'Diameter'
                 },
             "15" :  {
                     "0" : { "text" :""  , "classes" : ["minWidth15", "positionEphemeris"] },
@@ -168,23 +175,27 @@ var MoonData = {
             "16" : {
                     "0" : { "text" :"Rise", "classes" : ["minWidth50", "positionEphemeris"] },
                     "1" : { "text" :"hh:mm"      , "classes" : ["minWidth50", "positionEphemeris"] },
-                    "longText" : "The UTC time of rise above horizon"
+                    "longText" : "The UTC time of rise above horizon",
+                "dataKey" : 'Rise'
                 },
             "17" : {
                     "0" : { "text" :"Transit" , "classes" : ["minWidth50", "positionEphemeris"] },
                     "1" : { "text" :"hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
-                    "longText" : "The UTC time of the transit across the meridian"
+                    "longText" : "The UTC time of the transit across the meridian",
+                "dataKey" : 'MeridianTransit'
                 },
             "18" : {
                     "0" : { "text" :"Set" , "classes" : ["minWidth55", "positionEphemeris"] },
                     "1" : { "text" :"hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
-                    "longText" : "The UTC time of setting"
+                    "longText" : "The UTC time of setting",
+                "dataKey" : 'Set'
                 },
  
             "19" :  {
                     "0" : { "text" :"\u03C0", "classes" : ["minWidth15", "positionEphemeris"] },
                     "1" : { "text" :"\u00B0", "classes" : ["minWidth15", "positionEphemeris"] },
-                    "longText" : "Equatorial horizontal parallax"
+                    "longText" : "Equatorial horizontal parallax",
+                "dataKey" : 'Parallax'
                 },
                 
             "20" :  {
@@ -201,12 +212,14 @@ var MoonData = {
             "22" :  {
                     "0" : { "text" :"90-l0" , "classes" : ["minWidth52", "physicalEphemeris"] },
                     "1" : { "text" :"\u00B0", "classes" : ["minWidth52", "physicalEphemeris"] },
-                    "longText" : "colongitude of the Sun (physical ephemeris)"
+                    "longText" : "colongitude of the Sun (physical ephemeris)",
+                "dataKey" : 'Colongitude'
                 },
             "23" :  {
                     "0" : { "text" :"b0"    , "classes" : ["minWidth65", "physicalEphemeris"] },
                     "1" : { "text" :"\u00B0", "classes" : ["minWidth65", "physicalEphemeris"] },
-                    "longText" : "latitude of the Sun (physical ephemeris)"
+                    "longText" : "latitude of the Sun (physical ephemeris)",
+                "dataKey" : 'b0'
                 },
         },
         
