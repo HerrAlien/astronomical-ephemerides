@@ -273,12 +273,14 @@ var RealTimeDataViewer = {
         var createDom = RealTimeDataViewer.Utils.CreateDom;
         var persistent = RealTimeDataViewer.Persistent;
         var topDiv = createDom(hostForRTSettings, "div");
+        createDom (topDiv, "div", " ").classList.add("clear");
 
         // <div class="rtsettings">
         var bodySectionDiv = createDom (topDiv, "div");
         bodySectionDiv.classList.add ("rtsettings");
         // <h3>Sun</h3>
         // TODO: this should be from the page object.
+        createDom (bodySectionDiv, "div", " ").classList.add("clear");
         var objectName = pageName.substr(0, pageName.indexOf(" "));
         createDom (bodySectionDiv, "h3", objectName);
 
@@ -288,16 +290,44 @@ var RealTimeDataViewer = {
 
         sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName));
 
+        var rtViewer = Pages[pageName]["rtViewer"];
         sectionCheckbox.onclick = function () { 
             localStorage.setItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName), this.checked);
-            Pages[pageName]["rtViewer"].resetItemVisibility();
+            rtViewer.resetItemVisibility();
         }
 
-        Pages[pageName]["rtViewer"].resetItemVisibility();
+        function AddSettingsForKeys() {
+            if (rtViewer.allKeys.length != 0) {
+                for (var key in rtViewer.allViews) {
+                    // div + checkbox for each key
+                    createDom (bodySectionDiv, "div", " ").classList.add("clear");
+                    var row = createDom (bodySectionDiv, "div");
+                    row.classList.add("row");
+                    createDom (row, "label", key);
 
+                    sectionCheckbox = createDom (row, "input");
+                    sectionCheckbox.type = "checkbox";
+
+                    sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName, key));
+
+                    sectionCheckbox.onclick = (function(){
+                        var keyName = key;
+                        return function () { 
+                            localStorage.setItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName, keyName), this.checked);
+                            rtViewer.resetItemVisibility();
+                        }
+                    })();
+                }
+             } else {
+                    setTimeout (AddSettingsForKeys, 100);
+             }
+        }
+
+        AddSettingsForKeys();
 
         // <div class="clear">&nbsp;</div>
         createDom (bodySectionDiv, "div", " ").classList.add("clear");
+        rtViewer.resetItemVisibility();
     }
 
 })();
