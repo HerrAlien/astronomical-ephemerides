@@ -147,10 +147,10 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     }
 
     function GetNumberOfDecimals (pageName, key) {
-        var numOfDecimals = localStorage.getItem (GetRTStorageKey(pageName, key, "numOfDecimals"));
+        var numOfDecimals = localStorage.getItem (GetRTStorageKey("numOfDecimals", pageName, key));
         if (numOfDecimals === null) {
             numOfDecimals = 3;
-            localStorage.setItem (GetRTStorageKey(pageName, key, "numOfDecimals"), numOfDecimals);
+            localStorage.setItem (GetRTStorageKey("numOfDecimals", pageName, key), numOfDecimals);
         }
 
         return numOfDecimals * 1.0;
@@ -158,7 +158,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     
     function IsVisible(pageName, key) {
 
-        var visible = localStorage.getItem (GetRTStorageKey(pageName, key, "visible"));
+        var visible = localStorage.getItem (GetRTStorageKey("visible", pageName, key));
         if (visible === null) {
 
         visible = true;
@@ -175,13 +175,13 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             }
         }
 
-            localStorage.setItem (GetRTStorageKey(pageName, key, "visible"), visible);
+            localStorage.setItem (GetRTStorageKey("visible", pageName, key), visible);
         }
 
         return ('true' == visible);
     }
 
-    function GetRTStorageKey (pageName, key, purpose) {
+    function GetRTStorageKey (purpose, pageName, key) {
         return pageName + "/" + key + "/" + purpose;
     }
 
