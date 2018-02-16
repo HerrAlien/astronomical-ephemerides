@@ -239,12 +239,34 @@ var RealTimeDataViewer = {
         if (Pages[pageName]["tableHeaderInfo"]) {
             CreateRTSettings (pageName);
         }
-    }
-
-    var hostForRTSettings = document.getElementById("realTimeSettingsContainer");
+    } 
 
     function CreateRTSettings (pageName) {
+        var hostForRTSettings = document.getElementById("realTimeSettingsContainer");
         var createDom = RealTimeDataViewer.Utils.CreateDom;
+        var persistent = RealTimeDataViewer.Persistent;
+        var topDiv = createDom(hostForRTSettings, "div");
+
+        // <div class="rtsettings">
+        var bodySectionDiv = createDom (topDiv, "div");
+        bodySectionDiv.classList.add ("rtsettings");
+        // <h3>Sun</h3>
+        // TODO: this should be from the page object.
+        var objectName = pageName.substr(0, pageName.indexOf(" "));
+        createDom (bodySectionDiv, "h3", objectName);
+
+        // <input type="checkbox"></input>
+        var sectionCheckbox = createDom (bodySectionDiv, "input");
+        sectionCheckbox.type = "checkbox";
+
+        sectionCheckbox.onclick = function () { 
+            localStorage.setItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName), this.checked);
+            Pages[pageName]["rtViewer"].resetItemVisibility();
+        }
+
+
+        // <div class="clear">&nbsp;</div>
+        createDom (bodySectionDiv, "div", " ").classList.add("clear");
     }
 
 })();
