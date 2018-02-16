@@ -282,11 +282,17 @@ var RealTimeDataViewer = {
         // TODO: this should be from the page object.
         createDom (bodySectionDiv, "div", " ").classList.add("clear");
         var objectName = pageName.substr(0, pageName.indexOf(" "));
-        createDom (bodySectionDiv, "h3", objectName);
+        
+        var sectionCheckboxId = pageName+"settings";
+
+        var sectionLabel = createDom (bodySectionDiv, "label");
+        sectionLabel.setAttribute('for', sectionCheckboxId);
+        createDom (sectionLabel, "h3", objectName);
 
         // <input type="checkbox"></input>
         var sectionCheckbox = createDom (bodySectionDiv, "input");
         sectionCheckbox.type = "checkbox";
+        sectionCheckbox.id = sectionCheckboxId;
 
         sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName));
 
@@ -299,14 +305,18 @@ var RealTimeDataViewer = {
         function AddSettingsForKeys() {
             if (rtViewer.allKeys.length != 0) {
                 for (var key in rtViewer.allViews) {
+
+                    var checkboxId = pageName+key+"settings";
+
                     // div + checkbox for each key
                     createDom (bodySectionDiv, "div", " ").classList.add("clear");
                     var row = createDom (bodySectionDiv, "div");
                     row.classList.add("row");
-                    createDom (row, "label", key);
+                    createDom (row, "label", key).setAttribute('for', checkboxId);
 
                     sectionCheckbox = createDom (row, "input");
                     sectionCheckbox.type = "checkbox";
+                    sectionCheckbox.id = checkboxId;
 
                     sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName, key));
 
@@ -326,6 +336,7 @@ var RealTimeDataViewer = {
         AddSettingsForKeys();
 
         // <div class="clear">&nbsp;</div>
+        createDom (bodySectionDiv, "div", " ").classList.add("clear");
         createDom (bodySectionDiv, "div", " ").classList.add("clear");
         rtViewer.resetItemVisibility();
     }
