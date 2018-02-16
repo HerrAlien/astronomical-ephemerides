@@ -67,7 +67,7 @@ var RealTimeDataViewer = {
                 }
                 var scrollableDiv = CreateDom(doms['div'], "div");
                 scrollableDiv.classList.add("scrollableRT");
-                CreateRtDomForPage(scrollableDiv, pageName, onKeyAdded);
+                RealTimeDataViewer.CreateRtDomForPage(scrollableDiv, pageName, onKeyAdded);
             }
         }
 
@@ -108,51 +108,52 @@ var RealTimeDataViewer = {
         var span = CreateDom(createdDoms['a'], "span", objectName);
         span.classList.add("realtimeTitle");
         return createdDoms;
+    },
+
+    CreateRtDomForPage : function (domHost, pageName, onViewAdded) {
+        // same host
+        try {
+            // This wil throw initially. Notifications will not update the view.
+            for (var key in Pages[pageName].dataSource.getDataAsObjectForJD(0, false)) {
+                var createdDom = CreateDom(domHost, "div", "loading ...");
+                createdDom.classList.add(key);
+
+                var unit = "\u00B0";
+                var scaleFactor = 1;
+                for (var tableKey in Pages[pageName].tableHeaderInfo) {
+                    if (key == Pages[pageName].tableHeaderInfo[tableKey].dataKey) {
+                        unit = Pages[pageName].tableHeaderInfo[tableKey]["1"]["text"];
+                        createdDom.setAttribute("alt", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
+                        createdDom.setAttribute("title", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
+                        createdDom.onclick = RealTimeDataViewer.alertDivTitle;
+                    }
+                }
+
+                if (unit == "'") {
+                    scaleFactor = 60;
+                } else if (unit == "''") {
+                    scaleFactor = 3600;
+                } else if (unit == "hh:mm") {
+                    unit = "h";
+                }
+
+                var decimalsNum = GetNumberOfDecimals(pageName, key);
+                if (IsVisible(pageName, key)) {
+                    createdDom.classList.remove("hidden");
+                } else {
+                    createdDom.classList.add("hidden");
+                }
+
+                onViewAdded({ "name": key, "unit": unit, "decimalsNum": decimalsNum, "factor": scaleFactor }, createdDom);
+            }
+
+        } catch (err) {
+            setTimeout(function () { RealTimeDataViewer.CreateRtDomForPage(domHost, pageName, onViewAdded); }, 100);
+        }
     }
+
 
 };
-
-function CreateRtDomForPage(domHost, pageName, onViewAdded) {
-    // same host
-    try {
-        // This wil throw initially. Notifications will not update the view.
-        for (var key in Pages[pageName].dataSource.getDataAsObjectForJD(0, false)) {
-            var createdDom = CreateDom(domHost, "div", "loading ...");
-            createdDom.classList.add(key);
-
-            var unit = "\u00B0";
-            var scaleFactor = 1;
-            for (var tableKey in Pages[pageName].tableHeaderInfo) {
-                if (key == Pages[pageName].tableHeaderInfo[tableKey].dataKey) {
-                    unit = Pages[pageName].tableHeaderInfo[tableKey]["1"]["text"];
-                    createdDom.setAttribute("alt", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
-                    createdDom.setAttribute("title", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
-                    createdDom.onclick = RealTimeDataViewer.alertDivTitle;
-                }
-            }
-
-            if (unit == "'") {
-                scaleFactor = 60;
-            } else if (unit == "''") {
-                scaleFactor = 3600;
-            } else if (unit == "hh:mm") {
-                unit = "h";
-            }
-
-            var decimalsNum = GetNumberOfDecimals(pageName, key);
-            if (IsVisible(pageName, key)) {
-                createdDom.classList.remove("hidden");
-            } else {
-                createdDom.classList.add("hidden");
-            }
-
-            onViewAdded({ "name": key, "unit": unit, "decimalsNum": 3, "factor": scaleFactor }, createdDom);
-        }
-
-    } catch (err) {
-        setTimeout(function () { CreateRtDomForPage(domHost, pageName, onViewAdded); }, 100);
-    }
-}
 
 function GetNumberOfDecimals(pageName, key) {
     var numOfDecimals = localStorage.getItem(GetRTStorageKey("numOfDecimals", pageName, key));
