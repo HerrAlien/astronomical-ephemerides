@@ -201,6 +201,10 @@ var JDForRealTimeView = {
         var createdDoms = {};
 
         var div = CreateDom(host, "div");
+        if (!IsVisible(pageName)) {
+            div.classList.add("hidden");
+        }
+
         createdDoms['div'] = div;
 
         div.classList.add ("rightNowFrontPageWidget");
@@ -225,7 +229,6 @@ var JDForRealTimeView = {
     function CreateRtDomForPage (domHost, pageName, onViewAdded) {
         // same host
         try {
-            // TODO: this is for all keys ...
             // This wil throw initially. Notifications will not update the view.
             for (var key in Pages[pageName].dataSource.getDataAsObjectForJD(0, false)) {
                 var createdDom = CreateDom(domHost, "div", "loading ...");
@@ -266,10 +269,17 @@ var JDForRealTimeView = {
     }
 
     function GetNumberOfDecimals (pageName, key) {
-        return 3;
+        var numOfDecimals = localStorage.getItem (GetRTStorageKey(pageName, key, "numOfDecimals"));
+        if (numOfDecimals === null) {
+            numOfDecimals = 3;
+            localStorage.setItem (GetRTStorageKey(pageName, key, "numOfDecimals"), numOfDecimals);
+        }
+
+        return numOfDecimals * 1.0;
     }
     
     function IsVisible(pageName, key) {
+
         if (pageName == "Jupiter Ephemeris") {
             if (key == "CentralMeridianGeometricLongitude_System1" || 
                 key == "CentralMeridianGeometricLongitude_System2" ) {
@@ -282,8 +292,19 @@ var JDForRealTimeView = {
                 }
         }
 
-        return true;
+        var visible = localStorage.getItem (GetRTStorageKey(pageName, key, "visible"));
+        if (visible === null) {
+            visible = true;
+            localStorage.setItem (GetRTStorageKey(pageName, key, "visible"), visible);
+        }
+
+        return ('true' == visible);
     }
+
+    function GetRTStorageKey (pageName, key, purpose) {
+        return pageName + "/" + key + "/" + purpose;
+    }
+
 
     function CreateDom (parent, type, content) {
         var child = parent.ownerDocument.createElement(type);
