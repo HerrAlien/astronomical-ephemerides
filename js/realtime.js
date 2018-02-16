@@ -85,7 +85,9 @@ var RealTimeDataViewer = {
         var createdDoms = {};
 
         var div = CreateDom(host, "div");
-        if (!IsVisible(pageName)) {
+        if (RealTimeDataViewer.Persistent.IsVisible(pageName)) {
+            div.classList.remove("hidden");
+        } else {
             div.classList.add("hidden");
         }
 
@@ -137,8 +139,8 @@ var RealTimeDataViewer = {
                     unit = "h";
                 }
 
-                var decimalsNum = GetNumberOfDecimals(pageName, key);
-                if (IsVisible(pageName, key)) {
+                var decimalsNum = RealTimeDataViewer.Persistent.GetNumberOfDecimals(pageName, key);
+                if (RealTimeDataViewer.Persistent.IsVisible(pageName, key)) {
                     createdDom.classList.remove("hidden");
                 } else {
                     createdDom.classList.add("hidden");
@@ -150,50 +152,47 @@ var RealTimeDataViewer = {
         } catch (err) {
             setTimeout(function () { RealTimeDataViewer.CreateRtDomForPage(domHost, pageName, onViewAdded); }, 100);
         }
+    },
+
+    Persistent : {
+        GetNumberOfDecimals : function (pageName, key) {
+            var numOfDecimals = localStorage.getItem(RealTimeDataViewer.Persistent.GetRTStorageKey("numOfDecimals", pageName, key));
+            if (numOfDecimals === null) {
+                numOfDecimals = 3;
+                localStorage.setItem(RealTimeDataViewer.Persistent.GetRTStorageKey("numOfDecimals", pageName, key), numOfDecimals);
+            }
+
+            return numOfDecimals * 1.0;
+        },
+
+        IsVisible : function (pageName, key) {
+            var visible = localStorage.getItem(RealTimeDataViewer.Persistent.GetRTStorageKey("visible", pageName, key));
+            if (visible === null) {
+                visible = true;
+                if (pageName == "Jupiter Ephemeris") {
+                    if (key == "CentralMeridianGeometricLongitude_System1" ||
+                        key == "CentralMeridianGeometricLongitude_System2") {
+                        visible = false;
+                    }
+                }
+                if (pageName == "Moon Ephemeris") {
+                    if (key == "RA" || key == "Dec") {
+                        visible = false;
+                    }
+                }
+                localStorage.setItem(RealTimeDataViewer.Persistent.GetRTStorageKey("visible", pageName, key), visible);
+            }
+            return ('true' == visible);
+        },
+
+        GetRTStorageKey : function (purpose, pageName, key){
+            return pageName + "/" + key + "/" + purpose;
+        }
+
     }
 
 
 };
-
-function GetNumberOfDecimals(pageName, key) {
-    var numOfDecimals = localStorage.getItem(GetRTStorageKey("numOfDecimals", pageName, key));
-    if (numOfDecimals === null) {
-        numOfDecimals = 3;
-        localStorage.setItem(GetRTStorageKey("numOfDecimals", pageName, key), numOfDecimals);
-    }
-
-    return numOfDecimals * 1.0;
-}
-
-function IsVisible(pageName, key) {
-
-    var visible = localStorage.getItem(GetRTStorageKey("visible", pageName, key));
-    if (visible === null) {
-
-        visible = true;
-        if (pageName == "Jupiter Ephemeris") {
-            if (key == "CentralMeridianGeometricLongitude_System1" ||
-                key == "CentralMeridianGeometricLongitude_System2") {
-                visible = false;
-            }
-        }
-
-        if (pageName == "Moon Ephemeris") {
-            if (key == "RA" || key == "Dec") {
-                visible = false;
-            }
-        }
-
-        localStorage.setItem(GetRTStorageKey("visible", pageName, key), visible);
-    }
-
-    return ('true' == visible);
-}
-
-function GetRTStorageKey(purpose, pageName, key) {
-    return pageName + "/" + key + "/" + purpose;
-}
-
 
 function CreateDom(parent, type, content) {
     var child = parent.ownerDocument.createElement(type);
