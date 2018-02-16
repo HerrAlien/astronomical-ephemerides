@@ -81,10 +81,10 @@ var RealTimeDataViewer = {
 
     CreateLinkDom : function(pageName) {
         var host = document.getElementById("rightNowFrontPage");
-
+        var createDom = RealTimeDataViewer.Utils.CreateDom;
         var createdDoms = {};
 
-        var div = RealTimeDataViewer.Utils.CreateDom(host, "div");
+        var div = createDom(host, "div");
         if (RealTimeDataViewer.Persistent.IsVisible(pageName)) {
             div.classList.remove("hidden");
         } else {
@@ -103,11 +103,11 @@ var RealTimeDataViewer = {
 
         div.classList.add(realTimeBackgroundClassName);
 
-        createdDoms['a'] = RealTimeDataViewer.Utils.CreateDom(div, "a");
+        createdDoms['a'] = createDom(div, "a");
         createdDoms['a'].setAttribute("href", "#" + pageName);
 
 
-        var span = RealTimeDataViewer.Utils.CreateDom(createdDoms['a'], "span", objectName);
+        var span = createDom(createdDoms['a'], "span", objectName);
         span.classList.add("realtimeTitle");
         return createdDoms;
     },
@@ -230,7 +230,21 @@ var RealTimeDataViewer = {
             return RealTimeDataViewer.Utils.padToOrder(a, 2);
         }
 
-    }
-
+    },
 
 };
+
+(function(){
+    for (var pageName in Pages) {
+        if (Pages[pageName]["tableHeaderInfo"]) {
+            CreateRTSettings (pageName);
+        }
+    }
+
+    var hostForRTSettings = document.getElementById("realTimeSettingsContainer");
+
+    function CreateRTSettings (pageName) {
+        var createDom = RealTimeDataViewer.Utils.CreateDom;
+    }
+
+})();
