@@ -55,7 +55,7 @@ var RealTimeDataViewer = {
                         if (obj.allViews[name]) {
                             obj.allViews[name].textContent = Math.floor(keyData) +
                                                               key.unit + "." +
-                                                              padToOrder(Math.floor(decimals * (keyData - Math.floor(keyData))), key.decimalsNum);
+                                                              RealTimeDataViewer.Utils.padToOrder(Math.floor(decimals * (keyData - Math.floor(keyData))), key.decimalsNum);
                         }
                     }
 
@@ -65,7 +65,7 @@ var RealTimeDataViewer = {
                     obj.allKeys.push(key);
                     obj.allViews[key.name] = dom;
                 }
-                var scrollableDiv = CreateDom(doms['div'], "div");
+                var scrollableDiv = RealTimeDataViewer.Utils.CreateDom(doms['div'], "div");
                 scrollableDiv.classList.add("scrollableRT");
                 RealTimeDataViewer.CreateRtDomForPage(scrollableDiv, pageName, onKeyAdded);
             }
@@ -84,7 +84,7 @@ var RealTimeDataViewer = {
 
         var createdDoms = {};
 
-        var div = CreateDom(host, "div");
+        var div = RealTimeDataViewer.Utils.CreateDom(host, "div");
         if (RealTimeDataViewer.Persistent.IsVisible(pageName)) {
             div.classList.remove("hidden");
         } else {
@@ -103,11 +103,11 @@ var RealTimeDataViewer = {
 
         div.classList.add(realTimeBackgroundClassName);
 
-        createdDoms['a'] = CreateDom(div, "a");
+        createdDoms['a'] = RealTimeDataViewer.Utils.CreateDom(div, "a");
         createdDoms['a'].setAttribute("href", "#" + pageName);
 
 
-        var span = CreateDom(createdDoms['a'], "span", objectName);
+        var span = RealTimeDataViewer.Utils.CreateDom(createdDoms['a'], "span", objectName);
         span.classList.add("realtimeTitle");
         return createdDoms;
     },
@@ -117,7 +117,7 @@ var RealTimeDataViewer = {
         try {
             // This wil throw initially. Notifications will not update the view.
             for (var key in Pages[pageName].dataSource.getDataAsObjectForJD(0, false)) {
-                var createdDom = CreateDom(domHost, "div", "loading ...");
+                var createdDom = RealTimeDataViewer.Utils.CreateDom(domHost, "div", "loading ...");
                 createdDom.classList.add(key);
 
                 var unit = "\u00B0";
@@ -200,39 +200,37 @@ var RealTimeDataViewer = {
     },
 
     Utils : {
+        CreateDom : function(parent, type, content) {
+            var child = parent.ownerDocument.createElement(type);
+            parent.appendChild(child);
+            if (content)
+                child.textContent = content;
+            return child;
+        },
 
+        padToOrder: function (number, order) {
+            if (order < 2) {
+                return "" + number;
+            }
+
+            var absNum = Math.abs(number);
+            var threshold = Math.pow(10, Math.floor(order - 1));
+            var res = "";
+
+            for (var i = 1; (i < order) && (absNum < threshold) ; i++, threshold *= 0.1) {
+                res += "0";
+            }
+            if (number < 0) {
+                res = "-" + res;
+            }
+            return res + "" + absNum;
+        },
+
+        padToTens : function (a){
+            return RealTimeDataViewer.Utils.padToOrder(a, 2);
+        }
 
     }
 
 
 };
-
-function CreateDom(parent, type, content) {
-    var child = parent.ownerDocument.createElement(type);
-    parent.appendChild(child);
-    if (content)
-        child.textContent = content;
-    return child;
-}
-
-function padToOrder(number, order) {
-    if (order < 2) {
-        return "" + number;
-    }
-
-    var absNum = Math.abs(number);
-    var threshold = Math.pow(10, Math.floor(order - 1));
-    var res = "";
-
-    for (var i = 1; (i < order) && (absNum < threshold) ; i++, threshold *= 0.1) {
-        res += "0";
-    }
-    if (number < 0) {
-        res = "-" + res;
-    }
-    return res + "" + absNum;
-}
-
-function padToTens(a) {
-    return padToOrder(a, 2);
-}
