@@ -15,82 +15,101 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 (function() {
 var CACHE_PREFIX = 'Cache-for-ephemerides';
-var CACHE_VERSION = 'v63';
+var CACHE_VERSION = 'v78';
 var CACHE_NAME = CACHE_PREFIX + '-' + CACHE_VERSION;
 var urlsToCache = [
 ".",
 "index.html",
 "manifest.json",
 "style/default.css",
-"js/notifications.js",
-"js/neptune.js",
+"js/aajs.js",
+"js/besselianelements.js",
+"js/galileanmoonsdata.js",
+"js/galileanmoonspage.js",
 "js/jupiter.js",
+"js/location.js",
 "js/mars.js",
-"js/saturn.js",
+"js/matrix.js",
 "js/mercury.js",
 "js/moon.js",
-"js/sun.js",
-"js/uranus.js",
-"js/venus.js",
-"js/planetdata.js",
-"js/planetpage.js",
-"js/timeinput.js",
-"js/aajs.js",
-"js/galileanmoonsdata.js",
-"js/matrix.js",
-"js/location.js",
-"js/realtime.js",
-"js/galileanmoonspage.js",
-"js/numerical.js",
 "js/mooneclipsesdata.js",
-"js/solareclipsesdata.js",
 "js/mooneclipsespage.js",
 "js/moonsdata.js",
 "js/moonspage.js",
+"js/neptune.js",
+"js/notifications.js",
+"js/numerical.js",
+"js/pagerank.js",
+"js/planetdata.js",
+"js/planetpage.js",
+"js/realtime.js",
+"js/realtime.js.orig",
+"js/realtime.js.rej",
 "js/risetransitset.js",
+"js/saturn.js",
 "js/saturnmoonsdata.js",
 "js/saturnmoonspage.js",
-"js/pagerank.js",
-"js/besselianelements.js",
+"js/searchform.js",
+"js/solareclipsesdata.js",
 "js/solareclipsespage.js",
-"images/menu.svg",
+"js/sun.js",
+"js/timeinput.js",
+"js/uranus.js",
+"js/venus.js",
 "images/ae-icon.png",
-"images/left.png",
-"images/right.png",
-"images/settings.svg",
-"images/logo.png",
-"images/galilean-moons.svg",
-"images/jupiter.svg",
-"images/lunar-eclipse.svg",
-"images/mars.svg",
-"images/mercury.svg",
-"images/moon.svg",
-"images/neptune.svg",
-"images/saturn-moons.svg",
-"images/saturn.svg",
-"images/solar-eclipse.svg",
-"images/sun.svg",
-"images/home-3.svg",
-"images/loading.gif",
-"images/uranus.svg",
-"images/venus.svg",
-"images/logomobilebanner.png",
 "images/ae-icon-144.png",
 "images/ae-icon-192.png",
 "images/ae-icon-256.png",
-"images/ae-icon-512.png"
+"images/ae-icon-512.png",
+"images/galilean-moons.svg",
+"images/home-3.svg",
+"images/icon.svg",
+"images/jupiter.svg",
+"images/loading.gif",
+"images/logo.png",
+"images/logomobilebanner.png",
+"images/lunar-eclipse.svg",
+"images/magnifying-glass.svg",
+"images/mars.svg",
+"images/menu.svg",
+"images/mercury.svg",
+"images/moon.svg",
+"images/neptune.svg",
+"images/saturn.svg",
+"images/saturn-moons.svg",
+"images/settings.svg",
+"images/solar-eclipse.svg",
+"images/sun.svg",
+"images/uranus.svg",
+"images/venus.svg"
 ];
 
 self.addEventListener('install', function(event) {
   // Perform install steps
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(function(cache) {
+      .then(cache => {
         console.log('Opened cache');
         return cache.addAll(urlsToCache);
       })
   );
 });
+
+function fetchAndCache (url) {
+  return fetch (url).then (resp => {
+    if(!resp || resp.status !== 200 || resp.type !== 'basic') {
+      return resp;
+    }
+
+    var responseToCache = resp.clone();
+    caches.open(CACHE_NAME)
+      .then(function(cache) {
+        cache.put(url, responseToCache);
+       });
+
+    return resp;
+  });
+}
 
 self.addEventListener('fetch', function(event) {
   event.respondWith(
@@ -101,33 +120,7 @@ self.addEventListener('fetch', function(event) {
           return response;
         }
         
-        // IMPORTANT: Clone the request. A request is a stream and
-        // can only be consumed once. Since we are consuming this
-        // once by cache and once by the browser for fetch, we need
-        // to clone the response.
-        var fetchRequest = event.request.clone();
-
-        return fetch(fetchRequest).then(
-          function(response) {
-            // Check if we received a valid response
-            if(!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-
-            // IMPORTANT: Clone the response. A response is a stream
-            // and because we want the browser to consume the response
-            // as well as the cache consuming the response, we need
-            // to clone it so we have two streams.
-            var responseToCache = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then(function(cache) {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
-          }
-        );
+        return fetchAndCache (event.request);
       }
     )
   );
