@@ -305,14 +305,32 @@ var RealTimeDataViewer = {
         function AddSettingsForKeys() {
             if (rtViewer.allKeys.length != 0) {
                 for (var key in rtViewer.allViews) {
+                    if (key == "Day" || key == "Month")
+                        continue;
 
+                    if (pageName == "Jupiter Ephemeris") {
+                        if (key == "CentralMeridianGeometricLongitude_System1" ||
+                            key == "CentralMeridianGeometricLongitude_System2") {
+                            continue;
+                        }
+                    }
+                    if (pageName == "Moon Ephemeris") {
+                        if (key == "RA" || key == "Dec") {
+                            continue;
+                        }
+                    }
+                
                     var checkboxId = pageName+key+"settings";
 
                     // div + checkbox for each key
                     createDom (bodySectionDiv, "div", " ").classList.add("clear");
                     var row = createDom (bodySectionDiv, "div");
                     row.classList.add("row");
-                    createDom (row, "label", key).setAttribute('for', checkboxId);
+                    var lbl = createDom (row, "label");
+                    lbl.setAttribute('for', checkboxId);
+                    var labelDiv = createDom (lbl, "div", " ");
+                    labelDiv.classList.add(key);
+                    labelDiv.classList.add("settingsLabelDiv");
 
                     sectionCheckbox = createDom (row, "input");
                     sectionCheckbox.type = "checkbox";

@@ -693,3 +693,7 @@ input[type=date]::-webkit-inner-spin-button {
 #realTimeSettingsContainer {
     margin-bottom: 100px;
 }
+
+.settingsLabelDiv {
+    font-size: 30px;
+}
