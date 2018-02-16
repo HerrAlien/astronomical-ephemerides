@@ -156,17 +156,17 @@ var RealTimeDataViewer = {
 
     Persistent : {
         GetNumberOfDecimals : function (pageName, key) {
-            var numOfDecimals = localStorage.getItem(RealTimeDataViewer.Persistent.GetRTStorageKey("numOfDecimals", pageName, key));
+            var numOfDecimals = localStorage.getItem(RealTimeDataViewer.Persistent.GetRTStorageKey(RealTimeDataViewer.Persistent.purposes.numberOfDecimals, pageName, key));
             if (numOfDecimals === null) {
                 numOfDecimals = 3;
-                localStorage.setItem(RealTimeDataViewer.Persistent.GetRTStorageKey("numOfDecimals", pageName, key), numOfDecimals);
+                localStorage.setItem(RealTimeDataViewer.Persistent.GetRTStorageKey(RealTimeDataViewer.Persistent.purposes.numberOfDecimals, pageName, key), numOfDecimals);
             }
 
             return numOfDecimals * 1.0;
         },
 
         IsVisible : function (pageName, key) {
-            var visible = localStorage.getItem(RealTimeDataViewer.Persistent.GetRTStorageKey("visible", pageName, key));
+            var visible = localStorage.getItem(RealTimeDataViewer.Persistent.GetRTStorageKey(RealTimeDataViewer.Persistent.purposes.visibility, pageName, key));
             if (visible === null) {
                 visible = true;
                 if (pageName == "Jupiter Ephemeris") {
@@ -180,14 +180,27 @@ var RealTimeDataViewer = {
                         visible = false;
                     }
                 }
-                localStorage.setItem(RealTimeDataViewer.Persistent.GetRTStorageKey("visible", pageName, key), visible);
+                localStorage.setItem(RealTimeDataViewer.Persistent.GetRTStorageKey(RealTimeDataViewer.Persistent.purposes.visibility, pageName, key), visible);
             }
             return ('true' == visible);
         },
 
         GetRTStorageKey : function (purpose, pageName, key){
+            if (typeof purpose == 'undefined') {
+                throw "Invalid purpose!";
+            }
             return pageName + "/" + key + "/" + purpose;
-        }
+        },
+
+        purposes : { 
+            visibility : "visible",
+            numberOfDecimals : "numOfDecimals"
+        },
+
+    },
+
+    Utils : {
+
 
     }
 
