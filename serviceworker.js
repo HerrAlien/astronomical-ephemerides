@@ -43,8 +43,6 @@ var urlsToCache = [
 "js/planetdata.js",
 "js/planetpage.js",
 "js/realtime.js",
-"js/realtime.js.orig",
-"js/realtime.js.rej",
 "js/risetransitset.js",
 "js/saturn.js",
 "js/saturnmoonsdata.js",
