@@ -1331,15 +1331,6 @@ border-bottom: solid 1px #AAAAAA;
 <script>
 
     "use strict";
-
-    (function(){
-    
-       for (var pageName in Pages) {
-           if (Pages[pageName]["tableHeaderInfo"]) {
-               Pages[pageName]["rtViewer"] = RealTimeDataViewer.New (pageName);
-           }
-       }
-    })();
     
     function error404(pageName) {
         document.getElementById("requestedresource").textContent = pageName;

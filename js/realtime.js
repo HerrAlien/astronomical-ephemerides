@@ -76,7 +76,7 @@ var RealTimeDataViewer = {
                 } else {
                     this.view.classList.add("hidden");
                 }
-                    
+
                 for (var key in this.allViews) {
                     if (RealTimeDataViewer.Persistent.IsVisible(pageName, key)) {
                         this.allViews[key].classList.remove("hidden");
@@ -251,6 +251,16 @@ var RealTimeDataViewer = {
 
 };
 
+    (function(){
+    
+       for (var pageName in Pages) {
+           if (Pages[pageName]["tableHeaderInfo"]) {
+               Pages[pageName]["rtViewer"] = RealTimeDataViewer.New (pageName);
+           }
+       }
+    })();
+
+
 (function(){
     for (var pageName in Pages) {
         if (Pages[pageName]["tableHeaderInfo"]) {
@@ -276,10 +286,14 @@ var RealTimeDataViewer = {
         var sectionCheckbox = createDom (bodySectionDiv, "input");
         sectionCheckbox.type = "checkbox";
 
+        sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName));
+
         sectionCheckbox.onclick = function () { 
             localStorage.setItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName), this.checked);
             Pages[pageName]["rtViewer"].resetItemVisibility();
         }
+
+        Pages[pageName]["rtViewer"].resetItemVisibility();
 
 
         // <div class="clear">&nbsp;</div>
