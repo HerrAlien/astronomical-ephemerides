@@ -29,7 +29,7 @@ var RealTimeDataViewer = {
             reset: function () {
 
                 var doms = RealTimeDataViewer.CreateLinkDom(pageName);
-                this.view = doms["a"];
+                this.view = doms["div"];
 
                 // views, per daya key
                 // TODO: get the keys!
@@ -68,7 +68,24 @@ var RealTimeDataViewer = {
                 var scrollableDiv = RealTimeDataViewer.Utils.CreateDom(doms['div'], "div");
                 scrollableDiv.classList.add("scrollableRT");
                 RealTimeDataViewer.CreateRtDomForPage(scrollableDiv, pageName, onKeyAdded);
+            },
+
+            resetItemVisibility: function () {
+                if (RealTimeDataViewer.Persistent.IsVisible(pageName)) {
+                    this.view.classList.remove("hidden");
+                } else {
+                    this.view.classList.add("hidden");
+                }
+                    
+                for (var key in this.allViews) {
+                    if (RealTimeDataViewer.Persistent.IsVisible(pageName, key)) {
+                        this.allViews[key].classList.remove("hidden");
+                    } else {
+                        this.allViews[key].classList.add("hidden");
+                    }
+                }
             }
+
         }
 
         returnedViewer.reset();
@@ -167,8 +184,8 @@ var RealTimeDataViewer = {
 
         IsVisible : function (pageName, key) {
             var visible = localStorage.getItem(RealTimeDataViewer.Persistent.GetRTStorageKey(RealTimeDataViewer.Persistent.purposes.visibility, pageName, key));
-            if (visible === null) {
-                visible = true;
+            if (visible == null) {
+                visible = 'true';
                 if (pageName == "Jupiter Ephemeris") {
                     if (key == "CentralMeridianGeometricLongitude_System1" ||
                         key == "CentralMeridianGeometricLongitude_System2") {
