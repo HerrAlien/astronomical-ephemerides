@@ -1340,7 +1340,7 @@ border-bottom: solid 1px #AAAAAA;
         searchFormInput.value = "";
 
         document.body.scrollTop = 0;
-        var hash = location.hash;
+        var hash = decodeURIComponent(location.hash);
         var pageName = hash.slice(1);
         if (pageName == "Search results") {
             return;
