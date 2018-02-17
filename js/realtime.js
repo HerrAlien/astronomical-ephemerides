@@ -193,7 +193,7 @@ var RealTimeDataViewer = {
                     }
                 }
                 if (pageName == "Moon Ephemeris") {
-                    if (key == "RA" || key == "Dec") {
+                    if (key == "RA" || key == "Dec" || key == "R") {
                         visible = false;
                     }
                 }
