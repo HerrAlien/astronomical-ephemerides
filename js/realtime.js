@@ -197,6 +197,16 @@ var RealTimeDataViewer = {
                         visible = false;
                     }
                 }
+
+                if (pageName != 'Sun Ephemeris' && pageName != 'Moon Ephemeris' &&
+                    pageName != 'Jupiter Ephemeris' && pageName != 'Saturn Ephemeris') {
+                    visible = false;
+                }
+                
+                if (key && key != 'RA' && key != 'Dec' && key != 'RaGeo' && key != 'DecGeo') {
+                    visible = false;
+                }
+
                 localStorage.setItem(RealTimeDataViewer.Persistent.GetRTStorageKey(RealTimeDataViewer.Persistent.purposes.visibility, pageName, key), visible);
             }
             return ('true' == visible);
