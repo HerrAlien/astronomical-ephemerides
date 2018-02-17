@@ -20,6 +20,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 // ---------------------------- view side ----------------------------------------    
 var RealTimeDataViewer = {
 
+    views : {},
+
     New: function (pageName) {
 
         var returnedViewer = {
@@ -265,7 +267,7 @@ var RealTimeDataViewer = {
     
        for (var pageName in Pages) {
            if (Pages[pageName]["tableHeaderInfo"]) {
-               Pages[pageName]["rtViewer"] = RealTimeDataViewer.New (pageName);
+               RealTimeDataViewer.views[pageName] = RealTimeDataViewer.New (pageName);
            }
        }
     })();
@@ -306,7 +308,7 @@ var RealTimeDataViewer = {
 
         sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName));
 
-        var rtViewer = Pages[pageName]["rtViewer"];
+        var rtViewer = RealTimeDataViewer.views[pageName];
         sectionCheckbox.onclick = function () { 
             localStorage.setItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName), this.checked);
             rtViewer.resetItemVisibility();
