@@ -97,7 +97,7 @@ var MoonData = {
                 "0" : { "text" : "\u03B1", "classes" : ["minWidth20"] },
                 "1" : { "text" : "h", "classes" : ["minWidth20"] },
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension",
-                "dataKey" : 'RA'
+                "dataKey" : 'RaGeo'
             },
         "3" : {
                 "0" : { "text" : "(RA)", "classes" : ["minWidth20", "screenOnly"] },
@@ -113,7 +113,7 @@ var MoonData = {
                 "0" : { "text" : "\u03B4", "classes" : ["minWidth20"] },
                 "1" : { "text" : "\u00B0", "classes" : ["minWidth25"] },
                 "longText" : "Apparent geocentric equatorial coordinates: Declination",
-                "dataKey" : 'Dec'
+                "dataKey" : 'DecGeo'
             },
         "6" :  {
                 "0" : { "text" : "(Dec)", "classes" : ["minWidth20" , "screenOnly"] },
