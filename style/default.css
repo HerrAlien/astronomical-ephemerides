@@ -611,9 +611,12 @@ input[type=date]::-webkit-inner-spin-button {
 }
 
 #footer {
-    margin-top: 40px;
+    margin-top: 60px;
     text-align: center;
     font-size: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top:    solid 1px #AAAAAA;
 }
 
 #credits, #home {
@@ -665,4 +668,35 @@ input[type=date]::-webkit-inner-spin-button {
     text-decoration: underline;
 }
 
+}
+
+.rtsettings input[type=checkbox] {
+    transform : scale(2.5);
+    float: right;
+}
+
+.rtsettings h3 {
+    float: left;
+    margin-top: 0px;
+}
+
+.rtsettings {
+    border-top: solid 1px #000000;
+    padding-top: 15px;
+}
+
+.row {
+    margin-top: 5px;
+}
+
+.row label {
+    font-size: 25px;
+}
+
+#realTimeSettingsContainer {
+    margin-bottom: 100px;
+}
+
+.settingsLabelDiv {
+    font-size: 30px;
 }

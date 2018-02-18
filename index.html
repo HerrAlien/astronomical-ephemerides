@@ -245,7 +245,6 @@ th {
 	clear: both;
     height: 0px;
 }
-
     
  #credits, .topBorder{
     	border-top: 1px solid #AAAAAA;
@@ -275,10 +274,7 @@ th {
         background-position: center;
         display: inline-block;
         margin: 10px;
-    }
-     .RA {
-        border-top: 1px solid #AAAAAA;
-        margin-top: 110px;
+        overflow-x: hidden;
     }
 
  .realtimeTitle {
@@ -286,123 +282,51 @@ th {
     border-bottom: 1px solid #AAAAAA;
     width: 100%;
     font-size: 30px;
-    text-decoration: underline;
+    text-decoration: none;
     padding-bottom: 5px;
-}    
+ }  
+
+ .realtimeTitle:hover {
+     text-decoration: underline;
+ }
+
+.rightNowFrontPageWidget .Month,
+.rightNowFrontPageWidget .Day {
+    display: none;
+}
     
  #HomeLinkMobile, #HomeLinkMobileNav {
     display: none;
 }
 
-@media  screen and  (max-width: 936px)  {
-
-     .rightNowFrontPageWidget {
-        width:  320px;
-        height: 320px;
-    }
-     .RA {
-        margin-top: 170px;
-    }
-
-     .realtimeTitle {
-        font-size: 48px;
-    }
-
-     .RA, .Dec {
-        font-size: 36px;
-    }
-        
-     #navigation.movedMenu {
-        top: -120px;
-    }
-
-     .linkButton img {
-        width: 82px;
-    }
-    
-     .topmenulink::after {
-        display: none;
-    }
-    
-     .MenuLinkDiv::after {
-        display: none;
-    }
-
-     .SettingsLink::after {
-        display: none;
-    }
-    
-     .MenuLinkDiv.topmenulink img{
-        width: 90px;
-        height: 90px;
-    }
-
-
-     .SettingsLink.topmenulink img {
-        width: 82px;
-        height: auto;
-    }
-    
-     #HomeLinkMobile {
-        display: block;
-        margin-top: 140px;
-        margin-bottom: 40px;
-        width: 720px;
-        height: auto;
-    }
-    
-     #HomeLink {
-        display: none;
-    }
-
-     #home h1 {
-        margin-top: 20px;
-    }
-    
-     #HomeLinkMobileNav {
-        display: block;
-    }
-}
-    
- #rightNowFrontPage {
-    text-align: center;
-}
-
- #SunHomepageImmediateView {
-    background-image: url('images/sun.svg');
-}
-
- #JupiterHomepageImmediateView {
-    background-image: url('images/jupiter.svg');
-}
-
- #MarsHomepageImmediateView {
-    background-image: url('images/mars.svg');
-}
-
- #SaturnHomepageImmediateView {
-    background-image: url('images/saturn.svg');
-}
-
- #MoonHomepageImmediateView {
-    background-image: url('images/moon.svg');
-}
-
- #VenusHomepageImmediateView {
-    background-image: url('images/venus.svg');
-}
-
-
- .RA::before {
-    content: "R.A. ";
-}
-
- .Dec::before {
-    content: "Dec. ";
-}
-
- .RA, .Dec, .realtimeTitle {
+.scrollableRT div,
+.realtimeTitle {
     background: rgba(255, 255, 255, 0.8);
+    margin-left: 10px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.scrollableRT {
+    margin-top: 90px;
+}
+
+.rightNowFrontPageWidget::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Handle */
+.rightNowFrontPageWidget::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+/* Handle on hover */
+.rightNowFrontPageWidget::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+.rightNowFrontPageWidget::-webkit-scrollbar-track {
+    background: #FFFFFF; 
 }
 
      #navigation {
@@ -472,7 +396,288 @@ border-bottom: solid 1px #AAAAAA;
 #searchArea a{
     cursor: pointer;
 }
+
+.hidden {
+    display: none;
+}
+
+ .HomeLinkButton {
+    float: left;
+    margin-top: 2px;
+    margin-right: 0px;
+}
+
+ .MenuLinkDiv {
+    margin-top: 2px;
+}
+ .MenuLinkDiv.topmenulink img{
+    width: 78px;
+    height: 62px;
+}
+
+ .HomeLinkButton.topmenulink img {
+    width: auto;
+    height: 90px;
+}
+
+ .SettingsLink.topmenulink img {
+    width: 62px;
+    height: 62px;
+}
+
+ h1 {
+    margin-top: 120px;
+    margin-bottom: 0px;
+    font-size: 50px;
+    font-family: Arial;
+    margin-left: auto;
+    display: block;
+    font-weight: normal;
+    margin-right: auto;
+}
+
+ h2 {
+    font-size: 40px;
+}
+
+ h3 {
+    font-size: 32px;
+}
     
+ #promotedMenu a {
+    float: left;
+    margin-top: 2px;
+    margin-left: 15px;
+}
+
+ #promotedMenu {
+    overflow: hidden;
+    height: 90px;
+}
+
+ .clear {
+	clear: both;
+    height: 0px;
+}
+
+@media  screen and  (max-width: 936px)  {
+
+     .rightNowFrontPageWidget {
+        width:  320px;
+        height: 320px;
+    }
+
+    .scrollableRT {
+        margin-top:145px;
+    }
+
+     .realtimeTitle {
+        font-size: 48px;
+        text-decoration: underline;
+    }
+
+     .rightNowFrontPageWidget div {
+        font-size: 36px;
+    }
+        
+     #navigation.movedMenu {
+        top: -120px;
+    }
+
+     .linkButton img {
+        width: 82px;
+    }
+    
+     .topmenulink::after {
+        display: none;
+    }
+    
+     .MenuLinkDiv::after {
+        display: none;
+    }
+
+     .SettingsLink::after {
+        display: none;
+    }
+    
+     .MenuLinkDiv.topmenulink img{
+        width: 90px;
+        height: 90px;
+    }
+
+
+     .SettingsLink.topmenulink img {
+        width: 82px;
+        height: auto;
+    }
+    
+     #HomeLinkMobile {
+        display: block;
+        margin-top: 140px;
+        margin-bottom: 40px;
+        width: 720px;
+        height: auto;
+    }
+    
+     #HomeLink {
+        display: none;
+    }
+
+     #home h1 {
+        margin-top: 20px;
+    }
+    
+     #HomeLinkMobileNav {
+        display: block;
+    }
+
+    .rightNowFrontPageWidget::-webkit-scrollbar {
+        width: 3px;
+    }
+
+}
+    
+ #rightNowFrontPage {
+    text-align: center;
+}
+
+.SunBackground {
+    background-image: url('images/sun.svg');
+}
+
+.JupiterBackground {
+    background-image: url('images/jupiter.svg');
+}
+
+.MarsBackground {
+    background-image: url('images/mars.svg');
+}
+
+.SaturnBackground {
+    background-image: url('images/saturn.svg');
+}
+
+.MoonBackground {
+    background-image: url('images/moon.svg');
+}
+
+.VenusBackground {
+    background-image: url('images/venus.svg');
+}
+
+.MercuryBackground {
+    background-image: url('images/mercury.svg');
+}
+
+.UranusBackground {
+    background-image: url('images/uranus.svg');
+}
+
+.NeptuneBackground {
+    background-image: url('images/neptune.svg');
+}
+
+
+ .RA::before {
+    content: "\03B1: ";
+}
+
+ .Dec::before {
+    content: "\03B4: ";
+}
+
+ .DistanceToEarth::before {
+    content: "\0394: ";
+ }
+
+ .Diameter::before {
+     content: "\03C6: ";
+ }
+
+ .MeridianTransit::before {
+     content: "Transit: ";
+ }
+
+.P::before {
+    content: "P: ";
+}
+
+.B0::before {
+    content: "B0: ";
+}
+
+.L0::before {
+    content: "L0: ";
+}
+
+.Parallax::before {
+    content: "\03C0: ";
+}
+
+.Rise::before {
+    content: "Rise: ";
+}
+
+.Set::before {
+    content: "Set: ";
+}
+   
+.DistanceToSun::before {
+    content: "R: ";
+}
+
+.Elongation::before {
+    content: "Elong.: "
+}
+
+.Phase::before {
+    content: "Phase: "
+}
+
+.EarthDeclination::before {
+    content: "DE: "
+}
+
+.SunDeclination::before {
+    content: "DS: "
+}
+
+.CentralMeridianLongitude::before {
+    content: "L0: "
+}
+
+.CentralMeridianApparentLongitude_System1::before {
+    content: "L0-S1: "
+}
+
+.CentralMeridianApparentLongitude_System2::before {
+    content: "L0-S2: "
+}
+
+.RaGeo::before {
+    content: "\03B1: ";
+}
+
+.DecGeo::before {
+    content: "\03B4: ";
+}
+
+.RaTopo::before {
+    content: "\03B1  topo: "
+}
+
+.DecTopo::before {
+    content: "\03B4  topo: "
+}
+
+.Colongitude::before {
+    content: "90-l0: "
+}
+
+.R::before {
+    content: "R: "
+}
+
     </style>
     
     
@@ -595,18 +800,24 @@ border-bottom: solid 1px #AAAAAA;
         <div id="settings" class="page">
             <h1>Settings</h1>
             <div id="settingsContainer">
-            <label>Latitude [&deg;]: <br/><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
-            <label>Longitude [&deg;]: <br/><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
-            <label>Altitude [m]: <br/><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
-            <div class="clear">&nbsp;</div>
-            <Label>Start from: <br/><input type="date" id="startingDate"></input></label>
-            <Label>increment in days: <br/><input type="number" id="incrementDate"></input></label>
-            <Label>for number of days:<br/><input type="number" id="numberOfDays"></input></label>
-            <div class="clear">&nbsp;</div>
-            <input type="button" id = "applySettingsChanges" value="Apply"></input>
-            <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
-            <div class="clear">&nbsp;</div>
-            </div>
+                <h2>Location and time intervals</h2>
+                <label>Latitude [&deg;]: <br/><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
+                <label>Longitude [&deg;]: <br/><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
+                <label>Altitude [m]: <br/><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
+                <div class="clear">&nbsp;</div>
+                <Label>Start from: <br/><input type="date" id="startingDate"></input></label>
+                <Label>increment in days: <br/><input type="number" id="incrementDate"></input></label>
+                <Label>for number of days:<br/><input type="number" id="numberOfDays"></input></label>
+                <div class="clear">&nbsp;</div>
+                <input type="button" id = "applySettingsChanges" value="Apply"></input>
+                <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
+                <div class="clear">&nbsp;</div>
+
+                <h2>Right now</h2>
+                <div id="realTimeSettingsContainer">
+                    
+                </div>
+          </div>
         </div>
         
         <div id="JSDisabledPage">
@@ -624,42 +835,10 @@ border-bottom: solid 1px #AAAAAA;
             <img src="images/logomobilebanner.png" alt="Home" id="HomeLinkMobile">
             <h1>Right now:</h1>
             <div id="rightNowFrontPage">
-            <a href="#Sun Ephemeris">
-             <div class="rightNowFrontPageWidget" id="SunHomepageImmediateView"> <span class="realtimeTitle">
-                      Sun</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
-            
-            <a href="#Moon Ephemeris">
-             <div  class="rightNowFrontPageWidget" id="MoonHomepageImmediateView"> <span class="realtimeTitle">
-                      Moon</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
-
-            <a href="#Jupiter Ephemeris">
-            <div  class="rightNowFrontPageWidget" id="JupiterHomepageImmediateView"> <span class="realtimeTitle">Jupiter</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
-            
-            <a href="#Saturn Ephemeris">
-            <div  class="rightNowFrontPageWidget" id="SaturnHomepageImmediateView">   <span class="realtimeTitle">  Saturn</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
-
-            <a href="#Mars Ephemeris">
-            <div  class="rightNowFrontPageWidget" id="MarsHomepageImmediateView">   <span class="realtimeTitle">  Mars</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
-
-            <a href="#Venus Ephemeris">
-             <div  class="rightNowFrontPageWidget" id="VenusHomepageImmediateView"> <span class="realtimeTitle">
-                      Venus</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
-
-            <div class="clear maxWidth">&nbsp;</div>
-        </div>
-        <br/>
+               
+            </div>
+             <div class="clear maxWidth">&nbsp;</div>
+            <br/>
             Astronomical Ephemerides is a JavaScript utility to calculate ephemerides for the major planets of the solar system. It uses an <a href="https://bitbucket.org/herr_alien/jsaaplus" target="_blank" rel="noopener" title="opens in a new window">Emscripten port</a> of the <a href="http://www.naughter.com/aa.html" target="_blank" rel="noopener" title="opens in a new window">AA+ library</a>. More about Emscripten <a href="http://kripken.github.io/emscripten-site/" target="_blank" rel="noopener" title="opens in a new window">here</a>.<br/>
         <br/>
         The following rules stand for the data computed by the application:
@@ -865,6 +1044,7 @@ border-bottom: solid 1px #AAAAAA;
             Jupiter is represented in <font color="orange"><b>orange color</b></font>
             <br/>
             <br/>
+            East is on the left side, West is on the right side.
             <div id="GalileanMoonsContainer">
                 <div class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</div>
              </div>
@@ -886,6 +1066,7 @@ border-bottom: solid 1px #AAAAAA;
             Saturn is represented in <font color="orange"><b>orange color</b></font>
             <br/>
             <br/>
+            East is on the left side, West is on the right side.
             <div id="SaturnMoonsContainer">
                 <div class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</div>
              </div>
@@ -943,8 +1124,25 @@ border-bottom: solid 1px #AAAAAA;
         </div>
 
 <div id="footer">
-<a href="#privacy">Privacy Policy</a> | <a href="mailto:alexandru.garofide@gmail.com">Contact us</a><br>
+<a href="https://bitbucket.org/herr_alien/astronomical_ephemerides" target="_blank" 
+   rel="noopener" title="Source code for the app">Source code</a> | 
+<a href="https://bitbucket.org/herr_alien/astronomical_ephemerides/issues?status=new&status=open" target="_blank" 
+   rel="noopener" title="Bug tracker">Found a bug?</a> | 
+<a href="http://www.astronomy.ro/forum/viewtopic.php?t=17450" target="_blank" 
+   rel="noopener" title="Forum (Romanian language)">Forum (RO)</a> | 
+   <!-- 
+<a href="http://www.astronomy.ro/forum/viewtopic.php?t=17450" target="_blank" 
+   rel="noopener" title="Forum (Romanian language)">Forum (EN) | 
+
+-->
+<a href="mailto:alexandru.garofide@gmail.com">Contact us</a><br>
 <br>
+<a href="#privacy">Privacy Policy</a> | 
+<a href="https://www.gnu.org/licenses/agpl.html" target="_blank" rel="noopener"  
+title="opens in a new window">AGPL License</a>  | 
+<a href="http://herralien-apps.appspot.com" target="_blank" rel="noopener"  
+title="opens in a new window">Bits of software</a><br>
+<br><br>
         Copyright 2018  Alexandru Garofide &lt;<a href="mailto:alexandru.garofide@gmail.com">alexandru.garofide@gmail.com</a>&gt;
 </div>
 
@@ -1131,35 +1329,13 @@ border-bottom: solid 1px #AAAAAA;
 <script type="text/JavaScript" src="js/besselianelements.js"></script>
 <script type="text/JavaScript" src="js/solareclipsesdata.js"></script>
 <script type="text/JavaScript" src="js/solareclipsespage.js"></script>
+<script type="text/JavaScript" src="js/realtimedata.js"></script>
 <script type="text/JavaScript" src="js/realtime.js"></script>
 <script type="text/JavaScript" src="js/searchform.js"></script>
 
 <script>
 
     "use strict";
-
-    (function(){
-    
-        // has common functionality with the page, considere refactoring some of it.
-        new RealTimeDataViewer(Pages["Sun Ephemeris"], 
-             document.getElementById("SunHomepageImmediateView"));
-
-       new RealTimeDataViewer(Pages["Jupiter Ephemeris"], 
-             document.getElementById("JupiterHomepageImmediateView"));
-
-        new RealTimeDataViewer(Pages["Mars Ephemeris"], 
-             document.getElementById("MarsHomepageImmediateView"));
-
-        new RealTimeDataViewer(Pages["Saturn Ephemeris"], 
-             document.getElementById("SaturnHomepageImmediateView"));
-
-        new RealTimeDataViewer(Pages["Moon Ephemeris"], 
-             document.getElementById("MoonHomepageImmediateView"));
-
-        new RealTimeDataViewer(Pages["Venus Ephemeris"], 
-             document.getElementById("VenusHomepageImmediateView"));
-
-        })();
     
     function error404(pageName) {
         document.getElementById("requestedresource").textContent = pageName;
@@ -1183,7 +1359,7 @@ border-bottom: solid 1px #AAAAAA;
         searchFormInput.value = "";
 
         document.body.scrollTop = 0;
-        var hash = location.hash;
+        var hash = decodeURIComponent(location.hash);
         var pageName = hash.slice(1);
         if (pageName == "Search results") {
             return;
