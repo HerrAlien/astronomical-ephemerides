@@ -276,8 +276,7 @@ function PlanetPage (planetDataSource, tableName) {
         displayableLine[di++] = sexagesimalDec.Ord2;
         displayableLine[di++] = sexagesimalDec.Ord1;
 		
-        var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(Math.round(obj.Diameter * 3600)/3600);
-        displayableLine[di++] = sexagesimalDiam.Ord1;
+        displayableLine[di++] = Math.round(obj.Diameter * 3600);
         
         displayableLine[di++] = this.timeToHhColumnMm(obj.Rise);
         displayableLine[di++] = this.timeToHhColumnMm(obj.MeridianTransit);
