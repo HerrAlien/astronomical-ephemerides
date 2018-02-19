@@ -278,11 +278,28 @@ var RealTimeDataViewer = {
         if (Pages[pageName]["tableHeaderInfo"]) {
             CreateRTSettings (pageName);
         }
-    } 
+    }
+
+    function createCheckboxSwitch (host, usingID) {
+        /*<label class="switch">
+  <input type="checkbox">
+  <span class="slider round"></span>
+</label>*/
+        var createDom = RealTimeDataViewer.Utils.CreateDom;
+        var containingLabel = createDom (host, "label");
+        containingLabel.classList.add("switch");
+        var actualInput = createDom (containingLabel, "input");
+        actualInput.type = "checkbox";
+        actualInput.id = usingID;
+        var span = createDom (containingLabel, "span");
+        span.classList.add("slider");
+        span.classList.add("round");
+        return actualInput;
+    }
 
     function CreateRTSettings (pageName) {
-        var hostForRTSettings = document.getElementById("realTimeSettingsContainer");
         var createDom = RealTimeDataViewer.Utils.CreateDom;
+        var hostForRTSettings = document.getElementById("realTimeSettingsContainer");
         var persistent = RealTimeDataViewer.Persistent;
         var topDiv = createDom(hostForRTSettings, "div");
         createDom (topDiv, "div", " ").classList.add("clear");
@@ -297,16 +314,15 @@ var RealTimeDataViewer = {
         
         var sectionCheckboxId = pageName+"settings";
 
+        // <input type="checkbox"></input>
+        var sectionCheckbox = createCheckboxSwitch (bodySectionDiv, sectionCheckboxId);
+
+        sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName));
+
         var sectionLabel = createDom (bodySectionDiv, "label");
         sectionLabel.setAttribute('for', sectionCheckboxId);
         createDom (sectionLabel, "h3", objectName);
 
-        // <input type="checkbox"></input>
-        var sectionCheckbox = createDom (bodySectionDiv, "input");
-        sectionCheckbox.type = "checkbox";
-        sectionCheckbox.id = sectionCheckboxId;
-
-        sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName));
 
         var rtViewer = RealTimeDataViewer.views[pageName];
         sectionCheckbox.onclick = function () { 
@@ -338,15 +354,8 @@ var RealTimeDataViewer = {
                     createDom (bodySectionDiv, "div", " ").classList.add("clear");
                     var row = createDom (bodySectionDiv, "div");
                     row.classList.add("row");
-                    var lbl = createDom (row, "label");
-                    lbl.setAttribute('for', checkboxId);
-                    var labelDiv = createDom (lbl, "div", " ");
-                    labelDiv.classList.add(key);
-                    labelDiv.classList.add("settingsLabelDiv");
 
-                    sectionCheckbox = createDom (row, "input");
-                    sectionCheckbox.type = "checkbox";
-                    sectionCheckbox.id = checkboxId;
+                    sectionCheckbox = createCheckboxSwitch (row, checkboxId);
 
                     sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName, key));
 
@@ -357,6 +366,13 @@ var RealTimeDataViewer = {
                             rtViewer.resetItemVisibility();
                         }
                     })();
+
+                    var lbl = createDom (row, "label");
+                    lbl.setAttribute('for', checkboxId);
+                    var labelDiv = createDom (lbl, "div", " ");
+                    labelDiv.classList.add(key);
+                    labelDiv.classList.add("settingsLabelDiv");
+
                 }
              } else {
                     setTimeout (AddSettingsForKeys, 100);
