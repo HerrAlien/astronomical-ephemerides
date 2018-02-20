@@ -15,13 +15,14 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 (function() {
 var CACHE_PREFIX = 'Cache-for-ephemerides';
-var CACHE_VERSION = 'v86';
+var CACHE_VERSION = 'v87';
 var CACHE_NAME = CACHE_PREFIX + '-' + CACHE_VERSION;
 var urlsToCache = [
 ".",
 "index.html",
 "manifest.json",
 "style/default.css",
+"style/common.css",
 "js/aajs.js",
 "js/besselianelements.js",
 "js/galileanmoonsdata.js",

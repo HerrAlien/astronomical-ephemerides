@@ -54,8 +54,12 @@
     text-align: left;
 }
 
-#settings label, #getFromGeolocationAnchor, #applySettingsChanges{
+#settings label, #getFromGeolocationAnchor{
     float: left;
+    margin-top: 16px;
+}
+
+#cancelSettingsChanges,  #applySettingsChanges{
     margin-top: 16px;
 }
 
@@ -66,24 +70,6 @@
 #cancelSettingsChanges {
     float: right;
     margin-right: 16px;
-}
-
-#applySettingsChanges, #cancelSettingsChanges {
-    margin-top: 32px;
-    height: 48px;
-    padding: 12px;
-    font-size: 20px;
-    border-radius: 20px;
-    border: solid 1px;
-    box-shadow: 1px 1px 1px #888;
-}
-
-#applySettingsChanges {
-    background-color: #B1D6FF;
-}
-
-#cancelSettingsChanges{
-    background-color: #ffffff;
 }
 
 #menuList li a {
@@ -174,12 +160,6 @@ tr.secondHeaderRowScrolled th, .withDropShadow {
 
 tr.secondHeaderRowScrolled th:last-of-type {
     box-shadow: 0px 2px 1px #CCCCCC;
-}
-
-input {
-    height: 32px;
-    font-size: 16px;
-    margin-top: 8px;
 }
 
 #latitudeInput, #longitudeInput, #altitudeInput {
@@ -709,70 +689,18 @@ input[type=date]::-webkit-inner-spin-button {
 
 /* --------------- from w3schools, with a few tweaks --------------*/
 
+#settings {
+    --slider-width: 40px;
+    --slider-height: 9px;  
+    --slider-cursor-to-slider-height: 3;
+    --input-height: 40px;
+}
+
 #settings label.switch {
-  position: relative;
-  display: block;
-  width: 38px;
-  height: 10px;
-  margin-top: 30px;
   float: right;
 }
 
-.switch input {display:none;}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .1s;
-  transition: .1s;
+#settings input[type='button'] {
+  width: auto;
+  display: inline;
 }
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 24px;
-  width: 24px;
-  left: 2px;
-  bottom: -2px;
-  background-color: #CCC;
-  -webkit-transition: .1s;
-  transition: .1s;
-  box-shadow: 0px 1px 1px 1px #000000;
-}
-
-input:checked + .slider {
-  background-color: #81B6F3;
-}
-
-input:checked + .slider:before {
-  background-color: #2196F3;
-}
-
-input[readOnly="true"] + .slider {
-  background-color: #ccc;
-}
-
-input[readOnly="true"] + .slider:before {
-  background-color: #ccc;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(24px);
-  -ms-transform: translateX(24px);
-  transform: translateX(24px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 10px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-
