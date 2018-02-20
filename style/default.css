@@ -659,6 +659,8 @@ input[type=date]::-webkit-inner-spin-button {
 .rtsettings {
     border-top: solid 1px #000000;
     padding-top: 15px;
+    padding-bottom: 65px;
+    border-bottom: solid 1px #000000;
 }
 
 .row {
@@ -712,21 +714,11 @@ input[type=date]::-webkit-inner-spin-button {
   display: inline;
 }
 
-@media  screen and  (min-width: 801px) {
-    #settings input[type="button"]{
-        --input-height: 25px;
-    }
-
-    #settings {
-        --slider-width: 30px;
-        --slider-height: 7px;  
-        --slider-cursor-to-slider-height: 2.5;
-    }
-}
-
 .rtsettings.collapsed, .collapsed {
     height: 70px;
     overflow-y: hidden;
+    border: none;
+    padding-bottom: 0px;
 }
 
  .expandCollapseButton {
@@ -749,3 +741,23 @@ input[type=date]::-webkit-inner-spin-button {
     transform: rotate(0deg);
     transition: 0.1;
 }
+
+@media  screen and  (min-width: 801px) {
+    #settings input[type="button"]{
+        --input-height: 25px;
+    }
+
+    #settings {
+        --slider-width: 30px;
+        --slider-height: 7px;  
+        --slider-cursor-to-slider-height: 2.5;
+    }
+
+     .expandCollapseButton {
+        width: 35px;
+        height: 35px;
+        background-size: 25px 25px;
+     }
+
+}
+
