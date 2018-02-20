@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 (function() {
 var CACHE_PREFIX = 'Cache-for-ephemerides';
-var CACHE_VERSION = '91';
+var CACHE_VERSION = '92';
 var CACHE_NAME = CACHE_PREFIX + '-' + CACHE_VERSION;
 var urlsToCache = [
 ".",
@@ -61,6 +61,7 @@ var urlsToCache = [
 "images/ae-icon-192.png",
 "images/ae-icon-256.png",
 "images/ae-icon-512.png",
+"images/double-arrow.svg",
 "images/galilean-moons.svg",
 "images/home-3.svg",
 "images/icon.svg",

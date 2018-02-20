@@ -307,6 +307,7 @@ var RealTimeDataViewer = {
         // <div class="rtsettings">
         var bodySectionDiv = createDom (topDiv, "div");
         bodySectionDiv.classList.add ("rtsettings");
+        bodySectionDiv.classList.add ("collapsed");
         // <h3>Sun</h3>
         // TODO: this should be from the page object.
         createDom (bodySectionDiv, "div", " ").classList.add("clear");
@@ -321,6 +322,18 @@ var RealTimeDataViewer = {
 
         var sectionLabel = createDom (bodySectionDiv, "label");
         sectionLabel.setAttribute('for', sectionCheckboxId);
+
+        var collapseExpand = createDom (bodySectionDiv, "div");
+        collapseExpand.classList.add("expandCollapseButton");
+        collapseExpand.onclick = function () {
+            if (this.parentElement.classList.contains ("collapsed")) {
+                this.parentElement.classList.remove ("collapsed");
+            } else {
+                this.parentElement.classList.add ("collapsed");
+            }
+        }
+
+
         createDom (sectionLabel, "h3", objectName);
 
 

@@ -704,6 +704,7 @@ input[type=date]::-webkit-inner-spin-button {
 
 #settings label.switch {
   float: right;
+  margin-right: 15px;
 }
 
 #settings input[type='button'] {
@@ -721,4 +722,30 @@ input[type=date]::-webkit-inner-spin-button {
         --slider-height: 7px;  
         --slider-cursor-to-slider-height: 2.5;
     }
+}
+
+.rtsettings.collapsed, .collapsed {
+    height: 70px;
+    overflow-y: hidden;
+}
+
+ .expandCollapseButton {
+    background-image: url('../images/double-arrow.svg');
+    width: 50px;
+    height: 50px;
+    background-size: 38px 38px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    float: right;
+    transform: rotate(180deg);
+    transition: 0.1;
+    margin-right: 20px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.collapsed .expandCollapseButton {
+    transform: rotate(0deg);
+    transition: 0.1;
 }
