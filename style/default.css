@@ -47,7 +47,7 @@
 }
 
 #settingsContainer {
-    max-width: 640px;
+    max-width: 780px;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -162,15 +162,6 @@ tr.secondHeaderRowScrolled th:last-of-type {
     box-shadow: 0px 2px 1px #CCCCCC;
 }
 
-#latitudeInput, #longitudeInput, #altitudeInput {
-    width: 134px;
-}
-#startingDate {
-    width: 220px;
-} 
-#incrementDate, #numberOfDays {
-    width: 180px;
-}
 
 /** ----------------------------- M O O N --------------------------------------- **/
 
@@ -692,12 +683,23 @@ input[type=date]::-webkit-inner-spin-button {
     --input-height: 40px;
 }
 
+#latitudeInput, #longitudeInput, #altitudeInput {
+    width: 230px;
+}
+#startingDate {
+    width: 220px;
+} 
+#incrementDate, #numberOfDays {
+    width: 230px;
+}
+
+
 #latitudeInput, #longitudeInput, #altitudeInput, #incrementDate, #numberOfDays {
     font-size: 26px;
 }
 
-#settings label {
-    font-size: 18px;
+#settings label, #getFromGeolocationAnchor {
+    font-size: 26px;
 }
 
 #settings label.switch {
