@@ -690,7 +690,6 @@ input[type=date]::-webkit-inner-spin-button {
 /* --------------- from w3schools, with a few tweaks --------------*/
 
 #settings {
-
     --input-height: 40px;
 }
 
@@ -701,4 +700,16 @@ input[type=date]::-webkit-inner-spin-button {
 #settings input[type='button'] {
   width: auto;
   display: inline;
+}
+
+@media  screen and  (min-width: 801px) {
+    #settings input[type="button"]{
+        --input-height: 25px;
+    }
+
+    #settings {
+        --slider-width: 30px;
+        --slider-height: 7px;  
+        --slider-cursor-to-slider-height: 2.5;
+    }
 }
