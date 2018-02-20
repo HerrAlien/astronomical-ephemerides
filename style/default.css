@@ -690,9 +690,7 @@ input[type=date]::-webkit-inner-spin-button {
 /* --------------- from w3schools, with a few tweaks --------------*/
 
 #settings {
-    --slider-width: 40px;
-    --slider-height: 9px;  
-    --slider-cursor-to-slider-height: 3;
+
     --input-height: 40px;
 }
 
