@@ -348,16 +348,11 @@ border-bottom: solid 1px #AAAAAA;
     height: 27px;
 }
 
-#HomeLinkMobileNav > div {
-        border-right: solid 2px #ccc;
-    }
-
 #searchArea {
     display: inline-block;
     padding: 0px;
     margin: 20px 0px 0px 0px;
     float: right;
-    border-left: solid 2px #ccc;
     /* expanded */
 }
 
@@ -424,10 +419,13 @@ border-bottom: solid 1px #AAAAAA;
  #promotedMenu {
     overflow-x: auto;
     height: 90px;
+    margin-top: 5px;
+    border-radius: 45px;
+    background: #f0f0f0;
 }
 
 #promotedMenu > div {
-        width: 19800px;
+        width: 3860px;
     }
 
  .clear {
@@ -670,6 +668,12 @@ border-bottom: solid 1px #AAAAAA;
     #HomeLinkMobileNav > div {
         border-right: none;
     }
+
+    #promotedMenu::after, 
+#promotedMenu::before {
+    display: none;
+}
+
 
 }
 
