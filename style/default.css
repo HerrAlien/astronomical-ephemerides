@@ -47,15 +47,19 @@
 }
 
 #settingsContainer {
-    max-width: 640px;
+    max-width: 780px;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
     text-align: left;
 }
 
-#settings label, #getFromGeolocationAnchor, #applySettingsChanges{
+#settings label, #getFromGeolocationAnchor{
     float: left;
+    margin-top: 16px;
+}
+
+#cancelSettingsChanges,  #applySettingsChanges{
     margin-top: 16px;
 }
 
@@ -66,13 +70,6 @@
 #cancelSettingsChanges {
     float: right;
     margin-right: 16px;
-}
-
-#applySettingsChanges, #cancelSettingsChanges {
-    margin-top: 32px;
-    height: 48px;
-    padding: 12px;
-    font-size: 20px;
 }
 
 #menuList li a {
@@ -165,21 +162,6 @@ tr.secondHeaderRowScrolled th:last-of-type {
     box-shadow: 0px 2px 1px #CCCCCC;
 }
 
-input {
-    height: 32px;
-    font-size: 16px;
-    margin-top: 8px;
-}
-
-#latitudeInput, #longitudeInput, #altitudeInput {
-    width: 134px;
-}
-#startingDate {
-    width: 220px;
-} 
-#incrementDate, #numberOfDays {
-    width: 180px;
-}
 
 /** ----------------------------- M O O N --------------------------------------- **/
 
@@ -423,11 +405,10 @@ input {
     margin-top: -1px;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 20px;
     page-break-after: always;
     max-width: 1024px;
     font-size: 25px;
-    padding: 20px;
+    padding: 0px 20px 20px 0px;
 }
 
 .moonEclipse table, .solarEclipse table {
@@ -670,11 +651,6 @@ input[type=date]::-webkit-inner-spin-button {
 
 }
 
-.rtsettings input[type=checkbox] {
-    transform : scale(2.5);
-    float: right;
-}
-
 .rtsettings h3 {
     float: left;
     margin-top: 0px;
@@ -683,6 +659,8 @@ input[type=date]::-webkit-inner-spin-button {
 .rtsettings {
     border-top: solid 1px #000000;
     padding-top: 15px;
+    padding-bottom: 65px;
+    border-bottom: solid 1px #000000;
 }
 
 .row {
@@ -700,3 +678,86 @@ input[type=date]::-webkit-inner-spin-button {
 .settingsLabelDiv {
     font-size: 30px;
 }
+
+/* --------------- from w3schools, with a few tweaks --------------*/
+
+#settings {
+    --input-height: 40px;
+}
+
+#latitudeInput, #longitudeInput, #altitudeInput {
+    width: 230px;
+}
+#startingDate {
+    width: 220px;
+} 
+#incrementDate, #numberOfDays {
+    width: 230px;
+}
+
+
+#latitudeInput, #longitudeInput, #altitudeInput, #incrementDate, #numberOfDays {
+    font-size: 26px;
+}
+
+#settings label, #getFromGeolocationAnchor {
+    font-size: 26px;
+}
+
+#settings label.switch {
+  float: right;
+  margin-right: 15px;
+}
+
+#settings input[type='button'] {
+  width: auto;
+  display: inline;
+}
+
+.rtsettings.collapsed, .collapsed {
+    height: 70px;
+    overflow-y: hidden;
+    border: none;
+    padding-bottom: 0px;
+}
+
+ .expandCollapseButton {
+    background-image: url('../images/double-arrow.svg');
+    width: 50px;
+    height: 50px;
+    background-size: 38px 38px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    float: right;
+    transform: rotate(180deg);
+    transition: 0.1;
+    margin-right: 20px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.collapsed .expandCollapseButton {
+    transform: rotate(0deg);
+    transition: 0.1;
+}
+
+@media  screen and  (min-width: 801px) {
+    #settings input[type="button"]{
+        --input-height: 25px;
+    }
+
+    #settings {
+        --slider-width: 30px;
+        --slider-height: 7px;  
+        --slider-cursor-to-slider-height: 2.5;
+    }
+
+     .expandCollapseButton {
+        width: 35px;
+        height: 35px;
+        background-size: 25px 25px;
+     }
+
+}
+
