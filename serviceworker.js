@@ -15,8 +15,13 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 (function() {
 var CACHE_PREFIX = 'Cache-for-ephemerides';
-var CACHE_VERSION = '93';
+var CACHE_VERSION = '96';
 var CACHE_NAME = CACHE_PREFIX + '-' + CACHE_VERSION;
+
+var optionalUrlsToCache = [
+"aajs.js.mem",
+];
+
 var urlsToCache = [
 ".",
 "index.html",
@@ -91,37 +96,15 @@ self.addEventListener('install', function(event) {
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('Opened cache');
+        cache.addAll (optionalUrlsToCache);
         return cache.addAll(urlsToCache);
       })
   );
 });
 
 
-self.onmessage = function(evt){
-  if (evt.data['action'] == 'cache') {
-  var url = evt.data['parameter'];
-    evt.waitUntil(
-      caches.open(CACHE_NAME)
-        .then(cache => {
-          cache.match(url).then(resp => {
-            if (!resp) {
-              cache.add(url).then(function() { 
-                evt.source.postMessage(url, self.origin); 
-                self.dispatchEvent (new CustomEvent("fileCached"));
-              });
-            } else {
-              evt.source.postMessage(url, self.origin); 
-              self.dispatchEvent (new CustomEvent("fileCached"));
-            }
-          })
-        })
-      );
-  }
-};
-
-
-function fetchAndCache (url) {
-  return fetch (url).then (resp => {
+function fetchAndCache (req) {
+  return fetch (req).then (resp => {
     if(!resp || resp.status !== 200 || resp.type !== 'basic') {
       return resp;
     }
@@ -129,7 +112,7 @@ function fetchAndCache (url) {
     var responseToCache = resp.clone();
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        cache.put(url, responseToCache);
+        cache.put(req, responseToCache);
        });
 
     return resp;
@@ -142,10 +125,25 @@ self.addEventListener('fetch', function(event) {
       .then(function(response) {
         // Cache hit - return response
         if (response) {
-          return response;
+          // analyze it
+          console.log ("Cache hit for " + response.url);
+
+          return response.clone().blob().then(dataAsBlob => {
+            if (dataAsBlob) {
+              console.log ("URL " + response.url + " has " + dataAsBlob.size + " bytes" + 
+                            response.useFinalURL ? ", final " : ", not final");
+            } else {
+              console.log ("No data as blob");
+            }
+
+            return response;
+            
+          });
+         
+        } else {
+          console.log ("Cache miss for " + event.request.url);
+          return fetchAndCache (event.request);
         }
-        
-        return fetchAndCache (event.request);
       }
     )
   );
