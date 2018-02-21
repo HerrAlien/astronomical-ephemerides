@@ -14,10 +14,7 @@
     coordinates, right ascension, RA, declination, dec, position, angle, elongation" />
 
     <meta name="description" content="A JavaScript utility to calculate ephemerides for the major planets of the solar system." />
-
-	<link rel="stylesheet" type="text/css" href="style/default.css" media="async-do-not-block" />
-    <link rel="icon" type="image/png" href="images/ae-icon.png" />
-
+    
     <link rel="manifest" href="manifest.json" />
 
     <link rel="apple-touch-icon" href="images/ae-icon-144.png" />
@@ -224,6 +221,8 @@ th {
 
  h2 {
     font-size: 40px;
+    margin-top: 70px;
+    margin-bottom: 10px;
 }
 
  h3 {
@@ -263,6 +262,7 @@ th {
 
  #home {
     text-align: left;
+    line-height: 1.5;
 }
 
      .rightNowFrontPageWidget {
@@ -308,7 +308,7 @@ th {
 }
 
 .scrollableRT {
-    margin-top: 90px;
+    margin-top: 80px;
 }
 
 .rightNowFrontPageWidget::-webkit-scrollbar {
@@ -336,7 +336,7 @@ border-bottom: solid 1px #AAAAAA;
     position: fixed;
     width: 100%;
     background: #ffffff;
-    z-index: 2;
+    z-index: 3;
 }
 
  .rightNowFrontPageWidget:hover {
@@ -356,6 +356,7 @@ border-bottom: solid 1px #AAAAAA;
     background: #ffffff;
     text-align: center;
     border-bottom: solid 1px #AAAAAA;
+    z-index: 2;
 }
 
  #showNavigationMenuContainer img {
@@ -453,6 +454,7 @@ border-bottom: solid 1px #AAAAAA;
  #promotedMenu {
     overflow: hidden;
     height: 90px;
+
 }
 
  .clear {
@@ -468,7 +470,7 @@ border-bottom: solid 1px #AAAAAA;
     }
 
     .scrollableRT {
-        margin-top:145px;
+        margin-top:130px;
     }
 
      .realtimeTitle {
@@ -806,10 +808,10 @@ border-bottom: solid 1px #AAAAAA;
                 <label>Altitude [m]: <br/><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
                 <div class="clear">&nbsp;</div>
                 <Label>Start from: <br/><input type="date" id="startingDate"></input></label>
-                <Label>increment in days: <br/><input type="number" id="incrementDate"></input></label>
-                <Label>for number of days:<br/><input type="number" id="numberOfDays"></input></label>
+                <Label>increment [days]: <br/><input type="number" id="incrementDate"></input></label>
+                <Label>for [days]:<br/><input type="number" id="numberOfDays"></input></label>
                 <div class="clear">&nbsp;</div>
-                <input type="button" id = "applySettingsChanges" value="Apply"></input>
+                <input type="button" id = "applySettingsChanges" class="cta" value="Apply"></input>
                 <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
                 <div class="clear">&nbsp;</div>
 
@@ -839,7 +841,7 @@ border-bottom: solid 1px #AAAAAA;
             </div>
              <div class="clear maxWidth">&nbsp;</div>
             <br/>
-            Astronomical Ephemerides is a JavaScript utility to calculate ephemerides for the major planets of the solar system. It uses an <a href="https://bitbucket.org/herr_alien/jsaaplus" target="_blank" rel="noopener" title="opens in a new window">Emscripten port</a> of the <a href="http://www.naughter.com/aa.html" target="_blank" rel="noopener" title="opens in a new window">AA+ library</a>. More about Emscripten <a href="http://kripken.github.io/emscripten-site/" target="_blank" rel="noopener" title="opens in a new window">here</a>.<br/>
+            Astronomical Ephemerides is a JavaScript utility to calculate ephemerides for the major objects of the solar system. It uses an <a href="https://bitbucket.org/herr_alien/jsaaplus" target="_blank" rel="noopener" title="opens in a new window">Emscripten port</a> of the <a href="http://www.naughter.com/aa.html" target="_blank" rel="noopener" title="opens in a new window">AA+ library (version 1.80)</a>. More about Emscripten <a href="http://kripken.github.io/emscripten-site/" target="_blank" rel="noopener" title="opens in a new window">here</a>.<br/>
         <br/>
         The following rules stand for the data computed by the application:
         <ul>
@@ -1148,10 +1150,15 @@ title="opens in a new window">Bits of software</a><br>
 
         </div>
     
-	<link rel="stylesheet" type="text/css" href="style/default.css"/>
 	</body>
 
 </html>
+
+    <link rel="stylesheet" type="text/css" href="style/common.css" />
+	<link rel="stylesheet" type="text/css" href="style/default.css" />
+    <link rel="icon" type="image/png" href="images/ae-icon.png" />
+
+
 <script type="text/JavaScript" src="js/notifications.js"></script>
 <script type="text/JavaScript" src="js/location.js"></script>
 <script type="text/JavaScript" src="js/timeinput.js"></script>
