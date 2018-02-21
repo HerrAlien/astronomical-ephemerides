@@ -229,22 +229,7 @@ th {
     font-size: 32px;
 }
     
- #promotedMenu a {
-    float: left;
-    margin-top: 2px;
-    margin-left: 15px;
-}
-
- #promotedMenu {
-    overflow: hidden;
-    height: 90px;
-}
-
- .clear {
-	clear: both;
-    height: 0px;
-}
-    
+   
  #credits, .topBorder{
     	border-top: 1px solid #AAAAAA;
 }
@@ -363,12 +348,16 @@ border-bottom: solid 1px #AAAAAA;
     height: 27px;
 }
 
+#HomeLinkMobileNav > div {
+        border-right: solid 2px #ccc;
+    }
 
 #searchArea {
     display: inline-block;
     padding: 0px;
     margin: 20px 0px 0px 0px;
     float: right;
+    border-left: solid 2px #ccc;
     /* expanded */
 }
 
@@ -425,25 +414,6 @@ border-bottom: solid 1px #AAAAAA;
     width: 62px;
     height: 62px;
 }
-
- h1 {
-    margin-top: 120px;
-    margin-bottom: 0px;
-    font-size: 50px;
-    font-family: Arial;
-    margin-left: auto;
-    display: block;
-    font-weight: normal;
-    margin-right: auto;
-}
-
- h2 {
-    font-size: 40px;
-}
-
- h3 {
-    font-size: 32px;
-}
     
  #promotedMenu a {
     float: left;
@@ -452,10 +422,13 @@ border-bottom: solid 1px #AAAAAA;
 }
 
  #promotedMenu {
-    overflow: hidden;
+    overflow-x: auto;
     height: 90px;
-
 }
+
+#promotedMenu > div {
+        width: 19800px;
+    }
 
  .clear {
 	clear: both;
@@ -680,6 +653,26 @@ border-bottom: solid 1px #AAAAAA;
     content: "R: "
 }
 
+@media screen and (min-width: 801px) {
+    #promotedMenu {
+        overflow: hidden;
+    }
+
+    #promotedMenu > div {
+        width: 100%;
+    }
+
+    #searchArea {
+    border-left: none;
+    /* expanded */
+    }
+
+    #HomeLinkMobileNav > div {
+        border-right: none;
+    }
+
+}
+
     </style>
     
     
@@ -761,6 +754,7 @@ border-bottom: solid 1px #AAAAAA;
             <a nohref="" id="searchButton"><img src="images/magnifying-glass.svg" alt="Search" /></a>
         </div>
         <div id="promotedMenu">
+            <div>
             <a href="#Sun Ephemeris"><div class="SunLinkButton topmenulink linkButton"><img src="images/sun.svg" alt="Sun"></div></a>
             <a href="#Moon Ephemeris"><div class="MoonLinkButton topmenulink linkButton"><img src="images/moon.svg" alt="Moon"></div></a>
             <a href="#Jupiter Ephemeris"><div class="JupiterLinkButton topmenulink linkButton"><img src="images/jupiter.svg" alt="Jupiter"></div></a>
@@ -774,6 +768,7 @@ border-bottom: solid 1px #AAAAAA;
             <a href="#Venus Ephemeris"><div class="VenusLinkButton topmenulink linkButton"><img src="images/venus.svg"  alt="Venus"></div></a>
             <a href="#Uranus Ephemeris"><div class="UranusLinkButton topmenulink linkButton"><img src="images/uranus.svg" alt="Uranus"></div></a>
             <a href="#Neptune Ephemeris"><div class="NeptuneLinkButton topmenulink linkButton"><img src="images/neptune.svg" alt="Neptune"></div></a>
+            </div>
         </div>
     </div>
     <a nohref="" id="showNavigationMenu"><div id="showNavigationMenuContainer"><img src="images/menu.svg" alt="More ..."></div></a>
