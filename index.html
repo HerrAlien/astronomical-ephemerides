@@ -1399,4 +1399,35 @@ title="opens in a new window">Bits of software</a><br>
     }
     registerWorker();
   })();
+
+
+  (function() {
+      var CACHE_PREFIX = 'Cache-for-ephemerides';
+      caches.keys().then(names => {
+          var versions = "version numbers: ";
+          for (var i = 0; i < names.length; i++) {
+              var name = names[i];
+
+                if (!name.startsWith(CACHE_PREFIX)) {
+                    continue;
+                }
+
+              var versionPos = name.lastIndexOf('v');
+              if (versionPos < 0) {
+                  versionPos = name.lastIndexOf('-');
+              }
+              if (versionPos < 0) {
+                  continue;
+              }
+              versions += name.substring(versionPos + 1) + ", ";
+          }
+
+          versions = versions.substring(0, versions.length - 2);
+          var div = document.createElement("div");
+          div.classList.add ("version");
+          div.textContent = versions;
+          document.body.appendChild(div);
+      });
+  })();
+
 </script>
