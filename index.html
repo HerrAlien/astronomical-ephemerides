@@ -1386,6 +1386,14 @@ title="opens in a new window">Bits of software</a><br>
         setTimeout(onhashchange, 1);
         
 
+    function injectAAJS() {
+        var scr = document.createElement ("script");
+        scr.setAttribute ("type", "text/javascript");
+        scr.setAttribute("src", "js/aajs.js");
+        document.documentElement.appendChild(scr);
+    }
+
+
   (function(){
     var registerWorker = function () {
         if ('serviceWorker' in navigator) {
@@ -1395,9 +1403,12 @@ title="opens in a new window">Bits of software</a><br>
               // registration failed :(
               console.log('ServiceWorker registration failed: ', err);              
             });
-        }             
+        } else {
+            injectAAJS();
+        }              
     }
     registerWorker();
+
   })();
 
 
