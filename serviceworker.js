@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 (function() {
 var CACHE_PREFIX = 'Cache-for-ephemerides';
-var CACHE_VERSION = '99';
+var CACHE_VERSION = '101';
 var CACHE_NAME = CACHE_PREFIX + '-' + CACHE_VERSION;
 
 var optionalUrlsToCache = [
@@ -104,7 +104,7 @@ self.addEventListener('install', function(event) {
 
 
 function fetchAndCache (req) {
-  return fetch (req).then (resp => {
+  return fetch (req.clone()).then (resp => {
     if(!resp || resp.status !== 200 || resp.type !== 'basic') {
       return resp;
     }
@@ -134,6 +134,10 @@ self.addEventListener('fetch', function(event) {
                             response.useFinalURL ? ", final " : ", not final");
             } else {
               console.log ("No data as blob");
+            }
+
+            if (!dataAsBlob || dataAsBlob.size == 0) {
+              return fetchAndCache(event.request);
             }
 
             return response;
