@@ -627,6 +627,7 @@ input[type=date]::-webkit-inner-spin-button {
     width:52px;
     float: left;
     margin-left: 10px;
+    height: 52px;
 }
 
 #searchArea input {
