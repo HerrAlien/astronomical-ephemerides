@@ -230,6 +230,19 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
         })(this);
          
     };
+
+        var localInit = function () {
+                try {
+
+                MoonsPage.prototype.reset = PlanetPage.prototype.reset;
+                
+                } catch (err) {
+                        setTimeout (localInit, 100);
+                }
+        }
+        localInit();
+
+    
 })();
 
 
