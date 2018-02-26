@@ -265,7 +265,7 @@ var RealTimeDataViewer = {
 
 
 (function(){
-    
+
     function createCheckboxSwitch (host, usingID) {
         /*<label class="switch">
   <input type="checkbox">
@@ -387,13 +387,29 @@ var RealTimeDataViewer = {
     }
 
 
-
+// should be distributed, for each RT
         var localInit = function () {
             try {
-                for (var pageName in Pages) {
-                    if (Pages[pageName]["tableHeaderInfo"]) {
-                        CreateRTSettings (pageName);
+                for (var pageName in { 
+
+"Sun Ephemeris": false,
+"Moon Ephemeris": false,
+"Lunar Eclipses": false,
+"Solar Eclipses": false,
+"Mercury Ephemeris": false,
+"Venus Ephemeris": false,
+"Mars Ephemeris": false,
+"Jupiter Ephemeris": false,
+"Elongations of Galilean Moons": false,
+"Saturn Ephemeris": false,
+"Elongations of Saturn Moons": false,
+"Uranus Ephemeris": false,
+"Neptune Ephemeris": false,
+                    
+                }) {
+                    if (Pages[pageName]["tableHeaderInfo"] && !(RealTimeDataViewer.views[pageName])) {
                         RealTimeDataViewer.views[pageName] = RealTimeDataViewer.New (pageName);
+                        CreateRTSettings (pageName);
                     }
                 }
             } catch (err) {
