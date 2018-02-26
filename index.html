@@ -1347,6 +1347,31 @@ title="opens in a new window">Bits of software</a><br>
 <script>
 
     "use strict";
+
+    var allowedPages = ["more", "settings", "home", "privacy", "Sun Ephemeris",
+"Moon Ephemeris",
+"Lunar Eclipses",
+"Solar Eclipses",
+"Mercury Ephemeris",
+"Venus Ephemeris",
+"Mars Ephemeris",
+"Jupiter Ephemeris",
+"Elongations of Galilean Moons",
+"Saturn Ephemeris",
+"Elongations of Saturn Moons",
+"Uranus Ephemeris",
+"Neptune Ephemeris",];
+
+    function DisplayPage (pageName) {
+        var delayedDisplay = function () {
+            try {
+                Pages[pageName].displayPage();
+            } catch (err) {
+                setTimeout(delayedDisplay, 100);
+            }
+        }
+        delayedDisplay();
+    }
     
     function error404(pageName) {
         document.getElementById("requestedresource").textContent = pageName;
@@ -1378,8 +1403,8 @@ title="opens in a new window">Bits of software</a><br>
 
         previousPage = document.getElementById(pageName); 
 
-        if (Pages[pageName]){
-            Pages[pageName].displayPage();
+        if (allowedPages.indexOf(pageName) >= 0){
+            DisplayPage (pageName);
         } else {
             error404 (pageName);
             window.location.href = "#Search results"
@@ -1390,15 +1415,6 @@ title="opens in a new window">Bits of software</a><br>
     if (location.hash)
         setTimeout(onhashchange, 1);
         
-
-    function injectAAJS() {
-        var scr = document.createElement ("script");
-        scr.setAttribute ("type", "text/javascript");
-        scr.setAttribute("src", "js/aajs.js");
-        document.documentElement.appendChild(scr);
-    }
-
-
   (function(){
     var registerWorker = function () {
         if ('serviceWorker' in navigator) {
@@ -1408,8 +1424,6 @@ title="opens in a new window">Bits of software</a><br>
               // registration failed :(
               console.log('ServiceWorker registration failed: ', err);              
             });
-        } else {
-            injectAAJS();
         }              
     }
     registerWorker();
