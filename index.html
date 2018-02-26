@@ -1209,7 +1209,7 @@ title="opens in a new window">Bits of software</a><br>
         }
     }};
 
-    Pages.addPlainPages(["more", "settings", "home", "privacy"]);
+    Pages.addPlainPages(["more", "settings", "home", "privacy", "Search results"]);
 
     var previousPage = false;
     var currentActiveLink = false;
@@ -1348,20 +1348,6 @@ title="opens in a new window">Bits of software</a><br>
 
     "use strict";
 
-    var allowedPages = ["more", "settings", "home", "privacy", "Sun Ephemeris",
-"Moon Ephemeris",
-"Lunar Eclipses",
-"Solar Eclipses",
-"Mercury Ephemeris",
-"Venus Ephemeris",
-"Mars Ephemeris",
-"Jupiter Ephemeris",
-"Elongations of Galilean Moons",
-"Saturn Ephemeris",
-"Elongations of Saturn Moons",
-"Uranus Ephemeris",
-"Neptune Ephemeris",];
-
     function DisplayPage (pageName) {
         var delayedDisplay = function () {
             try {
@@ -1403,7 +1389,7 @@ title="opens in a new window">Bits of software</a><br>
 
         previousPage = document.getElementById(pageName); 
 
-        if (allowedPages.indexOf(pageName) >= 0){
+        if (previousPage){
             DisplayPage (pageName);
         } else {
             error404 (pageName);
