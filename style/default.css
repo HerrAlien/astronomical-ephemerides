@@ -627,6 +627,7 @@ input[type=date]::-webkit-inner-spin-button {
     width:52px;
     float: left;
     margin-left: 10px;
+    height: 52px;
 }
 
 #searchArea input {
@@ -758,6 +759,12 @@ input[type=date]::-webkit-inner-spin-button {
         height: 35px;
         background-size: 25px 25px;
      }
+     
+     input:checked + .slider:before {
+      -webkit-transform: translateX(18px);
+      -ms-transform: translateX(18px);
+      transform: translateX(18px) ;
+    }
 
 }
 
