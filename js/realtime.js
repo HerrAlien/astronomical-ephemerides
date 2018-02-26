@@ -263,23 +263,9 @@ var RealTimeDataViewer = {
 
 };
 
-    (function(){
-    
-       for (var pageName in Pages) {
-           if (Pages[pageName]["tableHeaderInfo"]) {
-               RealTimeDataViewer.views[pageName] = RealTimeDataViewer.New (pageName);
-           }
-       }
-    })();
-
 
 (function(){
-    for (var pageName in Pages) {
-        if (Pages[pageName]["tableHeaderInfo"]) {
-            CreateRTSettings (pageName);
-        }
-    }
-
+    
     function createCheckboxSwitch (host, usingID) {
         /*<label class="switch">
   <input type="checkbox">
@@ -400,4 +386,21 @@ var RealTimeDataViewer = {
         rtViewer.resetItemVisibility();
     }
 
-})();
+
+
+        var localInit = function () {
+            try {
+                for (var pageName in Pages) {
+                    if (Pages[pageName]["tableHeaderInfo"]) {
+                        CreateRTSettings (pageName);
+                        RealTimeDataViewer.views[pageName] = RealTimeDataViewer.New (pageName);
+                    }
+                }
+            } catch (err) {
+                setTimeout(localInit, 100);
+            }
+        }
+
+        localInit();
+    })();
+

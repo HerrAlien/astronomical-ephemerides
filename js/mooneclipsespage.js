@@ -22,9 +22,6 @@ var MoonEclipsesPage = {
     pageRendered : false,
     dataSource : MoonEclipsesData,
 
-    // clears up the rendered thing
-    reset : PlanetPage.prototype.reset,
-    
     displayPage : function () {
         
         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
@@ -211,6 +208,17 @@ var MoonEclipsesPage = {
     },
     keywordsArray : ["Shadow", "Umbra", "Penumbra", "Partial", "Total", "Eclipse",
                       "Contact", "First", "Last"]
-}
+    // clears up the rendered thing
+};
 
-Pages["Lunar Eclipses"] = MoonEclipsesPage;
+(function(){
+    var initLocal = function() {
+        try {
+            MoonEclipsesPage.reset = PlanetPage.prototype.reset;
+            Pages["Lunar Eclipses"] = MoonEclipsesPage;
+        } catch (err) {
+            setTimeout(initLocal, 100);
+        }
+    }
+    initLocal();
+})();

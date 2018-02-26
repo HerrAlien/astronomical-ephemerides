@@ -16,13 +16,19 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
-var NeptuneData = new PlanetData({ number: 7, name: "Neptune", 
-                               semidiameterFunctionName :   function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.NeptuneSemidiameterB (delta); } } );		
+var NeptuneData = {};
 
 							   
 (function () {
-    var Page = new PlanetPage (NeptuneData, "NeptuneTable");
-        Pages["Neptune Ephemeris"] = Page;
-
-
+	var initLocal = function () {
+		try {
+		NeptuneData = new PlanetData({ number: 7, name: "Neptune", 
+								   semidiameterFunctionName :   function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.NeptuneSemidiameterB (delta); } } );		
+		var Page = new PlanetPage (NeptuneData, "NeptuneTable");
+			Pages["Neptune Ephemeris"] = Page;
+		} catch (err) {
+			setTimeout (initLocal, 100);
+		}
+	}
+	initLocal();
 })();

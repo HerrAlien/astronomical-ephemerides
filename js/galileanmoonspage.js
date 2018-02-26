@@ -19,13 +19,20 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 "use strict";
 
 (function(){
-var GalileanMoonsPage = new MoonsPage ( "GalileanMoonsContainer",
-        GalileanMoonsData,
-        {'Io' : {'d' : '', 'color' : 'blue', 'lastPos' : {'X' : 0, 'Y' : 0} },
-                    'Europa' : {'d' : '', 'color' : 'red', 'lastPos' : {'X' : 0, 'Y' : 0}}, 
-                    'Ganymede' : {'d' : '', 'color' : 'green', 'lastPos' : {'X' : 0, 'Y' : 0}}, 
-                    'Callisto' : {'d' : '', 'color' : 'black', 'lastPos' : {'X' : 0, 'Y' : 0}}}
-);
+    var localInit = function () {
+        try {
+           var GalileanMoonsPage = new MoonsPage ( "GalileanMoonsContainer",
+                   GalileanMoonsData,
+                   {'Io' : {'d' : '', 'color' : 'blue', 'lastPos' : {'X' : 0, 'Y' : 0} },
+                               'Europa' : {'d' : '', 'color' : 'red', 'lastPos' : {'X' : 0, 'Y' : 0}}, 
+                               'Ganymede' : {'d' : '', 'color' : 'green', 'lastPos' : {'X' : 0, 'Y' : 0}}, 
+                               'Callisto' : {'d' : '', 'color' : 'black', 'lastPos' : {'X' : 0, 'Y' : 0}}}
+           );
 
-Pages["Elongations of Galilean Moons"] = GalileanMoonsPage;
+           Pages["Elongations of Galilean Moons"] = GalileanMoonsPage;
+        } catch (err) {
+                setTimeout (localInit, 100);
+        }
+    }
+    localInit();
 })();

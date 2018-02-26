@@ -24,8 +24,6 @@ var SolarEclipsesPage = {
     pageRendered : false,
 
     // clears up the rendered thing
-    reset : PlanetPage.prototype.reset,
-    
     displayPage : function () {
         
         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
@@ -125,5 +123,15 @@ var SolarEclipsesPage = {
     
 };
 
-Pages["Solar Eclipses"] = SolarEclipsesPage;
+(function(){
+    var initLocal = function() {
+        try {
+        SolarEclipsesPage.reset = PlanetPage.prototype.reset;
+        Pages["Solar Eclipses"] = SolarEclipsesPage;
+        } catch (err) {
+            setTimeout(initLocal, 100);
+        }
+    };
+    initLocal();
+})();
 
