@@ -63,7 +63,7 @@ var SunData = {
         this.cache = {};
     },
     riseSetAngle : -0.83333,
-    addRiseTransitSetData : PlanetData.prototype.addRiseTransitSetData
+    addRiseTransitSetData : false
 };
 
     
@@ -194,8 +194,6 @@ var SunData = {
         // this will probably become an utility available for every page
         lastAppendedLine : false,
        
-        reset : PlanetPage.prototype.reset,
-       
         prepareOneDayDataObjectForView : function (obj, JD) {
             var displayableLine = [];
 
@@ -239,9 +237,6 @@ var SunData = {
             return displayableLine;
         },
 
-        appendLine : PlanetPage.prototype.appendLine,
-        addNodeChild : PlanetPage.prototype.addNodeChild,
-        oldAddHeader : PlanetPage.prototype.addTableHeader,
         addTableHeader : function (table, classes) {
 
             var result = this.oldAddHeader(table, classes);
@@ -251,9 +246,23 @@ var SunData = {
             return result;
         },
         
-        displayPage : PlanetPage.prototype.displayPage,
-        timeToHhColumnMm : PlanetPage.prototype.timeToHhColumnMm
     };
-        Pages["Sun Ephemeris"] = Sun;
     
+	var localInit = function() {
+		try {
+			SunData.addRiseTransitSetData = PlanetData.prototype.addRiseTransitSetData;
+			Sun.reset = PlanetPage.prototype.reset;
+			Sun.displayPage = PlanetPage.prototype.displayPage;
+			Sun.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
+			Sun.appendLine = PlanetPage.prototype.appendLine;
+			Sun.addNodeChild = PlanetPage.prototype.addNodeChild;
+			Sun.oldAddHeader = PlanetPage.prototype.addTableHeader;
+			Pages["Sun Ephemeris"] = Sun;
+		} catch (err) {
+			setTimeout (localInit, 100);
+		}
+	}
+
+	localInit();
+
 })();
