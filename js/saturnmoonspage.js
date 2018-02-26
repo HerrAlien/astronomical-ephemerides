@@ -29,6 +29,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                                     'Titan' : {'d' : '', 'color' : 'grey', 'lastPos' : {'X' : 0, 'Y' : 0}}}
                 );
 
+                SaturnMoonsPage.reset = PlanetPage.prototype.reset;
+                
                 Pages["Elongations of Saturn Moons"] = SaturnMoonsPage;
                 SaturnMoonsPage.planetFraction = 1/23.0;
                 } catch (err) {

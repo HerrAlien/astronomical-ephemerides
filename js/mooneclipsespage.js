@@ -20,7 +20,7 @@ var MoonEclipsesPage = {
 
     hostElement : document.getElementById("MoonEclipsesContainer"),
     pageRendered : false,
-    dataSource : MoonEclipsesData,
+    
 
     displayPage : function () {
         
@@ -214,6 +214,7 @@ var MoonEclipsesPage = {
 (function(){
     var initLocal = function() {
         try {
+            MoonEclipsesPage.dataSource = MoonEclipsesData;
             MoonEclipsesPage.reset = PlanetPage.prototype.reset;
             Pages["Lunar Eclipses"] = MoonEclipsesPage;
         } catch (err) {

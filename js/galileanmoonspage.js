@@ -29,6 +29,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                                'Callisto' : {'d' : '', 'color' : 'black', 'lastPos' : {'X' : 0, 'Y' : 0}}}
            );
 
+           GalileanMoonsPage.reset = PlanetPage.prototype.reset;
+    
            Pages["Elongations of Galilean Moons"] = GalileanMoonsPage;
         } catch (err) {
                 setTimeout (localInit, 100);

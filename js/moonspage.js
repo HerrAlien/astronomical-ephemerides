@@ -38,8 +38,6 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
 
 (function(){
     // clears up the rendered thing
-    MoonsPage.prototype["reset"] = PlanetPage.prototype.reset;
-    
     MoonsPage.prototype["displayPage"] = function () {
         
         var pageObj = this;

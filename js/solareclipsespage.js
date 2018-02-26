@@ -19,7 +19,6 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var SolarEclipsesPage = {
     
-    dataSource : SolarEclipses,
     hostElement : document.getElementById("SolarEclipsesContainer"),
     pageRendered : false,
 
@@ -126,6 +125,7 @@ var SolarEclipsesPage = {
 (function(){
     var initLocal = function() {
         try {
+        SolarEclipsesPage.dataSource = SolarEclipses;
         SolarEclipsesPage.reset = PlanetPage.prototype.reset;
         Pages["Solar Eclipses"] = SolarEclipsesPage;
         } catch (err) {
