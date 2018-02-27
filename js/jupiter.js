@@ -22,7 +22,7 @@ var JupiterData = {};
 (function () {
 
     var localInit = function () {
-        try {
+        if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
             JupiterData = new PlanetData({ number: 4, name: "Jupiter", 
                                        semidiameterFunctionName :   function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.JupiterEquatorialSemidiameterB (delta); } } );
             JupiterData['old_GetData'] = JupiterData.getDataAsObjectForJD;
@@ -75,8 +75,8 @@ var JupiterData = {};
             }
 
             Pages["Jupiter Ephemeris"] = Page;
-        } catch (err) {
-            setTimeout (localInit, 100);
+        } else {
+            setTimeout (localInit, 500);
         }
     }
     

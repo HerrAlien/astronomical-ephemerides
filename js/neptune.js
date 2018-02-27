@@ -21,13 +21,13 @@ var NeptuneData = {};
 							   
 (function () {
 	var initLocal = function () {
-		try {
+		if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
 		NeptuneData = new PlanetData({ number: 7, name: "Neptune", 
 								   semidiameterFunctionName :   function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.NeptuneSemidiameterB (delta); } } );		
 		var Page = new PlanetPage (NeptuneData, "NeptuneTable");
 			Pages["Neptune Ephemeris"] = Page;
-		} catch (err) {
-			setTimeout (initLocal, 100);
+		} else {
+			setTimeout (initLocal, 500);
 		}
 	}
 	initLocal();

@@ -19,13 +19,13 @@ var MercuryData = {};
 							   
 (function () {
 	var localInit = function () {
-		try {
+		if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
 			MercuryData = new PlanetData({ number: 1, name: "Mercury", 
 									   semidiameterFunctionName : function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.MercurySemidiameterB(delta); } } );						   
 			var Page = new PlanetPage (MercuryData, "MercuryTable");
 			Pages["Mercury Ephemeris"] = Page;
-		} catch (err) {
-			setTimeout(localInit, 100);
+		} else {
+			setTimeout(localInit, 500);
 		}
 	}
 	localInit();

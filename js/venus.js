@@ -21,14 +21,14 @@ var VenusData = {};
 							   
 (function () {
 	var localInit = function() {
-		try {
+		if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
 			VenusData = new PlanetData({ number: 2, name: "Venus", 
 									   semidiameterFunctionName :   function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.VenusSemidiameterB (delta); } } );		
 
 			var Page = new PlanetPage (VenusData, "VenusTable");
 			Pages["Venus Ephemeris"] = Page;
-		} catch (err) {
-			setTimeout(localInit, 100);
+		} else {
+			setTimeout(localInit, 500);
 		}
 	}
 

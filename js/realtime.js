@@ -389,17 +389,24 @@ var RealTimeDataViewer = {
 
         var pagesDoms = document.getElementsByClassName("page");
         var localInit = function () {
-            try {
+            if (typeof Pages != 'undefined' && typeof DataForNow != 'undefined') {
+                var createdDoms = 0;
                 for (var i = 0; i < pagesDoms.length; i++) {
                     var pageName = pagesDoms[i].id;
-                    if (Pages[pageName]["tableHeaderInfo"] && !(RealTimeDataViewer.views[pageName])) {
+                    if (typeof Pages != 'undefined' && 
+                        Pages[pageName] && 
+                        Pages[pageName]["tableHeaderInfo"] && !(RealTimeDataViewer.views[pageName])) {
                         RealTimeDataViewer.views[pageName] = RealTimeDataViewer.New (pageName);
                         CreateRTSettings (pageName);
+                        createdDoms++;
                     }
                 }
-            } catch (err) {
-                setTimeout(localInit, 100);
-            }
+                if (createdDoms == pagesDoms.length) {
+                    return;
+                }
+            } 
+
+                setTimeout(localInit, 500);
         }
 
         localInit();

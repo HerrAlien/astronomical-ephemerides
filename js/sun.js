@@ -249,7 +249,7 @@ var SunData = {
     };
     
 	var localInit = function() {
-		try {
+		if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
 			SunData.addRiseTransitSetData = PlanetData.prototype.addRiseTransitSetData;
 			Sun.reset = PlanetPage.prototype.reset;
 			Sun.displayPage = PlanetPage.prototype.displayPage;
@@ -258,7 +258,7 @@ var SunData = {
 			Sun.addNodeChild = PlanetPage.prototype.addNodeChild;
 			Sun.oldAddHeader = PlanetPage.prototype.addTableHeader;
 			Pages["Sun Ephemeris"] = Sun;
-		} catch (err) {
+		} else {
 			setTimeout (localInit, 100);
 		}
 	}

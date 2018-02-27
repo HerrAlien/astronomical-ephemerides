@@ -21,7 +21,7 @@ var MarsData = {};
 // upgrade the object to handle physical data as well.
 (function () {
     var initLocal = function () {    
-        try {
+        if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
             MarsData = new PlanetData({ number: 3, name: "Mars", 
                                        semidiameterFunctionName :  function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.MarsSemidiameterB(delta); } } );				
 
@@ -71,7 +71,7 @@ var MarsData = {};
             }
 
             Pages["Mars Ephemeris"] = Page;
-        } catch (err) {
+        } else {
             setTimeout (initLocal, 100);
         }
     }

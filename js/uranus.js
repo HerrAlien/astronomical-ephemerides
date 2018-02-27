@@ -21,13 +21,13 @@ var UranusData = {};
 							   
 (function () {
 	var initLocal = function () {
-		try {
+		if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
 	UranusData = new PlanetData({ number: 6, name: "Uranus", 
                                semidiameterFunctionName :   function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.UranusSemidiameterB (delta); } } );		
     var Page = new PlanetPage (UranusData, "UranusTable");
         Pages["Uranus Ephemeris"] = Page;
-		} catch (err) {
-			setTimeout (initLocal, 100);
+		} else {
+			setTimeout (initLocal, 500);
 		}
 	}
 	initLocal();

@@ -298,7 +298,7 @@ var MoonData = {
     };
     
     var localInit = function() {
-        try {
+        if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
             MoonData.addRiseTransitSetData = PlanetData.prototype.addRiseTransitSetData;
 
             MoonPage.reset = PlanetPage.prototype.reset;
@@ -309,8 +309,8 @@ var MoonData = {
             MoonPage.oldHeaderFunc = PlanetPage.prototype.addTableHeader;
             MoonPage.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
             Pages["Moon Ephemeris"] = MoonPage;
-        } catch (err) {
-            setTimeout(localInit, 100);
+        } else {
+            setTimeout(localInit, 500);
         }
     }
 

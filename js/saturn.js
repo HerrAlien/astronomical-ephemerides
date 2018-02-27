@@ -21,13 +21,13 @@ var SaturnData = {};
 (function () {
 
 	var initLocal = function () {
-		try {
+		if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
 		SaturnData = new PlanetData({ number: 5, name: "Saturn", 
                                semidiameterFunctionName :   function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.SaturnEquatorialSemidiameterB (delta); } } );		
     	var Page = new PlanetPage (SaturnData, "SaturnTable");
         Pages["Saturn Ephemeris"] = Page;
-		} catch (err) {
-			setTimeout (initLocal, 100);
+		} else {
+			setTimeout (initLocal, 500);
 		}
 	}
 	initLocal();
