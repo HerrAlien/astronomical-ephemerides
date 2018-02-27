@@ -169,7 +169,7 @@ var RealTimeDataViewer = {
             }
 
         } catch (err) {
-            setTimeout(function () { RealTimeDataViewer.CreateRtDomForPage(domHost, pageName, onViewAdded); }, 100);
+            setTimeout(function () { RealTimeDataViewer.CreateRtDomForPage(domHost, pageName, onViewAdded); }, Timeout.onInit);
         }
     },
 
@@ -263,22 +263,8 @@ var RealTimeDataViewer = {
 
 };
 
-    (function(){
-    
-       for (var pageName in Pages) {
-           if (Pages[pageName]["tableHeaderInfo"]) {
-               RealTimeDataViewer.views[pageName] = RealTimeDataViewer.New (pageName);
-           }
-       }
-    })();
-
 
 (function(){
-    for (var pageName in Pages) {
-        if (Pages[pageName]["tableHeaderInfo"]) {
-            CreateRTSettings (pageName);
-        }
-    }
 
     function createCheckboxSwitch (host, usingID) {
         /*<label class="switch">
@@ -388,7 +374,7 @@ var RealTimeDataViewer = {
 
                 }
              } else {
-                    setTimeout (AddSettingsForKeys, 100);
+                    setTimeout (AddSettingsForKeys, Timeout.onInit);
              }
         }
 
@@ -400,4 +386,32 @@ var RealTimeDataViewer = {
         rtViewer.resetItemVisibility();
     }
 
-})();
+
+        var pagesDoms = document.getElementsByClassName("page");
+        var localInit = function () {
+            if (typeof Pages != 'undefined' && typeof DataForNow != 'undefined' && typeof Notifications != 'undefined') {
+                var pagesAccountedFor = 0;
+                for (var i = 0; i < pagesDoms.length; i++) {
+                    var pageName = pagesDoms[i].id;
+                    if (typeof Pages != 'undefined' && 
+                        Pages[pageName] && 
+                        Pages[pageName]["tableHeaderInfo"] && !(RealTimeDataViewer.views[pageName])) {
+                        RealTimeDataViewer.views[pageName] = RealTimeDataViewer.New (pageName);
+                        CreateRTSettings (pageName);
+                    }
+
+                    if (typeof Pages != 'undefined' && Pages[pageName]) {
+                        pagesAccountedFor++;
+                    }
+                }
+                if (pagesAccountedFor == pagesDoms.length) {
+                    return;
+                }
+            } 
+
+                setTimeout(localInit, Timeout.onInit);
+        }
+
+        localInit();
+    })();
+

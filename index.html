@@ -15,15 +15,40 @@
 
     <meta name="description" content="A JavaScript utility to calculate ephemerides for the major planets of the solar system." />
     
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff" />   
+
+    <script type="text/JavaScript">
+        var Timeout = {
+            onInit : 100
+        };
+    </script>
+
+<script type="text/JavaScript" async="" src="js/aajs.js"></script>
+<script type="text/javascript" async="" src="js/matrix.js"></script>
+<script type="text/javascript" async="" src="js/numerical.js"></script>
+<script type="text/JavaScript" async="" src="js/besselianelements.js"></script>
+
+<script type="text/JavaScript" async="" src="js/moonsdata.js"></script>
+<script type="text/JavaScript" async="" src="js/galileanmoonsdata.js"></script>
+<script type="text/JavaScript" async="" src="js/saturnmoonsdata.js"></script>
+
+<script type="text/JavaScript" async="" src="js/mooneclipsesdata.js"></script>
+<script type="text/JavaScript" async="" src="js/solareclipsesdata.js"></script>
+<script type="text/JavaScript" async="" src="js/realtimedata.js"></script>
+
+<script type="text/JavaScript" async="" src="js/notifications.js"></script>
+<script type="text/JavaScript" async="" src="js/pagerank.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style/common.css" />
+	<link rel="stylesheet" type="text/css" href="style/default.css" />
+    <link rel="icon" type="image/png" href="images/ae-icon.png" />
+
     <link rel="manifest" href="manifest.json" />
 
     <link rel="apple-touch-icon" href="images/ae-icon-144.png" />
     <link rel="icon" type="image/png" href="images/ae-icon-144.png">
     <link rel="apple-touch-startup-image" href="images/ae-icon-512.png" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff" />   
-
-    <script type="text/JavaScript" src="js/aajs.js" async=""></script>
 
     <style>
     
@@ -831,11 +856,6 @@ border-bottom: solid 1px #AAAAAA;
             
         </div>
 
-        <script type="text/JavaScript">
-            "use strict";
-            document.getElementById("JSDisabledPage").style.display = "none";
-        </script>
-        
         <div id="home" class="page">
             <img src="images/logomobilebanner.png" alt="Home" id="HomeLinkMobile">
             <h1>Right now:</h1>
@@ -916,96 +936,7 @@ border-bottom: solid 1px #AAAAAA;
                     <div class="physicalButton buttonsToSwitchPosPhys">Physical ephemeris</div>
                 </div>
            </div>
-           
-
-             <script>
-            
-            "use strict";
-             
-            function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
-                var pageElement = document.getElementById(pageId);
-                this.table = pageElement.getElementsByClassName("planetTable")[0];
-                this.cellsToHide_physical = false;
-                this.cellsToHide_positional = false;
-                
-                this.positionalButton = pageElement.getElementsByClassName("positionalButton")[0];
-                this.physicalButton = pageElement.getElementsByClassName("physicalButton")[0];
-                if (typeof firstPhysicalColumnIndex == 'undefined')
-                    this.firstPhysicalColumnIndex = 16;
-                else
-                    this.firstPhysicalColumnIndex = firstPhysicalColumnIndex;
-            }
-            
-            (function() {
-                PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
-                    this.cellsToHide_physical = [];
-                    this.cellsToHide_positional = [];
-                    for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
-                        var cells = this.table.rows[rowIndex].cells;
-                        for (var colIndex = 16; colIndex < cells.length; colIndex++)
-                            this.cellsToHide_physical.push(cells[colIndex]);
-                        for (var colIndex = 0; colIndex < 16; colIndex++)
-                            this.cellsToHide_positional.push(cells[colIndex]);
-                    }
-                }
-                
-                PhysicalPositionalToggler.prototype['init'] = function () {
-                
-                    var _togglerObj = this;
-                
-                    this.positionalButton.onclick = function () {
-                        var togglerObj = _togglerObj;
-                        togglerObj.positionalButton.classList.add("activeButton");
-                        togglerObj.physicalButton.classList.remove("activeButton");
-                        togglerObj.table.classList.remove ("showPhysical");
-                        togglerObj.table.classList.add ("showPositional");
-                        if (!togglerObj.cellsToHide_physical)
-                            togglerObj.updateCellsToHide();
-                            
-                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
-                            togglerObj.cellsToHide_physical[i].classList.remove("physPosVisible");
-                            togglerObj.cellsToHide_physical[i].classList.add("physPosHidden");
-                        }
-                            
-                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
-                            togglerObj.cellsToHide_positional[i].classList.remove("physPosHidden");
-                            togglerObj.cellsToHide_positional[i].classList.add("physPosVisible");
-                        }
-                    }
-                 
-                    this.physicalButton.onclick = function () {
-                        var togglerObj = _togglerObj;
-                        togglerObj.physicalButton.classList.add("activeButton");
-                        togglerObj.positionalButton.classList.remove("activeButton");
-
-                        togglerObj.table.classList.remove ("showPositional");
-                        togglerObj.table.classList.add ("showPhysical");
-                        if (!togglerObj.cellsToHide_physical)
-                            togglerObj.updateCellsToHide();
-
-                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
-                            togglerObj.cellsToHide_physical[i].classList.remove("physPosHidden");  
-                            togglerObj.cellsToHide_physical[i].classList.add("physPosVisible");
-                        }
-                            
-                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
-                            togglerObj.cellsToHide_positional[i].classList.remove("physPosVisible");
-                            togglerObj.cellsToHide_positional[i].classList.add("physPosHidden");
-                        }
-                    }
-                }
-            })();
-                
-            (function() {
-                var jupiterToggler = new PhysicalPositionalToggler("Jupiter Ephemeris");
-                jupiterToggler.init();
-
-                var marsToggler = new PhysicalPositionalToggler("Mars Ephemeris");
-                marsToggler.init();
-            })();    
-                
-             </script>
-         
+        
         </div>
 
         <div id="Saturn Ephemeris" class="page">
@@ -1156,18 +1087,122 @@ title="opens in a new window">Bits of software</a><br>
 
 </html>
 
-    <link rel="stylesheet" type="text/css" href="style/common.css" />
-	<link rel="stylesheet" type="text/css" href="style/default.css" />
-    <link rel="icon" type="image/png" href="images/ae-icon.png" />
+<script type="text/JavaScript" async="" src="js/searchform.js"></script>
+<script type="text/JavaScript" async="" src="js/realtime.js"></script>
+<script type="text/JavaScript" async="" src="js/location.js"></script>
+<script type="text/JavaScript" async="" src="js/timeinput.js"></script>
+<script type="text/JavaScript" async="" src="js/planetdata.js"></script>
+<script type="text/JavaScript" async="" src="js/planetpage.js"></script>
+<script type="text/JavaScript" async="" src="js/sun.js"></script>
+<script type="text/JavaScript" async="" src="js/mercury.js"></script>
+<script type="text/JavaScript" async="" src="js/venus.js"></script>
+<script type="text/JavaScript" async="" src="js/mars.js"></script>
+<script type="text/JavaScript" async="" src="js/jupiter.js"></script>
+<script type="text/JavaScript" async="" src="js/saturn.js"></script>
+<script type="text/JavaScript" async="" src="js/uranus.js"></script>
+<script type="text/JavaScript" async="" src="js/neptune.js"></script>
+<script type="text/JavaScript" async="" src="js/moonspage.js"></script>
+<script type="text/JavaScript" async="" src="js/galileanmoonspage.js"></script>
+<script type="text/JavaScript" async="" src="js/saturnmoonspage.js"></script>
+<script type="text/JavaScript" async="" src="js/mooneclipsespage.js"></script>
+<script type="text/JavaScript" async="" src="js/solareclipsespage.js"></script>
+<script type="text/JavaScript" async="" src="js/moon.js"></script>
 
 
-<script type="text/JavaScript" src="js/notifications.js"></script>
-<script type="text/JavaScript" src="js/location.js"></script>
-<script type="text/JavaScript" src="js/timeinput.js"></script>
-<script type="text/JavaScript" src="js/pagerank.js"></script>
+             <script>
+            
+            "use strict";
+            
+            document.getElementById("JSDisabledPage").style.display = "none";
+        
 
-<script type="text/JavaScript" >
+             
+            function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
+                var pageElement = document.getElementById(pageId);
+                this.table = pageElement.getElementsByClassName("planetTable")[0];
+                this.cellsToHide_physical = false;
+                this.cellsToHide_positional = false;
+                
+                this.positionalButton = pageElement.getElementsByClassName("positionalButton")[0];
+                this.physicalButton = pageElement.getElementsByClassName("physicalButton")[0];
+                if (typeof firstPhysicalColumnIndex == 'undefined')
+                    this.firstPhysicalColumnIndex = 16;
+                else
+                    this.firstPhysicalColumnIndex = firstPhysicalColumnIndex;
+            }
+            
+            (function() {
+                PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
+                    this.cellsToHide_physical = [];
+                    this.cellsToHide_positional = [];
+                    for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
+                        var cells = this.table.rows[rowIndex].cells;
+                        for (var colIndex = 16; colIndex < cells.length; colIndex++)
+                            this.cellsToHide_physical.push(cells[colIndex]);
+                        for (var colIndex = 0; colIndex < 16; colIndex++)
+                            this.cellsToHide_positional.push(cells[colIndex]);
+                    }
+                }
+                
+                PhysicalPositionalToggler.prototype['init'] = function () {
+                
+                    var _togglerObj = this;
+                
+                    this.positionalButton.onclick = function () {
+                        var togglerObj = _togglerObj;
+                        togglerObj.positionalButton.classList.add("activeButton");
+                        togglerObj.physicalButton.classList.remove("activeButton");
+                        togglerObj.table.classList.remove ("showPhysical");
+                        togglerObj.table.classList.add ("showPositional");
+                        if (!togglerObj.cellsToHide_physical)
+                            togglerObj.updateCellsToHide();
+                            
+                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
+                            togglerObj.cellsToHide_physical[i].classList.remove("physPosVisible");
+                            togglerObj.cellsToHide_physical[i].classList.add("physPosHidden");
+                        }
+                            
+                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
+                            togglerObj.cellsToHide_positional[i].classList.remove("physPosHidden");
+                            togglerObj.cellsToHide_positional[i].classList.add("physPosVisible");
+                        }
+                    }
+                 
+                    this.physicalButton.onclick = function () {
+                        var togglerObj = _togglerObj;
+                        togglerObj.physicalButton.classList.add("activeButton");
+                        togglerObj.positionalButton.classList.remove("activeButton");
+
+                        togglerObj.table.classList.remove ("showPositional");
+                        togglerObj.table.classList.add ("showPhysical");
+                        if (!togglerObj.cellsToHide_physical)
+                            togglerObj.updateCellsToHide();
+
+                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
+                            togglerObj.cellsToHide_physical[i].classList.remove("physPosHidden");  
+                            togglerObj.cellsToHide_physical[i].classList.add("physPosVisible");
+                        }
+                            
+                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
+                            togglerObj.cellsToHide_positional[i].classList.remove("physPosVisible");
+                            togglerObj.cellsToHide_positional[i].classList.add("physPosHidden");
+                        }
+                    }
+                }
+            })();
+                
+            (function() {
+                var jupiterToggler = new PhysicalPositionalToggler("Jupiter Ephemeris");
+                jupiterToggler.init();
+
+                var marsToggler = new PhysicalPositionalToggler("Mars Ephemeris");
+                marsToggler.init();
+            })();    
+                
+
     
+    PageTimeInterval = { "JD" :  false, "days" : false, "stepSize" : false };
+
     var PageTimeInterval = {};
     var Pages = {"addPlainPages" : function(titles){
         for (var i = 0; i < titles.length; i++) {
@@ -1176,7 +1211,7 @@ title="opens in a new window">Bits of software</a><br>
         }
     }};
 
-    Pages.addPlainPages(["more", "settings", "home", "privacy"]);
+    Pages.addPlainPages(["more", "settings", "home", "privacy", "Search results"]);
 
     var previousPage = false;
     var currentActiveLink = false;
@@ -1211,9 +1246,6 @@ title="opens in a new window">Bits of software</a><br>
         alert("Changes discarded.");
     });
 
-    Location.init();
-    TimeStepsData.init();
-    PageTimeInterval = { "JD" :  false, "days" : false, "stepSize" : false };
     
     if (!location.hash) {
         gohome();
@@ -1287,11 +1319,11 @@ title="opens in a new window">Bits of software</a><br>
             try {
                 PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
             } catch (e) {
-                setTimeout (updateTimeAtAajsLoad, 300);
+                setTimeout (updateTimeAtAajsLoad, Timeout.onInit);
             }
         }
         else
-            setTimeout (updateTimeAtAajsLoad, 300);
+            setTimeout (updateTimeAtAajsLoad, Timeout.onInit);
     }
     
     updateTimeAtAajsLoad();
@@ -1308,43 +1340,18 @@ title="opens in a new window">Bits of software</a><br>
         }
     })();
     */
-         
-</script>
 
-<script type="text/javascript" src="js/matrix.js"></script>
-<script type="text/javascript" src="js/numerical.js"></script>
-<script type="text/JavaScript" src="js/planetdata.js"></script>
-<script type="text/JavaScript" src="js/planetpage.js"></script>
 
-<script type="text/JavaScript" src="js/sun.js"></script>
-<script type="text/JavaScript" src="js/mercury.js"></script>
-<script type="text/JavaScript" src="js/venus.js"></script>
-<script type="text/JavaScript" src="js/mars.js"></script>
-<script type="text/JavaScript" src="js/jupiter.js"></script>
-<script type="text/JavaScript" src="js/saturn.js"></script>
-<script type="text/JavaScript" src="js/uranus.js"></script>
-<script type="text/JavaScript" src="js/neptune.js"></script>
-
-<script type="text/JavaScript" src="js/moon.js"></script>
-<script type="text/JavaScript" src="js/moonsdata.js"></script>
-<script type="text/JavaScript" src="js/moonspage.js"></script>
-<script type="text/JavaScript" src="js/galileanmoonsdata.js"></script>
-<script type="text/JavaScript" src="js/galileanmoonspage.js"></script>
-<script type="text/JavaScript" src="js/saturnmoonsdata.js"></script>
-<script type="text/JavaScript" src="js/saturnmoonspage.js"></script>
-
-<script type="text/JavaScript" src="js/mooneclipsesdata.js"></script>
-<script type="text/JavaScript" src="js/mooneclipsespage.js"></script>
-<script type="text/JavaScript" src="js/besselianelements.js"></script>
-<script type="text/JavaScript" src="js/solareclipsesdata.js"></script>
-<script type="text/JavaScript" src="js/solareclipsespage.js"></script>
-<script type="text/JavaScript" src="js/realtimedata.js"></script>
-<script type="text/JavaScript" src="js/realtime.js"></script>
-<script type="text/JavaScript" src="js/searchform.js"></script>
-
-<script>
-
-    "use strict";
+    function DisplayPage (pageName) {
+        var delayedDisplay = function () {
+            try {
+                Pages[pageName].displayPage();
+            } catch (err) {
+                setTimeout(delayedDisplay, Timeout.onInit);
+            }
+        }
+        delayedDisplay();
+    }
     
     function error404(pageName) {
         document.getElementById("requestedresource").textContent = pageName;
@@ -1361,42 +1368,36 @@ title="opens in a new window">Bits of software</a><br>
     }
 
     function onhashchange(){
-
-        var searchFormInput = document.getElementById("searchTerms"); 
-        searchFormInput.classList.remove("visible");
-        searchFormInput.classList.add("hidden");
-        searchFormInput.value = "";
-
-        document.body.scrollTop = 0;
-        var hash = decodeURIComponent(location.hash);
-        var pageName = hash.slice(1);
-        if (pageName == "Search results") {
-            return;
-        }
-
-        previousPage = document.getElementById(pageName); 
-
-        if (Pages[pageName]){
-            Pages[pageName].displayPage();
+        if (typeof PageRank == 'undefined') {
+            setTimeout(onhashchange, Timeout.onInit);
         } else {
-            error404 (pageName);
-            window.location.href = "#Search results"
+            var searchFormInput = document.getElementById("searchTerms"); 
+            searchFormInput.classList.remove("visible");
+            searchFormInput.classList.add("hidden");
+            searchFormInput.value = "";
+
+            document.body.scrollTop = 0;
+            var hash = decodeURIComponent(location.hash);
+            var pageName = hash.slice(1);
+            if (pageName == "Search results") {
+                return;
+            }
+
+            previousPage = document.getElementById(pageName); 
+
+            if (previousPage){
+                DisplayPage (pageName);
+            } else {
+                error404 (pageName);
+                window.location.href = "#Search results"
+            }
         }
     }
     
     window.addEventListener("hashchange", onhashchange, false);
     if (location.hash)
-        setTimeout(onhashchange, 1);
+        setTimeout(onhashchange, Timeout.onInit);
         
-
-    function injectAAJS() {
-        var scr = document.createElement ("script");
-        scr.setAttribute ("type", "text/javascript");
-        scr.setAttribute("src", "js/aajs.js");
-        document.documentElement.appendChild(scr);
-    }
-
-
   (function(){
     var registerWorker = function () {
         if ('serviceWorker' in navigator) {
@@ -1406,14 +1407,28 @@ title="opens in a new window">Bits of software</a><br>
               // registration failed :(
               console.log('ServiceWorker registration failed: ', err);              
             });
-        } else {
-            injectAAJS();
         }              
     }
     registerWorker();
 
   })();
 
+
+   (function(){
+
+        var appInit = function() {
+            if (typeof Location == 'undefined' || typeof TimeStepsData == 'undefined' || typeof Notifications == 'undefined'
+                || !Location.init || !TimeStepsData.init) {
+                setTimeout (appInit, Timeout.onInit);
+            } else {
+                Location.init();
+                TimeStepsData.init();
+            }
+        }
+
+        appInit();
+
+   })();
 
   (function() {
       var CACHE_PREFIX = 'Cache-for-ephemerides';
@@ -1443,5 +1458,8 @@ title="opens in a new window">Bits of software</a><br>
           document.body.appendChild(div);
       });
   })();
+
+
+
 
 </script>

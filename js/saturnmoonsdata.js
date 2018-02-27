@@ -16,4 +16,15 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
-var SaturnMoonsData = new MoonsData (function (JD, highPrecision) { if (typeof AAJS != "undefined") return AAJS.SaturnMoons.Calculate(JD, highPrecision); } );
+var SaturnMoonsData = {};
+
+(function(){
+    var localInit = function () {
+        try {
+            SaturnMoonsData = new MoonsData (function (JD, highPrecision) { if (typeof AAJS != "undefined") return AAJS.SaturnMoons.Calculate(JD, highPrecision); } );
+        } catch (err) {
+            setTimeout (localInit, Timeout.onInit);
+        }
+    }
+    localInit();
+})();

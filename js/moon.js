@@ -70,8 +70,7 @@ var MoonData = {
         this.toDUT = 0;
     },
 
-    riseSetAngle : -0.83333,
-    addRiseTransitSetData : PlanetData.prototype["addRiseTransitSetData"]    
+    riseSetAngle : -0.83333
 };
 
 (function(){    
@@ -234,13 +233,6 @@ var MoonData = {
         lastAppendedLine : false
     };
     
-    Pages["Moon Ephemeris"] = MoonPage;
-    
-    MoonPage.reset = PlanetPage.prototype.reset;
-    MoonPage.appendLine = PlanetPage.prototype.appendLine;
-    MoonPage.addNodeChild = PlanetPage.prototype.addNodeChild;
-    MoonPage.displayPage = PlanetPage.prototype.displayPage;
-   
     MoonPage.prepareOneDayDataObjectForView = function (obj) {
         var displayableLine = [];
 
@@ -294,8 +286,6 @@ var MoonData = {
 
         return displayableLine;
     };
-
-    MoonPage.oldHeaderFunc = PlanetPage.prototype.addTableHeader;
     
     MoonPage.addTableHeader = function (table, classes, tBody) {            
         var result = this.oldHeaderFunc(table, classes, tBody);
@@ -307,5 +297,23 @@ var MoonData = {
         return result;
     };
     
-    MoonPage.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
+    var localInit = function() {
+        if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
+            MoonData.addRiseTransitSetData = PlanetData.prototype.addRiseTransitSetData;
+
+            MoonPage.reset = PlanetPage.prototype.reset;
+            MoonPage.appendLine = PlanetPage.prototype.appendLine;
+            MoonPage.addNodeChild = PlanetPage.prototype.addNodeChild;
+            MoonPage.displayPage = PlanetPage.prototype.displayPage;
+
+            MoonPage.oldHeaderFunc = PlanetPage.prototype.addTableHeader;
+            MoonPage.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
+            Pages["Moon Ephemeris"] = MoonPage;
+        } else {
+            setTimeout(localInit, 500);
+        }
+    }
+
+    localInit();
+
 })();

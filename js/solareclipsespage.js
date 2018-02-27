@@ -19,17 +19,14 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var SolarEclipsesPage = {
     
-    dataSource : SolarEclipses,
     hostElement : document.getElementById("SolarEclipsesContainer"),
     pageRendered : false,
 
     // clears up the rendered thing
-    reset : PlanetPage.prototype.reset,
-    
     displayPage : function () {
         
         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
-            return setTimeout (function() { SolarEclipsesPage.displayPage(); }, 300);
+            return setTimeout (function() { SolarEclipsesPage.displayPage(); }, Timeout.onInit);
         
         if (SolarEclipsesPage.pageRendered)
             return;
@@ -125,5 +122,16 @@ var SolarEclipsesPage = {
     
 };
 
-Pages["Solar Eclipses"] = SolarEclipsesPage;
+(function(){
+    var initLocal = function() {
+        try {
+        SolarEclipsesPage.dataSource = SolarEclipses;
+        SolarEclipsesPage.reset = PlanetPage.prototype.reset;
+        Pages["Solar Eclipses"] = SolarEclipsesPage;
+        } catch (err) {
+            setTimeout(initLocal, Timeout.onInit);
+        }
+    };
+    initLocal();
+})();
 

@@ -16,62 +16,69 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
-var JupiterData = new PlanetData({ number: 4, name: "Jupiter", 
-                               semidiameterFunctionName :   function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.JupiterEquatorialSemidiameterB (delta); } } );				
+var JupiterData = {};
 
 // upgrade the object to handle physical data as well.
-(function () {    
-    JupiterData['old_GetData'] = JupiterData.getDataAsObjectForJD;
-    JupiterData.getDataAsObjectForJD = function (JD, computeRiseTransitSet) {
-        var data = this.old_GetData(JD, computeRiseTransitSet); 
-        if (!data['EarthDeclination']) {
-            var physicalData = AAJS['Jupiter']['PhysicalDetails'] (JD);
-            for (var key in physicalData)
-                data[key] = physicalData[key];
-            this.cache[JD] = data;
-        }
-        return data;
-    };
-})();
-    
-							   
 (function () {
-    var Page = new PlanetPage (JupiterData, "JupiterTable");
-    Pages["Jupiter Ephemeris"] = Page;
 
-    Page.tableHeaderInfo['16'] = { "0" : {"text" : "Date", "classes" :  ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: month" };
-    Page.tableHeaderInfo['17'] = { "0" : {"text" :"" , "classes" :      ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: day" };
-    Page.tableHeaderInfo['18'] = {  "dataKey" : 'CentralMeridianApparentLongitude_System1', "0" : {"text" : "L0-S1", "classes" : ["minWidth50", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth50", "physPosHidden"]}, "longText" : "Longitude of central meridian, System 1 (physical ephemeris)" };
-    Page.tableHeaderInfo['19'] = {  "dataKey" : 'CentralMeridianApparentLongitude_System2', "0" : {"text" :"L0-S2" , "classes" : ["minWidth50", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth50", "physPosHidden"]}, "longText" : "Longitude of central meridian, System 2 (physical ephemeris)" };
-    Page.tableHeaderInfo['20'] = {  "dataKey" : 'EarthDeclination', "0" : {"text" :"DE"    , "classes" : ["minWidth40", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physPosHidden"]}, "longText" : "Planetocentric declination of Earth (physical ephemeris)" };
-    Page.tableHeaderInfo['21'] = {  "dataKey" : 'SunDeclination', "0" : {"text" :"DS"    , "classes" : ["minWidth45", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth45", "physPosHidden"]}, "longText" : "Planetocentric declination of the Sun (physical ephemeris)" };
-    Page.tableHeaderInfo['22'] = {  "dataKey" : 'P', "0" : {"text" :"P"     , "classes" : ["minWidth45", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth45", "physPosHidden"]}, "longText" : "Position angle of the North Pole (physical ephemeris)" };
+    var localInit = function () {
+        if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
+            JupiterData = new PlanetData({ number: 4, name: "Jupiter", 
+                                       semidiameterFunctionName :   function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.JupiterEquatorialSemidiameterB (delta); } } );
+            JupiterData['old_GetData'] = JupiterData.getDataAsObjectForJD;
+            JupiterData.getDataAsObjectForJD = function (JD, computeRiseTransitSet) {
+                var data = this.old_GetData(JD, computeRiseTransitSet); 
+                if (!data['EarthDeclination']) {
+                    var physicalData = AAJS['Jupiter']['PhysicalDetails'] (JD);
+                    for (var key in physicalData)
+                        data[key] = physicalData[key];
+                    this.cache[JD] = data;
+                }
+                return data;
+            };
+
+            var Page = new PlanetPage (JupiterData, "JupiterTable");
+
+            Page.tableHeaderInfo['16'] = { "0" : {"text" : "Date", "classes" :  ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: month" };
+            Page.tableHeaderInfo['17'] = { "0" : {"text" :"" , "classes" :      ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: day" };
+            Page.tableHeaderInfo['18'] = {  "dataKey" : 'CentralMeridianApparentLongitude_System1', "0" : {"text" : "L0-S1", "classes" : ["minWidth50", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth50", "physPosHidden"]}, "longText" : "Longitude of central meridian, System 1 (physical ephemeris)" };
+            Page.tableHeaderInfo['19'] = {  "dataKey" : 'CentralMeridianApparentLongitude_System2', "0" : {"text" :"L0-S2" , "classes" : ["minWidth50", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth50", "physPosHidden"]}, "longText" : "Longitude of central meridian, System 2 (physical ephemeris)" };
+            Page.tableHeaderInfo['20'] = {  "dataKey" : 'EarthDeclination', "0" : {"text" :"DE"    , "classes" : ["minWidth40", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physPosHidden"]}, "longText" : "Planetocentric declination of Earth (physical ephemeris)" };
+            Page.tableHeaderInfo['21'] = {  "dataKey" : 'SunDeclination', "0" : {"text" :"DS"    , "classes" : ["minWidth45", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth45", "physPosHidden"]}, "longText" : "Planetocentric declination of the Sun (physical ephemeris)" };
+            Page.tableHeaderInfo['22'] = {  "dataKey" : 'P', "0" : {"text" :"P"     , "classes" : ["minWidth45", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth45", "physPosHidden"]}, "longText" : "Position angle of the North Pole (physical ephemeris)" };
+
+            Page.firstDataRowColumnClasses = Page.firstDataRowColumnClasses.concat([["minWidth20", "physSeenAtSmallWidth"], ["minWidth20", "physSeenAtSmallWidth"], ["minWidth50"], ["minWidth50"], ["minWidth40"], ["minWidth40"], ["minWidth40"]]);
+
+            Page["old_prepareOneDayDataObjectForView"] = Page.prepareOneDayDataObjectForView;
+            Page.prepareOneDayDataObjectForView = function (obj, JD) {
+                var preparedLine = this.old_prepareOneDayDataObjectForView(obj, JD);
+                preparedLine[preparedLine.length] = preparedLine[0]
+                preparedLine[preparedLine.length] = preparedLine[1]
+                preparedLine[preparedLine.length] = Math.round(obj.CentralMeridianApparentLongitude_System1 * 10) / 10;
+                preparedLine[preparedLine.length] = Math.round(obj.CentralMeridianApparentLongitude_System2 * 10) / 10;
+                preparedLine[preparedLine.length] = Math.round(obj.EarthDeclination * 10) / 10;
+                preparedLine[preparedLine.length] = Math.round(obj.SunDeclination * 10) / 10;
+                preparedLine[preparedLine.length] = Math.round(obj.P * 10) / 10;
+                return preparedLine;
+            }
+
+            Page["old_addPlanetTableHeader"] = Page.addPlanetTableHeader;
+            Page.addPlanetTableHeader = function (table, classes) {
+                var headerRows = this.old_addPlanetTableHeader(table, classes);
+                var cellL0S1 = headerRows.row1.cells[16];
+                cellL0S1.textContent = "L";
+                this.addNodeChild (cellL0S1, "sub", "0,S1"); 
+                var cellL0S2 = headerRows.row1.cells[17];
+                cellL0S2.textContent = "L";
+                this.addNodeChild (cellL0S2, "sub", "0,S2"); 
+                return headerRows;
+            }
+
+            Pages["Jupiter Ephemeris"] = Page;
+        } else {
+            setTimeout (localInit, 500);
+        }
+    }
     
-    Page.firstDataRowColumnClasses = Page.firstDataRowColumnClasses.concat([["minWidth20", "physSeenAtSmallWidth"], ["minWidth20", "physSeenAtSmallWidth"], ["minWidth50"], ["minWidth50"], ["minWidth40"], ["minWidth40"], ["minWidth40"]]);
-
-    Page["old_prepareOneDayDataObjectForView"] = Page.prepareOneDayDataObjectForView;
-    Page.prepareOneDayDataObjectForView = function (obj, JD) {
-        var preparedLine = this.old_prepareOneDayDataObjectForView(obj, JD);
-        preparedLine[preparedLine.length] = preparedLine[0]
-        preparedLine[preparedLine.length] = preparedLine[1]
-        preparedLine[preparedLine.length] = Math.round(obj.CentralMeridianApparentLongitude_System1 * 10) / 10;
-        preparedLine[preparedLine.length] = Math.round(obj.CentralMeridianApparentLongitude_System2 * 10) / 10;
-        preparedLine[preparedLine.length] = Math.round(obj.EarthDeclination * 10) / 10;
-        preparedLine[preparedLine.length] = Math.round(obj.SunDeclination * 10) / 10;
-        preparedLine[preparedLine.length] = Math.round(obj.P * 10) / 10;
-        return preparedLine;
-    }
-
-    Page["old_addPlanetTableHeader"] = Page.addPlanetTableHeader;
-    Page.addPlanetTableHeader = function (table, classes) {
-        var headerRows = this.old_addPlanetTableHeader(table, classes);
-        var cellL0S1 = headerRows.row1.cells[16];
-        cellL0S1.textContent = "L";
-        this.addNodeChild (cellL0S1, "sub", "0,S1"); 
-        var cellL0S2 = headerRows.row1.cells[17];
-        cellL0S2.textContent = "L";
-        this.addNodeChild (cellL0S2, "sub", "0,S2"); 
-        return headerRows;
-    }
-
+    localInit();
 })();

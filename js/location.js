@@ -76,4 +76,3 @@ var Location = {
 	}
 };
 
-Location.init();
