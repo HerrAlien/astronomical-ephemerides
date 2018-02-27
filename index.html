@@ -680,7 +680,7 @@ border-bottom: solid 1px #AAAAAA;
     content: "R: "
 }
 
-@media screen and (min-width: 801px) {
+@media screen and (min-width: 937px) {
     #promotedMenu {
         overflow: hidden;
     }
@@ -703,6 +703,38 @@ border-bottom: solid 1px #AAAAAA;
     display: none;
 }
 
+  #searchArea {
+      margin: 12px 0px 0px 0px;
+      float: right;
+      /* expanded */
+  }
+  
+  #searchArea img {
+      width:52px;
+      float: left;
+      margin-left: 10px;
+      height: 52px;
+  }
+  
+  #searchArea input {
+      margin-top: 20px;
+      height: 30px;
+      float: left;
+      font-size: 28px;
+      max-width: 220px;
+  }
+  
+  #searchArea::after{
+      content: "Search";
+      display: block;
+      font-size: 18px;
+      text-align: right;
+      cursor: pointer;
+  }
+  
+  #searchArea:hover::after{
+      text-decoration: underline;
+  }
 
 }
 
