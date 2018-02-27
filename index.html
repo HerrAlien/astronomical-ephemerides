@@ -1420,8 +1420,9 @@ title="opens in a new window">Bits of software</a><br>
    (function(){
 
         var appInit = function() {
-            if (typeof Location == 'undefined' || typeof TimeStepsData == 'undefined' || typeof Notifications == 'undefined') {
-                setTimeout (appInit, 500);
+            if (typeof Location == 'undefined' || typeof TimeStepsData == 'undefined' || typeof Notifications == 'undefined'
+                || !Location.init || !TimeStepsData.init) {
+                setTimeout (appInit, Timeout.onInit);
             } else {
                 Location.init();
                 TimeStepsData.init();

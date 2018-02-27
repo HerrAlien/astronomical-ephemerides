@@ -401,7 +401,9 @@ var RealTimeDataViewer = {
                         createdDoms++;
                     }
 
-                    if (!Pages[pageName]["tableHeaderInfo"]) {
+                    if (typeof Pages != 'undefined' && 
+                        Pages[pageName] && 
+                        !Pages[pageName]["tableHeaderInfo"]) {
                         createdDoms++;
                     }
                 }
