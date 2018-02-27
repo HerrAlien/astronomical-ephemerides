@@ -169,7 +169,7 @@ var RealTimeDataViewer = {
             }
 
         } catch (err) {
-            setTimeout(function () { RealTimeDataViewer.CreateRtDomForPage(domHost, pageName, onViewAdded); }, 100);
+            setTimeout(function () { RealTimeDataViewer.CreateRtDomForPage(domHost, pageName, onViewAdded); }, Timeout.onInit);
         }
     },
 
@@ -374,7 +374,7 @@ var RealTimeDataViewer = {
 
                 }
              } else {
-                    setTimeout (AddSettingsForKeys, 100);
+                    setTimeout (AddSettingsForKeys, Timeout.onInit);
              }
         }
 
@@ -389,7 +389,7 @@ var RealTimeDataViewer = {
 
         var pagesDoms = document.getElementsByClassName("page");
         var localInit = function () {
-            if (typeof Pages != 'undefined' && typeof DataForNow != 'undefined') {
+            if (typeof Pages != 'undefined' && typeof DataForNow != 'undefined' && typeof Notifications != 'undefined') {
                 var createdDoms = 0;
                 for (var i = 0; i < pagesDoms.length; i++) {
                     var pageName = pagesDoms[i].id;
@@ -400,13 +400,17 @@ var RealTimeDataViewer = {
                         CreateRTSettings (pageName);
                         createdDoms++;
                     }
+
+                    if (!Pages[pageName]["tableHeaderInfo"]) {
+                        createdDoms++;
+                    }
                 }
                 if (createdDoms == pagesDoms.length) {
                     return;
                 }
             } 
 
-                setTimeout(localInit, 500);
+                setTimeout(localInit, Timeout.onInit);
         }
 
         localInit();

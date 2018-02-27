@@ -33,7 +33,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     
            Pages["Elongations of Galilean Moons"] = GalileanMoonsPage;
         } catch (err) {
-                setTimeout (localInit, 100);
+                setTimeout (localInit, Timeout.onInit);
         }
     }
     localInit();

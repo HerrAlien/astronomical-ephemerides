@@ -72,7 +72,7 @@ var MarsData = {};
 
             Pages["Mars Ephemeris"] = Page;
         } else {
-            setTimeout (initLocal, 100);
+            setTimeout (initLocal, Timeout.onInit);
         }
     }
     initLocal();

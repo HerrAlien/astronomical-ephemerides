@@ -18,6 +18,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff" />   
 
+    <script type="text/JavaScript">
+        var Timeout = {
+            onInit : 100
+        };
+    </script>
+
     <script type="text/JavaScript" async="" src="js/aajs.js"></script>
     <script type="text/javascript" async="" src="js/matrix.js"></script>
     <script type="text/javascript" async="" src="js/numerical.js"></script>
@@ -1194,13 +1200,15 @@ title="opens in a new window">Bits of software</a><br>
     <link rel="icon" type="image/png" href="images/ae-icon.png" />
 
 
-<script type="text/JavaScript" src="js/notifications.js"></script>
-<script type="text/JavaScript" src="js/location.js"></script>
-<script type="text/JavaScript" src="js/timeinput.js"></script>
-<script type="text/JavaScript" src="js/pagerank.js"></script>
+<script type="text/JavaScript" async="" src="js/notifications.js"></script>
+<script type="text/JavaScript" async="" src="js/location.js"></script>
+<script type="text/JavaScript" async="" src="js/timeinput.js"></script>
+<script type="text/JavaScript" async="" src="js/pagerank.js"></script>
 
 <script type="text/JavaScript" >
     
+    PageTimeInterval = { "JD" :  false, "days" : false, "stepSize" : false };
+
     var PageTimeInterval = {};
     var Pages = {"addPlainPages" : function(titles){
         for (var i = 0; i < titles.length; i++) {
@@ -1244,9 +1252,6 @@ title="opens in a new window">Bits of software</a><br>
         alert("Changes discarded.");
     });
 
-    Location.init();
-    TimeStepsData.init();
-    PageTimeInterval = { "JD" :  false, "days" : false, "stepSize" : false };
     
     if (!location.hash) {
         gohome();
@@ -1341,12 +1346,7 @@ title="opens in a new window">Bits of software</a><br>
         }
     })();
     */
-         
-</script>
-    
-<script>
 
-    "use strict";
 
     function DisplayPage (pageName) {
         var delayedDisplay = function () {
@@ -1417,6 +1417,21 @@ title="opens in a new window">Bits of software</a><br>
   })();
 
 
+   (function(){
+
+        var appInit = function() {
+            if (typeof Location == 'undefined' || typeof TimeStepsData == 'undefined' || typeof Notifications == 'undefined') {
+                setTimeout (appInit, 500);
+            } else {
+                Location.init();
+                TimeStepsData.init();
+            }
+        }
+
+        appInit();
+
+   })();
+
   (function() {
       var CACHE_PREFIX = 'Cache-for-ephemerides';
       caches.keys().then(names => {
@@ -1445,5 +1460,8 @@ title="opens in a new window">Bits of software</a><br>
           document.body.appendChild(div);
       });
   })();
+
+
+
 
 </script>
