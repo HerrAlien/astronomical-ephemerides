@@ -24,24 +24,11 @@
         };
     </script>
 
-    <script type="text/JavaScript" async="" src="js/aajs.js"></script>
-    <script type="text/javascript" async="" src="js/matrix.js"></script>
-    <script type="text/javascript" async="" src="js/numerical.js"></script>
-    <script type="text/JavaScript" async="" src="js/searchform.js"></script>
-    <script type="text/JavaScript" async="" src="js/besselianelements.js"></script>
+<script type="text/JavaScript" async="" src="js/aajs.js"></script>
+<script type="text/javascript" async="" src="js/matrix.js"></script>
+<script type="text/javascript" async="" src="js/numerical.js"></script>
+<script type="text/JavaScript" async="" src="js/besselianelements.js"></script>
 
-<script type="text/JavaScript" async="" src="js/planetdata.js"></script>
-<script type="text/JavaScript" async="" src="js/planetpage.js"></script>
-<script type="text/JavaScript" async="" src="js/sun.js"></script>
-<script type="text/JavaScript" async="" src="js/mercury.js"></script>
-<script type="text/JavaScript" async="" src="js/venus.js"></script>
-<script type="text/JavaScript" async="" src="js/mars.js"></script>
-<script type="text/JavaScript" async="" src="js/jupiter.js"></script>
-<script type="text/JavaScript" async="" src="js/saturn.js"></script>
-<script type="text/JavaScript" async="" src="js/uranus.js"></script>
-<script type="text/JavaScript" async="" src="js/neptune.js"></script>
-
-<script type="text/JavaScript" async="" src="js/moon.js"></script>
 <script type="text/JavaScript" async="" src="js/moonsdata.js"></script>
 <script type="text/JavaScript" async="" src="js/galileanmoonsdata.js"></script>
 <script type="text/JavaScript" async="" src="js/saturnmoonsdata.js"></script>
@@ -49,19 +36,9 @@
 <script type="text/JavaScript" async="" src="js/mooneclipsesdata.js"></script>
 <script type="text/JavaScript" async="" src="js/solareclipsesdata.js"></script>
 <script type="text/JavaScript" async="" src="js/realtimedata.js"></script>
-<script type="text/JavaScript" async="" src="js/realtime.js"></script>
-
-<script type="text/JavaScript"  async="" src="js/moonspage.js"></script>
-<script type="text/JavaScript"  async="" src="js/galileanmoonspage.js"></script>
-<script type="text/JavaScript"  async="" src="js/saturnmoonspage.js"></script>
-<script type="text/JavaScript"  async="" src="js/mooneclipsespage.js"></script>
-<script type="text/JavaScript"  async="" src="js/solareclipsespage.js"></script>
 
 <script type="text/JavaScript" async="" src="js/notifications.js"></script>
-<script type="text/JavaScript" async="" src="js/location.js"></script>
-<script type="text/JavaScript" async="" src="js/timeinput.js"></script>
 <script type="text/JavaScript" async="" src="js/pagerank.js"></script>
-
 
     <link rel="stylesheet" type="text/css" href="style/common.css" />
 	<link rel="stylesheet" type="text/css" href="style/default.css" />
@@ -1110,6 +1087,27 @@ title="opens in a new window">Bits of software</a><br>
 
 </html>
 
+<script type="text/JavaScript" async="" src="js/searchform.js"></script>
+<script type="text/JavaScript" async="" src="js/realtime.js"></script>
+<script type="text/JavaScript" async="" src="js/location.js"></script>
+<script type="text/JavaScript" async="" src="js/timeinput.js"></script>
+<script type="text/JavaScript" async="" src="js/planetdata.js"></script>
+<script type="text/JavaScript" async="" src="js/planetpage.js"></script>
+<script type="text/JavaScript" async="" src="js/sun.js"></script>
+<script type="text/JavaScript" async="" src="js/mercury.js"></script>
+<script type="text/JavaScript" async="" src="js/venus.js"></script>
+<script type="text/JavaScript" async="" src="js/mars.js"></script>
+<script type="text/JavaScript" async="" src="js/jupiter.js"></script>
+<script type="text/JavaScript" async="" src="js/saturn.js"></script>
+<script type="text/JavaScript" async="" src="js/uranus.js"></script>
+<script type="text/JavaScript" async="" src="js/neptune.js"></script>
+<script type="text/JavaScript" async="" src="js/moonspage.js"></script>
+<script type="text/JavaScript" async="" src="js/galileanmoonspage.js"></script>
+<script type="text/JavaScript" async="" src="js/saturnmoonspage.js"></script>
+<script type="text/JavaScript" async="" src="js/mooneclipsespage.js"></script>
+<script type="text/JavaScript" async="" src="js/solareclipsespage.js"></script>
+<script type="text/JavaScript" async="" src="js/moon.js"></script>
+
 
              <script>
             
@@ -1321,11 +1319,11 @@ title="opens in a new window">Bits of software</a><br>
             try {
                 PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
             } catch (e) {
-                setTimeout (updateTimeAtAajsLoad, 300);
+                setTimeout (updateTimeAtAajsLoad, Timeout.onInit);
             }
         }
         else
-            setTimeout (updateTimeAtAajsLoad, 300);
+            setTimeout (updateTimeAtAajsLoad, Timeout.onInit);
     }
     
     updateTimeAtAajsLoad();
@@ -1349,7 +1347,7 @@ title="opens in a new window">Bits of software</a><br>
             try {
                 Pages[pageName].displayPage();
             } catch (err) {
-                setTimeout(delayedDisplay, 100);
+                setTimeout(delayedDisplay, Timeout.onInit);
             }
         }
         delayedDisplay();
@@ -1370,32 +1368,35 @@ title="opens in a new window">Bits of software</a><br>
     }
 
     function onhashchange(){
-
-        var searchFormInput = document.getElementById("searchTerms"); 
-        searchFormInput.classList.remove("visible");
-        searchFormInput.classList.add("hidden");
-        searchFormInput.value = "";
-
-        document.body.scrollTop = 0;
-        var hash = decodeURIComponent(location.hash);
-        var pageName = hash.slice(1);
-        if (pageName == "Search results") {
-            return;
-        }
-
-        previousPage = document.getElementById(pageName); 
-
-        if (previousPage){
-            DisplayPage (pageName);
+        if (typeof PageRank == 'undefined') {
+            setTimeout(onhashchange, Timeout.onInit);
         } else {
-            error404 (pageName);
-            window.location.href = "#Search results"
+            var searchFormInput = document.getElementById("searchTerms"); 
+            searchFormInput.classList.remove("visible");
+            searchFormInput.classList.add("hidden");
+            searchFormInput.value = "";
+
+            document.body.scrollTop = 0;
+            var hash = decodeURIComponent(location.hash);
+            var pageName = hash.slice(1);
+            if (pageName == "Search results") {
+                return;
+            }
+
+            previousPage = document.getElementById(pageName); 
+
+            if (previousPage){
+                DisplayPage (pageName);
+            } else {
+                error404 (pageName);
+                window.location.href = "#Search results"
+            }
         }
     }
     
     window.addEventListener("hashchange", onhashchange, false);
     if (location.hash)
-        setTimeout(onhashchange, 1);
+        setTimeout(onhashchange, Timeout.onInit);
         
   (function(){
     var registerWorker = function () {
