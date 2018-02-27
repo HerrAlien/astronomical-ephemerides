@@ -57,6 +57,15 @@
 <script type="text/JavaScript"  async="" src="js/mooneclipsespage.js"></script>
 <script type="text/JavaScript"  async="" src="js/solareclipsespage.js"></script>
 
+<script type="text/JavaScript" async="" src="js/notifications.js"></script>
+<script type="text/JavaScript" async="" src="js/location.js"></script>
+<script type="text/JavaScript" async="" src="js/timeinput.js"></script>
+<script type="text/JavaScript" async="" src="js/pagerank.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="style/common.css" />
+	<link rel="stylesheet" type="text/css" href="style/default.css" />
+    <link rel="icon" type="image/png" href="images/ae-icon.png" />
 
     <link rel="manifest" href="manifest.json" />
 
@@ -870,11 +879,6 @@ border-bottom: solid 1px #AAAAAA;
             
         </div>
 
-        <script type="text/JavaScript">
-            "use strict";
-            document.getElementById("JSDisabledPage").style.display = "none";
-        </script>
-        
         <div id="home" class="page">
             <img src="images/logomobilebanner.png" alt="Home" id="HomeLinkMobile">
             <h1>Right now:</h1>
@@ -955,96 +959,7 @@ border-bottom: solid 1px #AAAAAA;
                     <div class="physicalButton buttonsToSwitchPosPhys">Physical ephemeris</div>
                 </div>
            </div>
-           
-
-             <script>
-            
-            "use strict";
-             
-            function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
-                var pageElement = document.getElementById(pageId);
-                this.table = pageElement.getElementsByClassName("planetTable")[0];
-                this.cellsToHide_physical = false;
-                this.cellsToHide_positional = false;
-                
-                this.positionalButton = pageElement.getElementsByClassName("positionalButton")[0];
-                this.physicalButton = pageElement.getElementsByClassName("physicalButton")[0];
-                if (typeof firstPhysicalColumnIndex == 'undefined')
-                    this.firstPhysicalColumnIndex = 16;
-                else
-                    this.firstPhysicalColumnIndex = firstPhysicalColumnIndex;
-            }
-            
-            (function() {
-                PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
-                    this.cellsToHide_physical = [];
-                    this.cellsToHide_positional = [];
-                    for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
-                        var cells = this.table.rows[rowIndex].cells;
-                        for (var colIndex = 16; colIndex < cells.length; colIndex++)
-                            this.cellsToHide_physical.push(cells[colIndex]);
-                        for (var colIndex = 0; colIndex < 16; colIndex++)
-                            this.cellsToHide_positional.push(cells[colIndex]);
-                    }
-                }
-                
-                PhysicalPositionalToggler.prototype['init'] = function () {
-                
-                    var _togglerObj = this;
-                
-                    this.positionalButton.onclick = function () {
-                        var togglerObj = _togglerObj;
-                        togglerObj.positionalButton.classList.add("activeButton");
-                        togglerObj.physicalButton.classList.remove("activeButton");
-                        togglerObj.table.classList.remove ("showPhysical");
-                        togglerObj.table.classList.add ("showPositional");
-                        if (!togglerObj.cellsToHide_physical)
-                            togglerObj.updateCellsToHide();
-                            
-                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
-                            togglerObj.cellsToHide_physical[i].classList.remove("physPosVisible");
-                            togglerObj.cellsToHide_physical[i].classList.add("physPosHidden");
-                        }
-                            
-                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
-                            togglerObj.cellsToHide_positional[i].classList.remove("physPosHidden");
-                            togglerObj.cellsToHide_positional[i].classList.add("physPosVisible");
-                        }
-                    }
-                 
-                    this.physicalButton.onclick = function () {
-                        var togglerObj = _togglerObj;
-                        togglerObj.physicalButton.classList.add("activeButton");
-                        togglerObj.positionalButton.classList.remove("activeButton");
-
-                        togglerObj.table.classList.remove ("showPositional");
-                        togglerObj.table.classList.add ("showPhysical");
-                        if (!togglerObj.cellsToHide_physical)
-                            togglerObj.updateCellsToHide();
-
-                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
-                            togglerObj.cellsToHide_physical[i].classList.remove("physPosHidden");  
-                            togglerObj.cellsToHide_physical[i].classList.add("physPosVisible");
-                        }
-                            
-                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
-                            togglerObj.cellsToHide_positional[i].classList.remove("physPosVisible");
-                            togglerObj.cellsToHide_positional[i].classList.add("physPosHidden");
-                        }
-                    }
-                }
-            })();
-                
-            (function() {
-                var jupiterToggler = new PhysicalPositionalToggler("Jupiter Ephemeris");
-                jupiterToggler.init();
-
-                var marsToggler = new PhysicalPositionalToggler("Mars Ephemeris");
-                marsToggler.init();
-            })();    
-                
-             </script>
-         
+        
         </div>
 
         <div id="Saturn Ephemeris" class="page">
@@ -1195,17 +1110,98 @@ title="opens in a new window">Bits of software</a><br>
 
 </html>
 
-    <link rel="stylesheet" type="text/css" href="style/common.css" />
-	<link rel="stylesheet" type="text/css" href="style/default.css" />
-    <link rel="icon" type="image/png" href="images/ae-icon.png" />
 
+             <script>
+            
+            "use strict";
+            
+            document.getElementById("JSDisabledPage").style.display = "none";
+        
 
-<script type="text/JavaScript" async="" src="js/notifications.js"></script>
-<script type="text/JavaScript" async="" src="js/location.js"></script>
-<script type="text/JavaScript" async="" src="js/timeinput.js"></script>
-<script type="text/JavaScript" async="" src="js/pagerank.js"></script>
+             
+            function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
+                var pageElement = document.getElementById(pageId);
+                this.table = pageElement.getElementsByClassName("planetTable")[0];
+                this.cellsToHide_physical = false;
+                this.cellsToHide_positional = false;
+                
+                this.positionalButton = pageElement.getElementsByClassName("positionalButton")[0];
+                this.physicalButton = pageElement.getElementsByClassName("physicalButton")[0];
+                if (typeof firstPhysicalColumnIndex == 'undefined')
+                    this.firstPhysicalColumnIndex = 16;
+                else
+                    this.firstPhysicalColumnIndex = firstPhysicalColumnIndex;
+            }
+            
+            (function() {
+                PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
+                    this.cellsToHide_physical = [];
+                    this.cellsToHide_positional = [];
+                    for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
+                        var cells = this.table.rows[rowIndex].cells;
+                        for (var colIndex = 16; colIndex < cells.length; colIndex++)
+                            this.cellsToHide_physical.push(cells[colIndex]);
+                        for (var colIndex = 0; colIndex < 16; colIndex++)
+                            this.cellsToHide_positional.push(cells[colIndex]);
+                    }
+                }
+                
+                PhysicalPositionalToggler.prototype['init'] = function () {
+                
+                    var _togglerObj = this;
+                
+                    this.positionalButton.onclick = function () {
+                        var togglerObj = _togglerObj;
+                        togglerObj.positionalButton.classList.add("activeButton");
+                        togglerObj.physicalButton.classList.remove("activeButton");
+                        togglerObj.table.classList.remove ("showPhysical");
+                        togglerObj.table.classList.add ("showPositional");
+                        if (!togglerObj.cellsToHide_physical)
+                            togglerObj.updateCellsToHide();
+                            
+                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
+                            togglerObj.cellsToHide_physical[i].classList.remove("physPosVisible");
+                            togglerObj.cellsToHide_physical[i].classList.add("physPosHidden");
+                        }
+                            
+                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
+                            togglerObj.cellsToHide_positional[i].classList.remove("physPosHidden");
+                            togglerObj.cellsToHide_positional[i].classList.add("physPosVisible");
+                        }
+                    }
+                 
+                    this.physicalButton.onclick = function () {
+                        var togglerObj = _togglerObj;
+                        togglerObj.physicalButton.classList.add("activeButton");
+                        togglerObj.positionalButton.classList.remove("activeButton");
 
-<script type="text/JavaScript" >
+                        togglerObj.table.classList.remove ("showPositional");
+                        togglerObj.table.classList.add ("showPhysical");
+                        if (!togglerObj.cellsToHide_physical)
+                            togglerObj.updateCellsToHide();
+
+                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
+                            togglerObj.cellsToHide_physical[i].classList.remove("physPosHidden");  
+                            togglerObj.cellsToHide_physical[i].classList.add("physPosVisible");
+                        }
+                            
+                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
+                            togglerObj.cellsToHide_positional[i].classList.remove("physPosVisible");
+                            togglerObj.cellsToHide_positional[i].classList.add("physPosHidden");
+                        }
+                    }
+                }
+            })();
+                
+            (function() {
+                var jupiterToggler = new PhysicalPositionalToggler("Jupiter Ephemeris");
+                jupiterToggler.init();
+
+                var marsToggler = new PhysicalPositionalToggler("Mars Ephemeris");
+                marsToggler.init();
+            })();    
+                
+
     
     PageTimeInterval = { "JD" :  false, "days" : false, "stepSize" : false };
 
