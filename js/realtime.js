@@ -22,6 +22,8 @@ var RealTimeDataViewer = {
 
     views : {},
 
+    rtDomHost : document.getElementById("rightNowFrontPage"),
+
     New: function (pageName) {
 
         var returnedViewer = {
@@ -30,7 +32,9 @@ var RealTimeDataViewer = {
 
             reset: function () {
 
-                var doms = RealTimeDataViewer.CreateLinkDom(pageName);
+                var host = document.createDocumentFragment();
+
+                var doms = RealTimeDataViewer.CreateLinkDom(host, pageName);
                 this.view = doms["div"];
 
                 // views, per daya key
@@ -70,6 +74,8 @@ var RealTimeDataViewer = {
                 var scrollableDiv = RealTimeDataViewer.Utils.CreateDom(doms['div'], "div");
                 scrollableDiv.classList.add("scrollableRT");
                 RealTimeDataViewer.CreateRtDomForPage(scrollableDiv, pageName, onKeyAdded);
+
+                RealTimeDataViewer.rtDomHost.appendChild(host);
             },
 
             resetItemVisibility: function () {
@@ -98,8 +104,8 @@ var RealTimeDataViewer = {
         alert(this.title); 
     },
 
-    CreateLinkDom : function(pageName) {
-        var host = document.getElementById("rightNowFrontPage");
+    CreateLinkDom : function(host, pageName) {
+        
         var createDom = RealTimeDataViewer.Utils.CreateDom;
         var createdDoms = {};
 
@@ -169,7 +175,7 @@ var RealTimeDataViewer = {
             }
 
         } catch (err) {
-            setTimeout(function () { RealTimeDataViewer.CreateRtDomForPage(domHost, pageName, onViewAdded); }, Timeout.onInit);
+            SyncedTimeOut(function () { RealTimeDataViewer.CreateRtDomForPage(domHost, pageName, onViewAdded); }, Timeout.onInit);
         }
     },
 
@@ -283,9 +289,8 @@ var RealTimeDataViewer = {
         return actualInput;
     }
 
-    function CreateRTSettings (pageName) {
+    function CreateRTSettings (hostForRTSettings, pageName) {
         var createDom = RealTimeDataViewer.Utils.CreateDom;
-        var hostForRTSettings = document.getElementById("realTimeSettingsContainer");
         var persistent = RealTimeDataViewer.Persistent;
         var topDiv = createDom(hostForRTSettings, "div");
         createDom (topDiv, "div", " ").classList.add("clear");
@@ -374,7 +379,7 @@ var RealTimeDataViewer = {
 
                 }
              } else {
-                    setTimeout (AddSettingsForKeys, Timeout.onInit);
+                    SyncedTimeOut (AddSettingsForKeys, Timeout.onInit);
              }
         }
 
@@ -388,6 +393,8 @@ var RealTimeDataViewer = {
 
 
         var pagesDoms = document.getElementsByClassName("page");
+        var hostForRTSettings = document.getElementById("realTimeSettingsContainer");
+
         var localInit = function () {
             if (typeof Pages != 'undefined' && typeof DataForNow != 'undefined' && typeof Notifications != 'undefined') {
                 var pagesAccountedFor = 0;
@@ -397,7 +404,9 @@ var RealTimeDataViewer = {
                         Pages[pageName] && 
                         Pages[pageName]["tableHeaderInfo"] && !(RealTimeDataViewer.views[pageName])) {
                         RealTimeDataViewer.views[pageName] = RealTimeDataViewer.New (pageName);
-                        CreateRTSettings (pageName);
+                        var host = document.createDocumentFragment();
+                        CreateRTSettings (host, pageName);
+                        hostForRTSettings.appendChild(host);
                     }
 
                     if (typeof Pages != 'undefined' && Pages[pageName]) {
@@ -409,7 +418,7 @@ var RealTimeDataViewer = {
                 }
             } 
 
-                setTimeout(localInit, Timeout.onInit);
+                SyncedTimeOut(localInit, Timeout.onInit);
         }
 
         localInit();

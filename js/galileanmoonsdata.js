@@ -23,7 +23,7 @@ var GalileanMoonsData = {};
         try {
             GalileanMoonsData = new MoonsData (function (JD, highPrecision) { if (typeof AAJS != "undefined") return AAJS.GalileanMoons.Calculate(JD, highPrecision); } );
         } catch (err) {
-            setTimeout (localInit, 100);
+            SyncedTimeOut (localInit, Timeout.onInit);
         }
     }
     localInit();

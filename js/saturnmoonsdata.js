@@ -23,7 +23,7 @@ var SaturnMoonsData = {};
         try {
             SaturnMoonsData = new MoonsData (function (JD, highPrecision) { if (typeof AAJS != "undefined") return AAJS.SaturnMoons.Calculate(JD, highPrecision); } );
         } catch (err) {
-            setTimeout (localInit, Timeout.onInit);
+            SyncedTimeOut (localInit, Timeout.onInit);
         }
     }
     localInit();

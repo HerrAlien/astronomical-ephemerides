@@ -42,7 +42,7 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
         
         var pageObj = this;
         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
-            return setTimeout (function() { pageObj.displayPage(); }, Timeout.onInit);
+            return SyncedTimeOut (function() { pageObj.displayPage(); }, Timeout.onInit);
 
         var startJD = PageTimeInterval.JD;
         var numberOfDays =  PageTimeInterval.days;
@@ -237,7 +237,7 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
                 MoonsPage.prototype.reset = PlanetPage.prototype.reset;
                 
                 } catch (err) {
-                        setTimeout (localInit, Timeout.onInit);
+                        SyncedTimeOut (localInit, Timeout.onInit);
                 }
         }
         localInit();

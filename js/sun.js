@@ -259,7 +259,7 @@ var SunData = {
 			Sun.oldAddHeader = PlanetPage.prototype.addTableHeader;
 			Pages["Sun Ephemeris"] = Sun;
 		} else {
-			setTimeout (localInit, 100);
+			SyncedTimeOut (localInit, Timeout.onInit);
 		}
 	}
 

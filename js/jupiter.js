@@ -76,7 +76,7 @@ var JupiterData = {};
 
             Pages["Jupiter Ephemeris"] = Page;
         } else {
-            setTimeout (localInit, 500);
+            SyncedTimeOut (localInit, Timeout.onInit);
         }
     }
     

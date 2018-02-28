@@ -449,6 +449,7 @@ tr.secondHeaderRowScrolled th:last-of-type {
     #MenuLink, .MenuLinkDiv.topmenulink, .MenuLinkDiv.topmenulink img, .MenuLinkDiv.topmenulink::after {
         width: 0px;
         height: 0px;
+        display: none;
     }
     .MenuLinkDiv.topmenulink::after {
         display: none;

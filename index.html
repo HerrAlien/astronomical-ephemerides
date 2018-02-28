@@ -20,8 +20,13 @@
 
     <script type="text/JavaScript">
         var Timeout = {
-            onInit : 100
+            onInit : 240
         };
+
+        function SyncedTimeOut (func, time) {
+          setTimeout (requestAnimationFrame (func), time);
+        }
+
     </script>
 
 <script type="text/JavaScript" async="" src="js/aajs.js"></script>
@@ -1352,11 +1357,11 @@ title="opens in a new window">Bits of software</a><br>
             try {
                 PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
             } catch (e) {
-                setTimeout (updateTimeAtAajsLoad, Timeout.onInit);
+                SyncedTimeOut (updateTimeAtAajsLoad, Timeout.onInit);
             }
         }
         else
-            setTimeout (updateTimeAtAajsLoad, Timeout.onInit);
+            SyncedTimeOut (updateTimeAtAajsLoad, Timeout.onInit);
     }
     
     updateTimeAtAajsLoad();
@@ -1380,7 +1385,7 @@ title="opens in a new window">Bits of software</a><br>
             try {
                 Pages[pageName].displayPage();
             } catch (err) {
-                setTimeout(delayedDisplay, Timeout.onInit);
+                SyncedTimeOut(delayedDisplay, Timeout.onInit);
             }
         }
         delayedDisplay();
@@ -1402,7 +1407,7 @@ title="opens in a new window">Bits of software</a><br>
 
     function onhashchange(){
         if (typeof PageRank == 'undefined') {
-            setTimeout(onhashchange, Timeout.onInit);
+            SyncedTimeOut(onhashchange, Timeout.onInit);
         } else {
             var searchFormInput = document.getElementById("searchTerms"); 
             searchFormInput.classList.remove("visible");
@@ -1429,7 +1434,7 @@ title="opens in a new window">Bits of software</a><br>
     
     window.addEventListener("hashchange", onhashchange, false);
     if (location.hash)
-        setTimeout(onhashchange, Timeout.onInit);
+        SyncedTimeOut(onhashchange, Timeout.onInit);
         
   (function(){
     var registerWorker = function () {
@@ -1452,7 +1457,7 @@ title="opens in a new window">Bits of software</a><br>
         var appInit = function() {
             if (typeof Location == 'undefined' || typeof TimeStepsData == 'undefined' || typeof Notifications == 'undefined'
                 || !Location.init || !TimeStepsData.init) {
-                setTimeout (appInit, Timeout.onInit);
+                SyncedTimeOut (appInit, Timeout.onInit);
             } else {
                 Location.init();
                 TimeStepsData.init();

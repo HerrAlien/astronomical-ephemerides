@@ -28,7 +28,7 @@ var VenusData = {};
 			var Page = new PlanetPage (VenusData, "VenusTable");
 			Pages["Venus Ephemeris"] = Page;
 		} else {
-			setTimeout(localInit, 500);
+			SyncedTimeOut(localInit, Timeout.onInit);
 		}
 	}
 

@@ -25,7 +25,7 @@ var MercuryData = {};
 			var Page = new PlanetPage (MercuryData, "MercuryTable");
 			Pages["Mercury Ephemeris"] = Page;
 		} else {
-			setTimeout(localInit, 500);
+			SyncedTimeOut(localInit, Timeout.onInit);
 		}
 	}
 	localInit();

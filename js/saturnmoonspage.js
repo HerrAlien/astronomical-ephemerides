@@ -34,7 +34,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                 Pages["Elongations of Saturn Moons"] = SaturnMoonsPage;
                 SaturnMoonsPage.planetFraction = 1/23.0;
                 } catch (err) {
-                        setTimeout (localInit, Timeout.onInit);
+                        SyncedTimeOut (localInit, Timeout.onInit);
                 }
         }
         localInit();
