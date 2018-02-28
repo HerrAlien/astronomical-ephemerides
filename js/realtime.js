@@ -283,6 +283,7 @@ var RealTimeDataViewer = {
         var actualInput = createDom (containingLabel, "input");
         actualInput.type = "checkbox";
         actualInput.id = usingID;
+        actualInput.classList.add("switchinput");
         var span = createDom (containingLabel, "span");
         span.classList.add("slider");
         span.classList.add("round");
