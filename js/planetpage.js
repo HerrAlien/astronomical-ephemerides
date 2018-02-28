@@ -143,7 +143,7 @@ function PlanetPage (planetDataSource, tableName) {
     PlanetPage.prototype["displayPage"] = function () {
             var pageObj = this;
             if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
-                return setTimeout (function() { pageObj.displayPage(); }, Timeout.onInit);
+                return SyncedTimeOut (function() { pageObj.displayPage(); }, Timeout.onInit);
             
             var JD = PageTimeInterval.JD;
             var daysAfter =  PageTimeInterval.days;

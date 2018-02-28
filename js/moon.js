@@ -310,7 +310,7 @@ var MoonData = {
             MoonPage.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
             Pages["Moon Ephemeris"] = MoonPage;
         } else {
-            setTimeout(localInit, 500);
+            SyncedTimeOut(localInit, Timeout.onInit);
         }
     }
 

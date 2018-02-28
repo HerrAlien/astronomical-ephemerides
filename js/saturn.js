@@ -27,7 +27,7 @@ var SaturnData = {};
     	var Page = new PlanetPage (SaturnData, "SaturnTable");
         Pages["Saturn Ephemeris"] = Page;
 		} else {
-			setTimeout (initLocal, 500);
+			SyncedTimeOut (initLocal, Timeout.onInit);
 		}
 	}
 	initLocal();

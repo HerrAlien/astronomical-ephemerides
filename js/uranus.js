@@ -27,7 +27,7 @@ var UranusData = {};
     var Page = new PlanetPage (UranusData, "UranusTable");
         Pages["Uranus Ephemeris"] = Page;
 		} else {
-			setTimeout (initLocal, 500);
+			SyncedTimeOut (initLocal, Timeout.onInit);
 		}
 	}
 	initLocal();

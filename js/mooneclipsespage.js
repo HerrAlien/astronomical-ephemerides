@@ -25,7 +25,7 @@ var MoonEclipsesPage = {
     displayPage : function () {
         
         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
-            return setTimeout (function() { MoonEclipsesPage.displayPage(); }, Timeout.onInit);
+            return SyncedTimeOut (function() { MoonEclipsesPage.displayPage(); }, Timeout.onInit);
 
         var startJD = PageTimeInterval.JD;
         var numberOfDays =  PageTimeInterval.days;
@@ -218,7 +218,7 @@ var MoonEclipsesPage = {
             MoonEclipsesPage.reset = PlanetPage.prototype.reset;
             Pages["Lunar Eclipses"] = MoonEclipsesPage;
         } catch (err) {
-            setTimeout(initLocal, Timeout.onInit);
+            SyncedTimeOut(initLocal, Timeout.onInit);
         }
     }
     initLocal();

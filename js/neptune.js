@@ -27,7 +27,7 @@ var NeptuneData = {};
 		var Page = new PlanetPage (NeptuneData, "NeptuneTable");
 			Pages["Neptune Ephemeris"] = Page;
 		} else {
-			setTimeout (initLocal, Timeout.onInit);
+			SyncedTimeOut (initLocal, Timeout.onInit);
 		}
 	}
 	initLocal();
