@@ -317,7 +317,7 @@ th {
     display: none;
 }
 
-.scrollableRT div,
+.scrollableRTdiv,
 .realtimeTitle {
     background: rgba(255, 255, 255, 0.8);
     margin-left: 10px;
@@ -377,7 +377,7 @@ border-bottom: solid 1px #AAAAAA;
     z-index: 2;
 }
 
- #showNavigationMenuContainer img {
+ #showNavigationMenuContainerImg {
     height: 27px;
 }
 
@@ -389,14 +389,14 @@ border-bottom: solid 1px #AAAAAA;
     /* expanded */
 }
 
-#searchArea img {
+#searchAreaImg {
     width:62px;
     float: left;
     margin-left: 10px;
     height: 62px;
 }
 
-#searchArea input {
+#searchTerms {
     height: 50px;
     top: 0px;
     float: left;
@@ -404,15 +404,15 @@ border-bottom: solid 1px #AAAAAA;
     width: 220px;
 }
 
-#searchArea input.hidden {
+#searchTerms.hidden {
     display: none;
 }
 
-#searchArea input.visible {
+#searchTerms.visible {
     display: block;
 }
 
-#searchArea a{
+#searchButton{
     cursor: pointer;
 }
 
@@ -715,14 +715,14 @@ border-bottom: solid 1px #AAAAAA;
       /* expanded */
   }
   
-  #searchArea img {
+  #searchAreaImg {
       width:52px;
       float: left;
       margin-left: 10px;
       height: 52px;
   }
   
-  #searchArea input {
+  #searchTerms {
       margin-top: 20px;
       height: 30px;
       float: left;
@@ -822,7 +822,7 @@ border-bottom: solid 1px #AAAAAA;
         <a href="#more" id="MenuLink"><div class="MenuLinkDiv topmenulink linkButton"><img src="images/menu.svg" alt="More ..."></div></a>
         <div id="searchArea">
             <input type="text" class="hidden" id="searchTerms" placeholder="   [Search]"/>
-            <a nohref="" id="searchButton"><img src="images/magnifying-glass.svg" alt="Search" /></a>
+            <a nohref="" id="searchButton"><img id="searchAreaImg" src="images/magnifying-glass.svg" alt="Search" /></a>
         </div>
         <div id="promotedMenu">
             <div>
@@ -842,7 +842,7 @@ border-bottom: solid 1px #AAAAAA;
             </div>
         </div>
     </div>
-    <a nohref="" id="showNavigationMenu"><div id="showNavigationMenuContainer"><img src="images/menu.svg" alt="More ..."></div></a>
+    <a nohref="" id="showNavigationMenu"><div id="showNavigationMenuContainer"><img id="showNavigationMenuContainerImg" src="images/menu.svg" alt="More ..."></div></a>
     
     <div class="clear maxWidth">&nbsp;</div>
     <div id="scroller">

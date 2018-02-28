@@ -144,6 +144,7 @@ var RealTimeDataViewer = {
             for (var key in Pages[pageName].dataSource.getDataAsObjectForJD(0, false)) {
                 var createdDom = RealTimeDataViewer.Utils.CreateDom(domHost, "div", "loading ...");
                 createdDom.classList.add(key);
+                createdDom.classList.add("scrollableRTdiv");
 
                 var unit = "\u00B0";
                 var scaleFactor = 1;
