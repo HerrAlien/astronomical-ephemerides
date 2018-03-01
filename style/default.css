@@ -1,7 +1,6 @@
 
 @media screen {
     #jupiterHorizontalScroller , #marsHorizontalScroller{
-        width: 890px;
         overflow-x: hidden;
         margin-left: auto;
         margin-right: auto;
@@ -422,15 +421,6 @@ tr.secondHeaderRowScrolled th:last-of-type {
     margin-top: 0px;
     margin-left: 0px;
     margin-right: 0px;
-}
-
-
-.buttonsToSwitchPosPhys, .physSeenAtSmallWidth {
-    display: none;
-}
-
-.physPosHidden {
-    visibility: visible;
 }
 
 .physPosVisible {
