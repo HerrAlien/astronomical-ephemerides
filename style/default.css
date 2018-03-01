@@ -28,7 +28,7 @@
     text-decoration: underline;
 }
 
-.largeButtons.linkButton img {
+.menuPageItemImg {
     width: 120px;
     height: 120px;
 }
@@ -54,7 +54,7 @@
     text-align: left;
 }
 
-#settings label, #getFromGeolocationAnchor{
+.settingsLabel, #getFromGeolocationAnchor{
     float: left;
     margin-top: 16px;
 }
@@ -63,17 +63,13 @@
     margin-top: 16px;
 }
 
-#settings label, #getFromGeolocationAnchor, #applySettingsChanges {
+.settingsLabel, #getFromGeolocationAnchor, #applySettingsChanges {
     margin-left: 6px;
 }
 
 #cancelSettingsChanges {
     float: right;
     margin-right: 16px;
-}
-
-#menuList li a {
-    text-decoration: none;
 }
 
 #getFromGeolocationAnchor {
@@ -85,13 +81,9 @@
     height: 72px;
 }
 
-#menuList li a:hover, #menuList li a.current, #promotedMenu a:hover, #promotedMenu a.current{
-    color: red;
-}
-
-#menuList li {
+.menuListItem {
     float: left;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 #menuList{ 
