@@ -327,7 +327,9 @@ var RealTimeDataViewer = {
         }
 
 
-        createDom (sectionLabel, "h3", objectName);
+        var sectionLabel2 = createDom (bodySectionDiv, "label");
+        sectionLabel2.setAttribute('for', sectionCheckboxId);
+        createDom (sectionLabel2, "h3", objectName);
 
 
         var rtViewer = RealTimeDataViewer.views[pageName];
