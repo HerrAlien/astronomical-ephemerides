@@ -24,7 +24,7 @@
         };
 
         function SyncedTimeOut (func, time) {
-          setTimeout (requestAnimationFrame (func), time);
+          setTimeout (function () { requestAnimationFrame (func); } , time);
         }
 
     </script>
