@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 (function() {
 var CACHE_PREFIX = 'Cache-for-ephemerides';
-var CACHE_VERSION = '118';
+var CACHE_VERSION = '120';
 var CACHE_NAME = CACHE_PREFIX + '-' + CACHE_VERSION;
 
 var optionalUrlsToCache = [
@@ -28,6 +28,8 @@ var urlsToCache = [
 "manifest.json",
 "style/default.css",
 "style/common.css",
+"style/largescreen.css",
+"style/print.css",
 "js/aajs.js",
 "js/besselianelements.js",
 "js/galileanmoonsdata.js",
@@ -126,15 +128,7 @@ self.addEventListener('fetch', function(event) {
         // Cache hit - return response
         if (response) {
           // analyze it
-          console.log ("Cache hit for " + response.url);
-
           return response.clone().blob().then(dataAsBlob => {
-            if (dataAsBlob) {
-              console.log ("URL " + response.url + " has " + dataAsBlob.size + " bytes" + 
-                            response.useFinalURL ? ", final " : ", not final");
-            } else {
-              console.log ("No data as blob");
-            }
 
             if (!dataAsBlob || dataAsBlob.size == 0) {
               return fetchAndCache(event.request);
@@ -145,7 +139,6 @@ self.addEventListener('fetch', function(event) {
           });
          
         } else {
-          console.log ("Cache miss for " + event.request.url);
           return fetchAndCache (event.request);
         }
       }
