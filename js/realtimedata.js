@@ -19,7 +19,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 // ---------------------------- model side ----------------------------------------
 
 var JDForRealTimeView = {
-    updateTimeInterval : Timeout.onInit, // [ms]
+    updateTimeInterval : 1000, // [ms]
     start : function () {
         JDForRealTimeView.recomputeTimes();
     },
@@ -41,8 +41,6 @@ var JDForRealTimeView = {
             
             var n = (rightNow.getUTCHours() + (rightNow.getUTCMinutes() + (rightNow.getUTCSeconds() + rightNow.getUTCMilliseconds()/1000)/60)/60)/24;
             JDForRealTimeView.onRecomputedTimes.notify ({"T1" : jdT1, "T2" : jdT2, "T3" : jdT3,"T4" : jdT4, "T5" : jdT5, "n" : n});
-
-            JDForRealTimeView.updateTimeInterval = 10000;
         }
         SyncedTimeOut (JDForRealTimeView.recomputeTimes, JDForRealTimeView.updateTimeInterval );
     }
