@@ -484,19 +484,6 @@ input[type=date]::-webkit-inner-spin-button {
     text-align: left;
 }
 
-#footer {
-    margin-top: 60px;
-    text-align: center;
-    font-size: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border-top:    solid 1px #AAAAAA;
-}
-
-#credits, #home {
-    text-align: justify;
-}
-
 #error404, #privacy {
     max-width: 835px;
 }

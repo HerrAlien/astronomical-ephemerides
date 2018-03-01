@@ -20,7 +20,7 @@
 
     <script type="text/JavaScript">
         var Timeout = {
-            onInit : 240
+            onInit : 16
         };
 
         function SyncedTimeOut (func, time) {
@@ -45,8 +45,8 @@
 <script type="text/JavaScript" async="" src="js/notifications.js"></script>
 <script type="text/JavaScript" async="" src="js/pagerank.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="style/common.css" />
-	<link rel="stylesheet" type="text/css" href="style/default.css" />
+<!--    <link rel="stylesheet" type="text/css" href="style/common.css" />
+	<link rel="stylesheet" type="text/css" href="style/default.css" /> -->
 	<link rel="stylesheet" type="text/css" href="style/largescreen.css" media="screen and (min-width: 1900px)"/>
 	<link rel="stylesheet" type="text/css" href="style/print.css" media="print"/>
 
@@ -718,6 +718,20 @@ border-bottom: solid 1px #AAAAAA;
   #searchArea:hover::after{
       text-decoration: underline;
   }
+
+
+#footer {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top:    solid 1px #AAAAAA;
+}
+
+#credits, #home {
+    text-align: justify;
+}
 
 }
 
@@ -1425,6 +1439,23 @@ title="opens in a new window">Bits of software</a><br>
         }              
     }
     registerWorker();
+
+  })();
+
+  (function(){
+    /*<!--    <link rel="stylesheet" type="text/css" href="style/common.css" />
+	<link rel="stylesheet" type="text/css" href="style/default.css" /> -->
+*/
+    var injectCssDom = function(url) {
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type="text/css";
+      link.href=url;
+      document.body.appendChild(link);
+    }
+    
+    setTimeout (function(){injectCssDom("style/common.css"); }, 2000);
+    setTimeout (function(){injectCssDom("style/default.css"); }, 2000);
 
   })();
 
