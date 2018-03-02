@@ -19,12 +19,13 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 // ---------------------------- model side ----------------------------------------
 
 var JDForRealTimeView = {
-    updateTimeInterval : 1000, // [ms]
+    updateTimeInterval : 1, // [ms]
     start : function () {
         JDForRealTimeView.recomputeTimes();
     },
     recomputeTimes : function () {
         if (typeof AAJS != 'undefined' && AAJS.AllDependenciesLoaded && AAJS.AllDependenciesLoaded()) {
+            JDForRealTimeView.updateTimeInterval = 10000;
             var rightNow = new Date();
             var y = rightNow.getUTCFullYear();
             var m = 1 + rightNow.getUTCMonth();
@@ -55,10 +56,10 @@ var JDForRealTimeView = {
     
     (function(){
         DataForNow.prototype['start'] = function() {
-            JDForRealTimeView.start();
             var obj = this;
             if (JDForRealTimeView.onRecomputedTimes) {
                 JDForRealTimeView.onRecomputedTimes.add (function(datesObj) { obj.updateData(datesObj); });
+                JDForRealTimeView.start();
             } else {
                 SyncedTimeOut (function() { obj.start(); }, Timeout.onInit);
             }
