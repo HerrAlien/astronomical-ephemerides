@@ -20,7 +20,8 @@
 
     <script type="text/JavaScript">
         var Timeout = {
-            onInit : 16
+            onInit : 1,
+            onNewData : 1
         };
 
         function SyncedTimeOut (func, time) {
@@ -1481,9 +1482,7 @@ title="opens in a new window">Bits of software</a><br>
   })();
 
   (function(){
-    /*<!--    <link rel="stylesheet" type="text/css" href="style/common.css" />
-	<link rel="stylesheet" type="text/css" href="style/default.css" /> -->
-*/
+
     var injectCssDom = function(url) {
       var link = document.createElement("link");
       link.rel = "stylesheet";
@@ -1492,8 +1491,8 @@ title="opens in a new window">Bits of software</a><br>
       document.body.appendChild(link);
     }
     
-    setTimeout (function(){injectCssDom("style/common.css"); }, 2000);
-    setTimeout (function(){injectCssDom("style/default.css"); }, 2000);
+    SyncedTimeOut (function(){injectCssDom("style/common.css"); }, Timeout.onInit);
+    SyncedTimeOut (function(){injectCssDom("style/default.css"); }, Timeout.onInit);
 
   })();
 
