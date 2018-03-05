@@ -23,13 +23,13 @@ var MarsData = {};
     var initLocal = function () {    
         if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
             MarsData = new PlanetData({ number: 3, name: "Mars", 
-                                       semidiameterFunctionName :  function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.MarsSemidiameterB(delta); } } );				
+                                       semidiameterFunctionName :  function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.MarsSemidiameterB(delta); } } );				
 
             MarsData['old_GetData'] = MarsData.getDataAsObjectForJD;
             MarsData.getDataAsObjectForJD = function (JD, computeRiseTransitSet) {
                 var data = this.old_GetData(JD, computeRiseTransitSet); 
                 if (!data['EarthDeclination']) {
-                    var physicalData = AAJS['Mars']['PhysicalDetails'] (JD);
+                    var physicalData = GetAAJS()['Mars']['PhysicalDetails'] (JD);
                     for (var key in physicalData)
                         data[key] = physicalData[key];
                     this.cache[JD] = data;

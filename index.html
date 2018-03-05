@@ -27,6 +27,12 @@
         function SyncedTimeOut (func, time) {
           setTimeout (function () { requestAnimationFrame (func); } , time);
         }
+        
+        var AAJS = {};
+        
+        function GetAAJS() {
+            return AAJS;
+        }
 
     </script>
 
@@ -1294,8 +1300,8 @@ title="opens in a new window">Bits of software</a><br>
         Location.Controls.commitUserValues();
         TimeStepsData.Controls.commitUserValues();
         // copy from timesteps data
-        if (typeof AAJS != 'undefined')
-            PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
+        if (typeof GetAAJS() != 'undefined')
+            PageTimeInterval = { "JD" :  GetAAJS().Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
             
         for (var pageKey in Pages){
             var entry = Pages[pageKey];
@@ -1382,19 +1388,17 @@ title="opens in a new window">Bits of software</a><br>
         }
     }
     
-    function updateTimeAtAajsLoad() {
-        if (typeof AAJS != 'undefined') {
+    function updateTimeAtAAJSLoad() {
+      
             try {
-                PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
+                PageTimeInterval = { "JD" :  GetAAJS().Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
             } catch (e) {
-                SyncedTimeOut (updateTimeAtAajsLoad, Timeout.onInit);
+                SyncedTimeOut (updateTimeAtAAJSLoad, Timeout.onInit);
             }
-        }
-        else
-            SyncedTimeOut (updateTimeAtAajsLoad, Timeout.onInit);
+
     }
     
-    updateTimeAtAajsLoad();
+    updateTimeAtAAJSLoad();
     
 /*    (function() {
         // update menus

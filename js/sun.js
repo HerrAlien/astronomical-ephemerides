@@ -23,19 +23,19 @@ var SunData = {
         var data = this.cache[JD];
         if (!data) {
             data = {};
-            var _date = AAJS.Date.JD2Date(JD);
+            var _date = GetAAJS().Date.JD2Date(JD);
             // convert from JD to gregorian
             data['Month'] = _date.M;
             data['Day'] = _date.D;
-            var radec = AAJS.Sun.EquatorialCoordinates(JD, true);
+            var radec = GetAAJS().Sun.EquatorialCoordinates(JD, true);
             data['RA'] = radec.X; // RA [h.hhhh]
             data['Dec'] = radec.Y; // DEC [deg.dddd]
-            var sunDistance = AAJS.Sun.Distance(JD, true);
+            var sunDistance = GetAAJS().Sun.Distance(JD, true);
 			data['DistanceToEarth'] = sunDistance;// [au]
-            data['Diameter'] = AAJS.Sun.Diameter(JD, true)/3600; // [deg.dddd]
+            data['Diameter'] = GetAAJS().Sun.Diameter(JD, true)/3600; // [deg.dddd]
             
             data['MeridianTransit'] = false;
-            var physical = AAJS.Sun.CalculatePhysicalDetails(JD, true);
+            var physical = GetAAJS().Sun.CalculatePhysicalDetails(JD, true);
             data['P'] = physical.P; // [deg.dddd]
             data['B0'] = physical.B0; // [deg.dddd]
             data['L0'] = physical.L0; // [deg.dddd]
@@ -208,19 +208,19 @@ var SunData = {
             displayableLine[1] = obj.Day;
             
             var di = 2;
-            var sexagesimalRA = AAJS.Numerical.ToSexagesimal(Math.round(obj.RA * 36000)/36000);
+            var sexagesimalRA = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.RA * 36000)/36000);
             displayableLine[di++] = sexagesimalRA.Ord3 ;
             displayableLine[di++] = sexagesimalRA.Ord2 
             displayableLine[di++] = sexagesimalRA.Ord1;
 
-            var sexagesimalDec = AAJS.Numerical.ToSexagesimal(Math.round(obj.Dec * 3600)/3600);
+            var sexagesimalDec = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.Dec * 3600)/3600);
             displayableLine[di++] = sexagesimalDec.Ord3 ;
             displayableLine[di++] = sexagesimalDec.Ord2;
             displayableLine[di++] = sexagesimalDec.Ord1;
 			
-			displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.DistanceToEarth);
+			displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals (obj.DistanceToEarth);
             
-            var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(Math.round(obj.Diameter * 3600)/3600);
+            var sexagesimalDiam = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.Diameter * 3600)/3600);
             displayableLine[di++] = sexagesimalDiam.Ord2;
             displayableLine[di++] = sexagesimalDiam.Ord1;
             
@@ -228,11 +228,11 @@ var SunData = {
             displayableLine[di++] = obj.bTransitValid ? this.timeToHhColumnMm(obj.MeridianTransit) : "N/A";
             displayableLine[di++] = obj.bSetValid ? this.timeToHhColumnMm(obj.Set) : "N/A";
             
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.P);
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.B0);
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.L0);
+            displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals (obj.P);
+            displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals (obj.B0);
+            displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals (obj.L0);
             
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals(obj.Parallax * 3600); // just arcsecs
+            displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals(obj.Parallax * 3600); // just arcsecs
 
             return displayableLine;
         },

@@ -24,12 +24,12 @@ var JupiterData = {};
     var localInit = function () {
         if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
             JupiterData = new PlanetData({ number: 4, name: "Jupiter", 
-                                       semidiameterFunctionName :   function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.JupiterEquatorialSemidiameterB (delta); } } );
+                                       semidiameterFunctionName :   function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.JupiterEquatorialSemidiameterB (delta); } } );
             JupiterData['old_GetData'] = JupiterData.getDataAsObjectForJD;
             JupiterData.getDataAsObjectForJD = function (JD, computeRiseTransitSet) {
                 var data = this.old_GetData(JD, computeRiseTransitSet); 
                 if (!data['EarthDeclination']) {
-                    var physicalData = AAJS['Jupiter']['PhysicalDetails'] (JD);
+                    var physicalData = GetAAJS()['Jupiter']['PhysicalDetails'] (JD);
                     for (var key in physicalData)
                         data[key] = physicalData[key];
                     this.cache[JD] = data;

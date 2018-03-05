@@ -61,7 +61,7 @@ function MoonEclipse (JD) {
         this.umbralRadius = 1.015 * (0.99834 * this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
         this.penumbralRadius = 1.007 * (0.99834 * this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
         
-        var magic =  AAJS.DynamicalTime.DeltaT(this.JD)/(3600 * 24);
+        var magic =  GetAAJS().DynamicalTime.DeltaT(this.JD)/(3600 * 24);
         this.JD -= magic; 
 }
 

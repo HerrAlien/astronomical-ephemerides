@@ -126,7 +126,7 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
             values.d += 360;
 
         var a = occultedData.RA - (b / (1-b))*Math.cos(occultorDecRads)/Math.cos(occultedData.Dec * degra) * (occultorData.RA - occultedData.RA);
-        values.mu = 15*(AAJS.Sidereal.ApparentGreenwichSiderealTime(jd) - a);
+        values.mu = 15*(GetAAJS().Sidereal.ApparentGreenwichSiderealTime(jd) - a);
         if (values.mu < 0)
             values.mu += 360;
         
@@ -179,7 +179,7 @@ var SolarEclipses = {
     
     EclipseDataForK : function (k) {
         // check if you have an eclipse
-        var eclipseData = AAJS.Eclipses.CalculateSolar (k);
+        var eclipseData = GetAAJS().Eclipses.CalculateSolar (k);
         if (eclipseData.bEclipse) {
             // if yes, compute the besselian elements
             eclipseData["t0"] = Math.round (eclipseData.JdOfMaximumEclipse * 24) / 24;

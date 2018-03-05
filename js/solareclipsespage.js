@@ -25,7 +25,7 @@ var SolarEclipsesPage = {
     // clears up the rendered thing
     displayPage : function () {
         
-        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
+        if (typeof GetAAJS() == "undefined" || !GetAAJS().AllDependenciesLoaded() || !PageTimeInterval.JD)
             return SyncedTimeOut (function() { SolarEclipsesPage.displayPage(); }, Timeout.onInit);
         
         if (SolarEclipsesPage.pageRendered)
@@ -35,7 +35,7 @@ var SolarEclipsesPage = {
         var startJD = PageTimeInterval.JD;
         var numberOfConjunctions =  Math.round(PageTimeInterval.days / MoonEclipsesPage.dataSource.sinodicPeriod);
 
-        var startK = AAJS.Moon.kForJD (startJD);
+        var startK = GetAAJS().Moon.kForJD (startJD);
         if (startK < 0)
             startK = -1 * Math.ceil(Math.abs(startK));
         else

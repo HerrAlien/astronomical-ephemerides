@@ -24,14 +24,14 @@ var JDForRealTimeView = {
         JDForRealTimeView.recomputeTimes();
     },
     recomputeTimes : function () {
-        if (typeof AAJS != 'undefined' && AAJS.AllDependenciesLoaded && AAJS.AllDependenciesLoaded()) {
+        if (typeof GetAAJS() != 'undefined' && GetAAJS().AllDependenciesLoaded && GetAAJS().AllDependenciesLoaded()) {
             JDForRealTimeView.updateTimeInterval = 10000;
             var rightNow = new Date();
             var y = rightNow.getUTCFullYear();
             var m = 1 + rightNow.getUTCMonth();
             var d = rightNow.getUTCDate();
 
-            var jdT3 = AAJS.Date.DateToJD (y, m, d, true);
+            var jdT3 = GetAAJS().Date.DateToJD (y, m, d, true);
             var spanBetweenComputedTimes = 1; // [days] - one full day
             // get the T1
             var jdT2 = jdT3 - spanBetweenComputedTimes;
@@ -66,7 +66,7 @@ var JDForRealTimeView = {
         }
         
         DataForNow.prototype['updateData'] = function (datesObj) {
-            if (typeof AAJS != 'undefined') {
+            if (typeof GetAAJS() != 'undefined') {
 
                 var obj1 = this.dataSource.getDataAsObjectForJD (datesObj.T1, true);
                 var obj2 = this.dataSource.getDataAsObjectForJD (datesObj.T2, true);

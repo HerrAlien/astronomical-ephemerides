@@ -23,7 +23,7 @@ var NeptuneData = {};
 	var initLocal = function () {
 		if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
 		NeptuneData = new PlanetData({ number: 7, name: "Neptune", 
-								   semidiameterFunctionName :   function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.NeptuneSemidiameterB (delta); } } );		
+								   semidiameterFunctionName :   function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.NeptuneSemidiameterB (delta); } } );		
 		var Page = new PlanetPage (NeptuneData, "NeptuneTable");
 			Pages["Neptune Ephemeris"] = Page;
 		} else {
