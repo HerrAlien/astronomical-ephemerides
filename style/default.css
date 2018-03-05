@@ -429,14 +429,12 @@ tr.secondHeaderRowScrolled th:last-of-type {
 
 label {
     display: block;
-/*    border: solid 2px #AAAAAA;
-    border-radius: 4px;*/
     padding: 4px; 
     color: #003377;
     font-size: 18px;
 }
 
-label input, #searchTerms {
+input[type=date] {
     border-top: none;
     border-left: none;
     border-right: none;
