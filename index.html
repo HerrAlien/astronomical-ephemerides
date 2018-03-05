@@ -20,11 +20,12 @@
 
     <script type="text/JavaScript">
         var Timeout = {
-            onInit : 240
+            onInit : 1,
+            onNewData : 1
         };
 
         function SyncedTimeOut (func, time) {
-          setTimeout (requestAnimationFrame (func), time);
+          setTimeout (function () { requestAnimationFrame (func); } , time);
         }
 
     </script>
@@ -45,9 +46,8 @@
 <script type="text/JavaScript" async="" src="js/notifications.js"></script>
 <script type="text/JavaScript" async="" src="js/pagerank.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="style/common.css" />
-	<link rel="stylesheet" type="text/css" href="style/default.css" />
-	<link rel="stylesheet" type="text/css" href="style/largescreen.css" media="screen and (min-width: 1900px)"/>
+<!--    <link rel="stylesheet" type="text/css" href="style/common.css" />
+	<link rel="stylesheet" type="text/css" href="style/default.css" /> -->
 	<link rel="stylesheet" type="text/css" href="style/print.css" media="print"/>
 
     <link rel="icon" type="image/png" href="images/ae-icon.png" />
@@ -667,6 +667,18 @@ border-bottom: solid 1px #AAAAAA;
     content: "R: "
 }
 
+.buttonsToSwitchPosPhys, .physSeenAtSmallWidth {
+    display: none;
+}
+
+.physPosHidden {
+    visibility: visible;
+}
+
+.physPosVisible {
+    visibility: visible;
+}
+
 @media screen and (min-width: 937px) {
     #promotedMenu {
         overflow: hidden;
@@ -719,6 +731,47 @@ border-bottom: solid 1px #AAAAAA;
       text-decoration: underline;
   }
 
+}
+
+ @media screen and (min-width: 1900px)  {
+    #MenuLink, .MenuLinkDiv.topmenulink, .MenuLinkDiv.topmenulink img, .MenuLinkDiv.topmenulink::after {
+        width: 0px;
+        height: 0px;
+        display: none;
+    }
+    .MenuLinkDiv.topmenulink::after {
+        display: none;
+    }
+
+
+
+.buttonsToSwitchPosPhys, .physSeenAtSmallWidth {
+    display: none;
+}
+
+
+.physPosHidden {
+    visibility: visible;
+}
+
+#jupiterHorizontalScroller , #marsHorizontalScroller{
+        width: 890px;
+}
+ }
+
+
+
+#footer {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top:    solid 1px #AAAAAA;
+}
+
+#credits, #home {
+    text-align: justify;
 }
 
     </style>
@@ -1425,6 +1478,21 @@ title="opens in a new window">Bits of software</a><br>
         }              
     }
     registerWorker();
+
+  })();
+
+  (function(){
+
+    var injectCssDom = function(url) {
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type="text/css";
+      link.href=url;
+      document.body.appendChild(link);
+    }
+    
+    SyncedTimeOut (function(){injectCssDom("style/common.css"); }, Timeout.onInit);
+    SyncedTimeOut (function(){injectCssDom("style/default.css"); }, Timeout.onInit);
 
   })();
 

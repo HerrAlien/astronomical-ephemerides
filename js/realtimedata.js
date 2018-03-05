@@ -19,12 +19,13 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 // ---------------------------- model side ----------------------------------------
 
 var JDForRealTimeView = {
-    updateTimeInterval : Timeout.onInit, // [ms]
+    updateTimeInterval : 1, // [ms]
     start : function () {
         JDForRealTimeView.recomputeTimes();
     },
     recomputeTimes : function () {
         if (typeof AAJS != 'undefined' && AAJS.AllDependenciesLoaded && AAJS.AllDependenciesLoaded()) {
+            JDForRealTimeView.updateTimeInterval = 10000;
             var rightNow = new Date();
             var y = rightNow.getUTCFullYear();
             var m = 1 + rightNow.getUTCMonth();
@@ -41,8 +42,6 @@ var JDForRealTimeView = {
             
             var n = (rightNow.getUTCHours() + (rightNow.getUTCMinutes() + (rightNow.getUTCSeconds() + rightNow.getUTCMilliseconds()/1000)/60)/60)/24;
             JDForRealTimeView.onRecomputedTimes.notify ({"T1" : jdT1, "T2" : jdT2, "T3" : jdT3,"T4" : jdT4, "T5" : jdT5, "n" : n});
-
-            JDForRealTimeView.updateTimeInterval = 10000;
         }
         SyncedTimeOut (JDForRealTimeView.recomputeTimes, JDForRealTimeView.updateTimeInterval );
     }
@@ -57,10 +56,10 @@ var JDForRealTimeView = {
     
     (function(){
         DataForNow.prototype['start'] = function() {
-            JDForRealTimeView.start();
             var obj = this;
             if (JDForRealTimeView.onRecomputedTimes) {
                 JDForRealTimeView.onRecomputedTimes.add (function(datesObj) { obj.updateData(datesObj); });
+                JDForRealTimeView.start();
             } else {
                 SyncedTimeOut (function() { obj.start(); }, Timeout.onInit);
             }
