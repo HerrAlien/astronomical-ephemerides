@@ -24,8 +24,9 @@ var JDForRealTimeView = {
         JDForRealTimeView.recomputeTimes();
     },
     recomputeTimes : function () {
-        if (typeof GetAAJS() != 'undefined' && GetAAJS().AllDependenciesLoaded && GetAAJS().AllDependenciesLoaded()) {
+        if (typeof AAJS != 'undefined' && AAJS.AllDependenciesLoaded && AAJS.AllDependenciesLoaded()) {
             JDForRealTimeView.updateTimeInterval = 10000;
+        }
             var rightNow = new Date();
             var y = rightNow.getUTCFullYear();
             var m = 1 + rightNow.getUTCMonth();
@@ -42,7 +43,7 @@ var JDForRealTimeView = {
             
             var n = (rightNow.getUTCHours() + (rightNow.getUTCMinutes() + (rightNow.getUTCSeconds() + rightNow.getUTCMilliseconds()/1000)/60)/60)/24;
             JDForRealTimeView.onRecomputedTimes.notify ({"T1" : jdT1, "T2" : jdT2, "T3" : jdT3,"T4" : jdT4, "T5" : jdT5, "n" : n});
-        }
+            
         SyncedTimeOut (JDForRealTimeView.recomputeTimes, JDForRealTimeView.updateTimeInterval );
     }
 };

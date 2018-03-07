@@ -29,8 +29,67 @@
         }
         
         var AAJS = {};
+        // only for *right now*
+        var RTAAJS = {
+          Mercury : { RadiusVector: function () { return 0;} },
+          Venus : { RadiusVector: function () { return 0;} },
+          Mars : { RadiusVector: function () { return 0;}, PhysicalDetails : function() { return {}; }, },
+          Jupiter : { RadiusVector: function () { return 0;}, PhysicalDetails : function() { return {}; }, },
+          Saturn : { RadiusVector: function () { return 0;} },
+          Uranus : { RadiusVector: function () { return 0;} },
+          Neptune : { RadiusVector: function () { return 0;} },
+          Sun : { 
+            EquatorialCoordinates: function() { 
+              return {"X": 0, "Y" : 0}; 
+              },
+            Distance : function() { return 1; },
+            Diameter: function() { return 0.5; },
+            CalculatePhysicalDetails : function() { return {}; },
+          },
+          Moon : { 
+            PositionalEphemeris : function() { return {"RaGeo" : 0, "DecGeo" : 0 }; } ,
+            CalculateSelenographicPositionOfSun  : function () { return {}; }
+          },
+
+          Date : { 
+            JD2Date : function (JD) { 
+              var d = new Date();
+              return {"M" : 1 + d.getMonth(), "D" : d.getDate()};
+            },
+            DateToJD : function (y, m, d) {
+              // var jd2000 = 2451545.0;
+              return -99999999;
+            }
+          },
+
+          Elliptical : { 
+            CalculatePlanetaryDetails : function (JD, planet_number) {
+              // here be computations
+              var details = { "ApparentGeocentricRA" : 0, "ApparentGeocentricDeclination" : 0,
+              "ApparentGeocentricDistance" : 1, };
+
+              return details;
+            }
+          },
+
+          AllDependenciesLoaded : function () { return true; },
+          RiseTransitSet : { Calculate : function() { return {}; } },
+          Diameters : {
+            MercurySemidiameterB : function() { return 0; },
+            VenusSemidiameterB : function() { return 0; },
+            MarsSemidiameterB : function() { return 0; },
+            JupiterEquatorialSemidiameterB : function() { return 0; },
+            SaturnEquatorialSemidiameterB: function() { return 0; },
+            UranusSemidiameterB: function() { return 0; },
+            NeptuneSemidiameterB: function() { return 0; },
+          }
+        };
         
         function GetAAJS() {
+            if (typeof AAJS == 'undefined' || !AAJS || typeof AAJS.AllDependenciesLoaded == 'undefined' ||
+               ! AAJS.AllDependenciesLoaded  || ! AAJS.AllDependenciesLoaded() ) {
+                  return RTAAJS;
+               }
             return AAJS;
         }
 
@@ -1300,8 +1359,8 @@ title="opens in a new window">Bits of software</a><br>
         Location.Controls.commitUserValues();
         TimeStepsData.Controls.commitUserValues();
         // copy from timesteps data
-        if (typeof GetAAJS() != 'undefined')
-            PageTimeInterval = { "JD" :  GetAAJS().Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
+        if (typeof AAJS != 'undefined')
+            PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
             
         for (var pageKey in Pages){
             var entry = Pages[pageKey];
@@ -1391,7 +1450,7 @@ title="opens in a new window">Bits of software</a><br>
     function updateTimeAtAAJSLoad() {
       
             try {
-                PageTimeInterval = { "JD" :  GetAAJS().Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
+                PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
             } catch (e) {
                 SyncedTimeOut (updateTimeAtAAJSLoad, Timeout.onInit);
             }
