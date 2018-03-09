@@ -1451,8 +1451,6 @@ title="opens in a new window">Bits of software</a><br>
     function updateTimeAtAAJSLoad() {
       
             try {
-                SunData.reset();
-                MoonData.reset();
                 PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
             } catch (e) {
                 SyncedTimeOut (updateTimeAtAAJSLoad, Timeout.onInit);
