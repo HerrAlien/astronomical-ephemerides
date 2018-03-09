@@ -24,7 +24,7 @@ var MoonEclipsesPage = {
 
     displayPage : function () {
         
-        if (typeof GetAAJS() == "undefined" || !GetAAJS().AllDependenciesLoaded() || !PageTimeInterval.JD)
+        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD )
             return SyncedTimeOut (function() { MoonEclipsesPage.displayPage(); }, Timeout.onInit);
 
         var startJD = PageTimeInterval.JD;

@@ -25,7 +25,7 @@ var SolarEclipsesPage = {
     // clears up the rendered thing
     displayPage : function () {
         
-        if (typeof GetAAJS() == "undefined" || !GetAAJS().AllDependenciesLoaded() || !PageTimeInterval.JD || typeof BesselianElements == 'undefined')
+        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD || typeof BesselianElements == 'undefined')
             return SyncedTimeOut (function() { SolarEclipsesPage.displayPage(); }, Timeout.onInit);
         
         if (SolarEclipsesPage.pageRendered)
