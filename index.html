@@ -302,9 +302,10 @@ th {
     display: inline-block;
     border-bottom: 1px solid #AAAAAA;
     width: 100%;
-    font-size: 30px;
+    font-size: 40px;
     text-decoration: none;
-    padding-bottom: 5px;
+    padding-bottom: 0px;
+    margin-top: -10px;
  }  
 
  .realtimeTitle:hover {
@@ -462,12 +463,14 @@ border-bottom: solid 1px #AAAAAA;
     }
 
      .realtimeTitle {
-        font-size: 48px;
+        font-size: 60px;
         text-decoration: underline;
+        margin-top: -20px;
+        margin-bottom: -10px;
     }
 
      .scrollableRTdiv {
-        font-size: 36px;
+        font-size: 40px;
     }
         
      #navigation.movedMenu {
@@ -1092,7 +1095,7 @@ border-bottom: solid 1px #AAAAAA;
             To obtain the value of a given Besselian element for a given time T, compute it in the following maner:
             <br/>
             <br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;t = T - T0
+            &nbsp;&nbsp;&nbsp;&nbsp;t = T - T<sub>0</sub>
             <br/>
             &nbsp;&nbsp;&nbsp;&nbsp;A(t) = A<sub>0</sub> + t * A<sub>1</sub> + t<sup>2</sup> * A<sub>2</sub> + t<sup>3</sup> * A<sub>3</sub>
             <br/>
@@ -1100,7 +1103,7 @@ border-bottom: solid 1px #AAAAAA;
             where A is any of the elements from the tables below.
             <br/>
             <br/>
-            The values from the table are valid for a time interval from T0-3h to T0+3h.
+            The values from the table are valid for a time interval from T<sub>0</sub> - 3h to T<sub>0</sub> + 3h.
             <br/>
             <br/>
             <b>x</b>, <b>y</b>, <b>l1</b> and <b>l2</b> are in Earth radii.<br/>
@@ -1147,7 +1150,7 @@ title="opens in a new window">AGPL License</a>  |
 <a href="http://herralien-apps.appspot.com" target="_blank" rel="noopener"  
 title="opens in a new window">Bits of software</a><br>
 <br><br>
-        Copyright 2018  Alexandru Garofide &lt;<a href="mailto:alexandru.garofide@gmail.com">alexandru.garofide@gmail.com</a>&gt;
+        Copyright <span id="copyrightYear">2018</span>  Alexandru Garofide &lt;<a href="mailto:alexandru.garofide@gmail.com">alexandru.garofide@gmail.com</a>&gt;
 </div>
 
         </div>
@@ -1511,6 +1514,9 @@ title="opens in a new window">Bits of software</a><br>
         }
 
         appInit();
+
+        var now = new Date();        
+        document.getElementById("copyrightYear").textContent = now.getFullYear();
 
    })();
 
