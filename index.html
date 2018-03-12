@@ -132,8 +132,8 @@ th {
 }
 
  body {
-    font-family: Verdana;
-    font-size: 22px;
+    font-family: Georgia;
+    font-size: 30px;
     min-width: 800px;
     margin-left: auto;
     margin-right: auto;
@@ -218,6 +218,7 @@ th {
     display: block;
     text-align: center;
     color: #000000;
+    font-family: Verdana;
 }
 
  .MenuLinkDiv::after {
@@ -307,20 +308,26 @@ th {
     margin-top: 120px;
     margin-bottom: 0px;
     font-size: 50px;
-    font-family: Arial;
+    font-family: Verdana;
     margin-left: auto;
     display: block;
     font-weight: normal;
     margin-right: auto;
 }
 
+#homeH1 {
+    font-size: 70px;
+}
+
  h2 {
+    font-family: Verdana;
     font-size: 40px;
     margin-top: 70px;
     margin-bottom: 10px;
 }
 
  h3 {
+    font-family: Verdana;
     font-size: 32px;
     margin-top: 0px;
 }
@@ -360,11 +367,12 @@ th {
 
  .realtimeTitle {
     display: inline-block;
-    border-bottom: 1px solid #AAAAAA;
+    border-bottom: 4px solid #AAAAAA;
     width: 100%;
-    font-size: 30px;
+    font-size: 40px;
     text-decoration: none;
-    padding-bottom: 5px;
+    padding-bottom: 0px;
+    margin-top: -10px;
  }  
 
  .realtimeTitle:hover {
@@ -522,12 +530,15 @@ border-bottom: solid 1px #AAAAAA;
     }
 
      .realtimeTitle {
-        font-size: 48px;
+        font-size: 60px;
         text-decoration: underline;
+        margin-top: -20px;
+        margin-bottom: -10px;
+        border-bottom: 6px solid #AAAAAA;
     }
 
      .scrollableRTdiv {
-        font-size: 36px;
+        font-size: 40px;
     }
         
      #navigation.movedMenu {
@@ -572,10 +583,6 @@ border-bottom: solid 1px #AAAAAA;
     
      #HomeLink {
         display: none;
-    }
-
-     #home h1 {
-        margin-top: 20px;
     }
     
      #HomeLinkMobileNav {
@@ -793,6 +800,10 @@ border-bottom: solid 1px #AAAAAA;
       text-decoration: underline;
   }
 
+.scrollableRT {
+    margin-top: 50px;
+}
+
 }
 
  @media screen and (min-width: 1900px)  {
@@ -826,7 +837,7 @@ border-bottom: solid 1px #AAAAAA;
 #footer {
     margin-top: 60px;
     text-align: center;
-    font-size: 20px;
+    font-size: 26px;
     padding-top: 20px;
     padding-bottom: 20px;
     border-top:    solid 1px #AAAAAA;
@@ -912,7 +923,7 @@ border-bottom: solid 1px #AAAAAA;
         <a href="#home" id="HomeLinkMobileNav"><div class="HomeLinkButton topmenulink linkButton"><img class="linkButtonImg" src="images/home-3.svg" alt="Home"></div></a>
         <a href="#settings"><div class="SettingsLink topmenulink linkButton"><img src="images/settings.svg" id="SettingsLinkTopmenulinkImg" class="linkButtonImg" alt="Settings"></div></a>
         <a href="#more" id="MenuLink"><div class="MenuLinkDiv topmenulink linkButton"><img src="images/menu.svg" id="MenuLinkDivTopmenulinkImg" class="linkButtonImg"  alt="More ..."></div></a>
-        <div id="searchArea">
+        <div id="searchArea" class="linkButton">
             <input type="text" class="hidden" id="searchTerms" placeholder="   [Search]"/>
             <a nohref="" id="searchButton"><img id="searchAreaImg" src="images/magnifying-glass.svg" alt="Search" /></a>
         </div>
@@ -987,8 +998,7 @@ border-bottom: solid 1px #AAAAAA;
         </div>
 
         <div id="home" class="page">
-            <img src="images/logomobilebanner.png" alt="Home" id="HomeLinkMobile">
-            <h1>Right now:</h1>
+            <h1 id="homeH1">Right now:</h1>
             <div id="rightNowFrontPage">
                
             </div>
@@ -1153,7 +1163,7 @@ border-bottom: solid 1px #AAAAAA;
             To obtain the value of a given Besselian element for a given time T, compute it in the following maner:
             <br/>
             <br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;t = T - T0
+            &nbsp;&nbsp;&nbsp;&nbsp;t = T - T<sub>0</sub>
             <br/>
             &nbsp;&nbsp;&nbsp;&nbsp;A(t) = A<sub>0</sub> + t * A<sub>1</sub> + t<sup>2</sup> * A<sub>2</sub> + t<sup>3</sup> * A<sub>3</sub>
             <br/>
@@ -1161,7 +1171,7 @@ border-bottom: solid 1px #AAAAAA;
             where A is any of the elements from the tables below.
             <br/>
             <br/>
-            The values from the table are valid for a time interval from T0-3h to T0+3h.
+            The values from the table are valid for a time interval from T<sub>0</sub> - 3h to T<sub>0</sub> + 3h.
             <br/>
             <br/>
             <b>x</b>, <b>y</b>, <b>l1</b> and <b>l2</b> are in Earth radii.<br/>
@@ -1208,7 +1218,7 @@ title="opens in a new window">AGPL License</a>  |
 <a href="http://herralien-apps.appspot.com" target="_blank" rel="noopener"  
 title="opens in a new window">Bits of software</a><br>
 <br><br>
-        Copyright 2018  Alexandru Garofide &lt;<a href="mailto:alexandru.garofide@gmail.com">alexandru.garofide@gmail.com</a>&gt;
+        Copyright <span id="copyrightYear">2018</span>  Alexandru Garofide &lt;<a href="mailto:alexandru.garofide@gmail.com">alexandru.garofide@gmail.com</a>&gt;
 </div>
 
         </div>
@@ -1571,6 +1581,9 @@ title="opens in a new window">Bits of software</a><br>
         }
 
         appInit();
+
+        var now = new Date();        
+        document.getElementById("copyrightYear").textContent = now.getFullYear();
 
    })();
 
