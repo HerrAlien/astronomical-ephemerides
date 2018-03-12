@@ -21,7 +21,7 @@ function MoonEclipse (JD) {
         var sunData = SunData.getDataAsObjectForJD (JD);
         var moonData = MoonData.getDataAsObjectForJD (JD);
         
-        var hourFration = 0.25;
+        var hourFration = 6;
         var dJd = hourFration /24.0;
         var dT = 2 * hourFration;
         
@@ -58,11 +58,11 @@ function MoonEclipse (JD) {
         this.dy  = this.dDecSun + this.dDecMoon;        
         this.slope = this.dy / this.dx;
         
-        this.umbralRadius = 1.015 * (0.99834 * this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
-        this.penumbralRadius = 1.007 * (0.99834 * this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
+        this.umbralRadius = 1.016 * (0.99834 * this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
+        this.penumbralRadius = 1.0092 * (0.99834 * this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
         
         var magic =  GetAAJS().DynamicalTime.DeltaT(this.JD)/(3600 * 24);
-        this.JD -= magic; 
+        this.JD -= magic;
 }
 
 (function(){
