@@ -143,8 +143,9 @@ th {
     height: 62px;
 }
 
- .linkButton:hover::after{
-    text-decoration: underline;
+ .topmenulink:hover::after{
+    text-decoration: none;
+    cursor: default;
 }
 
  .linkButton::after {
@@ -711,11 +712,10 @@ border-bottom: solid 1px #AAAAAA;
       display: block;
       font-size: 18px;
       text-align: right;
-      cursor: pointer;
   }
   
   #searchArea:hover::after{
-      text-decoration: underline;
+      text-decoration: none;
   }
 
 .scrollableRT {
@@ -1466,7 +1466,7 @@ title="opens in a new window">Bits of software</a><br>
             });
         }              
     }
-    registerWorker();
+   //// registerWorker();
 
   })();
 
