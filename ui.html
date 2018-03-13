@@ -58,3 +58,22 @@
 
     
 </body></html>
+
+<script>
+
+var AAJSLoFi = {
+    __T : false,
+    T : function () {
+        if (!AAJSLoFi.__T) {
+            var now = (new Date()).getTime();
+            var jd2000 = Date.parse ("January 1, 2000");
+            AAJSLoFi.__T = (now - jd2000) / (36525 * 1000 * 3600 * 24);
+        }
+        return AAJSLoFi.__T;
+    },
+
+    /* uniform, circular movement. */
+};
+
+</script>
+
