@@ -209,8 +209,9 @@ th {
     height: 62px;
 }
 
- .linkButton:hover::after{
-    text-decoration: underline;
+ .topmenulink:hover::after{
+    text-decoration: none;
+    cursor: default;
 }
 
  .linkButton::after {
@@ -383,10 +384,7 @@ th {
 .Day {
     display: none;
 }
-    
- #HomeLinkMobile, #HomeLinkMobileNav {
-    display: none;
-}
+
 
 .scrollableRTdiv,
 .realtimeTitle {
@@ -507,6 +505,9 @@ border-bottom: solid 1px #AAAAAA;
     margin-top: 5px;
     border-radius: 45px;
     background: #f0f0f0;
+    max-width: 1460px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #promotedMenuScroller {
@@ -571,22 +572,6 @@ border-bottom: solid 1px #AAAAAA;
      #SettingsLinkTopmenulinkImg {
         width: 82px;
         height: 82px;
-    }
-    
-     #HomeLinkMobile {
-        display: block;
-        margin-top: 140px;
-        margin-bottom: 40px;
-        width: 720px;
-        height: auto;
-    }
-    
-     #HomeLink {
-        display: none;
-    }
-    
-     #HomeLinkMobileNav {
-        display: block;
     }
 
     .rightNowFrontPageWidget::-webkit-scrollbar {
@@ -793,11 +778,10 @@ border-bottom: solid 1px #AAAAAA;
       display: block;
       font-size: 18px;
       text-align: right;
-      cursor: pointer;
   }
   
   #searchArea:hover::after{
-      text-decoration: underline;
+      text-decoration: none;
   }
 
 .scrollableRT {
@@ -919,8 +903,7 @@ border-bottom: solid 1px #AAAAAA;
 
 <body>
     <div id="navigation">
-        <a href="#home" id="HomeLink"><div class="HomeLinkButton topmenulink linkButton"><img id="HomeLinkButtonTopmenulinkImg" src="images/logo.png" alt="Home"></div></a>
-        <a href="#home" id="HomeLinkMobileNav"><div class="HomeLinkButton topmenulink linkButton"><img class="linkButtonImg" src="images/home-3.svg" alt="Home"></div></a>
+        <a href="#home" id="HomeLink"><div class="HomeLinkButton topmenulink linkButton"><img id="HomeLinkButtonTopmenulinkImg" src="images/icon.svg" alt="Home"></div></a>
         <a href="#settings"><div class="SettingsLink topmenulink linkButton"><img src="images/settings.svg" id="SettingsLinkTopmenulinkImg" class="linkButtonImg" alt="Settings"></div></a>
         <a href="#more" id="MenuLink"><div class="MenuLinkDiv topmenulink linkButton"><img src="images/menu.svg" id="MenuLinkDivTopmenulinkImg" class="linkButtonImg"  alt="More ..."></div></a>
         <div id="searchArea" class="linkButton">
