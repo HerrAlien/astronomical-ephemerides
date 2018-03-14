@@ -1,65 +1,63 @@
-<html lang="en-US"><head>
+<html lang="en-US">
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Astronomical Ephemerides</title>
-	<link rel="stylesheet" type="text/css" href="style/default.css">
-    <link rel="icon" type="image/png" href="images/ae-icon.png">
+</head>
 
+<body>
 
-    <style>
-    
-    
-        .positionalButton, .physicalButton {
-            height:23px; 
-            border: solid 1px #000000; 
-            float: left; 
-            padding-top: 2px; 
-            padding-left: 10px; 
-            width: 190px; 
-            text-align: center;        
-            cursor: pointer;
-            user-select: none;
-        }
-    
-        .positionalButton {
-            border-radius: 5px 0px 0px 5px; 
-            padding-right: 10px; 
-        }
-
-        .physicalButton {
-            border-radius: 0px 5px 5px 0px;
-        }
-        
-        .physicalPositionalButtonsHolder {
-            height: 40px; 
-            width: 420px; 
-        }
-        
-        .activeButton {
-            background: #000000;
-            color: #ffffff;
-            cursor: default;
-        }
-        
-    </style>
-    
-    
-    
- </head>
-
-<body style="min-width: 0px;">
-
-
-    <div class="physicalPositionalButtonsHolder">
-        <div class="positionalButton activeButton">Positional ephemeris</div>
-        <div class="physicalButton">Physical ephemeris</div>
-    </div>
 
     
 </body></html>
 
 <script>
+
+var CsysAxes = {
+    x : 0,
+    y : 1,
+    z : 2
+};
+
+function Vector(x,y,z) {
+    this.coords = [0,0,0];
+    this.coords[CsysAxes.x] = typeof x == 'undefined' ? 0 : x;
+    this.coords[CsysAxes.y] = typeof y == 'undefined' ? 0 : y;
+    this.coords[CsysAxes.z] = typeof z == 'undefined' ? 0 : z;
+}
+
+(function(){
+    Vector.prototype['translate'] = function (v, y, z) {
+        if (typeof y != 'undefined') {
+            this.coords[CsysAxes.x] += v;
+            this.coords[CsysAxes.y] += y;
+            this.coords[CsysAxes.z] += z;
+        } else {
+            this.coords[CsysAxes.x] += v.coords[CsysAxes.x];
+            this.coords[CsysAxes.y] += v.coords[CsysAxes.y];
+            this.coords[CsysAxes.z] += v.coords[CsysAxes.z];
+        }
+    }
+
+    Vector.prototype['rotate'] = function (axis, angle) {
+        var newCoords = [];
+        var cosAngle = Math.cos(angle);
+        var sinAngle = Math.sin(angle);
+        if (axis == CsysAxes.x) {
+            newCoords = [this.coords[CsysAxes.x], 
+                         this.coords[CsysAxes.y] * cosAngle - this.coords[CsysAxes.z] * sinAngle,
+                         this.coords[CsysAxes.y] * sinAngle + this.coords[CsysAxes.z] * cosAngle];
+        } else if (axis == CsysAxes.y) {
+            newCoords = [this.coords[CsysAxes.x] * cosAngle + this.coords[CsysAxes.z] * sinAngle, 
+                         this.coords[CsysAxes.y],
+                         -this.coords[CsysAxes.x] * sinAngle + this.coords[CsysAxes.z] * cosAngle];
+        } else if (axis == CsysAxes.z) {
+            newCoords = [this.coords[CsysAxes.x] * cosAngle - this.coords[CsysAxes.y] * sinAngle, 
+                         this.coords[CsysAxes.x] * sinAngle + this.coords[CsysAxes.y] * cosAngle,
+                         this.coords[CsysAxes.z]];
+        }
+        this.coords = newCoords;
+    }
+
+})();
 
 var AAJSLoFi = {
     __T : false,
@@ -72,7 +70,26 @@ var AAJSLoFi = {
         return AAJSLoFi.__T;
     },
 
+    __planets : {
+        Mercury : {
+            MeanL : [],
+            Lnode : [],
+            tilt : []
+        },
+        Earth : {
+            MeanL : [],
+            Lnode : [0, 0, 0, 0],
+            tilt : [0, 0, 0, 0]
+        }
+    }
+
     /* uniform, circular movement. */
+    // in plane of the orbit, X axis being the node line
+    var coords;
+    
+    // in the ecliptic plane, X axis being the node line
+
+    // in the ecliptic plane, X axis pointing to the vernal point
 };
 
 </script>
