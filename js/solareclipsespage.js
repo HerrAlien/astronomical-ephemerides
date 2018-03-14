@@ -19,17 +19,14 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var SolarEclipsesPage = {
     
-    dataSource : SolarEclipses,
     hostElement : document.getElementById("SolarEclipsesContainer"),
     pageRendered : false,
 
     // clears up the rendered thing
-    reset : PlanetPage.prototype.reset,
-    
     displayPage : function () {
         
-        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
-            return setTimeout (function() { SolarEclipsesPage.displayPage(); }, 300);
+        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD || typeof BesselianElements == 'undefined')
+            return SyncedTimeOut (function() { SolarEclipsesPage.displayPage(); }, Timeout.onInit);
         
         if (SolarEclipsesPage.pageRendered)
             return;
@@ -86,10 +83,6 @@ var SolarEclipsesPage = {
         var eclipseTitle = addNodeChild (mainDiv, "h2", dateTime.date.Y + "-" + dateTime.date.M + "-" + dateTime.date.D + " " + description);
         var eclipseTitle = addNodeChild (mainDiv, "h3", "Besselian elements:");
         addNodeChild (mainDiv, "span", "T0 = " + dateTime.time.Ord3 + ":" +  dateTime.time.Ord2 + " UTC");
-        addNodeChild (mainDiv, "br");
-        addNodeChild (mainDiv, "span", "tan (f1) = " + Math.round(eclipseData.besselianElements.tan_f1 * 1e7)/1e7);
-        addNodeChild (mainDiv, "br");
-        addNodeChild (mainDiv, "span", "tan (f2) = " + Math.round(eclipseData.besselianElements.tan_f2 * 1e7)/1e7);
         
         var table = addNodeChild (mainDiv, "table");
         var header = addNodeChild (table, "tr");
@@ -118,12 +111,37 @@ var SolarEclipsesPage = {
         
         for (var key in elements) {
             addRowDataForParameter (key);
-        }        
+        }
+
+        var row = addNodeChild (table, "tr");
+        addNodeChild(row, "td", "tan (f1)");
+        addNodeChild (row, "td", Math.round(eclipseData.besselianElements.tan_f1 * 1e7)/1e7);
+        for (var i = 0; i < 3; i++)
+         addNodeChild (row, "td", "0");
+
+        row = addNodeChild (table, "tr");
+        addNodeChild(row, "td", "tan (f2)");
+        addNodeChild (row, "td", Math.round(eclipseData.besselianElements.tan_f2 * 1e7)/1e7);
+        for (var i = 0; i < 3; i++)
+         addNodeChild (row, "td", "0");
+         
+                
     },
     keywordsArray : ["Besselian", "Elements", "Shadow", "Umbra", "Penumbra", "Antumbra", "Partial", "Total", "Annular", "Eclipse",
                       "Contact", "First", "Last"]
     
 };
 
-Pages["Solar Eclipses"] = SolarEclipsesPage;
+(function(){
+    var initLocal = function() {
+        try {
+        SolarEclipsesPage.dataSource = SolarEclipses;
+        SolarEclipsesPage.reset = PlanetPage.prototype.reset;
+        Pages["Solar Eclipses"] = SolarEclipsesPage;
+        } catch (err) {
+            SyncedTimeOut(initLocal, Timeout.onInit);
+        }
+    };
+    initLocal();
+})();
 

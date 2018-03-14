@@ -14,18 +14,45 @@
     coordinates, right ascension, RA, declination, dec, position, angle, elongation" />
 
     <meta name="description" content="A JavaScript utility to calculate ephemerides for the major planets of the solar system." />
+    
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff" />   
 
-	<link rel="stylesheet" type="text/css" href="style/default.css" media="async-do-not-block" />
+    <script type="text/JavaScript">
+        var Timeout = {
+            onInit : 1,
+            onNewData : 1
+        };
+
+        function SyncedTimeOut (func, time) {
+          setTimeout (function () { requestAnimationFrame (func); } , time);
+        }
+
+    </script>
+
+<script type="text/JavaScript" async="" src="js/aajs.js"></script>
+<script type="text/javascript" async="" src="js/matrix.js"></script>
+<script type="text/javascript" async="" src="js/numerical.js"></script>
+<script type="text/JavaScript" async="" src="js/besselianelements.js"></script>
+
+<script type="text/JavaScript" async="" src="js/moonsdata.js"></script>
+<script type="text/JavaScript" async="" src="js/galileanmoonsdata.js"></script>
+<script type="text/JavaScript" async="" src="js/saturnmoonsdata.js"></script>
+
+<script type="text/JavaScript" async="" src="js/mooneclipsesdata.js"></script>
+<script type="text/JavaScript" async="" src="js/solareclipsesdata.js"></script>
+<script type="text/JavaScript" async="" src="js/realtimedata.js"></script>
+
+<script type="text/JavaScript" async="" src="js/notifications.js"></script>
+<script type="text/JavaScript" async="" src="js/pagerank.js"></script>
+
     <link rel="icon" type="image/png" href="images/ae-icon.png" />
 
     <link rel="manifest" href="manifest.json" />
 
     <link rel="apple-touch-icon" href="images/ae-icon-144.png" />
+    <link rel="icon" type="image/png" href="images/ae-icon-144.png">
     <link rel="apple-touch-startup-image" href="images/ae-icon-512.png" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff" />   
-
-    <script type="text/JavaScript" src="js/aajs.js" async=""></script>
 
     <style>
     
@@ -39,8 +66,8 @@ th {
 }
 
  body {
-    font-family: Verdana;
-    font-size: 22px;
+    font-family: Georgia;
+    font-size: 30px;
     min-width: 800px;
     margin-left: auto;
     margin-right: auto;
@@ -109,14 +136,16 @@ th {
     text-align: center;
 }
 
- .linkButton img{
+ .linkButtonImg{
     cursor: pointer;
     margin-top: 2px;
     width: 62px;
+    height: 62px;
 }
 
- .linkButton:hover::after{
-    text-decoration: underline;
+ .topmenulink:hover::after{
+    text-decoration: none;
+    cursor: default;
 }
 
  .linkButton::after {
@@ -124,6 +153,7 @@ th {
     display: block;
     text-align: center;
     color: #000000;
+    font-family: Verdana;
 }
 
  .MenuLinkDiv::after {
@@ -193,59 +223,51 @@ th {
     margin-right: 0px;
 }
 
- .MenuLinkDiv {
-    margin-top: 2px;
-}
- .MenuLinkDiv.topmenulink img{
+#MenuLinkDivTopmenulinkImg{
     width: 78px;
     height: 62px;
 }
 
- .HomeLinkButton.topmenulink img {
+ #HomeLinkButtonTopmenulinkImg {
     width: auto;
     height: 90px;
 }
 
- .SettingsLink.topmenulink img {
+ #SettingsLinkTopmenulinkImg {
     width: 62px;
     height: 62px;
 }
+    
 
  h1 {
     margin-top: 120px;
     margin-bottom: 0px;
     font-size: 50px;
-    font-family: Arial;
+    font-family: Verdana;
     margin-left: auto;
     display: block;
     font-weight: normal;
     margin-right: auto;
 }
 
+#homeH1 {
+    font-size: 70px;
+}
+
  h2 {
+    font-family: Verdana;
     font-size: 40px;
+    margin-top: 70px;
+    margin-bottom: 10px;
 }
 
  h3 {
+    font-family: Verdana;
     font-size: 32px;
+    margin-top: 0px;
 }
     
- #promotedMenu a {
-    float: left;
-    margin-top: 2px;
-    margin-left: 15px;
-}
-
- #promotedMenu {
-    overflow: hidden;
-    height: 90px;
-}
-
- .clear {
-	clear: both;
-    height: 0px;
-}
-    
+   
  #credits, .topBorder{
     	border-top: 1px solid #AAAAAA;
 }
@@ -263,6 +285,7 @@ th {
 
  #home {
     text-align: left;
+    line-height: 1.5;
 }
 
      .rightNowFrontPageWidget {
@@ -279,27 +302,25 @@ th {
 
  .realtimeTitle {
     display: inline-block;
-    border-bottom: 1px solid #AAAAAA;
+    border-bottom: 4px solid #AAAAAA;
     width: 100%;
-    font-size: 30px;
+    font-size: 40px;
     text-decoration: none;
-    padding-bottom: 5px;
+    padding-bottom: 0px;
+    margin-top: -10px;
  }  
 
  .realtimeTitle:hover {
      text-decoration: underline;
  }
 
-.rightNowFrontPageWidget .Month,
-.rightNowFrontPageWidget .Day {
-    display: none;
-}
-    
- #HomeLinkMobile, #HomeLinkMobileNav {
+.Month,
+.Day {
     display: none;
 }
 
-.scrollableRT div,
+
+.scrollableRTdiv,
 .realtimeTitle {
     background: rgba(255, 255, 255, 0.8);
     margin-left: 10px;
@@ -308,7 +329,7 @@ th {
 }
 
 .scrollableRT {
-    margin-top: 90px;
+    margin-top: 80px;
 }
 
 .rightNowFrontPageWidget::-webkit-scrollbar {
@@ -336,7 +357,7 @@ border-bottom: solid 1px #AAAAAA;
     position: fixed;
     width: 100%;
     background: #ffffff;
-    z-index: 2;
+    z-index: 3;
 }
 
  .rightNowFrontPageWidget:hover {
@@ -356,12 +377,12 @@ border-bottom: solid 1px #AAAAAA;
     background: #ffffff;
     text-align: center;
     border-bottom: solid 1px #AAAAAA;
+    z-index: 2;
 }
 
- #showNavigationMenuContainer img {
+ #showNavigationMenuContainerImg {
     height: 27px;
 }
-
 
 #searchArea {
     display: inline-block;
@@ -371,13 +392,14 @@ border-bottom: solid 1px #AAAAAA;
     /* expanded */
 }
 
-#searchArea img {
+#searchAreaImg {
     width:62px;
     float: left;
     margin-left: 10px;
+    height: 62px;
 }
 
-#searchArea input {
+#searchTerms {
     height: 50px;
     top: 0px;
     float: left;
@@ -385,15 +407,15 @@ border-bottom: solid 1px #AAAAAA;
     width: 220px;
 }
 
-#searchArea input.hidden {
+#searchTerms.hidden {
     display: none;
 }
 
-#searchArea input.visible {
+#searchTerms.visible {
     display: block;
 }
 
-#searchArea a{
+#searchButton{
     cursor: pointer;
 }
 
@@ -401,59 +423,30 @@ border-bottom: solid 1px #AAAAAA;
     display: none;
 }
 
- .HomeLinkButton {
-    float: left;
-    margin-top: 2px;
-    margin-right: 0px;
-}
-
  .MenuLinkDiv {
     margin-top: 2px;
 }
- .MenuLinkDiv.topmenulink img{
-    width: 78px;
-    height: 62px;
-}
 
- .HomeLinkButton.topmenulink img {
-    width: auto;
-    height: 90px;
-}
-
- .SettingsLink.topmenulink img {
-    width: 62px;
-    height: 62px;
-}
-
- h1 {
-    margin-top: 120px;
-    margin-bottom: 0px;
-    font-size: 50px;
-    font-family: Arial;
-    margin-left: auto;
-    display: block;
-    font-weight: normal;
-    margin-right: auto;
-}
-
- h2 {
-    font-size: 40px;
-}
-
- h3 {
-    font-size: 32px;
-}
-    
- #promotedMenu a {
+ .promotedMenuLink {
     float: left;
     margin-top: 2px;
     margin-left: 15px;
 }
 
  #promotedMenu {
-    overflow: hidden;
+    overflow-x: auto;
     height: 90px;
+    margin-top: 5px;
+    border-radius: 45px;
+    background: #f0f0f0;
+    max-width: 1460px;
+    margin-left: auto;
+    margin-right: auto;
 }
+
+#promotedMenuScroller {
+        width: 3860px;
+    }
 
  .clear {
 	clear: both;
@@ -468,24 +461,28 @@ border-bottom: solid 1px #AAAAAA;
     }
 
     .scrollableRT {
-        margin-top:145px;
+        margin-top:130px;
     }
 
      .realtimeTitle {
-        font-size: 48px;
+        font-size: 60px;
         text-decoration: underline;
+        margin-top: -20px;
+        margin-bottom: -10px;
+        border-bottom: 6px solid #AAAAAA;
     }
 
-     .rightNowFrontPageWidget div {
-        font-size: 36px;
+     .scrollableRTdiv {
+        font-size: 40px;
     }
         
      #navigation.movedMenu {
         top: -120px;
     }
 
-     .linkButton img {
+     .linkButtonImg  {
         width: 82px;
+        height: 82px;
     }
     
      .topmenulink::after {
@@ -500,35 +497,15 @@ border-bottom: solid 1px #AAAAAA;
         display: none;
     }
     
-     .MenuLinkDiv.topmenulink img{
+     #MenuLinkDivTopmenulinkImg{
         width: 90px;
         height: 90px;
     }
 
 
-     .SettingsLink.topmenulink img {
+     #SettingsLinkTopmenulinkImg {
         width: 82px;
-        height: auto;
-    }
-    
-     #HomeLinkMobile {
-        display: block;
-        margin-top: 140px;
-        margin-bottom: 40px;
-        width: 720px;
-        height: auto;
-    }
-    
-     #HomeLink {
-        display: none;
-    }
-
-     #home h1 {
-        margin-top: 20px;
-    }
-    
-     #HomeLinkMobileNav {
-        display: block;
+        height: 82px;
     }
 
     .rightNowFrontPageWidget::-webkit-scrollbar {
@@ -678,6 +655,116 @@ border-bottom: solid 1px #AAAAAA;
     content: "R: "
 }
 
+.buttonsToSwitchPosPhys, .physSeenAtSmallWidth {
+    display: none;
+}
+
+.physPosHidden {
+    visibility: visible;
+}
+
+.physPosVisible {
+    visibility: visible;
+}
+
+@media screen and (min-width: 937px) {
+    #promotedMenu {
+        overflow: hidden;
+    }
+
+    #promotedMenuScroller {
+        width: 100%;
+    }
+
+    #searchArea {
+    border-left: none;
+    /* expanded */
+    }
+
+    #promotedMenu::after, 
+#promotedMenu::before {
+    display: none;
+}
+
+  #searchArea {
+      margin: 12px 0px 0px 0px;
+      float: right;
+      /* expanded */
+  }
+  
+  #searchAreaImg {
+      width:52px;
+      float: left;
+      margin-left: 10px;
+      height: 52px;
+  }
+  
+  #searchTerms {
+      margin-top: 20px;
+      height: 30px;
+      float: left;
+      font-size: 28px;
+      max-width: 220px;
+  }
+  
+  #searchArea::after{
+      content: "Search";
+      display: block;
+      font-size: 18px;
+      text-align: right;
+  }
+  
+  #searchArea:hover::after{
+      text-decoration: none;
+  }
+
+.scrollableRT {
+    margin-top: 50px;
+}
+
+}
+
+ @media screen and (min-width: 1900px)  {
+    #MenuLink, .MenuLinkDiv.topmenulink, .MenuLinkDiv.topmenulink img, .MenuLinkDiv.topmenulink::after {
+        width: 0px;
+        height: 0px;
+        display: none;
+    }
+    .MenuLinkDiv.topmenulink::after {
+        display: none;
+    }
+
+
+
+.buttonsToSwitchPosPhys, .physSeenAtSmallWidth {
+    display: none;
+}
+
+
+.physPosHidden {
+    visibility: visible;
+}
+
+#jupiterHorizontalScroller , #marsHorizontalScroller{
+        width: 890px;
+}
+ }
+
+
+
+#footer {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 26px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top:    solid 1px #AAAAAA;
+}
+
+#credits, #home {
+    text-align: justify;
+}
+
     </style>
     
     
@@ -750,50 +837,51 @@ border-bottom: solid 1px #AAAAAA;
 
 <body>
     <div id="navigation">
-        <a href="#home"   id="HomeLink"><div class="HomeLinkButton topmenulink linkButton"><img src="images/logo.png" alt="Home"></div></a>
-        <a href="#home"   id="HomeLinkMobileNav"><div class="HomeLinkButton topmenulink linkButton"><img src="images/home-3.svg" alt="Home"></div></a>
-        <a href="#settings"><div class="SettingsLink topmenulink linkButton"><img src="images/settings.svg" alt="Settings"></div></a>
-        <a href="#more" id="MenuLink"><div class="MenuLinkDiv topmenulink linkButton"><img src="images/menu.svg" alt="More ..."></div></a>
-        <div id="searchArea">
+        <a href="#home" id="HomeLink"><div class="HomeLinkButton topmenulink linkButton"><img id="HomeLinkButtonTopmenulinkImg" src="images/icon.svg" alt="Home"></div></a>
+        <a href="#settings"><div class="SettingsLink topmenulink linkButton"><img src="images/settings.svg" id="SettingsLinkTopmenulinkImg" class="linkButtonImg" alt="Settings"></div></a>
+        <a href="#more" id="MenuLink"><div class="MenuLinkDiv topmenulink linkButton"><img src="images/menu.svg" id="MenuLinkDivTopmenulinkImg" class="linkButtonImg"  alt="More ..."></div></a>
+        <div id="searchArea" class="linkButton">
             <input type="text" class="hidden" id="searchTerms" placeholder="   [Search]"/>
-            <a nohref="" id="searchButton"><img src="images/magnifying-glass.svg" alt="Search" /></a>
+            <a nohref="" id="searchButton"><img id="searchAreaImg" src="images/magnifying-glass.svg" alt="Search" /></a>
         </div>
         <div id="promotedMenu">
-            <a href="#Sun Ephemeris"><div class="SunLinkButton topmenulink linkButton"><img src="images/sun.svg" alt="Sun"></div></a>
-            <a href="#Moon Ephemeris"><div class="MoonLinkButton topmenulink linkButton"><img src="images/moon.svg" alt="Moon"></div></a>
-            <a href="#Jupiter Ephemeris"><div class="JupiterLinkButton topmenulink linkButton"><img src="images/jupiter.svg" alt="Jupiter"></div></a>
-            <a href="#Saturn Ephemeris"><div class="SaturnLinkButton topmenulink linkButton"><img src="images/saturn.svg" alt="Saturn"></div></a>
-            <a href="#Solar Eclipses"><div class="SolarEclipseLinkButton topmenulink linkButton"><img src="images/solar-eclipse.svg"  alt="Solar Eclipses"></div></a>
-            <a href="#Lunar Eclipses"><div class="LunarEclipseLinkButton topmenulink linkButton"><img src="images/lunar-eclipse.svg" alt="Lunar Eclipses"></div></a>
-            <a href="#Elongations of Galilean Moons"><div class="GalileanMoonsLinkButton topmenulink linkButton"><img src="images/galilean-moons.svg" alt="Galilean Moons"></div></a>
-            <a href="#Mars Ephemeris"><div class="MarsLinkButton topmenulink linkButton"><img src="images/mars.svg" alt="Mars"></div></a>
-            <a href="#Elongations of Saturn Moons"><div class="SaturnMoonsLinkButton topmenulink linkButton"><img src="images/saturn-moons.svg" alt="Moons of Saturn"></div></a>
-            <a href="#Mercury Ephemeris"><div class="MercuryLinkButton topmenulink linkButton"><img src="images/mercury.svg" alt="Mercury"></div></a>
-            <a href="#Venus Ephemeris"><div class="VenusLinkButton topmenulink linkButton"><img src="images/venus.svg"  alt="Venus"></div></a>
-            <a href="#Uranus Ephemeris"><div class="UranusLinkButton topmenulink linkButton"><img src="images/uranus.svg" alt="Uranus"></div></a>
-            <a href="#Neptune Ephemeris"><div class="NeptuneLinkButton topmenulink linkButton"><img src="images/neptune.svg" alt="Neptune"></div></a>
+            <div id="promotedMenuScroller">
+            <a class="promotedMenuLink" href="#Sun Ephemeris"><div class="SunLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sun.svg" alt="Sun"></div></a>
+            <a class="promotedMenuLink" href="#Moon Ephemeris"><div class="MoonLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/moon.svg" alt="Moon"></div></a>
+            <a class="promotedMenuLink" href="#Jupiter Ephemeris"><div class="JupiterLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/jupiter.svg" alt="Jupiter"></div></a>
+            <a class="promotedMenuLink" href="#Saturn Ephemeris"><div class="SaturnLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/saturn.svg" alt="Saturn"></div></a>
+            <a class="promotedMenuLink" href="#Solar Eclipses"><div class="SolarEclipseLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/solar-eclipse.svg"  alt="Solar Eclipses"></div></a>
+            <a class="promotedMenuLink" href="#Lunar Eclipses"><div class="LunarEclipseLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/lunar-eclipse.svg" alt="Lunar Eclipses"></div></a>
+            <a class="promotedMenuLink" href="#Elongations of Galilean Moons"><div class="GalileanMoonsLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/galilean-moons.svg" alt="Galilean Moons"></div></a>
+            <a class="promotedMenuLink" href="#Mars Ephemeris"><div class="MarsLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/mars.svg" alt="Mars"></div></a>
+            <a class="promotedMenuLink" href="#Elongations of Saturn Moons"><div class="SaturnMoonsLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/saturn-moons.svg" alt="Moons of Saturn"></div></a>
+            <a class="promotedMenuLink" href="#Mercury Ephemeris"><div class="MercuryLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/mercury.svg" alt="Mercury"></div></a>
+            <a class="promotedMenuLink" href="#Venus Ephemeris"><div class="VenusLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/venus.svg"  alt="Venus"></div></a>
+            <a class="promotedMenuLink" href="#Uranus Ephemeris"><div class="UranusLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/uranus.svg" alt="Uranus"></div></a>
+            <a class="promotedMenuLink" href="#Neptune Ephemeris"><div class="NeptuneLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/neptune.svg" alt="Neptune"></div></a>
+            </div>
         </div>
     </div>
-    <a nohref="" id="showNavigationMenu"><div id="showNavigationMenuContainer"><img src="images/menu.svg" alt="More ..."></div></a>
+    <a nohref="" id="showNavigationMenu"><div id="showNavigationMenuContainer"><img id="showNavigationMenuContainerImg" src="images/menu.svg" alt="More ..."></div></a>
     
     <div class="clear maxWidth">&nbsp;</div>
     <div id="scroller">
         <div id="more" class="page">
             <h1>Menu</h1>
             <ul id="menuList">
-                <li><a href="#Sun Ephemeris"><div             class="largeButtons SunLinkButton   linkButton"><img src="images/sun.svg" alt="Sun"></div></a></li>
-                <li><a href="#Moon Ephemeris"><div            class="largeButtons MoonLinkButton   linkButton"><img src="images/moon.svg" alt="Moon"></div></a></li>
-                <li><a href="#Lunar Eclipses"><div   class="largeButtons LunarEclipseLinkButton   linkButton"><img src="images/lunar-eclipse.svg" alt="Lunar Eclipses"></div></a></li>
-                <li><a href="#Solar Eclipses"><div class="largeButtons SolarEclipseLinkButton   linkButton"><img src="images/solar-eclipse.svg" alt="Solar Eclipses"></div></a></li>
-                <li><a href="#Mercury Ephemeris"><div         class="largeButtons MercuryLinkButton   linkButton"><img src="images/mercury.svg" alt="Mercury"></div></a></li>
-                <li><a href="#Venus Ephemeris"><div           class="largeButtons VenusLinkButton   linkButton"><img src="images/venus.svg" alt="Venus"></div></a></li>
-                <li><a href="#Mars Ephemeris"><div            class="largeButtons MarsLinkButton   linkButton"><img src="images/mars.svg" alt="Mars"></div></a></li>
-                <li><a href="#Jupiter Ephemeris"><div         class="largeButtons JupiterLinkButton   linkButton"><img src="images/jupiter.svg" alt="Jupiter"></div></a></li>
-                <li><a href="#Elongations of Galilean Moons"><div   class="largeButtons GalileanMoonsLinkButton   linkButton"><img src="images/galilean-moons.svg" alt="Galilean Moons"></div></a></li>
-                <li><a href="#Saturn Ephemeris"><div          class="largeButtons SaturnLinkButton   linkButton"><img src="images/saturn.svg" alt="Saturn"></div></a></li>
-                <li><a href="#Elongations of Saturn Moons"><div     class="largeButtons SaturnMoonsLinkButton   linkButton"><img src="images/saturn-moons.svg" alt="Moons of Saturn"></div></a></li>
-                <li><a href="#Uranus Ephemeris"><div          class="largeButtons UranusLinkButton   linkButton"><img src="images/uranus.svg" alt="Uranus"></div></a></li>
-                <li><a href="#Neptune Ephemeris"><div         class="largeButtons NeptuneLinkButton   linkButton"><img src="images/neptune.svg" alt="Neptune"></div></a></li>
+                <li class="menuListItem"><a href="#Sun Ephemeris"><div                  class="largeButtons SunLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sun.svg" alt="Sun"></div></a></li>
+                <li class="menuListItem"><a href="#Moon Ephemeris"><div                 class="largeButtons MoonLinkButton   linkButton"><img class="menuPageItemImg" src="images/moon.svg" alt="Moon"></div></a></li>
+                <li class="menuListItem"><a href="#Lunar Eclipses"><div                 class="largeButtons LunarEclipseLinkButton   linkButton"><img  class="menuPageItemImg" src="images/lunar-eclipse.svg" alt="Lunar Eclipses"></div></a></li>
+                <li class="menuListItem"><a href="#Solar Eclipses"><div                 class="largeButtons SolarEclipseLinkButton   linkButton"><img  class="menuPageItemImg" src="images/solar-eclipse.svg" alt="Solar Eclipses"></div></a></li>
+                <li class="menuListItem"><a href="#Mercury Ephemeris"><div              class="largeButtons MercuryLinkButton   linkButton"><img  class="menuPageItemImg" src="images/mercury.svg" alt="Mercury"></div></a></li>
+                <li class="menuListItem"><a href="#Venus Ephemeris"><div                class="largeButtons VenusLinkButton   linkButton"><img  class="menuPageItemImg" src="images/venus.svg" alt="Venus"></div></a></li>
+                <li class="menuListItem"><a href="#Mars Ephemeris"><div                 class="largeButtons MarsLinkButton   linkButton"><img  class="menuPageItemImg" src="images/mars.svg" alt="Mars"></div></a></li>
+                <li class="menuListItem"><a href="#Jupiter Ephemeris"><div              class="largeButtons JupiterLinkButton   linkButton"><img  class="menuPageItemImg" src="images/jupiter.svg" alt="Jupiter"></div></a></li>
+                <li class="menuListItem"><a href="#Elongations of Galilean Moons"><div  class="largeButtons GalileanMoonsLinkButton   linkButton"><img  class="menuPageItemImg" src="images/galilean-moons.svg" alt="Galilean Moons"></div></a></li>
+                <li class="menuListItem"><a href="#Saturn Ephemeris"><div               class="largeButtons SaturnLinkButton   linkButton"><img  class="menuPageItemImg" src="images/saturn.svg" alt="Saturn"></div></a></li>
+                <li class="menuListItem"><a href="#Elongations of Saturn Moons"><div    class="largeButtons SaturnMoonsLinkButton   linkButton"><img  class="menuPageItemImg" src="images/saturn-moons.svg" alt="Moons of Saturn"></div></a></li>
+                <li class="menuListItem"><a href="#Uranus Ephemeris"><div               class="largeButtons UranusLinkButton   linkButton"><img  class="menuPageItemImg" src="images/uranus.svg" alt="Uranus"></div></a></li>
+                <li class="menuListItem"><a href="#Neptune Ephemeris"><div              class="largeButtons NeptuneLinkButton   linkButton"><img  class="menuPageItemImg" src="images/neptune.svg" alt="Neptune"></div></a></li>
             </ul>
             <div class="clear">&nbsp;</div>
         </div>
@@ -801,15 +889,15 @@ border-bottom: solid 1px #AAAAAA;
             <h1>Settings</h1>
             <div id="settingsContainer">
                 <h2>Location and time intervals</h2>
-                <label>Latitude [&deg;]: <br/><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
-                <label>Longitude [&deg;]: <br/><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
-                <label>Altitude [m]: <br/><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
+                <label class="settingsLabel">Latitude [&deg;]: <br/><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
+                <label class="settingsLabel">Longitude [&deg;]: <br/><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
+                <label class="settingsLabel">Altitude [m]: <br/><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
                 <div class="clear">&nbsp;</div>
-                <Label>Start from: <br/><input type="date" id="startingDate"></input></label>
-                <Label>increment in days: <br/><input type="number" id="incrementDate"></input></label>
-                <Label>for number of days:<br/><input type="number" id="numberOfDays"></input></label>
+                <Label class="settingsLabel">Start from: <br/><input type="date" id="startingDate"></input></label>
+                <Label class="settingsLabel">increment [days]: <br/><input type="number" id="incrementDate"></input></label>
+                <Label class="settingsLabel">for [days]:<br/><input type="number" id="numberOfDays"></input></label>
                 <div class="clear">&nbsp;</div>
-                <input type="button" id = "applySettingsChanges" value="Apply"></input>
+                <input type="button" id = "applySettingsChanges" class="cta" value="Apply"></input>
                 <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
                 <div class="clear">&nbsp;</div>
 
@@ -826,20 +914,14 @@ border-bottom: solid 1px #AAAAAA;
             
         </div>
 
-        <script type="text/JavaScript">
-            "use strict";
-            document.getElementById("JSDisabledPage").style.display = "none";
-        </script>
-        
         <div id="home" class="page">
-            <img src="images/logomobilebanner.png" alt="Home" id="HomeLinkMobile">
-            <h1>Right now:</h1>
+            <h1 id="homeH1">Right now:</h1>
             <div id="rightNowFrontPage">
                
             </div>
              <div class="clear maxWidth">&nbsp;</div>
             <br/>
-            Astronomical Ephemerides is a JavaScript utility to calculate ephemerides for the major planets of the solar system. It uses an <a href="https://bitbucket.org/herr_alien/jsaaplus" target="_blank" rel="noopener" title="opens in a new window">Emscripten port</a> of the <a href="http://www.naughter.com/aa.html" target="_blank" rel="noopener" title="opens in a new window">AA+ library</a>. More about Emscripten <a href="http://kripken.github.io/emscripten-site/" target="_blank" rel="noopener" title="opens in a new window">here</a>.<br/>
+            Astronomical Ephemerides is a JavaScript utility to calculate ephemerides for the major objects of the solar system. It uses an <a href="https://bitbucket.org/herr_alien/jsaaplus" target="_blank" rel="noopener" title="opens in a new window">Emscripten port</a> of the <a href="http://www.naughter.com/aa.html" target="_blank" rel="noopener" title="opens in a new window">AA+ library (version 1.80)</a>. More about Emscripten <a href="http://kripken.github.io/emscripten-site/" target="_blank" rel="noopener" title="opens in a new window">here</a>.<br/>
         <br/>
         The following rules stand for the data computed by the application:
         <ul>
@@ -911,96 +993,7 @@ border-bottom: solid 1px #AAAAAA;
                     <div class="physicalButton buttonsToSwitchPosPhys">Physical ephemeris</div>
                 </div>
            </div>
-           
-
-             <script>
-            
-            "use strict";
-             
-            function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
-                var pageElement = document.getElementById(pageId);
-                this.table = pageElement.getElementsByClassName("planetTable")[0];
-                this.cellsToHide_physical = false;
-                this.cellsToHide_positional = false;
-                
-                this.positionalButton = pageElement.getElementsByClassName("positionalButton")[0];
-                this.physicalButton = pageElement.getElementsByClassName("physicalButton")[0];
-                if (typeof firstPhysicalColumnIndex == 'undefined')
-                    this.firstPhysicalColumnIndex = 16;
-                else
-                    this.firstPhysicalColumnIndex = firstPhysicalColumnIndex;
-            }
-            
-            (function() {
-                PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
-                    this.cellsToHide_physical = [];
-                    this.cellsToHide_positional = [];
-                    for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
-                        var cells = this.table.rows[rowIndex].cells;
-                        for (var colIndex = 16; colIndex < cells.length; colIndex++)
-                            this.cellsToHide_physical.push(cells[colIndex]);
-                        for (var colIndex = 0; colIndex < 16; colIndex++)
-                            this.cellsToHide_positional.push(cells[colIndex]);
-                    }
-                }
-                
-                PhysicalPositionalToggler.prototype['init'] = function () {
-                
-                    var _togglerObj = this;
-                
-                    this.positionalButton.onclick = function () {
-                        var togglerObj = _togglerObj;
-                        togglerObj.positionalButton.classList.add("activeButton");
-                        togglerObj.physicalButton.classList.remove("activeButton");
-                        togglerObj.table.classList.remove ("showPhysical");
-                        togglerObj.table.classList.add ("showPositional");
-                        if (!togglerObj.cellsToHide_physical)
-                            togglerObj.updateCellsToHide();
-                            
-                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
-                            togglerObj.cellsToHide_physical[i].classList.remove("physPosVisible");
-                            togglerObj.cellsToHide_physical[i].classList.add("physPosHidden");
-                        }
-                            
-                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
-                            togglerObj.cellsToHide_positional[i].classList.remove("physPosHidden");
-                            togglerObj.cellsToHide_positional[i].classList.add("physPosVisible");
-                        }
-                    }
-                 
-                    this.physicalButton.onclick = function () {
-                        var togglerObj = _togglerObj;
-                        togglerObj.physicalButton.classList.add("activeButton");
-                        togglerObj.positionalButton.classList.remove("activeButton");
-
-                        togglerObj.table.classList.remove ("showPositional");
-                        togglerObj.table.classList.add ("showPhysical");
-                        if (!togglerObj.cellsToHide_physical)
-                            togglerObj.updateCellsToHide();
-
-                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
-                            togglerObj.cellsToHide_physical[i].classList.remove("physPosHidden");  
-                            togglerObj.cellsToHide_physical[i].classList.add("physPosVisible");
-                        }
-                            
-                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
-                            togglerObj.cellsToHide_positional[i].classList.remove("physPosVisible");
-                            togglerObj.cellsToHide_positional[i].classList.add("physPosHidden");
-                        }
-                    }
-                }
-            })();
-                
-            (function() {
-                var jupiterToggler = new PhysicalPositionalToggler("Jupiter Ephemeris");
-                jupiterToggler.init();
-
-                var marsToggler = new PhysicalPositionalToggler("Mars Ephemeris");
-                marsToggler.init();
-            })();    
-                
-             </script>
-         
+        
         </div>
 
         <div id="Saturn Ephemeris" class="page">
@@ -1087,7 +1080,7 @@ border-bottom: solid 1px #AAAAAA;
             To obtain the value of a given Besselian element for a given time T, compute it in the following maner:
             <br/>
             <br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;t = T - T0
+            &nbsp;&nbsp;&nbsp;&nbsp;t = T - T<sub>0</sub>
             <br/>
             &nbsp;&nbsp;&nbsp;&nbsp;A(t) = A<sub>0</sub> + t * A<sub>1</sub> + t<sup>2</sup> * A<sub>2</sub> + t<sup>3</sup> * A<sub>3</sub>
             <br/>
@@ -1095,7 +1088,7 @@ border-bottom: solid 1px #AAAAAA;
             where A is any of the elements from the tables below.
             <br/>
             <br/>
-            The values from the table are valid for a time interval from T0-3h to T0+3h.
+            The values from the table are valid for a time interval from T<sub>0</sub> - 3h to T<sub>0</sub> + 3h.
             <br/>
             <br/>
             <b>x</b>, <b>y</b>, <b>l1</b> and <b>l2</b> are in Earth radii.<br/>
@@ -1130,11 +1123,10 @@ border-bottom: solid 1px #AAAAAA;
    rel="noopener" title="Bug tracker">Found a bug?</a> | 
 <a href="http://www.astronomy.ro/forum/viewtopic.php?t=17450" target="_blank" 
    rel="noopener" title="Forum (Romanian language)">Forum (RO)</a> | 
-   <!-- 
-<a href="http://www.astronomy.ro/forum/viewtopic.php?t=17450" target="_blank" 
-   rel="noopener" title="Forum (Romanian language)">Forum (EN) | 
 
--->
+<a href="https://www.cloudynights.com/topic/609148-yet-another-set-of-astronomical-ephemerides/" target="_blank" 
+   rel="noopener" title="Forum (English language)">Forum (EN)</a> | 
+
 <a href="mailto:alexandru.garofide@gmail.com">Contact us</a><br>
 <br>
 <a href="#privacy">Privacy Policy</a> | 
@@ -1143,22 +1135,131 @@ title="opens in a new window">AGPL License</a>  |
 <a href="http://herralien-apps.appspot.com" target="_blank" rel="noopener"  
 title="opens in a new window">Bits of software</a><br>
 <br><br>
-        Copyright 2018  Alexandru Garofide &lt;<a href="mailto:alexandru.garofide@gmail.com">alexandru.garofide@gmail.com</a>&gt;
+        Copyright <span id="copyrightYear">2018</span>  Alexandru Garofide &lt;<a href="mailto:alexandru.garofide@gmail.com">alexandru.garofide@gmail.com</a>&gt;
 </div>
 
         </div>
     
-	<link rel="stylesheet" type="text/css" href="style/default.css"/>
 	</body>
 
 </html>
-<script type="text/JavaScript" src="js/notifications.js"></script>
-<script type="text/JavaScript" src="js/location.js"></script>
-<script type="text/JavaScript" src="js/timeinput.js"></script>
-<script type="text/JavaScript" src="js/pagerank.js"></script>
 
-<script type="text/JavaScript" >
+<script type="text/JavaScript" async="" src="js/searchform.js"></script>
+<script type="text/JavaScript" async="" src="js/realtime.js"></script>
+<script type="text/JavaScript" async="" src="js/location.js"></script>
+<script type="text/JavaScript" async="" src="js/timeinput.js"></script>
+<script type="text/JavaScript" async="" src="js/planetdata.js"></script>
+<script type="text/JavaScript" async="" src="js/planetpage.js"></script>
+<script type="text/JavaScript" async="" src="js/sun.js"></script>
+<script type="text/JavaScript" async="" src="js/mercury.js"></script>
+<script type="text/JavaScript" async="" src="js/venus.js"></script>
+<script type="text/JavaScript" async="" src="js/mars.js"></script>
+<script type="text/JavaScript" async="" src="js/jupiter.js"></script>
+<script type="text/JavaScript" async="" src="js/saturn.js"></script>
+<script type="text/JavaScript" async="" src="js/uranus.js"></script>
+<script type="text/JavaScript" async="" src="js/neptune.js"></script>
+<script type="text/JavaScript" async="" src="js/moonspage.js"></script>
+<script type="text/JavaScript" async="" src="js/galileanmoonspage.js"></script>
+<script type="text/JavaScript" async="" src="js/saturnmoonspage.js"></script>
+<script type="text/JavaScript" async="" src="js/mooneclipsespage.js"></script>
+<script type="text/JavaScript" async="" src="js/solareclipsespage.js"></script>
+<script type="text/JavaScript" async="" src="js/moon.js"></script>
+
+
+             <script>
+            
+            "use strict";
+            
+            document.getElementById("JSDisabledPage").style.display = "none";
+        
+
+             
+            function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
+                var pageElement = document.getElementById(pageId);
+                this.table = pageElement.getElementsByClassName("planetTable")[0];
+                this.cellsToHide_physical = false;
+                this.cellsToHide_positional = false;
+                
+                this.positionalButton = pageElement.getElementsByClassName("positionalButton")[0];
+                this.physicalButton = pageElement.getElementsByClassName("physicalButton")[0];
+                if (typeof firstPhysicalColumnIndex == 'undefined')
+                    this.firstPhysicalColumnIndex = 16;
+                else
+                    this.firstPhysicalColumnIndex = firstPhysicalColumnIndex;
+            }
+            
+            (function() {
+                PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
+                    this.cellsToHide_physical = [];
+                    this.cellsToHide_positional = [];
+                    for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
+                        var cells = this.table.rows[rowIndex].cells;
+                        for (var colIndex = 16; colIndex < cells.length; colIndex++)
+                            this.cellsToHide_physical.push(cells[colIndex]);
+                        for (var colIndex = 0; colIndex < 16; colIndex++)
+                            this.cellsToHide_positional.push(cells[colIndex]);
+                    }
+                }
+                
+                PhysicalPositionalToggler.prototype['init'] = function () {
+                
+                    var _togglerObj = this;
+                
+                    this.positionalButton.onclick = function () {
+                        var togglerObj = _togglerObj;
+                        togglerObj.positionalButton.classList.add("activeButton");
+                        togglerObj.physicalButton.classList.remove("activeButton");
+                        togglerObj.table.classList.remove ("showPhysical");
+                        togglerObj.table.classList.add ("showPositional");
+                        if (!togglerObj.cellsToHide_physical)
+                            togglerObj.updateCellsToHide();
+                            
+                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
+                            togglerObj.cellsToHide_physical[i].classList.remove("physPosVisible");
+                            togglerObj.cellsToHide_physical[i].classList.add("physPosHidden");
+                        }
+                            
+                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
+                            togglerObj.cellsToHide_positional[i].classList.remove("physPosHidden");
+                            togglerObj.cellsToHide_positional[i].classList.add("physPosVisible");
+                        }
+                    }
+                 
+                    this.physicalButton.onclick = function () {
+                        var togglerObj = _togglerObj;
+                        togglerObj.physicalButton.classList.add("activeButton");
+                        togglerObj.positionalButton.classList.remove("activeButton");
+
+                        togglerObj.table.classList.remove ("showPositional");
+                        togglerObj.table.classList.add ("showPhysical");
+                        if (!togglerObj.cellsToHide_physical)
+                            togglerObj.updateCellsToHide();
+
+                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
+                            togglerObj.cellsToHide_physical[i].classList.remove("physPosHidden");  
+                            togglerObj.cellsToHide_physical[i].classList.add("physPosVisible");
+                        }
+                            
+                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
+                            togglerObj.cellsToHide_positional[i].classList.remove("physPosVisible");
+                            togglerObj.cellsToHide_positional[i].classList.add("physPosHidden");
+                        }
+                    }
+                }
+            })();
+                
+            (function() {
+                var jupiterToggler = new PhysicalPositionalToggler("Jupiter Ephemeris");
+                jupiterToggler.init();
+
+                var marsToggler = new PhysicalPositionalToggler("Mars Ephemeris");
+                marsToggler.init();
+            })();    
+                
+
     
+    PageTimeInterval = { "JD" :  false, "days" : false, "stepSize" : false };
+
     var PageTimeInterval = {};
     var Pages = {"addPlainPages" : function(titles){
         for (var i = 0; i < titles.length; i++) {
@@ -1167,7 +1268,7 @@ title="opens in a new window">Bits of software</a><br>
         }
     }};
 
-    Pages.addPlainPages(["more", "settings", "home", "privacy"]);
+    Pages.addPlainPages(["more", "settings", "home", "privacy", "Search results"]);
 
     var previousPage = false;
     var currentActiveLink = false;
@@ -1202,9 +1303,6 @@ title="opens in a new window">Bits of software</a><br>
         alert("Changes discarded.");
     });
 
-    Location.init();
-    TimeStepsData.init();
-    PageTimeInterval = { "JD" :  false, "days" : false, "stepSize" : false };
     
     if (!location.hash) {
         gohome();
@@ -1278,11 +1376,11 @@ title="opens in a new window">Bits of software</a><br>
             try {
                 PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
             } catch (e) {
-                setTimeout (updateTimeAtAajsLoad, 300);
+                SyncedTimeOut (updateTimeAtAajsLoad, Timeout.onInit);
             }
         }
         else
-            setTimeout (updateTimeAtAajsLoad, 300);
+            SyncedTimeOut (updateTimeAtAajsLoad, Timeout.onInit);
     }
     
     updateTimeAtAajsLoad();
@@ -1299,43 +1397,18 @@ title="opens in a new window">Bits of software</a><br>
         }
     })();
     */
-         
-</script>
 
-<script type="text/javascript" src="js/matrix.js"></script>
-<script type="text/javascript" src="js/numerical.js"></script>
-<script type="text/JavaScript" src="js/planetdata.js"></script>
-<script type="text/JavaScript" src="js/planetpage.js"></script>
 
-<script type="text/JavaScript" src="js/sun.js"></script>
-<script type="text/JavaScript" src="js/mercury.js"></script>
-<script type="text/JavaScript" src="js/venus.js"></script>
-<script type="text/JavaScript" src="js/mars.js"></script>
-<script type="text/JavaScript" src="js/jupiter.js"></script>
-<script type="text/JavaScript" src="js/saturn.js"></script>
-<script type="text/JavaScript" src="js/uranus.js"></script>
-<script type="text/JavaScript" src="js/neptune.js"></script>
-
-<script type="text/JavaScript" src="js/moon.js"></script>
-<script type="text/JavaScript" src="js/moonsdata.js"></script>
-<script type="text/JavaScript" src="js/moonspage.js"></script>
-<script type="text/JavaScript" src="js/galileanmoonsdata.js"></script>
-<script type="text/JavaScript" src="js/galileanmoonspage.js"></script>
-<script type="text/JavaScript" src="js/saturnmoonsdata.js"></script>
-<script type="text/JavaScript" src="js/saturnmoonspage.js"></script>
-
-<script type="text/JavaScript" src="js/mooneclipsesdata.js"></script>
-<script type="text/JavaScript" src="js/mooneclipsespage.js"></script>
-<script type="text/JavaScript" src="js/besselianelements.js"></script>
-<script type="text/JavaScript" src="js/solareclipsesdata.js"></script>
-<script type="text/JavaScript" src="js/solareclipsespage.js"></script>
-<script type="text/JavaScript" src="js/realtimedata.js"></script>
-<script type="text/JavaScript" src="js/realtime.js"></script>
-<script type="text/JavaScript" src="js/searchform.js"></script>
-
-<script>
-
-    "use strict";
+    function DisplayPage (pageName) {
+        var delayedDisplay = function () {
+            try {
+                Pages[pageName].displayPage();
+            } catch (err) {
+                SyncedTimeOut(delayedDisplay, Timeout.onInit);
+            }
+        }
+        delayedDisplay();
+    }
     
     function error404(pageName) {
         document.getElementById("requestedresource").textContent = pageName;
@@ -1352,34 +1425,36 @@ title="opens in a new window">Bits of software</a><br>
     }
 
     function onhashchange(){
-
-        var searchFormInput = document.getElementById("searchTerms"); 
-        searchFormInput.classList.remove("visible");
-        searchFormInput.classList.add("hidden");
-        searchFormInput.value = "";
-
-        document.body.scrollTop = 0;
-        var hash = decodeURIComponent(location.hash);
-        var pageName = hash.slice(1);
-        if (pageName == "Search results") {
-            return;
-        }
-
-        previousPage = document.getElementById(pageName); 
-
-        if (Pages[pageName]){
-            Pages[pageName].displayPage();
+        if (typeof PageRank == 'undefined') {
+            SyncedTimeOut(onhashchange, Timeout.onInit);
         } else {
-            error404 (pageName);
-            window.location.href = "#Search results"
+            var searchFormInput = document.getElementById("searchTerms"); 
+            searchFormInput.classList.remove("visible");
+            searchFormInput.classList.add("hidden");
+            searchFormInput.value = "";
+
+            document.body.scrollTop = 0;
+            var hash = decodeURIComponent(location.hash);
+            var pageName = hash.slice(1);
+            if (pageName == "Search results") {
+                return;
+            }
+
+            previousPage = document.getElementById(pageName); 
+
+            if (previousPage){
+                DisplayPage (pageName);
+            } else {
+                error404 (pageName);
+                window.location.href = "#Search results"
+            }
         }
     }
     
     window.addEventListener("hashchange", onhashchange, false);
     if (location.hash)
-        setTimeout(onhashchange, 1);
+        SyncedTimeOut(onhashchange, Timeout.onInit);
         
-
   (function(){
     var registerWorker = function () {
         if ('serviceWorker' in navigator) {
@@ -1389,8 +1464,78 @@ title="opens in a new window">Bits of software</a><br>
               // registration failed :(
               console.log('ServiceWorker registration failed: ', err);              
             });
-        }             
+        }              
     }
     registerWorker();
+
   })();
+
+  (function(){
+
+    var injectCssDom = function(url) {
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type="text/css";
+      link.href=url;
+      document.body.appendChild(link);
+    }
+    
+    SyncedTimeOut (function(){injectCssDom("style/common.css"); }, Timeout.onInit);
+    SyncedTimeOut (function(){injectCssDom("style/default.css"); }, Timeout.onInit);
+    SyncedTimeOut (function(){injectCssDom("style/print.css"); }, Timeout.onInit);
+
+  })();
+
+
+   (function(){
+
+        var appInit = function() {
+            if (typeof Location == 'undefined' || typeof TimeStepsData == 'undefined' || typeof Notifications == 'undefined'
+                || !Location.init || !TimeStepsData.init) {
+                SyncedTimeOut (appInit, Timeout.onInit);
+            } else {
+                Location.init();
+                TimeStepsData.init();
+            }
+        }
+
+        appInit();
+
+        var now = new Date();        
+        document.getElementById("copyrightYear").textContent = now.getFullYear();
+
+   })();
+
+  (function() {
+      var CACHE_PREFIX = 'Cache-for-ephemerides';
+      caches.keys().then(names => {
+          var versions = "version numbers: ";
+          for (var i = 0; i < names.length; i++) {
+              var name = names[i];
+
+                if (!name.startsWith(CACHE_PREFIX)) {
+                    continue;
+                }
+
+              var versionPos = name.lastIndexOf('v');
+              if (versionPos < 0) {
+                  versionPos = name.lastIndexOf('-');
+              }
+              if (versionPos < 0) {
+                  continue;
+              }
+              versions += name.substring(versionPos + 1) + ", ";
+          }
+
+          versions = versions.substring(0, versions.length - 2);
+          var div = document.createElement("div");
+          div.classList.add ("version");
+          div.textContent = versions;
+          document.body.appendChild(div);
+      });
+  })();
+
+
+
+
 </script>

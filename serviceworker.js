@@ -15,13 +15,21 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 (function() {
 var CACHE_PREFIX = 'Cache-for-ephemerides';
-var CACHE_VERSION = 'v85';
+var CACHE_VERSION = '135';
 var CACHE_NAME = CACHE_PREFIX + '-' + CACHE_VERSION;
+
+var optionalUrlsToCache = [
+"aajs.js.mem",
+];
+
 var urlsToCache = [
 ".",
 "index.html",
 "manifest.json",
 "style/default.css",
+"style/common.css",
+"style/largescreen.css",
+"style/print.css",
 "js/aajs.js",
 "js/besselianelements.js",
 "js/galileanmoonsdata.js",
@@ -60,13 +68,12 @@ var urlsToCache = [
 "images/ae-icon-192.png",
 "images/ae-icon-256.png",
 "images/ae-icon-512.png",
+"images/double-arrow.svg",
 "images/galilean-moons.svg",
 "images/home-3.svg",
 "images/icon.svg",
 "images/jupiter.svg",
 "images/loading.gif",
-"images/logo.png",
-"images/logomobilebanner.png",
 "images/lunar-eclipse.svg",
 "images/magnifying-glass.svg",
 "images/mars.svg",
@@ -89,13 +96,15 @@ self.addEventListener('install', function(event) {
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('Opened cache');
+        cache.addAll (optionalUrlsToCache);
         return cache.addAll(urlsToCache);
       })
   );
 });
 
-function fetchAndCache (url) {
-  return fetch (url).then (resp => {
+
+function fetchAndCache (req) {
+  return fetch (req.clone()).then (resp => {
     if(!resp || resp.status !== 200 || resp.type !== 'basic') {
       return resp;
     }
@@ -103,7 +112,7 @@ function fetchAndCache (url) {
     var responseToCache = resp.clone();
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        cache.put(url, responseToCache);
+        cache.put(req, responseToCache);
        });
 
     return resp;
@@ -116,10 +125,20 @@ self.addEventListener('fetch', function(event) {
       .then(function(response) {
         // Cache hit - return response
         if (response) {
-          return response;
+          // analyze it
+          return response.clone().blob().then(dataAsBlob => {
+
+            if (!dataAsBlob || dataAsBlob.size == 0) {
+              return fetchAndCache(event.request);
+            }
+
+            return response;
+            
+          });
+         
+        } else {
+          return fetchAndCache (event.request);
         }
-        
-        return fetchAndCache (event.request);
       }
     )
   );
