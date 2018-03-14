@@ -102,4 +102,3 @@ var Location = {
 	}
 };
 
-Location.init();

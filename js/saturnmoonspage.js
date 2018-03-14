@@ -17,16 +17,25 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 "use strict";
 
 (function(){
-var SaturnMoonsPage = new MoonsPage ( "SaturnMoonsContainer",
-        SaturnMoonsData,
-        {'Mimas' : {'d' : '', 'color' : 'blue', 'lastPos' : {'X' : 0, 'Y' : 0} },
-                    'Enceladus' : {'d' : '', 'color' : 'red', 'lastPos' : {'X' : 0, 'Y' : 0}}, 
-                    'Tethys' : {'d' : '', 'color' : 'green', 'lastPos' : {'X' : 0, 'Y' : 0}}, 
-                    'Dione' : {'d' : '', 'color' : 'black', 'lastPos' : {'X' : 0, 'Y' : 0}},
-                    'Rhea' : {'d' : '', 'color' : 'magenta', 'lastPos' : {'X' : 0, 'Y' : 0}},
-                    'Titan' : {'d' : '', 'color' : 'grey', 'lastPos' : {'X' : 0, 'Y' : 0}}}
-);
+        var localInit = function () {
+                try {
+                var SaturnMoonsPage = new MoonsPage ( "SaturnMoonsContainer",
+                        SaturnMoonsData,
+                        {'Mimas' : {'d' : '', 'color' : 'blue', 'lastPos' : {'X' : 0, 'Y' : 0} },
+                                    'Enceladus' : {'d' : '', 'color' : 'red', 'lastPos' : {'X' : 0, 'Y' : 0}}, 
+                                    'Tethys' : {'d' : '', 'color' : 'green', 'lastPos' : {'X' : 0, 'Y' : 0}}, 
+                                    'Dione' : {'d' : '', 'color' : 'black', 'lastPos' : {'X' : 0, 'Y' : 0}},
+                                    'Rhea' : {'d' : '', 'color' : 'magenta', 'lastPos' : {'X' : 0, 'Y' : 0}},
+                                    'Titan' : {'d' : '', 'color' : 'grey', 'lastPos' : {'X' : 0, 'Y' : 0}}}
+                );
 
-Pages["Elongations of Saturn Moons"] = SaturnMoonsPage;
-SaturnMoonsPage.planetFraction = 1/23.0;
+                SaturnMoonsPage.reset = PlanetPage.prototype.reset;
+                
+                Pages["Elongations of Saturn Moons"] = SaturnMoonsPage;
+                SaturnMoonsPage.planetFraction = 1/23.0;
+                } catch (err) {
+                        SyncedTimeOut (localInit, Timeout.onInit);
+                }
+        }
+        localInit();
 })();

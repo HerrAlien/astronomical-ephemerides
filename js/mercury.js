@@ -15,11 +15,18 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
-
-var MercuryData = new PlanetData({ number: 1, name: "Mercury", 
-                               semidiameterFunctionName : function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.MercurySemidiameterB(delta); } } );						   
+var MercuryData = {};
 							   
 (function () {
-    var Page = new PlanetPage (MercuryData, "MercuryTable");
-    Pages["Mercury Ephemeris"] = Page;
+	var localInit = function () {
+		if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
+			MercuryData = new PlanetData({ number: 1, name: "Mercury", 
+									   semidiameterFunctionName : function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.MercurySemidiameterB(delta); } } );						   
+			var Page = new PlanetPage (MercuryData, "MercuryTable");
+			Pages["Mercury Ephemeris"] = Page;
+		} else {
+			SyncedTimeOut(localInit, Timeout.onInit);
+		}
+	}
+	localInit();
 })();
