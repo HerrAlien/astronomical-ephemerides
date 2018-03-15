@@ -48,6 +48,12 @@ function Vector(x,y,z) {
         this.coords = newCoords;
     }
 
+    Vector.prototype['length'] = function() {
+        return Math.sqrt(this.coords[CsysAxes.x] * this.coords[CsysAxes.x] +
+                         this.coords[CsysAxes.y] * this.coords[CsysAxes.y] +
+                         this.coords[CsysAxes.z] * this.coords[CsysAxes.z]);
+    }
+
 })();
 
 var AAJSLoFi = {
@@ -117,6 +123,16 @@ var AAJSLoFi = {
         var geoXyz = helioXyz;
         geoXyz.translate(-earthXyz.coords[CsysAxes.x], -earthXyz.coords[CsysAxes.y], -earthXyz.coords[CsysAxes.z]);
         return geoXyz;
+    },
+
+    equatorial : function (date, planet) {
+        var $ = AAJSLoFi;
+        var radeg = 180 / Math.PI;
+        var degra = Math.PI/180;
+        var xyzCoords = $.geocentricEclipticXyz(date, planet);
+        xyzCoords.rotate(CsysAxes.x, $.__planets.Earth.eps * degra );
+        return [$.reduceQuadrantsDeg(radeg * Math.atan2(xyzCoords.coords[CsysAxes.y], xyzCoords.coords[CsysAxes.x])), 
+                $.reduceQuadrantsDeg(radeg * Math.asin(xyzCoords.coords[CsysAxes.z], xyzCoords.length))];
     },
 
     poly : function (arg, coeffs) {
@@ -217,6 +233,17 @@ var AAJSLoFi = {
             }
         },
 
+        {
+            name : "Venus equatorial, December 20, 1992",
+            input : new Date("December 20, 1992"),
+            expectedOutput :  [316.17291, 360-18.88802],
+            actualOutput : false,
+            test : function () {
+                // helio_ecliptic_
+                this.actualOutput = $.equatorial (this.input, $.__planets.Venus);
+                return testlib.doubleEqArr (this.actualOutput, this.expectedOutput, 2);
+            }
+        },
         
 
 
