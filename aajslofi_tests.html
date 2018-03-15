@@ -90,7 +90,8 @@ var AAJSLoFi = {
             MeanL : [100.466449, 36000.7698231, 0.00030368, 0.000000021],
             r : 1,
             tilt : [0, 0, 0, 0],
-            Lnode : [0, 0, 0, 0]
+            Lnode : [0, 0, 0, 0],
+            eps : 23.4402297
         },
     }, 
 
@@ -106,8 +107,8 @@ var AAJSLoFi = {
         // compute mean longitude
         var L = $.L(T, planet);
         // then subtract node longitude
-        var O = $.reduceQuadrantsDeg($.poly(T, planet.Lnode));
-        var m = (L - O) * degra;
+        var O = $.reduceQuadrantsDeg($.poly(T, planet.Lnode)) * degra;
+        var m = (L - O) ;
         // compute in orbit coordinates
         var v = new Vector(planet.r * Math.cos(m), planet.r * Math.sin(m), 0);
         // rotate around X with the tilt, to drop back to the ecliptic
@@ -145,6 +146,9 @@ var AAJSLoFi = {
 <script type="text/javascript">
          
     (function () {
+
+        var $ = AAJSLoFi;
+        var degra = Math.PI / 180;
             
         var tests = [
                 
@@ -154,7 +158,7 @@ var AAJSLoFi = {
             expectedOutput :  -0.07032169747,
             actualOutput : false,
             test : function () {
-                this.actualOutput = AAJSLoFi.T(this.input);
+                this.actualOutput = $.T(this.input);
                 return testlib.doubleEq (this.actualOutput, this.expectedOutput, 3e-12);
             }
         },
@@ -162,10 +166,10 @@ var AAJSLoFi = {
         {
             name : "Earth Heliocentric Longitude, December 20, 1992",
             input : new Date("December 20, 1992"),
-            expectedOutput :  88.35704 * Math.PI / 180,
+            expectedOutput :  88.35704 *degra,
             actualOutput : false,
             test : function () {
-                this.actualOutput =  AAJSLoFi.L(AAJSLoFi.T(this.input), AAJSLoFi.__planets.Earth);
+                this.actualOutput =  $.L($.T(this.input), $.__planets.Earth);
                 return testlib.doubleEq (this.actualOutput, this.expectedOutput, 1e-2);
             }
         },
@@ -173,11 +177,30 @@ var AAJSLoFi = {
         {
             name : "Earth Heliocentric Longitude, October 13, 1992",
             input : new Date("October 13, 1992"),
-            expectedOutput :  AAJSLoFi.reduceQuadrantsDeg(180 + 201.80719) * Math.PI / 180,
+            expectedOutput :  $.reduceQuadrantsDeg(180 + 201.80719) * degra,
             actualOutput : false,
             test : function () {
-                this.actualOutput =  AAJSLoFi.L(AAJSLoFi.T(this.input), AAJSLoFi.__planets.Earth);
+                this.actualOutput =  $.L($.T(this.input), $.__planets.Earth);
                 return testlib.doubleEq (this.actualOutput, this.expectedOutput, 1e-3);
+            }
+        },
+
+        
+        {
+            name : "Sun rectangular equatorial coordinates, October 13, 1992",
+            input : new Date("October 13, 1992"),
+            expectedOutput :  [-0.9379952, -0.3116544, -0.1351215],
+            actualOutput : false,
+            test : function () {
+                // helio_ecliptic_
+                var earthXYZ = $.heliocentricXyz(this.input, $.__planets.Earth);
+                var sunXYZ = earthXYZ;
+                sunXYZ.coords[CsysAxes.x] *= -1;
+                sunXYZ.coords[CsysAxes.y] *= -1;
+                sunXYZ.coords[CsysAxes.z] *= -1;
+                sunXYZ.rotate(CsysAxes.x, $.__planets.Earth.eps * degra );
+                this.actualOutput =  sunXYZ.coords;
+                return testlib.doubleEqArr (this.actualOutput, this.expectedOutput, 3e-2);
             }
         },
 
