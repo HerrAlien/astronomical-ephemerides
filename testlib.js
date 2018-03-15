@@ -69,9 +69,9 @@ var testlib = {
             {
                 var currentTest = tests[i];
                 var testPassed = false;
-                //try { 
+                try { 
                 testPassed = currentTest.test(); 
-                //} catch (e){currentTest.actualOutput += " : " + e.message;}
+                } catch (e){currentTest.actualOutput += " : " + e;}
                 testlib.logTest(currentTest, testPassed);
             }
         }
