@@ -1,0 +1,193 @@
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+
+
+    
+</body></html>
+        
+<script>
+
+var CsysAxes = {
+    x : 0,
+    y : 1,
+    z : 2
+};
+
+function Vector(x,y,z) {
+    this.coords = [0,0,0];
+    this.coords[CsysAxes.x] = typeof x == 'undefined' ? 0 : x;
+    this.coords[CsysAxes.y] = typeof y == 'undefined' ? 0 : y;
+    this.coords[CsysAxes.z] = typeof z == 'undefined' ? 0 : z;
+}
+
+(function(){
+    Vector.prototype['translate'] = function (v, y, z) {
+        if (typeof y != 'undefined') {
+            this.coords[CsysAxes.x] += v;
+            this.coords[CsysAxes.y] += y;
+            this.coords[CsysAxes.z] += z;
+        } else {
+            this.coords[CsysAxes.x] += v.coords[CsysAxes.x];
+            this.coords[CsysAxes.y] += v.coords[CsysAxes.y];
+            this.coords[CsysAxes.z] += v.coords[CsysAxes.z];
+        }
+    }
+
+    Vector.prototype['rotate'] = function (axis, angle) {
+        var newCoords = [];
+        var cosAngle = Math.cos(angle);
+        var sinAngle = Math.sin(angle);
+        if (axis == CsysAxes.x) {
+            newCoords = [this.coords[CsysAxes.x], 
+                         this.coords[CsysAxes.y] * cosAngle - this.coords[CsysAxes.z] * sinAngle,
+                         this.coords[CsysAxes.y] * sinAngle + this.coords[CsysAxes.z] * cosAngle];
+        } else if (axis == CsysAxes.y) {
+            newCoords = [this.coords[CsysAxes.x] * cosAngle + this.coords[CsysAxes.z] * sinAngle, 
+                         this.coords[CsysAxes.y],
+                         -this.coords[CsysAxes.x] * sinAngle + this.coords[CsysAxes.z] * cosAngle];
+        } else if (axis == CsysAxes.z) {
+            newCoords = [this.coords[CsysAxes.x] * cosAngle - this.coords[CsysAxes.y] * sinAngle, 
+                         this.coords[CsysAxes.x] * sinAngle + this.coords[CsysAxes.y] * cosAngle,
+                         this.coords[CsysAxes.z]];
+        }
+        this.coords = newCoords;
+    }
+
+})();
+
+var AAJSLoFi = {
+    T : function (date) {
+        var jd2000 = Date.parse ("January 1, 2000") + 1000 * 3600 * 12;
+        return (date.getTime() - jd2000) / (36525 * 1000 * 3600 * 24);
+    },
+
+    __jd_now : false,
+    jdNow : function () {
+        if (!AAJSLoFi.__jd_now) {
+            AAJSLoFi.__jd_now = AAJSLoFi.T(new Date());
+        }
+        return AAJSLoFi.__jd_now;
+    },
+
+    __planets : {
+        Mercury : {
+            MeanL : [252.250906, 149474.0722491, 0.00030397, 0.000000018],
+            r : 0.387098310,
+            tilt : [7.004986, 0.0018215, -0.00001809, 0.000000053],
+            Lnode : [48.330893, 1.1861890, 0.00029589, 0.000000211]
+        },
+        Venus : {
+            MeanL : [181.979801, 58519.2130302, 0.00031060, 0.000000015],
+            r : 0.723329820,
+            tilt : [3.394662, 0.0010037, -0.00000088, -0.000000007],
+            Lnode : [76.679920, 0.9011190, 0.00040665, -0.000000080]
+        },
+        Earth : {
+            MeanL : [100.466449, 36000.7698231, 0.00030368, 0.000000021],
+            r : 1,
+            tilt : [0, 0, 0, 0],
+            Lnode : [0, 0, 0, 0]
+        },
+    }, 
+
+    L : function (T, planet) {
+        var $ = AAJSLoFi;
+        return $.reduceQuadrantsDeg($.poly(T, planet.MeanL)) * Math.PI/180;
+    },
+
+    heliocentricXyz : function (date, planet) {
+        var $ = AAJSLoFi;
+        var T = $.T(date);
+        var degra = Math.PI/180;
+        // compute mean longitude
+        var L = $.L(T, planet);
+        // then subtract node longitude
+        var O = $.reduceQuadrantsDeg($.poly(T, planet.Lnode));
+        var m = (L - O) * degra;
+        // compute in orbit coordinates
+        var v = new Vector(planet.r * Math.cos(m), planet.r * Math.sin(m), 0);
+        // rotate around X with the tilt, to drop back to the ecliptic
+        var i = $.reduceQuadrantsDeg($.poly(T, planet.tilt)) * degra;
+        v.rotate(CsysAxes.x, -i);
+        // then rotate around Z with the node longitude, to match the vernal point. 
+        v.rotate(CsysAxes.z, -O);
+        return v;
+    },
+
+    poly : function (arg, coeffs) {
+        var res = 0;
+        var poweredArg = 1;
+        for (var i = 0; i < coeffs.length; i++) {
+            res += poweredArg * coeffs[i];
+            poweredArg *= arg;
+        }
+        return res;
+    },
+
+    reduceQuadrantsDeg : function (n) {
+        while (n >= 360)
+            n -= 360;
+        while (n < 0)
+            n += 360;
+        return n;
+    }
+};
+
+</script>
+
+<script type="text/javascript" src="testlib.js"></script>
+
+
+<script type="text/javascript">
+         
+    (function () {
+            
+        var tests = [
+                
+        {
+            name : "T, December 20, 1992",
+            input : new Date("December 20, 1992"),
+            expectedOutput :  -0.07032169747,
+            actualOutput : false,
+            test : function () {
+                this.actualOutput = AAJSLoFi.T(this.input);
+                return testlib.doubleEq (this.actualOutput, this.expectedOutput, 3e-12);
+            }
+        },
+
+        {
+            name : "Earth Heliocentric Longitude, December 20, 1992",
+            input : new Date("December 20, 1992"),
+            expectedOutput :  88.35704 * Math.PI / 180,
+            actualOutput : false,
+            test : function () {
+                this.actualOutput =  AAJSLoFi.L(AAJSLoFi.T(this.input), AAJSLoFi.__planets.Earth);
+                return testlib.doubleEq (this.actualOutput, this.expectedOutput, 1e-2);
+            }
+        },
+
+        {
+            name : "Earth Heliocentric Longitude, October 13, 1992",
+            input : new Date("October 13, 1992"),
+            expectedOutput :  AAJSLoFi.reduceQuadrantsDeg(180 + 201.80719) * Math.PI / 180,
+            actualOutput : false,
+            test : function () {
+                this.actualOutput =  AAJSLoFi.L(AAJSLoFi.T(this.input), AAJSLoFi.__planets.Earth);
+                return testlib.doubleEq (this.actualOutput, this.expectedOutput, 1e-3);
+            }
+        },
+
+        
+
+
+        ];
+            
+        testlib.runTests (tests);
+    })();
+                
+        </script>
+
