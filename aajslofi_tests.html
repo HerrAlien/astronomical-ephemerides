@@ -119,6 +119,17 @@ var AAJSLoFi = {
         return v;
     },
 
+    geocentricEclipticXyz : function (date, planet) {
+        var $ = AAJSLoFi;
+        var helioXyz = $.heliocentricXyz (date, planet);
+        var earthXyz = $.heliocentricXyz(date, $.__planets.Earth);
+        var geoXyz = helioXyz;
+        geoXyz.coords[CsysAxes.x] -= earthXyz.coords[CsysAxes.x];
+        geoXyz.coords[CsysAxes.y] -= earthXyz.coords[CsysAxes.y];
+        geoXyz.coords[CsysAxes.z] -= earthXyz.coords[CsysAxes.z];
+        return geoXyz;
+    },
+
     poly : function (arg, coeffs) {
         var res = 0;
         var poweredArg = 1;
@@ -211,15 +222,7 @@ var AAJSLoFi = {
             actualOutput : false,
             test : function () {
                 // helio_ecliptic_
-                var earthXYZ = $.heliocentricXyz(this.input, $.__planets.Earth);
-                var venusXYZ = $.heliocentricXyz(this.input, $.__planets.Venus);
-
-                var venusGeo = venusXYZ;
-
-                venusGeo.coords[CsysAxes.x] -= earthXYZ.coords[CsysAxes.x];
-                venusGeo.coords[CsysAxes.y] -= earthXYZ.coords[CsysAxes.y];
-                venusGeo.coords[CsysAxes.z] -= earthXYZ.coords[CsysAxes.z];
-
+                var venusGeo = $.geocentricEclipticXyz(this.input, $.__planets.Venus);
                 this.actualOutput =  venusGeo.coords;
                 return testlib.doubleEqArr (this.actualOutput, this.expectedOutput, 1e-2);
             }
