@@ -18,23 +18,14 @@ var CsysAxes = {
 };
 
 function Vector(x,y,z) {
-    this.coords = [0,0,0];
-    this.coords[CsysAxes.x] = typeof x == 'undefined' ? 0 : x;
-    this.coords[CsysAxes.y] = typeof y == 'undefined' ? 0 : y;
-    this.coords[CsysAxes.z] = typeof z == 'undefined' ? 0 : z;
+    this.coords = [x, y, z];
 }
 
 (function(){
     Vector.prototype['translate'] = function (v, y, z) {
-        if (typeof y != 'undefined') {
             this.coords[CsysAxes.x] += v;
             this.coords[CsysAxes.y] += y;
             this.coords[CsysAxes.z] += z;
-        } else {
-            this.coords[CsysAxes.x] += v.coords[CsysAxes.x];
-            this.coords[CsysAxes.y] += v.coords[CsysAxes.y];
-            this.coords[CsysAxes.z] += v.coords[CsysAxes.z];
-        }
     }
 
     Vector.prototype['rotate'] = function (axis, angle) {
@@ -124,9 +115,7 @@ var AAJSLoFi = {
         var helioXyz = $.heliocentricXyz (date, planet);
         var earthXyz = $.heliocentricXyz(date, $.__planets.Earth);
         var geoXyz = helioXyz;
-        geoXyz.coords[CsysAxes.x] -= earthXyz.coords[CsysAxes.x];
-        geoXyz.coords[CsysAxes.y] -= earthXyz.coords[CsysAxes.y];
-        geoXyz.coords[CsysAxes.z] -= earthXyz.coords[CsysAxes.z];
+        geoXyz.translate(-earthXyz.coords[CsysAxes.x], -earthXyz.coords[CsysAxes.y], -earthXyz.coords[CsysAxes.z]);
         return geoXyz;
     },
 
