@@ -71,10 +71,10 @@ var AAJSLoFi = {};
        this.coords = newCoords;
    }
 
-   Vector.prototype['length'] = function() {
-       return Math.sqrt(this.coords[CsysAxes.x] * this.coords[CsysAxes.x] +
-                        this.coords[CsysAxes.y] * this.coords[CsysAxes.y] +
-                        this.coords[CsysAxes.z] * this.coords[CsysAxes.z]);
+   Vector.prototype['modulus'] = function() {
+       return Math.sqrt((this.coords[CsysAxes.x] * this.coords[CsysAxes.x]) +
+                        (this.coords[CsysAxes.y] * this.coords[CsysAxes.y]) +
+                        (this.coords[CsysAxes.z] * this.coords[CsysAxes.z]));
    }
 
 
@@ -167,7 +167,7 @@ var AAJSLoFi = {};
             var xyzCoords = $.geocentricEclipticXyz(date, planet);
             xyzCoords.rotate(CsysAxes.x, $.__planets.Earth.eps * degra );
             return [$.reduceQuadrantsDeg(radeg * Math.atan2(xyzCoords.coords[CsysAxes.y], xyzCoords.coords[CsysAxes.x])), 
-                    $.reduceQuadrants90Deg(radeg * Math.asin(xyzCoords.coords[CsysAxes.z], xyzCoords.length))];
+                    $.reduceQuadrants90Deg(radeg * Math.asin(xyzCoords.coords[CsysAxes.z] / xyzCoords.modulus()))];
         },
 
         Elliptical : {
