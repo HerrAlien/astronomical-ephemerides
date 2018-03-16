@@ -207,7 +207,7 @@ var RealTimeDataViewer = {
                     }
                 }
 
-                if (pageName != 'Sun Ephemeris' && pageName != 'Moon Ephemeris' &&
+                if (pageName != 'Venus Ephemeris' && pageName != 'Mars Ephemeris' &&
                     pageName != 'Jupiter Ephemeris' && pageName != 'Saturn Ephemeris') {
                     visible = false;
                 }
