@@ -337,19 +337,16 @@ th {
  .page {
     display: block;
     opacity: 1;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
     margin-left: auto;
     margin-right: auto;
     margin-top:2px;
     text-align: center;
-    width: 95%;
 }
 
  .page:not(:target){
     display: none;
-    position: fixed;
-    bottom: 0;
 }
 
  .fixed {
@@ -396,12 +393,11 @@ th {
     margin: -2px auto 2px auto;
 }
 
- .SettingsLink::after {
-    content: "Settings";
+ .SettingsLink::after { content: 
+ "Settings";
 }
 
- .SunLinkButton::after {
-     content: 
+ .SunLinkButton::after { content: 
  "Sun";
 }
 
@@ -472,13 +468,15 @@ th {
     width: 62px;
     height: 62px;
 }
-    
+
+h1, h2, hr {
+    font-family: Verdana;
+}    
 
  h1 {
     margin-top: 120px;
     margin-bottom: 0px;
     font-size: 50px;
-    font-family: Verdana;
     margin-left: auto;
     display: block;
     font-weight: normal;
@@ -490,14 +488,12 @@ th {
 }
 
  h2 {
-    font-family: Verdana;
     font-size: 40px;
     margin-top: 70px;
     margin-bottom: 10px;
 }
 
  h3 {
-    font-family: Verdana;
     font-size: 32px;
     margin-top: 0px;
 }
@@ -508,7 +504,6 @@ th {
 }
 
  #credits{
-        width: 100%;
         padding-top: 10px;
         margin-top: 20px;
         font-family: Courier;
@@ -549,14 +544,12 @@ th {
      text-decoration: underline;
  }
 
-.Month,
-.Day {
+.Month, .Day {
     display: none;
 }
 
 
-.scrollableRTdiv,
-.realtimeTitle {
+.scrollableRTdiv, .realtimeTitle {
     background: rgba(255, 255, 255, 0.8);
     margin-left: 10px;
     width: 100%;
@@ -642,7 +635,7 @@ border-bottom: solid 1px #AAAAAA;
     width: 220px;
 }
 
-#searchTerms.hidden {
+.hidden, #searchTerms.hidden, .buttonsToSwitchPosPhys, .physSeenAtSmallWidth {
     display: none;
 }
 
@@ -652,10 +645,6 @@ border-bottom: solid 1px #AAAAAA;
 
 #searchButton{
     cursor: pointer;
-}
-
-.hidden {
-    display: none;
 }
 
  .MenuLinkDiv {
@@ -888,10 +877,6 @@ border-bottom: solid 1px #AAAAAA;
 
 .R::before {
     content: "R: "
-}
-
-.buttonsToSwitchPosPhys, .physSeenAtSmallWidth {
-    display: none;
 }
 
 .physPosHidden {
