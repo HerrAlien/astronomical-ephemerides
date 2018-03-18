@@ -34,7 +34,7 @@
 var AAJSLoFi = {};
 
 (function () {
-    var CsysAxes = {
+    var CSYS = {
         x : 0,
         y : 1,
         z : 2
@@ -46,35 +46,35 @@ var AAJSLoFi = {};
 
     
    Vector.prototype['translate'] = function (v, y, z) {
-           this.coords[CsysAxes.x] += v;
-           this.coords[CsysAxes.y] += y;
-           this.coords[CsysAxes.z] += z;
+           this.coords[CSYS.x] += v;
+           this.coords[CSYS.y] += y;
+           this.coords[CSYS.z] += z;
    }
 
    Vector.prototype['rotate'] = function (axis, angle) {
        var newCoords = [];
        var cosAngle = Math.cos(angle);
        var sinAngle = Math.sin(angle);
-       if (axis == CsysAxes.x) {
-           newCoords = [this.coords[CsysAxes.x], 
-                        this.coords[CsysAxes.y] * cosAngle - this.coords[CsysAxes.z] * sinAngle,
-                        this.coords[CsysAxes.y] * sinAngle + this.coords[CsysAxes.z] * cosAngle];
-       } else if (axis == CsysAxes.y) {
-           newCoords = [this.coords[CsysAxes.x] * cosAngle + this.coords[CsysAxes.z] * sinAngle, 
-                        this.coords[CsysAxes.y],
-                        -this.coords[CsysAxes.x] * sinAngle + this.coords[CsysAxes.z] * cosAngle];
-       } else if (axis == CsysAxes.z) {
-           newCoords = [this.coords[CsysAxes.x] * cosAngle - this.coords[CsysAxes.y] * sinAngle, 
-                        this.coords[CsysAxes.x] * sinAngle + this.coords[CsysAxes.y] * cosAngle,
-                        this.coords[CsysAxes.z]];
+       if (axis == CSYS.x) {
+           newCoords = [this.coords[CSYS.x], 
+                        this.coords[CSYS.y] * cosAngle - this.coords[CSYS.z] * sinAngle,
+                        this.coords[CSYS.y] * sinAngle + this.coords[CSYS.z] * cosAngle];
+       } else if (axis == CSYS.y) {
+           newCoords = [this.coords[CSYS.x] * cosAngle + this.coords[CSYS.z] * sinAngle, 
+                        this.coords[CSYS.y],
+                        -this.coords[CSYS.x] * sinAngle + this.coords[CSYS.z] * cosAngle];
+       } else if (axis == CSYS.z) {
+           newCoords = [this.coords[CSYS.x] * cosAngle - this.coords[CSYS.y] * sinAngle, 
+                        this.coords[CSYS.x] * sinAngle + this.coords[CSYS.y] * cosAngle,
+                        this.coords[CSYS.z]];
        }
        this.coords = newCoords;
    }
 
    Vector.prototype['modulus'] = function() {
-       return Math.sqrt((this.coords[CsysAxes.x] * this.coords[CsysAxes.x]) +
-                        (this.coords[CsysAxes.y] * this.coords[CsysAxes.y]) +
-                        (this.coords[CsysAxes.z] * this.coords[CsysAxes.z]));
+       return Math.sqrt((this.coords[CSYS.x] * this.coords[CSYS.x]) +
+                        (this.coords[CSYS.y] * this.coords[CSYS.y]) +
+                        (this.coords[CSYS.z] * this.coords[CSYS.z]));
    }
 
 
@@ -151,9 +151,9 @@ var AAJSLoFi = {};
             var v = new Vector(planet.r * Math.cos(m), planet.r * Math.sin(m), 0);
             // rotate around X with the tilt, to drop back to the ecliptic
             var i = $.reduceQuadrantsDeg($.poly(T, planet.tilt)) * degra;
-            v.rotate(CsysAxes.x, i);
+            v.rotate(CSYS.x, i);
             // then rotate around Z with the node longitude, to match the vernal point. 
-            v.rotate(CsysAxes.z, O);
+            v.rotate(CSYS.z, O);
             return v;
         },
 
@@ -162,7 +162,7 @@ var AAJSLoFi = {};
             var helioXyz = $.heliocentricXyz (date, planet);
             var earthXyz = $.heliocentricXyz(date, $.__planets.Earth);
             var geoXyz = helioXyz;
-            geoXyz.translate(-earthXyz.coords[CsysAxes.x], -earthXyz.coords[CsysAxes.y], -earthXyz.coords[CsysAxes.z]);
+            geoXyz.translate(-earthXyz.coords[CSYS.x], -earthXyz.coords[CSYS.y], -earthXyz.coords[CSYS.z]);
             return geoXyz;
         },
 
@@ -171,15 +171,17 @@ var AAJSLoFi = {};
             var radeg = 180 / Math.PI;
             var degra = Math.PI/180;
             var xyzCoords = $.geocentricEclipticXyz(date, planet);
-            xyzCoords.rotate(CsysAxes.x, $.__planets.Earth.eps * degra );
-            return [$.reduceQuadrantsDeg(radeg * Math.atan2(xyzCoords.coords[CsysAxes.y], xyzCoords.coords[CsysAxes.x])), 
-                    $.reduceQuadrants90Deg(radeg * Math.asin(xyzCoords.coords[CsysAxes.z] / xyzCoords.modulus()))];
+            xyzCoords.rotate(CSYS.x, $.__planets.Earth.eps * degra );
+            return [$.reduceQuadrantsDeg(radeg * Math.atan2(xyzCoords.coords[CSYS.y], xyzCoords.coords[CSYS.x])), 
+                    $.reduceQuadrants90Deg(radeg * Math.asin(xyzCoords.coords[CSYS.z] / xyzCoords.modulus()))];
         },
 
         Elliptical : {
             CalculatePlanetaryDetails : function (jd, planetNumber) {
                 var $ = AAJSLoFi;
-                var planets = [$.__planets.Earth, $.__planets.Earth, $.__planets.Venus, $.__planets.Mars, $.__planets.Jupiter, $.__planets.Saturn, $.__planets.Earth, $.__planets.Earth];
+                var $p = $.__planets;
+                var earth = $p.Earth;
+                var planets = [earth, earth, $p.Venus, $p.Mars, $p.Jupiter, $p.Saturn, earth, earth];
                 var coordsArr = $.equatorial (new Date(), planets[planetNumber]);
                 return {"ApparentGeocentricRA" : coordsArr[0] / 15, "ApparentGeocentricDeclination" : coordsArr[1], "ApparentGeocentricDistance" : 0};
             }
@@ -196,18 +198,14 @@ var AAJSLoFi = {};
         },
 
         reduceQuadrantsDeg : function (n) {
-            while (n >= 360)
-                n -= 360;
-            while (n < 0)
-                n += 360;
+            while (n >= 360) n -= 360;
+            while (n < 0) n += 360;
             return n;
         },
 
         reduceQuadrants90Deg : function (n) {
           var reduced = AAJSLoFi.reduceQuadrantsDeg(n);
-          if (reduced > 180)
-            reduced -= 360;
-          return reduced;
+          return (reduced > 180) ? reduced - 360 : reduced;
         },
 
         Date : { 
@@ -215,9 +213,7 @@ var AAJSLoFi = {};
              var d = new Date();
              return {"M" : 1 + d.getMonth(), "D" : d.getDate()};
            },
-           DateToJD : function (y, m, d) {
-              return -99999999;
-           }
+           DateToJD : function (y, m, d) { return -99999999; }
         },
           AllDependenciesLoaded : function () { return true; },
           RiseTransitSet : { Calculate : function() { return {}; } },
@@ -255,15 +251,21 @@ var AAJSLoFi = {};
 })();
 
         
-        function GetAAJS() {
-            if (typeof AAJS == 'undefined' || !AAJS || typeof AAJS.AllDependenciesLoaded == 'undefined' ||
-               ! AAJS.AllDependenciesLoaded  || ! AAJS.AllDependenciesLoaded() ) {
-                  return AAJSLoFi;
-               }
-            return AAJS;
-        }
+function GetAAJS() {
+    if (typeof AAJS == 'undefined' || !AAJS || typeof AAJS.AllDependenciesLoaded == 'undefined' ||
+       ! AAJS.AllDependenciesLoaded  || ! AAJS.AllDependenciesLoaded() ) {
+          return AAJSLoFi;
+       }
+    return AAJS;
+}
 
-    </script>
+(function(){
+    var URL = document.URL;
+    if (URL.slice(-11) == "ephemerides")
+        location.href = URL + "/";
+})();
+
+</script>
 
 <script type="text/JavaScript" async="" src="js/aajs.js"></script>
 <script type="text/javascript" async="" src="js/matrix.js"></script>
@@ -950,16 +952,10 @@ border-bottom: solid 1px #AAAAAA;
         height: 0px;
         display: none;
     }
-    .MenuLinkDiv.topmenulink::after {
-        display: none;
-    }
-
-
 
 .buttonsToSwitchPosPhys, .physSeenAtSmallWidth {
     display: none;
 }
-
 
 .physPosHidden {
     visibility: visible;
@@ -969,7 +965,6 @@ border-bottom: solid 1px #AAAAAA;
         width: 890px;
 }
  }
-
 
 
 #footer {
@@ -987,17 +982,6 @@ border-bottom: solid 1px #AAAAAA;
 
     </style>
     
-    
-    <script type="text/javascript">
-        
-        "use strict";
-    
-        (function(){
-            var URL = document.URL;
-            if (URL.slice(-11) == "ephemerides")
-                location.href = URL + "/";
-        })();
-    </script>
 
 <script type="application/ld+json">
 
