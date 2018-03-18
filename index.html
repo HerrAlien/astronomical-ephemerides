@@ -1450,12 +1450,6 @@ Pages.addPlainPages(["more", "settings", "home", "privacy", "Search results"]);
 var previousPage = false;
 var currentActiveLink = false;
 
-function gohome () {
-    $get("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
-                                                      "bubbles": true, 
-                                                      "cancelable": false }));
-}
-    
 $get ("applySettingsChanges").addEventListener("click", function() {
     Location.Controls.commitUserValues();
     TimeStepsData.Controls.commitUserValues();
@@ -1480,11 +1474,7 @@ $get ("cancelSettingsChanges").addEventListener("click", function() {
     alert("Changes discarded.");
 });
 
-
-if (!location.hash) {
-    gohome();
-} 
-
+(function(){
 var sourceMenu = $get("navigation");
 var oldScrollTop = 0;
     
@@ -1547,6 +1537,7 @@ $get("showNavigationMenu").onclick = function () {
         pageObj.hostElement.rows[1].classList.remove ("movedMenu");
     }
 }
+})();
 
 function updateTimeAtAAJSLoad() {
   
