@@ -1355,13 +1355,11 @@ title="opens in a new window">Bits of software</a><br>
  <script>
 
 "use strict";
+var $get = function (id) { return document.getElementById(id); }
+$get("JSDisabledPage").style.display = "none";
 
-document.getElementById("JSDisabledPage").style.display = "none";
-
-
- 
 function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
-    var pageElement = document.getElementById(pageId);
+    var pageElement = $get(pageId);
     this.table = pageElement.getElementsByClassName("planetTable")[0];
     this.cellsToHide_physical = false;
     this.cellsToHide_positional = false;
@@ -1456,12 +1454,12 @@ var previousPage = false;
 var currentActiveLink = false;
 
 function gohome () {
-    document.getElementById("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
+    $get("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
                                                       "bubbles": true, 
                                                       "cancelable": false }));
 }
     
-document.getElementById ("applySettingsChanges").addEventListener("click", function() {
+$get ("applySettingsChanges").addEventListener("click", function() {
     Location.Controls.commitUserValues();
     TimeStepsData.Controls.commitUserValues();
     // copy from timesteps data
@@ -1478,7 +1476,7 @@ document.getElementById ("applySettingsChanges").addEventListener("click", funct
     alert("New settings applied.");
 });
 
-document.getElementById ("cancelSettingsChanges").addEventListener("click", function() {
+$get ("cancelSettingsChanges").addEventListener("click", function() {
     Location.Controls.update();
     TimeStepsData.Controls.update();
 
@@ -1490,7 +1488,7 @@ if (!location.hash) {
     gohome();
 } 
 
-var sourceMenu = document.getElementById("navigation");
+var sourceMenu = $get("navigation");
 var oldScrollTop = 0;
     
 window.addEventListener("scroll", function() {
@@ -1544,7 +1542,7 @@ window.addEventListener("scroll", function() {
     oldScrollTop = scrolledTop;
 });
 
-document.getElementById("showNavigationMenu").onclick = function () {
+$get("showNavigationMenu").onclick = function () {
     var pageObj = Pages [previousPage.id];
     sourceMenu.classList.remove ("movedMenu");
     if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
@@ -1577,8 +1575,8 @@ function DisplayPage (pageName) {
 }
 
 function error404(pageName) {
-    document.getElementById("requestedresource").textContent = pageName;
-    var list = document.getElementById("searchsuggestions");
+    $get("requestedresource").textContent = pageName;
+    var list = $get("searchsuggestions");
     while(list.hasChildNodes()) {
       list.removeChild(list.firstChild);
     }
@@ -1594,7 +1592,7 @@ function onhashchange(){
     if (typeof PageRank == 'undefined') {
         SyncedTimeOut(onhashchange, Timeout.onInit);
     } else {
-        var searchFormInput = document.getElementById("searchTerms"); 
+        var searchFormInput = $get("searchTerms"); 
         searchFormInput.classList.remove("visible");
         searchFormInput.classList.add("hidden");
         searchFormInput.value = "";
@@ -1606,13 +1604,13 @@ function onhashchange(){
             return;
         }
 
-        previousPage = document.getElementById(pageName); 
+        previousPage = $get(pageName); 
 
         if (previousPage){
             DisplayPage (pageName);
         } else {
             error404 (pageName);
-            window.location.href = "#Search results"
+            window.location.href = "#Search results";
         }
     }
 }
@@ -1659,7 +1657,7 @@ if (location.hash) SyncedTimeOut(onhashchange, Timeout.onInit);
   appInit();
 
   var now = new Date();        
-  document.getElementById("copyrightYear").textContent = now.getFullYear();
+  $get("copyrightYear").textContent = now.getFullYear();
 
   var CACHE_PREFIX = 'Cache-for-ephemerides';
   caches.keys().then(names => {
