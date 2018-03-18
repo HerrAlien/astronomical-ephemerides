@@ -19,31 +19,23 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff" />   
 
     <script type="text/JavaScript">
-        var Timeout = {
-            onInit : 1,
-            onNewData : 1
-        };
+var Timeout = {
+    onInit : 1,
+    onNewData : 1
+};
 
-        function SyncedTimeOut (func, time) {
-          setTimeout (function () { requestAnimationFrame (func); } , time);
-        }
-        
-        var AAJS = {};
-        // only for *right now*
-        var SunData = { getSunEarthDistance : function() { return 1; } };
+function SyncedTimeOut (func, time) {
+  setTimeout (function () { requestAnimationFrame (func); } , time);
+}
+
+var AAJS = {};
+// only for *right now*
+var SunData = { getSunEarthDistance : function() { return 1; } };
 var AAJSLoFi = {};
 
 (function () {
-    var CSYS = {
-        x : 0,
-        y : 1,
-        z : 2
-    };
-
-    function Vector(x,y,z) {
-        this.coords = [x, y, z];
-    }
-
+    var CSYS = { x : 0, y : 1, z : 2 };
+    function Vector(x,y,z) { this.coords = [x, y, z]; }
     
    Vector.prototype['translate'] = function (v, y, z) {
            this.coords[CSYS.x] += v;
@@ -77,20 +69,10 @@ var AAJSLoFi = {};
                         (this.coords[CSYS.z] * this.coords[CSYS.z]));
    }
 
-
-
     AAJSLoFi = {
+        DATE_JD_2000 : Date.parse ("January 1, 2000") + 1000 * 3600 * 12,
         T : function (date) {
-            var jd2000 = Date.parse ("January 1, 2000") + 1000 * 3600 * 12;
-            return (date.getTime() - jd2000) / (36525 * 1000 * 3600 * 24);
-        },
-
-        __jd_now : false,
-        jdNow : function () {
-            if (!AAJSLoFi.__jd_now) {
-                AAJSLoFi.__jd_now = AAJSLoFi.T(new Date());
-            }
-            return AAJSLoFi.__jd_now;
+            return (date.getTime() - AAJSLoFi.DATE_JD_2000) / (36525 * 1000 * 3600 * 24);
         },
 
         __planets : {
