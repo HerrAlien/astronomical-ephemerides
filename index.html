@@ -1352,204 +1352,188 @@ title="opens in a new window">Bits of software</a><br>
 <script type="text/JavaScript" async="" src="js/moon.js"></script>
 
 
-             <script>
-            
-            "use strict";
-            
-            document.getElementById("JSDisabledPage").style.display = "none";
-        
+ <script>
 
-             
-            function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
-                var pageElement = document.getElementById(pageId);
-                this.table = pageElement.getElementsByClassName("planetTable")[0];
-                this.cellsToHide_physical = false;
-                this.cellsToHide_positional = false;
-                
-                this.positionalButton = pageElement.getElementsByClassName("positionalButton")[0];
-                this.physicalButton = pageElement.getElementsByClassName("physicalButton")[0];
-                if (typeof firstPhysicalColumnIndex == 'undefined')
-                    this.firstPhysicalColumnIndex = 16;
-                else
-                    this.firstPhysicalColumnIndex = firstPhysicalColumnIndex;
-            }
-            
-            (function() {
-                PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
-                    this.cellsToHide_physical = [];
-                    this.cellsToHide_positional = [];
-                    for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
-                        var cells = this.table.rows[rowIndex].cells;
-                        for (var colIndex = 16; colIndex < cells.length; colIndex++)
-                            this.cellsToHide_physical.push(cells[colIndex]);
-                        for (var colIndex = 0; colIndex < 16; colIndex++)
-                            this.cellsToHide_positional.push(cells[colIndex]);
-                    }
-                }
-                
-                PhysicalPositionalToggler.prototype['init'] = function () {
-                
-                    var _togglerObj = this;
-                
-                    this.positionalButton.onclick = function () {
-                        var togglerObj = _togglerObj;
-                        togglerObj.positionalButton.classList.add("activeButton");
-                        togglerObj.physicalButton.classList.remove("activeButton");
-                        togglerObj.table.classList.remove ("showPhysical");
-                        togglerObj.table.classList.add ("showPositional");
-                        if (!togglerObj.cellsToHide_physical)
-                            togglerObj.updateCellsToHide();
-                            
-                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
-                            togglerObj.cellsToHide_physical[i].classList.remove("physPosVisible");
-                            togglerObj.cellsToHide_physical[i].classList.add("physPosHidden");
-                        }
-                            
-                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
-                            togglerObj.cellsToHide_positional[i].classList.remove("physPosHidden");
-                            togglerObj.cellsToHide_positional[i].classList.add("physPosVisible");
-                        }
-                    }
-                 
-                    this.physicalButton.onclick = function () {
-                        var togglerObj = _togglerObj;
-                        togglerObj.physicalButton.classList.add("activeButton");
-                        togglerObj.positionalButton.classList.remove("activeButton");
+"use strict";
 
-                        togglerObj.table.classList.remove ("showPositional");
-                        togglerObj.table.classList.add ("showPhysical");
-                        if (!togglerObj.cellsToHide_physical)
-                            togglerObj.updateCellsToHide();
+document.getElementById("JSDisabledPage").style.display = "none";
 
-                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
-                            togglerObj.cellsToHide_physical[i].classList.remove("physPosHidden");  
-                            togglerObj.cellsToHide_physical[i].classList.add("physPosVisible");
-                        }
-                            
-                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
-                            togglerObj.cellsToHide_positional[i].classList.remove("physPosVisible");
-                            togglerObj.cellsToHide_positional[i].classList.add("physPosHidden");
-                        }
-                    }
-                }
-            })();
-                
-            (function() {
-                var jupiterToggler = new PhysicalPositionalToggler("Jupiter Ephemeris");
-                jupiterToggler.init();
 
-                var marsToggler = new PhysicalPositionalToggler("Mars Ephemeris");
-                marsToggler.init();
-            })();    
-                
-
+ 
+function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
+    var pageElement = document.getElementById(pageId);
+    this.table = pageElement.getElementsByClassName("planetTable")[0];
+    this.cellsToHide_physical = false;
+    this.cellsToHide_positional = false;
     
-    PageTimeInterval = { "JD" :  false, "days" : false, "stepSize" : false };
+    this.positionalButton = pageElement.getElementsByClassName("positionalButton")[0];
+    this.physicalButton = pageElement.getElementsByClassName("physicalButton")[0];
+    if (typeof firstPhysicalColumnIndex == 'undefined')
+        this.firstPhysicalColumnIndex = 16;
+    else
+        this.firstPhysicalColumnIndex = firstPhysicalColumnIndex;
+}
 
-    var PageTimeInterval = {};
-    var Pages = {"addPlainPages" : function(titles){
-        for (var i = 0; i < titles.length; i++) {
-            var title = titles[i];
-            Pages[title] = {"displayPage" : function(){}};
+(function() {
+    PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
+        this.cellsToHide_physical = [];
+        this.cellsToHide_positional = [];
+        for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
+            var cells = this.table.rows[rowIndex].cells;
+            for (var colIndex = 16; colIndex < cells.length; colIndex++)
+                this.cellsToHide_physical.push(cells[colIndex]);
+            for (var colIndex = 0; colIndex < 16; colIndex++)
+                this.cellsToHide_positional.push(cells[colIndex]);
         }
-    }};
-
-    Pages.addPlainPages(["more", "settings", "home", "privacy", "Search results"]);
-
-    var previousPage = false;
-    var currentActiveLink = false;
-    
-    function gohome () {
-        document.getElementById("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
-                                                          "bubbles": true, 
-                                                          "cancelable": false }));
     }
     
-    document.getElementById ("applySettingsChanges").addEventListener("click", function() {
-        Location.Controls.commitUserValues();
-        TimeStepsData.Controls.commitUserValues();
-        // copy from timesteps data
-        if (typeof AAJS != 'undefined')
-            PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
-            
-        for (var pageKey in Pages){
-            var entry = Pages[pageKey];
-            if (entry && entry.reset) {
-                entry.reset();
+    PhysicalPositionalToggler.prototype['init'] = function () {
+    
+        var _togglerObj = this;
+    
+        this.positionalButton.onclick = function () {
+            var togglerObj = _togglerObj;
+            togglerObj.positionalButton.classList.add("activeButton");
+            togglerObj.physicalButton.classList.remove("activeButton");
+            togglerObj.table.classList.remove ("showPhysical");
+            togglerObj.table.classList.add ("showPositional");
+            if (!togglerObj.cellsToHide_physical)
+                togglerObj.updateCellsToHide();
+                
+            for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
+                togglerObj.cellsToHide_physical[i].classList.remove("physPosVisible");
+                togglerObj.cellsToHide_physical[i].classList.add("physPosHidden");
+            }
+                
+            for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
+                togglerObj.cellsToHide_positional[i].classList.remove("physPosHidden");
+                togglerObj.cellsToHide_positional[i].classList.add("physPosVisible");
             }
         }
+     
+        this.physicalButton.onclick = function () {
+            var togglerObj = _togglerObj;
+            togglerObj.physicalButton.classList.add("activeButton");
+            togglerObj.positionalButton.classList.remove("activeButton");
 
-        alert("New settings applied.");
-    });
+            togglerObj.table.classList.remove ("showPositional");
+            togglerObj.table.classList.add ("showPhysical");
+            if (!togglerObj.cellsToHide_physical)
+                togglerObj.updateCellsToHide();
+
+             for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
+                 togglerObj.cellsToHide_physical[i].classList.remove("physPosHidden");  
+                 togglerObj.cellsToHide_physical[i].classList.add("physPosVisible");
+             }
+                 
+             for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
+                 togglerObj.cellsToHide_positional[i].classList.remove("physPosVisible");
+                 togglerObj.cellsToHide_positional[i].classList.add("physPosHidden");
+             }
+         }
+     }
+
+     var jupiterToggler = new PhysicalPositionalToggler("Jupiter Ephemeris");
+     jupiterToggler.init();
+
+     var marsToggler = new PhysicalPositionalToggler("Mars Ephemeris");
+     marsToggler.init();
+ })();    
+                
+PageTimeInterval = { "JD" :  false, "days" : false, "stepSize" : false };
+
+var PageTimeInterval = {};
+var Pages = {"addPlainPages" : function(titles){
+    for (var i = 0; i < titles.length; i++) {
+        var title = titles[i];
+        Pages[title] = {"displayPage" : function(){}};
+    }
+}};
+
+Pages.addPlainPages(["more", "settings", "home", "privacy", "Search results"]);
+
+var previousPage = false;
+var currentActiveLink = false;
+
+function gohome () {
+    document.getElementById("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
+                                                      "bubbles": true, 
+                                                      "cancelable": false }));
+}
     
-    document.getElementById ("cancelSettingsChanges").addEventListener("click", function() {
-        Location.Controls.update();
-        TimeStepsData.Controls.update();
-
-        alert("Changes discarded.");
-    });
-
-    
-    if (!location.hash) {
-        gohome();
-    } 
-    
-    var sourceMenu = document.getElementById("navigation");
-    var oldScrollTop = 0;
-    
-    window.addEventListener("scroll", function() {
-        var scrolledTop = document.body.scrollTop;
-        var scrolled = scrolledTop >= 20;
-        var pageObj = false;
-        if (previousPage) {
-            pageObj = Pages [previousPage.id];
-            if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
-                if (scrolled) {
-                    // get the first two rows
-                    pageObj.hostElement.rows[0].classList.remove ("firstHeaderRow");
-                    pageObj.hostElement.rows[0].classList.add ("firstHeaderRowScrolled");
-
-                    pageObj.hostElement.rows[1].classList.remove ("secondHeaderRow");
-                    pageObj.hostElement.rows[1].classList.add ("secondHeaderRowScrolled");
-                } else {
-                    pageObj.hostElement.rows[0].classList.add ("firstHeaderRow");
-                    pageObj.hostElement.rows[0].classList.remove ("firstHeaderRowScrolled");
-
-                    pageObj.hostElement.rows[1].classList.add ("secondHeaderRow");
-                    pageObj.hostElement.rows[1].classList.remove ("secondHeaderRowScrolled");                    
-                }
-            }            
-        }
+document.getElementById ("applySettingsChanges").addEventListener("click", function() {
+    Location.Controls.commitUserValues();
+    TimeStepsData.Controls.commitUserValues();
+    // copy from timesteps data
+    if (typeof AAJS != 'undefined')
+        PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
         
-        if (scrolled) {
-            sourceMenu.classList.add ("withDropShadow");
-        } else {
-            sourceMenu.classList.remove ("withDropShadow");
+    for (var pageKey in Pages){
+        var entry = Pages[pageKey];
+        if (entry && entry.reset) {
+            entry.reset();
         }
-        
-        var hysterezis = 15;
-        // is it on a small screen?
-        if (scrolledTop > oldScrollTop + hysterezis && scrolledTop > 180 ) {
-            // scrolled down
-            sourceMenu.classList.add ("movedMenu");
-            if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
-                pageObj.hostElement.rows[0].classList.add ("movedMenu");
-                pageObj.hostElement.rows[1].classList.add ("movedMenu");
+    }
+
+    alert("New settings applied.");
+});
+
+document.getElementById ("cancelSettingsChanges").addEventListener("click", function() {
+    Location.Controls.update();
+    TimeStepsData.Controls.update();
+
+    alert("Changes discarded.");
+});
+
+
+if (!location.hash) {
+    gohome();
+} 
+
+var sourceMenu = document.getElementById("navigation");
+var oldScrollTop = 0;
+    
+window.addEventListener("scroll", function() {
+    var scrolledTop = document.body.scrollTop;
+    var scrolled = scrolledTop >= 20;
+    var pageObj = false;
+    if (previousPage) {
+        pageObj = Pages [previousPage.id];
+        if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
+            if (scrolled) {
+                // get the first two rows
+                pageObj.hostElement.rows[0].classList.remove ("firstHeaderRow");
+                pageObj.hostElement.rows[0].classList.add ("firstHeaderRowScrolled");
+
+                pageObj.hostElement.rows[1].classList.remove ("secondHeaderRow");
+                pageObj.hostElement.rows[1].classList.add ("secondHeaderRowScrolled");
+            } else {
+                pageObj.hostElement.rows[0].classList.add ("firstHeaderRow");
+                pageObj.hostElement.rows[0].classList.remove ("firstHeaderRowScrolled");
+
+                pageObj.hostElement.rows[1].classList.add ("secondHeaderRow");
+                pageObj.hostElement.rows[1].classList.remove ("secondHeaderRowScrolled");                    
             }
-        } else if (scrolledTop < oldScrollTop - hysterezis || scrolledTop < 180) {
-            // scrolled up
-            sourceMenu.classList.remove ("movedMenu");
-            if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
-                pageObj.hostElement.rows[0].classList.remove ("movedMenu");
-                pageObj.hostElement.rows[1].classList.remove ("movedMenu");
-            }
+        }            
+    }
+    
+    if (scrolled) {
+        sourceMenu.classList.add ("withDropShadow");
+    } else {
+        sourceMenu.classList.remove ("withDropShadow");
+    }
+    
+    var hysterezis = 15;
+    // is it on a small screen?
+    if (scrolledTop > oldScrollTop + hysterezis && scrolledTop > 180 ) {
+        // scrolled down
+        sourceMenu.classList.add ("movedMenu");
+        if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
+            pageObj.hostElement.rows[0].classList.add ("movedMenu");
+            pageObj.hostElement.rows[1].classList.add ("movedMenu");
         }
-        
-        oldScrollTop = scrolledTop;
-    });
-
-    document.getElementById("showNavigationMenu").onclick = function () {
-        var pageObj = Pages [previousPage.id];
+    } else if (scrolledTop < oldScrollTop - hysterezis || scrolledTop < 180) {
+    // scrolled up
         sourceMenu.classList.remove ("movedMenu");
         if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
             pageObj.hostElement.rows[0].classList.remove ("movedMenu");
@@ -1557,169 +1541,151 @@ title="opens in a new window">Bits of software</a><br>
         }
     }
     
-    function updateTimeAtAAJSLoad() {
-      
-            try {
-                PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
-            } catch (e) {
-                SyncedTimeOut (updateTimeAtAAJSLoad, Timeout.onInit);
-            }
+    oldScrollTop = scrolledTop;
+});
 
+document.getElementById("showNavigationMenu").onclick = function () {
+    var pageObj = Pages [previousPage.id];
+    sourceMenu.classList.remove ("movedMenu");
+    if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
+        pageObj.hostElement.rows[0].classList.remove ("movedMenu");
+        pageObj.hostElement.rows[1].classList.remove ("movedMenu");
     }
-    
-    updateTimeAtAAJSLoad();
-    
-/*    (function() {
-        // update menus
-        var sourceMenu = document.getElementById("navigation");
-        var destMenus = document.getElementsByClassName("navigation");
-        for (var i = 0; i < destMenus.length; i++) {
-            var currentMenuDest = destMenus[i];
-            for (var sourceNodeIndex = 0; sourceNodeIndex < sourceMenu.children.length; sourceNodeIndex++) {
-                currentMenuDest.appendChild(sourceMenu.children[sourceNodeIndex].cloneNode(true));
-            }
-        }
-    })();
-    */
+}
 
+function updateTimeAtAAJSLoad() {
+  
+        try {
+            PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
+        } catch (e) {
+            SyncedTimeOut (updateTimeAtAAJSLoad, Timeout.onInit);
+        }
 
-    function DisplayPage (pageName) {
-        var delayedDisplay = function () {
-            try {
-                Pages[pageName].displayPage();
-            } catch (err) {
-                SyncedTimeOut(delayedDisplay, Timeout.onInit);
-            }
-        }
-        delayedDisplay();
-    }
-    
-    function error404(pageName) {
-        document.getElementById("requestedresource").textContent = pageName;
-        var list = document.getElementById("searchsuggestions");
-        while(list.hasChildNodes()) {
-          list.removeChild(list.firstChild);
-        }
-        var rankedPages = PageRank.rank(pageName.split(" "));
-        for (var i = 0; i < rankedPages.length; i++) {
-            var li = PlanetPage.prototype["addNodeChild"](list, "li");
-            var anchor = PlanetPage.prototype["addNodeChild"](li, "a", rankedPages[i]);
-            anchor.setAttribute ("href", "#" + rankedPages[i]);
+}
+
+updateTimeAtAAJSLoad();
+
+function DisplayPage (pageName) {
+    var delayedDisplay = function () {
+        try {
+            Pages[pageName].displayPage();
+        } catch (err) {
+            SyncedTimeOut(delayedDisplay, Timeout.onInit);
         }
     }
+    delayedDisplay();
+}
 
-    function onhashchange(){
-        if (typeof PageRank == 'undefined') {
-            SyncedTimeOut(onhashchange, Timeout.onInit);
-        } else {
-            var searchFormInput = document.getElementById("searchTerms"); 
-            searchFormInput.classList.remove("visible");
-            searchFormInput.classList.add("hidden");
-            searchFormInput.value = "";
-
-            document.body.scrollTop = 0;
-            var hash = decodeURIComponent(location.hash);
-            var pageName = hash.slice(1);
-            if (pageName == "Search results") {
-                return;
-            }
-
-            previousPage = document.getElementById(pageName); 
-
-            if (previousPage){
-                DisplayPage (pageName);
-            } else {
-                error404 (pageName);
-                window.location.href = "#Search results"
-            }
-        }
+function error404(pageName) {
+    document.getElementById("requestedresource").textContent = pageName;
+    var list = document.getElementById("searchsuggestions");
+    while(list.hasChildNodes()) {
+      list.removeChild(list.firstChild);
     }
-    
-    window.addEventListener("hashchange", onhashchange, false);
-    if (location.hash)
+    var rankedPages = PageRank.rank(pageName.split(" "));
+    for (var i = 0; i < rankedPages.length; i++) {
+        var li = PlanetPage.prototype["addNodeChild"](list, "li");
+        var anchor = PlanetPage.prototype["addNodeChild"](li, "a", rankedPages[i]);
+        anchor.setAttribute ("href", "#" + rankedPages[i]);
+    }
+}
+
+function onhashchange(){
+    if (typeof PageRank == 'undefined') {
         SyncedTimeOut(onhashchange, Timeout.onInit);
-        
-  (function(){
-    var registerWorker = function () {
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
-               console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            }, function(err) {
-              // registration failed :(
-              console.log('ServiceWorker registration failed: ', err);              
-            });
-        }              
-    }
-    registerWorker();
+    } else {
+        var searchFormInput = document.getElementById("searchTerms"); 
+        searchFormInput.classList.remove("visible");
+        searchFormInput.classList.add("hidden");
+        searchFormInput.value = "";
 
-  })();
-
-  (function(){
-
-    var injectCssDom = function(url) {
-      var link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.type="text/css";
-      link.href=url;
-      document.body.appendChild(link);
-    }
-    
-    SyncedTimeOut (function(){injectCssDom("style/common.css"); }, Timeout.onInit);
-    SyncedTimeOut (function(){injectCssDom("style/default.css"); }, Timeout.onInit);
-    SyncedTimeOut (function(){injectCssDom("style/print.css"); }, Timeout.onInit);
-
-  })();
-
-
-   (function(){
-
-        var appInit = function() {
-            if (typeof Location == 'undefined' || typeof TimeStepsData == 'undefined' || typeof Notifications == 'undefined'
-                || !Location.init || !TimeStepsData.init) {
-                SyncedTimeOut (appInit, Timeout.onInit);
-            } else {
-                Location.init();
-                TimeStepsData.init();
-            }
+        document.body.scrollTop = 0;
+        var hash = decodeURIComponent(location.hash);
+        var pageName = hash.slice(1);
+        if (pageName == "Search results") {
+            return;
         }
 
-        appInit();
+        previousPage = document.getElementById(pageName); 
 
-        var now = new Date();        
-        document.getElementById("copyrightYear").textContent = now.getFullYear();
+        if (previousPage){
+            DisplayPage (pageName);
+        } else {
+            error404 (pageName);
+            window.location.href = "#Search results"
+        }
+    }
+}
 
-   })();
+window.addEventListener("hashchange", onhashchange, false);
+if (location.hash) SyncedTimeOut(onhashchange, Timeout.onInit);
+    
+(function(){
+   var registerWorker = function () {
+       if ('serviceWorker' in navigator) {
+           navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
+              console.log('ServiceWorker registration successful with scope: ', registration.scope);
+           }, function(err) {
+             // registration failed :(
+             console.log('ServiceWorker registration failed: ', err);              
+           });
+       }              
+   }
+   registerWorker();
+ 
+   var injectCssDom = function(url) {
+     SyncedTimeOut (function() {
+     var link = document.createElement("link");
+     link.rel = "stylesheet";
+     link.type="text/css";
+     link.href=url;
+     document.body.appendChild(link); }, Timeout.onInit);
+   }
+   
+   injectCssDom("style/common.css");
+   injectCssDom("style/default.css");
+   injectCssDom("style/print.css");
 
-  (function() {
-      var CACHE_PREFIX = 'Cache-for-ephemerides';
-      caches.keys().then(names => {
-          var versions = "version numbers: ";
-          for (var i = 0; i < names.length; i++) {
-              var name = names[i];
+   var appInit = function() {
+      if (typeof Location == 'undefined' || typeof TimeStepsData == 'undefined' || typeof Notifications == 'undefined'
+          || !Location.init || !TimeStepsData.init) {
+          SyncedTimeOut (appInit, Timeout.onInit);
+      } else {
+          Location.init();
+          TimeStepsData.init();
+      }
+   }
 
-                if (!name.startsWith(CACHE_PREFIX)) {
-                    continue;
-                }
+  appInit();
 
-              var versionPos = name.lastIndexOf('v');
-              if (versionPos < 0) {
-                  versionPos = name.lastIndexOf('-');
-              }
-              if (versionPos < 0) {
-                  continue;
-              }
-              versions += name.substring(versionPos + 1) + ", ";
+  var now = new Date();        
+  document.getElementById("copyrightYear").textContent = now.getFullYear();
+
+  var CACHE_PREFIX = 'Cache-for-ephemerides';
+  caches.keys().then(names => {
+      var versions = "version numbers: ";
+      for (var i = 0; i < names.length; i++) {
+          var name = names[i];
+
+            if (!name.startsWith(CACHE_PREFIX)) {
+                continue;
+            }
+
+          var versionPos = name.lastIndexOf('v');
+          if (versionPos < 0) {
+              versionPos = name.lastIndexOf('-');
           }
+          if (versionPos < 0) {
+              continue;
+          }
+          versions += name.substring(versionPos + 1) + ", ";
+      }
 
-          versions = versions.substring(0, versions.length - 2);
-          var div = document.createElement("div");
-          div.classList.add ("version");
-          div.textContent = versions;
-          document.body.appendChild(div);
-      });
-  })();
-
-
-
-
+      versions = versions.substring(0, versions.length - 2);
+      var div = document.createElement("div");
+      div.classList.add ("version");
+      div.textContent = versions;
+      document.body.appendChild(div);
+  });
+})();
 </script>
