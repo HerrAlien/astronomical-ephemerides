@@ -34,11 +34,11 @@ var SunData = { getSunEarthDistance : function() { return 1; } };
 var AAJSLoFi = {};
 
 (function () {
-    var CSYS = { x : 0, y : 1, z : 2 };
+    var CSYS = { x:0, y:1, z:2 };
     function Vector(x,y,z) { this.coords = [x, y, z]; }
     
-   Vector.prototype['translate'] = function (v, y, z) {
-           this.coords[CSYS.x] += v;
+   Vector.prototype['translate'] = function (x, y, z) {
+           this.coords[CSYS.x] += x;
            this.coords[CSYS.y] += y;
            this.coords[CSYS.z] += z;
    }
@@ -124,17 +124,12 @@ var AAJSLoFi = {};
             var $ = AAJSLoFi;
             var T = $.T(date);
             var degra = Math.PI/180;
-            // compute mean longitude
             var L = $.L(T, planet);
-            // then subtract node longitude
             var O = $.reduceQuadrantsDeg($.poly(T, planet.Lnode)) * degra;
             var m = (L - O) ;
-            // compute in orbit coordinates
             var v = new Vector(planet.r * Math.cos(m), planet.r * Math.sin(m), 0);
-            // rotate around X with the tilt, to drop back to the ecliptic
             var i = $.reduceQuadrantsDeg($.poly(T, planet.tilt)) * degra;
             v.rotate(CSYS.x, i);
-            // then rotate around Z with the node longitude, to match the vernal point. 
             v.rotate(CSYS.z, O);
             return v;
         },
@@ -155,7 +150,7 @@ var AAJSLoFi = {};
             var xyzCoords = $.geocentricEclipticXyz(date, planet);
             xyzCoords.rotate(CSYS.x, $.__planets.Earth.eps * degra );
             return [$.reduceQuadrantsDeg(radeg * Math.atan2(xyzCoords.coords[CSYS.y], xyzCoords.coords[CSYS.x])), 
-                    $.reduceQuadrants90Deg(radeg * Math.asin(xyzCoords.coords[CSYS.z] / xyzCoords.modulus()))];
+                    $.reduceQuadrants90Deg(radeg * Math.asin(xyzCoords.coords[CSYS.z] / xyzCoords.modulus())), xyzCoords.modulus()];
         },
 
         Elliptical : {
@@ -165,7 +160,9 @@ var AAJSLoFi = {};
                 var earth = $p.Earth;
                 var planets = [earth, earth, $p.Venus, $p.Mars, $p.Jupiter, $p.Saturn, earth, earth];
                 var coordsArr = $.equatorial (new Date(), planets[planetNumber]);
-                return {"ApparentGeocentricRA" : coordsArr[0] / 15, "ApparentGeocentricDeclination" : coordsArr[1], "ApparentGeocentricDistance" : 0};
+                return {"ApparentGeocentricRA" : coordsArr[0] / 15, 
+                        "ApparentGeocentricDeclination" : coordsArr[1], 
+                        "ApparentGeocentricDistance" : coordsArr[2]};
             }
         },
 
