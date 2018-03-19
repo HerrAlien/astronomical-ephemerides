@@ -68,26 +68,7 @@ var urlsToCache = [
 "images/ae-icon-192.png",
 "images/ae-icon-256.png",
 "images/ae-icon-512.png",
-"images/double-arrow.svg",
-"images/galilean-moons.svg",
-"images/home-3.svg",
-"images/icon.svg",
-"images/jupiter.svg",
-"images/loading.gif",
-"images/lunar-eclipse.svg",
-"images/magnifying-glass.svg",
-"images/mars.svg",
-"images/menu.svg",
-"images/mercury.svg",
-"images/moon.svg",
-"images/neptune.svg",
-"images/saturn.svg",
-"images/saturn-moons.svg",
-"images/settings.svg",
-"images/solar-eclipse.svg",
-"images/sun.svg",
-"images/uranus.svg",
-"images/venus.svg"
+"images/sprite.svg"
 ];
 
 self.addEventListener('install', function(event) {
