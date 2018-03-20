@@ -1529,8 +1529,8 @@
 
     <!-- -->
     
-    <g class="section" id="menu" transform="scale(6.4) translate(0, 6)">
-        <g height="64" width="80" stroke-width="9" stroke="#000000" >
+    <g class="section" id="menu" transform="scale(6.5) translate(0, 10)">
+        <g height="64" width="64" stroke-width="9" stroke="#000000" >
             <line y2="14" x2="9" y1="14" x1="71" />
             <line y2="32" x2="9" y1="32" x1="71" />
             <line y2="50" x2="9" y1="50" x1="71" />
