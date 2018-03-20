@@ -429,13 +429,14 @@ border-bottom: solid 1px #AAAAAA;
 }
 
  .promotedMenuLink {
-    float: left;
+    display: inline-block;
     margin-top: 2px;
     margin-left: 15px;
 }
 
  #promotedMenu {
     overflow-x: auto;
+    overflow-y: hidden;
     height: 90px;
     margin-top: 5px;
     border-radius: 45px;
@@ -443,11 +444,8 @@ border-bottom: solid 1px #AAAAAA;
     max-width: 1460px;
     margin-left: auto;
     margin-right: auto;
+    white-space: nowrap;
 }
-
-#promotedMenuScroller {
-        width: 3860px;
-    }
 
  .clear {
 	clear: both;
@@ -673,19 +671,11 @@ border-bottom: solid 1px #AAAAAA;
         overflow: hidden;
     }
 
-    #promotedMenuScroller {
-        width: 100%;
-    }
-
     #searchArea {
     border-left: none;
     /* expanded */
     }
 
-    #promotedMenu::after, 
-#promotedMenu::before {
-    display: none;
-}
 
   #searchArea {
       margin: 12px 0px 0px 0px;
@@ -846,7 +836,6 @@ border-bottom: solid 1px #AAAAAA;
             <a nohref="" id="searchButton"><img id="searchAreaImg" src="images/sprite.svg#magnifying-glass" alt="Search" /></a>
         </div>
         <div id="promotedMenu">
-            <div id="promotedMenuScroller">
             <a class="promotedMenuLink" href="#Sun Ephemeris"><div class="SunLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#sun" alt="Sun"></div></a>
             <a class="promotedMenuLink" href="#Moon Ephemeris"><div class="MoonLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#moon" alt="Moon"></div></a>
             <a class="promotedMenuLink" href="#Jupiter Ephemeris"><div class="JupiterLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#jupiter" alt="Jupiter"></div></a>
@@ -860,7 +849,6 @@ border-bottom: solid 1px #AAAAAA;
             <a class="promotedMenuLink" href="#Venus Ephemeris"><div class="VenusLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#venus"  alt="Venus"></div></a>
             <a class="promotedMenuLink" href="#Uranus Ephemeris"><div class="UranusLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#uranus" alt="Uranus"></div></a>
             <a class="promotedMenuLink" href="#Neptune Ephemeris"><div class="NeptuneLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#neptune" alt="Neptune"></div></a>
-            </div>
         </div>
     </div>
     <a nohref="" id="showNavigationMenu"><div id="showNavigationMenuContainer"><img id="showNavigationMenuContainerImg" src="images/sprite.svg#menu" alt="More ..."></div></a>
