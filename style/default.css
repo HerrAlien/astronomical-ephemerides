@@ -619,5 +619,12 @@ input[type=date]::-webkit-inner-spin-button {
     body {
         font-size: 24px;
     }
+tr.firstHeaderRowScrolled{
+    top: 104px;
+}
+
+tr.secondHeaderRowScrolled{
+    top: 124px;
+}
 }
 
