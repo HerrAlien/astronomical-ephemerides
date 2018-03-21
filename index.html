@@ -242,6 +242,9 @@ function GetAAJS() {
     var URL = document.URL;
     if (URL.slice(-11) == "ephemerides")
         location.href = URL + "/";
+    URL = location.href;
+    if (URL.indexOf("#") < 0)
+      location.href = "#home";
 })();
 
 </script>
@@ -271,6 +274,11 @@ function GetAAJS() {
     <link rel="apple-touch-startup-image" href="images/ae-icon-512.png" />
 
     <style>
+
+@font-face {
+    font-family: "Courier";
+    src: url('images/bulgarian-courier.ttf') format("truetype");
+}
     
  * {
     transition: 0.125s;
@@ -1356,8 +1364,6 @@ title="opens in a new window">Bits of software</a><br>
  <script>
 
 "use strict";
-
-window.location.href = "#home";
 
 var $get = function (id) { return document.getElementById(id); }
 $get("JSDisabledPage").style.display = "none";
