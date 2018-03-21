@@ -437,8 +437,9 @@ th {
 }
 
  #HomeLinkButtonTopmenulinkImg {
-    width: 90px;
-    height: 90px;
+    width: 120px;
+    height: 120px;
+
     margin-right: 20px;
 }
 
@@ -594,10 +595,10 @@ border-bottom: solid 1px #AAAAAA;
 }
 
 #searchAreaImg {
-    width:62px;
+    width:64px;
     float: left;
     margin-left: 10px;
-    height: 62px;
+    height: 64px;
 }
 
 #searchTerms {
@@ -621,7 +622,7 @@ border-bottom: solid 1px #AAAAAA;
 }
 
  .MenuLinkDiv {
-    margin-top: 2px;
+    display: none;
 }
 
  .promotedMenuLink {
@@ -633,14 +634,45 @@ border-bottom: solid 1px #AAAAAA;
  #promotedMenu {
     overflow-x: auto;
     overflow-y: hidden;
-    height: 115px;
-    margin-top: 5px;
-    border-radius: 25px;
-    background: #f0f0f0;
     max-width: 1460px;
     margin-left: auto;
     margin-right: auto;
     white-space: nowrap;
+}
+
+#promotedMenu::after, #promotedMenu::before {
+  display: inline-block;
+  position: fixed;
+  font-size: 50px;
+  height: 115px;
+  padding-top: 15px;
+  top: 0px;
+  color: #006dff;
+}
+
+#promotedMenu::after {
+    right: 160px;
+    content: ">";
+}
+
+#promotedMenu::before {
+    content: "<";
+}
+
+.movedMenu #promotedMenu::after, .movedMenu #promotedMenu::before {
+  top: -200px;
+}
+
+#promotedMenu.noRight::after {
+  display: none;
+}
+
+#promotedMenu.noLeft::before {
+  display: none;
+}
+
+#promotedMenu.searchTermsVisible::after{
+  right: 380px;
 }
 
  .clear {
@@ -683,7 +715,6 @@ border-bottom: solid 1px #AAAAAA;
     .rightNowFrontPageWidget::-webkit-scrollbar {
         width: 3px;
     }
-
 }
     
  #rightNowFrontPage {
@@ -835,11 +866,27 @@ border-bottom: solid 1px #AAAAAA;
     visibility: visible;
 }
 
+  #searchArea::after{
+      content: "Search";
+      display: block;
+      font-size: 18px;
+      text-align: right;
+  }
+  
+  #searchArea:hover::after{
+      text-decoration: none;
+  }
+
 @media screen and (min-width: 937px) {
     #promotedMenu {
-        overflow: hidden;
+      overflow: hidden;
       height: 90px;
     }
+
+     #HomeLinkButtonTopmenulinkImg {
+    width: 90px;
+    height: 90px;
+     }
 
     #searchArea {
     border-left: none;
@@ -868,23 +915,21 @@ border-bottom: solid 1px #AAAAAA;
       max-width: 220px;
   }
   
-  #searchArea::after{
-      content: "Search";
-      display: block;
-      font-size: 18px;
-      text-align: right;
+  .scrollableRT {
+      margin-top: 50px;
   }
-  
-  #searchArea:hover::after{
-      text-decoration: none;
+  .promotedMenuLink {
+    float: left;
   }
 
-.scrollableRT {
-    margin-top: 50px;
-}
-.promotedMenuLink {
-  float: left;
-}
+  .MenuLinkDiv {
+    display: block;
+    margin-top: 2px;
+  }
+
+  #promotedMenu::after, #promotedMenu::before {
+    display: none;
+  }
 }
 
  @media screen and (min-width: 1900px)  {
@@ -920,7 +965,6 @@ border-bottom: solid 1px #AAAAAA;
 #credits, #home {
     text-align: justify;
 }
-
     </style>
     
 
@@ -982,9 +1026,9 @@ border-bottom: solid 1px #AAAAAA;
 
 <body>
     <div id="navigation">
-        <a href="#home" id="HomeLink"><div class="HomeLinkButton topmenulink linkButton"><img id="HomeLinkButtonTopmenulinkImg" src="images/sprite.svg#icon" alt="Home"></div></a>
-        <a href="#settings"><div class="SettingsLink topmenulink linkButton"><img src="images/sprite.svg#settings" id="SettingsLinkTopmenulinkImg" class="linkButtonImg" alt="Settings"></div></a>
-        <a href="#more" id="MenuLink"><div class="MenuLinkDiv topmenulink linkButton"><img src="images/sprite.svg#menu" id="MenuLinkDivTopmenulinkImg" class="linkButtonImg"  alt="More ..."></div></a>
+        <a href="#home" id="HomeLink" title="Home" alt="Home"><div class="HomeLinkButton topmenulink linkButton"><img id="HomeLinkButtonTopmenulinkImg" src="images/sprite.svg#icon" alt="Home"></div></a>
+        <a href="#settings" title="Settings" alt="Settings"><div class="SettingsLink topmenulink linkButton"><img src="images/sprite.svg#settings" id="SettingsLinkTopmenulinkImg" class="linkButtonImg" alt="Settings"></div></a>
+        <a href="#more" id="MenuLink" title="More ..." alt="More ..."><div class="MenuLinkDiv topmenulink linkButton"><img src="images/sprite.svg#menu" id="MenuLinkDivTopmenulinkImg" class="linkButtonImg"  alt="More ..."></div></a>
         <div id="searchArea" class="linkButton">
             <input type="text" class="hidden" id="searchTerms" placeholder="   [Search]"/>
             <a nohref="" id="searchButton"><img id="searchAreaImg" src="images/sprite.svg#magnifying-glass" alt="Search" /></a>
@@ -1504,10 +1548,7 @@ function updateTimeAtAAJSLoad() {
             SyncedTimeOut (updateTimeAtAAJSLoad, Timeout.onInit);
         }
 
-}
-
 updateTimeAtAAJSLoad();
-
 function DisplayPage (pageName) {
     var delayedDisplay = function () {
         try {
@@ -1561,6 +1602,27 @@ function onhashchange(){
 
 window.addEventListener("hashchange", onhashchange, false);
 if (location.hash) SyncedTimeOut(onhashchange, Timeout.onInit);
+
+    (function(){
+      var menu = document.getElementById("promotedMenu");
+      function toggleArrows(){
+          if (menu.scrollLeft < 30) {
+            menu.classList.add("noLeft");
+          } else {
+            menu.classList.remove("noLeft");
+          }
+
+          if (menu.scrollLeft > 1150) {
+            menu.classList.add("noRight");
+          } else {
+            menu.classList.remove("noRight");
+          }
+      }
+
+      menu.addEventListener("scroll", function() { requestAnimationFrame(toggleArrows); }, false);
+      toggleArrows();
+
+    })();
     
 (function(){
    var registerWorker = function () {
