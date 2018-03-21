@@ -1547,8 +1547,10 @@ function updateTimeAtAAJSLoad() {
         } catch (e) {
             SyncedTimeOut (updateTimeAtAAJSLoad, Timeout.onInit);
         }
+}
 
 updateTimeAtAAJSLoad();
+
 function DisplayPage (pageName) {
     var delayedDisplay = function () {
         try {
