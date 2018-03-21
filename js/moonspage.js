@@ -41,7 +41,7 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
     MoonsPage.prototype["displayPage"] = function () {
         
         var pageObj = this;
-        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
+        if (typeof GetAAJS() == "undefined" || !GetAAJS().AllDependenciesLoaded() || !PageTimeInterval.JD)
             return SyncedTimeOut (function() { pageObj.displayPage(); }, Timeout.onInit);
 
         var startJD = PageTimeInterval.JD;

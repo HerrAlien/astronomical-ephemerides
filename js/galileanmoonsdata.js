@@ -21,7 +21,7 @@ var GalileanMoonsData = {};
 (function(){
     var localInit = function () {
         try {
-            GalileanMoonsData = new MoonsData (function (JD, highPrecision) { if (typeof AAJS != "undefined") return AAJS.GalileanMoons.Calculate(JD, highPrecision); } );
+            GalileanMoonsData = new MoonsData (function (JD, highPrecision) { if (typeof GetAAJS() != "undefined") return GetAAJS().GalileanMoons.Calculate(JD, highPrecision); } );
         } catch (err) {
             SyncedTimeOut (localInit, Timeout.onInit);
         }

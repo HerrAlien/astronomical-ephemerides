@@ -26,12 +26,13 @@ var JDForRealTimeView = {
     recomputeTimes : function () {
         if (typeof AAJS != 'undefined' && AAJS.AllDependenciesLoaded && AAJS.AllDependenciesLoaded()) {
             JDForRealTimeView.updateTimeInterval = 10000;
+        }
             var rightNow = new Date();
             var y = rightNow.getUTCFullYear();
             var m = 1 + rightNow.getUTCMonth();
             var d = rightNow.getUTCDate();
 
-            var jdT3 = AAJS.Date.DateToJD (y, m, d, true);
+            var jdT3 = GetAAJS().Date.DateToJD (y, m, d, true);
             var spanBetweenComputedTimes = 1; // [days] - one full day
             // get the T1
             var jdT2 = jdT3 - spanBetweenComputedTimes;
@@ -42,7 +43,7 @@ var JDForRealTimeView = {
             
             var n = (rightNow.getUTCHours() + (rightNow.getUTCMinutes() + (rightNow.getUTCSeconds() + rightNow.getUTCMilliseconds()/1000)/60)/60)/24;
             JDForRealTimeView.onRecomputedTimes.notify ({"T1" : jdT1, "T2" : jdT2, "T3" : jdT3,"T4" : jdT4, "T5" : jdT5, "n" : n});
-        }
+            
         SyncedTimeOut (JDForRealTimeView.recomputeTimes, JDForRealTimeView.updateTimeInterval );
     }
 };
@@ -66,7 +67,7 @@ var JDForRealTimeView = {
         }
         
         DataForNow.prototype['updateData'] = function (datesObj) {
-            if (typeof AAJS != 'undefined') {
+            if (typeof GetAAJS() != 'undefined') {
 
                 var obj1 = this.dataSource.getDataAsObjectForJD (datesObj.T1, true);
                 var obj2 = this.dataSource.getDataAsObjectForJD (datesObj.T2, true);

@@ -266,12 +266,12 @@ function PlanetPage (planetDataSource, tableName) {
         displayableLine[1] = obj.Day;
         
         var di = 2;
-        var sexagesimalRA = AAJS.Numerical.ToSexagesimal(Math.round(obj.RA * 36000)/36000);
+        var sexagesimalRA = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.RA * 36000)/36000);
         displayableLine[di++] = sexagesimalRA.Ord3 ;
         displayableLine[di++] = sexagesimalRA.Ord2 
         displayableLine[di++] = sexagesimalRA.Ord1;
 
-        var sexagesimalDec = AAJS.Numerical.ToSexagesimal(Math.round(obj.Dec * 3600)/3600);
+        var sexagesimalDec = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.Dec * 3600)/3600);
         displayableLine[di++] = sexagesimalDec.Ord3 ;
         displayableLine[di++] = sexagesimalDec.Ord2;
         displayableLine[di++] = sexagesimalDec.Ord1;
@@ -282,8 +282,8 @@ function PlanetPage (planetDataSource, tableName) {
         displayableLine[di++] = this.timeToHhColumnMm(obj.MeridianTransit);
         displayableLine[di++] = this.timeToHhColumnMm(obj.Set);
         
-        displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.DistanceToEarth);
-        displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.DistanceToSun);
+        displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals (obj.DistanceToEarth);
+        displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals (obj.DistanceToSun);
         
         // is it east or is it west?
         var cardinalCoordinateRelativeToSun = "W";
@@ -305,8 +305,8 @@ function PlanetPage (planetDataSource, tableName) {
         if (sunRA < planetRA )
             cardinalCoordinateRelativeToSun = "E";
         
-        displayableLine[di++] = AAJS.Numerical.RoundTo1Decimal (obj.Elongation * 180 / Math.PI) + " " + cardinalCoordinateRelativeToSun;
-        displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.Phase);
+        displayableLine[di++] = GetAAJS().Numerical.RoundTo1Decimal (obj.Elongation * 180 / Math.PI) + " " + cardinalCoordinateRelativeToSun;
+        displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals (obj.Phase);
         
         return displayableLine;
     };
@@ -321,7 +321,7 @@ function PlanetPage (planetDataSource, tableName) {
     
     PlanetPage.prototype["timeToHhColumnMm"] = function (timeHdotHhh) {
         var roundedTime = Math.round(timeHdotHhh * 60) / 60;
-        var roundedTimeObj = AAJS.Numerical.ToSexagesimal (roundedTime);
+        var roundedTimeObj = GetAAJS().Numerical.ToSexagesimal (roundedTime);
         return (roundedTimeObj.Ord3 >= 10 ? roundedTimeObj.Ord3 : "0" + roundedTimeObj.Ord3) + ":" +
                (roundedTimeObj.Ord2 >= 10 ? roundedTimeObj.Ord2 : "0" + roundedTimeObj.Ord2)
     };
@@ -331,13 +331,13 @@ function PlanetPage (planetDataSource, tableName) {
         var dayFraction = JD - fullDayJD;
         if (dayFraction < 0) dayFraction += 1;
         
-        var dateOfJD =  AAJS.Date.JD2Date(fullDayJD);
+        var dateOfJD =  GetAAJS().Date.JD2Date(fullDayJD);
 
         if (dateOfJD.M < 10) dateOfJD.M = "0" + dateOfJD.M;
         if (dateOfJD.D < 10) dateOfJD.D = "0" + dateOfJD.D;
         
         var roundedTime = Math.round(dayFraction * 24 * 60) / 60;
-        var sexagesimalTime = AAJS.Numerical.ToSexagesimal (roundedTime);
+        var sexagesimalTime = GetAAJS().Numerical.ToSexagesimal (roundedTime);
 
         if (sexagesimalTime.Ord3 < 10) sexagesimalTime.Ord3 = "0" + sexagesimalTime.Ord3;
         if (sexagesimalTime.Ord2 < 10) sexagesimalTime.Ord2 = "0" + sexagesimalTime.Ord2;

@@ -35,7 +35,7 @@ var SolarEclipsesPage = {
         var startJD = PageTimeInterval.JD;
         var numberOfConjunctions =  Math.round(PageTimeInterval.days / MoonEclipsesPage.dataSource.sinodicPeriod);
 
-        var startK = AAJS.Moon.kForJD (startJD);
+        var startK = GetAAJS().Moon.kForJD (startJD);
         if (startK < 0)
             startK = -1 * Math.ceil(Math.abs(startK));
         else

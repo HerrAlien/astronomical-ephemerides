@@ -23,7 +23,7 @@ var VenusData = {};
 	var localInit = function() {
 		if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
 			VenusData = new PlanetData({ number: 2, name: "Venus", 
-									   semidiameterFunctionName :   function (delta) { if (typeof AAJS != "undefined") return AAJS.Diameters.VenusSemidiameterB (delta); } } );		
+									   semidiameterFunctionName :   function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.VenusSemidiameterB (delta); } } );		
 
 			var Page = new PlanetPage (VenusData, "VenusTable");
 			Pages["Venus Ephemeris"] = Page;
