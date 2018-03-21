@@ -1356,6 +1356,9 @@ title="opens in a new window">Bits of software</a><br>
  <script>
 
 "use strict";
+
+window.location.href = "#home";
+
 var $get = function (id) { return document.getElementById(id); }
 $get("JSDisabledPage").style.display = "none";
 
@@ -1606,7 +1609,8 @@ window.addEventListener("hashchange", onhashchange, false);
 if (location.hash) SyncedTimeOut(onhashchange, Timeout.onInit);
 
     (function(){
-      var menu = document.getElementById("promotedMenu");
+      var menu = $get("promotedMenu");
+      var rightLimit = menu.scrollWidth - menu.clientWidth - 30;
       function toggleArrows(){
           if (menu.scrollLeft < 30) {
             menu.classList.add("noLeft");
@@ -1614,7 +1618,7 @@ if (location.hash) SyncedTimeOut(onhashchange, Timeout.onInit);
             menu.classList.remove("noLeft");
           }
 
-          if (menu.scrollLeft > 1150) {
+          if (menu.scrollLeft > rightLimit) {
             menu.classList.add("noRight");
           } else {
             menu.classList.remove("noRight");
