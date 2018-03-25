@@ -1115,14 +1115,13 @@ border-bottom: solid 1px #AAAAAA;
                
             </div>
              <div class="clear maxWidth">&nbsp;</div>
-            <br/>
-            Astronomical Ephemerides is a JavaScript utility to calculate ephemerides for the major objects of the solar system. It uses an <a href="https://bitbucket.org/herr_alien/jsaaplus" target="_blank" rel="noopener" title="opens in a new window">Emscripten port</a> of the <a href="http://www.naughter.com/aa.html" target="_blank" rel="noopener" title="opens in a new window">AA+ library (version 1.80)</a>. More about Emscripten <a href="http://kripken.github.io/emscripten-site/" target="_blank" rel="noopener" title="opens in a new window">here</a>.<br/>
-        <br/>
-        The following rules stand for the data computed by the application:
         <ul>
+            <li>Positions are expressed as geocentric apparent equatorial coordinates, unless stated otherwise.</li>
             <li>Unless specified otherwise, all times (transits, eclipses, occultations etc.) are in UTC.</li>
             <li>Transits are computed for any given day as the first transit to occur after the given date. This means that they might occur in the following day.</li>
         </ul>
+            Astronomical Ephemerides computes ephemerides for the major objects of the solar system, using an <a href="https://bitbucket.org/herr_alien/jsaaplus" target="_blank" rel="noopener" title="opens in a new window">Emscripten port</a> of the <a href="http://www.naughter.com/aa.html" target="_blank" rel="noopener" title="opens in a new window">AA+ library (version 1.80)</a>. More about Emscripten <a href="http://kripken.github.io/emscripten-site/" target="_blank" rel="noopener" title="opens in a new window">on their site</a>.<br/>
+        <br/>
             <div id="credits">
             Copyright (C) 2018  Alexandru Garofide &lt;<a href="mailto:alexandru.garofide@gmail.com">alexandru.garofide@gmail.com</a>&gt;<br/>
         <br/>
@@ -1616,7 +1615,6 @@ if (location.hash) SyncedTimeOut(onhashchange, Timeout.onInit);
 
     (function(){
       var menu = $get("promotedMenu");
-      var rightLimit = menu.scrollWidth - menu.clientWidth - 30;
       function toggleArrows(){
           if (menu.scrollLeft < 30) {
             menu.classList.add("noLeft");
@@ -1624,6 +1622,7 @@ if (location.hash) SyncedTimeOut(onhashchange, Timeout.onInit);
             menu.classList.remove("noLeft");
           }
 
+          var rightLimit = menu.scrollWidth - menu.clientWidth - 30;
           if (menu.scrollLeft > rightLimit) {
             menu.classList.add("noRight");
           } else {
