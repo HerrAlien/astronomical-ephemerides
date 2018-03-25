@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 (function() {
 var CACHE_PREFIX = 'Cache-for-ephemerides';
-var CACHE_VERSION = '135';
+var CACHE_VERSION = '142';
 var CACHE_NAME = CACHE_PREFIX + '-' + CACHE_VERSION;
 
 var optionalUrlsToCache = [
@@ -63,6 +63,7 @@ var urlsToCache = [
 "js/timeinput.js",
 "js/uranus.js",
 "js/venus.js",
+"images/bulgarian-courier.ttf",
 "images/ae-icon.png",
 "images/ae-icon-144.png",
 "images/ae-icon-192.png",
