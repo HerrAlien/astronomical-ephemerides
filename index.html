@@ -144,7 +144,7 @@ var AAJSLoFi = {};
             var xyzCoords = $.geocentricEclipticXyz(date, planet);
             xyzCoords.rotate(CSYS.x, $.__planets.Earth.eps * degra );
             return [$.reduceQuadrantsDeg(radeg * Math.atan2(xyzCoords.coords[CSYS.y], xyzCoords.coords[CSYS.x])), 
-                    $.reduceQuadrants90Deg(radeg * Math.asin(xyzCoords.coords[CSYS.z] / xyzCoords.modulus())), xyzCoords.modulus()];
+                    $.reduceQuadrants90Deg(radeg * Math.asin(xyzCoords.coords[CSYS.z] / xyzCoords.modulus()))];
         },
 
         Elliptical : {
@@ -155,8 +155,7 @@ var AAJSLoFi = {};
                 var planets = [earth, earth, $p.Venus, $p.Mars, $p.Jupiter, $p.Saturn, earth, earth];
                 var coordsArr = $.equatorial (new Date(), planets[planetNumber]);
                 return {"ApparentGeocentricRA" : coordsArr[0] / 15, 
-                        "ApparentGeocentricDeclination" : coordsArr[1], 
-                        "ApparentGeocentricDistance" : coordsArr[2]};
+                        "ApparentGeocentricDeclination" : coordsArr[1]};
             }
         },
 
