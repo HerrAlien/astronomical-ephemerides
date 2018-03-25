@@ -45,29 +45,22 @@ var AAJSLoFi = {};
    }
 
    Vector.prototype['rotate'] = function (axis, angle) {
-       var newCoords = [];
+       var c = this.coords;
        var cosAngle = Math.cos(angle);
        var sinAngle = Math.sin(angle);
        if (axis == CSYS.x) {
-           newCoords = [this.coords[CSYS.x], 
-                        this.coords[CSYS.y] * cosAngle - this.coords[CSYS.z] * sinAngle,
-                        this.coords[CSYS.y] * sinAngle + this.coords[CSYS.z] * cosAngle];
+           c = [c[CSYS.x], c[CSYS.y] * cosAngle - c[CSYS.z] * sinAngle, c[CSYS.y] * sinAngle + c[CSYS.z] * cosAngle];
        } else if (axis == CSYS.y) {
-           newCoords = [this.coords[CSYS.x] * cosAngle + this.coords[CSYS.z] * sinAngle, 
-                        this.coords[CSYS.y],
-                        -this.coords[CSYS.x] * sinAngle + this.coords[CSYS.z] * cosAngle];
+           c = [c[CSYS.x] * cosAngle + c[CSYS.z] * sinAngle, c[CSYS.y], -c[CSYS.x] * sinAngle + c[CSYS.z] * cosAngle];
        } else if (axis == CSYS.z) {
-           newCoords = [this.coords[CSYS.x] * cosAngle - this.coords[CSYS.y] * sinAngle, 
-                        this.coords[CSYS.x] * sinAngle + this.coords[CSYS.y] * cosAngle,
-                        this.coords[CSYS.z]];
+           c = [c[CSYS.x] * cosAngle - c[CSYS.y] * sinAngle, c[CSYS.x] * sinAngle + c[CSYS.y] * cosAngle, c[CSYS.z]];
        }
-       this.coords = newCoords;
+       this.coords = c;
    }
 
    Vector.prototype['modulus'] = function() {
-       return Math.sqrt((this.coords[CSYS.x] * this.coords[CSYS.x]) +
-                        (this.coords[CSYS.y] * this.coords[CSYS.y]) +
-                        (this.coords[CSYS.z] * this.coords[CSYS.z]));
+     var c = this.coords;
+     return Math.sqrt((c[CSYS.x] * c[CSYS.x]) + (c[CSYS.y] * c[CSYS.y]) + (c[CSYS.z] * c[CSYS.z]));
    }
 
     AAJSLoFi = {
