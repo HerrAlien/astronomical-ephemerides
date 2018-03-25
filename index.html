@@ -34,184 +34,185 @@ var SunData = { getSunEarthDistance : function() { return 1; } };
 var AAJSLoFi = {};
 
 (function () {
-    var CSYS = { x:0, y:1, z:2 };
-    function Vector(x,y,z) { this.coords = [x, y, z]; }
-    function zero() { return 0; }
-    
-   Vector.prototype['translate'] = function (x, y, z) {
-           this.coords[CSYS.x] += x;
-           this.coords[CSYS.y] += y;
-           this.coords[CSYS.z] += z;
-   }
 
-   Vector.prototype['rotate'] = function (axis, angle) {
-       var c = this.coords;
-       var cosAngle = Math.cos(angle);
-       var sinAngle = Math.sin(angle);
-       if (axis == CSYS.x) {
-           c = [c[CSYS.x], c[CSYS.y] * cosAngle - c[CSYS.z] * sinAngle, c[CSYS.y] * sinAngle + c[CSYS.z] * cosAngle];
-       } else if (axis == CSYS.y) {
-           c = [c[CSYS.x] * cosAngle + c[CSYS.z] * sinAngle, c[CSYS.y], -c[CSYS.x] * sinAngle + c[CSYS.z] * cosAngle];
-       } else if (axis == CSYS.z) {
-           c = [c[CSYS.x] * cosAngle - c[CSYS.y] * sinAngle, c[CSYS.x] * sinAngle + c[CSYS.y] * cosAngle, c[CSYS.z]];
-       }
-       this.coords = c;
-   }
+var CSYS = { x:0, y:1, z:2 };
+function Vector(x,y,z) { this.coords = [x, y, z]; }
+function zero() { return 0; }
+ 
+Vector.prototype['translate'] = function (x, y, z) {
+        this.coords[CSYS.x] += x;
+        this.coords[CSYS.y] += y;
+        this.coords[CSYS.z] += z;
+}
 
-   Vector.prototype['modulus'] = function() {
-     var c = this.coords;
-     return Math.sqrt((c[CSYS.x] * c[CSYS.x]) + (c[CSYS.y] * c[CSYS.y]) + (c[CSYS.z] * c[CSYS.z]));
-   }
+Vector.prototype['rotate'] = function (axis, angle) {
+    var c = this.coords;
+    var cosAngle = Math.cos(angle);
+    var sinAngle = Math.sin(angle);
+    if (axis == CSYS.x) {
+        c = [c[CSYS.x], c[CSYS.y] * cosAngle - c[CSYS.z] * sinAngle, c[CSYS.y] * sinAngle + c[CSYS.z] * cosAngle];
+    } else if (axis == CSYS.y) {
+        c = [c[CSYS.x] * cosAngle + c[CSYS.z] * sinAngle, c[CSYS.y], -c[CSYS.x] * sinAngle + c[CSYS.z] * cosAngle];
+    } else if (axis == CSYS.z) {
+        c = [c[CSYS.x] * cosAngle - c[CSYS.y] * sinAngle, c[CSYS.x] * sinAngle + c[CSYS.y] * cosAngle, c[CSYS.z]];
+    }
+    this.coords = c;
+}
 
-    AAJSLoFi = {
-        DATE_JD_2000 : Date.parse ("January 1, 2000") + 1000 * 3600 * 12,
-        T : function (date) {
-            return (date.getTime() - AAJSLoFi.DATE_JD_2000) / (36525 * 1000 * 3600 * 24);
+Vector.prototype['modulus'] = function() {
+  var c = this.coords;
+  return Math.sqrt((c[CSYS.x] * c[CSYS.x]) + (c[CSYS.y] * c[CSYS.y]) + (c[CSYS.z] * c[CSYS.z]));
+}
+
+AAJSLoFi = {
+    DATE_JD_2000 : Date.parse ("January 1, 2000") + 1000 * 3600 * 12,
+    T : function (date) {
+        return (date.getTime() - AAJSLoFi.DATE_JD_2000) / (36525 * 1000 * 3600 * 24);
+    },
+
+    __planets : {
+        Mercury : {
+             MeanL : [252.250906, 149474.0722491, 0.00030397, 0.000000018],
+             r : 0.387098310,
+             tilt : [7.004986, 0.0018215, -0.00001809, 0.000000053],
+             Lnode : [48.330893, 1.1861890, 0.00029589, 0.000000211]
         },
+        Venus : {
+            MeanL : [181.979801, 58519.2130302, 0.00031060, 0.000000015],
+            r : 0.723329820,
+            tilt : [3.394662, 0.0010037, -0.00000088, -0.000000007],
+            Lnode : [76.679920, 0.9011190, 0.00040665, -0.000000080]
+        },
+        Earth : {
+            MeanL : [100.466449, 36000.7698231, 0.00030368, 0.000000021],
+            r : 1,
+            tilt : [0, 0, 0, 0],
+            Lnode : [0, 0, 0, 0],
+            eps : 23.4402297
+        },
+        Mars : {
+            MeanL : [355.433275, 19141.6964746, 0.00031097, 0.000000015],
+            r : 1.523679342,
+            tilt : [1.849726, -0.0006010, 0.00001276, -0.000000006],
+            Lnode : [49.558093, 0.7270923, 0.00001605, 0.000000318]
+        },
+        Jupiter : {
+            MeanL : [34.351484, 3036.3027889, 0.00022374, 0.000000025],
+            r : 5.202603191,
+            tilt : [1.303270, -0.0054966, 0.00000465, -0.000000004],
+            Lnode : [100.464441, 1.0209550, 0.00040117, 0.000000569]
+        },
+        Saturn : {
+            MeanL : [50.077471, 1223.5110141, 0.00051952, -0.000000003],
+            r : 9.554909596,
+            tilt : [2.488878, -0.0037363, -0.00001516, 0.000000089],
+            Lnode : [113.665524, 0.8770979, -0.00012067, -0.000002380]
+        },
+    }, 
 
-        __planets : {
-            Mercury : {
-                 MeanL : [252.250906, 149474.0722491, 0.00030397, 0.000000018],
-                 r : 0.387098310,
-                 tilt : [7.004986, 0.0018215, -0.00001809, 0.000000053],
-                 Lnode : [48.330893, 1.1861890, 0.00029589, 0.000000211]
-            },
-            Venus : {
-                MeanL : [181.979801, 58519.2130302, 0.00031060, 0.000000015],
-                r : 0.723329820,
-                tilt : [3.394662, 0.0010037, -0.00000088, -0.000000007],
-                Lnode : [76.679920, 0.9011190, 0.00040665, -0.000000080]
-            },
-            Earth : {
-                MeanL : [100.466449, 36000.7698231, 0.00030368, 0.000000021],
-                r : 1,
-                tilt : [0, 0, 0, 0],
-                Lnode : [0, 0, 0, 0],
-                eps : 23.4402297
-            },
-            Mars : {
-                MeanL : [355.433275, 19141.6964746, 0.00031097, 0.000000015],
-                r : 1.523679342,
-                tilt : [1.849726, -0.0006010, 0.00001276, -0.000000006],
-                Lnode : [49.558093, 0.7270923, 0.00001605, 0.000000318]
-            },
-            Jupiter : {
-                MeanL : [34.351484, 3036.3027889, 0.00022374, 0.000000025],
-                r : 5.202603191,
-                tilt : [1.303270, -0.0054966, 0.00000465, -0.000000004],
-                Lnode : [100.464441, 1.0209550, 0.00040117, 0.000000569]
-            },
-            Saturn : {
-                MeanL : [50.077471, 1223.5110141, 0.00051952, -0.000000003],
-                r : 9.554909596,
-                tilt : [2.488878, -0.0037363, -0.00001516, 0.000000089],
-                Lnode : [113.665524, 0.8770979, -0.00012067, -0.000002380]
-            },
-        }, 
+    L : function (T, planet) {
+        var $ = AAJSLoFi;
+        return $.reduceQuadrantsDeg($.poly(T, planet.MeanL)) * Math.PI/180;
+    },
 
-        L : function (T, planet) {
+    heliocentricXyz : function (date, planet) {
+        var $ = AAJSLoFi;
+        var T = $.T(date);
+        var degra = Math.PI/180;
+        var L = $.L(T, planet);
+        var O = $.reduceQuadrantsDeg($.poly(T, planet.Lnode)) * degra;
+        var m = (L - O) ;
+        var v = new Vector(planet.r * Math.cos(m), planet.r * Math.sin(m), 0);
+        var i = $.reduceQuadrantsDeg($.poly(T, planet.tilt)) * degra;
+        v.rotate(CSYS.x, i);
+        v.rotate(CSYS.z, O);
+        return v;
+    },
+
+    geocentricEclipticXyz : function (date, planet) {
+        var $ = AAJSLoFi;
+        var helioXyz = $.heliocentricXyz (date, planet);
+        var earthXyz = $.heliocentricXyz(date, $.__planets.Earth);
+        var geoXyz = helioXyz;
+        geoXyz.translate(-earthXyz.coords[CSYS.x], -earthXyz.coords[CSYS.y], -earthXyz.coords[CSYS.z]);
+        return geoXyz;
+    },
+
+    equatorial : function (date, planet) {
+        var $ = AAJSLoFi;
+        var radeg = 180 / Math.PI;
+        var degra = Math.PI/180;
+        var xyzCoords = $.geocentricEclipticXyz(date, planet);
+        xyzCoords.rotate(CSYS.x, $.__planets.Earth.eps * degra );
+        return [$.reduceQuadrantsDeg(radeg * Math.atan2(xyzCoords.coords[CSYS.y], xyzCoords.coords[CSYS.x])), 
+                $.reduceQuadrants90Deg(radeg * Math.asin(xyzCoords.coords[CSYS.z] / xyzCoords.modulus()))];
+    },
+
+    Elliptical : {
+        CalculatePlanetaryDetails : function (jd, planetNumber) {
             var $ = AAJSLoFi;
-            return $.reduceQuadrantsDeg($.poly(T, planet.MeanL)) * Math.PI/180;
-        },
+            var $p = $.__planets;
+            var earth = $p.Earth;
+            var planets = [earth, earth, $p.Venus, $p.Mars, $p.Jupiter, $p.Saturn, earth, earth];
+            var coordsArr = $.equatorial (new Date(), planets[planetNumber]);
+            return {"ApparentGeocentricRA" : coordsArr[0] / 15, 
+                    "ApparentGeocentricDeclination" : coordsArr[1]};
+        }
+    },
 
-        heliocentricXyz : function (date, planet) {
-            var $ = AAJSLoFi;
-            var T = $.T(date);
-            var degra = Math.PI/180;
-            var L = $.L(T, planet);
-            var O = $.reduceQuadrantsDeg($.poly(T, planet.Lnode)) * degra;
-            var m = (L - O) ;
-            var v = new Vector(planet.r * Math.cos(m), planet.r * Math.sin(m), 0);
-            var i = $.reduceQuadrantsDeg($.poly(T, planet.tilt)) * degra;
-            v.rotate(CSYS.x, i);
-            v.rotate(CSYS.z, O);
-            return v;
-        },
+    poly : function (arg, coeffs) {
+        var res = 0;
+        var poweredArg = 1;
+        for (var i = 0; i < coeffs.length; i++) {
+            res += poweredArg * coeffs[i];
+            poweredArg *= arg;
+        }
+        return res;
+    },
 
-        geocentricEclipticXyz : function (date, planet) {
-            var $ = AAJSLoFi;
-            var helioXyz = $.heliocentricXyz (date, planet);
-            var earthXyz = $.heliocentricXyz(date, $.__planets.Earth);
-            var geoXyz = helioXyz;
-            geoXyz.translate(-earthXyz.coords[CSYS.x], -earthXyz.coords[CSYS.y], -earthXyz.coords[CSYS.z]);
-            return geoXyz;
-        },
+    reduceQuadrantsDeg : function (n) {
+        while (n >= 360) n -= 360;
+        while (n < 0) n += 360;
+        return n;
+    },
 
-        equatorial : function (date, planet) {
-            var $ = AAJSLoFi;
-            var radeg = 180 / Math.PI;
-            var degra = Math.PI/180;
-            var xyzCoords = $.geocentricEclipticXyz(date, planet);
-            xyzCoords.rotate(CSYS.x, $.__planets.Earth.eps * degra );
-            return [$.reduceQuadrantsDeg(radeg * Math.atan2(xyzCoords.coords[CSYS.y], xyzCoords.coords[CSYS.x])), 
-                    $.reduceQuadrants90Deg(radeg * Math.asin(xyzCoords.coords[CSYS.z] / xyzCoords.modulus()))];
-        },
+    reduceQuadrants90Deg : function (n) {
+      var reduced = AAJSLoFi.reduceQuadrantsDeg(n);
+      return (reduced > 180) ? reduced - 360 : reduced;
+    },
 
-        Elliptical : {
-            CalculatePlanetaryDetails : function (jd, planetNumber) {
-                var $ = AAJSLoFi;
-                var $p = $.__planets;
-                var earth = $p.Earth;
-                var planets = [earth, earth, $p.Venus, $p.Mars, $p.Jupiter, $p.Saturn, earth, earth];
-                var coordsArr = $.equatorial (new Date(), planets[planetNumber]);
-                return {"ApparentGeocentricRA" : coordsArr[0] / 15, 
-                        "ApparentGeocentricDeclination" : coordsArr[1]};
-            }
-        },
+    Date : { 
+       JD2Date : function (JD) { 
+         var d = new Date();
+         return {"M" : 1 + d.getMonth(), "D" : d.getDate()};
+       },
+       DateToJD : function (y, m, d) { return -99999999; }
+    },
+    AllDependenciesLoaded : function () { return true; },
+    RiseTransitSet : { Calculate : zero },
 
-        poly : function (arg, coeffs) {
-            var res = 0;
-            var poweredArg = 1;
-            for (var i = 0; i < coeffs.length; i++) {
-                res += poweredArg * coeffs[i];
-                poweredArg *= arg;
-            }
-            return res;
-        },
+    Diameters : { MercurySemidiameterB : zero, VenusSemidiameterB : zero, MarsSemidiameterB : zero,
+      JupiterEquatorialSemidiameterB : zero, SaturnEquatorialSemidiameterB: zero, UranusSemidiameterB: zero,
+      NeptuneSemidiameterB: zero },
 
-        reduceQuadrantsDeg : function (n) {
-            while (n >= 360) n -= 360;
-            while (n < 0) n += 360;
-            return n;
-        },
-
-        reduceQuadrants90Deg : function (n) {
-          var reduced = AAJSLoFi.reduceQuadrantsDeg(n);
-          return (reduced > 180) ? reduced - 360 : reduced;
-        },
-
-        Date : { 
-           JD2Date : function (JD) { 
-             var d = new Date();
-             return {"M" : 1 + d.getMonth(), "D" : d.getDate()};
-           },
-           DateToJD : function (y, m, d) { return -99999999; }
-        },
-          AllDependenciesLoaded : function () { return true; },
-          RiseTransitSet : { Calculate : zero },
-
-          Diameters : { MercurySemidiameterB : zero, VenusSemidiameterB : zero, MarsSemidiameterB : zero,
-            JupiterEquatorialSemidiameterB : zero, SaturnEquatorialSemidiameterB: zero, UranusSemidiameterB: zero,
-            NeptuneSemidiameterB: zero },
-
-          Mercury : { RadiusVector: zero },
-          Venus : { RadiusVector: zero },
-          Mars : { RadiusVector: zero, PhysicalDetails : zero },
-          Jupiter : { RadiusVector: zero, PhysicalDetails : zero },
-          Saturn : { RadiusVector: zero },
-          Uranus : { RadiusVector: zero },
-          Neptune : { RadiusVector: zero },
-          Sun : { 
-            EquatorialCoordinates: function() { return {"X": 0, "Y" : 0}; },
-            Distance : zero,
-            Diameter: zero,
-            CalculatePhysicalDetails : zero
-          },
-          Moon : { 
-            PositionalEphemeris : function() { return {"RaGeo" : 0, "DecGeo" : 0 }; } ,
-            CalculateSelenographicPositionOfSun  : zero
-          }
-    };
+    Mercury : { RadiusVector: zero },
+    Venus : { RadiusVector: zero },
+    Mars : { RadiusVector: zero, PhysicalDetails : zero },
+    Jupiter : { RadiusVector: zero, PhysicalDetails : zero },
+    Saturn : { RadiusVector: zero },
+    Uranus : { RadiusVector: zero },
+    Neptune : { RadiusVector: zero },
+    Sun : { 
+      EquatorialCoordinates: function() { return {"X": 0, "Y" : 0}; },
+      Distance : zero,
+      Diameter: zero,
+      CalculatePhysicalDetails : zero
+    },
+    Moon : { 
+      PositionalEphemeris : function() { return {"RaGeo" : 0, "DecGeo" : 0 }; } ,
+      CalculateSelenographicPositionOfSun  : zero
+    }
+};
 })();
 
         
