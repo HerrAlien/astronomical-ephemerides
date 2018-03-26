@@ -28,6 +28,17 @@ function SyncedTimeOut (func, time) {
   setTimeout (function () { requestAnimationFrame (func); } , time);
 }
 
+
+(function(){
+  var progressReporter = function() {
+      if (typeof AAJSMemFileLoadNotifications == "undefined")
+        return SyncedTimeOut (progressReporter);
+      AAJSMemFileLoadNotifications.add(function(evt){console.log(evt);} );
+  }
+  progressReporter();
+})();
+
+
 var AAJS = {};
 // only for *right now*
 var SunData = { getSunEarthDistance : function() { return 1; } };
