@@ -34,199 +34,185 @@ var SunData = { getSunEarthDistance : function() { return 1; } };
 var AAJSLoFi = {};
 
 (function () {
-    var CSYS = { x:0, y:1, z:2 };
-    function Vector(x,y,z) { this.coords = [x, y, z]; }
-    
-   Vector.prototype['translate'] = function (x, y, z) {
-           this.coords[CSYS.x] += x;
-           this.coords[CSYS.y] += y;
-           this.coords[CSYS.z] += z;
-   }
 
-   Vector.prototype['rotate'] = function (axis, angle) {
-       var newCoords = [];
-       var cosAngle = Math.cos(angle);
-       var sinAngle = Math.sin(angle);
-       if (axis == CSYS.x) {
-           newCoords = [this.coords[CSYS.x], 
-                        this.coords[CSYS.y] * cosAngle - this.coords[CSYS.z] * sinAngle,
-                        this.coords[CSYS.y] * sinAngle + this.coords[CSYS.z] * cosAngle];
-       } else if (axis == CSYS.y) {
-           newCoords = [this.coords[CSYS.x] * cosAngle + this.coords[CSYS.z] * sinAngle, 
-                        this.coords[CSYS.y],
-                        -this.coords[CSYS.x] * sinAngle + this.coords[CSYS.z] * cosAngle];
-       } else if (axis == CSYS.z) {
-           newCoords = [this.coords[CSYS.x] * cosAngle - this.coords[CSYS.y] * sinAngle, 
-                        this.coords[CSYS.x] * sinAngle + this.coords[CSYS.y] * cosAngle,
-                        this.coords[CSYS.z]];
-       }
-       this.coords = newCoords;
-   }
+var CSYS = { x:0, y:1, z:2 };
+function Vector(x,y,z) { this.coords = [x, y, z]; }
+function zero() { return 0; }
+ 
+Vector.prototype['translate'] = function (x, y, z) {
+        this.coords[CSYS.x] += x;
+        this.coords[CSYS.y] += y;
+        this.coords[CSYS.z] += z;
+}
 
-   Vector.prototype['modulus'] = function() {
-       return Math.sqrt((this.coords[CSYS.x] * this.coords[CSYS.x]) +
-                        (this.coords[CSYS.y] * this.coords[CSYS.y]) +
-                        (this.coords[CSYS.z] * this.coords[CSYS.z]));
-   }
+Vector.prototype['rotate'] = function (axis, angle) {
+    var c = this.coords;
+    var cosAngle = Math.cos(angle);
+    var sinAngle = Math.sin(angle);
+    if (axis == CSYS.x) {
+        c = [c[CSYS.x], c[CSYS.y] * cosAngle - c[CSYS.z] * sinAngle, c[CSYS.y] * sinAngle + c[CSYS.z] * cosAngle];
+    } else if (axis == CSYS.y) {
+        c = [c[CSYS.x] * cosAngle + c[CSYS.z] * sinAngle, c[CSYS.y], -c[CSYS.x] * sinAngle + c[CSYS.z] * cosAngle];
+    } else if (axis == CSYS.z) {
+        c = [c[CSYS.x] * cosAngle - c[CSYS.y] * sinAngle, c[CSYS.x] * sinAngle + c[CSYS.y] * cosAngle, c[CSYS.z]];
+    }
+    this.coords = c;
+}
 
-    AAJSLoFi = {
-        DATE_JD_2000 : Date.parse ("January 1, 2000") + 1000 * 3600 * 12,
-        T : function (date) {
-            return (date.getTime() - AAJSLoFi.DATE_JD_2000) / (36525 * 1000 * 3600 * 24);
+Vector.prototype['modulus'] = function() {
+  var c = this.coords;
+  return Math.sqrt((c[CSYS.x] * c[CSYS.x]) + (c[CSYS.y] * c[CSYS.y]) + (c[CSYS.z] * c[CSYS.z]));
+}
+
+AAJSLoFi = {
+    DATE_JD_2000 : Date.parse ("January 1, 2000") + 1000 * 3600 * 12,
+    T : function (date) {
+        return (date.getTime() - AAJSLoFi.DATE_JD_2000) / (36525 * 1000 * 3600 * 24);
+    },
+
+    __planets : {
+        Mercury : {
+             MeanL : [252.250906, 149474.0722491, 0.00030397, 0.000000018],
+             r : 0.387098310,
+             tilt : [7.004986, 0.0018215, -0.00001809, 0.000000053],
+             Lnode : [48.330893, 1.1861890, 0.00029589, 0.000000211]
         },
+        Venus : {
+            MeanL : [181.979801, 58519.2130302, 0.00031060, 0.000000015],
+            r : 0.723329820,
+            tilt : [3.394662, 0.0010037, -0.00000088, -0.000000007],
+            Lnode : [76.679920, 0.9011190, 0.00040665, -0.000000080]
+        },
+        Earth : {
+            MeanL : [100.466449, 36000.7698231, 0.00030368, 0.000000021],
+            r : 1,
+            tilt : [0, 0, 0, 0],
+            Lnode : [0, 0, 0, 0],
+            eps : 23.4402297
+        },
+        Mars : {
+            MeanL : [355.433275, 19141.6964746, 0.00031097, 0.000000015],
+            r : 1.523679342,
+            tilt : [1.849726, -0.0006010, 0.00001276, -0.000000006],
+            Lnode : [49.558093, 0.7270923, 0.00001605, 0.000000318]
+        },
+        Jupiter : {
+            MeanL : [34.351484, 3036.3027889, 0.00022374, 0.000000025],
+            r : 5.202603191,
+            tilt : [1.303270, -0.0054966, 0.00000465, -0.000000004],
+            Lnode : [100.464441, 1.0209550, 0.00040117, 0.000000569]
+        },
+        Saturn : {
+            MeanL : [50.077471, 1223.5110141, 0.00051952, -0.000000003],
+            r : 9.554909596,
+            tilt : [2.488878, -0.0037363, -0.00001516, 0.000000089],
+            Lnode : [113.665524, 0.8770979, -0.00012067, -0.000002380]
+        },
+    }, 
 
-        __planets : {
-            Mercury : {
-                 MeanL : [252.250906, 149474.0722491, 0.00030397, 0.000000018],
-                 r : 0.387098310,
-                 tilt : [7.004986, 0.0018215, -0.00001809, 0.000000053],
-                 Lnode : [48.330893, 1.1861890, 0.00029589, 0.000000211]
-            },
-            Venus : {
-                MeanL : [181.979801, 58519.2130302, 0.00031060, 0.000000015],
-                r : 0.723329820,
-                tilt : [3.394662, 0.0010037, -0.00000088, -0.000000007],
-                Lnode : [76.679920, 0.9011190, 0.00040665, -0.000000080]
-            },
-            Earth : {
-                MeanL : [100.466449, 36000.7698231, 0.00030368, 0.000000021],
-                r : 1,
-                tilt : [0, 0, 0, 0],
-                Lnode : [0, 0, 0, 0],
-                eps : 23.4402297
-            },
-            Mars : {
-                MeanL : [355.433275, 19141.6964746, 0.00031097, 0.000000015],
-                r : 1.523679342,
-                tilt : [1.849726, -0.0006010, 0.00001276, -0.000000006],
-                Lnode : [49.558093, 0.7270923, 0.00001605, 0.000000318]
-            },
-            Jupiter : {
-                MeanL : [34.351484, 3036.3027889, 0.00022374, 0.000000025],
-                r : 5.202603191,
-                tilt : [1.303270, -0.0054966, 0.00000465, -0.000000004],
-                Lnode : [100.464441, 1.0209550, 0.00040117, 0.000000569]
-            },
-            Saturn : {
-                MeanL : [50.077471, 1223.5110141, 0.00051952, -0.000000003],
-                r : 9.554909596,
-                tilt : [2.488878, -0.0037363, -0.00001516, 0.000000089],
-                Lnode : [113.665524, 0.8770979, -0.00012067, -0.000002380]
-            },
-        }, 
+    L : function (T, planet) {
+        var $ = AAJSLoFi;
+        return $.reduceQuadrantsDeg($.poly(T, planet.MeanL)) * Math.PI/180;
+    },
 
-        L : function (T, planet) {
+    heliocentricXyz : function (date, planet) {
+        var $ = AAJSLoFi;
+        var T = $.T(date);
+        var degra = Math.PI/180;
+        var L = $.L(T, planet);
+        var O = $.reduceQuadrantsDeg($.poly(T, planet.Lnode)) * degra;
+        var m = (L - O) ;
+        var v = new Vector(planet.r * Math.cos(m), planet.r * Math.sin(m), 0);
+        var i = $.reduceQuadrantsDeg($.poly(T, planet.tilt)) * degra;
+        v.rotate(CSYS.x, i);
+        v.rotate(CSYS.z, O);
+        return v;
+    },
+
+    geocentricEclipticXyz : function (date, planet) {
+        var $ = AAJSLoFi;
+        var helioXyz = $.heliocentricXyz (date, planet);
+        var earthXyz = $.heliocentricXyz(date, $.__planets.Earth);
+        var geoXyz = helioXyz;
+        geoXyz.translate(-earthXyz.coords[CSYS.x], -earthXyz.coords[CSYS.y], -earthXyz.coords[CSYS.z]);
+        return geoXyz;
+    },
+
+    equatorial : function (date, planet) {
+        var $ = AAJSLoFi;
+        var radeg = 180 / Math.PI;
+        var degra = Math.PI/180;
+        var xyzCoords = $.geocentricEclipticXyz(date, planet);
+        xyzCoords.rotate(CSYS.x, $.__planets.Earth.eps * degra );
+        return [$.reduceQuadrantsDeg(radeg * Math.atan2(xyzCoords.coords[CSYS.y], xyzCoords.coords[CSYS.x])), 
+                $.reduceQuadrants90Deg(radeg * Math.asin(xyzCoords.coords[CSYS.z] / xyzCoords.modulus()))];
+    },
+
+    Elliptical : {
+        CalculatePlanetaryDetails : function (jd, planetNumber) {
             var $ = AAJSLoFi;
-            return $.reduceQuadrantsDeg($.poly(T, planet.MeanL)) * Math.PI/180;
-        },
+            var $p = $.__planets;
+            var earth = $p.Earth;
+            var planets = [earth, earth, $p.Venus, $p.Mars, $p.Jupiter, $p.Saturn, earth, earth];
+            var coordsArr = $.equatorial (new Date(), planets[planetNumber]);
+            return {"ApparentGeocentricRA" : coordsArr[0] / 15, 
+                    "ApparentGeocentricDeclination" : coordsArr[1]};
+        }
+    },
 
-        heliocentricXyz : function (date, planet) {
-            var $ = AAJSLoFi;
-            var T = $.T(date);
-            var degra = Math.PI/180;
-            var L = $.L(T, planet);
-            var O = $.reduceQuadrantsDeg($.poly(T, planet.Lnode)) * degra;
-            var m = (L - O) ;
-            var v = new Vector(planet.r * Math.cos(m), planet.r * Math.sin(m), 0);
-            var i = $.reduceQuadrantsDeg($.poly(T, planet.tilt)) * degra;
-            v.rotate(CSYS.x, i);
-            v.rotate(CSYS.z, O);
-            return v;
-        },
+    poly : function (arg, coeffs) {
+        var res = 0;
+        var poweredArg = 1;
+        for (var i = 0; i < coeffs.length; i++) {
+            res += poweredArg * coeffs[i];
+            poweredArg *= arg;
+        }
+        return res;
+    },
 
-        geocentricEclipticXyz : function (date, planet) {
-            var $ = AAJSLoFi;
-            var helioXyz = $.heliocentricXyz (date, planet);
-            var earthXyz = $.heliocentricXyz(date, $.__planets.Earth);
-            var geoXyz = helioXyz;
-            geoXyz.translate(-earthXyz.coords[CSYS.x], -earthXyz.coords[CSYS.y], -earthXyz.coords[CSYS.z]);
-            return geoXyz;
-        },
+    reduceQuadrantsDeg : function (n) {
+        while (n >= 360) n -= 360;
+        while (n < 0) n += 360;
+        return n;
+    },
 
-        equatorial : function (date, planet) {
-            var $ = AAJSLoFi;
-            var radeg = 180 / Math.PI;
-            var degra = Math.PI/180;
-            var xyzCoords = $.geocentricEclipticXyz(date, planet);
-            xyzCoords.rotate(CSYS.x, $.__planets.Earth.eps * degra );
-            return [$.reduceQuadrantsDeg(radeg * Math.atan2(xyzCoords.coords[CSYS.y], xyzCoords.coords[CSYS.x])), 
-                    $.reduceQuadrants90Deg(radeg * Math.asin(xyzCoords.coords[CSYS.z] / xyzCoords.modulus())), xyzCoords.modulus()];
-        },
+    reduceQuadrants90Deg : function (n) {
+      var reduced = AAJSLoFi.reduceQuadrantsDeg(n);
+      return (reduced > 180) ? reduced - 360 : reduced;
+    },
 
-        Elliptical : {
-            CalculatePlanetaryDetails : function (jd, planetNumber) {
-                var $ = AAJSLoFi;
-                var $p = $.__planets;
-                var earth = $p.Earth;
-                var planets = [earth, earth, $p.Venus, $p.Mars, $p.Jupiter, $p.Saturn, earth, earth];
-                var coordsArr = $.equatorial (new Date(), planets[planetNumber]);
-                return {"ApparentGeocentricRA" : coordsArr[0] / 15, 
-                        "ApparentGeocentricDeclination" : coordsArr[1], 
-                        "ApparentGeocentricDistance" : coordsArr[2]};
-            }
-        },
+    Date : { 
+       JD2Date : function (JD) { 
+         var d = new Date();
+         return {"M" : 1 + d.getMonth(), "D" : d.getDate()};
+       },
+       DateToJD : function (y, m, d) { return -99999999; }
+    },
+    AllDependenciesLoaded : function () { return true; },
+    RiseTransitSet : { Calculate : zero },
 
-        poly : function (arg, coeffs) {
-            var res = 0;
-            var poweredArg = 1;
-            for (var i = 0; i < coeffs.length; i++) {
-                res += poweredArg * coeffs[i];
-                poweredArg *= arg;
-            }
-            return res;
-        },
+    Diameters : { MercurySemidiameterB : zero, VenusSemidiameterB : zero, MarsSemidiameterB : zero,
+      JupiterEquatorialSemidiameterB : zero, SaturnEquatorialSemidiameterB: zero, UranusSemidiameterB: zero,
+      NeptuneSemidiameterB: zero },
 
-        reduceQuadrantsDeg : function (n) {
-            while (n >= 360) n -= 360;
-            while (n < 0) n += 360;
-            return n;
-        },
-
-        reduceQuadrants90Deg : function (n) {
-          var reduced = AAJSLoFi.reduceQuadrantsDeg(n);
-          return (reduced > 180) ? reduced - 360 : reduced;
-        },
-
-        Date : { 
-           JD2Date : function (JD) { 
-             var d = new Date();
-             return {"M" : 1 + d.getMonth(), "D" : d.getDate()};
-           },
-           DateToJD : function (y, m, d) { return -99999999; }
-        },
-          AllDependenciesLoaded : function () { return true; },
-          RiseTransitSet : { Calculate : function() { return {}; } },
-          Diameters : {
-            MercurySemidiameterB : function() { return 0; },
-            VenusSemidiameterB : function() { return 0; },
-            MarsSemidiameterB : function() { return 0; },
-            JupiterEquatorialSemidiameterB : function() { return 0; },
-            SaturnEquatorialSemidiameterB: function() { return 0; },
-            UranusSemidiameterB: function() { return 0; },
-            NeptuneSemidiameterB: function() { return 0; },
-          },
-
-          Mercury : { RadiusVector: function () { return 0;} },
-          Venus : { RadiusVector: function () { return 0;} },
-          Mars : { RadiusVector: function () { return 0;}, PhysicalDetails : function() { return {}; }, },
-          Jupiter : { RadiusVector: function () { return 0;}, PhysicalDetails : function() { return {}; }, },
-          Saturn : { RadiusVector: function () { return 0;} },
-          Uranus : { RadiusVector: function () { return 0;} },
-          Neptune : { RadiusVector: function () { return 0;} },
-          Sun : { 
-            EquatorialCoordinates: function() { 
-              return {"X": 0, "Y" : 0}; 
-              },
-            Distance : function() { return 1; },
-            Diameter: function() { return 0.5; },
-            CalculatePhysicalDetails : function() { return {}; },
-          },
-          Moon : { 
-            PositionalEphemeris : function() { return {"RaGeo" : 0, "DecGeo" : 0 }; } ,
-            CalculateSelenographicPositionOfSun  : function () { return {}; }
-          }
-          
-    };
+    Mercury : { RadiusVector: zero },
+    Venus : { RadiusVector: zero },
+    Mars : { RadiusVector: zero, PhysicalDetails : zero },
+    Jupiter : { RadiusVector: zero, PhysicalDetails : zero },
+    Saturn : { RadiusVector: zero },
+    Uranus : { RadiusVector: zero },
+    Neptune : { RadiusVector: zero },
+    Sun : { 
+      EquatorialCoordinates: function() { return {"X": 0, "Y" : 0}; },
+      Distance : zero,
+      Diameter: zero,
+      CalculatePhysicalDetails : zero
+    },
+    Moon : { 
+      PositionalEphemeris : function() { return {"RaGeo" : 0, "DecGeo" : 0 }; } ,
+      CalculateSelenographicPositionOfSun  : zero
+    }
+};
 })();
 
         
@@ -480,7 +466,6 @@ h1, h2, hr {
     margin-top: 0px;
 }
     
-   
  #credits, .topBorder{
     	border-top: 1px solid #AAAAAA;
 }
@@ -516,31 +501,31 @@ h1, h2, hr {
     line-height: 1.5;
 }
 
-     .rightNowFrontPageWidget {
-        background-repeat: no-repeat;
-        background-size: 90% 90%;
-        width:  200px;
-        height: 200px;
-        text-align: center;
-        background-position: center;
-        display: inline-block;
-        margin: 10px;
-        overflow-x: hidden;
-    }
-
- .realtimeTitle {
+.rightNowFrontPageWidget {
+    background-repeat: no-repeat;
+    background-size: 90% 90%;
+    width:  200px;
+    height: 200px;
+    text-align: center;
+    background-position: center;
     display: inline-block;
-    border-bottom: 4px solid #AAAAAA;
-    width: 100%;
-    font-size: 40px;
-    text-decoration: none;
-    padding-bottom: 0px;
-    margin-top: -10px;
- }  
+    margin: 10px;
+    overflow-x: hidden;
+}
 
- .realtimeTitle:hover {
-     text-decoration: underline;
- }
+.realtimeTitle {
+   display: inline-block;
+   border-bottom: 4px solid #AAAAAA;
+   width: 100%;
+   font-size: 40px;
+   text-decoration: none;
+   padding-bottom: 0px;
+   margin-top: -10px;
+}  
+
+.realtimeTitle:hover {
+    text-decoration: underline;
+}
 
 .Month, .Day {
     display: none;
@@ -586,12 +571,12 @@ border-bottom: solid 1px #AAAAAA;
     z-index: 3;
 }
 
- .rightNowFrontPageWidget:hover {
+.rightNowFrontPageWidget:hover {
     background-position-x: center;
     background-position-y: top;
 }
 
-     #showNavigationMenu {
+#showNavigationMenu {
     cursor: pointer;
     text-decoration: none;
 }
@@ -606,7 +591,7 @@ border-bottom: solid 1px #AAAAAA;
     z-index: 2;
 }
 
- #showNavigationMenuContainerImg {
+#showNavigationMenuContainerImg {
     height: 27px;
 }
 
@@ -645,17 +630,17 @@ border-bottom: solid 1px #AAAAAA;
     cursor: pointer;
 }
 
- .MenuLinkDiv {
+.MenuLinkDiv {
     display: none;
 }
 
- .promotedMenuLink {
+.promotedMenuLink {
     display: inline-block;
     margin-top: 2px;
     margin-left: 15px;
 }
 
- #promotedMenu {
+#promotedMenu {
     overflow-x: auto;
     overflow-y: hidden;
     max-width: 1460px;
@@ -1398,67 +1383,67 @@ function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
 }
 
 (function() {
-    PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
-        this.cellsToHide_physical = [];
-        this.cellsToHide_positional = [];
-        for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
-            var cells = this.table.rows[rowIndex].cells;
-            for (var colIndex = 16; colIndex < cells.length; colIndex++)
-                this.cellsToHide_physical.push(cells[colIndex]);
-            for (var colIndex = 0; colIndex < 16; colIndex++)
-                this.cellsToHide_positional.push(cells[colIndex]);
+PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
+    this.cellsToHide_physical = [];
+    this.cellsToHide_positional = [];
+    for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
+        var cells = this.table.rows[rowIndex].cells;
+        for (var colIndex = 16; colIndex < cells.length; colIndex++)
+            this.cellsToHide_physical.push(cells[colIndex]);
+        for (var colIndex = 0; colIndex < 16; colIndex++)
+            this.cellsToHide_positional.push(cells[colIndex]);
+    }
+}
+
+PhysicalPositionalToggler.prototype['init'] = function () {
+    var _this = this;
+
+    this.positionalButton.onclick = function () {
+        _this.positionalButton.classList.add("activeButton");
+        _this.physicalButton.classList.remove("activeButton");
+        _this.table.classList.remove ("showPhysical");
+        _this.table.classList.add ("showPositional");
+        if (!_this.cellsToHide_physical)
+            _this.updateCellsToHide();
+            
+        for (var i = 0; i < _this.cellsToHide_physical.length; i++) {
+            _this.cellsToHide_physical[i].classList.remove("physPosVisible");
+            _this.cellsToHide_physical[i].classList.add("physPosHidden");
+        }
+            
+        for (var i = 0; i < _this.cellsToHide_positional.length; i++) {
+            _this.cellsToHide_positional[i].classList.remove("physPosHidden");
+            _this.cellsToHide_positional[i].classList.add("physPosVisible");
         }
     }
-    
-    PhysicalPositionalToggler.prototype['init'] = function () {
-        var _this = this;
-    
-        this.positionalButton.onclick = function () {
-            _this.positionalButton.classList.add("activeButton");
-            _this.physicalButton.classList.remove("activeButton");
-            _this.table.classList.remove ("showPhysical");
-            _this.table.classList.add ("showPositional");
-            if (!_this.cellsToHide_physical)
-                _this.updateCellsToHide();
-                
-            for (var i = 0; i < _this.cellsToHide_physical.length; i++) {
-                _this.cellsToHide_physical[i].classList.remove("physPosVisible");
-                _this.cellsToHide_physical[i].classList.add("physPosHidden");
-            }
-                
-            for (var i = 0; i < _this.cellsToHide_positional.length; i++) {
-                _this.cellsToHide_positional[i].classList.remove("physPosHidden");
-                _this.cellsToHide_positional[i].classList.add("physPosVisible");
-            }
-        }
-     
-        this.physicalButton.onclick = function () {
-            _this.physicalButton.classList.add("activeButton");
-            _this.positionalButton.classList.remove("activeButton");
+ 
+    this.physicalButton.onclick = function () {
+        _this.physicalButton.classList.add("activeButton");
+        _this.positionalButton.classList.remove("activeButton");
 
-            _this.table.classList.remove ("showPositional");
-            _this.table.classList.add ("showPhysical");
-            if (!_this.cellsToHide_physical)
-                _this.updateCellsToHide();
+        _this.table.classList.remove ("showPositional");
+        _this.table.classList.add ("showPhysical");
+        if (!_this.cellsToHide_physical)
+            _this.updateCellsToHide();
 
-             for (var i = 0; i < _this.cellsToHide_physical.length; i++) {
-                 _this.cellsToHide_physical[i].classList.remove("physPosHidden");  
-                 _this.cellsToHide_physical[i].classList.add("physPosVisible");
-             }
-                 
-             for (var i = 0; i < _this.cellsToHide_positional.length; i++) {
-                 _this.cellsToHide_positional[i].classList.remove("physPosVisible");
-                 _this.cellsToHide_positional[i].classList.add("physPosHidden");
-             }
+         for (var i = 0; i < _this.cellsToHide_physical.length; i++) {
+             _this.cellsToHide_physical[i].classList.remove("physPosHidden");  
+             _this.cellsToHide_physical[i].classList.add("physPosVisible");
+         }
+             
+         for (var i = 0; i < _this.cellsToHide_positional.length; i++) {
+             _this.cellsToHide_positional[i].classList.remove("physPosVisible");
+             _this.cellsToHide_positional[i].classList.add("physPosHidden");
          }
      }
+ }
 
-     var jupiterToggler = new PhysicalPositionalToggler("Jupiter Ephemeris");
-     jupiterToggler.init();
+var jupiterToggler = new PhysicalPositionalToggler("Jupiter Ephemeris");
+jupiterToggler.init();
 
-     var marsToggler = new PhysicalPositionalToggler("Mars Ephemeris");
-     marsToggler.init();
- })();    
+var marsToggler = new PhysicalPositionalToggler("Mars Ephemeris");
+marsToggler.init();
+})();    
                 
 PageTimeInterval = { "JD" :  false, "days" : false, "stepSize" : false };
 
@@ -1629,94 +1614,94 @@ function onhashchange(){
 window.addEventListener("hashchange", onhashchange, false);
 if (location.hash) SyncedTimeOut(onhashchange, Timeout.onInit);
 
-    (function(){
-      var menu = $get("promotedMenu");
-      function toggleArrows(){
-          if (menu.scrollLeft < 30) {
-            menu.classList.add("noLeft");
-          } else {
-            menu.classList.remove("noLeft");
-          }
-
-          var rightLimit = menu.scrollWidth - menu.clientWidth - 30;
-          if (menu.scrollLeft > rightLimit) {
-            menu.classList.add("noRight");
-          } else {
-            menu.classList.remove("noRight");
-          }
-      }
-
-      menu.addEventListener("scroll", function() { requestAnimationFrame(toggleArrows); }, false);
-      toggleArrows();
-
-    })();
-    
 (function(){
-   var registerWorker = function () {
-       if ('serviceWorker' in navigator) {
-           navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
-              console.log('ServiceWorker registration successful with scope: ', registration.scope);
-           }, function(err) {
-             // registration failed :(
-             console.log('ServiceWorker registration failed: ', err);              
-           });
-       }              
-   }
-   registerWorker();
- 
-   var injectCssDom = function(url) {
-     SyncedTimeOut (function() {
-     var link = document.createElement("link");
-     link.rel = "stylesheet";
-     link.type="text/css";
-     link.href=url;
-     document.body.appendChild(link); }, Timeout.onInit);
-   }
-   
-   injectCssDom("style/common.css");
-   injectCssDom("style/default.css");
-   injectCssDom("style/print.css");
-
-   var appInit = function() {
-      if (typeof Location == 'undefined' || typeof TimeStepsData == 'undefined' || typeof Notifications == 'undefined'
-          || !Location.init || !TimeStepsData.init) {
-          SyncedTimeOut (appInit, Timeout.onInit);
+  var menu = $get("promotedMenu");
+  function toggleArrows(){
+      if (menu.scrollLeft < 30) {
+        menu.classList.add("noLeft");
       } else {
-          Location.init();
-          TimeStepsData.init();
+        menu.classList.remove("noLeft");
       }
+
+      var rightLimit = menu.scrollWidth - menu.clientWidth - 30;
+      if (menu.scrollLeft > rightLimit) {
+        menu.classList.add("noRight");
+      } else {
+        menu.classList.remove("noRight");
+      }
+  }
+
+  menu.addEventListener("scroll", function() { requestAnimationFrame(toggleArrows); }, false);
+  toggleArrows();
+
+})();
+
+(function(){
+var registerWorker = function () {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
+           console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function(err) {
+          // registration failed :(
+          console.log('ServiceWorker registration failed: ', err);              
+        });
+    }              
+}
+registerWorker();
+
+var injectCssDom = function(url) {
+  SyncedTimeOut (function() {
+  var link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.type="text/css";
+  link.href=url;
+  document.body.appendChild(link); }, Timeout.onInit);
+}
+
+injectCssDom("style/common.css");
+injectCssDom("style/default.css");
+injectCssDom("style/print.css");
+
+var appInit = function() {
+   if (typeof Location == 'undefined' || typeof TimeStepsData == 'undefined' || typeof Notifications == 'undefined'
+       || !Location.init || !TimeStepsData.init) {
+       SyncedTimeOut (appInit, Timeout.onInit);
+   } else {
+       Location.init();
+       TimeStepsData.init();
    }
+}
 
-  appInit();
+appInit();
 
-  var now = new Date();        
-  $get("copyrightYear").textContent = now.getFullYear();
+var now = new Date();        
+$get("copyrightYear").textContent = now.getFullYear();
 
-  var CACHE_PREFIX = 'Cache-for-ephemerides';
-  caches.keys().then(names => {
-      var versions = "version numbers: ";
-      for (var i = 0; i < names.length; i++) {
-          var name = names[i];
+var CACHE_PREFIX = 'Cache-for-ephemerides';
+caches.keys().then(names => {
+    var versions = "version numbers: ";
+    for (var i = 0; i < names.length; i++) {
+        var name = names[i];
 
-            if (!name.startsWith(CACHE_PREFIX)) {
-                continue;
-            }
-
-          var versionPos = name.lastIndexOf('v');
-          if (versionPos < 0) {
-              versionPos = name.lastIndexOf('-');
-          }
-          if (versionPos < 0) {
+          if (!name.startsWith(CACHE_PREFIX)) {
               continue;
           }
-          versions += name.substring(versionPos + 1) + ", ";
-      }
 
-      versions = versions.substring(0, versions.length - 2);
-      var div = document.createElement("div");
-      div.classList.add ("version");
-      div.textContent = versions;
-      document.body.appendChild(div);
-  });
+        var versionPos = name.lastIndexOf('v');
+        if (versionPos < 0) {
+            versionPos = name.lastIndexOf('-');
+        }
+        if (versionPos < 0) {
+            continue;
+        }
+        versions += name.substring(versionPos + 1) + ", ";
+    }
+
+    versions = versions.substring(0, versions.length - 2);
+    var div = document.createElement("div");
+    div.classList.add ("version");
+    div.textContent = versions;
+    document.body.appendChild(div);
+});
 })();
 </script>
