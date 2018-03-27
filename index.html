@@ -31,6 +31,8 @@ function SyncedTimeOut (func, time) {
 
 (function(){
   var loaders = [];
+  var realTimePercentage = false;
+
   var progressReporter = function() {
       if (typeof AAJSMemFileLoadNotifications == "undefined")
         return SyncedTimeOut (progressReporter);
@@ -41,13 +43,17 @@ function SyncedTimeOut (func, time) {
           denominator = evt.total;
         percentage = Math.round(evt.loaded * 100 / denominator) + "%"; 
         
-        SyncedTimeOut(function(){
           if (loaders.length == 0)
             loaders = document.getElementsByClassName("loadingMemFileContentsDiv");
+      
+          if (!realTimePercentage)
+            realTimePercentage = document.getElementById("lofiWarningProgress");
+
           for (var i = 0; i < loaders.length; i++) {
             loaders[i].textContent = percentage;
           }
-        }, 1);
+
+          realTimePercentage.textContent = percentage;
 
         } );
   }
@@ -332,6 +338,12 @@ th {
     margin-right: auto;
     margin-top: 0px;
     page-break-inside: avoid;
+}
+
+#lofiWarning {
+  width: 100%;
+  background: #000;
+  color: #fff;
 }
 
  .scrolledDown {
@@ -1166,6 +1178,7 @@ border-bottom: solid 1px #AAAAAA;
             <div id="rightNowFrontPage">
                
             </div>
+                <div id="lofiWarning">Loading high accuracy algorithm ...(<span id="lofiWarningProgress"></span>)</div>
              <div class="clear maxWidth">&nbsp;</div>
         <ul>
             <li>Positions are expressed as geocentric apparent equatorial coordinates, unless stated otherwise.</li>
@@ -1610,6 +1623,20 @@ function updateTimeAtAAJSLoad() {
 }
 
 updateTimeAtAAJSLoad();
+
+(function(){
+  var waitUntilDependenciesLoaded = function() {
+
+  if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded || !AAJS.AllDependenciesLoaded())
+                return SyncedTimeOut (waitUntilDependenciesLoaded, Timeout.onInit);
+   $get("lofiWarning").classList.add("hidden");
+
+  }
+
+  waitUntilDependenciesLoaded();
+
+})();
+
 
 function DisplayPage (pageName) {
     var delayedDisplay = function () {
