@@ -35,7 +35,12 @@ function SyncedTimeOut (func, time) {
       if (typeof AAJSMemFileLoadNotifications == "undefined")
         return SyncedTimeOut (progressReporter);
       AAJSMemFileLoadNotifications.add(function(evt){
-        var percentage = Math.round(evt.loaded * 100 / evt.total) + "%"; 
+        var percentage = "0%";
+        var denominator = 10000000;
+        if (evt.total != 0)
+          denominator = evt.total;
+        percentage = Math.round(evt.loaded * 100 / denominator) + "%"; 
+        
         SyncedTimeOut(function(){
           if (loaders.length == 0)
             loaders = document.getElementsByClassName("loadingMemFileContentsDiv");
