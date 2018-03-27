@@ -28,6 +28,33 @@ function SyncedTimeOut (func, time) {
   setTimeout (function () { requestAnimationFrame (func); } , time);
 }
 
+
+(function(){
+  var loaders = [];
+  var progressReporter = function() {
+      if (typeof AAJSMemFileLoadNotifications == "undefined")
+        return SyncedTimeOut (progressReporter);
+      AAJSMemFileLoadNotifications.add(function(evt){
+        var percentage = "0%";
+        var denominator = 10000000;
+        if (evt.total != 0)
+          denominator = evt.total;
+        percentage = Math.round(evt.loaded * 100 / denominator) + "%"; 
+        
+        SyncedTimeOut(function(){
+          if (loaders.length == 0)
+            loaders = document.getElementsByClassName("loadingMemFileContentsDiv");
+          for (var i = 0; i < loaders.length; i++) {
+            loaders[i].textContent = percentage;
+          }
+        }, 1);
+
+        } );
+  }
+  progressReporter();
+})();
+
+
 var AAJS = {};
 // only for *right now*
 var SunData = { getSunEarthDistance : function() { return 1; } };
@@ -483,10 +510,12 @@ h1, h2, hr {
     backgtound-position: center;
     width:  160px;
     height: 160px;
-    background-size: 100% 100%;
-    margin-left:  auto;
+    background-size: 100% 78%;
+    margin-left: auto;
     margin-right: auto;
     margin-bottom: 160px;
+    font-size: 40px;
+    padding-top: 50px;
 }
 
 .loadingMemFileContentsDiv::after {
