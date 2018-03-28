@@ -279,15 +279,6 @@ function GetAAJS() {
     return AAJS;
 }
 
-(function(){
-    var URL = document.URL;
-    if (URL.slice(-11) == "ephemerides")
-        location.href = URL + "/";
-    URL = location.href;
-    if (URL.indexOf("#") < 0)
-      location.href = "#home";
-})();
-
 </script>
 
 <script type="text/JavaScript" async="" src="js/aajs.js"></script>
@@ -1428,6 +1419,16 @@ title="opens in a new window">Bits of software</a><br>
  <script>
 
 "use strict";
+
+(function(){
+    var URL = document.URL;
+    if (URL.slice(-11) == "ephemerides")
+        location.href = URL + "/";
+    URL = location.href;
+    if (URL.indexOf("#") < 0)
+      location.href = "#home";
+})();
+
 
 var $get = function (id) { return document.getElementById(id); }
 $get("JSDisabledPage").style.display = "none";
