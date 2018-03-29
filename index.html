@@ -777,11 +777,14 @@ border-bottom: solid 1px #AAAAAA;
     .rightNowFrontPageWidget::-webkit-scrollbar {
         width: 3px;
     }
+}
 
-    #navigation {
+@media screen and (orientation:portrait) and (max-height: 936px) {
+
+  #navigation {
     margin: 0px 0px -10px 0px;
     padding-bottom: 7px;
-    border-bottom: solid 1px #AAAAAA;
+    border-top: solid 1px #AAAAAA;
     position: fixed;
     width: 100%;
     background: #ffffff;
@@ -789,24 +792,24 @@ border-bottom: solid 1px #AAAAAA;
     bottom: 0px;
   }
 
-#promotedMenu::after, #promotedMenu::before, #navigation.movedMenu, 
-.movedMenu #promotedMenu::after, .movedMenu #promotedMenu::before {
-    top: auto;
-    position: fixed;
-    bottom: 0px;
-}
+  #promotedMenu::after, #promotedMenu::before, #navigation.movedMenu, 
+  .movedMenu #promotedMenu::after, .movedMenu #promotedMenu::before {
+      top: auto;
+      position: fixed;
+      bottom: 0px;
+  }
 
-#showNavigationMenuContainer {
-  display: none;
-}
+  #showNavigationMenuContainer {
+    display: none;
+  }
 
-h1 {
-  margin-top: auto;
-}
+  h1 {
+    margin-top: auto;
+  }
 
-#footer {
-  margin-bottom: 120px;
-}
+  #footer {
+    margin-bottom: 120px;
+  }
 
 }
     
