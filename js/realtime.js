@@ -212,6 +212,9 @@ var RealTimeDataViewer = {
                     visible = false;
                 }
                 
+               if (key)
+                    visible = 'true';
+
                 if (key && key != 'RA' && key != 'Dec' && key != 'RaGeo' && key != 'DecGeo') {
                     visible = false;
                 }
