@@ -100,11 +100,11 @@ tr.secondHeaderRow {
 }
 
 tr.firstHeaderRowScrolled{
-    top: 128px;
+    top: 0px;
 }
 
 tr.secondHeaderRowScrolled{
-    top: 148px;
+    top: 20px;
 }
 
 tr.firstHeaderRow, tr.firstHeaderRowScrolled {
@@ -385,10 +385,10 @@ tr.secondHeaderRowScrolled th:last-of-type {
     
     
     tr.firstHeaderRowScrolled.movedMenu {
-        top: 28;
+        top: 0;
     }
     tr.secondHeaderRowScrolled.movedMenu {
-        top: 48;
+        top: 20;
     }
     
 }
