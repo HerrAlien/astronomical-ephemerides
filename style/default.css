@@ -1,7 +1,10 @@
-
+@font-face {
+    font-family: "Courier";
+    src: url('../images/bulgarian-courier.ttf') format("truetype");
+}
+    
 @media screen {
     #jupiterHorizontalScroller , #marsHorizontalScroller{
-        width: 890px;
         overflow-x: hidden;
         margin-left: auto;
         margin-right: auto;
@@ -28,7 +31,7 @@
     text-decoration: underline;
 }
 
-.largeButtons.linkButton img {
+.menuPageItemImg {
     width: 120px;
     height: 120px;
 }
@@ -47,36 +50,29 @@
 }
 
 #settingsContainer {
-    max-width: 640px;
+    max-width: 780px;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
     text-align: left;
 }
 
-#settings label, #getFromGeolocationAnchor, #applySettingsChanges{
+.settingsLabel, #getFromGeolocationAnchor{
     float: left;
     margin-top: 16px;
 }
 
-#settings label, #getFromGeolocationAnchor, #applySettingsChanges {
+#cancelSettingsChanges,  #applySettingsChanges{
+    margin-top: 16px;
+}
+
+.settingsLabel, #getFromGeolocationAnchor, #applySettingsChanges {
     margin-left: 6px;
 }
 
 #cancelSettingsChanges {
     float: right;
     margin-right: 16px;
-}
-
-#applySettingsChanges, #cancelSettingsChanges {
-    margin-top: 32px;
-    height: 48px;
-    padding: 12px;
-    font-size: 20px;
-}
-
-#menuList li a {
-    text-decoration: none;
 }
 
 #getFromGeolocationAnchor {
@@ -88,13 +84,9 @@
     height: 72px;
 }
 
-#menuList li a:hover, #menuList li a.current, #promotedMenu a:hover, #promotedMenu a.current{
-    color: red;
-}
-
-#menuList li {
+.menuListItem {
     float: left;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 #menuList{ 
@@ -112,11 +104,11 @@ tr.secondHeaderRow {
 }
 
 tr.firstHeaderRowScrolled{
-    margin-top: -126px;
+    top: 128px;
 }
 
 tr.secondHeaderRowScrolled{
-    margin-top: -108px;
+    top: 148px;
 }
 
 tr.firstHeaderRow, tr.firstHeaderRowScrolled {
@@ -165,21 +157,6 @@ tr.secondHeaderRowScrolled th:last-of-type {
     box-shadow: 0px 2px 1px #CCCCCC;
 }
 
-input {
-    height: 32px;
-    font-size: 16px;
-    margin-top: 8px;
-}
-
-#latitudeInput, #longitudeInput, #altitudeInput {
-    width: 134px;
-}
-#startingDate {
-    width: 220px;
-} 
-#incrementDate, #numberOfDays {
-    width: 180px;
-}
 
 /** ----------------------------- M O O N --------------------------------------- **/
 
@@ -211,85 +188,6 @@ input {
 #SunTable td:nth-of-type(10) {
     border-right: none;
 }
-
-@media print {
-    
-    a, tr.firstHeaderRow, tr.firstHeaderRowScrolled {
-    text-decoration: none;
-    }
-    
-    .fixed {
-        position: relative;
-    }
-    
-    .printOnly {
-        display: table-row;
-    }
-
-
-    .screenOnly {
-        font-size: 0px;
-        color: #ffffff;
-    }
-
-    .physicalPositionalButtonsHolder {
-        display: none;
-    }
-
-     tr.printOnly:nth-of-type(odd), tr.printOnly:nth-of-type(even){
-        background: #ffffff;
-        font-family : Courier;
-        font-size: 12px;
-        height: 14px;
-    }
-    
-    tr.printOnly:nth-of-type(odd) th {
-        border-top: 1px solid black;
-        padding: 0px;
-    }
-    tr.printOnly:nth-of-type(even) th {
-        border-bottom: 1px solid black;
-        padding: 0px;
-    }
-    
-    #scroller {
-        position: relative;
-        width: 100%;
-        height: 100%;
-    }
-    
-    .topmenulink {
-        display: none;
-    }
-    
-    .breakBefore {
-        page-break-before: always;
-        width: 100%;
-        height: 1px;
-        display: block;
-    }    
-    
-    #navigation {
-        display: none;
-    }
-    
-    h1 {
-        margin-top: 20px;
-    }
-    
-    tr.firstHeaderRow th{
-        border-top: solid 1px #000000;
-    }
-
-    tr.secondHeaderRow th{
-        border-bottom: solid 1px #000000;
-    }
-
-    #showNavigationMenuContainer {
-        display: none;
-    }
-}
-
 
 /** ---------------------------------- P L A N E T ------------------------------ **/
 .firstHeaderRow, .secondHeaderRow, .planetTable,
@@ -405,6 +303,7 @@ input {
 }
 
 #GalileanMoonsContainer svg {
+    margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -423,11 +322,10 @@ input {
     margin-top: -1px;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 20px;
     page-break-after: always;
     max-width: 1024px;
     font-size: 25px;
-    padding: 20px;
+    padding: 0px 20px 20px 0px;
 }
 
 .moonEclipse table, .solarEclipse table {
@@ -451,27 +349,8 @@ input {
     margin-right: 0px;
 }
 
-
-.buttonsToSwitchPosPhys, .physSeenAtSmallWidth {
-    display: none;
-}
-
-.physPosHidden {
-    visibility: visible;
-}
-
 .physPosVisible {
     visibility: visible;
-}
-
-@media screen and (min-width: 1900px)  {
-    #MenuLink, .MenuLinkDiv.topmenulink, .MenuLinkDiv.topmenulink img, .MenuLinkDiv.topmenulink::after {
-        width: 0px;
-        height: 0px;
-    }
-    .MenuLinkDiv.topmenulink::after {
-        display: none;
-    }
 }
 
 @media  screen and  (max-width: 936px)  {
@@ -510,10 +389,10 @@ input {
     
     
     tr.firstHeaderRowScrolled.movedMenu {
-        top: 154;
+        top: 28;
     }
     tr.secondHeaderRowScrolled.movedMenu {
-        top: 154;
+        top: 48;
     }
     
 }
@@ -528,6 +407,8 @@ input {
     text-align: center;        
     cursor: pointer;
     user-select: none;
+    font-family: Verdana;
+    font-size: 16px;
 }
 
 .positionalButton {
@@ -555,14 +436,12 @@ input {
 
 label {
     display: block;
-/*    border: solid 2px #AAAAAA;
-    border-radius: 4px;*/
     padding: 4px; 
     color: #003377;
     font-size: 18px;
 }
 
-label input, #searchTerms {
+input[type=date] {
     border-top: none;
     border-left: none;
     border-right: none;
@@ -610,19 +489,6 @@ input[type=date]::-webkit-inner-spin-button {
     text-align: left;
 }
 
-#footer {
-    margin-top: 60px;
-    text-align: center;
-    font-size: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border-top:    solid 1px #AAAAAA;
-}
-
-#credits, #home {
-    text-align: justify;
-}
-
 #error404, #privacy {
     max-width: 835px;
 }
@@ -635,44 +501,6 @@ input[type=date]::-webkit-inner-spin-button {
     margin-bottom: 20px;
 }
 
-@media  screen and  (min-width: 937px) {
-#searchArea {
-    margin: 12px 0px 0px 0px;
-    float: right;
-    /* expanded */
-}
-
-#searchArea img {
-    width:52px;
-    float: left;
-    margin-left: 10px;
-}
-
-#searchArea input {
-    margin-top: 20px;
-    height: 30px;
-    float: left;
-    font-size: 28px;
-    max-width: 220px;
-}
-
-#searchArea::after{
-    content: "Search";
-    display: block;
-    font-size: 18px;
-    text-align: right;
-    cursor: pointer;
-}
-
-#searchArea:hover::after{
-    text-decoration: underline;
-}
-
-}
-
-.rtsettings input[type=checkbox] {
-    transform : scale(2.5);
-    float: right;
 }
 
 .rtsettings h3 {
@@ -683,10 +511,13 @@ input[type=date]::-webkit-inner-spin-button {
 .rtsettings {
     border-top: solid 1px #000000;
     padding-top: 15px;
+    padding-bottom: 65px;
+    border-bottom: solid 1px #000000;
 }
 
 .row {
-    margin-top: 5px;
+    margin-top: 15px;
+    margin-bottom: 25px;
 }
 
 .row label {
@@ -700,3 +531,104 @@ input[type=date]::-webkit-inner-spin-button {
 .settingsLabelDiv {
     font-size: 30px;
 }
+
+/* --------------- from w3schools, with a few tweaks --------------*/
+
+#settings {
+    --input-height: 40px;
+}
+
+#latitudeInput, #longitudeInput, #altitudeInput {
+    width: 230px;
+}
+#startingDate {
+    width: 220px;
+} 
+#incrementDate, #numberOfDays {
+    width: 230px;
+}
+
+
+#latitudeInput, #longitudeInput, #altitudeInput, #incrementDate, #numberOfDays {
+    font-size: 26px;
+}
+
+#settings label, #getFromGeolocationAnchor {
+    font-size: 26px;
+    font-family: Verdana;
+}
+
+#settings label.switch {
+  float: right;
+  margin-right: 15px;
+  margin-top: 25px;
+}
+
+#settings input[type='button'] {
+  width: auto;
+  display: inline;
+}
+
+.rtsettings.collapsed, .collapsed {
+    height: 70px;
+    overflow-y: hidden;
+    border: none;
+    padding-bottom: 0px;
+}
+
+ .expandCollapseButton {
+    background-image: url('../images/sprite.svg#double-arrow');
+    width: 50px;
+    height: 50px;
+    background-size: 38px 38px;
+    background-position: center;
+    background-repeat: no-repeat;
+    float: right;
+    transform: rotate(180deg);
+    transition: 0.1s;
+    margin-right: 20px;
+    margin-left: 20px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.collapsed .expandCollapseButton {
+    transform: rotate(0deg);
+    transition: 0.1s;
+}
+
+@media  screen and  (min-width: 936px) {
+    #settings input[type="button"]{
+        --input-height: 25px;
+    }
+
+    #settings {
+        --slider-width: 30px;
+        --slider-height: 7px;  
+        --slider-cursor-to-slider-height: 2.5;
+    }
+
+     .expandCollapseButton {
+        width: 35px;
+        height: 35px;
+        background-size: 25px 25px;
+     }
+     
+     input:checked + .slider:before {
+      -webkit-transform: translateX(18px);
+      -ms-transform: translateX(18px);
+      transform: translateX(18px) ;
+    }
+
+    body {
+        font-size: 24px;
+    }
+tr.firstHeaderRowScrolled{
+    top: 104px;
+}
+
+tr.secondHeaderRowScrolled{
+    top: 124px;
+}
+}
+

@@ -20,15 +20,12 @@ var MoonEclipsesPage = {
 
     hostElement : document.getElementById("MoonEclipsesContainer"),
     pageRendered : false,
-    dataSource : MoonEclipsesData,
-
-    // clears up the rendered thing
-    reset : PlanetPage.prototype.reset,
     
+
     displayPage : function () {
         
-        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
-            return setTimeout (function() { MoonEclipsesPage.displayPage(); }, 300);
+        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD )
+            return SyncedTimeOut (function() { MoonEclipsesPage.displayPage(); }, Timeout.onInit);
 
         var startJD = PageTimeInterval.JD;
         var numberOfDays =  PageTimeInterval.days;
@@ -70,7 +67,7 @@ var MoonEclipsesPage = {
         
 
         var eclipseTitle = addNodeChild (mainDiv, "h2", oppositionDateTime.date.Y + "-" + oppositionDateTime.date.M + "-" + oppositionDateTime.date.D + " " + description);
-        addNodeChild (mainDiv, "span", "magnitude: " + AAJS.Numerical.RoundTo2Decimals(oppositionData.magnitude) + "; penumbral magnitude: " + AAJS.Numerical.RoundTo2Decimals(oppositionData.penumbralMagnitude));
+        addNodeChild (mainDiv, "span", "magnitude: " + GetAAJS().Numerical.RoundTo2Decimals(oppositionData.magnitude) + "; penumbral magnitude: " + GetAAJS().Numerical.RoundTo2Decimals(oppositionData.penumbralMagnitude));
         
         var timingsTable = addNodeChild (mainDiv, "table");
         var headerRow = addNodeChild (timingsTable, "tr");
@@ -211,6 +208,18 @@ var MoonEclipsesPage = {
     },
     keywordsArray : ["Shadow", "Umbra", "Penumbra", "Partial", "Total", "Eclipse",
                       "Contact", "First", "Last"]
-}
+    // clears up the rendered thing
+};
 
-Pages["Lunar Eclipses"] = MoonEclipsesPage;
+(function(){
+    var initLocal = function() {
+        try {
+            MoonEclipsesPage.dataSource = MoonEclipsesData;
+            MoonEclipsesPage.reset = PlanetPage.prototype.reset;
+            Pages["Lunar Eclipses"] = MoonEclipsesPage;
+        } catch (err) {
+            SyncedTimeOut(initLocal, Timeout.onInit);
+        }
+    }
+    initLocal();
+})();

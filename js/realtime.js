@@ -22,6 +22,8 @@ var RealTimeDataViewer = {
 
     views : {},
 
+    rtDomHost : document.getElementById("rightNowFrontPage"),
+
     New: function (pageName) {
 
         var returnedViewer = {
@@ -30,7 +32,9 @@ var RealTimeDataViewer = {
 
             reset: function () {
 
-                var doms = RealTimeDataViewer.CreateLinkDom(pageName);
+                var host = document.createDocumentFragment();
+
+                var doms = RealTimeDataViewer.CreateLinkDom(host, pageName);
                 this.view = doms["div"];
 
                 // views, per daya key
@@ -70,6 +74,8 @@ var RealTimeDataViewer = {
                 var scrollableDiv = RealTimeDataViewer.Utils.CreateDom(doms['div'], "div");
                 scrollableDiv.classList.add("scrollableRT");
                 RealTimeDataViewer.CreateRtDomForPage(scrollableDiv, pageName, onKeyAdded);
+
+                RealTimeDataViewer.rtDomHost.appendChild(host);
             },
 
             resetItemVisibility: function () {
@@ -98,8 +104,8 @@ var RealTimeDataViewer = {
         alert(this.title); 
     },
 
-    CreateLinkDom : function(pageName) {
-        var host = document.getElementById("rightNowFrontPage");
+    CreateLinkDom : function(host, pageName) {
+        
         var createDom = RealTimeDataViewer.Utils.CreateDom;
         var createdDoms = {};
 
@@ -138,6 +144,7 @@ var RealTimeDataViewer = {
             for (var key in Pages[pageName].dataSource.getDataAsObjectForJD(0, false)) {
                 var createdDom = RealTimeDataViewer.Utils.CreateDom(domHost, "div", "loading ...");
                 createdDom.classList.add(key);
+                createdDom.classList.add("scrollableRTdiv");
 
                 var unit = "\u00B0";
                 var scaleFactor = 1;
@@ -169,7 +176,7 @@ var RealTimeDataViewer = {
             }
 
         } catch (err) {
-            setTimeout(function () { RealTimeDataViewer.CreateRtDomForPage(domHost, pageName, onViewAdded); }, 100);
+            SyncedTimeOut(function () { RealTimeDataViewer.CreateRtDomForPage(domHost, pageName, onViewAdded); }, Timeout.onInit);
         }
     },
 
@@ -200,11 +207,14 @@ var RealTimeDataViewer = {
                     }
                 }
 
-                if (pageName != 'Sun Ephemeris' && pageName != 'Moon Ephemeris' &&
+                if (pageName != 'Venus Ephemeris' && pageName != 'Mars Ephemeris' &&
                     pageName != 'Jupiter Ephemeris' && pageName != 'Saturn Ephemeris') {
                     visible = false;
                 }
                 
+               if (key)
+                    visible = 'true';
+
                 if (key && key != 'RA' && key != 'Dec' && key != 'RaGeo' && key != 'DecGeo') {
                     visible = false;
                 }
@@ -263,25 +273,28 @@ var RealTimeDataViewer = {
 
 };
 
-    (function(){
-    
-       for (var pageName in Pages) {
-           if (Pages[pageName]["tableHeaderInfo"]) {
-               RealTimeDataViewer.views[pageName] = RealTimeDataViewer.New (pageName);
-           }
-       }
-    })();
-
 
 (function(){
-    for (var pageName in Pages) {
-        if (Pages[pageName]["tableHeaderInfo"]) {
-            CreateRTSettings (pageName);
-        }
-    } 
 
-    function CreateRTSettings (pageName) {
-        var hostForRTSettings = document.getElementById("realTimeSettingsContainer");
+    function createCheckboxSwitch (host, usingID) {
+        /*<label class="switch">
+  <input type="checkbox">
+  <span class="slider round"></span>
+</label>*/
+        var createDom = RealTimeDataViewer.Utils.CreateDom;
+        var containingLabel = createDom (host, "label");
+        containingLabel.classList.add("switch");
+        var actualInput = createDom (containingLabel, "input");
+        actualInput.type = "checkbox";
+        actualInput.id = usingID;
+        actualInput.classList.add("switchinput");
+        var span = createDom (containingLabel, "span");
+        span.classList.add("slider");
+        span.classList.add("round");
+        return actualInput;
+    }
+
+    function CreateRTSettings (hostForRTSettings, pageName) {
         var createDom = RealTimeDataViewer.Utils.CreateDom;
         var persistent = RealTimeDataViewer.Persistent;
         var topDiv = createDom(hostForRTSettings, "div");
@@ -290,6 +303,7 @@ var RealTimeDataViewer = {
         // <div class="rtsettings">
         var bodySectionDiv = createDom (topDiv, "div");
         bodySectionDiv.classList.add ("rtsettings");
+        bodySectionDiv.classList.add ("collapsed");
         // <h3>Sun</h3>
         // TODO: this should be from the page object.
         createDom (bodySectionDiv, "div", " ").classList.add("clear");
@@ -297,16 +311,29 @@ var RealTimeDataViewer = {
         
         var sectionCheckboxId = pageName+"settings";
 
-        var sectionLabel = createDom (bodySectionDiv, "label");
-        sectionLabel.setAttribute('for', sectionCheckboxId);
-        createDom (sectionLabel, "h3", objectName);
-
         // <input type="checkbox"></input>
-        var sectionCheckbox = createDom (bodySectionDiv, "input");
-        sectionCheckbox.type = "checkbox";
-        sectionCheckbox.id = sectionCheckboxId;
+        var sectionCheckbox = createCheckboxSwitch (bodySectionDiv, sectionCheckboxId);
 
         sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName));
+
+        var sectionLabel = createDom (bodySectionDiv, "label");
+        sectionLabel.setAttribute('for', sectionCheckboxId);
+
+        var collapseExpand = createDom (bodySectionDiv, "div");
+        collapseExpand.classList.add("expandCollapseButton");
+        collapseExpand.onclick = function () {
+            if (this.parentElement.classList.contains ("collapsed")) {
+                this.parentElement.classList.remove ("collapsed");
+            } else {
+                this.parentElement.classList.add ("collapsed");
+            }
+        }
+
+
+        var sectionLabel2 = createDom (bodySectionDiv, "label");
+        sectionLabel2.setAttribute('for', sectionCheckboxId);
+        createDom (sectionLabel2, "h3", objectName);
+
 
         var rtViewer = RealTimeDataViewer.views[pageName];
         sectionCheckbox.onclick = function () { 
@@ -338,15 +365,8 @@ var RealTimeDataViewer = {
                     createDom (bodySectionDiv, "div", " ").classList.add("clear");
                     var row = createDom (bodySectionDiv, "div");
                     row.classList.add("row");
-                    var lbl = createDom (row, "label");
-                    lbl.setAttribute('for', checkboxId);
-                    var labelDiv = createDom (lbl, "div", " ");
-                    labelDiv.classList.add(key);
-                    labelDiv.classList.add("settingsLabelDiv");
 
-                    sectionCheckbox = createDom (row, "input");
-                    sectionCheckbox.type = "checkbox";
-                    sectionCheckbox.id = checkboxId;
+                    sectionCheckbox = createCheckboxSwitch (row, checkboxId);
 
                     sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName, key));
 
@@ -357,9 +377,16 @@ var RealTimeDataViewer = {
                             rtViewer.resetItemVisibility();
                         }
                     })();
+
+                    var lbl = createDom (row, "label");
+                    lbl.setAttribute('for', checkboxId);
+                    var labelDiv = createDom (lbl, "div", " ");
+                    labelDiv.classList.add(key);
+                    labelDiv.classList.add("settingsLabelDiv");
+
                 }
              } else {
-                    setTimeout (AddSettingsForKeys, 100);
+                    SyncedTimeOut (AddSettingsForKeys, Timeout.onInit);
              }
         }
 
@@ -371,4 +398,36 @@ var RealTimeDataViewer = {
         rtViewer.resetItemVisibility();
     }
 
-})();
+
+        var pagesDoms = document.getElementsByClassName("page");
+        var hostForRTSettings = document.getElementById("realTimeSettingsContainer");
+
+        var localInit = function () {
+            if (typeof Pages != 'undefined' && typeof DataForNow != 'undefined' && typeof Notifications != 'undefined') {
+                var pagesAccountedFor = 0;
+                for (var i = 0; i < pagesDoms.length; i++) {
+                    var pageName = pagesDoms[i].id;
+                    if (typeof Pages != 'undefined' && 
+                        Pages[pageName] && 
+                        Pages[pageName]["tableHeaderInfo"] && !(RealTimeDataViewer.views[pageName])) {
+                        RealTimeDataViewer.views[pageName] = RealTimeDataViewer.New (pageName);
+                        var host = document.createDocumentFragment();
+                        CreateRTSettings (host, pageName);
+                        hostForRTSettings.appendChild(host);
+                    }
+
+                    if (typeof Pages != 'undefined' && Pages[pageName]) {
+                        pagesAccountedFor++;
+                    }
+                }
+                if (pagesAccountedFor == pagesDoms.length) {
+                    return;
+                }
+            } 
+
+                SyncedTimeOut(localInit, Timeout.onInit);
+        }
+
+        localInit();
+    })();
+

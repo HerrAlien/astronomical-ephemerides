@@ -71,7 +71,7 @@ var testlib = {
                 var testPassed = false;
                 try { 
                 testPassed = currentTest.test(); 
-                } catch (e){currentTest.actualOutput += " : " + e.message;}
+                } catch (e){currentTest.actualOutput += " : " + e;}
                 testlib.logTest(currentTest, testPassed);
             }
         }

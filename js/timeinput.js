@@ -26,7 +26,7 @@ var TimeStepsData = {
     numberOfDays : 410,
     timestep : 1,
     
-    onTimestepUpdated : Notifications.New(),
+    
 
 	Controls : {
 		dateInput : document.getElementById ("startingDate"),
@@ -61,6 +61,7 @@ var TimeStepsData = {
 	
 	init : function () {
 		TimeStepsData.Controls.update();
+		TimeStepsData.onTimestepUpdated = Notifications.New();
         TimeStepsData.onTimestepUpdated.notify();
 	}
 };
