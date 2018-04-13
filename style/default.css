@@ -1,4 +1,8 @@
-
+@font-face {
+    font-family: "Courier";
+    src: url('../images/bulgarian-courier.ttf') format("truetype");
+}
+    
 @media screen {
     #jupiterHorizontalScroller , #marsHorizontalScroller{
         overflow-x: hidden;

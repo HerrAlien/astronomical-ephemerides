@@ -25,7 +25,7 @@ var JDForRealTimeView = {
     },
     recomputeTimes : function () {
         if (typeof AAJS != 'undefined' && AAJS.AllDependenciesLoaded && AAJS.AllDependenciesLoaded()) {
-            JDForRealTimeView.updateTimeInterval = 10000;
+            JDForRealTimeView.updateTimeInterval = 1000;
         }
             var rightNow = new Date();
             var y = rightNow.getUTCFullYear();

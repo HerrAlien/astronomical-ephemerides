@@ -306,11 +306,6 @@ function GetAAJS() {
 
     <style>
 
-@font-face {
-    font-family: "Courier";
-    src: url('images/bulgarian-courier.ttf') format("truetype");
-}
-    
  * {
     transition: 0.125s;
 }
@@ -475,17 +470,24 @@ th {
  "Saturn Moons";
 }
 
- .HomeLinkButton {
+ #HomeLinkButton {
     float: left;
     margin-top: 2px;
-    margin-right: 0px;
-}
-
- #HomeLinkButtonTopmenulinkImg {
+    margin-right: 20px;
     width: 120px;
     height: 120px;
+    background: url('images/sprite.svg#icon');
+    background-size: 120px 120px;
+    background-position: center;
+    background-repeat: no-repeat;
 
-    margin-right: 20px;
+    color: #003377;
+    text-align: right;
+    text-shadow: 0px 0px 30px #fff;
+    font-size: 26px;
+    line-height: 8.5;
+    font-weight: 900;
+    font-style: italic;
 }
 
 h1, h2, hr {
@@ -979,9 +981,12 @@ border-bottom: solid 1px #AAAAAA;
       height: 90px;
     }
 
-     #HomeLinkButtonTopmenulinkImg {
-    width: 90px;
-    height: 90px;
+     #HomeLinkButton {
+        width: 90px;
+        height: 90px;
+        background-size: 90px 90px;
+    font-size: 20px;
+    line-height: 8.5;
      }
 
     #searchArea {
@@ -1122,9 +1127,9 @@ border-bottom: solid 1px #AAAAAA;
 
 <body>
     <div id="navigation">
-        <a href="#home" id="HomeLink" title="Home" alt="Home"><div class="HomeLinkButton topmenulink linkButton"><img id="HomeLinkButtonTopmenulinkImg" src="images/sprite.svg#icon" alt="Home"></div></a>
-        <a href="#settings" title="Settings" alt="Settings"><div class="SettingsLink topmenulink linkButton"><img src="images/sprite.svg#settings" id="SettingsLinkTopmenulinkImg" class="linkButtonImg" alt="Settings"></div></a>
-        <a href="#more" id="MenuLink" title="More ..." alt="More ..."><div class="MenuLinkDiv topmenulink linkButton"><img src="images/sprite.svg#menu" id="MenuLinkDivTopmenulinkImg" class="linkButtonImg"  alt="More ..."></div></a>
+        <a href="#home" id="HomeLink" title="Home" alt="Home"><div id="HomeLinkButton" class="topmenulink"></div></a>
+        <a href="#settings" title="Settings" alt="Settings"><div class="SettingsLink topmenulink linkButton"><img src="images/sprite.svg#settings" class="linkButtonImg" alt="Settings"></div></a>
+        <a href="#more" id="MenuLink" title="More ..." alt="More ..."><div class="MenuLinkDiv topmenulink linkButton"><img src="images/sprite.svg#menu" class="linkButtonImg"  alt="More ..."></div></a>
         <div id="searchArea" class="linkButton">
             <input type="text" class="hidden" id="searchTerms" placeholder="   [Search]"/>
             <a nohref="" id="searchButton"><img id="searchAreaImg" src="images/sprite.svg#magnifying-glass" alt="Search" /></a>
@@ -1791,7 +1796,7 @@ $get("copyrightYear").textContent = now.getFullYear();
 
 var CACHE_PREFIX = 'Cache-for-ephemerides';
 caches.keys().then(names => {
-    var versions = "version numbers: ";
+    var versions = "v";
     for (var i = 0; i < names.length; i++) {
         var name = names[i];
 
@@ -1810,10 +1815,8 @@ caches.keys().then(names => {
     }
 
     versions = versions.substring(0, versions.length - 2);
-    var div = document.createElement("div");
-    div.classList.add ("version");
+    var div = $get("HomeLinkButton");
     div.textContent = versions;
-    document.body.appendChild(div);
 });
 })();
 </script>
