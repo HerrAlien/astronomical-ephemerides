@@ -32,11 +32,11 @@ function PlanetData(planet)
         if (!data) {
 			data = {};
 			var i = 0;
-			var dateOfJD =  AAJS.Date.JD2Date(JD);
+			var dateOfJD =  GetAAJS().Date.JD2Date(JD);
 			data['Month'] = dateOfJD.M;
 			data['Day'] = dateOfJD.D;
 			
-			var planetaryDetails = AAJS.Elliptical.CalculatePlanetaryDetails (JD, 
+			var planetaryDetails = GetAAJS().Elliptical.CalculatePlanetaryDetails (JD, 
 																			this.planet.number, 
 																			true);
 
@@ -50,7 +50,7 @@ function PlanetData(planet)
             data['Set'] = false;
 			
 			var sunEarthDistance = SunData.getSunEarthDistance(JD);
-			var r =  AAJS[this.planet.name].RadiusVector(JD, true);
+			var r =  GetAAJS()[this.planet.name].RadiusVector(JD, true);
 			data['DistanceToSun'] = r;
 							
 			var delta = planetaryDetails.ApparentGeocentricDistance;
@@ -75,7 +75,7 @@ function PlanetData(planet)
     PlanetData.prototype["addRiseTransitSetData"] = function (JD, currentData) {
         var yData = this.getDataAsObjectForJD (JD - 1, false);
         var tData = this.getDataAsObjectForJD (JD + 1, false);
-        var rts = AAJS.RiseTransitSet.Calculate (JD, yData['RA'], yData['Dec'], currentData['RA'], currentData['Dec'], tData['RA'], tData['Dec'], -Location.longitude,
+        var rts = GetAAJS().RiseTransitSet.Calculate (JD, yData['RA'], yData['Dec'], currentData['RA'], currentData['Dec'], tData['RA'], tData['Dec'], -Location.longitude,
         Location.latitude, this.riseSetAngle);
         currentData['MeridianTransit'] = rts['Transit'];
         currentData['Rise'] = rts['Rise'];

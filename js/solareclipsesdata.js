@@ -38,7 +38,7 @@ var SolarEclipses = {
     
     EclipseDataForK : function (k) {
         // check if you have an eclipse
-        var eclipseData = AAJS.Eclipses.CalculateSolar (k);
+        var eclipseData = GetAAJS().Eclipses.CalculateSolar (k);
         if (eclipseData.bEclipse) {
             // if yes, compute the besselian elements
             eclipseData["t0"] = Math.round (eclipseData.JdOfMaximumEclipse * 24) / 24;

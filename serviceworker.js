@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 (function() {
 var CACHE_PREFIX = 'Cache-for-ephemerides';
-var CACHE_VERSION = '135';
+var CACHE_VERSION = '152';
 var CACHE_NAME = CACHE_PREFIX + '-' + CACHE_VERSION;
 
 var optionalUrlsToCache = [
@@ -63,31 +63,13 @@ var urlsToCache = [
 "js/timeinput.js",
 "js/uranus.js",
 "js/venus.js",
+"images/bulgarian-courier.ttf",
 "images/ae-icon.png",
 "images/ae-icon-144.png",
 "images/ae-icon-192.png",
 "images/ae-icon-256.png",
 "images/ae-icon-512.png",
-"images/double-arrow.svg",
-"images/galilean-moons.svg",
-"images/home-3.svg",
-"images/icon.svg",
-"images/jupiter.svg",
-"images/loading.gif",
-"images/lunar-eclipse.svg",
-"images/magnifying-glass.svg",
-"images/mars.svg",
-"images/menu.svg",
-"images/mercury.svg",
-"images/moon.svg",
-"images/neptune.svg",
-"images/saturn.svg",
-"images/saturn-moons.svg",
-"images/settings.svg",
-"images/solar-eclipse.svg",
-"images/sun.svg",
-"images/uranus.svg",
-"images/venus.svg"
+"images/sprite.svg"
 ];
 
 self.addEventListener('install', function(event) {

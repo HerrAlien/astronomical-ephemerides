@@ -1,4 +1,8 @@
-
+@font-face {
+    font-family: "Courier";
+    src: url('../images/bulgarian-courier.ttf') format("truetype");
+}
+    
 @media screen {
     #jupiterHorizontalScroller , #marsHorizontalScroller{
         overflow-x: hidden;
@@ -100,11 +104,11 @@ tr.secondHeaderRow {
 }
 
 tr.firstHeaderRowScrolled{
-    top: 104px;
+    top: 128px;
 }
 
 tr.secondHeaderRowScrolled{
-    top: 124
+    top: 148px;
 }
 
 tr.firstHeaderRow, tr.firstHeaderRowScrolled {
@@ -573,7 +577,7 @@ input[type=date]::-webkit-inner-spin-button {
 }
 
  .expandCollapseButton {
-    background-image: url('../images/double-arrow.svg');
+    background-image: url('../images/sprite.svg#double-arrow');
     width: 50px;
     height: 50px;
     background-size: 38px 38px;
@@ -619,5 +623,12 @@ input[type=date]::-webkit-inner-spin-button {
     body {
         font-size: 24px;
     }
+tr.firstHeaderRowScrolled{
+    top: 104px;
+}
+
+tr.secondHeaderRowScrolled{
+    top: 124px;
+}
 }
 

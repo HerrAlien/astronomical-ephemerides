@@ -28,12 +28,12 @@ var MoonData = {
         
             var i = 0;
             
-            var _date = AAJS.Date.JD2Date(JD);
+            var _date = GetAAJS().Date.JD2Date(JD);
             // convert from JD to gregorian
             data['Month'] = _date.M;
             data['Day'] = _date.D;
             
-            var posData = AAJS.Moon.PositionalEphemeris(JD, Location.latitude, Location.longitude, Location.altitude);
+            var posData = GetAAJS().Moon.PositionalEphemeris(JD, Location.latitude, Location.longitude, Location.altitude);
             
             for (var key in posData)
                 data[key] = posData[key];
@@ -45,7 +45,7 @@ var MoonData = {
             
 			data['MeridianTransit'] = false;
 
-            var selenographicCoordsOfSun = AAJS.Moon.CalculateSelenographicPositionOfSun (JD, true);
+            var selenographicCoordsOfSun = GetAAJS().Moon.CalculateSelenographicPositionOfSun (JD, true);
             var colongitude = 90 - selenographicCoordsOfSun.l0;
             if (colongitude < 0)
                 colongitude += 360;
@@ -247,27 +247,27 @@ var MoonData = {
         displayableLine[1] = obj.Day;
         
         var di = 2;
-        var sexagesimalRaGeo = AAJS.Numerical.ToSexagesimal(Math.round(obj.RaGeo * 36000)/36000);
+        var sexagesimalRaGeo = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.RaGeo * 36000)/36000);
         displayableLine[di++] = sexagesimalRaGeo.Ord3 ;
         displayableLine[di++] = sexagesimalRaGeo.Ord2 
         displayableLine[di++] = sexagesimalRaGeo.Ord1;
 
-        var sexagesimalDecGeo = AAJS.Numerical.ToSexagesimal(Math.round(obj.DecGeo * 3600)/3600);
+        var sexagesimalDecGeo = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.DecGeo * 3600)/3600);
         displayableLine[di++] = sexagesimalDecGeo.Ord3 ;
         displayableLine[di++] = sexagesimalDecGeo.Ord2;
         displayableLine[di++] = sexagesimalDecGeo.Ord1;
 		            
-        var sexagesimalRaTopo = AAJS.Numerical.ToSexagesimal(Math.round(obj.RaTopo * 36000)/36000);
+        var sexagesimalRaTopo = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.RaTopo * 36000)/36000);
         displayableLine[di++] = sexagesimalRaTopo.Ord3 ;
         displayableLine[di++] = sexagesimalRaTopo.Ord2 
         displayableLine[di++] = sexagesimalRaTopo.Ord1;
 
-        var sexagesimalDecTopo = AAJS.Numerical.ToSexagesimal(Math.round(obj.DecTopo * 3600)/3600);
+        var sexagesimalDecTopo = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.DecTopo * 3600)/3600);
         displayableLine[di++] = sexagesimalDecTopo.Ord3 ;
         displayableLine[di++] = sexagesimalDecTopo.Ord2;
         displayableLine[di++] = sexagesimalDecTopo.Ord1;
 
-        var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(Math.round(obj.diameter * 3600)/3600);
+        var sexagesimalDiam = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.diameter * 3600)/3600);
         displayableLine[di++] = sexagesimalDiam.Ord2;
         displayableLine[di++] = sexagesimalDiam.Ord1;
         
@@ -275,14 +275,14 @@ var MoonData = {
         displayableLine[di++] = this.timeToHhColumnMm(obj.MeridianTransit);
         displayableLine[di++] = this.timeToHhColumnMm(obj.Set);
             
-        var sexagesimalParallax = AAJS.Numerical.ToSexagesimal(Math.round(obj.parallax * 3600)/3600);
+        var sexagesimalParallax = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.parallax * 3600)/3600);
         
         displayableLine[di++] = sexagesimalParallax.Ord3;
         displayableLine[di++] = sexagesimalParallax.Ord2;
         displayableLine[di++] = sexagesimalParallax.Ord1;
         
-        displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.Colongitude);
-        displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.b0);
+        displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals (obj.Colongitude);
+        displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals (obj.b0);
 
         return displayableLine;
     };

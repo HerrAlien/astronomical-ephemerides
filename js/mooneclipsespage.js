@@ -24,7 +24,7 @@ var MoonEclipsesPage = {
 
     displayPage : function () {
         
-        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
+        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD )
             return SyncedTimeOut (function() { MoonEclipsesPage.displayPage(); }, Timeout.onInit);
 
         var startJD = PageTimeInterval.JD;
@@ -67,7 +67,7 @@ var MoonEclipsesPage = {
         
 
         var eclipseTitle = addNodeChild (mainDiv, "h2", oppositionDateTime.date.Y + "-" + oppositionDateTime.date.M + "-" + oppositionDateTime.date.D + " " + description);
-        addNodeChild (mainDiv, "span", "magnitude: " + AAJS.Numerical.RoundTo2Decimals(oppositionData.magnitude) + "; penumbral magnitude: " + AAJS.Numerical.RoundTo2Decimals(oppositionData.penumbralMagnitude));
+        addNodeChild (mainDiv, "span", "magnitude: " + GetAAJS().Numerical.RoundTo2Decimals(oppositionData.magnitude) + "; penumbral magnitude: " + GetAAJS().Numerical.RoundTo2Decimals(oppositionData.penumbralMagnitude));
         
         var timingsTable = addNodeChild (mainDiv, "table");
         var headerRow = addNodeChild (timingsTable, "tr");
