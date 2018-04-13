@@ -388,6 +388,14 @@ tr.secondHeaderRowScrolled th:last-of-type {
     }
     
     
+    tr.firstHeaderRowScrolled{
+        top: 128px;
+    }
+
+    tr.secondHeaderRowScrolled{
+        top: 148px;
+    }
+
     tr.firstHeaderRowScrolled.movedMenu {
         top: 0;
     }
@@ -396,6 +404,23 @@ tr.secondHeaderRowScrolled th:last-of-type {
     }
     
 }
+
+@media  screen and  (max-width: 936px) and (orientation: landscape) {
+    
+    .buttonsToSwitchPosPhys {
+        display: inline;
+    }
+    
+    tr.firstHeaderRowScrolled.movedMenu {
+        top: 28;
+    }
+    tr.secondHeaderRowScrolled.movedMenu {
+        top: 48;
+    }
+    
+}
+
+
     
 .positionalButton, .physicalButton {
     height:23px; 
