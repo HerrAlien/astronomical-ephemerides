@@ -210,8 +210,7 @@ AAJSLoFi = {
             var earth = $p.Earth;
             var planets = [earth, earth, $p.Venus, $p.Mars, $p.Jupiter, $p.Saturn, earth, earth];
             var coordsArr = $.equatorial (new Date(), planets[planetNumber]);
-            return {"ApparentGeocentricRA" : coordsArr[0] / 15, 
-                    "ApparentGeocentricDeclination" : coordsArr[1]};
+            return {"ApparentGeocentricRA" : coordsArr[0] / 15, "ApparentGeocentricDeclination" : coordsArr[1]};
         }
     },
 
@@ -780,6 +779,40 @@ border-bottom: solid 1px #AAAAAA;
     .rightNowFrontPageWidget::-webkit-scrollbar {
         width: 3px;
     }
+}
+
+@media screen and (orientation:portrait) and (max-height: 936px) {
+
+  #navigation {
+    margin: 0px 0px -10px 0px;
+    padding-bottom: 7px;
+    border-top: solid 1px #AAAAAA;
+    position: fixed;
+    width: 100%;
+    background: #ffffff;
+    z-index: 3;
+    bottom: 0px;
+  }
+
+  #promotedMenu::after, #promotedMenu::before, #navigation.movedMenu, 
+  .movedMenu #promotedMenu::after, .movedMenu #promotedMenu::before {
+      top: auto;
+      position: fixed;
+      bottom: 0px;
+  }
+
+  #showNavigationMenuContainer {
+    display: none;
+  }
+
+  h1 {
+    margin-top: auto;
+  }
+
+  #footer {
+    margin-bottom: 120px;
+  }
+
 }
     
  #rightNowFrontPage {
@@ -1778,10 +1811,10 @@ caches.keys().then(names => {
         if (versionPos < 0) {
             continue;
         }
-        versions += name.substring(versionPos + 1) + ", ";
+        versions += name.substring(versionPos + 1) + ",";
     }
 
-    versions = versions.substring(0, versions.length - 2);
+    versions = versions.substring(0, versions.length - 1);
     var div = $get("HomeLinkButton");
     div.textContent = versions;
 });
