@@ -1811,10 +1811,10 @@ caches.keys().then(names => {
         if (versionPos < 0) {
             continue;
         }
-        versions += name.substring(versionPos + 1) + ",";
+        versions += name.substring(versionPos + 1) + ", ";
     }
 
-    versions = versions.substring(0, versions.length - 1);
+    versions = versions.substring(0, versions.length - 2);
     var div = $get("HomeLinkButton");
     div.textContent = versions;
 });

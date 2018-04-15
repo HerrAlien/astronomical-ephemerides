@@ -1,0 +1,665 @@
+@font-face {
+    font-family: "Courier";
+    src: url('../images/bulgarian-courier.ttf') format("truetype");
+}
+    
+@media screen {
+    #jupiterHorizontalScroller , #marsHorizontalScroller{
+        overflow-x: hidden;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 0px;
+    }
+
+    .showPositional #JupiterTable tr.firstHeaderRow, 
+    .showPositional #JupiterTable tr.secondHeaderRow,
+    .showPositional #JupiterTable tr.firstHeaderRowScrolled, 
+    .showPositional #JupiterTable tr.secondHeaderRowScrolled, 
+    .showPositional #Jupiter{
+        width: 880px;
+        background: #ffffff;
+    }
+    
+    .secondHeaderRow th, 
+    .secondHeaderRowScrolled th {
+        border-bottom: 1px solid #000000;
+    }
+}
+
+.largeButtons.linkButton::after {
+    font-size: 30px;
+    text-decoration: underline;
+}
+
+.menuPageItemImg {
+    width: 120px;
+    height: 120px;
+}
+
+.largeButtons {
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+#more {
+    font-size: 22px;
+}
+
+#settings {
+    text-align: center;
+}
+
+#settingsContainer {
+    max-width: 780px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+.settingsLabel, #getFromGeolocationAnchor{
+    float: left;
+    margin-top: 16px;
+}
+
+#cancelSettingsChanges,  #applySettingsChanges{
+    margin-top: 16px;
+}
+
+.settingsLabel, #getFromGeolocationAnchor, #applySettingsChanges {
+    margin-left: 6px;
+}
+
+#cancelSettingsChanges {
+    float: right;
+    margin-right: 16px;
+}
+
+#getFromGeolocationAnchor {
+    cursor: pointer;
+    padding-right: 10px;
+}
+
+#getFromGeolocationAnchor {
+    height: 72px;
+}
+
+.menuListItem {
+    float: left;
+    margin-top: 50px;
+}
+
+#menuList{ 
+    list-style-type:none;
+}
+
+tr.firstHeaderRow{
+    margin-top: -47px;
+    background: #ffffff;
+}
+
+tr.secondHeaderRow {
+    margin-top: -27px;
+    background: #ffffff;
+}
+
+tr.firstHeaderRowScrolled{
+    top: 0px;
+}
+
+tr.secondHeaderRowScrolled{
+    top: 20px;
+}
+
+tr.firstHeaderRow, tr.firstHeaderRowScrolled {
+    text-decoration: underline;
+}
+
+table {
+    margin-top: 10px;
+    font-family : Courier;
+    font-size: 14px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.planetTable {
+    margin-top: 50px;
+}
+
+ td,  th {
+    padding: 2px;
+}
+
+.planetTable th {
+    cursor: help;
+}
+
+tr:nth-of-type(odd) {
+background: #ffffff;
+}
+
+ tr:nth-of-type(even) {
+background: #EEEEEE;
+}
+
+tr.firstHeaderRow, tr.secondHeaderRow, tr.firstHeaderRowScrolled, tr.secondHeaderRowScrolled {
+    background: #ffffff;
+	height: 21px;   
+    z-index: 2;
+}
+
+tr.secondHeaderRowScrolled th, .withDropShadow {
+    box-shadow: 2px 2px 2px #CCCCCC;
+}
+
+tr.secondHeaderRowScrolled th:last-of-type {
+    box-shadow: 0px 2px 1px #CCCCCC;
+}
+
+
+/** ----------------------------- M O O N --------------------------------------- **/
+
+#MoonTable .firstHeaderRow, #MoonTable .secondHeaderRow,
+#MoonTable .firstHeaderRowScrolled, #MoonTable .secondHeaderRowScrolled {
+    width: 770px;
+}
+
+#MoonTable td:nth-of-type(2), #MoonTable td:nth-of-type(5), #MoonTable td:nth-of-type(8), #MoonTable td:nth-of-type(11), #MoonTable td:nth-of-type(14), #MoonTable td:nth-of-type(16), #MoonTable td:nth-of-type(17), #MoonTable td:nth-of-type(18), #MoonTable td:nth-of-type(19), #MoonTable td:nth-of-type(22), #MoonTable td:nth-of-type(23) {
+    border-right: 1px solid black;
+}
+
+#MoonTable td:nth-of-type(9), #MoonTable td:nth-of-type(10), #MoonTable td:nth-of-type(12), #MoonTable td:nth-of-type(13), #MoonTable td:nth-of-type(15){
+    border-right: none;
+}
+
+/** -------------------------------------- S U N -------------------------------- **/
+
+#SunTable .firstHeaderRow, #SunTable .secondHeaderRow,
+#SunTable .firstHeaderRowScrolled, #SunTable .secondHeaderRowScrolled {
+    min-width: 724px;
+}
+
+#SunTable td:nth-of-type(2), #SunTable td:nth-of-type(5), #SunTable td:nth-of-type(8), #SunTable td:nth-of-type(9), #SunTable td:nth-of-type(11),
+#SunTable td:nth-of-type(14), #SunTable td:nth-of-type(15), #SunTable td:nth-of-type(16), #SunTable td:nth-of-type(17), #SunTable td:nth-of-type(12), #SunTable td:nth-of-type(13) {
+    border-right: 1px solid black;
+}
+
+#SunTable td:nth-of-type(10) {
+    border-right: none;
+}
+
+/** ---------------------------------- P L A N E T ------------------------------ **/
+.firstHeaderRow, .secondHeaderRow, .planetTable,
+.firstHeaderRowScrolled, .secondHeaderRowScrolled {
+    width: 633px;
+}
+
+.minWidth1{
+	min-width: 1px;
+}
+
+.minWidth5 {
+    min-width: 5px;
+}
+
+.minWidth15 {
+    min-width : 15px;
+}
+
+.minWidth20 {
+    min-width : 20px;
+}
+
+.minWidth25 {
+    min-width : 25px;
+}
+
+.minWidth30 {
+    min-width: 30px;
+}
+
+.minWidth40 {
+    min-width : 40px;
+}
+
+.minWidth45 {
+    min-width : 45px;
+}
+
+.minWidth50 {
+    min-width: 50px;
+}
+
+.minWidth52 {
+    min-width: 52px;
+}
+
+.minWidth55 {
+    min-width: 55px;
+}
+
+.minWidth62 {
+    min-width : 62px;
+}
+
+.minWidth65 {
+    min-width : 65px;
+}
+
+.borderRight,
+.planetTable td:nth-of-type(2) ,
+.planetTable td:nth-of-type(5),
+.planetTable td:nth-of-type(8),
+.planetTable td:nth-of-type(9),
+.planetTable td:nth-of-type(10),
+.planetTable td:nth-of-type(11),
+.planetTable td:nth-of-type(12),
+.planetTable td:nth-of-type(13),
+.planetTable td:nth-of-type(14),
+.planetTable td:nth-of-type(15){
+    border-right: solid 1px black;
+}
+
+.minWidth15 {
+    min-width: 15px;    
+}
+
+.minWidth70 {
+    min-width:70px;
+}
+
+@media screen {
+}
+
+/* ---------------------------- M A R S ------------------------------------ */
+
+#MarsTable tr.firstHeaderRow, 
+#MarsTable tr.secondHeaderRow,
+#MarsTable tr.firstHeaderRowScrolled, 
+#MarsTable tr.secondHeaderRowScrolled {
+    width: 832px;
+}
+#MarsTable td:nth-of-type(16), 
+#MarsTable td:nth-of-type(18), 
+#MarsTable td:nth-of-type(19), 
+#MarsTable td:nth-of-type(20), 
+#MarsTable td:nth-of-type(21){
+    border-right: solid 1px black;
+}
+
+/* ---------------------------- J U P I T E R ---------------------- */
+#JupiterTable td:nth-of-type(16), 
+#JupiterTable td:nth-of-type(18), 
+#JupiterTable td:nth-of-type(19), 
+#JupiterTable td:nth-of-type(20), 
+#JupiterTable td:nth-of-type(21), 
+#JupiterTable td:nth-of-type(22){
+    border-right: solid 1px black;
+}
+
+#Elongations of Galilean Moons, #Elongations of Saturn Moons {
+    text-align: center;
+}
+
+#GalileanMoonsContainer svg {
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.satellitesContents {
+    text-align: left;
+    max-width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.moonEclipse, .solarEclipse {
+    text-align: center;
+    border-top: solid 1px #AAAAAA;
+    margin-top: -1px;
+    margin-left: auto;
+    margin-right: auto;
+    page-break-after: always;
+    max-width: 1024px;
+    font-size: 25px;
+    padding: 0px 20px 20px 0px;
+}
+
+.moonEclipse table, .solarEclipse table {
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+.moonEclipse table td, .solarEclipse table td{
+    padding: 10px;
+}
+.solarEclipse table td{
+    text-align: right;
+}
+
+.viewport {
+    width: 100%;
+    max-width: 640px;
+    padding-top: 0.1%; /* 1:1 Aspect Ratio */
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.physPosVisible {
+    visibility: visible;
+}
+
+.physicalPositionalButtonsHolder {
+    position: fixed;
+    bottom: 120;
+    background: #ffffff;
+    padding: 2px 0px 2px 2px;
+    width: 100%;
+}
+
+
+@media  screen and  (max-width: 936px)  {
+    
+    .buttonsToSwitchPosPhys {
+        display: inline;
+    }
+    
+    .physSeenAtSmallWidth {
+        display: table-cell;
+    }
+    
+    .physPosHidden {
+        visibility: hidden;
+    }
+
+    #jupiterHorizontalScroller, #marsHorizontalScroller {
+        width: 647px;
+    }
+
+    #JupiterTable tr.firstHeaderRow, 
+    #JupiterTable tr.secondHeaderRow,
+    #JupiterTable tr.firstHeaderRowScrolled, 
+    #JupiterTable tr.secondHeaderRowScrolled, 
+    #MarsTable tr.firstHeaderRow, 
+    #MarsTable tr.secondHeaderRow,
+    #MarsTable tr.firstHeaderRowScrolled, 
+    #MarsTable tr.secondHeaderRowScrolled  {
+        width: 635px;
+    }
+    
+    .showPhysical {
+        margin-left: -650px;
+        margin-right: auto;
+    }
+    
+    
+    tr.firstHeaderRowScrolled.movedMenu {
+        top: 0;
+    }
+    tr.secondHeaderRowScrolled.movedMenu {
+        top: 20;
+    }
+    
+}
+
+@media  screen and  (max-width: 936px) and (orientation: landscape) {
+    
+    .physicalPositionalButtonsHolder {
+    position: fixed;
+    bottom: 0;
+    background: #ffffff;
+    padding: 2px 0px 2px 2px;
+    width: 100%;
+}
+
+    
+    tr.firstHeaderRowScrolled{
+        top: 128px;
+    }
+
+    tr.secondHeaderRowScrolled{
+        top: 148px;
+    }
+
+    tr.firstHeaderRowScrolled.movedMenu {
+        top: 28;
+    }
+    tr.secondHeaderRowScrolled.movedMenu {
+        top: 48;
+    }
+    
+}
+
+
+    
+.positionalButton, .physicalButton {
+    height:23px; 
+    border: solid 1px #000000; 
+    float: left; 
+    padding-top: 2px; 
+    padding-left: 5px; 
+    width: 170px; 
+    text-align: center;        
+    cursor: pointer;
+    user-select: none;
+    font-family: Verdana;
+    font-size: 16px;
+}
+
+.positionalButton {
+    border-radius: 5px 0px 0px 5px; 
+    padding-right: 5px; 
+}
+
+.physicalButton {
+    border-radius: 0px 5px 5px 0px;
+}
+
+.activeButton {
+    background: #000000;
+    color: #ffffff;
+    cursor: default;
+}
+
+label {
+    display: block;
+    padding: 4px; 
+    color: #003377;
+    font-size: 18px;
+}
+
+input[type=date] {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-color: #AAAAAA;
+    border-bottom-width: 2px;
+    width: 100%;
+    display: block;
+    font-size: 26px;
+    color: #666666;
+    transition: 0.25s;
+}
+
+label input:hover {
+    color: #003377;
+}
+
+label input:focus, label input:hover, #searchTerms {
+    outline: none;
+    transition: 0.25s;
+    border-color: #003377;
+}
+
+label input:focus{
+    color: #000000;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type=date]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+#Solar\20 Eclipses > div.leftaligned {
+    margin-top: 30px;
+    margin-bottom: 60px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1024px;
+}
+
+.leftaligned {
+    text-align: left;
+}
+
+#error404, #privacy {
+    max-width: 835px;
+}
+
+#privacy h1, #error404 h1, #Search\20 results h1{
+    margin-bottom: 40px;
+}
+
+#Search\20 results ul li{
+    margin-bottom: 20px;
+}
+
+}
+
+.rtsettings h3 {
+    float: left;
+    margin-top: 0px;
+}
+
+.rtsettings {
+    border-top: solid 1px #000000;
+    padding-top: 15px;
+    padding-bottom: 65px;
+    border-bottom: solid 1px #000000;
+}
+
+.row {
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+.row label {
+    font-size: 25px;
+}
+
+#realTimeSettingsContainer {
+    margin-bottom: 100px;
+}
+
+.settingsLabelDiv {
+    font-size: 30px;
+}
+
+/* --------------- from w3schools, with a few tweaks --------------*/
+
+#settings {
+    --input-height: 40px;
+}
+
+#latitudeInput, #longitudeInput, #altitudeInput {
+    width: 230px;
+}
+#startingDate {
+    width: 220px;
+} 
+#incrementDate, #numberOfDays {
+    width: 230px;
+}
+
+
+#latitudeInput, #longitudeInput, #altitudeInput, #incrementDate, #numberOfDays {
+    font-size: 26px;
+}
+
+#settings label, #getFromGeolocationAnchor {
+    font-size: 26px;
+    font-family: Verdana;
+}
+
+#settings label.switch {
+  float: right;
+  margin-right: 15px;
+  margin-top: 25px;
+}
+
+#settings input[type='button'] {
+  width: auto;
+  display: inline;
+}
+
+.rtsettings.collapsed, .collapsed {
+    height: 70px;
+    overflow-y: hidden;
+    border: none;
+    padding-bottom: 0px;
+}
+
+ .expandCollapseButton {
+    background-image: url('../images/sprite.svg#double-arrow');
+    width: 50px;
+    height: 50px;
+    background-size: 38px 38px;
+    background-position: center;
+    background-repeat: no-repeat;
+    float: right;
+    transform: rotate(180deg);
+    transition: 0.1s;
+    margin-right: 20px;
+    margin-left: 20px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.collapsed .expandCollapseButton {
+    transform: rotate(0deg);
+    transition: 0.1s;
+}
+
+@media  screen and  (min-width: 936px) {
+    #settings input[type="button"]{
+        --input-height: 25px;
+    }
+
+    #settings {
+        --slider-width: 30px;
+        --slider-height: 7px;  
+        --slider-cursor-to-slider-height: 2.5;
+    }
+
+     .expandCollapseButton {
+        width: 35px;
+        height: 35px;
+        background-size: 25px 25px;
+     }
+     
+     input:checked + .slider:before {
+      -webkit-transform: translateX(18px);
+      -ms-transform: translateX(18px);
+      transform: translateX(18px) ;
+    }
+
+    body {
+        font-size: 24px;
+    }
+tr.firstHeaderRowScrolled{
+    top: 104px;
+}
+
+tr.secondHeaderRowScrolled{
+    top: 124px;
+}
+}
+
