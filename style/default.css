@@ -3,27 +3,25 @@
     src: url('../images/bulgarian-courier.ttf') format("truetype");
 }
     
-@media screen {
-    #jupiterHorizontalScroller , #marsHorizontalScroller{
-        overflow-x: hidden;
-        margin-left: auto;
-        margin-right: auto;
-        padding-top: 0px;
-    }
+#jupiterHorizontalScroller , #marsHorizontalScroller{
+    overflow-x: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 0px;
+}
 
-    .showPositional #JupiterTable tr.firstHeaderRow, 
-    .showPositional #JupiterTable tr.secondHeaderRow,
-    .showPositional #JupiterTable tr.firstHeaderRowScrolled, 
-    .showPositional #JupiterTable tr.secondHeaderRowScrolled, 
-    .showPositional #Jupiter{
-        width: 880px;
-        background: #ffffff;
-    }
-    
-    .secondHeaderRow th, 
-    .secondHeaderRowScrolled th {
-        border-bottom: 1px solid #000000;
-    }
+.showPositional #JupiterTable tr.firstHeaderRow, 
+.showPositional #JupiterTable tr.secondHeaderRow,
+.showPositional #JupiterTable tr.firstHeaderRowScrolled, 
+.showPositional #JupiterTable tr.secondHeaderRowScrolled, 
+.showPositional #Jupiter{
+    width: 880px;
+    background: #ffffff;
+}
+
+.secondHeaderRow th, 
+.secondHeaderRowScrolled th {
+    border-bottom: 1px solid #000000;
 }
 
 .largeButtons.linkButton::after {
@@ -360,9 +358,6 @@ tr.secondHeaderRowScrolled th:last-of-type {
     padding: 2px 0px 2px 2px;
     width: 100%;
 }
-
-
-@media  screen and  (max-width: 936px)  {
     
     .buttonsToSwitchPosPhys {
         display: inline;
@@ -404,9 +399,8 @@ tr.secondHeaderRowScrolled th:last-of-type {
         top: 20;
     }
     
-}
 
-@media  screen and  (max-width: 936px) and (orientation: landscape) {
+@media screen and (orientation: landscape) {
     
     .physicalPositionalButtonsHolder {
     position: fixed;
@@ -629,6 +623,30 @@ input[type=date]::-webkit-inner-spin-button {
 }
 
 @media  screen and  (min-width: 936px) {
+
+    .buttonsToSwitchPosPhys {
+        display: hidden;
+    }
+    
+    .physSeenAtSmallWidth {
+        display: none;
+    }
+    
+    .physPosHidden {
+        visibility: visible;
+    }
+
+    .physicalEphemeris {
+        display: table-cell;
+    }
+    
+    tr.firstHeaderRowScrolled.movedMenu {
+        top: 0;
+    }
+    tr.secondHeaderRowScrolled.movedMenu {
+        top: 20;
+    }
+
     #settings input[type="button"]{
         --input-height: 25px;
     }
@@ -654,12 +672,13 @@ input[type=date]::-webkit-inner-spin-button {
     body {
         font-size: 24px;
     }
-tr.firstHeaderRowScrolled{
-    top: 104px;
-}
 
-tr.secondHeaderRowScrolled{
-    top: 124px;
-}
+    tr.firstHeaderRowScrolled{
+        top: 104px;
+    }
+
+    tr.secondHeaderRowScrolled{
+        top: 124px;
+    }
 }
 
