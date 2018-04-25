@@ -630,10 +630,10 @@ input[type=date]::-webkit-inner-spin-button {
     }
     
     tr.firstHeaderRowScrolled.movedMenu {
-        top: 0;
+        top: 100;
     }
     tr.secondHeaderRowScrolled.movedMenu {
-        top: 20;
+        top: 120;
     }
 
     #settings input[type="button"]{
@@ -663,11 +663,11 @@ input[type=date]::-webkit-inner-spin-button {
     }
 
     tr.firstHeaderRowScrolled{
-        top: 104px;
+        top: 100px;
     }
 
     tr.secondHeaderRowScrolled{
-        top: 124px;
+        top: 120px;
     }
 }
 
