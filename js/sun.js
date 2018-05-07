@@ -23,19 +23,19 @@ var SunData = {
         var data = this.cache[JD];
         if (!data) {
             data = {};
-            var _date = AAJS.Date.JD2Date(JD);
+            var _date = GetAAJS().Date.JD2Date(JD);
             // convert from JD to gregorian
             data['Month'] = _date.M;
             data['Day'] = _date.D;
-            var radec = AAJS.Sun.EquatorialCoordinates(JD, true);
+            var radec = GetAAJS().Sun.EquatorialCoordinates(JD, true);
             data['RA'] = radec.X; // RA [h.hhhh]
             data['Dec'] = radec.Y; // DEC [deg.dddd]
-            var sunDistance = AAJS.Sun.Distance(JD, true);
+            var sunDistance = GetAAJS().Sun.Distance(JD, true);
 			data['DistanceToEarth'] = sunDistance;// [au]
-            data['Diameter'] = AAJS.Sun.Diameter(JD, true)/3600; // [deg.dddd]
+            data['Diameter'] = GetAAJS().Sun.Diameter(JD, true)/3600; // [deg.dddd]
             
             data['MeridianTransit'] = false;
-            var physical = AAJS.Sun.CalculatePhysicalDetails(JD, true);
+            var physical = GetAAJS().Sun.CalculatePhysicalDetails(JD, true);
             data['P'] = physical.P; // [deg.dddd]
             data['B0'] = physical.B0; // [deg.dddd]
             data['L0'] = physical.L0; // [deg.dddd]
@@ -63,7 +63,7 @@ var SunData = {
         this.cache = {};
     },
     riseSetAngle : -0.83333,
-    addRiseTransitSetData : PlanetData.prototype.addRiseTransitSetData
+    addRiseTransitSetData : false
 };
 
     
@@ -76,54 +76,60 @@ var SunData = {
         "0" : {
                 "0" : { "text" : "Date", "classes" : ["minWidth20"] },
                 "1" : { "text" : "", "classes" : ["minWidth20"] },
-                "longText" : "Date: month"
+                "longText" : "Date: month",
+                "dataKey" : 'Month'
             } ,
 
         "1" : {
                 "0" : { "text" : "", "classes" : ["minWidth20"] },
                 "1" : { "text" : "", "classes" : ["minWidth20"] },
-                "longText" : "Date: day"
+                "longText" : "Date: day",
+                "dataKey" : 'Day'
             },
         "2" : {
                 "0" : { "text" : "\u03B1", "classes" : ["minWidth20"] },
                 "1" : { "text" : "h", "classes" : ["minWidth20"] },
-                "longText" : "Equatorial coordinates: Right Ascension"
+                "longText" : "Apparent geocentric equatorial coordinates: Right Ascension",
+                "dataKey" : 'RA'
             },
         "3" : {
                 "0" : { "text" : "(RA)", "classes" : ["minWidth20"] },
                 "1" : { "text" : "m", "classes" : ["minWidth20"] },
-                "longText" : "Equatorial coordinates: Right Ascension"
+                "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "4" : {
-                "0" : { "text" : "", "classes" : ["minWidth10"] },
-                "1" : { "text" : "s", "classes" : ["minWidth20"] },
-                "longText" : "Equatorial coordinates: Right Ascension"
+                "0" : { "text" : "", "classes" : ["minWidth20"] },
+                "1" : { "text" : "s", "classes" : ["minWidth40"] },
+                "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "5" :  {
                 "0" : { "text" : "\u03B4", "classes" : ["minWidth20"] },
                 "1" : { "text" : "\u00B0", "classes" : ["minWidth25"] },
-                "longText" : "Equatorial coordinates: Declination"
+                "longText" : "Apparent geocentric equatorial coordinates: Declination",
+                "dataKey" : 'Dec'
             },
         "6" :  {
                 "0" : { "text" : "(Dec)", "classes" : ["minWidth20" ] },
                 "1" : { "text" : "'", "classes" : ["minWidth20"] },
-                "longText" : "Equatorial coordinates: Declination"
+                "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
         "7" :  {
                 "0" : { "text" : "", "classes" : ["minWidth10"  ] },
                 "1" : { "text" : "''", "classes" : ["minWidth25"] },
-                "longText" : "Equatorial coordinates: Declination"
+                "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
             "8" :  {
                     "0" : { "text" :"\u0394", "classes" : ["minWidth50", "positionEphemeris"] },
-                    "1" : { "text" :"A.U.",   "classes" : ["minWidth50", "positionEphemeris"] },
-                    "longText" : "Distance to Earth, in astronomical units"
+                    "1" : { "text" :"au",   "classes" : ["minWidth50", "positionEphemeris"] },
+                    "longText" : "Distance to Earth, in astronomical units",
+                "dataKey" : 'DistanceToEarth'
                 },
             
             "9" :  {
                     "0" : { "text" :"\u03D5", "classes" : ["minWidth20", "positionEphemeris"] },
                     "1" : { "text" :"'",      "classes" : ["minWidth20", "positionEphemeris"] },
-                    "longText" : "Apparent diameter of the Sun"
+                    "longText" : "Apparent diameter of the Sun",
+                "dataKey" : 'Diameter'
                 },
             "10" :  {
                     "0" : { "text" :"",    "classes" : ["minWidth20", "positionEphemeris"] },
@@ -134,40 +140,47 @@ var SunData = {
         "11" : {
                     "0" : { "text" : "Rise", "classes" :  ["minWidth50", "positionEphemeris"] },
                     "1" : { "text" : "hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
-                    "longText" : "The UTC time of rise above horizon"
+                    "longText" : "The UTC time of rise above horizon",
+                "dataKey" : 'Rise'
             },      
         "12" : {    
                     "0" : { "text" : "Transit", "classes" : ["minWidth40"  , "positionEphemeris"] },
                     "1" : { "text" : "hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
-                    "longText" : "The UTC time of the transit across the meridian"
+                    "longText" : "The UTC time of the transit across the meridian",
+                "dataKey" : 'MeridianTransit'
             },      
         "13" : {    
                     "0" : { "text" : "Set", "classes" : ["minWidth40"  , "positionEphemeris"] },
                     "1" : { "text" : "hh:mm", "classes" : ["minWidth55", "positionEphemeris"] },
-                    "longText" : "The UTC time of setting"
+                    "longText" : "The UTC time of setting",
+                "dataKey" : 'Set'
             },
             "14" :  {
                     "0" : { "text" :"P",      "classes" : ["minWidth62", "physicalEphemeris"] },
                     "1" : { "text" :"\u00B0", "classes" : ["minWidth62", "physicalEphemeris"] },
-                    "longText" : "Position angle of the N end of the axis of rotation. It is positive when east of the north point of the disk, negative if west."
+                    "longText" : "Position angle of the N end of the axis of rotation (physical ephemeris). It is positive when east of the north point of the disk, negative if west.",
+                "dataKey" : 'P'
                 },
 
             "15" :  {
                     "0" : { "text" :"B",      "classes" : ["minWidth62", "physicalEphemeris"] },
                     "1" : { "text" :"\u00B0", "classes" : ["minWidth62", "physicalEphemeris"] },
-                    "longText" : "Heliographic latitude of the centre of the disk."
+                    "longText" : "Heliographic latitude of the centre of the disk (physical ephemeris).",
+                "dataKey" : 'B0'
                 },
 
             "16" :  {
                     "0" : { "text" :"L",      "classes" : ["minWidth62", "physicalEphemeris"] },
                     "1" : { "text" :"\u00B0", "classes" : ["minWidth62", "physicalEphemeris"] },
-                    "longText" : "Heliographic longitude of the centre of the disk."
+                    "longText" : "Heliographic longitude of the centre of the disk (physical ephemeris).",
+                "dataKey" : 'L0'
                 },
                 // \u03C0
             "17" :  {
                     "0" : { "text" :"\u03C0", "classes" : ["minWidth50", "physicalEphemeris"] },
                     "1" : { "text" :"''",     "classes" : ["minWidth50", "physicalEphemeris"] },
-                    "longText" : "Equatorial horizontal parallax"
+                    "longText" : "Equatorial horizontal parallax",
+                "dataKey" : 'Parallax'
                 }
         },
         
@@ -180,8 +193,6 @@ var SunData = {
         months : ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         // this will probably become an utility available for every page
         lastAppendedLine : false,
-       
-        reset : PlanetPage.prototype.reset,
        
         prepareOneDayDataObjectForView : function (obj, JD) {
             var displayableLine = [];
@@ -197,19 +208,19 @@ var SunData = {
             displayableLine[1] = obj.Day;
             
             var di = 2;
-            var sexagesimalRA = AAJS.Numerical.ToSexagesimal(Math.round(obj.RA * 3600)/3600);
+            var sexagesimalRA = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.RA * 36000)/36000);
             displayableLine[di++] = sexagesimalRA.Ord3 ;
             displayableLine[di++] = sexagesimalRA.Ord2 
             displayableLine[di++] = sexagesimalRA.Ord1;
 
-            var sexagesimalDec = AAJS.Numerical.ToSexagesimal(Math.round(obj.Dec * 3600)/3600);
+            var sexagesimalDec = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.Dec * 3600)/3600);
             displayableLine[di++] = sexagesimalDec.Ord3 ;
             displayableLine[di++] = sexagesimalDec.Ord2;
             displayableLine[di++] = sexagesimalDec.Ord1;
 			
-			displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.DistanceToEarth);
+			displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals (obj.DistanceToEarth);
             
-            var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(Math.round(obj.Diameter * 3600)/3600);
+            var sexagesimalDiam = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.Diameter * 3600)/3600);
             displayableLine[di++] = sexagesimalDiam.Ord2;
             displayableLine[di++] = sexagesimalDiam.Ord1;
             
@@ -217,18 +228,15 @@ var SunData = {
             displayableLine[di++] = obj.bTransitValid ? this.timeToHhColumnMm(obj.MeridianTransit) : "N/A";
             displayableLine[di++] = obj.bSetValid ? this.timeToHhColumnMm(obj.Set) : "N/A";
             
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.P);
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.B0);
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.L0);
+            displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals (obj.P);
+            displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals (obj.B0);
+            displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals (obj.L0);
             
-            displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals(obj.Parallax * 3600); // just arcsecs
+            displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals(obj.Parallax * 3600); // just arcsecs
 
             return displayableLine;
         },
 
-        appendLine : PlanetPage.prototype.appendLine,
-        addNodeChild : PlanetPage.prototype.addNodeChild,
-        oldAddHeader : PlanetPage.prototype.addTableHeader,
         addTableHeader : function (table, classes) {
 
             var result = this.oldAddHeader(table, classes);
@@ -238,9 +246,23 @@ var SunData = {
             return result;
         },
         
-        displayPage : PlanetPage.prototype.displayPage,
-        timeToHhColumnMm : PlanetPage.prototype.timeToHhColumnMm
     };
-        Pages["Sun"] = Sun;
     
+	var localInit = function() {
+		if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
+			SunData.addRiseTransitSetData = PlanetData.prototype.addRiseTransitSetData;
+			Sun.reset = PlanetPage.prototype.reset;
+			Sun.displayPage = PlanetPage.prototype.displayPage;
+			Sun.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
+			Sun.appendLine = PlanetPage.prototype.appendLine;
+			Sun.addNodeChild = PlanetPage.prototype.addNodeChild;
+			Sun.oldAddHeader = PlanetPage.prototype.addTableHeader;
+			Pages["Sun Ephemeris"] = Sun;
+		} else {
+			SyncedTimeOut (localInit, Timeout.onInit);
+		}
+	}
+
+	localInit();
+
 })();

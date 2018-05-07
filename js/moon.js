@@ -28,12 +28,12 @@ var MoonData = {
         
             var i = 0;
             
-            var _date = AAJS.Date.JD2Date(JD);
+            var _date = GetAAJS().Date.JD2Date(JD);
             // convert from JD to gregorian
             data['Month'] = _date.M;
             data['Day'] = _date.D;
             
-            var posData = AAJS.Moon.PositionalEphemeris(JD, Location.latitude, Location.longitude, Location.altitude);
+            var posData = GetAAJS().Moon.PositionalEphemeris(JD, Location.latitude, Location.longitude, Location.altitude);
             
             for (var key in posData)
                 data[key] = posData[key];
@@ -41,10 +41,11 @@ var MoonData = {
             // how about we rename the geo ones?
             data ['RA'] = data['RaGeo'];
             data ['Dec'] = data['DecGeo'];
+            data ['Parallax'] = data.parallax;
             
 			data['MeridianTransit'] = false;
 
-            var selenographicCoordsOfSun = AAJS.Moon.CalculateSelenographicPositionOfSun (JD, true);
+            var selenographicCoordsOfSun = GetAAJS().Moon.CalculateSelenographicPositionOfSun (JD, true);
             var colongitude = 90 - selenographicCoordsOfSun.l0;
             if (colongitude < 0)
                 colongitude += 360;
@@ -69,10 +70,8 @@ var MoonData = {
         this.toDUT = 0;
     },
 
-    riseSetAngle : -0.83333,
-    addRiseTransitSetData : PlanetData.prototype["addRiseTransitSetData"]    
+    riseSetAngle : -0.83333
 };
-    
 
 (function(){    
     var MoonPage = {
@@ -83,81 +82,88 @@ var MoonData = {
         "0" : {
                 "0" : { "text" : "Date", "classes" : ["minWidth20"] },
                 "1" : { "text" : "", "classes" : ["minWidth20"] },
-                "longText" : "Date: month"
+                "longText" : "Date: month",
+                "dataKey" : 'Month'
             } ,
 
         "1" : {
                 "0" : { "text" : "", "classes" : ["minWidth20"] },
                 "1" : { "text" : "", "classes" : ["minWidth20"] },
-                "longText" : "Date: day"
+                "longText" : "Date: day",
+                "dataKey" : 'Day'
             },
         "2" : {
                 "0" : { "text" : "\u03B1", "classes" : ["minWidth20"] },
                 "1" : { "text" : "h", "classes" : ["minWidth20"] },
-                "longText" : "Equatorial coordinates: Right Ascension"
+                "longText" : "Apparent geocentric equatorial coordinates: Right Ascension",
+                "dataKey" : 'RaGeo'
             },
         "3" : {
                 "0" : { "text" : "(RA)", "classes" : ["minWidth20", "screenOnly"] },
                 "1" : { "text" : "m", "classes" : ["minWidth20"] },
-                "longText" : "Equatorial coordinates: Right Ascension"
+                "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "4" : {
-                "0" : { "text" : "", "classes" : ["minWidth10"] },
-                "1" : { "text" : "s", "classes" : ["minWidth20"] },
-                "longText" : "Equatorial coordinates: Right Ascension"
+                "0" : { "text" : "", "classes" : ["minWidth20"] },
+                "1" : { "text" : "s", "classes" : ["minWidth40"] },
+                "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "5" :  {
                 "0" : { "text" : "\u03B4", "classes" : ["minWidth20"] },
                 "1" : { "text" : "\u00B0", "classes" : ["minWidth25"] },
-                "longText" : "Equatorial coordinates: Declination"
+                "longText" : "Apparent geocentric equatorial coordinates: Declination",
+                "dataKey" : 'DecGeo'
             },
         "6" :  {
                 "0" : { "text" : "(Dec)", "classes" : ["minWidth20" , "screenOnly"] },
                 "1" : { "text" : "'", "classes" : ["minWidth20"] },
-                "longText" : "Equatorial coordinates: Declination"
+                "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
         "7" :  {
                 "0" : { "text" : "", "classes" : ["minWidth10"  ] },
                 "1" : { "text" : "''", "classes" : ["minWidth25"] },
-                "longText" : "Equatorial coordinates: Declination"
+                "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
 
             "8" : {
                     "0" : { "text" :"\u03B1", "classes" : ["minWidth20", "positionEphemeris"] },
                     "1" : { "text" :"h"     , "classes" : ["minWidth20", "positionEphemeris"] },
-                    "longText" : "Topocentric equatorial coordinates: Right Ascension"
+                    "longText" : "Apparent topocentric equatorial coordinates: Right Ascension",
+                    "dataKey" : "RaTopo"
                 },
             "9" : {
                     "0" : { "text" :"topo", "classes" : ["minWidth20", "positionEphemeris"] },
                     "1" : { "text" :"m"   , "classes" : ["minWidth20", "positionEphemeris"] },
-                    "longText" : "Topocentric equatorial coordinates: Right Ascension"
+                    "longText" : "Apparent topocentric equatorial coordinates: Right Ascension"
                 },
             "10" : {
-                    "0" : { "text" :"" , "classes" : ["minWidth5", "positionEphemeris"] },
-                    "1" : { "text" :"s", "classes" : ["minWidth20", "positionEphemeris"] },
-                    "longText" : "Topocentric equatorial oordinates: Right Ascension"
+                    "0" : { "text" :"" , "classes" : ["minWidth20", "positionEphemeris"] },
+                    "1" : { "text" :"s", "classes" : ["minWidth30", "positionEphemeris"] },
+                    "longText" : "Apparent topocentric equatorial oordinates: Right Ascension"
                 },
             "11" :  {
                     "0" : { "text" :"\u03B4", "classes" : ["minWidth25", "positionEphemeris"] },
                     "1" : { "text" :"\u00B0", "classes" : ["minWidth25", "positionEphemeris"] },
-                    "longText" : "Topocentric equatorial coordinates: Declination"
+                    "longText" : "Apparent topocentric equatorial coordinates: Declination",
+                    "dataKey" : "DecTopo"
                 },
             "12" :  {
                     "0" : { "text" :"topo", "classes" : ["minWidth20", "positionEphemeris"] },
                     "1" : { "text" :"'"   , "classes" : ["minWidth20", "positionEphemeris"] },
-                    "longText" : "Topocentric equatorial coordinates: Declination"
+                    "longText" : "Apparent topocentric equatorial coordinates: Declination"
                 },
             "13" :  {
                     "0" : { "text" :""  , "classes" : ["minWidth20", "positionEphemeris"] },
                     "1" : { "text" :"''", "classes" : ["minWidth30", "positionEphemeris"] },
-                    "longText" : "Topocentric equatorial coordinates: Declination"
+                    "longText" : "Apparent topocentric equatorial coordinates: Declination"
                 },
 
            
             "14" :  {
                     "0" : { "text" :"\u03D5", "classes" : ["minWidth20", "positionEphemeris"] },
                     "1" : { "text" :"'"     , "classes" : ["minWidth20", "positionEphemeris"] },
-                    "longText" : "Apparent diameter"
+                    "longText" : "Apparent diameter",
+                "dataKey" : 'Diameter'
                 },
             "15" :  {
                     "0" : { "text" :""  , "classes" : ["minWidth15", "positionEphemeris"] },
@@ -168,23 +174,27 @@ var MoonData = {
             "16" : {
                     "0" : { "text" :"Rise", "classes" : ["minWidth50", "positionEphemeris"] },
                     "1" : { "text" :"hh:mm"      , "classes" : ["minWidth50", "positionEphemeris"] },
-                    "longText" : "The UTC time of rise above horizon"
+                    "longText" : "The UTC time of rise above horizon",
+                "dataKey" : 'Rise'
                 },
             "17" : {
                     "0" : { "text" :"Transit" , "classes" : ["minWidth50", "positionEphemeris"] },
                     "1" : { "text" :"hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
-                    "longText" : "The UTC time of the transit across the meridian"
+                    "longText" : "The UTC time of the transit across the meridian",
+                "dataKey" : 'MeridianTransit'
                 },
             "18" : {
                     "0" : { "text" :"Set" , "classes" : ["minWidth55", "positionEphemeris"] },
                     "1" : { "text" :"hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
-                    "longText" : "The UTC time of setting"
+                    "longText" : "The UTC time of setting",
+                "dataKey" : 'Set'
                 },
  
             "19" :  {
                     "0" : { "text" :"\u03C0", "classes" : ["minWidth15", "positionEphemeris"] },
                     "1" : { "text" :"\u00B0", "classes" : ["minWidth15", "positionEphemeris"] },
-                    "longText" : "Equatorial horizontal parallax"
+                    "longText" : "Equatorial horizontal parallax",
+                "dataKey" : 'Parallax'
                 },
                 
             "20" :  {
@@ -201,12 +211,14 @@ var MoonData = {
             "22" :  {
                     "0" : { "text" :"90-l0" , "classes" : ["minWidth52", "physicalEphemeris"] },
                     "1" : { "text" :"\u00B0", "classes" : ["minWidth52", "physicalEphemeris"] },
-                    "longText" : "colongitude of the Sun"
+                    "longText" : "colongitude of the Sun (physical ephemeris)",
+                "dataKey" : 'Colongitude'
                 },
             "23" :  {
                     "0" : { "text" :"b0"    , "classes" : ["minWidth65", "physicalEphemeris"] },
                     "1" : { "text" :"\u00B0", "classes" : ["minWidth65", "physicalEphemeris"] },
-                    "longText" : "latitude of the Sun"
+                    "longText" : "latitude of the Sun (physical ephemeris)",
+                "dataKey" : 'b0'
                 },
         },
         
@@ -221,13 +233,6 @@ var MoonData = {
         lastAppendedLine : false
     };
     
-    Pages["Moon"] = MoonPage;
-    
-    MoonPage.reset = PlanetPage.prototype.reset;
-    MoonPage.appendLine = PlanetPage.prototype.appendLine;
-    MoonPage.addNodeChild = PlanetPage.prototype.addNodeChild;
-    MoonPage.displayPage = PlanetPage.prototype.displayPage;
-   
     MoonPage.prepareOneDayDataObjectForView = function (obj) {
         var displayableLine = [];
 
@@ -242,27 +247,27 @@ var MoonData = {
         displayableLine[1] = obj.Day;
         
         var di = 2;
-        var sexagesimalRaGeo = AAJS.Numerical.ToSexagesimal(Math.round(obj.RaGeo * 3600)/3600);
+        var sexagesimalRaGeo = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.RaGeo * 36000)/36000);
         displayableLine[di++] = sexagesimalRaGeo.Ord3 ;
         displayableLine[di++] = sexagesimalRaGeo.Ord2 
         displayableLine[di++] = sexagesimalRaGeo.Ord1;
 
-        var sexagesimalDecGeo = AAJS.Numerical.ToSexagesimal(Math.round(obj.DecGeo * 3600)/3600);
+        var sexagesimalDecGeo = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.DecGeo * 3600)/3600);
         displayableLine[di++] = sexagesimalDecGeo.Ord3 ;
         displayableLine[di++] = sexagesimalDecGeo.Ord2;
         displayableLine[di++] = sexagesimalDecGeo.Ord1;
 		            
-        var sexagesimalRaTopo = AAJS.Numerical.ToSexagesimal(Math.round(obj.RaTopo * 3600)/3600);
+        var sexagesimalRaTopo = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.RaTopo * 36000)/36000);
         displayableLine[di++] = sexagesimalRaTopo.Ord3 ;
         displayableLine[di++] = sexagesimalRaTopo.Ord2 
         displayableLine[di++] = sexagesimalRaTopo.Ord1;
 
-        var sexagesimalDecTopo = AAJS.Numerical.ToSexagesimal(Math.round(obj.DecTopo * 3600)/3600);
+        var sexagesimalDecTopo = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.DecTopo * 3600)/3600);
         displayableLine[di++] = sexagesimalDecTopo.Ord3 ;
         displayableLine[di++] = sexagesimalDecTopo.Ord2;
         displayableLine[di++] = sexagesimalDecTopo.Ord1;
 
-        var sexagesimalDiam = AAJS.Numerical.ToSexagesimal(Math.round(obj.diameter * 3600)/3600);
+        var sexagesimalDiam = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.diameter * 3600)/3600);
         displayableLine[di++] = sexagesimalDiam.Ord2;
         displayableLine[di++] = sexagesimalDiam.Ord1;
         
@@ -270,19 +275,17 @@ var MoonData = {
         displayableLine[di++] = this.timeToHhColumnMm(obj.MeridianTransit);
         displayableLine[di++] = this.timeToHhColumnMm(obj.Set);
             
-        var sexagesimalParallax = AAJS.Numerical.ToSexagesimal(Math.round(obj.parallax * 3600)/3600);
+        var sexagesimalParallax = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.parallax * 3600)/3600);
         
         displayableLine[di++] = sexagesimalParallax.Ord3;
         displayableLine[di++] = sexagesimalParallax.Ord2;
         displayableLine[di++] = sexagesimalParallax.Ord1;
         
-        displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.Colongitude);
-        displayableLine[di++] = AAJS.Numerical.RoundTo3Decimals (obj.b0);
+        displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals (obj.Colongitude);
+        displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals (obj.b0);
 
         return displayableLine;
     };
-
-    MoonPage.oldHeaderFunc = PlanetPage.prototype.addTableHeader;
     
     MoonPage.addTableHeader = function (table, classes, tBody) {            
         var result = this.oldHeaderFunc(table, classes, tBody);
@@ -294,5 +297,23 @@ var MoonData = {
         return result;
     };
     
-    MoonPage.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
+    var localInit = function() {
+        if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
+            MoonData.addRiseTransitSetData = PlanetData.prototype.addRiseTransitSetData;
+
+            MoonPage.reset = PlanetPage.prototype.reset;
+            MoonPage.appendLine = PlanetPage.prototype.appendLine;
+            MoonPage.addNodeChild = PlanetPage.prototype.addNodeChild;
+            MoonPage.displayPage = PlanetPage.prototype.displayPage;
+
+            MoonPage.oldHeaderFunc = PlanetPage.prototype.addTableHeader;
+            MoonPage.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
+            Pages["Moon Ephemeris"] = MoonPage;
+        } else {
+            SyncedTimeOut(localInit, Timeout.onInit);
+        }
+    }
+
+    localInit();
+
 })();

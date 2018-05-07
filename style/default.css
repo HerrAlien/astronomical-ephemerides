@@ -1,47 +1,10 @@
-* {
-    transition: 0.125s;
+@font-face {
+    font-family: "Courier";
+    src: url('../images/bulgarian-courier.ttf') format("truetype");
 }
-
-th {
-    transition: 0s;
-    background: #ffffff;
-}
-
-body {
-    font-family: Verdana;
-    font-size: 18px;
-    min-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 0px;
-    page-break-inside: avoid;
-}
-
-.scrolledDown {
-    bottom: -60px;
-}
-
-.scrolledInPlace {
-    bottom: 0px;
-}
-
-a:visited {
-    color: #003377;
-}
-
-a {
-    text-decoration: underline;
-    color: #000000;
-}
-
-@media screen {
-    #scroller {
-        z-index: 2;
-        background: #ffffff;
-    }
     
+@media screen {
     #jupiterHorizontalScroller , #marsHorizontalScroller{
-        width: 880px;
         overflow-x: hidden;
         margin-left: auto;
         margin-right: auto;
@@ -63,168 +26,12 @@ a {
     }
 }
 
-.page {
-    display: block;
-    opacity: 1;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top:2px;
-    text-align: center;
-    width: 95%;
-}
-
-.page:not(:target){
-    display: none;
-    position: fixed;
-    bottom: 0;
-}
-
-.page::after {
-    font-size: 14px;
-    display: block;
-    margin: 48px auto 10px auto;
-    text-align: center;
-    content: "Copyright 2017 by Alexandru Garofide.";
- }
-
-.fixed {
-    position: fixed;
-}
-
-.printOnly {
-    display: none;
-    height: 0px;
-}
-
-.topmenulink {
-    float: right;
-    margin-right: 5px;
-    margin-left: 5px;
-}
-
-.linkButton {
-    text-align: center;
-}
-
-.linkButton img{
-    cursor: pointer;
-    margin-top: 2px;
-    width: 62px;
-}
-
-.linkButton:hover::after{
-    text-decoration: underline
-}
-
-.linkButton::after {
-    font-size: 18px;
-    display: block;
-    text-align: center;
-    color: #000000;
-}
-
-.MenuLinkDiv::after {
-    content: "More ...";
-    margin: -2px auto 2px auto;
-}
-
-.SettingsLink::after {
-    content: "Settings";
-}
-
-.DownloadLink::after {
-    content: "Download";
-}
-
-.SunLinkButton::after {
-     content: 
-"Sun";
-}
-
-.MoonLinkButton::after { content: 
-"Moon";
-}
-
-.MercuryLinkButton::after { content: 
-"Mercury";
-}
-
-.VenusLinkButton::after { content: 
-"Venus";
-}
-
-.MarsLinkButton::after { content: 
-"Mars";
-}
-
-.JupiterLinkButton::after { content: 
-"Jupiter";
-}
-
-.SaturnLinkButton::after { content: 
-"Saturn";
-}
-
-.UranusLinkButton::after { content: 
-"Uranus";
-}
-
-.NeptuneLinkButton::after { content: 
-"Neptune";
-}
-
-.LunarEclipseLinkButton::after { content: 
-"Lunar Eclipses";
-}
-
-.SolarEclipseLinkButton::after { content: 
-"Solar Eclipses";
-}
-
-.GalileanMoonsLinkButton::after { content: 
-"Galilean Moons";
-}
-.SaturnMoonsLinkButton::after { content: 
-"Saturn Moons";
-}
-
-.DownloadLink.topmenulink img {
-    width: 78px;
-    height: 62px;
-}
-
-.HomeLinkButton {
-    float: left;
-    margin-top: 2px;
-    margin-right: 20px;
-}
-
-.MenuLinkDiv {
-    margin-top: 2px;
-}
-.MenuLinkDiv.topmenulink img{
-    width: 78px;
-    height: 62px;
-}
-
-.HomeLinkButton.topmenulink img {
-    width: auto;
-    height: 90px;
-}
-
-.SettingsLink.topmenulink img {
-    width: 62px;
-    height: 62px;
-}
-
 .largeButtons.linkButton::after {
     font-size: 30px;
     text-decoration: underline;
 }
 
-.largeButtons.linkButton img {
+.menuPageItemImg {
     width: 120px;
     height: 120px;
 }
@@ -232,17 +39,6 @@ a {
 .largeButtons {
     margin-right: 15px;
     margin-left: 15px;
-}
-
-h1 {
-    margin-top: 120px;
-    margin-bottom: 0px;
-    font-size: 50px;
-    font-family: Arial;
-    margin-left: auto;
-    display: block;
-    font-weight: normal;
-    margin-right: auto;
 }
 
 #more {
@@ -254,36 +50,29 @@ h1 {
 }
 
 #settingsContainer {
-    max-width: 640px;
+    max-width: 780px;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
     text-align: left;
 }
 
-#settings label, #getFromGeolocationAnchor, #applySettingsChanges{
+.settingsLabel, #getFromGeolocationAnchor{
     float: left;
     margin-top: 16px;
 }
 
-#settings label, #getFromGeolocationAnchor, #applySettingsChanges {
+#cancelSettingsChanges,  #applySettingsChanges{
+    margin-top: 16px;
+}
+
+.settingsLabel, #getFromGeolocationAnchor, #applySettingsChanges {
     margin-left: 6px;
 }
 
 #cancelSettingsChanges {
     float: right;
     margin-right: 16px;
-}
-
-#applySettingsChanges, #cancelSettingsChanges {
-    margin-top: 32px;
-    height: 48px;
-    padding: 12px;
-    font-size: 20px;
-}
-
-#menuList li a {
-    text-decoration: none;
 }
 
 #getFromGeolocationAnchor {
@@ -295,33 +84,13 @@ h1 {
     height: 72px;
 }
 
-#menuList li a:hover, #menuList li a.current, #promotedMenu a:hover, #promotedMenu a.current{
-    color: red;
-}
-
-#menuList li {
+.menuListItem {
     float: left;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 #menuList{ 
     list-style-type:none;
-}
-
-#promotedMenu a {
-    float: left;
-    margin-top: 2px;
-    margin-left: 15px;
-}
-
-#promotedMenu {
-    overflow: hidden;
-    height: 90px;
-}
-
-.clear {
-	clear: both;
-    height: 0px;
 }
 
 tr.firstHeaderRow{
@@ -335,11 +104,11 @@ tr.secondHeaderRow {
 }
 
 tr.firstHeaderRowScrolled{
-    margin-top: -126px;
+    top: 0px;
 }
 
 tr.secondHeaderRowScrolled{
-    margin-top: -106px;
+    top: 20px;
 }
 
 tr.firstHeaderRow, tr.firstHeaderRowScrolled {
@@ -388,39 +157,8 @@ tr.secondHeaderRowScrolled th:last-of-type {
     box-shadow: 0px 2px 1px #CCCCCC;
 }
 
-input {
-    height: 32px;
-    font-size: 16px;
-    margin-top: 8px;
-}
-
-#latitudeInput, #longitudeInput, #altitudeInput {
-    width: 134px;
-}
-#startingDate {
-    width: 220px;
-} 
-#incrementDate, #numberOfDays {
-    width: 180px;
-}
-
-#credits, .topBorder{
-    	border-top: 1px solid #AAAAAA;
-}
-#credits{
-        width: 100%;
-        padding-top: 10px;
-        margin-top: 20px;
-        font-family: Courier;
-    }
-    
-.loadingMemFileContents {
-    text-align: center;
-}
 
 /** ----------------------------- M O O N --------------------------------------- **/
-@media screen {
-}
 
 #MoonTable .firstHeaderRow, #MoonTable .secondHeaderRow,
 #MoonTable .firstHeaderRowScrolled, #MoonTable .secondHeaderRowScrolled {
@@ -442,10 +180,6 @@ input {
     min-width: 724px;
 }
 
-
-@media screen {
-}
-
 #SunTable td:nth-of-type(2), #SunTable td:nth-of-type(5), #SunTable td:nth-of-type(8), #SunTable td:nth-of-type(9), #SunTable td:nth-of-type(11),
 #SunTable td:nth-of-type(14), #SunTable td:nth-of-type(15), #SunTable td:nth-of-type(16), #SunTable td:nth-of-type(17), #SunTable td:nth-of-type(12), #SunTable td:nth-of-type(13) {
     border-right: 1px solid black;
@@ -454,81 +188,6 @@ input {
 #SunTable td:nth-of-type(10) {
     border-right: none;
 }
-
-@media print {
-    
-    a, tr.firstHeaderRow, tr.firstHeaderRowScrolled {
-    text-decoration: none;
-    }
-    
-    .fixed {
-        position: relative;
-    }
-    
-    .printOnly {
-        display: table-row;
-    }
-
-
-    .screenOnly {
-        font-size: 0px;
-        color: #ffffff;
-    }
-
-    .physicalPositionalButtonsHolder {
-        display: none;
-    }
-
-     tr.printOnly:nth-of-type(odd), tr.printOnly:nth-of-type(even){
-        background: #ffffff;
-        font-family : Courier;
-        font-size: 12px;
-        height: 14px;
-    }
-    
-    tr.printOnly:nth-of-type(odd) th {
-        border-top: 1px solid black;
-        padding: 0px;
-    }
-    tr.printOnly:nth-of-type(even) th {
-        border-bottom: 1px solid black;
-        padding: 0px;
-    }
-    
-    #scroller {
-        position: relative;
-        width: 100%;
-        height: 100%;
-    }
-    
-    .topmenulink {
-        display: none;
-    }
-    
-    .breakBefore {
-        page-break-before: always;
-        width: 100%;
-        height: 1px;
-        display: block;
-    }    
-    
-    #navigation {
-        display: none;
-    }
-    
-    h1 {
-        margin-top: 20px;
-    }
-    
-    tr.firstHeaderRow th{
-        border-top: solid 1px #000000;
-    }
-
-    tr.secondHeaderRow th{
-        border-bottom: solid 1px #000000;
-    }
-}
-
 
 /** ---------------------------------- P L A N E T ------------------------------ **/
 .firstHeaderRow, .secondHeaderRow, .planetTable,
@@ -614,32 +273,37 @@ input {
 }
 
 /* ---------------------------- M A R S ------------------------------------ */
-@media screen {
-}
+
 #MarsTable tr.firstHeaderRow, 
 #MarsTable tr.secondHeaderRow,
 #MarsTable tr.firstHeaderRowScrolled, 
 #MarsTable tr.secondHeaderRowScrolled {
     width: 832px;
 }
-#Mars  td:nth-of-type(16), #Mars  td:nth-of-type(18), #Mars  td:nth-of-type(19), #Mars  td:nth-of-type(20), #Mars  td:nth-of-type(21){
+#MarsTable td:nth-of-type(16), 
+#MarsTable td:nth-of-type(18), 
+#MarsTable td:nth-of-type(19), 
+#MarsTable td:nth-of-type(20), 
+#MarsTable td:nth-of-type(21){
     border-right: solid 1px black;
 }
 
 /* ---------------------------- J U P I T E R ---------------------- */
-
-@media screen {
-}
-
-#Jupiter  td:nth-of-type(16), #Jupiter  td:nth-of-type(18), #Jupiter  td:nth-of-type(19), #Jupiter  td:nth-of-type(20), #Jupiter  td:nth-of-type(21), #Jupiter  td:nth-of-type(22){
+#JupiterTable td:nth-of-type(16), 
+#JupiterTable td:nth-of-type(18), 
+#JupiterTable td:nth-of-type(19), 
+#JupiterTable td:nth-of-type(20), 
+#JupiterTable td:nth-of-type(21), 
+#JupiterTable td:nth-of-type(22){
     border-right: solid 1px black;
 }
 
-#GalileanMoons, #SaturnMoons {
+#Elongations of Galilean Moons, #Elongations of Saturn Moons {
     text-align: center;
 }
 
 #GalileanMoonsContainer svg {
+    margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -652,23 +316,28 @@ input {
 }
 
 
-@media screen {
-}
-
 .moonEclipse, .solarEclipse {
     text-align: center;
     border-top: solid 1px #AAAAAA;
     margin-top: -1px;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 20px;
     page-break-after: always;
     max-width: 1024px;
+    font-size: 25px;
+    padding: 0px 20px 20px 0px;
 }
 
 .moonEclipse table, .solarEclipse table {
-    font-size: 18px;
     margin-bottom: 20px;
+    font-size: 30px;
+}
+
+.moonEclipse table td, .solarEclipse table td{
+    padding: 10px;
+}
+.solarEclipse table td{
+    text-align: right;
 }
 
 .viewport {
@@ -680,57 +349,18 @@ input {
     margin-right: 0px;
 }
 
-#home {
-    text-align: left;
-}
-
-.buttonsToSwitchPosPhys, .physSeenAtSmallWidth {
-    display: none;
-}
-
-.physPosHidden {
-    visibility: visible;
-}
-
 .physPosVisible {
     visibility: visible;
 }
 
-    .rightNowFrontPageWidget {
-        background-repeat: no-repeat;
-        background-size: 90% 90%;
-        width:  200px;
-        height: 200px;
-        text-align: center;
-        background-position: center;
-        display: inline-block;
-        margin: 10px;
-    }
-    .RA {
-        border-top: 1px solid #AAAAAA;
-        margin-top: 110px;
-    }
-
-.realtimeTitle {
-    display: inline-block;
-    border-bottom: 1px solid #AAAAAA;
+.physicalPositionalButtonsHolder {
+    position: fixed;
+    bottom: 120;
+    background: #ffffff;
+    padding: 2px 0px 2px 2px;
     width: 100%;
-    font-size: 30px;
 }
 
-.RA, .Dec {
-    font-size: 16px;
-}
-
-@media screen and (min-width: 1980px)  {
-    #MenuLink, .MenuLinkDiv.topmenulink, .MenuLinkDiv.topmenulink img, .MenuLinkDiv.topmenulink::after {
-        width: 0px;
-        height: 0px;
-    }
-    .MenuLinkDiv.topmenulink::after {
-        display: none;
-    }
-}
 
 @media  screen and  (max-width: 936px)  {
     
@@ -747,7 +377,7 @@ input {
     }
 
     #jupiterHorizontalScroller, #marsHorizontalScroller {
-        width: 630px;
+        width: 647px;
     }
 
     #JupiterTable tr.firstHeaderRow, 
@@ -762,30 +392,49 @@ input {
     }
     
     .showPhysical {
-        margin-left: -634px;
+        margin-left: -650px;
         margin-right: auto;
     }
     
-    .rightNowFrontPageWidget {
-        width:  320px;
-        height: 320px;
+    
+    tr.firstHeaderRowScrolled.movedMenu {
+        top: 0;
     }
-    .RA {
-        margin-top: 170px;
-    }
-
-    .realtimeTitle {
-        font-size: 40px;
-    }
-
-    .RA, .Dec {
-        font-size: 26px;
+    tr.secondHeaderRowScrolled.movedMenu {
+        top: 20;
     }
     
-    .DownloadLink::after, .DownloadLink {
-        display: none;
-    }
 }
+
+@media  screen and  (max-width: 936px) and (orientation: landscape) {
+    
+    .physicalPositionalButtonsHolder {
+    position: fixed;
+    bottom: 0;
+    background: #ffffff;
+    padding: 2px 0px 2px 2px;
+    width: 100%;
+}
+
+    
+    tr.firstHeaderRowScrolled{
+        top: 128px;
+    }
+
+    tr.secondHeaderRowScrolled{
+        top: 148px;
+    }
+
+    tr.firstHeaderRowScrolled.movedMenu {
+        top: 28;
+    }
+    tr.secondHeaderRowScrolled.movedMenu {
+        top: 48;
+    }
+    
+}
+
+
     
 .positionalButton, .physicalButton {
     height:23px; 
@@ -797,6 +446,8 @@ input {
     text-align: center;        
     cursor: pointer;
     user-select: none;
+    font-family: Verdana;
+    font-size: 16px;
 }
 
 .positionalButton {
@@ -808,93 +459,20 @@ input {
     border-radius: 0px 5px 5px 0px;
 }
 
-.physicalPositionalButtonsHolder {
-    position: fixed;
-    bottom: 0;
-    background: #ffffff;
-    padding: 2px 0px 2px 2px;
-    width: 100%;
-}
-
 .activeButton {
     background: #000000;
     color: #ffffff;
     cursor: default;
 }
 
-#rightNowFrontPage {
-    text-align: center;
-}
-
-#SunHomepageImmediateView {
-    background-image: url('../images/sun.svg');
-}
-
-#JupiterHomepageImmediateView {
-    background-image: url('../images/jupiter.svg');
-}
-
-#MarsHomepageImmediateView {
-    background-image: url('../images/mars.svg');
-}
-
-#SaturnHomepageImmediateView {
-    background-image: url('../images/saturn.svg');
-}
-
-#MoonHomepageImmediateView {
-    background-image: url('../images/moon.svg');
-}
-
-#VenusHomepageImmediateView {
-    background-image: url('../images/venus.svg');
-}
-
-
-.RA::before {
-    content: "R.A. ";
-}
-
-.Dec::before {
-    content: "Dec. ";
-}
-
-.Dec::after {
-    content: "More ... ";
-    text-decoration: underline;
-    display: block;
-}
-
-.RA, .Dec, .realtimeTitle {
-    background: rgba(255, 255, 255, 0.8);
-}
-
-#navigation {
-margin: 0px 0px -10px 0px;
-padding-bottom: 7px;
-border-bottom: solid 1px #AAAAAA;
-    position: fixed;
-    top: 0px;
-    width: 100%;
-    background: #ffffff;
-    z-index: 2;
-}
-
-.rightNowFrontPageWidget:hover {
-    background-position-x: center;
-    background-position-y: top;
-}
-
 label {
     display: block;
-/*    border: solid 2px #AAAAAA;
-    border-radius: 4px;*/
     padding: 4px; 
     color: #003377;
     font-size: 18px;
 }
 
-label input {
+input[type=date] {
     border-top: none;
     border-left: none;
     border-right: none;
@@ -911,7 +489,7 @@ label input:hover {
     color: #003377;
 }
 
-label input:focus, label input:hover {
+label input:focus, label input:hover, #searchTerms {
     outline: none;
     transition: 0.25s;
     border-color: #003377;
@@ -929,7 +507,7 @@ input[type=date]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-#SolarEclipses .leftaligned {
+#Solar\20 Eclipses > div.leftaligned {
     margin-top: 30px;
     margin-bottom: 60px;
     width: 80%;
@@ -941,3 +519,147 @@ input[type=date]::-webkit-inner-spin-button {
 .leftaligned {
     text-align: left;
 }
+
+#error404, #privacy {
+    max-width: 835px;
+}
+
+#privacy h1, #error404 h1, #Search\20 results h1{
+    margin-bottom: 40px;
+}
+
+#Search\20 results ul li{
+    margin-bottom: 20px;
+}
+
+}
+
+.rtsettings h3 {
+    float: left;
+    margin-top: 0px;
+}
+
+.rtsettings {
+    border-top: solid 1px #000000;
+    padding-top: 15px;
+    padding-bottom: 65px;
+    border-bottom: solid 1px #000000;
+}
+
+.row {
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+.row label {
+    font-size: 25px;
+}
+
+#realTimeSettingsContainer {
+    margin-bottom: 100px;
+}
+
+.settingsLabelDiv {
+    font-size: 30px;
+}
+
+/* --------------- from w3schools, with a few tweaks --------------*/
+
+#settings {
+    --input-height: 40px;
+}
+
+#latitudeInput, #longitudeInput, #altitudeInput {
+    width: 230px;
+}
+#startingDate {
+    width: 220px;
+} 
+#incrementDate, #numberOfDays {
+    width: 230px;
+}
+
+
+#latitudeInput, #longitudeInput, #altitudeInput, #incrementDate, #numberOfDays {
+    font-size: 26px;
+}
+
+#settings label, #getFromGeolocationAnchor {
+    font-size: 26px;
+    font-family: Verdana;
+}
+
+#settings label.switch {
+  float: right;
+  margin-right: 15px;
+  margin-top: 25px;
+}
+
+#settings input[type='button'] {
+  width: auto;
+  display: inline;
+}
+
+.rtsettings.collapsed, .collapsed {
+    height: 70px;
+    overflow-y: hidden;
+    border: none;
+    padding-bottom: 0px;
+}
+
+ .expandCollapseButton {
+    background-image: url('../images/sprite.svg#double-arrow');
+    width: 50px;
+    height: 50px;
+    background-size: 38px 38px;
+    background-position: center;
+    background-repeat: no-repeat;
+    float: right;
+    transform: rotate(180deg);
+    transition: 0.1s;
+    margin-right: 20px;
+    margin-left: 20px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.collapsed .expandCollapseButton {
+    transform: rotate(0deg);
+    transition: 0.1s;
+}
+
+@media  screen and  (min-width: 936px) {
+    #settings input[type="button"]{
+        --input-height: 25px;
+    }
+
+    #settings {
+        --slider-width: 30px;
+        --slider-height: 7px;  
+        --slider-cursor-to-slider-height: 2.5;
+    }
+
+     .expandCollapseButton {
+        width: 35px;
+        height: 35px;
+        background-size: 25px 25px;
+     }
+     
+     input:checked + .slider:before {
+      -webkit-transform: translateX(18px);
+      -ms-transform: translateX(18px);
+      transform: translateX(18px) ;
+    }
+
+    body {
+        font-size: 24px;
+    }
+tr.firstHeaderRowScrolled{
+    top: 104px;
+}
+
+tr.secondHeaderRowScrolled{
+    top: 124px;
+}
+}
+

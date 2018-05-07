@@ -21,7 +21,7 @@ function MoonEclipse (JD) {
         var sunData = SunData.getDataAsObjectForJD (JD);
         var moonData = MoonData.getDataAsObjectForJD (JD);
         
-        var hourFration = 0.25;
+        var hourFration = 6;
         var dJd = hourFration /24.0;
         var dT = 2 * hourFration;
         
@@ -58,11 +58,11 @@ function MoonEclipse (JD) {
         this.dy  = this.dDecSun + this.dDecMoon;        
         this.slope = this.dy / this.dx;
         
-        this.umbralRadius = 1.015 * (0.99834 * this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
-        this.penumbralRadius = 1.007 * (0.99834 * this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
+        this.umbralRadius = 1.016 * (0.99834 * this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
+        this.penumbralRadius = 1.0092 * (0.99834 * this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
         
-        var magic =  AAJS.DynamicalTime.DeltaT(this.JD)/(3600 * 24);
-        this.JD -= magic; 
+        var magic =  GetAAJS().DynamicalTime.DeltaT(this.JD)/(3600 * 24);
+        this.JD -= magic;
 }
 
 (function(){
@@ -132,6 +132,7 @@ var MoonEclipsesData = {
         var oppositionTimeCorrection = 0;
         var dJd = 0.5/24;
         
+        var counter = 0;
         do {
             
             sunData = SunData.getDataAsObjectForJD (jd);
@@ -141,12 +142,40 @@ var MoonEclipsesData = {
             dMoonData = MoonData.getDataAsObjectForJD (jd + dJd);
             
             var opposingSunRA = 12 + sunData.RA;
-            if (opposingSunRA > 24)
-                opposingSunRA -= 24;
+            var moonRA_1 = moonData.RaGeo;
+            if (Math.abs(opposingSunRA - moonRA_1) > 12){
+                if (opposingSunRA < moonRA_1)
+                    opposingSunRA += 24;
+                else
+                    moonRA_1 += 24;
+            }
             
-            oppositionTimeCorrection = dJd * (opposingSunRA - moonData.RaGeo) /
-                                           ((dMoonData.RaGeo - moonData.RaGeo) - (dSunData.RA - sunData.RA));
+            var dMoonDataRA = dMoonData.RaGeo;
+            var moonRA_2 = moonRA_1;
+            if (Math.abs(dMoonDataRA - moonRA_2) > 12){
+                if (dMoonDataRA < moonRA_2)
+                    dMoonDataRA += 24;
+                else
+                    moonRA_2 += 24;
+            }
+
+            var sunRA = sunData.RA;
+            var dSunDataRA = dSunData.RA;
+            
+            if (Math.abs(dSunDataRA - sunRA) > 12){
+                if (dSunDataRA < sunRA)
+                    dSunDataRA += 24;
+                else
+                    sunRA += 24;
+            }
+            
+            oppositionTimeCorrection = dJd * (opposingSunRA - moonRA_1) /
+                                           ((dMoonDataRA - moonRA_2) - (dSunDataRA - sunRA));
             jd += oppositionTimeCorrection;
+            counter++;
+            if (counter > 25){
+                throw "Cannot obtain JD for opposition JD=" + startJD;
+            }
             
         } while (Math.abs(oppositionTimeCorrection) > eps);
         return jd;

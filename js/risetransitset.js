@@ -21,7 +21,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         var jd = JD;
         var previousJd = jd;
         var radec = functionToGetRADEC(jd);
-        jd =  AAJS.Date.LST2NextJD(radec.X, JD, Location.longitude);
+        jd =  GetAAJS().Date.LST2NextJD(radec.X, JD, Location.longitude);
         if (jd - JD > 1)
             jd -= 1;
         
@@ -29,7 +29,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         {
             previousJd = jd;
             radec = functionToGetRADEC(jd);
-            jd =  AAJS.Date.LST2NextJD(radec.X, JD, Location.longitude);
+            jd =  GetAAJS().Date.LST2NextJD(radec.X, JD, Location.longitude);
             if (jd - JD > 1)
                 jd -= 1;
         }

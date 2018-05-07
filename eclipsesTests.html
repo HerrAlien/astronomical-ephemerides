@@ -27,6 +27,7 @@
 
        <script type="text/javascript" src="js/notifications.js"></script>
        <script type="text/javascript" src="js/mooneclipsesdata.js"></script>
+        <script type="text/JavaScript" src="js/besselianelements.js"></script>
        <script type="text/javascript" src="js/solareclipsesdata.js"></script>
         <style>
             p {
@@ -420,7 +421,7 @@ Tan ƒ1	0.0046222
 Tan ƒ2	0.0045992
 */
 
-{
+        {
             name : "Besselian elements for eclipse 2017-08-21",
             input : AAJS.Date.DateToJD (2017, 08, 21, true) + 0.75, // 18:00
             expectedOutput : {
@@ -444,6 +445,60 @@ Tan ƒ2	0.0045992
                     "l2" : 3e-5,
                     "tan_f1" : 5e-9,
                     "tan_f2" : 5e-9
+                },
+                
+            actualOutput : false,
+                      
+            test : function () {
+                this.actualOutput = SolarEclipses.ComputeBesselianElements (this.input);
+                return testlib.doubleEqArr (this.actualOutput.x, 
+                                          this.expectedOutput.x, 
+                                              this.accuracies.x) &&
+                       testlib.doubleEqArr (this.actualOutput.y, 
+                                          this.expectedOutput.y, 
+                                              this.accuracies.y) &&
+                       testlib.doubleEqArr (this.actualOutput.d, 
+                                          this.expectedOutput.d, 
+                                              this.accuracies.d) &&
+                       testlib.doubleEqArr (this.actualOutput.mu, 
+                                          this.expectedOutput.mu, 
+                                              this.accuracies.mu) &&
+                       testlib.doubleEqArr (this.actualOutput.l1, 
+                                          this.expectedOutput.l1, 
+                                              this.accuracies.l1) &&
+                       testlib.doubleEqArr (this.actualOutput.l2, 
+                                          this.expectedOutput.l2, 
+                                              this.accuracies.l2) &&
+                        testlib.doubleEq (this.actualOutput.tan_f1, this.expectedOutput.tan_f1, this.accuracies.tan_f1) &&
+                        testlib.doubleEq (this.actualOutput.tan_f2, this.expectedOutput.tan_f2, this.accuracies.tan_f2);
+            }
+        },
+
+
+        {
+            name : "Besselian elements for eclipse 2017-02-26 (wrap MU around 360)",
+            input : AAJS.Date.DateToJD (2017, 02, 26, true) + 15/24, // 18:00
+            expectedOutput : {
+                    "x"  : [0.17594	, 0.52535, -0.00001, -0.00001], // earth radii
+                    "y"  : [-0.42555, 0.15325, 0.00008, 0.00000 ], // earth radii
+                    "d"  : [360-8.4917, 0.0153, 0, 0],  // degrees
+                    "mu" : [41.7990, 15.0031, 0, 0],  // degrees
+                    "l1" : [0.55249, -0.00013, -0.00001, 0], // earth radii
+                    "l2" : [0.00630, -0.00013, -0.00001, 0], // earth radii
+                    "tan_f1" : 0.0047219,
+                    "tan_f2" : 0.0046984
+                },
+                  
+                  
+            accuracies : {
+                    "x"  : 1.3e-3,
+                    "y"  : 4e-4,
+                    "d"  : 1e-4,
+                    "mu" : 1e-4,
+                    "l1" : 3e-4,
+                    "l2" : 1e-4,
+                    "tan_f1" : 1e-5,
+                    "tan_f2" : 1e-5
                 },
                 
             actualOutput : false,

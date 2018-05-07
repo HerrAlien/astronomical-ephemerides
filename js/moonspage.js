@@ -38,13 +38,12 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
 
 (function(){
     // clears up the rendered thing
-    MoonsPage.prototype["reset"] = PlanetPage.prototype.reset;
-    
     MoonsPage.prototype["displayPage"] = function () {
         
         var pageObj = this;
-        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
-            return setTimeout (function() { pageObj.displayPage(); }, 300);
+        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD ||
+            !this.dataSource || !this.dataSource.reset)
+            return SyncedTimeOut (function() { pageObj.displayPage(); }, Timeout.onInit);
 
         var startJD = PageTimeInterval.JD;
         var numberOfDays =  PageTimeInterval.days;
@@ -212,7 +211,7 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
                 hostSVG.appendChild (linesDF);
                    
                 if (stepsCounter < numberOfSteps) {
-                    setTimeout (getDataForPaths, 1);
+                    requestAnimationFrame (getDataForPaths);
                 } else {
                     satellitesPage.pageRendered = true;
                 }
@@ -232,6 +231,19 @@ function MoonsPage (hostElemName, dataObject, pathsConfigs){
         })(this);
          
     };
+
+        var localInit = function () {
+                try {
+
+                MoonsPage.prototype.reset = PlanetPage.prototype.reset;
+                
+                } catch (err) {
+                        SyncedTimeOut (localInit, Timeout.onInit);
+                }
+        }
+        localInit();
+
+    
 })();
 
 

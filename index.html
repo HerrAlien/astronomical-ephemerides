@@ -1,86 +1,1199 @@
 <html lang="en-US">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
     <title>Astronomical Ephemerides</title>
-	<link rel="stylesheet" type="text/css" href="style/default.css"  />
-    <link rel="icon" type="image/png" href="images/ae-icon.png">
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <meta name="keywords" content="astronomy, astronomical, planet position, ephemerides, ephemeris, eclipse, Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, positional, physical, eclipses, 
+    Galilean moons, Saturn moons, Europa, Ganymede, Io, Callisto, Titan, Rhea, Mimas, Enceladus, Tethys, Dione, rise, transit, set, geocentric, topocentric, Besselian, Elements, data, tables, almanac, equatorial, 
+    coordinates, right ascension, RA, declination, dec, position, angle, elongation" />
+
+    <meta name="description" content="A JavaScript utility to calculate ephemerides for the major planets of the solar system." />
     
-    <script type="text/javascript">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff" />   
+
+    <script type="text/JavaScript">
+var Timeout = {
+    onInit : 1,
+    onNewData : 1
+};
+
+function SyncedTimeOut (func, time) {
+  setTimeout (function () { requestAnimationFrame (func); } , time);
+}
+
+
+(function(){
+  var loaders = [];
+  var realTimePercentage = false;
+
+  var progressReporter = function() {
+      if (typeof AAJSMemFileLoadNotifications == "undefined")
+        return SyncedTimeOut (progressReporter);
+      AAJSMemFileLoadNotifications.add(function(evt){
+        var percentage = "0%";
+        var denominator = 10000000;
+        if (evt.total != 0)
+          denominator = evt.total;
+        percentage = Math.round(evt.loaded * 100 / denominator) + "%"; 
         
-        "use strict";
+          if (loaders.length == 0)
+            loaders = document.getElementsByClassName("loadingMemFileContentsDiv");
+      
+          if (!realTimePercentage)
+            realTimePercentage = document.getElementById("lofiWarningProgress");
+
+          for (var i = 0; i < loaders.length; i++) {
+            loaders[i].textContent = percentage;
+          }
+
+          realTimePercentage.textContent = percentage;
+
+        } );
+  }
+  progressReporter();
+})();
+
+
+var AAJS = {};
+// only for *right now*
+var SunData = { getSunEarthDistance : function() { return 1; } };
+var AAJSLoFi = {};
+
+(function () {
+
+var CSYS = { x:0, y:1, z:2 };
+function Vector(x,y,z) { this.coords = [x, y, z]; }
+function zero() { return 0; }
+ 
+Vector.prototype['translate'] = function (x, y, z) {
+        this.coords[CSYS.x] += x;
+        this.coords[CSYS.y] += y;
+        this.coords[CSYS.z] += z;
+}
+
+Vector.prototype['rotate'] = function (axis, angle) {
+    var c = this.coords;
+    var cosAngle = Math.cos(angle);
+    var sinAngle = Math.sin(angle);
+    if (axis == CSYS.x) {
+        c = [c[CSYS.x], c[CSYS.y] * cosAngle - c[CSYS.z] * sinAngle, c[CSYS.y] * sinAngle + c[CSYS.z] * cosAngle];
+    } else if (axis == CSYS.y) {
+        c = [c[CSYS.x] * cosAngle + c[CSYS.z] * sinAngle, c[CSYS.y], -c[CSYS.x] * sinAngle + c[CSYS.z] * cosAngle];
+    } else if (axis == CSYS.z) {
+        c = [c[CSYS.x] * cosAngle - c[CSYS.y] * sinAngle, c[CSYS.x] * sinAngle + c[CSYS.y] * cosAngle, c[CSYS.z]];
+    }
+    this.coords = c;
+}
+
+Vector.prototype['modulus'] = function() {
+  var c = this.coords;
+  return Math.sqrt((c[CSYS.x] * c[CSYS.x]) + (c[CSYS.y] * c[CSYS.y]) + (c[CSYS.z] * c[CSYS.z]));
+}
+
+AAJSLoFi = {
+    DATE_JD_2000 : Date.parse ("January 1, 2000") + 1000 * 3600 * 12,
+    T : function (date) {
+        return (date.getTime() - AAJSLoFi.DATE_JD_2000) / (36525 * 1000 * 3600 * 24);
+    },
+
+    __planets : {
+        Mercury : {
+             MeanL : [252.250906, 149474.0722491, 0.00030397, 0.000000018],
+             r : 0.387098310,
+             tilt : [7.004986, 0.0018215, -0.00001809, 0.000000053],
+             Lnode : [48.330893, 1.1861890, 0.00029589, 0.000000211],
+             e : [0.20563175, .000020406, -0.0000000284, -0.00000000017],
+             P: [77.456119, 1.5564775, 0.00029589, 0.000000056]
+        },
+        Venus : {
+            MeanL : [181.979801, 58519.2130302, 0.00031060, 0.000000015],
+            r : 0.723329820,
+            tilt : [3.394662, 0.0010037, -0.00000088, -0.000000007],
+            Lnode : [76.679920, 0.9011190, 0.00040665, -0.000000080],
+            e: [0.00677188, -0.000047766, 0.0000000975, 0.00000000044],
+            P: [131.563707, 1.4022188, -0.00107337, -0.000005315]
+        },
+        Earth : {
+            MeanL : [100.466449, 36000.7698231, 0.00030368, 0.000000021],
+            r : 1,
+            tilt : [0, 0, 0, 0],
+            Lnode : [0, 0, 0, 0],
+            eps : 23.4402297,
+            e: [0],
+            P: [0]
+        },
+        Mars : {
+            MeanL : [355.433275, 19141.6964746, 0.00031097, 0.000000015],
+            r : 1.523679342,
+            tilt : [1.849726, -0.0006010, 0.00001276, -0.000000006],
+            Lnode : [49.558093, 0.7270923, 0.00001605, 0.000000318],
+            e: [.09340062, 0.000090483, -0.0000000806, -0.00000000035],
+            P: [336.060234, 1.8410331, 0.00013515, 0.000000318]
+        },
+        Jupiter : {
+            MeanL : [34.351484, 3036.3027889, 0.00022374, 0.000000025],
+            r : 5.202603191,
+            tilt : [1.303270, -0.0054966, 0.00000465, -0.000000004],
+            Lnode : [100.464441, 1.0209550, 0.00040117, 0.000000569],
+            e: [0.04849485, 0.000163244, -0.0000004719, -0.00000000197],
+            P: [14.331309, 1.6126668, 0.00103127, -0.000004569]
+        },
+        Saturn : {
+            MeanL : [50.077471, 1223.5110141, 0.00051952, -0.000000003],
+            r : 9.554909596,
+            tilt : [2.488878, -0.0037363, -0.00001516, 0.000000089],
+            Lnode : [113.665524, 0.8770979, -0.00012067, -0.000002380],
+            e: [0.05550862, -0.000346818, -0.0000006456, 0.00000000338],
+            P: [93.056787, 1.9637694, 0.00083757, 0.000004899]
+        },
+    }, 
+
+    L : function (T, planet) {
+        var $ = AAJSLoFi;
+        return $.reduceQuadrantsDeg($.poly(T, planet.MeanL)) * Math.PI/180;
+    },
+
+    heliocentricXyz : function (date, planet) {
+        var $ = AAJSLoFi;
+        var T = $.T(date);
+        var degra = Math.PI/180;
+        var L = $.L(T, planet);
+        var O = $.reduceQuadrantsDeg($.poly(T, planet.Lnode)) * degra;
+
+        var P = $.reduceQuadrantsDeg($.poly(T, planet.P)) * degra;
+        var e = $.poly(T, planet.e);
+        var M = L - P;
+        var E = M;
+        for (var i = 0; i < 5; i++)
+          E = M + e * Math.sin(E);
+        
+        var r = planet.r * (1 - e * Math.cos(E));
+        var m = (E + P - O) ;
+
+        var v = new Vector(r * Math.cos(m), r * Math.sin(m), 0);
+        var i = $.reduceQuadrantsDeg($.poly(T, planet.tilt)) * degra;
+        v.rotate(CSYS.x, i);
+        v.rotate(CSYS.z, O);
+        return v;
+    },
+
+    geocentricEclipticXyz : function (date, planet) {
+        var $ = AAJSLoFi;
+        var helioXyz = $.heliocentricXyz (date, planet);
+        var earthXyz = $.heliocentricXyz(date, $.__planets.Earth);
+        var geoXyz = helioXyz;
+        geoXyz.translate(-earthXyz.coords[CSYS.x], -earthXyz.coords[CSYS.y], -earthXyz.coords[CSYS.z]);
+        return geoXyz;
+    },
+
+    equatorial : function (date, planet) {
+        var $ = AAJSLoFi;
+        var radeg = 180 / Math.PI;
+        var degra = Math.PI/180;
+        var xyzCoords = $.geocentricEclipticXyz(date, planet);
+        xyzCoords.rotate(CSYS.x, $.__planets.Earth.eps * degra );
+        return [$.reduceQuadrantsDeg(radeg * Math.atan2(xyzCoords.coords[CSYS.y], xyzCoords.coords[CSYS.x])), 
+                $.reduceQuadrants90Deg(radeg * Math.asin(xyzCoords.coords[CSYS.z] / xyzCoords.modulus()))];
+    },
+
+    Elliptical : {
+        CalculatePlanetaryDetails : function (jd, planetNumber) {
+            var $ = AAJSLoFi;
+            var $p = $.__planets;
+            var earth = $p.Earth;
+            var planets = [earth, earth, $p.Venus, $p.Mars, $p.Jupiter, $p.Saturn, earth, earth];
+            var coordsArr = $.equatorial (new Date(), planets[planetNumber]);
+            return {"ApparentGeocentricRA" : coordsArr[0] / 15, "ApparentGeocentricDeclination" : coordsArr[1]};
+        }
+    },
+
+    poly : function (arg, coeffs) {
+        var res = 0;
+        var poweredArg = 1;
+        for (var i = 0; i < coeffs.length; i++) {
+            res += poweredArg * coeffs[i];
+            poweredArg *= arg;
+        }
+        return res;
+    },
+
+    reduceQuadrantsDeg : function (n) {
+        while (n >= 360) n -= 360;
+        while (n < 0) n += 360;
+        return n;
+    },
+
+    reduceQuadrants90Deg : function (n) {
+      var reduced = AAJSLoFi.reduceQuadrantsDeg(n);
+      return (reduced > 180) ? reduced - 360 : reduced;
+    },
+
+    Date : { 
+       JD2Date : function (JD) { 
+         var d = new Date();
+         return {"M" : 1 + d.getMonth(), "D" : d.getDate()};
+       },
+       DateToJD : function (y, m, d) { return -99999999; }
+    },
+    AllDependenciesLoaded : function () { return true; },
+    RiseTransitSet : { Calculate : zero },
+
+    Diameters : { MercurySemidiameterB : zero, VenusSemidiameterB : zero, MarsSemidiameterB : zero,
+      JupiterEquatorialSemidiameterB : zero, SaturnEquatorialSemidiameterB: zero, UranusSemidiameterB: zero,
+      NeptuneSemidiameterB: zero },
+
+    Mercury : { RadiusVector: zero },
+    Venus : { RadiusVector: zero },
+    Mars : { RadiusVector: zero, PhysicalDetails : zero },
+    Jupiter : { RadiusVector: zero, PhysicalDetails : zero },
+    Saturn : { RadiusVector: zero },
+    Uranus : { RadiusVector: zero },
+    Neptune : { RadiusVector: zero },
+    Sun : { 
+      EquatorialCoordinates: function() { return {"X": 0, "Y" : 0}; },
+      Distance : zero,
+      Diameter: zero,
+      CalculatePhysicalDetails : zero
+    },
+    Moon : { 
+      PositionalEphemeris : function() { return {"RaGeo" : 0, "DecGeo" : 0 }; } ,
+      CalculateSelenographicPositionOfSun  : zero
+    }
+};
+})();
+
+        
+function GetAAJS() {
+    if (typeof AAJS == 'undefined' || !AAJS || typeof AAJS.AllDependenciesLoaded == 'undefined' ||
+       ! AAJS.AllDependenciesLoaded  || ! AAJS.AllDependenciesLoaded() ) {
+          return AAJSLoFi;
+       }
+    return AAJS;
+}
+
+</script>
+
+<script type="text/JavaScript" async="" src="js/aajs.js"></script>
+<script type="text/javascript" async="" src="js/matrix.js"></script>
+<script type="text/javascript" async="" src="js/numerical.js"></script>
+<script type="text/JavaScript" async="" src="js/besselianelements.js"></script>
+
+<script type="text/JavaScript" async="" src="js/moonsdata.js"></script>
+<script type="text/JavaScript" async="" src="js/galileanmoonsdata.js"></script>
+<script type="text/JavaScript" async="" src="js/saturnmoonsdata.js"></script>
+
+<script type="text/JavaScript" async="" src="js/mooneclipsesdata.js"></script>
+<script type="text/JavaScript" async="" src="js/solareclipsesdata.js"></script>
+<script type="text/JavaScript" async="" src="js/realtimedata.js"></script>
+
+<script type="text/JavaScript" async="" src="js/notifications.js"></script>
+<script type="text/JavaScript" async="" src="js/pagerank.js"></script>
+
+    <link rel="icon" type="image/png" href="images/ae-icon.png" />
+
+    <link rel="manifest" href="manifest.json" />
+
+    <link rel="apple-touch-icon" href="images/ae-icon-144.png" />
+    <link rel="icon" type="image/png" href="images/ae-icon-144.png">
+    <link rel="apple-touch-startup-image" href="images/ae-icon-512.png" />
+
+    <style>
+
+ * {
+    transition: 0.125s;
+}
+
+th {
+    transition: 0s;
+    background: #ffffff;
+}
+
+ body {
+    font-family: Georgia, Serif;
+    font-size: 30px;
+    min-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+    page-break-inside: avoid;
+}
+
+#lofiWarning {
+  width: 100%;
+  background: #000;
+  color: #fff;
+}
+
+ .scrolledDown {
+    bottom: -60px;
+}
+
+ .scrolledInPlace {
+    bottom: 0px;
+}
+
+ a:visited {
+    color: #003377;
+}
+
+ a {
+    text-decoration: underline;
+    color: #000000;
+}
+
+@media screen {
+     #scroller {
+        z-index: 2;
+        background: #ffffff;
+    }
+}
+ 
+ .page {
+    display: block;
+    opacity: 1;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:2px;
+    text-align: center;
+    padding-top: 10px;
+}
+
+ .page:not(:target){
+    display: none;
+}
+
+ .fixed {
+    position: fixed;
+}
+
+.printOnly {
+    display: none;
+    height: 0px;
+}
+
+ .topmenulink {
+    float: right;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+ .linkButton {
+    text-align: center;
+}
+
+ .linkButtonImg{
+    cursor: pointer;
+    margin-top: 2px;
+    width: 62px;
+    height: 62px;
+}
+
+ .topmenulink:hover::after{
+    text-decoration: none;
+    cursor: default;
+}
+
+ .linkButton::after {
+    font-size: 18px;
+    display: block;
+    text-align: center;
+    color: #000000;
+    font-family: Verdana, Sans-Serif;
+}
+
+ .MenuLinkDiv::after {
+    content: "More ...";
+    margin: -2px auto 2px auto;
+}
+
+ .SettingsLink::after { content: 
+ "Settings";
+}
+
+ .SunLinkButton::after { content: 
+ "Sun";
+}
+
+ .MoonLinkButton::after { content: 
+ "Moon";
+}
+
+ .MercuryLinkButton::after { content: 
+ "Mercury";
+}
+
+ .VenusLinkButton::after { content: 
+ "Venus";
+}
+
+ .MarsLinkButton::after { content: 
+ "Mars";
+}
+
+ .JupiterLinkButton::after { content: 
+ "Jupiter";
+}
+
+ .SaturnLinkButton::after { content: 
+ "Saturn";
+}
+
+ .UranusLinkButton::after { content: 
+ "Uranus";
+}
+
+ .NeptuneLinkButton::after { content: 
+ "Neptune";
+}
+
+ .LunarEclipseLinkButton::after { content: 
+ "Lunar Eclipses";
+}
+
+ .SolarEclipseLinkButton::after { content: 
+ "Solar Eclipses";
+}
+
+ .GalileanMoonsLinkButton::after { content: 
+ "Galilean Moons";
+}
+ .SaturnMoonsLinkButton::after { content: 
+ "Saturn Moons";
+}
+
+ #HomeLinkButton {
+    float: left;
+    margin-top: 2px;
+    margin-right: 20px;
+    width: 120px;
+    height: 120px;
+    background: url('images/sprite.svg#icon');
+    background-size: 120px 120px;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    color: #003377;
+    text-align: right;
+    text-shadow: 0px 0px 30px #fff;
+    font-size: 26px;
+    line-height: 8.5;
+    font-weight: 900;
+    font-style: italic;
+}
+
+h1, h2, hr {
+    font-family: Verdana, Sans-Serif;
+}    
+
+ h1 {
+    margin-top: 120px;
+    margin-bottom: 0px;
+    font-size: 50px;
+    margin-left: auto;
+    display: block;
+    font-weight: normal;
+    margin-right: auto;
+}
+
+#homeH1 {
+    font-size: 70px;
+}
+
+ h2 {
+    font-size: 40px;
+    margin-top: 70px;
+    margin-bottom: 10px;
+}
+
+ h3 {
+    font-size: 32px;
+    margin-top: 0px;
+}
     
-        (function(){
-            var URL = document.URL;
-            if (URL.slice(-11) == "ephemerides")
-                location.href = URL + "/";
-        })();
-    </script>
+ #credits, .topBorder{
+    	border-top: 1px solid #AAAAAA;
+}
+
+ #credits{
+        padding-top: 10px;
+        margin-top: 20px;
+        font-family: Courier;
+    }
+    
+ .loadingMemFileContentsDiv {
+    text-align: center;
+    background:url('images/loading.gif');
+    background-repeat: no-repeat;
+    backgtound-position: center;
+    width:  160px;
+    height: 160px;
+    background-size: 100% 78%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 160px;
+    font-size: 40px;
+    padding-top: 50px;
+}
+
+.loadingMemFileContentsDiv::after {
+  content: 'Downloading initialization data ...';
+  display: block;
+  margin-top: 160px;
+  font-size: 24px;
+}
+
+ #home {
+    text-align: left;
+    line-height: 1.5;
+}
+
+.rightNowFrontPageWidget {
+    background-repeat: no-repeat;
+    background-size: 90% 90%;
+    width:  200px;
+    height: 200px;
+    text-align: center;
+    background-position: center;
+    display: inline-block;
+    margin: 10px;
+    overflow-x: hidden;
+}
+
+.realtimeTitle {
+   display: inline-block;
+   border-bottom: 4px solid #AAAAAA;
+   width: 100%;
+   font-size: 40px;
+   text-decoration: none;
+   padding-bottom: 0px;
+   margin-top: -10px;
+}  
+
+.realtimeTitle:hover {
+    text-decoration: underline;
+}
+
+.Month, .Day {
+    display: none;
+}
+
+
+.scrollableRTdiv, .realtimeTitle {
+    background: rgba(255, 255, 255, 0.8);
+    margin-left: 10px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.scrollableRT {
+    margin-top: 80px;
+}
+
+.rightNowFrontPageWidget::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Handle */
+.rightNowFrontPageWidget::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+/* Handle on hover */
+.rightNowFrontPageWidget::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+.rightNowFrontPageWidget::-webkit-scrollbar-track {
+    background: #FFFFFF; 
+}
+
+     #navigation {
+margin: 0px 0px -10px 0px;
+padding-bottom: 7px;
+border-bottom: solid 1px #AAAAAA;
+    position: fixed;
+    width: 100%;
+    background: #ffffff;
+    z-index: 3;
+}
+
+.rightNowFrontPageWidget:hover {
+    background-position-x: center;
+    background-position-y: top;
+}
+
+#showNavigationMenu {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+ #showNavigationMenuContainer {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    background: #ffffff;
+    text-align: center;
+    border-bottom: solid 1px #AAAAAA;
+    z-index: 2;
+}
+
+#showNavigationMenuContainerImg {
+    height: 27px;
+}
+
+#searchArea {
+    display: inline-block;
+    padding: 0px;
+    margin: 20px 0px 0px 0px;
+    float: right;
+    /* expanded */
+}
+
+#searchAreaImg {
+    width:64px;
+    float: left;
+    margin-left: 10px;
+    height: 64px;
+}
+
+#searchTerms {
+    height: 50px;
+    top: 0px;
+    float: left;
+    font-size: 36px;
+    width: 220px;
+}
+
+.hidden, #searchTerms.hidden, .buttonsToSwitchPosPhys, .physSeenAtSmallWidth {
+    display: none;
+}
+
+#searchTerms.visible {
+    display: block;
+}
+
+#searchButton{
+    cursor: pointer;
+}
+
+.MenuLinkDiv {
+    display: none;
+}
+
+.promotedMenuLink {
+    display: inline-block;
+    margin-top: 2px;
+    margin-left: 15px;
+}
+
+#promotedMenu {
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 1460px;
+    margin-left: auto;
+    margin-right: auto;
+    white-space: nowrap;
+}
+
+#promotedMenu::after, #promotedMenu::before {
+  display: inline-block;
+  position: fixed;
+  font-size: 50px;
+  height: 115px;
+  padding-top: 15px;
+  top: 0px;
+  color: #006dff;
+}
+
+#promotedMenu::after {
+    right: 160px;
+    content: ">";
+}
+
+#promotedMenu::before {
+    content: "<";
+}
+
+.movedMenu #promotedMenu::after, .movedMenu #promotedMenu::before {
+  top: -200px;
+}
+
+#promotedMenu.noRight::after {
+  display: none;
+}
+
+#promotedMenu.noLeft::before {
+  display: none;
+}
+
+#promotedMenu.searchTermsVisible::after{
+  right: 380px;
+}
+
+ .clear {
+	clear: both;
+    height: 0px;
+}
+
+@media  screen and  (max-width: 936px)  {
+
+     .rightNowFrontPageWidget {
+        width:  320px;
+        height: 320px;
+    }
+
+    .scrollableRT {
+        margin-top:130px;
+    }
+
+     .realtimeTitle {
+        font-size: 60px;
+        text-decoration: underline;
+        margin-top: -20px;
+        margin-bottom: -10px;
+        border-bottom: 6px solid #AAAAAA;
+    }
+
+     .scrollableRTdiv {
+        font-size: 40px;
+    }
+        
+     #navigation.movedMenu {
+        top: -130px;
+    }
+
+     .linkButtonImg  {
+        width: 82px;
+        height: 82px;
+    }
+
+    .rightNowFrontPageWidget::-webkit-scrollbar {
+        width: 3px;
+    }
+}
+
+@media screen and (orientation:portrait) and (max-height: 936px) {
+
+  #navigation {
+    margin: 0px 0px -10px 0px;
+    padding-bottom: 7px;
+    border-top: solid 1px #AAAAAA;
+    position: fixed;
+    width: 100%;
+    background: #ffffff;
+    z-index: 3;
+    bottom: 0px;
+  }
+
+  #promotedMenu::after, #promotedMenu::before, #navigation.movedMenu, 
+  .movedMenu #promotedMenu::after, .movedMenu #promotedMenu::before {
+      top: auto;
+      position: fixed;
+      bottom: 0px;
+  }
+
+  #showNavigationMenuContainer {
+    display: none;
+  }
+
+  h1 {
+    margin-top: auto;
+  }
+
+  #footer {
+    margin-bottom: 120px;
+  }
+
+}
+    
+ #rightNowFrontPage {
+    text-align: center;
+}
+
+.SunBackground {
+    background-image: url('images/sprite.svg#sun');
+}
+
+.JupiterBackground {
+    background-image: url('images/sprite.svg#jupiter');
+}
+
+.MarsBackground {
+    background-image: url('images/sprite.svg#mars');
+}
+
+.SaturnBackground {
+    background-image: url('images/sprite.svg#saturn');
+}
+
+.MoonBackground {
+    background-image: url('images/sprite.svg#moon');
+}
+
+.VenusBackground {
+    background-image: url('images/sprite.svg#venus');
+}
+
+.MercuryBackground {
+    background-image: url('images/sprite.svg#mercury');
+}
+
+.UranusBackground {
+    background-image: url('images/sprite.svg#uranus');
+}
+
+.NeptuneBackground {
+    background-image: url('images/sprite.svg#neptune');
+}
+
+
+ .RA::before {
+    content: "\03B1: ";
+}
+
+ .Dec::before {
+    content: "\03B4: ";
+}
+
+ .DistanceToEarth::before {
+    content: "\0394: ";
+ }
+
+ .Diameter::before {
+     content: "\03C6: ";
+ }
+
+ .MeridianTransit::before {
+     content: "Transit: ";
+ }
+
+.P::before {
+    content: "P: ";
+}
+
+.B0::before {
+    content: "B0: ";
+}
+
+.L0::before {
+    content: "L0: ";
+}
+
+.Parallax::before {
+    content: "\03C0: ";
+}
+
+.Rise::before {
+    content: "Rise: ";
+}
+
+.Set::before {
+    content: "Set: ";
+}
+   
+.DistanceToSun::before {
+    content: "R: ";
+}
+
+.Elongation::before {
+    content: "Elong.: "
+}
+
+.Phase::before {
+    content: "Phase: "
+}
+
+.EarthDeclination::before {
+    content: "DE: "
+}
+
+.SunDeclination::before {
+    content: "DS: "
+}
+
+.CentralMeridianLongitude::before {
+    content: "L0: "
+}
+
+.CentralMeridianApparentLongitude_System1::before {
+    content: "L0-S1: "
+}
+
+.CentralMeridianApparentLongitude_System2::before {
+    content: "L0-S2: "
+}
+
+.RaGeo::before {
+    content: "\03B1: ";
+}
+
+.DecGeo::before {
+    content: "\03B4: ";
+}
+
+.RaTopo::before {
+    content: "\03B1  topo: "
+}
+
+.DecTopo::before {
+    content: "\03B4  topo: "
+}
+
+.Colongitude::before {
+    content: "90-l0: "
+}
+
+.R::before {
+    content: "R: "
+}
+
+.physPosHidden {
+    visibility: visible;
+}
+
+.physPosVisible {
+    visibility: visible;
+}
+
+  #searchArea::after{
+      content: "Search";
+      display: block;
+      font-size: 18px;
+      text-align: right;
+  }
+  
+  #searchArea:hover::after{
+      text-decoration: none;
+  }
+
+@media screen and (min-width: 937px) {
+    #promotedMenu {
+      overflow: hidden;
+      height: 90px;
+    }
+
+     #HomeLinkButton {
+        width: 90px;
+        height: 90px;
+        background-size: 90px 90px;
+    font-size: 20px;
+    line-height: 8.5;
+     }
+
+    #searchArea {
+    border-left: none;
+    /* expanded */
+    }
+
+
+  #searchArea {
+      margin: 12px 0px 0px 0px;
+      float: right;
+      /* expanded */
+  }
+  
+  #searchAreaImg {
+      width:52px;
+      float: left;
+      margin-left: 10px;
+      height: 52px;
+  }
+  
+  #searchTerms {
+      margin-top: 20px;
+      height: 30px;
+      float: left;
+      font-size: 28px;
+      max-width: 220px;
+  }
+  
+  .scrollableRT {
+      margin-top: 50px;
+  }
+  .promotedMenuLink {
+    float: left;
+  }
+
+  .MenuLinkDiv {
+    display: block;
+    margin-top: 2px;
+  }
+
+  #promotedMenu::after, #promotedMenu::before {
+    display: none;
+  }
+}
+
+ @media screen and (min-width: 1900px)  {
+    #MenuLink, .MenuLinkDiv.topmenulink, .MenuLinkDiv.topmenulink img, .MenuLinkDiv.topmenulink::after {
+        width: 0px;
+        height: 0px;
+        display: none;
+    }
+
+.buttonsToSwitchPosPhys, .physSeenAtSmallWidth {
+    display: none;
+}
+
+.physPosHidden {
+    visibility: visible;
+}
+
+#jupiterHorizontalScroller , #marsHorizontalScroller{
+        width: 890px;
+}
+ }
+
+
+#footer {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 26px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top:    solid 1px #AAAAAA;
+}
+
+#credits, #home {
+    text-align: justify;
+}
+    </style>
+    
+
+<script type="application/ld+json">
+
+{
+  "@context": "http://schema.org/",
+  "@type": "WebApplication",
+  "name": "Astronomical Ephemerides",
+  "url": "https://herralien-apps.appspot.com/ephemerides/",
+  "sameAs" : "https://herralien-apps.appspot.com/ephemerides/#home",
+  "alternateName" : "Ephemerides",
+  "description": "A JavaScript utility to calculate ephemerides for the major planets of the solar system.",
+  "disambiguatingDescription" : "The application is not intended for astrology - although can be used for it.",
+
+    "screenshot": "https://herralien-apps.appspot.com/ephemerides/images/screenshot-landscape.png",
+
+  "applicationCategory" : "Science",
+  "applicationSubCategory" : "Astronomy",
+  "countriesSupported" : "all",
+  "license" : "https://www.gnu.org/licenses/agpl.html",
+  "operatingSystem" : "any",
+  "isAccessibleForFree" : true,
+  "keywords" : "astronomy, astronomical, planet position, ephemerides, ephemeris, eclipse, Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, positional, physical, eclipses, Galilean moons, Saturn moons, Europa, Ganymede, Io, Callisto, Titan, Rhea, Mimas, Enceladus, Tethys, Dione, rise, transit, set, geocentric, topocentric, Besselian, Elements, data, tables, almanac, equatorial, coordinates, right ascension, RA, declination, dec, position, angle, elongation",
+    
+  "inLanguage" : "en-US",
+  
+  "audience" : {
+    "audienceType" : "astronomers, stargazers"
+  },
+  
+  "author" : {
+    "@context": "http://schema.org/",
+  	"@type": "Person",
+    "name": "Alexandru Garofide",
+    "email" : "alexandru.garofide@gmail.com",
+    "givenName" : "Alexandru",
+    "familyName" : "Garofide"
+  },
+  
+  "copyrightHolder" : {
+    "@context": "http://schema.org/",
+  	"@type": "Person",
+    "name": "Alexandru Garofide",
+    "email" : "alexandru.garofide@gmail.com",
+    "givenName" : "Alexandru",
+    "familyName" : "Garofide"
+  },
+  
+  "copyrightYear" : 2018,
+  "softwareVersion" : "1.0",
+  "storageRequirements" : "7MB",
+  "browserRequirements" : "requires HTML5 support"
+}
+
+</script>
 
 </head>
 
 <body>
     <div id="navigation">
-    <a href="#home"   id="HomeLink"><div class="HomeLinkButton topmenulink linkButton"><img src="images/logo.png" alt="Home"></div></a>
-    <a href="#settings"><div class="SettingsLink topmenulink linkButton"><img src="images/settings.svg" alt="Settings"></div></a>
-    <a href="zip/ephemerides.7z"><div class="DownloadLink topmenulink linkButton"><img src="images/download.svg" alt="Download"></div></a>
-    <a href="#more" id="MenuLink"><div class="MenuLinkDiv topmenulink linkButton"><img src="images/menu.svg" alt="More ..."></div></a>
-    <div id="promotedMenu">
-            <a href="#Sun"><div class="SunLinkButton topmenulink linkButton"><img src="images/sun.svg" alt="Sun"></div></a>
-            <a href="#Moon"><div class="MoonLinkButton topmenulink linkButton"><img src="images/moon.svg" alt="Moon"></div></a>
-            <a href="#Jupiter"><div class="JupiterLinkButton topmenulink linkButton"><img src="images/jupiter.svg" alt="Jupiter"></div></a>
-            <a href="#Saturn"><div class="SaturnLinkButton topmenulink linkButton"><img src="images/saturn.svg" alt="Saturn"></div></a>
-            <a href="#SolarEclipses"><div class="SolarEclipseLinkButton topmenulink linkButton"><img src="images/solar-eclipse.svg"  alt="Solar Eclipses"></div></a>
-            <a href="#LunarEclipses"><div class="LunarEclipseLinkButton topmenulink linkButton"><img src="images/lunar-eclipse.svg" alt="Lunar Eclipses"></div></a>
-            <a href="#GalileanMoons"><div class="GalileanMoonsLinkButton topmenulink linkButton"><img src="images/galilean-moons.svg" alt="Galilean Moons"></div></a>
-            <a href="#Mars"><div class="MarsLinkButton topmenulink linkButton"><img src="images/mars.svg" alt="Mars"></div></a>
-            <a href="#SaturnMoons"><div class="SaturnMoonsLinkButton topmenulink linkButton"><img src="images/saturn-moons.svg" alt="Moons of Saturn"></div></a>
-            <a href="#Mercury"><div class="MercuryLinkButton topmenulink linkButton"><img src="images/mercury.svg" alt="Mercury"></div></a>
-            <a href="#Venus"><div class="VenusLinkButton topmenulink linkButton"><img src="images/venus.svg"  alt="Venus"></div></a>
-            <a href="#Uranus"><div class="UranusLinkButton topmenulink linkButton"><img src="images/uranus.svg" alt="Uranus"></div></a>
-            <a href="#Neptune"><div class="NeptuneLinkButton topmenulink linkButton"><img src="images/neptune.svg" alt="Neptune"></div></a>
-
+        <a href="#home" id="HomeLink" title="Home" alt="Home"><div id="HomeLinkButton" class="topmenulink"></div></a>
+        <a href="#settings" title="Settings" alt="Settings"><div class="SettingsLink topmenulink linkButton"><img src="images/sprite.svg#settings" class="linkButtonImg" alt="Settings"></div></a>
+        <a href="#more" id="MenuLink" title="More ..." alt="More ..."><div class="MenuLinkDiv topmenulink linkButton"><img src="images/sprite.svg#menu" class="linkButtonImg"  alt="More ..."></div></a>
+        <div id="searchArea" class="linkButton">
+            <input type="text" class="hidden" id="searchTerms" placeholder="   [Search]"/>
+            <a nohref="" id="searchButton"><img id="searchAreaImg" src="images/sprite.svg#magnifying-glass" alt="Search" /></a>
+        </div>
+        <div id="promotedMenu">
+            <a class="promotedMenuLink" href="#Sun Ephemeris"><div class="SunLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#sun" alt="Sun"></div></a>
+            <a class="promotedMenuLink" href="#Moon Ephemeris"><div class="MoonLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#moon" alt="Moon"></div></a>
+            <a class="promotedMenuLink" href="#Jupiter Ephemeris"><div class="JupiterLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#jupiter" alt="Jupiter"></div></a>
+            <a class="promotedMenuLink" href="#Saturn Ephemeris"><div class="SaturnLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#saturn" alt="Saturn"></div></a>
+            <a class="promotedMenuLink" href="#Solar Eclipses"><div class="SolarEclipseLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#solar-eclipse"  alt="Solar Eclipses"></div></a>
+            <a class="promotedMenuLink" href="#Lunar Eclipses"><div class="LunarEclipseLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#lunar-eclipse" alt="Lunar Eclipses"></div></a>
+            <a class="promotedMenuLink" href="#Elongations of Galilean Moons"><div class="GalileanMoonsLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#galilean-moons" alt="Galilean Moons"></div></a>
+            <a class="promotedMenuLink" href="#Mars Ephemeris"><div class="MarsLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#mars" alt="Mars"></div></a>
+            <a class="promotedMenuLink" href="#Elongations of Saturn Moons"><div class="SaturnMoonsLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#saturn-moons" alt="Moons of Saturn"></div></a>
+            <a class="promotedMenuLink" href="#Mercury Ephemeris"><div class="MercuryLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#mercury" alt="Mercury"></div></a>
+            <a class="promotedMenuLink" href="#Venus Ephemeris"><div class="VenusLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#venus"  alt="Venus"></div></a>
+            <a class="promotedMenuLink" href="#Uranus Ephemeris"><div class="UranusLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#uranus" alt="Uranus"></div></a>
+            <a class="promotedMenuLink" href="#Neptune Ephemeris"><div class="NeptuneLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#neptune" alt="Neptune"></div></a>
+        </div>
     </div>
-    </div>
+    <a nohref="" id="showNavigationMenu"><div id="showNavigationMenuContainer"><img id="showNavigationMenuContainerImg" src="images/sprite.svg#menu" alt="More ..."></div></a>
     
     <div class="clear maxWidth">&nbsp;</div>
-    <div id="scroller" class="scrollerWithMenu">
+    <div id="scroller">
         <div id="more" class="page">
             <h1>Menu</h1>
             <ul id="menuList">
-                <li><a href="#Sun"><div             class="largeButtons SunLinkButton   linkButton"><img src="images/sun.svg" alt="Sun"></div></a></li>
-                <li><a href="#Moon"><div            class="largeButtons MoonLinkButton   linkButton"><img src="images/moon.svg" alt="Moon"></div></a></li>
-                <li><a href="#LunarEclipses"><div   class="largeButtons LunarEclipseLinkButton   linkButton"><img src="images/lunar-eclipse.svg" alt="Lunar Eclipses"></div></a></li>
-                <li><a href="#SolarEclipses"><div class="largeButtons SolarEclipseLinkButton   linkButton"><img src="images/solar-eclipse.svg" alt="Solar Eclipses"></div></a></li>
-                <li><a href="#Mercury"><div         class="largeButtons MercuryLinkButton   linkButton"><img src="images/mercury.svg" alt="Mercury"></div></a></li>
-                <li><a href="#Venus"><div           class="largeButtons VenusLinkButton   linkButton"><img src="images/venus.svg" alt="Venus"></div></a></li>
-                <li><a href="#Mars"><div            class="largeButtons MarsLinkButton   linkButton"><img src="images/mars.svg" alt="Mars"></div></a></li>
-                <li><a href="#Jupiter"><div         class="largeButtons JupiterLinkButton   linkButton"><img src="images/jupiter.svg" alt="Jupiter"></div></a></li>
-                <li><a href="#GalileanMoons"><div   class="largeButtons GalileanMoonsLinkButton   linkButton"><img src="images/galilean-moons.svg" alt="Galilean Moons"></div></a></li>
-                <li><a href="#Saturn"><div          class="largeButtons SaturnLinkButton   linkButton"><img src="images/saturn.svg" alt="Saturn"></div></a></li>
-                <li><a href="#SaturnMoons"><div     class="largeButtons SaturnMoonsLinkButton   linkButton"><img src="images/saturn-moons.svg" alt="Moons of Saturn"></div></a></li>
-                <li><a href="#Uranus"><div          class="largeButtons UranusLinkButton   linkButton"><img src="images/uranus.svg" alt="Uranus"></div></a></li>
-                <li><a href="#Neptune"><div         class="largeButtons NeptuneLinkButton   linkButton"><img src="images/neptune.svg" alt="Neptune"></div></a></li>
+                <li class="menuListItem"><a href="#Sun Ephemeris"><div                  class="largeButtons SunLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#sun" alt="Sun"></div></a></li>
+                <li class="menuListItem"><a href="#Moon Ephemeris"><div                 class="largeButtons MoonLinkButton   linkButton"><img class="menuPageItemImg" src="images/sprite.svg#moon" alt="Moon"></div></a></li>
+                <li class="menuListItem"><a href="#Lunar Eclipses"><div                 class="largeButtons LunarEclipseLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#lunar-eclipse" alt="Lunar Eclipses"></div></a></li>
+                <li class="menuListItem"><a href="#Solar Eclipses"><div                 class="largeButtons SolarEclipseLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#solar-eclipse" alt="Solar Eclipses"></div></a></li>
+                <li class="menuListItem"><a href="#Mercury Ephemeris"><div              class="largeButtons MercuryLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#mercury" alt="Mercury"></div></a></li>
+                <li class="menuListItem"><a href="#Venus Ephemeris"><div                class="largeButtons VenusLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#venus" alt="Venus"></div></a></li>
+                <li class="menuListItem"><a href="#Mars Ephemeris"><div                 class="largeButtons MarsLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#mars" alt="Mars"></div></a></li>
+                <li class="menuListItem"><a href="#Jupiter Ephemeris"><div              class="largeButtons JupiterLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#jupiter" alt="Jupiter"></div></a></li>
+                <li class="menuListItem"><a href="#Elongations of Galilean Moons"><div  class="largeButtons GalileanMoonsLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#galilean-moons" alt="Galilean Moons"></div></a></li>
+                <li class="menuListItem"><a href="#Saturn Ephemeris"><div               class="largeButtons SaturnLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#saturn" alt="Saturn"></div></a></li>
+                <li class="menuListItem"><a href="#Elongations of Saturn Moons"><div    class="largeButtons SaturnMoonsLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#saturn-moons" alt="Moons of Saturn"></div></a></li>
+                <li class="menuListItem"><a href="#Uranus Ephemeris"><div               class="largeButtons UranusLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#uranus" alt="Uranus"></div></a></li>
+                <li class="menuListItem"><a href="#Neptune Ephemeris"><div              class="largeButtons NeptuneLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#neptune" alt="Neptune"></div></a></li>
             </ul>
             <div class="clear">&nbsp;</div>
         </div>
         <div id="settings" class="page">
             <h1>Settings</h1>
             <div id="settingsContainer">
-            <label>Latitude [&deg;]: <br/><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
-            <label>Longitude [&deg;]: <br/><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
-            <label>Altitude [m]: <br/><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
-            <div class="clear">&nbsp;</div>
-            <Label>Start from: <br/><input type="date" id="startingDate"></input></label>
-            <Label>increment in days: <br/><input type="number" id="incrementDate"></input></label>
-            <Label>for number of days:<br/><input type="number" id="numberOfDays"></input></label>
-            <div class="clear">&nbsp;</div>
-            <input type="button" id = "applySettingsChanges" value="Apply"></input>
-            <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
-            <div class="clear">&nbsp;</div>
-            </div>
+                <h2>Location and time intervals</h2>
+                <label class="settingsLabel">Latitude [&deg;]: <br/><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
+                <label class="settingsLabel">Longitude [&deg;]: <br/><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
+                <label class="settingsLabel">Altitude [m]: <br/><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
+                <div class="clear">&nbsp;</div>
+                <Label class="settingsLabel">Start from: <br/><input type="date" id="startingDate"></input></label>
+                <Label class="settingsLabel">increment [days]: <br/><input type="number" id="incrementDate"></input></label>
+                <Label class="settingsLabel">for [days]:<br/><input type="number" id="numberOfDays"></input></label>
+                <div class="clear">&nbsp;</div>
+                <input type="button" id = "applySettingsChanges" class="cta" value="Apply"></input>
+                <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
+                <div class="clear">&nbsp;</div>
+
+                <h2>Right now</h2>
+                <div id="realTimeSettingsContainer">
+                    
+                </div>
+          </div>
         </div>
         
         <div id="JSDisabledPage">
@@ -89,55 +1202,22 @@
             
         </div>
 
-        
         <div id="home" class="page">
-            <h1>Right now:</h1>
+            <h1 id="homeH1">Right now:</h1>
             <div id="rightNowFrontPage">
-            <a href="#Sun">
-             <div class="rightNowFrontPageWidget" id="SunHomepageImmediateView"> <span class="realtimeTitle">
-                      Sun</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
-            
-            <a href="#Moon">
-             <div  class="rightNowFrontPageWidget" id="MoonHomepageImmediateView"> <span class="realtimeTitle">
-                      Moon</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
-
-            <a href="#Jupiter">
-            <div  class="rightNowFrontPageWidget" id="JupiterHomepageImmediateView"> <span class="realtimeTitle">Jupiter</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
-            
-            <a href="#Saturn">
-            <div  class="rightNowFrontPageWidget" id="SaturnHomepageImmediateView">   <span class="realtimeTitle">  Saturn</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
-
-            <a href="#Mars">
-            <div  class="rightNowFrontPageWidget" id="MarsHomepageImmediateView">   <span class="realtimeTitle">  Mars</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
-
-            <a href="#Venus">
-             <div  class="rightNowFrontPageWidget" id="VenusHomepageImmediateView"> <span class="realtimeTitle">
-                      Venus</span>
-                    <div class="RA">loading ...</div>
-                    <div class="Dec">loading ...</div></div></a>
-
-            <div class="clear maxWidth">&nbsp;</div>
-        </div>
-        <br/>
-            Astronomical Ephemerides is a JavaScript utility to calculate ephemerides for the major planets of the solar system. It uses an <a href="https://bitbucket.org/herr_alien/jsaaplus" target="_blank" title="opens in a new window">Emscripten port</a> of the <a href="http://www.naughter.com/aa.html" target="_blank" title="opens in a new window">AA+ library</a>. More about Emscripten <a href="http://kripken.github.io/emscripten-site/" target="_blank" title="opens in a new window">here</a>.<br/>
-        <br/>
-        The following rules stand for the data computed by the application:
+               
+            </div>
+                <div id="lofiWarning">Loading high accuracy algorithm ...(<span id="lofiWarningProgress"></span>)</div>
+             <div class="clear maxWidth">&nbsp;</div>
         <ul>
+            <li>Positions are expressed as geocentric apparent equatorial coordinates, unless stated otherwise.</li>
             <li>Unless specified otherwise, all times (transits, eclipses, occultations etc.) are in UTC.</li>
             <li>Transits are computed for any given day as the first transit to occur after the given date. This means that they might occur in the following day.</li>
         </ul>
+            Astronomical Ephemerides computes ephemerides for the major objects of the solar system, using an <a href="https://bitbucket.org/herr_alien/jsaaplus" target="_blank" rel="noopener" title="opens in a new window">Emscripten port</a> of the <a href="http://www.naughter.com/aa.html" target="_blank" rel="noopener" title="opens in a new window">AA+ library (version 1.80)</a>. More about Emscripten <a href="http://kripken.github.io/emscripten-site/" target="_blank" rel="noopener" title="opens in a new window">on their site</a>.<br/>
+        <br/>
             <div id="credits">
-            Copyright (C) 2017  Herr_Alien &lt;alexandru.garofide@gmail.com&gt;<br/>
+            Copyright (C) 2018  Alexandru Garofide &lt;<a href="mailto:alexandru.garofide@gmail.com">alexandru.garofide@gmail.com</a>&gt;<br/>
         <br/>
             This program is free software: you can redistribute it and/or modify
             it under the terms of the GNU Affero General Public License as published by
@@ -150,178 +1230,89 @@
             GNU Affero General Public License for more details.<br/>
         <br/>
             You should have received a copy of the GNU Affero General Public License
-            along with this program.  If not, see &lt;<a href="https://www.gnu.org/licenses/agpl.html" target="_blank"  title="opens in a new window">https://www.gnu.org/licenses/agpl.html</a>&gt;.
+            along with this program.  If not, see &lt;<a href="https://www.gnu.org/licenses/agpl.html" target="_blank" rel="noopener"  title="opens in a new window">https://www.gnu.org/licenses/agpl.html</a>&gt;.
             </div>
         </div>
         
-        <div id="Sun" class="page invisible">
+        <div id="Sun Ephemeris" class="page invisible">
             <h1>Sun</h1>
             <table id="SunTable" cellspacing="0" cellpadding="0" class="planetTable">
-            <tr><td class="loadingMemFileContents"><img src="images/loading.gif"  alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
+            <tr><td class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></td></tr>
              </table>
         </div>
-        <div id="Mercury" class="page">
+        <div id="Mercury Ephemeris" class="page">
             <h1>Mercury</h1>
             <table id="MercuryTable" cellspacing="0" cellpadding="0" class="planetTable">
-            <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
+            <tr><td class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></td></tr>
             </table>
         </div>
 
-        <div id="Venus" class="page">
+        <div id="Venus Ephemeris" class="page">
             <h1>Venus</h1>
             <table id="VenusTable" cellspacing="0" cellpadding="0" class="planetTable">
-            <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
+            <tr><td class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></td></tr>
             </table>
         </div>
 
-        <div id="Mars" class="page">
+        <div id="Mars Ephemeris" class="page">
             <div class="swipeRight"></div> <div class="swipeLeft"></div>
             <h1>Mars</h1>
             <div id="marsHorizontalScroller">
                 <table id="MarsTable" cellspacing="0" cellpadding="0" class="planetTable">
-                <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
+                <tr><td class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></td></tr>
                </table>
                
                 <div class="physicalPositionalButtonsHolder">
-                        <div id="jupiterPositional" class="positionalButton activeButton buttonsToSwitchPosPhys">Positional ephemeris</div>
-                        <div id="jupiterPhysical" class="physicalButton buttonsToSwitchPosPhys">Physical ephemeris</div>
+                        <div class="positionalButton activeButton buttonsToSwitchPosPhys">Positional ephemeris</div>
+                        <div class="physicalButton buttonsToSwitchPosPhys">Physical ephemeris</div>
                 </div>
             </div>
 
         </div>
 
-        <div id="Jupiter" class="page">
+        <div id="Jupiter Ephemeris" class="page">
             <h1>Jupiter</h1>
             <div id="jupiterHorizontalScroller">
                 <table id="JupiterTable" cellspacing="0" cellpadding="0" class="planetTable showPositional">
-                <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
+                <tr><td class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></td></tr>
                  </table>
                 <div class="physicalPositionalButtonsHolder">
-                    <div id="jupiterPositional" class="positionalButton activeButton buttonsToSwitchPosPhys">Positional ephemeris</div>
-                    <div id="jupiterPhysical" class="physicalButton buttonsToSwitchPosPhys">Physical ephemeris</div>
+                    <div class="positionalButton activeButton buttonsToSwitchPosPhys">Positional ephemeris</div>
+                    <div class="physicalButton buttonsToSwitchPosPhys">Physical ephemeris</div>
                 </div>
            </div>
-           
-
-             <script>
-            
-            "use strict";
-             
-            function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
-                var pageElement = document.getElementById(pageId);
-                this.table = pageElement.getElementsByClassName("planetTable")[0];
-                this.cellsToHide_physical = false;
-                this.cellsToHide_positional = false;
-                
-                this.positionalButton = pageElement.getElementsByClassName("positionalButton")[0];
-                this.physicalButton = pageElement.getElementsByClassName("physicalButton")[0];
-                if (typeof firstPhysicalColumnIndex == 'undefined')
-                    this.firstPhysicalColumnIndex = 16;
-                else
-                    this.firstPhysicalColumnIndex = firstPhysicalColumnIndex;
-            }
-            
-            (function() {
-                PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
-                    this.cellsToHide_physical = [];
-                    this.cellsToHide_positional = [];
-                    for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
-                        var cells = this.table.rows[rowIndex].cells;
-                        for (var colIndex = 16; colIndex < cells.length; colIndex++)
-                            this.cellsToHide_physical.push(cells[colIndex]);
-                        for (var colIndex = 0; colIndex < 16; colIndex++)
-                            this.cellsToHide_positional.push(cells[colIndex]);
-                    }
-                }
-                
-                PhysicalPositionalToggler.prototype['init'] = function () {
-                
-                    var _togglerObj = this;
-                
-                    this.positionalButton.onclick = function () {
-                        var togglerObj = _togglerObj;
-                        togglerObj.positionalButton.classList.add("activeButton");
-                        togglerObj.physicalButton.classList.remove("activeButton");
-                        togglerObj.table.classList.remove ("showPhysical");
-                        togglerObj.table.classList.add ("showPositional");
-                        if (!togglerObj.cellsToHide_physical)
-                            togglerObj.updateCellsToHide();
-                            
-                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
-                            togglerObj.cellsToHide_physical[i].classList.remove("physPosVisible");
-                            togglerObj.cellsToHide_physical[i].classList.add("physPosHidden");
-                        }
-                            
-                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
-                            togglerObj.cellsToHide_positional[i].classList.remove("physPosHidden");
-                            togglerObj.cellsToHide_positional[i].classList.add("physPosVisible");
-                        }
-                    }
-                 
-                    this.physicalButton.onclick = function () {
-                        var togglerObj = _togglerObj;
-                        togglerObj.physicalButton.classList.add("activeButton");
-                        togglerObj.positionalButton.classList.remove("activeButton");
-
-                        togglerObj.table.classList.remove ("showPositional");
-                        togglerObj.table.classList.add ("showPhysical");
-                        if (!togglerObj.cellsToHide_physical)
-                            togglerObj.updateCellsToHide();
-
-                        for (var i = 0; i < togglerObj.cellsToHide_physical.length; i++) {
-                            togglerObj.cellsToHide_physical[i].classList.remove("physPosHidden");  
-                            togglerObj.cellsToHide_physical[i].classList.add("physPosVisible");
-                        }
-                            
-                        for (var i = 0; i < togglerObj.cellsToHide_positional.length; i++) {
-                            togglerObj.cellsToHide_positional[i].classList.remove("physPosVisible");
-                            togglerObj.cellsToHide_positional[i].classList.add("physPosHidden");
-                        }
-                    }
-                }
-            })();
-                
-            (function() {
-                var jupiterToggler = new PhysicalPositionalToggler("Jupiter");
-                jupiterToggler.init();
-
-                var marsToggler = new PhysicalPositionalToggler("Mars");
-                marsToggler.init();
-            })();    
-                
-             </script>
-         
+        
         </div>
 
-        <div id="Saturn" class="page">
+        <div id="Saturn Ephemeris" class="page">
             <h1>Saturn</h1>
             <table id="SaturnTable" cellspacing="0" cellpadding="0" class="planetTable">
-            <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
+            <tr><td class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></td></tr>
              </table>
         </div>
 
-       <div id="Uranus" class="page">
+       <div id="Uranus Ephemeris" class="page">
             <h1>Uranus</h1>
             <table id="UranusTable" cellspacing="0" cellpadding="0" class="planetTable">
-            <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
+            <tr><td class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></td></tr>
              </table>
         </div>
 
-       <div id="Neptune" class="page">
+       <div id="Neptune Ephemeris" class="page">
             <h1>Neptune</h1>
             <table id="NeptuneTable" cellspacing="0" cellpadding="0" class="planetTable">
-            <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
+            <tr><td class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></td></tr>
              </table>
         </div>
 
-       <div id="Moon" class="page">
+       <div id="Moon Ephemeris" class="page">
             <h1>Moon</h1>
             <table id="MoonTable" cellspacing="0" cellpadding="0"  class="planetTable">
-            <tr><td class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</td></tr>
+            <tr><td class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></td></tr>
              </table>
         </div>
 
-       <div id="GalileanMoons" class="page">
+       <div id="Elongations of Galilean Moons" class="page">
             <h1>Elongations of Galilean Moons</h1>
             <div class="satellitesContents">
             <br/>The following colors were used to represent each moon:
@@ -334,13 +1325,14 @@
             Jupiter is represented in <font color="orange"><b>orange color</b></font>
             <br/>
             <br/>
+            East is on the left side, West is on the right side.
             <div id="GalileanMoonsContainer">
-                <div class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</div>
+                <div class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></div>
              </div>
              </div>
         </div>
 
-       <div id="SaturnMoons" class="page">
+       <div id="Elongations of Saturn Moons" class="page">
            <h1>Elongations of Saturn's Moons</h1>
             <div class="satellitesContents">
             <br/>The following colors were used to represent each moon:
@@ -355,229 +1347,476 @@
             Saturn is represented in <font color="orange"><b>orange color</b></font>
             <br/>
             <br/>
+            East is on the left side, West is on the right side.
             <div id="SaturnMoonsContainer">
-                <div class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</div>
+                <div class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></div>
              </div>
              </div>
         </div>
         
-       <div id="LunarEclipses" class="page">
+       <div id="Lunar Eclipses" class="page">
             <h1>Lunar Eclipses</h1>
             <br/> Accuracy of the times displayed below is about 1 minute.
             <br/> 
             <br/> 
-            <div id="MoonEclipsesContainer" class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</div>
+            <div id="MoonEclipsesContainer" class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></div>
         </div>
         
-       <div id="SolarEclipses" class="page">
+       <div id="Solar Eclipses" class="page">
             <h1>Solar Eclipses</h1>
             <div class="leftaligned">
-            To obtain the value of a given Besselian element for a given time T, you need to compute the values in the following maner:
+            To obtain the value of a given Besselian element for a given time T, compute it in the following manner:
             <br/>
             <br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;t = T - T0
+            &nbsp;&nbsp;&nbsp;&nbsp;t = T - T<sub>0</sub>
             <br/>
             &nbsp;&nbsp;&nbsp;&nbsp;A(t) = A<sub>0</sub> + t * A<sub>1</sub> + t<sup>2</sup> * A<sub>2</sub> + t<sup>3</sup> * A<sub>3</sub>
             <br/>
             <br/>
             where A is any of the elements from the tables below.
+            <br/>
+            <br/>
+            The values from the table are valid for a time interval from T<sub>0</sub> - 3h to T<sub>0</sub> + 3h.
+            <br/>
+            <br/>
+            <b>x</b>, <b>y</b>, <b>l1</b> and <b>l2</b> are in Earth radii.<br/>
+            <b>&mu;</b> and <b>d</b> are in sexagesimal degrees (&deg;)
             </div>
             
-            <div id="SolarEclipsesContainer" class="loadingMemFileContents"><img src="images/loading.gif" alt="Loading ..."><br/>Downloading initialization data ...</div>
+            <div id="SolarEclipsesContainer" class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></div>
         </div>
+
+       <div id="privacy" class="page">
+            <h1>Privacy Policy</h1>
+            <div class="leftaligned">
+                This application doesn't collect, use, store, and share or disclose any information about the user or any other person.
+            </div>
+        </div>
+
+       <div id="Search results" class="page">
+            <h1>Pages that fit your search</h1>
+            <div class="leftaligned">
+                A page with the <b>*exact*</b> title <b><u>"<span id="requestedresource"></span>"</u></b> does not exist.<br/>
+                <br/>
+                Consider trying one of the following suggestions, or <a href="#home" alt="Home">go back to the main page</a>.
+                <ul id="searchsuggestions">
+                </ul>
+            </div>
+        </div>
+
+<div id="footer">
+<a href="https://bitbucket.org/herr_alien/astronomical_ephemerides" target="_blank" 
+   rel="noopener" title="Source code for the app">Source code</a> | 
+<a href="https://bitbucket.org/herr_alien/astronomical_ephemerides/issues?status=new&status=open" target="_blank" 
+   rel="noopener" title="Bug tracker">Found a bug?</a> | 
+<a href="http://www.astronomy.ro/forum/viewtopic.php?t=17450" target="_blank" 
+   rel="noopener" title="Forum (Romanian language)">Forum (RO)</a> | 
+
+<a href="https://www.cloudynights.com/topic/609148-yet-another-set-of-astronomical-ephemerides/" target="_blank" 
+   rel="noopener" title="Forum (English language)">Forum (EN)</a> | 
+
+<a href="mailto:alexandru.garofide@gmail.com">Contact us</a><br>
+<br>
+<a href="#privacy">Privacy Policy</a> | 
+<a href="https://www.gnu.org/licenses/agpl.html" target="_blank" rel="noopener"  
+title="opens in a new window">AGPL License</a>  | 
+<a href="http://herralien-apps.appspot.com" target="_blank" rel="noopener"  
+title="opens in a new window">Bits of software</a><br>
+<br><br>
+        Copyright <span id="copyrightYear">2018</span>  Alexandru Garofide &lt;<a href="mailto:alexandru.garofide@gmail.com">alexandru.garofide@gmail.com</a>&gt;
+</div>
 
         </div>
     
 	</body>
 
 </html>
-<script type="text/JavaScript" src="js/notifications.js"></script>
-<script type="text/JavaScript" src="js/location.js"></script>
-<script type="text/JavaScript" src="js/timeinput.js"></script>
 
-<script type="text/JavaScript" >
-    
-    "use strict";
-    document.getElementById("JSDisabledPage").style.display = "none";
-    
-    var PageTimeInterval = {};
-    var Pages = {};
+<script type="text/JavaScript" async="" src="js/searchform.js"></script>
+<script type="text/JavaScript" async="" src="js/realtime.js"></script>
+<script type="text/JavaScript" async="" src="js/location.js"></script>
+<script type="text/JavaScript" async="" src="js/timeinput.js"></script>
+<script type="text/JavaScript" async="" src="js/planetdata.js"></script>
+<script type="text/JavaScript" async="" src="js/planetpage.js"></script>
+<script type="text/JavaScript" async="" src="js/sun.js"></script>
+<script type="text/JavaScript" async="" src="js/mercury.js"></script>
+<script type="text/JavaScript" async="" src="js/venus.js"></script>
+<script type="text/JavaScript" async="" src="js/mars.js"></script>
+<script type="text/JavaScript" async="" src="js/jupiter.js"></script>
+<script type="text/JavaScript" async="" src="js/saturn.js"></script>
+<script type="text/JavaScript" async="" src="js/uranus.js"></script>
+<script type="text/JavaScript" async="" src="js/neptune.js"></script>
+<script type="text/JavaScript" async="" src="js/moonspage.js"></script>
+<script type="text/JavaScript" async="" src="js/galileanmoonspage.js"></script>
+<script type="text/JavaScript" async="" src="js/saturnmoonspage.js"></script>
+<script type="text/JavaScript" async="" src="js/mooneclipsespage.js"></script>
+<script type="text/JavaScript" async="" src="js/solareclipsespage.js"></script>
+<script type="text/JavaScript" async="" src="js/moon.js"></script>
 
-    var previousPage = false;
-    var currentActiveLink = false;
+
+ <script>
+
+"use strict";
+
+(function(){
+    var URL = document.URL;
+    if (URL.slice(-11) == "ephemerides")
+        location.href = URL + "/";
+    URL = location.href;
+    if (URL.indexOf("#") < 0)
+      location.href = "#home";
+})();
+
+
+var $get = function (id) { return document.getElementById(id); }
+$get("JSDisabledPage").style.display = "none";
+
+function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
+    var pageElement = $get(pageId);
+    this.table = pageElement.getElementsByClassName("planetTable")[0];
+    this.cellsToHide_physical = false;
+    this.cellsToHide_positional = false;
     
-    function gohome () {
-        document.getElementById("HomeLink").dispatchEvent(new MouseEvent("click",  { "view": window, 
-                                                          "bubbles": true, 
-                                                          "cancelable": false }));
+    this.positionalButton = pageElement.getElementsByClassName("positionalButton")[0];
+    this.physicalButton = pageElement.getElementsByClassName("physicalButton")[0];
+    if (typeof firstPhysicalColumnIndex == 'undefined')
+        this.firstPhysicalColumnIndex = 16;
+    else
+        this.firstPhysicalColumnIndex = firstPhysicalColumnIndex;
+}
+
+(function() {
+PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
+    this.cellsToHide_physical = [];
+    this.cellsToHide_positional = [];
+    for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
+        var cells = this.table.rows[rowIndex].cells;
+        for (var colIndex = 16; colIndex < cells.length; colIndex++)
+            this.cellsToHide_physical.push(cells[colIndex]);
+        for (var colIndex = 0; colIndex < 16; colIndex++)
+            this.cellsToHide_positional.push(cells[colIndex]);
     }
-    
-    function onhashchange(){
-        document.body.scrollTop = 0;
-        var hash = location.hash;
-        var pageName = hash.slice(1);
-        previousPage = document.getElementById(pageName); 
+}
 
-        if (Pages[pageName]){
-            Pages[pageName].displayPage();
-        }
-        
-/*        setTimeout(function () {
-        scroller.classList.remove ("scrollerNoMenu");
-        scroller.classList.add ("scrollerWithMenu");
-        }, 10); */
-    }
-    
-    window.addEventListener("hashchange", onhashchange, false);
+PhysicalPositionalToggler.prototype['init'] = function () {
+    var _this = this;
 
-    document.getElementById ("applySettingsChanges").addEventListener("click", function() {
-        Location.Controls.commitUserValues();
-        TimeStepsData.Controls.commitUserValues();
-        // copy from timesteps data
-        if (typeof AAJS != 'undefined')
-            PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
+    this.positionalButton.onclick = function () {
+        _this.positionalButton.classList.add("activeButton");
+        _this.physicalButton.classList.remove("activeButton");
+        _this.table.classList.remove ("showPhysical");
+        _this.table.classList.add ("showPositional");
+        if (!_this.cellsToHide_physical)
+            _this.updateCellsToHide();
             
-        for (var pageKey in Pages){
-            if (Pages[pageKey]) {
-                Pages[pageKey].reset();
-            }
+        for (var i = 0; i < _this.cellsToHide_physical.length; i++) {
+            _this.cellsToHide_physical[i].classList.remove("physPosVisible");
+            _this.cellsToHide_physical[i].classList.add("physPosHidden");
         }
-        gohome();
+            
+        for (var i = 0; i < _this.cellsToHide_positional.length; i++) {
+            _this.cellsToHide_positional[i].classList.remove("physPosHidden");
+            _this.cellsToHide_positional[i].classList.add("physPosVisible");
+        }
+    }
+ 
+    this.physicalButton.onclick = function () {
+        _this.physicalButton.classList.add("activeButton");
+        _this.positionalButton.classList.remove("activeButton");
 
-    });
-    
-    document.getElementById ("cancelSettingsChanges").addEventListener("click", function() {
-        Location.Controls.update();
-        TimeStepsData.Controls.update();
+        _this.table.classList.remove ("showPositional");
+        _this.table.classList.add ("showPhysical");
+        if (!_this.cellsToHide_physical)
+            _this.updateCellsToHide();
 
-        gohome();
-    });
+         for (var i = 0; i < _this.cellsToHide_physical.length; i++) {
+             _this.cellsToHide_physical[i].classList.remove("physPosHidden");  
+             _this.cellsToHide_physical[i].classList.add("physPosVisible");
+         }
+             
+         for (var i = 0; i < _this.cellsToHide_positional.length; i++) {
+             _this.cellsToHide_positional[i].classList.remove("physPosVisible");
+             _this.cellsToHide_positional[i].classList.add("physPosHidden");
+         }
+     }
+ }
 
-    Location.init();
-    TimeStepsData.init();
-    PageTimeInterval = { "JD" :  false, "days" : false, "stepSize" : false };
-    
-    if (!location.hash) {
-        gohome();
-    } 
-    
-    var sourceMenu = document.getElementById("navigation");
-    window.addEventListener("scroll", function() {
-        var scrolled = document.body.scrollTop >= 20;
+var jupiterToggler = new PhysicalPositionalToggler("Jupiter Ephemeris");
+jupiterToggler.init();
+
+var marsToggler = new PhysicalPositionalToggler("Mars Ephemeris");
+marsToggler.init();
+})();    
+                
+PageTimeInterval = { "JD" :  false, "days" : false, "stepSize" : false };
+
+var PageTimeInterval = {};
+var Pages = {"addPlainPages" : function(titles){
+    for (var i = 0; i < titles.length; i++) {
+        var title = titles[i];
+        Pages[title] = {"displayPage" : function(){}};
+    }
+}};
+
+Pages.addPlainPages(["more", "settings", "home", "privacy", "Search results"]);
+
+var previousPage = false;
+var currentActiveLink = false;
+
+$get ("applySettingsChanges").addEventListener("click", function() {
+    Location.Controls.commitUserValues();
+    TimeStepsData.Controls.commitUserValues();
+    // copy from timesteps data
+    if (typeof AAJS != 'undefined')
+        PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
         
-        if (previousPage) {
-            var pageObj = Pages [previousPage.id];
-            if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
-                if (scrolled) {
-                    // get the first two rows
-                    pageObj.hostElement.rows[0].classList.remove ("firstHeaderRow");
-                    pageObj.hostElement.rows[0].classList.add ("firstHeaderRowScrolled");
-
-                    pageObj.hostElement.rows[1].classList.remove ("secondHeaderRow");
-                    pageObj.hostElement.rows[1].classList.add ("secondHeaderRowScrolled");
-                } else {
-                    pageObj.hostElement.rows[0].classList.add ("firstHeaderRow");
-                    pageObj.hostElement.rows[0].classList.remove ("firstHeaderRowScrolled");
-
-                    pageObj.hostElement.rows[1].classList.add ("secondHeaderRow");
-                    pageObj.hostElement.rows[1].classList.remove ("secondHeaderRowScrolled");                    
-                    sourceMenu.classList.remove ("withDropShadow");
-                }
-            }            
+    for (var pageKey in Pages){
+        var entry = Pages[pageKey];
+        if (entry && entry.reset) {
+            entry.reset();
         }
-        
-        if (scrolled)
-            sourceMenu.classList.add ("withDropShadow");
-        else 
-            sourceMenu.classList.remove ("withDropShadow");
-    });
+    }
+
+    alert("New settings applied.");
+});
+
+$get ("cancelSettingsChanges").addEventListener("click", function() {
+    Location.Controls.update();
+    TimeStepsData.Controls.update();
+
+    alert("Changes discarded.");
+});
+
+(function(){
+var sourceMenu = $get("navigation");
+var oldScrollTop = 0;
     
-    function updateTimeAtAajsLoad() {
-        if (typeof AAJS != 'undefined') {
-            try {
-                PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
-            } catch (e) {
-                setTimeout (updateTimeAtAajsLoad, 300);
+window.addEventListener("scroll", function() {
+    var scrolledTop = document.body.scrollTop;
+    var scrolled = scrolledTop >= 20;
+    var pageObj = false;
+    if (previousPage) {
+        pageObj = Pages [previousPage.id];
+        if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
+            if (scrolled) {
+                // get the first two rows
+                pageObj.hostElement.rows[0].classList.remove ("firstHeaderRow");
+                pageObj.hostElement.rows[0].classList.add ("firstHeaderRowScrolled");
+
+                pageObj.hostElement.rows[1].classList.remove ("secondHeaderRow");
+                pageObj.hostElement.rows[1].classList.add ("secondHeaderRowScrolled");
+            } else {
+                pageObj.hostElement.rows[0].classList.add ("firstHeaderRow");
+                pageObj.hostElement.rows[0].classList.remove ("firstHeaderRowScrolled");
+
+                pageObj.hostElement.rows[1].classList.add ("secondHeaderRow");
+                pageObj.hostElement.rows[1].classList.remove ("secondHeaderRowScrolled");                    
             }
-        }
-        else
-            setTimeout (updateTimeAtAajsLoad, 300);
+        }            
     }
     
-    updateTimeAtAajsLoad();
+    if (scrolled) {
+        sourceMenu.classList.add ("withDropShadow");
+    } else {
+        sourceMenu.classList.remove ("withDropShadow");
+    }
     
-/*    (function() {
-        // update menus
-        var sourceMenu = document.getElementById("navigation");
-        var destMenus = document.getElementsByClassName("navigation");
-        for (var i = 0; i < destMenus.length; i++) {
-            var currentMenuDest = destMenus[i];
-            for (var sourceNodeIndex = 0; sourceNodeIndex < sourceMenu.children.length; sourceNodeIndex++) {
-                currentMenuDest.appendChild(sourceMenu.children[sourceNodeIndex].cloneNode(true));
-            }
+    var hysterezis = 15;
+    // is it on a small screen?
+    if (scrolledTop > oldScrollTop + hysterezis && scrolledTop > 180 ) {
+        // scrolled down
+        sourceMenu.classList.add ("movedMenu");
+        if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
+            pageObj.hostElement.rows[0].classList.add ("movedMenu");
+            pageObj.hostElement.rows[1].classList.add ("movedMenu");
         }
-    })();
-    */
-         
-</script>
-
-<script type="text/JavaScript" src="js/aajs.js" async=""></script>
-
-<script type="text/javascript" src="js/matrix.js"></script>
-<script type="text/javascript" src="js/numerical.js"></script>
-<script type="text/JavaScript" src="js/planetdata.js"></script>
-<script type="text/JavaScript" src="js/planetpage.js"></script>
-
-<script type="text/JavaScript" src="js/sun.js"></script>
-<script type="text/JavaScript" src="js/mercury.js"></script>
-<script type="text/JavaScript" src="js/venus.js"></script>
-<script type="text/JavaScript" src="js/mars.js"></script>
-<script type="text/JavaScript" src="js/jupiter.js"></script>
-<script type="text/JavaScript" src="js/saturn.js"></script>
-<script type="text/JavaScript" src="js/uranus.js"></script>
-<script type="text/JavaScript" src="js/neptune.js"></script>
-
-<script type="text/JavaScript" src="js/moon.js"></script>
-<script type="text/JavaScript" src="js/moonsdata.js"></script>
-<script type="text/JavaScript" src="js/moonspage.js"></script>
-<script type="text/JavaScript" src="js/galileanmoonsdata.js"></script>
-<script type="text/JavaScript" src="js/galileanmoonspage.js"></script>
-<script type="text/JavaScript" src="js/saturnmoonsdata.js"></script>
-<script type="text/JavaScript" src="js/saturnmoonspage.js"></script>
-
-<script type="text/JavaScript" src="js/mooneclipsesdata.js"></script>
-<script type="text/JavaScript" src="js/mooneclipsespage.js"></script>
-<script type="text/JavaScript" src="js/solareclipsesdata.js"></script>
-<script type="text/JavaScript" src="js/solareclipsespage.js"></script>
-<script type="text/JavaScript" src="js/realtime.js"></script>
-
-<script>
-
-    "use strict";
-
-    (function(){
+    } else if (scrolledTop < oldScrollTop - hysterezis || scrolledTop < 180) {
+    // scrolled up
+        sourceMenu.classList.remove ("movedMenu");
+        if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
+            pageObj.hostElement.rows[0].classList.remove ("movedMenu");
+            pageObj.hostElement.rows[1].classList.remove ("movedMenu");
+        }
+    }
     
-        // has common functionality with the page, considere refactoring some of it.
-        new RealTimeDataViewer(Pages["Sun"], 
-             document.getElementById("SunHomepageImmediateView"));
+    oldScrollTop = scrolledTop;
+});
 
-       new RealTimeDataViewer(Pages["Jupiter"], 
-             document.getElementById("JupiterHomepageImmediateView"));
+$get("showNavigationMenu").onclick = function () {
+    var pageObj = Pages [previousPage.id];
+    sourceMenu.classList.remove ("movedMenu");
+    if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
+        pageObj.hostElement.rows[0].classList.remove ("movedMenu");
+        pageObj.hostElement.rows[1].classList.remove ("movedMenu");
+    }
+}
+})();
 
-        new RealTimeDataViewer(Pages["Mars"], 
-             document.getElementById("MarsHomepageImmediateView"));
+function updateTimeAtAAJSLoad() {
+  
+        try {
+            PageTimeInterval = { "JD" :  AAJS.Date.DateToJD (TimeStepsData.yearToStart, TimeStepsData.monthToStart, TimeStepsData.dayToStart, true), "days" : TimeStepsData.numberOfDays, "stepSize" : TimeStepsData.timestep };
+        } catch (e) {
+            SyncedTimeOut (updateTimeAtAAJSLoad, Timeout.onInit);
+        }
+}
 
-        new RealTimeDataViewer(Pages["Saturn"], 
-             document.getElementById("SaturnHomepageImmediateView"));
+updateTimeAtAAJSLoad();
 
-        new RealTimeDataViewer(Pages["Moon"], 
-             document.getElementById("MoonHomepageImmediateView"));
+(function(){
+  var waitUntilDependenciesLoaded = function() {
 
-        new RealTimeDataViewer(Pages["Venus"], 
-             document.getElementById("VenusHomepageImmediateView"));
+  if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded || !AAJS.AllDependenciesLoaded())
+                return SyncedTimeOut (waitUntilDependenciesLoaded, Timeout.onInit);
+   $get("lofiWarning").classList.add("hidden");
 
-             })();
-    
-    if (location.hash)
-        setTimeout(onhashchange, 1);
+  }
+
+  waitUntilDependenciesLoaded();
+
+})();
+
+
+function DisplayPage (pageName) {
+    var delayedDisplay = function () {
+        try {
+            Pages[pageName].displayPage();
+        } catch (err) {
+            SyncedTimeOut(delayedDisplay, Timeout.onInit);
+        }
+    }
+    delayedDisplay();
+}
+
+function error404(pageName) {
+    $get("requestedresource").textContent = pageName;
+    var list = $get("searchsuggestions");
+    while(list.hasChildNodes()) {
+      list.removeChild(list.firstChild);
+    }
+    var rankedPages = PageRank.rank(pageName.split(" "));
+    for (var i = 0; i < rankedPages.length; i++) {
+        var li = PlanetPage.prototype["addNodeChild"](list, "li");
+        var anchor = PlanetPage.prototype["addNodeChild"](li, "a", rankedPages[i]);
+        anchor.setAttribute ("href", "#" + rankedPages[i]);
+    }
+}
+
+function onhashchange(){
+    if (typeof PageRank == 'undefined') {
+        SyncedTimeOut(onhashchange, Timeout.onInit);
+    } else {
+        var searchFormInput = $get("searchTerms"); 
+        searchFormInput.classList.remove("visible");
+        searchFormInput.classList.add("hidden");
+        searchFormInput.value = "";
+
+        var hash = decodeURIComponent(location.hash);
+        var pageName = hash.slice(1);
+        if (pageName == "Search results") {
+            return;
+        }
+
+        previousPage = $get(pageName); 
+
+        if (previousPage){
+            DisplayPage (pageName);
+        } else {
+            error404 (pageName);
+            window.location.href = "#Search results";
+        }
+    }
+}
+
+window.addEventListener("hashchange", onhashchange, false);
+if (location.hash) SyncedTimeOut(onhashchange, Timeout.onInit);
+
+(function(){
+  var menu = $get("promotedMenu");
+  function toggleArrows(){
+      if (menu.scrollLeft < 30) {
+        menu.classList.add("noLeft");
+      } else {
+        menu.classList.remove("noLeft");
+      }
+
+      var rightLimit = menu.scrollWidth - menu.clientWidth - 30;
+      if (menu.scrollLeft > rightLimit) {
+        menu.classList.add("noRight");
+      } else {
+        menu.classList.remove("noRight");
+      }
+  }
+
+  menu.addEventListener("scroll", function() { requestAnimationFrame(toggleArrows); }, false);
+  toggleArrows();
+
+})();
+
+(function(){
+var registerWorker = function () {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('serviceworker.js').then(function(registration) {
+           console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function(err) {
+          // registration failed :(
+          console.log('ServiceWorker registration failed: ', err);              
+        });
+    }              
+}
+registerWorker();
+
+var injectCssDom = function(url) {
+  SyncedTimeOut (function() {
+  var link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.type="text/css";
+  link.href=url;
+  document.body.appendChild(link); }, Timeout.onInit);
+}
+
+injectCssDom("style/common.css");
+injectCssDom("style/default.css");
+injectCssDom("style/print.css");
+
+var appInit = function() {
+   if (typeof Location == 'undefined' || typeof TimeStepsData == 'undefined' || typeof Notifications == 'undefined'
+       || !Location.init || !TimeStepsData.init) {
+       SyncedTimeOut (appInit, Timeout.onInit);
+   } else {
+       Location.init();
+       TimeStepsData.init();
+   }
+}
+
+appInit();
+
+var now = new Date();        
+$get("copyrightYear").textContent = now.getFullYear();
+
+var CACHE_PREFIX = 'Cache-for-ephemerides';
+caches.keys().then(names => {
+    var versions = "v";
+    for (var i = 0; i < names.length; i++) {
+        var name = names[i];
+
+          if (!name.startsWith(CACHE_PREFIX)) {
+              continue;
+          }
+
+        var versionPos = name.lastIndexOf('v');
+        if (versionPos < 0) {
+            versionPos = name.lastIndexOf('-');
+        }
+        if (versionPos < 0) {
+            continue;
+        }
+        versions += name.substring(versionPos + 1) + ",";
+    }
+
+    versions = versions.substring(0, versions.length - 1);
+    var div = $get("HomeLinkButton");
+    div.textContent = versions;
+});
+})();
 </script>
