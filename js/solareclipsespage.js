@@ -125,6 +125,9 @@ var SolarEclipsesPage = {
         for (var i = 0; i < 3; i++)
          addNodeChild (row, "td", "0");
          
+        var localCircumstances = addNodeChild (mainDiv, "div");
+        localCircumstances.classList.add ("localCircumstances");
+        var localCircumstancesTitle = addNodeChild (localCircumstances, "h3", "Local circumstances");
                 
     },
     keywordsArray : ["Besselian", "Elements", "Shadow", "Umbra", "Penumbra", "Antumbra", "Partial", "Total", "Annular", "Eclipse",
