@@ -1,6 +1,6 @@
 <html>
     <head>
-        <script type="text/javascript" src="js/aajs.js.unoptimized"></script>
+        <script type="text/javascript" src="js/aajs.js"></script>
         <script type="text/javascript" src="testlib.js"></script>
 
         <script type="text/javascript">
@@ -483,7 +483,14 @@
         
        ];
             
-        testlib.runTests (tests);
+        function runTests() {
+            if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
+                return setTimeout (runTests, 100);
+
+            testlib.runTests (tests);
+        }
+
+        runTests();
             
     })();
             

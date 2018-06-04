@@ -24,6 +24,8 @@
 <script type="text/javascript">
 
     var Location = { "latitude" : 44.42677, "longitude" : 26.10254, "altitude" : 200 };
+
+    function GetAAJS() { return AAJS; }
          
     (function () {
             
@@ -249,7 +251,14 @@
 
         ];
             
-        testlib.runTests (tests);
+        function runTests() {
+            if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
+                return setTimeout (runTests, 100);
+
+            testlib.runTests (tests);
+        }
+
+        runTests();
             
     })();
             
