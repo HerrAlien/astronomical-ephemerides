@@ -15,6 +15,9 @@
         }; 
         
         function PlanetPage() {}
+
+        function GetAAJS() { return AAJS; }
+
             </script>
 
 
@@ -706,8 +709,18 @@ Penumbral Eclipse ends	7 Sep, 20:55:01	7 Sep, 22:55:01	Yes
         
         
         ];
-            
-        testlib.runTests (tests);
+           
+        
+        function runTests() {
+            if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
+                return setTimeout (runTests, 100);
+
+            testlib.runTests (tests);
+        }
+
+        runTests();
+
+
     })();
                 
         </script>
