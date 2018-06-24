@@ -531,6 +531,25 @@ Tan ƒ2	0.0045992
             }
         },
 
+        {
+            name : "Local circumstances for 1984-05-30",
+            input : {
+                    "Latitude"  : 46.583333,
+                    "Longitude" : 26.966667,
+                    "Altitude"  : 167
+            },
+            expectedOutput : {
+                    "tMax" : 17 + (24 + 6/60) / 60
+            },
+                  
+            actualOutput : {},
+
+            test : function () {
+                return testlib.doubleEqObj(this.expectedOutput, this.actualOutput, 0.001);
+            }
+        },
+        
+
 
 /*
 

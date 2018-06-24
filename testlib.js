@@ -38,7 +38,7 @@ var testlib = {
             if (typeof a === 'String')
                 return a == b;
             
-            if (typeof a != 'Aray' && typeof a != 'Object')
+            if (typeof a != 'Aray' && typeof a != 'object')
                 return this.doubleEq(a, b, eps);
             
             for (var key in a) {
@@ -47,7 +47,7 @@ var testlib = {
                     return false;
                 if (ttypeof_b_key != typeof a[key])
                     return false;
-                if (typeof_b_key === 'Object') {
+                if (typeof_b_key === 'object') {
                     var keyAsObjs = this.doubleEqObj(a[key], b[key], eps);
                     if (!keyAsObjs)
                         return false;
