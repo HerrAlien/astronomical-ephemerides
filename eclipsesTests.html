@@ -532,20 +532,43 @@ Tan ƒ2	0.0045992
         },
 
         {
-            name : "Local circumstances for 1984-05-30",
+            name : "Local circumstances - time of maximum - for 1984-05-30",
             input : {
-                    "Latitude"  : 46.583333,
-                    "Longitude" : 26.966667,
-                    "Altitude"  : 167
+                    "latitude"  : 46.583333,
+                    "longitude" : 26.966667,
+                    "altitude"  : 167,
+                    "jd"        : AAJS.Date.DateToJD (1984, 05, 30, true),
+                    "k"         :  AAJS.Moon.kForJD (AAJS.Date.DateToJD (1984, 05, 30, true))
             },
-            expectedOutput : {
-                    "tMax" : 17 + (24 + 6/60) / 60
-            },
+            expectedOutput : AAJS.Date.DateToJD (1984, 05, 30, true) + ((17 + (24 + 6/60) / 60) / 24) ,
                   
-            actualOutput : {},
+            actualOutput :   false,
 
             test : function () {
-                return testlib.doubleEqObj(this.expectedOutput, this.actualOutput, 0.001);
+
+                function computeLocalCircumstances(eclipseData, location) {
+                    var rhoCosPhi = AAJS.Globe.RadiusTimesCosineGeocentricLatitude (location.latitude, location.altitude);
+                    var rhoSinPhi = AAJS.Globe.RadiusTimesSineGeocentricLatitude (location.latitude, location.altitude);
+                    var degra = Math.PI / 180;
+                    var longitudeRads = location.longitude * degra;
+
+                    // approximate a time for maximum, based on raw differences between
+                    // shadow hour angle and location longitude.
+                    var deltaHourAngle = location.longitude - eclipseData.besselianElements.mu[0];
+
+                    var timeDistance =  (deltaHourAngle / 15) / 24;
+                    var tMax = eclipseData.t0 + timeDistance;
+
+                    return {
+                            "tMax" : tMax
+                    };
+                }
+
+                var eclipseData = SolarEclipses.EclipseDataForK(this.input.k);
+
+                this.actualOutput = computeLocalCircumstances(eclipseData, this.input).tMax;
+
+                return testlib.doubleEq(this.actualOutput, this.expectedOutput, 0.0001);
             }
         },
         
