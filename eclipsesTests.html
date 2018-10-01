@@ -538,7 +538,7 @@ Tan ƒ2	0.0045992
                     "longitude" : 26.966667,
                     "altitude"  : 167,
                     "jd"        : AAJS.Date.DateToJD (1984, 05, 30, true),
-                    "k"         :  AAJS.Moon.kForJD (AAJS.Date.DateToJD (1984, 05, 30, true))
+                    "k"         :  Math.round (2*AAJS.Moon.kForJD ( AAJS.Date.DateToJD (1984, 05, 30, true))) / 2
             },
             expectedOutput : AAJS.Date.DateToJD (1984, 05, 30, true) + ((17 + (24 + 6/60) / 60) / 24) ,
                   
@@ -554,10 +554,31 @@ Tan ƒ2	0.0045992
 
                     // approximate a time for maximum, based on raw differences between
                     // shadow hour angle and location longitude.
-                    var deltaHourAngle = location.longitude - eclipseData.besselianElements.mu[0];
+                    var mu = eclipseData.besselianElements.mu[0];
+                    var long = location.longitude;
+
+                    if (mu > 0 && long > 0) {
+                            if (mu > 180 && long < 180) {
+                                    mu -= 360;
+                            }
+                            else if (long > 180 && mu < 180) {
+                                    long -= 360;
+                            }
+                    }
+
+                    var deltaHourAngle = long - mu;
 
                     var timeDistance =  (deltaHourAngle / 15) / 24;
                     var tMax = eclipseData.t0 + timeDistance;
+
+                    for (var i = 0; i < 2; i++) {
+                            var T = (tMax - eclipseData.t0) * 24; // per hour variations
+                            //var H = 
+
+                            //var xi = rhoCosPhi * Math.sin ()
+                    }
+
+                        
 
                     return {
                             "tMax" : tMax
