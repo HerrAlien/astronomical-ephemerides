@@ -26,6 +26,9 @@ var Timeout = {
 };
 
 function SyncedTimeOut (func, time) {
+  if (!time) {
+    time = 100;
+  }
   setTimeout (function () { requestAnimationFrame (func); } , time);
 }
 
@@ -660,10 +663,10 @@ border-bottom: solid 1px #AAAAAA;
 }
 
 #searchAreaImg {
-    width:64px;
+    width:76px;
     float: left;
     margin-left: 10px;
-    height: 64px;
+    height: 76px;
 }
 
 #searchTerms {
@@ -979,7 +982,7 @@ border-bottom: solid 1px #AAAAAA;
 @media screen and (min-width: 937px) {
     #promotedMenu {
       overflow: hidden;
-      height: 90px;
+      height: 100px;
     }
 
      #HomeLinkButton {
@@ -1003,10 +1006,10 @@ border-bottom: solid 1px #AAAAAA;
   }
   
   #searchAreaImg {
-      width:52px;
+      width:62px;
       float: left;
       margin-left: 10px;
-      height: 52px;
+      height: 62px;
   }
   
   #searchTerms {
@@ -1593,7 +1596,7 @@ var sourceMenu = $get("navigation");
 var oldScrollTop = 0;
     
 window.addEventListener("scroll", function() {
-    var scrolledTop = document.body.scrollTop;
+    var scrolledTop = document.body.scrollTop || (document.body.getBoundingClientRect().y * -1);
     var scrolled = scrolledTop >= 20;
     var pageObj = false;
     if (previousPage) {
