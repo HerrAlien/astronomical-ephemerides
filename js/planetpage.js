@@ -248,7 +248,9 @@ function PlanetPage (planetDataSource, tableName) {
         }
         this.pageRendered = false;
         // reset the data - transits depend on the longitude
-        this.dataSource.reset();
+        if (this.dataSource.reset) {
+            this.dataSource.reset();
+        }
     };
 		   
 	PlanetPage.prototype["prepareOneDayDataObjectForView"] = function (obj, JD) {
@@ -326,7 +328,7 @@ function PlanetPage (planetDataSource, tableName) {
                (roundedTimeObj.Ord2 >= 10 ? roundedTimeObj.Ord2 : "0" + roundedTimeObj.Ord2)
     };
     
-    PlanetPage.prototype["yyyymmdd_hhmmOfJD"] = function (JD, localTime) {
+    PlanetPage.prototype["yyyymmdd_hhmmOfJD"] = function (JD) {
         var fullDayJD = 0.5 + Math.floor(JD - 0.5);
         var dayFraction = JD - fullDayJD;
         if (dayFraction < 0) dayFraction += 1;
@@ -335,7 +337,7 @@ function PlanetPage (planetDataSource, tableName) {
         var roundedTime = Math.round(dayFraction * 24 * 60) / 60;
         var sexagesimalTime = GetAAJS().Numerical.ToSexagesimal (roundedTime);
 
-        if (localTime)
+        if (TimeStepsData.useLocalTime)
         {
             var lt = new Date();
             lt.setUTCHours(sexagesimalTime.Ord3);

@@ -1185,9 +1185,15 @@ border-bottom: solid 1px #AAAAAA;
                 <label class="settingsLabel">Longitude [&deg;]: <br/><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
                 <label class="settingsLabel">Altitude [m]: <br/><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
                 <div class="clear">&nbsp;</div>
-                <Label class="settingsLabel">Start from: <br/><input type="date" id="startingDate"></input></label>
-                <Label class="settingsLabel">increment [days]: <br/><input type="number" id="incrementDate"></input></label>
-                <Label class="settingsLabel">for [days]:<br/><input type="number" id="numberOfDays"></input></label>
+                <label class="settingsLabel">Start from: <br/><input type="date" id="startingDate"></input></label>
+                <label class="settingsLabel">increment [days]: <br/><input type="number" id="incrementDate"></input></label>
+                <label class="settingsLabel">for [days]:<br/><input type="number" id="numberOfDays"></input></label>
+
+                <div id="displayTimesDiv"><span>Display times in:</span>
+                  <label class="settingsLabel">Universal Time (UT)<br/><input type="radio" id="timeAsUTC"></input></label>
+                  <label class="settingsLabel">Local Time<br/><input type="radio" id="timeAsLocalTime"></input></label>
+                </div>
+                
                 <div class="clear">&nbsp;</div>
                 <input type="button" id = "applySettingsChanges" class="cta" value="Apply"></input>
                 <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>

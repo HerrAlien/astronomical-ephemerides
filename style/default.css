@@ -663,3 +663,11 @@ tr.secondHeaderRowScrolled{
 }
 }
 
+#displayTimesDiv span{
+    margin-top: 20px;
+    float:left;
+}
+
+#displayTimesDiv input[type=radio] {
+    transform: scale(2,2);
+}

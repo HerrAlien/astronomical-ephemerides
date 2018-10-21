@@ -72,8 +72,8 @@ var MoonEclipsesPage = {
         var timingsTable = addNodeChild (mainDiv, "table");
         var headerRow = addNodeChild (timingsTable, "tr");
         var headerPhaseColumn = addNodeChild (headerRow, "th", "Phase");
-        var headerTimeColumn = addNodeChild (headerRow, "th", "UTC");
-        var headerLocalTimeColumn = addNodeChild (headerRow, "th", "LT");
+        var headerTimeColumn = addNodeChild (headerRow, "th", 
+            TimeStepsData.useLocalTime ? "Time (local)" : "Time (UTC)");
         
         function addTiming (JD, description, timingsTable) {
             var addNodeChild = PlanetPage.prototype.addNodeChild;
@@ -82,10 +82,6 @@ var MoonEclipsesPage = {
             
             addNodeChild (tr, "td", description);
             addNodeChild (tr, "td", dt.time.Ord3 + ":" +  dt.time.Ord2);
-            
-            var lt = yyyymmdd_hhmmOfJD(JD,true);
-
-            addNodeChild (tr, "td", lt.time.Ord3 + ":" +  lt.time.Ord2);
         }
         
         addTiming (oppositionData.Timings.Penumbral.firstContact, "Penumbral Eclipse Begins (TP1)", timingsTable);
