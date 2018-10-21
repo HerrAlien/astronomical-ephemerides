@@ -326,19 +326,38 @@ function PlanetPage (planetDataSource, tableName) {
                (roundedTimeObj.Ord2 >= 10 ? roundedTimeObj.Ord2 : "0" + roundedTimeObj.Ord2)
     };
     
-    PlanetPage.prototype["yyyymmdd_hhmmOfJD"] = function (JD) {
+    PlanetPage.prototype["yyyymmdd_hhmmOfJD"] = function (JD, localTime) {
         var fullDayJD = 0.5 + Math.floor(JD - 0.5);
         var dayFraction = JD - fullDayJD;
         if (dayFraction < 0) dayFraction += 1;
         
         var dateOfJD =  GetAAJS().Date.JD2Date(fullDayJD);
+        var roundedTime = Math.round(dayFraction * 24 * 60) / 60;
+        var sexagesimalTime = GetAAJS().Numerical.ToSexagesimal (roundedTime);
+
+        if (localTime)
+        {
+            var lt = new Date();
+            lt.setUTCHours(sexagesimalTime.Ord3);
+            lt.setUTCMinutes (sexagesimalTime.Ord2);
+            lt.setUTCSeconds (sexagesimalTime.Ord1);
+            lt.setUTCFullYear(dateOfJD.Y);
+            lt.setUTCMonth(dateOfJD.M-1);
+            lt.setUTCDate(dateOfJD.D);
+
+            dateOfJD.Y = lt.getFullYear();
+            dateOfJD.M = lt.getMonth() + 1;
+            dateOfJD.D = lt.getDate();
+
+            sexagesimalTime.Ord3 = lt.getHours();
+            sexagesimalTime.Ord2 = lt.getMinutes();
+            sexagesimalTime.Ord1 = lt.getSeconds();
+
+        }
 
         if (dateOfJD.M < 10) dateOfJD.M = "0" + dateOfJD.M;
         if (dateOfJD.D < 10) dateOfJD.D = "0" + dateOfJD.D;
         
-        var roundedTime = Math.round(dayFraction * 24 * 60) / 60;
-        var sexagesimalTime = GetAAJS().Numerical.ToSexagesimal (roundedTime);
-
         if (sexagesimalTime.Ord3 < 10) sexagesimalTime.Ord3 = "0" + sexagesimalTime.Ord3;
         if (sexagesimalTime.Ord2 < 10) sexagesimalTime.Ord2 = "0" + sexagesimalTime.Ord2;
         if (sexagesimalTime.Ord1 < 10) sexagesimalTime.Ord1 = "0" + sexagesimalTime.Ord1;
