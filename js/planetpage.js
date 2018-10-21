@@ -321,11 +321,9 @@ function PlanetPage (planetDataSource, tableName) {
         return child;
     };
     
-    PlanetPage.prototype["timeToHhColumnMm"] = function (timeHdotHhh) {
-        var roundedTime = Math.round(timeHdotHhh * 60) / 60;
-        var roundedTimeObj = GetAAJS().Numerical.ToSexagesimal (roundedTime);
-        return (roundedTimeObj.Ord3 >= 10 ? roundedTimeObj.Ord3 : "0" + roundedTimeObj.Ord3) + ":" +
-               (roundedTimeObj.Ord2 >= 10 ? roundedTimeObj.Ord2 : "0" + roundedTimeObj.Ord2)
+    PlanetPage.prototype["timeToHhColumnMm"] = function (JD) {
+        var res = PlanetPage.prototype.yyyymmdd_hhmmOfJD(JD);
+        return res.time.Ord3 + ":" +  res.time.Ord2;
     };
     
     PlanetPage.prototype["yyyymmdd_hhmmOfJD"] = function (JD) {
