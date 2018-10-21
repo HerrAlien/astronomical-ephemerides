@@ -52,7 +52,7 @@ var TimeStepsData = {
             dateToSet.setUTCFullYear(TimeStepsData.yearToStart);
             TimeStepsData.Controls.dateInput.valueAsDate = dateToSet;
 
-            TimeStepsData.Controls.localTimeCheckBox.checked = TimeStepsData.Controls.getUseLocalTime_uncommited();
+            TimeStepsData.Controls.localTimeCheckBox.checked = TimeStepsData.useLocalTime;
             TimeStepsData.Controls.utcCheckBox.checked = !TimeStepsData.Controls.localTimeCheckBox.checked;
 		},
 		
