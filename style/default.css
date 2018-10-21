@@ -362,6 +362,36 @@ tr.secondHeaderRowScrolled th:last-of-type {
 }
 
 
+@media  screen and  (max-width: 936px) and (orientation: landscape) {
+    
+    .physicalPositionalButtonsHolder {
+    position: fixed;
+    bottom: 0;
+    background: #ffffff;
+    padding: 2px 0px 2px 2px;
+    width: 100%;
+}
+
+    tr.firstHeaderRowScrolled.movedMenu {
+        top: 28;
+    }
+    tr.secondHeaderRowScrolled.movedMenu {
+        top: 48;
+    }
+        
+    tr.firstHeaderRowScrolled{
+        top: 148px;
+    }
+
+    tr.secondHeaderRowScrolled{
+        top: 168px;
+    }
+
+}
+
+
+
+
 @media  screen and  (max-width: 936px)  {
     
     .buttonsToSwitchPosPhys {
@@ -405,36 +435,6 @@ tr.secondHeaderRowScrolled th:last-of-type {
     }
     
 }
-
-@media  screen and  (max-width: 936px) and (orientation: landscape) {
-    
-    .physicalPositionalButtonsHolder {
-    position: fixed;
-    bottom: 0;
-    background: #ffffff;
-    padding: 2px 0px 2px 2px;
-    width: 100%;
-}
-
-    
-    tr.firstHeaderRowScrolled{
-        top: 128px;
-    }
-
-    tr.secondHeaderRowScrolled{
-        top: 148px;
-    }
-
-    tr.firstHeaderRowScrolled.movedMenu {
-        top: 28;
-    }
-    tr.secondHeaderRowScrolled.movedMenu {
-        top: 48;
-    }
-    
-}
-
-
     
 .positionalButton, .physicalButton {
     height:23px; 
