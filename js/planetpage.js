@@ -83,19 +83,19 @@ function PlanetPage (planetDataSource, tableName) {
         "9" : {
                    "0" : { "text" : "Rise", "classes" :  ["minWidth50"] },
                    "1" : { "text" : "hh:mm", "classes" : ["minWidth50"] },
-                   "longText" : "The UTC time of rise above horizon",
+                   "longText" : "The time of rise above horizon",
                 "dataKey" : 'Rise'
             },
         "10" : {
                    "0" : { "text" : "Transit", "classes" : ["minWidth40"  ] },
                    "1" : { "text" : "hh:mm", "classes" : ["minWidth50"] },
-                   "longText" : "The UTC time of the transit across the meridian",
+                   "longText" : "The time of the transit across the meridian",
                 "dataKey" : 'MeridianTransit'
             },
         "11" : {
                    "0" : { "text" : "Set", "classes" : ["minWidth40"  ] },
                    "1" : { "text" : "hh:mm", "classes" : ["minWidth55"] },
-                   "longText" : "The UTC time of setting",
+                   "longText" : "The time of setting",
                 "dataKey" : 'Set'
             },
 

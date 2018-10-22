@@ -174,19 +174,19 @@ var MoonData = {
             "16" : {
                     "0" : { "text" :"Rise", "classes" : ["minWidth50", "positionEphemeris"] },
                     "1" : { "text" :"hh:mm"      , "classes" : ["minWidth50", "positionEphemeris"] },
-                    "longText" : "The UTC time of rise above horizon",
+                    "longText" : "The time of rise above horizon",
                 "dataKey" : 'Rise'
                 },
             "17" : {
                     "0" : { "text" :"Transit" , "classes" : ["minWidth50", "positionEphemeris"] },
                     "1" : { "text" :"hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
-                    "longText" : "The UTC time of the transit across the meridian",
+                    "longText" : "The time of the transit across the meridian",
                 "dataKey" : 'MeridianTransit'
                 },
             "18" : {
                     "0" : { "text" :"Set" , "classes" : ["minWidth55", "positionEphemeris"] },
                     "1" : { "text" :"hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
-                    "longText" : "The UTC time of setting",
+                    "longText" : "The time of setting",
                 "dataKey" : 'Set'
                 },
  

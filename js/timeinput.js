@@ -72,9 +72,17 @@ var TimeStepsData = {
         }
 	},
 	
-	init : function () {
-		TimeStepsData.Controls.localTimeCheckBox.checked = TimeStepsData.useLocalTime;
-		TimeStepsData.Controls.utcCheckBox.checked = !TimeStepsData.useLocalTime;
+	init : function () {		
+		var timeScaleMainPageSpan = document.getElementById("timeScaleMainPage");
+		
+		TimeStepsData.Controls.update();
+		TimeStepsData.onTimestepUpdated = Notifications.New();
+
+		TimeStepsData.onTimestepUpdated.add(function() {
+			timeScaleMainPageSpan.textContent = TimeStepsData.useLocalTime ? "local time" : "UTC";
+		});
+
+        TimeStepsData.onTimestepUpdated.notify();
 
 		TimeStepsData.Controls.utcCheckBox.onchange = function() { 
 			if(TimeStepsData.Controls.utcCheckBox.checked)
@@ -85,10 +93,6 @@ var TimeStepsData = {
 			if(TimeStepsData.Controls.localTimeCheckBox.checked)
 				TimeStepsData.Controls.utcCheckBox.checked = false;
 		}
-		
-		TimeStepsData.Controls.update();
-		TimeStepsData.onTimestepUpdated = Notifications.New();
-        TimeStepsData.onTimestepUpdated.notify();
 	}
 };
 
