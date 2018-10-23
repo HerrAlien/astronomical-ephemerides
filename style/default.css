@@ -355,7 +355,7 @@ tr.secondHeaderRowScrolled th:last-of-type {
 
 .physicalPositionalButtonsHolder {
     position: fixed;
-    bottom: 120;
+    bottom: 134px;
     background: #ffffff;
     padding: 2px 0px 2px 2px;
     width: 100%;
