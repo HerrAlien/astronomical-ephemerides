@@ -32,7 +32,9 @@ var PageRank = {
                             rank: PageRank.computeRank(caseInsensitiveSearchTerms, Pages[key]['PageRankKeywords'])});
         }
         pagesAray.sort(function(entryA, entryB){ 
-            return entryB.rank - entryA.rank; 
+            if (entryB.rank != entryA.rank)
+                return entryB.rank - entryA.rank; 
+            return entryA.name > entryB.name;
         });
         for (var i = 0; i < pagesAray.length; i++) {
             if (pagesAray[i].rank > 0) {
