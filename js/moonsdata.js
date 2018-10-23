@@ -36,10 +36,10 @@ function MoonsData (dataFunction) {
                 }
                 
                 // when ApparentElongation is close or smaller than 1, we may have some events ..
-				var dateOfJD =  GetAAJS().Date.JD2Date(JD);
-				data['Month'] = dateOfJD.M;
-				data['Day'] = dateOfJD.D;
-                data['DayFraction'] = (JD -0.5) - Math.floor(JD - 0.5);
+				var dateOfJD = PlanetPage.prototype.yyyymmdd_hhmmOfJD(JD);
+				data['Month'] = Number(dateOfJD.date.M);
+				data['Day'] = Number(dateOfJD.date.D);
+                data['DayFraction'] = (Number(dateOfJD.time.Ord3) + Number(dateOfJD.time.Ord2)/60.0)/24.0;
 				
 				this.cache[JD] = data;
 			}
