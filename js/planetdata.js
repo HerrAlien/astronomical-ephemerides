@@ -77,9 +77,9 @@ function PlanetData(planet)
         var tData = this.getDataAsObjectForJD (JD + 1, false);
         var rts = GetAAJS().RiseTransitSet.Calculate (JD, yData['RA'], yData['Dec'], currentData['RA'], currentData['Dec'], tData['RA'], tData['Dec'], -Location.longitude,
         Location.latitude, this.riseSetAngle);
-        currentData['MeridianTransit'] = rts['Transit'];
-        currentData['Rise'] = rts['Rise'];
-        currentData['Set'] = rts['Set'];
+        currentData['MeridianTransit'] = JD+rts['Transit']/24.0;
+        currentData['Rise'] = JD+rts['Rise']/24.0;
+        currentData['Set'] = JD+rts['Set']/24.0;
 
         currentData['bTransitValid'] = rts['bTransitValid'];
         currentData['bRiseValid'] = rts['bRiseValid'];

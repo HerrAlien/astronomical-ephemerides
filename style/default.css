@@ -104,11 +104,11 @@ tr.secondHeaderRow {
 }
 
 tr.firstHeaderRowScrolled{
-    top: 128px;
+    top: 0px;
 }
 
 tr.secondHeaderRowScrolled{
-    top: 148px;
+    top: 20px;
 }
 
 tr.firstHeaderRow, tr.firstHeaderRowScrolled {
@@ -353,6 +353,45 @@ tr.secondHeaderRowScrolled th:last-of-type {
     visibility: visible;
 }
 
+.physicalPositionalButtonsHolder {
+    position: fixed;
+    bottom: 134px;
+    background: #ffffff;
+    padding: 2px 0px 2px 2px;
+    width: 100%;
+}
+
+
+@media  screen and  (max-width: 936px) and (orientation: landscape) {
+    
+    .physicalPositionalButtonsHolder {
+    position: fixed;
+    bottom: 0;
+    background: #ffffff;
+    padding: 2px 0px 2px 2px;
+    width: 100%;
+}
+
+    tr.firstHeaderRowScrolled.movedMenu {
+        top: 28;
+    }
+    tr.secondHeaderRowScrolled.movedMenu {
+        top: 48;
+    }
+        
+    tr.firstHeaderRowScrolled{
+        top: 148px;
+    }
+
+    tr.secondHeaderRowScrolled{
+        top: 168px;
+    }
+
+}
+
+
+
+
 @media  screen and  (max-width: 936px)  {
     
     .buttonsToSwitchPosPhys {
@@ -389,10 +428,10 @@ tr.secondHeaderRowScrolled th:last-of-type {
     
     
     tr.firstHeaderRowScrolled.movedMenu {
-        top: 28;
+        top: 0;
     }
     tr.secondHeaderRowScrolled.movedMenu {
-        top: 48;
+        top: 20;
     }
     
 }
@@ -418,14 +457,6 @@ tr.secondHeaderRowScrolled th:last-of-type {
 
 .physicalButton {
     border-radius: 0px 5px 5px 0px;
-}
-
-.physicalPositionalButtonsHolder {
-    position: fixed;
-    bottom: 0;
-    background: #ffffff;
-    padding: 2px 0px 2px 2px;
-    width: 100%;
 }
 
 .activeButton {
@@ -632,3 +663,11 @@ tr.secondHeaderRowScrolled{
 }
 }
 
+#displayTimesDiv span{
+    margin-top: 20px;
+    float:left;
+}
+
+#displayTimesDiv input[type=radio] {
+    transform: scale(2,2);
+}
