@@ -72,7 +72,8 @@ var MoonEclipsesPage = {
         var timingsTable = addNodeChild (mainDiv, "table");
         var headerRow = addNodeChild (timingsTable, "tr");
         var headerPhaseColumn = addNodeChild (headerRow, "th", "Phase");
-        var headerTimeColumn = addNodeChild (headerRow, "th", "UTC");
+        var headerTimeColumn = addNodeChild (headerRow, "th", 
+            TimeStepsData.useLocalTime ? "Time (local)" : "Time (UTC)");
         
         function addTiming (JD, description, timingsTable) {
             var addNodeChild = PlanetPage.prototype.addNodeChild;

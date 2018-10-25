@@ -19,7 +19,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 // ---------------------------- model side ----------------------------------------
 
 var JDForRealTimeView = {
-    updateTimeInterval : 1, // [ms]
+    updateTimeInterval : 100, // [ms]
     start : function () {
         JDForRealTimeView.recomputeTimes();
     },
