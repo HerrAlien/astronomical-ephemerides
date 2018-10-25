@@ -1070,6 +1070,11 @@ border-bottom: solid 1px #AAAAAA;
 #credits, #home {
     text-align: justify;
 }
+
+#timeScaleMainPage {
+  font-weight: bolder;
+}
+
     </style>
     
 
@@ -1185,9 +1190,15 @@ border-bottom: solid 1px #AAAAAA;
                 <label class="settingsLabel">Longitude [&deg;]: <br/><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
                 <label class="settingsLabel">Altitude [m]: <br/><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a>
                 <div class="clear">&nbsp;</div>
-                <Label class="settingsLabel">Start from: <br/><input type="date" id="startingDate"></input></label>
-                <Label class="settingsLabel">increment [days]: <br/><input type="number" id="incrementDate"></input></label>
-                <Label class="settingsLabel">for [days]:<br/><input type="number" id="numberOfDays"></input></label>
+                <label class="settingsLabel">Start from: <br/><input type="date" id="startingDate"></input></label>
+                <label class="settingsLabel">increment [days]: <br/><input type="number" id="incrementDate"></input></label>
+                <label class="settingsLabel">for [days]:<br/><input type="number" id="numberOfDays"></input></label>
+
+                <div id="displayTimesDiv"><span>Display times in:</span>
+                  <label class="settingsLabel">Universal Time (UT)<br/><input type="radio" id="timeAsUTC"></input></label>
+                  <label class="settingsLabel">Local Time<br/><input type="radio" id="timeAsLocalTime"></input></label>
+                </div>
+                
                 <div class="clear">&nbsp;</div>
                 <input type="button" id = "applySettingsChanges" class="cta" value="Apply"></input>
                 <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
@@ -1215,7 +1226,8 @@ border-bottom: solid 1px #AAAAAA;
              <div class="clear maxWidth">&nbsp;</div>
         <ul>
             <li>Positions are expressed as geocentric apparent equatorial coordinates, unless stated otherwise.</li>
-            <li>Unless specified otherwise, all times (transits, eclipses, occultations etc.) are in UTC.</li>
+            <li>Unless specified otherwise, all times (transits, eclipses, occultations etc.) are in <span id="timeScaleMainPage">UTC</span>; 
+            this can be changed in <a href="#settings" title="Settings" alt="Settings">"Settings"</a>.</li>
             <li>Transits are computed for any given day as the first transit to occur after the given date. This means that they might occur in the following day.</li>
         </ul>
             Astronomical Ephemerides computes ephemerides for the major objects of the solar system, using an <a href="https://bitbucket.org/herr_alien/jsaaplus" target="_blank" rel="noopener" title="opens in a new window">Emscripten port</a> of the <a href="http://www.naughter.com/aa.html" target="_blank" rel="noopener" title="opens in a new window">AA+ library (version 1.80)</a>. More about Emscripten <a href="http://kripken.github.io/emscripten-site/" target="_blank" rel="noopener" title="opens in a new window">on their site</a>.<br/>

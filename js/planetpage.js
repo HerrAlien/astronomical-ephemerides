@@ -83,19 +83,19 @@ function PlanetPage (planetDataSource, tableName) {
         "9" : {
                    "0" : { "text" : "Rise", "classes" :  ["minWidth50"] },
                    "1" : { "text" : "hh:mm", "classes" : ["minWidth50"] },
-                   "longText" : "The UTC time of rise above horizon",
+                   "longText" : "The time of rise above horizon",
                 "dataKey" : 'Rise'
             },
         "10" : {
                    "0" : { "text" : "Transit", "classes" : ["minWidth40"  ] },
                    "1" : { "text" : "hh:mm", "classes" : ["minWidth50"] },
-                   "longText" : "The UTC time of the transit across the meridian",
+                   "longText" : "The time of the transit across the meridian",
                 "dataKey" : 'MeridianTransit'
             },
         "11" : {
                    "0" : { "text" : "Set", "classes" : ["minWidth40"  ] },
                    "1" : { "text" : "hh:mm", "classes" : ["minWidth55"] },
-                   "longText" : "The UTC time of setting",
+                   "longText" : "The time of setting",
                 "dataKey" : 'Set'
             },
 
@@ -248,7 +248,9 @@ function PlanetPage (planetDataSource, tableName) {
         }
         this.pageRendered = false;
         // reset the data - transits depend on the longitude
-        this.dataSource.reset();
+        if (this.dataSource.reset) {
+            this.dataSource.reset();
+        }
     };
 		   
 	PlanetPage.prototype["prepareOneDayDataObjectForView"] = function (obj, JD) {
@@ -319,11 +321,9 @@ function PlanetPage (planetDataSource, tableName) {
         return child;
     };
     
-    PlanetPage.prototype["timeToHhColumnMm"] = function (timeHdotHhh) {
-        var roundedTime = Math.round(timeHdotHhh * 60) / 60;
-        var roundedTimeObj = GetAAJS().Numerical.ToSexagesimal (roundedTime);
-        return (roundedTimeObj.Ord3 >= 10 ? roundedTimeObj.Ord3 : "0" + roundedTimeObj.Ord3) + ":" +
-               (roundedTimeObj.Ord2 >= 10 ? roundedTimeObj.Ord2 : "0" + roundedTimeObj.Ord2)
+    PlanetPage.prototype["timeToHhColumnMm"] = function (JD) {
+        var res = PlanetPage.prototype.yyyymmdd_hhmmOfJD(JD);
+        return res.time.Ord3 + ":" +  res.time.Ord2;
     };
     
     PlanetPage.prototype["yyyymmdd_hhmmOfJD"] = function (JD) {
@@ -332,13 +332,32 @@ function PlanetPage (planetDataSource, tableName) {
         if (dayFraction < 0) dayFraction += 1;
         
         var dateOfJD =  GetAAJS().Date.JD2Date(fullDayJD);
+        var roundedTime = Math.round(dayFraction * 24 * 60) / 60;
+        var sexagesimalTime = GetAAJS().Numerical.ToSexagesimal (roundedTime);
+
+        if (TimeStepsData.useLocalTime)
+        {
+            var lt = new Date();
+            lt.setUTCHours(sexagesimalTime.Ord3);
+            lt.setUTCMinutes (sexagesimalTime.Ord2);
+            lt.setUTCSeconds (sexagesimalTime.Ord1);
+            lt.setUTCFullYear(dateOfJD.Y);
+            lt.setUTCMonth(dateOfJD.M-1);
+            lt.setUTCDate(dateOfJD.D);
+
+            dateOfJD.Y = lt.getFullYear();
+            dateOfJD.M = lt.getMonth() + 1;
+            dateOfJD.D = lt.getDate();
+
+            sexagesimalTime.Ord3 = lt.getHours();
+            sexagesimalTime.Ord2 = lt.getMinutes();
+            sexagesimalTime.Ord1 = lt.getSeconds();
+
+        }
 
         if (dateOfJD.M < 10) dateOfJD.M = "0" + dateOfJD.M;
         if (dateOfJD.D < 10) dateOfJD.D = "0" + dateOfJD.D;
         
-        var roundedTime = Math.round(dayFraction * 24 * 60) / 60;
-        var sexagesimalTime = GetAAJS().Numerical.ToSexagesimal (roundedTime);
-
         if (sexagesimalTime.Ord3 < 10) sexagesimalTime.Ord3 = "0" + sexagesimalTime.Ord3;
         if (sexagesimalTime.Ord2 < 10) sexagesimalTime.Ord2 = "0" + sexagesimalTime.Ord2;
         if (sexagesimalTime.Ord1 < 10) sexagesimalTime.Ord1 = "0" + sexagesimalTime.Ord1;

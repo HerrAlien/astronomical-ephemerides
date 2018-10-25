@@ -25,13 +25,20 @@ var TimeStepsData = {
     dayToStart : 1,
     numberOfDays : 410,
     timestep : 1,
-    
-    
+    useLocalTime : true,
 
 	Controls : {
 		dateInput : document.getElementById ("startingDate"),
 		daysCountInput: document.getElementById ("numberOfDays"),
         stepSizeInput: document.getElementById ("incrementDate"),
+        utcCheckBox : document.getElementById("timeAsUTC"),
+        localTimeCheckBox : document.getElementById("timeAsLocalTime"),
+        
+		getUseLocalTime_uncommited : function () {
+			if (TimeStepsData.Controls.utcCheckBox.checked)
+				return false;
+			return TimeStepsData.Controls.localTimeCheckBox.checked;
+		},
 		
 		update: function () {
 			var attrMap = {"daysCountInput" : "numberOfDays", 
@@ -44,8 +51,11 @@ var TimeStepsData = {
             dateToSet.setUTCMonth(TimeStepsData.monthToStart-1);
             dateToSet.setUTCFullYear(TimeStepsData.yearToStart);
             TimeStepsData.Controls.dateInput.valueAsDate = dateToSet;
+
+            TimeStepsData.Controls.localTimeCheckBox.checked = TimeStepsData.useLocalTime;
+            TimeStepsData.Controls.utcCheckBox.checked = !TimeStepsData.Controls.localTimeCheckBox.checked;
 		},
-        
+		
         commitUserValues : function () {
             TimeStepsData.numberOfDays = TimeStepsData.Controls.daysCountInput.value * 1.0;
             TimeStepsData.timestep = TimeStepsData.Controls.stepSizeInput.value * 1.0;
@@ -55,14 +65,34 @@ var TimeStepsData = {
                 TimeStepsData.monthToStart = 1 + selDate.getMonth();
                 TimeStepsData.dayToStart = selDate.getDate();
             }
+
+			TimeStepsData.useLocalTime = TimeStepsData.Controls.getUseLocalTime_uncommited();
+
             TimeStepsData.onTimestepUpdated.notify();
         }
 	},
 	
-	init : function () {
+	init : function () {		
+		var timeScaleMainPageSpan = document.getElementById("timeScaleMainPage");
+		
 		TimeStepsData.Controls.update();
 		TimeStepsData.onTimestepUpdated = Notifications.New();
+
+		TimeStepsData.onTimestepUpdated.add(function() {
+			timeScaleMainPageSpan.textContent = TimeStepsData.useLocalTime ? "local time" : "UTC";
+		});
+
         TimeStepsData.onTimestepUpdated.notify();
+
+		TimeStepsData.Controls.utcCheckBox.onchange = function() { 
+			if(TimeStepsData.Controls.utcCheckBox.checked)
+				TimeStepsData.Controls.localTimeCheckBox.checked = false;
+		}
+
+		TimeStepsData.Controls.localTimeCheckBox.onchange = function() { 
+			if(TimeStepsData.Controls.localTimeCheckBox.checked)
+				TimeStepsData.Controls.utcCheckBox.checked = false;
+		}
 	}
 };
 
