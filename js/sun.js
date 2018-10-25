@@ -140,19 +140,19 @@ var SunData = {
         "11" : {
                     "0" : { "text" : "Rise", "classes" :  ["minWidth50", "positionEphemeris"] },
                     "1" : { "text" : "hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
-                    "longText" : "The UTC time of rise above horizon",
+                    "longText" : "The time of rise above horizon",
                 "dataKey" : 'Rise'
             },      
         "12" : {    
                     "0" : { "text" : "Transit", "classes" : ["minWidth40"  , "positionEphemeris"] },
                     "1" : { "text" : "hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
-                    "longText" : "The UTC time of the transit across the meridian",
+                    "longText" : "The time of the transit across the meridian",
                 "dataKey" : 'MeridianTransit'
             },      
         "13" : {    
                     "0" : { "text" : "Set", "classes" : ["minWidth40"  , "positionEphemeris"] },
                     "1" : { "text" : "hh:mm", "classes" : ["minWidth55", "positionEphemeris"] },
-                    "longText" : "The UTC time of setting",
+                    "longText" : "The time of setting",
                 "dataKey" : 'Set'
             },
             "14" :  {
