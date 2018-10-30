@@ -251,6 +251,7 @@ var SunData = {
 	var localInit = function() {
 		if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
 			SunData.addRiseTransitSetData = PlanetData.prototype.addRiseTransitSetData;
+			SunData.isAboveHorizon = PlanetData.prototype.isAboveHorizon;
 			Sun.reset = PlanetPage.prototype.reset;
 			Sun.displayPage = PlanetPage.prototype.displayPage;
 			Sun.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
