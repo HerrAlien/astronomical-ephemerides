@@ -74,6 +74,11 @@ var MoonEclipsesPage = {
         var headerPhaseColumn = addNodeChild (headerRow, "th", "Phase");
         var headerTimeColumn = addNodeChild (headerRow, "th", 
             TimeStepsData.useLocalTime ? "Time (local)" : "Time (UTC)");
+
+        function IsVisible(timingJD) {
+            var moonData = MoonData.getDataAsObjectForJD (Math.floor(oppositionData.JD), true);
+            return (timingJD > moonData.Rise && timingJD < moonData.Set);
+        }
         
         function addTiming (JD, description, timingsTable) {
             var addNodeChild = PlanetPage.prototype.addNodeChild;
@@ -82,28 +87,39 @@ var MoonEclipsesPage = {
             
             addNodeChild (tr, "td", description);
             addNodeChild (tr, "td", dt.time.Ord3 + ":" +  dt.time.Ord2);
+
+            if (!IsVisible(JD)) {
+                tr.classList.add("notVisible");
+            }
         }
         
-        addTiming (oppositionData.Timings.Penumbral.firstContact, "Penumbral Eclipse Begins (TP1)", timingsTable);
+        addTiming (oppositionData.Timings.Penumbral.firstContact, 
+                   "Penumbral Eclipse Begins (TP1)", timingsTable);
                    
         if (oppositionData.umbralPartialEclipse) {
-            addTiming (oppositionData.Timings.Umbral.firstContact, "Partial Eclipse Begins (TU1)", timingsTable);
+            addTiming (oppositionData.Timings.Umbral.firstContact,
+                       "Partial Eclipse Begins (TU1)", timingsTable);
 
             if (oppositionData.umbralTotalEclipse)
-                addTiming (oppositionData.Timings.Umbral.beginFullImmersion, "Total Eclipse Begins (TU2)", timingsTable);
+                addTiming (oppositionData.Timings.Umbral.beginFullImmersion,
+                         "Total Eclipse Begins (TU2)", timingsTable);
         }
         
         // maximum ...
-        addTiming (oppositionData.Timings.Maximum, "Eclipse maximum (TM)", timingsTable);
+        addTiming (oppositionData.Timings.Maximum, 
+                   "Eclipse maximum (TM)", timingsTable);
         
         if (oppositionData.umbralPartialEclipse) {
             if (oppositionData.umbralTotalEclipse)
-                addTiming (oppositionData.Timings.Umbral.endFullImmersion,  "Total Eclipse Ends (TU3)", timingsTable);
+                addTiming (oppositionData.Timings.Umbral.endFullImmersion,
+                           "Total Eclipse Ends (TU3)", timingsTable);
                        
-            addTiming (oppositionData.Timings.Umbral.lastContact, "Partial Eclipse Ends (TU4)", timingsTable);
+            addTiming (oppositionData.Timings.Umbral.lastContact,
+                      "Partial Eclipse Ends (TU4)", timingsTable);
         }
         
-        addTiming (oppositionData.Timings.Penumbral.lastContact, "Penumbral Eclipse Ends (TP4)", timingsTable);
+        addTiming (oppositionData.Timings.Penumbral.lastContact,
+                   "Penumbral Eclipse Ends (TP4)", timingsTable);
     },
     
     circle : function (svg, R, CX, CY, fillColor, strokeColor) {
