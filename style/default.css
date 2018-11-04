@@ -671,3 +671,19 @@ tr.secondHeaderRowScrolled{
 #displayTimesDiv input[type=radio] {
     transform: scale(2,2);
 }
+
+.eventRow td {
+    /* background: #ffffff; */
+    animation-name: tableRowEvent;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    /* border: solid 2px red; */
+    /* border-color: red; */
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+}
+
+.notVisible td {
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, var(--colored-bg-light) 4px, var(--colored-bg-light) 24px);
+
+}

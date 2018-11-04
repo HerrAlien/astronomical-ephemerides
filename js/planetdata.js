@@ -26,7 +26,7 @@ function PlanetData(planet)
 (function(){
     PlanetData.prototype["reset"] = function () {
         this.cache = {};
-    }
+    };
     PlanetData.prototype["getDataAsObjectForJD"] = function (JD, computeRiseTransitSet) {
         var data = this.cache[JD];
         if (!data) {
@@ -86,6 +86,11 @@ function PlanetData(planet)
         currentData['bSetValid'] = rts['bSetValid'];
         
         return currentData;
-    }
+    };
+
+    PlanetData.prototype["isAboveHorizon"] = function (JD) {
+    	var data = this.getDataAsObjectForJD(Math.floor(JD), true);
+    	return (JD > data.Rise && JD < data.Set);
+    };
     
 })();

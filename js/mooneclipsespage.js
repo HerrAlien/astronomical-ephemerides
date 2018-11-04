@@ -76,8 +76,7 @@ var MoonEclipsesPage = {
             TimeStepsData.useLocalTime ? "Time (local)" : "Time (UTC)");
 
         function IsVisible(timingJD) {
-            var moonData = MoonData.getDataAsObjectForJD (Math.floor(oppositionData.JD), true);
-            return (timingJD > moonData.Rise && timingJD < moonData.Set);
+            return MoonData.isAboveHorizon(timingJD);
         }
         
         function addTiming (JD, description, timingsTable) {

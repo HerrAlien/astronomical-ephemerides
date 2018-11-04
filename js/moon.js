@@ -300,6 +300,7 @@ var MoonData = {
     var localInit = function() {
         if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
             MoonData.addRiseTransitSetData = PlanetData.prototype.addRiseTransitSetData;
+            MoonData.isAboveHorizon = PlanetData.prototype.isAboveHorizon;
 
             MoonPage.reset = PlanetPage.prototype.reset;
             MoonPage.appendLine = PlanetPage.prototype.appendLine;
