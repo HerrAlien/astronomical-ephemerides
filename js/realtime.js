@@ -216,7 +216,7 @@ var RealTimeDataViewer = {
                     visible = 'true';
 
                 if (key && key != 'RA' && key != 'Dec' && key != 'RaGeo' && key != 'DecGeo') {
-                    visible = false;
+                    visible = 'false';
                 }
 
                 localStorage.setItem(RealTimeDataViewer.Persistent.GetRTStorageKey(RealTimeDataViewer.Persistent.purposes.visibility, pageName, key), visible);
