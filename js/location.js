@@ -34,45 +34,88 @@ var Location = {
 		long: document.getElementById ("longitudeInput"),
 		alt: document.getElementById ("altitudeInput"),
         geolocation : document.getElementById("getFromGeolocationAnchor"),
+        map : false,
+        marker : false,
 		
+		updateMapFromControls : function () {
+			if (this.map)
+				this.map.setCenter({lat: Number(this.lat.value), lng: Number(this.long.value)});
+			if (this.marker)
+				this.marker.setPosition ({lat: Number(this.lat.value), lng: Number(this.long.value)});
+		},
+
 		update: function () {
 			var attrMap = {"lat" : "latitude", 
                             "long" : "longitude", 
                             "alt" : "altitude"};
 			for (var k in attrMap)
 				this[k].value = Location[attrMap[k]];
+				
+			this.updateMapFromControls();
 		},
 		
 		init : function (){
-
+			var ctrls = this;
             this.geolocation.onclick = function () {
                 var geoLocationAPI = navigator.geolocation || window.navigator.geolocation;
                 if (geoLocationAPI) {
                     geoLocationAPI.getCurrentPosition (function (position) {
-                        Location.Controls.lat.value = position.coords.latitude;
-                        Location.Controls.long.value = position.coords.longitude;
+                        ctrls.lat.value = position.coords.latitude;
+                        ctrls.long.value = position.coords.longitude;
                         if(!position.coords.altitude)
-                            Location.Controls.alt.value = 0;
+                            ctrls.alt.value = 0;
                         else
-                            Location.Controls.alt.value = position.coords.altitude;
+                            ctrls.alt.value = position.coords.altitude;
+                   
+						ctrls.updateMapFromControls();
                    });
                 }
             }
+
+            this.lat.oninput = function() { ctrls.updateMapFromControls() };
+            this.long.oninput = function() { ctrls.updateMapFromControls() };
+
 		},
         
         commitUserValues : function () {
-            Location.latitude = 1.0 * Location.Controls.lat.value;
-            Location.longitude = 1.0 * Location.Controls.long.value;
-            Location.altitude = 1.0 * Location.Controls.alt.value;
+            Location.latitude = Number(Location.Controls.lat.value);
+            Location.longitude = Number(Location.Controls.long.value);
+            Location.altitude = Number(Location.Controls.alt.value);
+
             Location.onLocationUpdated.notify();
         }
 	},
-	
+
+    initGoogleMap : function () {
+          Location.Controls.map = new google.maps.Map(document.getElementById('mapHolder'), {
+            center: {lat: Location.latitude, lng: Location.longitude},
+            zoom: 8
+          });
+
+          Location.Controls.marker = new google.maps.Marker ({"map" : Location.Controls.map, "position" :  {lat: Location.latitude, lng: Location.longitude}});
+
+          // add your event listeners
+          Location.Controls.map.addListener('dblclick', function(evt) {
+            Location.Controls.lat.value = evt.latLng.lat();
+            Location.Controls.long.value = evt.latLng.lng();
+            Location.Controls.marker.setPosition(evt.latLng);
+          });
+      },
+
 	init : function () {
 		this.onLocationUpdated = Notifications.New();
 		this.Controls.init();
 		this.Controls.update();
         this.onLocationUpdated.notify();
+
+		var scr = document.createElement("script");
+		scr.async = "";
+		scr.defer = "";
+		scr.src = "https://maps.googleapis.com/maps/api/js?callback=Location.initGoogleMap";
+		if (document.location.href.indexOf("http://localhost") < 0)
+			scr.src += "&key=AIzaSyBEnDEs-D1e0h57lS0AqLVu7hxX2WdjwZ0";
+
+		document.body.appendChild(scr);
 	}
 };
 
