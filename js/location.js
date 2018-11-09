@@ -39,9 +39,9 @@ var Location = {
 		
 		updateMapFromControls : function () {
 			if (this.map)
-				this.map.setCenter({lat: Number(this.lat.value), lng: Number(this.long.value)});
+				this.map.setView({lat: Number(this.lat.value), lng: Number(this.long.value)});
 			if (this.marker)
-				this.marker.setPosition ({lat: Number(this.lat.value), lng: Number(this.long.value)});
+				this.marker.setLatLng ({lat: Number(this.lat.value), lng: Number(this.long.value)});
 		},
 
 		update: function () {
@@ -96,7 +96,13 @@ var Location = {
 			}).addTo(Location.Controls.map);
 			Location.Controls.marker = L.marker([Location.latitude, Location.longitude]).addTo(Location.Controls.map);
 			Location.Controls.map.on('dblclick', function(evt){
+
 				Location.Controls.marker.setLatLng(evt.latlng);
+
+				Location.Controls.lat.value = evt.latlng.lat;
+				Location.Controls.long.value = evt.latlng.lng;
+				Location.Controls.alt.value = isNaN(evt.latlng.alt) ? 0 : evt.latlng.alt;
+				
 			});
       }, 
 
