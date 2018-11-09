@@ -86,21 +86,16 @@ var Location = {
         }
 	},
 
-    initGoogleMap : function () {
-          Location.Controls.map = new google.maps.Map(document.getElementById('mapHolder'), {
-            center: {lat: Location.latitude, lng: Location.longitude},
-            zoom: 8
-          });
+    initMap : function () {
+          Location.Controls.map = L.map('mapHolder').setView([Location.latitude, Location.longitude], 8);
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox.outdoors',
+    accessToken: 'pk.eyJ1IjoiaGVycmFsaWVuIiwiYSI6ImNqbzl2cWQ4MTAyNzYzcW53YTQxNW9sN2cifQ.5lYnsEwiJsHPv3Ss6l3hHw'
+}).addTo(Location.Controls.map);
 
-          Location.Controls.marker = new google.maps.Marker ({"map" : Location.Controls.map, "position" :  {lat: Location.latitude, lng: Location.longitude}});
-
-          // add your event listeners
-          Location.Controls.map.addListener('dblclick', function(evt) {
-            Location.Controls.lat.value = evt.latLng.lat();
-            Location.Controls.long.value = evt.latLng.lng();
-            Location.Controls.marker.setPosition(evt.latLng);
-          });
-      },
+      }, 
 
 	init : function () {
 		this.onLocationUpdated = Notifications.New();
@@ -108,14 +103,8 @@ var Location = {
 		this.Controls.update();
         this.onLocationUpdated.notify();
 
-		var scr = document.createElement("script");
-		scr.async = "";
-		scr.defer = "";
-		scr.src = "https://maps.googleapis.com/maps/api/js?callback=Location.initGoogleMap";
-		if (document.location.href.indexOf("http://localhost") < 0)
-			scr.src += "&key=AIzaSyBEnDEs-D1e0h57lS0AqLVu7hxX2WdjwZ0";
+		this.initMap();
 
-		document.body.appendChild(scr);
 	}
 };
 
