@@ -88,13 +88,16 @@ var Location = {
 
     initMap : function () {
           Location.Controls.map = L.map('mapHolder').setView([Location.latitude, Location.longitude], 8);
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox.outdoors',
-    accessToken: 'pk.eyJ1IjoiaGVycmFsaWVuIiwiYSI6ImNqbzl2cWQ4MTAyNzYzcW53YTQxNW9sN2cifQ.5lYnsEwiJsHPv3Ss6l3hHw'
-}).addTo(Location.Controls.map);
-
+			L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+				attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+				maxZoom: 18,
+				id: 'mapbox.outdoors',
+				accessToken: 'pk.eyJ1IjoiaGVycmFsaWVuIiwiYSI6ImNqbzl2cWQ4MTAyNzYzcW53YTQxNW9sN2cifQ.5lYnsEwiJsHPv3Ss6l3hHw'
+			}).addTo(Location.Controls.map);
+			Location.Controls.marker = L.marker([Location.latitude, Location.longitude]).addTo(Location.Controls.map);
+			Location.Controls.map.on('dblclick', function(evt){
+				Location.Controls.marker.setLatLng(evt.latlng);
+			});
       }, 
 
 	init : function () {
