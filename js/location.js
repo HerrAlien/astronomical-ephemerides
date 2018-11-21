@@ -56,21 +56,23 @@ var Location = {
 		
 		init : function (){
 			var ctrls = this;
-            this.geolocation.onclick = function () {
-                var geoLocationAPI = navigator.geolocation || window.navigator.geolocation;
-                if (geoLocationAPI) {
-                    geoLocationAPI.getCurrentPosition (function (position) {
-                        ctrls.lat.value = position.coords.latitude;
-                        ctrls.long.value = position.coords.longitude;
-                        if(!position.coords.altitude)
-                            ctrls.alt.value = 0;
-                        else
-                            ctrls.alt.value = position.coords.altitude;
-                   
-						ctrls.updateMapFromControls();
-                   });
-                }
-            }
+			if (this.geolocation) {
+				this.geolocation.onclick = function () {
+					var geoLocationAPI = navigator.geolocation || window.navigator.geolocation;
+					if (geoLocationAPI) {
+						geoLocationAPI.getCurrentPosition (function (position) {
+							ctrls.lat.value = position.coords.latitude;
+							ctrls.long.value = position.coords.longitude;
+							if(!position.coords.altitude)
+								ctrls.alt.value = 0;
+							else
+								ctrls.alt.value = position.coords.altitude;
+
+							ctrls.updateMapFromControls();
+					   });
+					}
+				}
+			}
 
             this.lat.oninput = function() { ctrls.updateMapFromControls() };
             this.long.oninput = function() { ctrls.updateMapFromControls() };
@@ -95,7 +97,7 @@ var Location = {
 				accessToken: 'pk.eyJ1IjoiaGVycmFsaWVuIiwiYSI6ImNqbzl2cWQ4MTAyNzYzcW53YTQxNW9sN2cifQ.5lYnsEwiJsHPv3Ss6l3hHw'
 			}).addTo(Location.Controls.map);
 			Location.Controls.marker = L.marker([Location.latitude, Location.longitude]).addTo(Location.Controls.map);
-			Location.Controls.map.on('dblclick', function(evt){
+			Location.Controls.map.on('click', function(evt){
 
 				Location.Controls.marker.setLatLng(evt.latlng);
 
