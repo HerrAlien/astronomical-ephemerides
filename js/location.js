@@ -115,7 +115,12 @@ var Location = {
         this.onLocationUpdated.notify();
 
 		this.initMap();
-
 	}
 };
 
+Pages["settings"] = { 
+	"displayPage" : function() { 
+		window.dispatchEvent(new Event('resize')); 
+		this["displayPage"] = function() {};
+	}
+};

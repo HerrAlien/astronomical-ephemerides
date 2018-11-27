@@ -627,7 +627,7 @@ border-bottom: solid 1px #AAAAAA;
     position: fixed;
     width: 100%;
     background: #ffffff;
-    z-index: 3;
+    z-index: 1403;
 }
 
 .rightNowFrontPageWidget:hover {
@@ -1590,11 +1590,11 @@ var PageTimeInterval = {};
 var Pages = {"addPlainPages" : function(titles){
     for (var i = 0; i < titles.length; i++) {
         var title = titles[i];
-        Pages[title] = {"displayPage" : function(){}};
+        Pages[title] = {"displayPage" : function() {}};
     }
 }};
 
-Pages.addPlainPages(["more", "settings", "home", "privacy", "Search results"]);
+Pages.addPlainPages(["more", "home", "privacy", "Search results"]);
 
 var previousPage = false;
 var currentActiveLink = false;
