@@ -108,7 +108,7 @@ tr.firstHeaderRowScrolled{
 }
 
 tr.secondHeaderRowScrolled{
-    top: 20px;
+    top: 22px;
 }
 
 tr.firstHeaderRow, tr.firstHeaderRowScrolled {
@@ -400,7 +400,7 @@ tr.secondHeaderRowScrolled th:last-of-type {
             top: 0;
         }
         tr.secondHeaderRowScrolled.movedMenu {
-            top: 20;
+            top: 22;
         }
     }
 
@@ -414,20 +414,21 @@ tr.secondHeaderRowScrolled th:last-of-type {
         width: 100%;
         }
 
+        tr.fixed.firstHeaderRowScrolled.movedMenu {
+            top: 40px;
+        }
+        tr.fixed.secondHeaderRowScrolled.movedMenu {
+            top: 62px;
+        }
+        
         tr.fixed.firstHeaderRowScrolled{
             top: 148px;
         }
 
         tr.fixed.secondHeaderRowScrolled{
-            top: 168px;
+            top: 170px;
         }
 
-        tr.fixed.firstHeaderRowScrolled.movedMenu {
-            top: 18;
-        }
-        tr.fixed.secondHeaderRowScrolled.movedMenu {
-            top: 38;
-        }
         
     }
 
@@ -658,7 +659,7 @@ tr.firstHeaderRowScrolled{
 }
 
 tr.secondHeaderRowScrolled{
-    top: 124px;
+    top: 126px;
 }
 }
 
