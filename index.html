@@ -648,7 +648,7 @@ border-bottom: solid 1px #AAAAAA;
     background: #ffffff;
     text-align: center;
     border-bottom: solid 1px #AAAAAA;
-    z-index: 2;
+    z-index: 1402;
 }
 
 #showNavigationMenuContainerImg {
@@ -773,7 +773,7 @@ border-bottom: solid 1px #AAAAAA;
     }
         
      #navigation.movedMenu {
-        top: -130px;
+        top: -160px;
     }
 
      .linkButtonImg  {
@@ -784,40 +784,40 @@ border-bottom: solid 1px #AAAAAA;
     .rightNowFrontPageWidget::-webkit-scrollbar {
         width: 3px;
     }
-}
 
-@media screen and (orientation:portrait) and (max-height: 936px) {
+    @media (orientation:portrait) {
 
-  #navigation {
-    margin: 0px 0px -10px 0px;
-    padding-bottom: 7px;
-    border-top: solid 1px #AAAAAA;
-    position: fixed;
-    width: 100%;
-    background: #ffffff;
-    z-index: 3;
-    bottom: 0px;
-  }
+      #navigation {
+        margin: 0px 0px -10px 0px;
+        padding-bottom: 7px;
+        border-top: solid 1px #AAAAAA;
+        position: fixed;
+        width: 100%;
+        background: #ffffff;
+        z-index: 3;
+        bottom: 0px;
+      }
 
-  #promotedMenu::after, #promotedMenu::before, #navigation.movedMenu, 
-  .movedMenu #promotedMenu::after, .movedMenu #promotedMenu::before {
-      top: auto;
-      position: fixed;
-      bottom: 0px;
-  }
+      #promotedMenu::after, #promotedMenu::before, #navigation.movedMenu, 
+      .movedMenu #promotedMenu::after, .movedMenu #promotedMenu::before {
+          top: auto;
+          position: fixed;
+          bottom: 0px;
+      }
 
-  #showNavigationMenuContainer {
-    display: none;
-  }
+      #showNavigationMenuContainer {
+        display: none;
+      }
 
-  h1 {
-    margin-top: auto;
-  }
+      h1 {
+        margin-top: auto;
+      }
 
-  #footer {
-    margin-bottom: 120px;
-  }
+      #footer {
+        margin-bottom: 120px;
+      }
 
+    }
 }
     
  #rightNowFrontPage {
@@ -1604,7 +1604,7 @@ var Pages = {"addPlainPages" : function(titles){
     }
 }};
 
-Pages.addPlainPages(["more", "home", "privacy", "Search results", "about"]);
+Pages.addPlainPages(["more", "settings", "home", "privacy", "Search results", "about"]);
 
 var previousPage = false;
 var currentActiveLink = false;
@@ -1643,7 +1643,7 @@ window.addEventListener("scroll", function() {
     var pageObj = false;
     if (previousPage) {
         pageObj = Pages [previousPage.id];
-        if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
+        if (pageObj && pageObj.hostElement && pageObj.hostElement['rows'] && pageObj.hostElement['rows'][1]) {
             if (scrolled) {
                 // get the first two rows
                 pageObj.hostElement.rows[0].classList.remove ("firstHeaderRow");
@@ -1669,7 +1669,7 @@ window.addEventListener("scroll", function() {
     
     var hysterezis = 15;
     // is it on a small screen?
-    if (scrolledTop > oldScrollTop + hysterezis && scrolledTop > 180 ) {
+if (pageObj && pageObj.hostElement && pageObj.hostElement['rows'] && pageObj.hostElement['rows'][1]) {    if (scrolledTop > oldScrollTop + hysterezis && scrolledTop > 180 ) {
         // scrolled down
         sourceMenu.classList.add ("movedMenu");
         if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
@@ -1686,6 +1686,7 @@ window.addEventListener("scroll", function() {
     }
     
     oldScrollTop = scrolledTop;
+}
 });
 
 $get("showNavigationMenu").onclick = function () {

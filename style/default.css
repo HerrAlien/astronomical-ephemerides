@@ -108,7 +108,7 @@ tr.firstHeaderRowScrolled{
 }
 
 tr.secondHeaderRowScrolled{
-    top: 20px;
+    top: 22px;
 }
 
 tr.firstHeaderRow, tr.firstHeaderRowScrolled {
@@ -361,37 +361,6 @@ tr.secondHeaderRowScrolled th:last-of-type {
     width: 100%;
 }
 
-
-@media  screen and  (max-width: 936px) and (orientation: landscape) {
-    
-    .physicalPositionalButtonsHolder {
-    position: fixed;
-    bottom: 0;
-    background: #ffffff;
-    padding: 2px 0px 2px 2px;
-    width: 100%;
-}
-
-    tr.firstHeaderRowScrolled.movedMenu {
-        top: 28;
-    }
-    tr.secondHeaderRowScrolled.movedMenu {
-        top: 48;
-    }
-        
-    tr.firstHeaderRowScrolled{
-        top: 148px;
-    }
-
-    tr.secondHeaderRowScrolled{
-        top: 168px;
-    }
-
-}
-
-
-
-
 @media  screen and  (max-width: 936px)  {
     
     .buttonsToSwitchPosPhys {
@@ -426,13 +395,44 @@ tr.secondHeaderRowScrolled th:last-of-type {
         margin-right: auto;
     }
     
+    @media (orientation: portrait) {
+        tr.firstHeaderRowScrolled.movedMenu {
+            top: 0;
+        }
+        tr.secondHeaderRowScrolled.movedMenu {
+            top: 22;
+        }
+    }
+
+    @media (orientation: landscape) {
     
-    tr.firstHeaderRowScrolled.movedMenu {
-        top: 0;
+        .physicalPositionalButtonsHolder {
+        position: fixed;
+        bottom: 0;
+        background: #ffffff;
+        padding: 2px 0px 2px 2px;
+        width: 100%;
+        }
+
+        tr.fixed.firstHeaderRowScrolled.movedMenu {
+            top: 40px;
+        }
+        tr.fixed.secondHeaderRowScrolled.movedMenu {
+            top: 62px;
+        }
+        
+        tr.fixed.firstHeaderRowScrolled{
+            top: 148px;
+        }
+
+        tr.fixed.secondHeaderRowScrolled{
+            top: 170px;
+        }
+
+        
     }
-    tr.secondHeaderRowScrolled.movedMenu {
-        top: 20;
-    }
+
+
     
 }
     
@@ -659,7 +659,7 @@ tr.firstHeaderRowScrolled{
 }
 
 tr.secondHeaderRowScrolled{
-    top: 124px;
+    top: 126px;
 }
 }
 
