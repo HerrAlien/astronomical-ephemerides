@@ -307,7 +307,7 @@ function PlanetPage (planetDataSource, tableName) {
         if (sunRA < planetRA )
             cardinalCoordinateRelativeToSun = "E";
         
-        displayableLine[di++] = GetAAJS().Numerical.RoundTo1Decimal (obj.Elongation * 180 / Math.PI) + " " + cardinalCoordinateRelativeToSun;
+        displayableLine[di++] = GetAAJS().Numerical.RoundTo1Decimal (obj.Elongation) + " " + cardinalCoordinateRelativeToSun;
         displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals (obj.Phase);
         
         return displayableLine;
