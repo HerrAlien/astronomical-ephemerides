@@ -65,7 +65,7 @@ var MoonEclipsesPage = {
         if (oppositionData.umbralTotalEclipse)
             description = "Total eclipse";
         
-
+        // the contents of this title is temporary. It may change, if the eclipse starts on one day and ends in another.
         var eclipseTitle = addNodeChild (mainDiv, "h2", oppositionDateTime.date.Y + "-" + oppositionDateTime.date.M + "-" + oppositionDateTime.date.D + " " + description);
         addNodeChild (mainDiv, "span", "magnitude: " + GetAAJS().Numerical.RoundTo2Decimals(oppositionData.magnitude) + "; penumbral magnitude: " + GetAAJS().Numerical.RoundTo2Decimals(oppositionData.penumbralMagnitude));
         
@@ -90,9 +90,11 @@ var MoonEclipsesPage = {
             if (!IsVisible(JD)) {
                 tr.classList.add("notVisible");
             }
+
+            return {"tableRow" : tr, "dateTime": dt};
         }
         
-        addTiming (oppositionData.Timings.Penumbral.firstContact, 
+        var beginsAt = addTiming (oppositionData.Timings.Penumbral.firstContact, 
                    "Penumbral Eclipse Begins (TP1)", timingsTable);
                    
         if (oppositionData.umbralPartialEclipse) {
@@ -117,8 +119,13 @@ var MoonEclipsesPage = {
                       "Partial Eclipse Ends (TU4)", timingsTable);
         }
         
-        addTiming (oppositionData.Timings.Penumbral.lastContact,
+        var endsAt = addTiming (oppositionData.Timings.Penumbral.lastContact,
                    "Penumbral Eclipse Ends (TP4)", timingsTable);
+
+        if (beginsAt.dateTime.date.D != endsAt.dateTime.date.D){
+            eclipseTitle.textContent = beginsAt.dateTime.date.Y + "-" + beginsAt.dateTime.date.M + "-" + beginsAt.dateTime.date.D + " -- " +
+                                       endsAt.dateTime.date.Y + "-" + endsAt.dateTime.date.M + "-" + endsAt.dateTime.date.D +  " " + description;
+        }
     },
     
     circle : function (svg, R, CX, CY, fillColor, strokeColor) {

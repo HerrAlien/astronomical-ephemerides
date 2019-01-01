@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 (function() {
 var CACHE_PREFIX = 'Cache-for-ephemerides';
-var CACHE_VERSION = '171';
+var CACHE_VERSION = '172';
 var CACHE_NAME = CACHE_PREFIX + '-' + CACHE_VERSION;
 
 var AAJS_CACHE_PREFIX = 'Cache-for-AAJS'
@@ -101,7 +101,7 @@ self.addEventListener('install', function(event) {
 });
 
 function cacheNameFromUrl (url) {
-  if (responseToCache.url.indexOf("aajs.js")) {
+  if (url.indexOf("aajs.js")) {
     return AAJS_CACHE_NAME;
   }
   return CACHE_NAME;
