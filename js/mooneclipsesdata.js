@@ -58,9 +58,15 @@ function MoonEclipse (JD) {
         this.dy  = this.dDecSun + this.dDecMoon;        
         this.slope = this.dy / this.dx;
         
-        this.umbralRadius = 1.016 * (0.99834 * this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
-        this.penumbralRadius = 1.0092 * (0.99834 * this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
+        /* Chauvenet ... */
+//        this.umbralRadius = 1.02 * ( 0.998340 * this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
+//        this.penumbralRadius = 1.02 * (0.998340 * this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
+
+        /* Danjon ... */
+        this.umbralRadius = 1.01 * (this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
+        this.penumbralRadius = 1.01 * (this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
         
+        // from dynamic time to UTC
         var magic =  GetAAJS().DynamicalTime.DeltaT(this.JD)/(3600 * 24);
         this.JD -= magic;
 }
