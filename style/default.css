@@ -336,6 +336,12 @@ tr.secondHeaderRowScrolled th:last-of-type {
 .moonEclipse table td, .solarEclipse table td{
     padding: 10px;
 }
+
+.moonEclipse table th:nth-of-type(1)
+{
+    width:550px;
+}
+
 .solarEclipse table td{
     text-align: right;
 }

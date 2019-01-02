@@ -95,32 +95,32 @@ var MoonEclipsesPage = {
         }
         
         var beginsAt = addTiming (oppositionData.Timings.Penumbral.firstContact, 
-                   "Penumbral Eclipse Begins (TP1)", timingsTable);
+                   "Penumbral Eclipse Begins (P1)", timingsTable);
                    
         if (oppositionData.umbralPartialEclipse) {
             addTiming (oppositionData.Timings.Umbral.firstContact,
-                       "Partial Eclipse Begins (TU1)", timingsTable);
+                       "Partial Eclipse Begins (U1)", timingsTable);
 
             if (oppositionData.umbralTotalEclipse)
                 addTiming (oppositionData.Timings.Umbral.beginFullImmersion,
-                         "Total Eclipse Begins (TU2)", timingsTable);
+                         "Total Eclipse Begins (U2)", timingsTable);
         }
         
         // maximum ...
         addTiming (oppositionData.Timings.Maximum, 
-                   "Eclipse maximum (TM)", timingsTable);
+                   "Eclipse maximum (M)", timingsTable);
         
         if (oppositionData.umbralPartialEclipse) {
             if (oppositionData.umbralTotalEclipse)
                 addTiming (oppositionData.Timings.Umbral.endFullImmersion,
-                           "Total Eclipse Ends (TU3)", timingsTable);
+                           "Total Eclipse Ends (U3)", timingsTable);
                        
             addTiming (oppositionData.Timings.Umbral.lastContact,
-                      "Partial Eclipse Ends (TU4)", timingsTable);
+                      "Partial Eclipse Ends (U4)", timingsTable);
         }
         
         var endsAt = addTiming (oppositionData.Timings.Penumbral.lastContact,
-                   "Penumbral Eclipse Ends (TP4)", timingsTable);
+                   "Penumbral Eclipse Ends (P4)", timingsTable);
 
         if (beginsAt.dateTime.date.D != endsAt.dateTime.date.D){
             eclipseTitle.textContent = beginsAt.dateTime.date.Y + "-" + beginsAt.dateTime.date.M + "-" + beginsAt.dateTime.date.D + " -- " +
