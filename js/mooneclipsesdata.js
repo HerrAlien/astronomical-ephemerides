@@ -67,8 +67,7 @@ function MoonEclipse (JD) {
         this.penumbralRadius = 1.01 * (this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
         
         // from dynamic time to UTC
-        var magic =  GetAAJS().DynamicalTime.DeltaT(this.JD)/(3600 * 24);
-        this.JD -= magic;
+        this.JD -= GetAAJS().DynamicalTime.DeltaT(this.JD)/(3600 * 24);
 }
 
 (function(){
@@ -289,7 +288,3 @@ var MoonEclipsesData = {
 
     }
 };
-
-(function(){
-
-})();
