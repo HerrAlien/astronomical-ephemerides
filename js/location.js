@@ -1,22 +1,18 @@
-/*
-Extinction-O-Meter - an HTML & JavaScript utility to apply differential 
-extinction corrections to brightness estimates
-               
-Copyright 2015  Herr_Alien <alexandru.garofide@gmail.com>
-                
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-                
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
-                
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see https://www.gnu.org/licenses/agpl.html
-*/
+/* ephemeris - a software astronomical almanach 
+
+Copyright 2019 Herr_Alien <alexandru.garofide@gmail.com>
+
+This program is free software: you can redistribute it and/or modify it under 
+the terms of the GNU Affero General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License along
+with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
@@ -25,6 +21,7 @@ var Location = {
 	latitude : 44.4268,
 	longitude :26.1025,
 	altitude : 200,
+	storageKey : "LocationSettings",
     
     onLocationUpdated : false,
 
@@ -33,7 +30,6 @@ var Location = {
 		lat : document.getElementById ("latitudeInput"),
 		long: document.getElementById ("longitudeInput"),
 		alt: document.getElementById ("altitudeInput"),
-        geolocation : document.getElementById("getFromGeolocationAnchor"),
         map : false,
         marker : false,
 		
@@ -56,23 +52,6 @@ var Location = {
 		
 		init : function (){
 			var ctrls = this;
-			if (this.geolocation) {
-				this.geolocation.onclick = function () {
-					var geoLocationAPI = navigator.geolocation || window.navigator.geolocation;
-					if (geoLocationAPI) {
-						geoLocationAPI.getCurrentPosition (function (position) {
-							ctrls.lat.value = position.coords.latitude;
-							ctrls.long.value = position.coords.longitude;
-							if(!position.coords.altitude)
-								ctrls.alt.value = 0;
-							else
-								ctrls.alt.value = position.coords.altitude;
-
-							ctrls.updateMapFromControls();
-					   });
-					}
-				}
-			}
 
             this.lat.oninput = function() { ctrls.updateMapFromControls() };
             this.long.oninput = function() { ctrls.updateMapFromControls() };
@@ -83,7 +62,7 @@ var Location = {
             Location.latitude = Number(Location.Controls.lat.value);
             Location.longitude = Number(Location.Controls.long.value);
             Location.altitude = Number(Location.Controls.alt.value);
-
+            Location.save();
             Location.onLocationUpdated.notify();
         }
 	},
@@ -106,9 +85,31 @@ var Location = {
 				Location.Controls.alt.value = isNaN(evt.latlng.alt) ? 0 : evt.latlng.alt;
 				
 			});
-      }, 
+      },
+    
+    load : function() {
+		var savedLocation = localStorage.getItem(this.storageKey);
+		if (null != savedLocation) {
+			var locationObj = JSON.parse(savedLocation);
+			for (var key in {"latitude":0, "longitude":0, "altitude":0}) {
+				this[key] = locationObj[key];
+			}
+		}
+    },
+
+    save: function() {
+    	var locationSettings = {};
+		for (var key in {"latitude":0, "longitude":0, "altitude":0}) {
+			locationSettings[key] = this[key];
+		}
+		localStorage.setItem(this.storageKey, JSON.stringify(locationSettings));
+    },
 
 	init : function () {
+
+		// if we have a key in persistent storage, use it.
+        this.load();
+
 		this.onLocationUpdated = Notifications.New();
 		this.Controls.init();
 		this.Controls.update();
