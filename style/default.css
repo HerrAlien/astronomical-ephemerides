@@ -367,6 +367,17 @@ tr.secondHeaderRowScrolled th:last-of-type {
     width: 100%;
 }
 
+.leftaligned {
+    margin-top: 30px;
+    margin-bottom: 60px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1024px;
+    text-align: left;
+}
+
+
 @media  screen and  (max-width: 936px)  {
     
     .buttonsToSwitchPosPhys {
@@ -438,6 +449,14 @@ tr.secondHeaderRowScrolled th:last-of-type {
         
     }
 
+.leftaligned {
+    margin-top: 30px;
+    margin-bottom: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    width: 100%;
+}
 
     
 }
@@ -511,19 +530,6 @@ input[type=number]::-webkit-inner-spin-button {
 
 input[type=date]::-webkit-inner-spin-button {
   -webkit-appearance: none;
-}
-
-#Solar\20 Eclipses > div.leftaligned {
-    margin-top: 30px;
-    margin-bottom: 60px;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1024px;
-}
-
-.leftaligned {
-    text-align: left;
 }
 
 #error404, #privacy {
