@@ -621,18 +621,21 @@ input[type=date]::-webkit-inner-spin-button {
 
  .expandCollapseButton {
     background-image: url('../images/sprite.svg#double-arrow');
-    width: 50px;
-    height: 50px;
-    background-size: 38px 38px;
+    background-color: var(--colored-bg-light);
+    width: 52px;
+    height: 52px;
+    background-size: 30px 30px;
     background-position: center;
     background-repeat: no-repeat;
     float: right;
     transform: rotate(180deg);
     transition: 0.1s;
-    margin-right: 20px;
-    margin-left: 20px;
+    margin-right: 40px;
     cursor: pointer;
     margin-top: 5px;
+    
+    border: solid 2px var(--colored-bg-dark);
+    border-radius: 50%;
 }
 
 .collapsed .expandCollapseButton {
