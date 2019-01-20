@@ -160,7 +160,7 @@ tr.secondHeaderRowScrolled th:last-of-type {
 
 /** ----------------------------- M O O N --------------------------------------- **/
 
-#MoonTable .firstHeaderRow, #MoonTable .secondHeaderRow,
+#MoonTable .firstHeaderRow, #MoonTable .secondHeaderRow, .muddle,
 #MoonTable .firstHeaderRowScrolled, #MoonTable .secondHeaderRowScrolled {
     width: 770px;
 }
@@ -175,7 +175,7 @@ tr.secondHeaderRowScrolled th:last-of-type {
 
 /** -------------------------------------- S U N -------------------------------- **/
 
-#SunTable .firstHeaderRow, #SunTable .secondHeaderRow,
+#SunTable .firstHeaderRow, #SunTable .secondHeaderRow, .muddle,
 #SunTable .firstHeaderRowScrolled, #SunTable .secondHeaderRowScrolled {
     min-width: 724px;
 }
@@ -189,8 +189,13 @@ tr.secondHeaderRowScrolled th:last-of-type {
     border-right: none;
 }
 
+.muddle {
+    margin-left:auto;
+    margin-right:auto;
+}
+
 /** ---------------------------------- P L A N E T ------------------------------ **/
-.firstHeaderRow, .secondHeaderRow, .planetTable,
+.firstHeaderRow, .secondHeaderRow, .planetTable, .muddle,
 .firstHeaderRowScrolled, .secondHeaderRowScrolled {
     width: 633px;
 }
@@ -274,7 +279,7 @@ tr.secondHeaderRowScrolled th:last-of-type {
 
 /* ---------------------------- M A R S ------------------------------------ */
 
-#MarsTable tr.firstHeaderRow, 
+#MarsTable tr.firstHeaderRow,
 #MarsTable tr.secondHeaderRow,
 #MarsTable tr.firstHeaderRowScrolled, 
 #MarsTable tr.secondHeaderRowScrolled {
