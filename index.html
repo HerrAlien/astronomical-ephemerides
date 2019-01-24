@@ -528,13 +528,19 @@ h1, h2, hr {
 
  h2 {
     font-size: 40px;
-    margin-top: 70px;
-    margin-bottom: 10px;
+    margin-top: 40px;
+    margin-bottom: 0px;
 }
 
  h3 {
     font-size: 32px;
+    margin-top: 32px;
+    margin-bottom: 0px;
+}
+
+label > h3 {
     margin-top: 0px;
+    margin-bottom: 32px;
 }
     
  #credits, .topBorder{
@@ -1219,34 +1225,35 @@ border-bottom: solid 1px #AAAAAA;
         <div id="settings" class="page">
             <h1>Settings</h1>
             <div id="settingsContainer">
-                <h2>Location and time intervals</h2>
+              <div id="requireApply">
+                <h2>Location and time</h2>
+                <h3>Location</h3>
                 <label class="settingsLabel">Latitude [&deg;]: <br/><input type="number" id="latitudeInput" placeholder="[degrees]" ></input></label>
                 <label class="settingsLabel">Longitude [&deg;]: <br/><input type="number" id="longitudeInput" placeholder="[degrees]" ></input></label>
                 <label class="settingsLabel">Altitude [m]: <br/><input type="number" id="altitudeInput" placeholder="[meters]" ></input></label> 
                 <!-- <a nohref="#" id="getFromGeolocationAnchor">or use geolocation</a> -->
-
-                <div class="clear">&nbsp;</div>
                 
-                <div id="mapHolder" style="width:100%; height:400px;font-size:10px;"></div>
+                <div id="mapHolder"></div>
 
-      
-                
-                <div class="clear">&nbsp;</div>
+                <h3>Time argument for ephemerides</h3>
                 <label class="settingsLabel">Start from: <br/><input type="date" id="startingDate"></input></label>
                 <label class="settingsLabel">increment [days]: <br/><input type="number" id="incrementDate"></input></label>
                 <label class="settingsLabel">for [days]:<br/><input type="number" id="numberOfDays"></input></label>
 
-                <div id="displayTimesDiv"><span>Display times in:</span>
+                <div class="clear">&nbsp;</div>
+
+                <h3>Computed times</h3>
+                <div id="displayTimesDiv">
                   <label class="settingsLabel">Universal Time (UT)<br/><input type="radio" id="timeAsUTC"></input></label>
                   <label class="settingsLabel">Local Time<br/><input type="radio" id="timeAsLocalTime"></input></label>
                 </div>
-                
                 <div class="clear">&nbsp;</div>
                 <input type="button" id = "applySettingsChanges" class="cta" value="Apply"></input>
                 <input type="button" id = "cancelSettingsChanges" value="Cancel"></input>
-                <div class="clear">&nbsp;</div>
 
-                <h2>Right now</h2>
+              </div>
+
+                <h2>Show on home page</h2>
                 <div id="realTimeSettingsContainer">
                     
                 </div>
@@ -1289,7 +1296,7 @@ border-bottom: solid 1px #AAAAAA;
 
         <div id="about" class="page">
         <h1>About</h1>
-          <ul>
+          <ul id="aboutList">
             <li>Argument of all ephemerides is UTC</li> 
             <li>First data is for 00:00 UTC of the starting day.</li>
             <li>Positions are expressed as geocentric apparent equatorial coordinates, unless stated otherwise.</li>

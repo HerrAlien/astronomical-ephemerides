@@ -59,7 +59,24 @@
 
 .settingsLabel, #getFromGeolocationAnchor{
     float: left;
-    margin-top: 16px;
+    margin-top: 0px;
+}
+
+#mapHolder {
+    width:100%; 
+    height:400px;
+    font-size:10px;
+}
+
+#requireApply {
+    padding-bottom: 20px;
+    border-radius: 15px;
+    border-bottom:solid 1px #000000;
+
+    padding-left: 10px;
+    padding-right: 10px;
+
+    background: #f9f9f9;
 }
 
 #cancelSettingsChanges,  #applySettingsChanges{
@@ -690,6 +707,10 @@ tr.secondHeaderRowScrolled{
 
 #displayTimesDiv input[type=radio] {
     transform: scale(2,2);
+}
+
+#aboutList > li {
+    margin-top: 25px;
 }
 
 .eventRow td {
