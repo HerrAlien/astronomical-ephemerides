@@ -58,7 +58,7 @@ function PlanetData(planet)
 			data['Diameter'] = 2 *this.planet.semidiameterFunctionName(delta) / 3600;
 
 			var cosElongationAngle = (delta * delta + sunEarthDistance * sunEarthDistance - r * r)/(2 * delta * sunEarthDistance);
-			data['Elongation'] = Math.acos(cosElongationAngle);
+			data['Elongation'] = Math.acos(cosElongationAngle) * 180 / Math.PI;
 			var cosPhaseAngle = (r*r + delta * delta - sunEarthDistance * sunEarthDistance)/(2 * delta * r);
 			data['Phase'] = 0.5 * (cosPhaseAngle + 1);
 			this.cache[JD] = data;

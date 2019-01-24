@@ -99,7 +99,7 @@ tr.firstHeaderRow{
 }
 
 tr.secondHeaderRow {
-    margin-top: -27px;
+    margin-top: -25px;
     background: #ffffff;
 }
 
@@ -108,7 +108,7 @@ tr.firstHeaderRowScrolled{
 }
 
 tr.secondHeaderRowScrolled{
-    top: 20px;
+    top: 22px;
 }
 
 tr.firstHeaderRow, tr.firstHeaderRowScrolled {
@@ -160,7 +160,7 @@ tr.secondHeaderRowScrolled th:last-of-type {
 
 /** ----------------------------- M O O N --------------------------------------- **/
 
-#MoonTable .firstHeaderRow, #MoonTable .secondHeaderRow,
+#MoonTable .firstHeaderRow, #MoonTable .secondHeaderRow, .muddle,
 #MoonTable .firstHeaderRowScrolled, #MoonTable .secondHeaderRowScrolled {
     width: 770px;
 }
@@ -175,7 +175,7 @@ tr.secondHeaderRowScrolled th:last-of-type {
 
 /** -------------------------------------- S U N -------------------------------- **/
 
-#SunTable .firstHeaderRow, #SunTable .secondHeaderRow,
+#SunTable .firstHeaderRow, #SunTable .secondHeaderRow, .muddle,
 #SunTable .firstHeaderRowScrolled, #SunTable .secondHeaderRowScrolled {
     min-width: 724px;
 }
@@ -189,8 +189,13 @@ tr.secondHeaderRowScrolled th:last-of-type {
     border-right: none;
 }
 
+.muddle {
+    margin-left:auto;
+    margin-right:auto;
+}
+
 /** ---------------------------------- P L A N E T ------------------------------ **/
-.firstHeaderRow, .secondHeaderRow, .planetTable,
+.firstHeaderRow, .secondHeaderRow, .planetTable, .muddle,
 .firstHeaderRowScrolled, .secondHeaderRowScrolled {
     width: 633px;
 }
@@ -274,7 +279,7 @@ tr.secondHeaderRowScrolled th:last-of-type {
 
 /* ---------------------------- M A R S ------------------------------------ */
 
-#MarsTable tr.firstHeaderRow, 
+#MarsTable tr.firstHeaderRow,
 #MarsTable tr.secondHeaderRow,
 #MarsTable tr.firstHeaderRowScrolled, 
 #MarsTable tr.secondHeaderRowScrolled {
@@ -336,6 +341,12 @@ tr.secondHeaderRowScrolled th:last-of-type {
 .moonEclipse table td, .solarEclipse table td{
     padding: 10px;
 }
+
+.moonEclipse table th:nth-of-type(1)
+{
+    width:550px;
+}
+
 .solarEclipse table td{
     text-align: right;
 }
@@ -361,35 +372,15 @@ tr.secondHeaderRowScrolled th:last-of-type {
     width: 100%;
 }
 
-
-@media  screen and  (max-width: 936px) and (orientation: landscape) {
-    
-    .physicalPositionalButtonsHolder {
-    position: fixed;
-    bottom: 0;
-    background: #ffffff;
-    padding: 2px 0px 2px 2px;
-    width: 100%;
+.leftaligned {
+    margin-top: 30px;
+    margin-bottom: 60px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1024px;
+    text-align: left;
 }
-
-    tr.firstHeaderRowScrolled.movedMenu {
-        top: 28;
-    }
-    tr.secondHeaderRowScrolled.movedMenu {
-        top: 48;
-    }
-        
-    tr.firstHeaderRowScrolled{
-        top: 148px;
-    }
-
-    tr.secondHeaderRowScrolled{
-        top: 168px;
-    }
-
-}
-
-
 
 
 @media  screen and  (max-width: 936px)  {
@@ -426,13 +417,52 @@ tr.secondHeaderRowScrolled th:last-of-type {
         margin-right: auto;
     }
     
+    @media (orientation: portrait) {
+        tr.firstHeaderRowScrolled.movedMenu {
+            top: 0;
+        }
+        tr.secondHeaderRowScrolled.movedMenu {
+            top: 22;
+        }
+    }
+
+    @media (orientation: landscape) {
     
-    tr.firstHeaderRowScrolled.movedMenu {
-        top: 0;
+        .physicalPositionalButtonsHolder {
+        position: fixed;
+        bottom: 0;
+        background: #ffffff;
+        padding: 2px 0px 2px 2px;
+        width: 100%;
+        }
+
+        tr.fixed.firstHeaderRowScrolled.movedMenu {
+            top: 40px;
+        }
+        tr.fixed.secondHeaderRowScrolled.movedMenu {
+            top: 62px;
+        }
+        
+        tr.fixed.firstHeaderRowScrolled{
+            top: 148px;
+        }
+
+        tr.fixed.secondHeaderRowScrolled{
+            top: 170px;
+        }
+
+        
     }
-    tr.secondHeaderRowScrolled.movedMenu {
-        top: 20;
-    }
+
+.leftaligned {
+    margin-top: 30px;
+    margin-bottom: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    width: 100%;
+}
+
     
 }
     
@@ -505,19 +535,6 @@ input[type=number]::-webkit-inner-spin-button {
 
 input[type=date]::-webkit-inner-spin-button {
   -webkit-appearance: none;
-}
-
-#Solar\20 Eclipses > div.leftaligned {
-    margin-top: 30px;
-    margin-bottom: 60px;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1024px;
-}
-
-.leftaligned {
-    text-align: left;
 }
 
 #error404, #privacy {
@@ -609,18 +626,21 @@ input[type=date]::-webkit-inner-spin-button {
 
  .expandCollapseButton {
     background-image: url('../images/sprite.svg#double-arrow');
-    width: 50px;
-    height: 50px;
-    background-size: 38px 38px;
+    background-color: var(--colored-bg-light);
+    width: 52px;
+    height: 52px;
+    background-size: 30px 30px;
     background-position: center;
     background-repeat: no-repeat;
     float: right;
     transform: rotate(180deg);
     transition: 0.1s;
-    margin-right: 20px;
-    margin-left: 20px;
+    margin-right: 40px;
     cursor: pointer;
     margin-top: 5px;
+    
+    border: solid 2px var(--colored-bg-dark);
+    border-radius: 50%;
 }
 
 .collapsed .expandCollapseButton {
@@ -659,7 +679,7 @@ tr.firstHeaderRowScrolled{
 }
 
 tr.secondHeaderRowScrolled{
-    top: 124px;
+    top: 126px;
 }
 }
 
