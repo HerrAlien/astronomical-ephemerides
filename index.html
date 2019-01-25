@@ -20,10 +20,30 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff" />   
 
     <script type="text/JavaScript">
+
+var PageTimeInterval = {};
+
 var Timeout = {
     onInit : 1,
     onNewData : 1
 };
+
+var AAJS = {};
+// only for *right now*
+var AAJSLoFi = {};
+
+var SunData = { getSunEarthDistance : function() { return 1; } };
+
+(function(){
+    var URL = document.URL;
+    if (URL.slice(-11) == "ephemerides")
+        location.href = URL + "/";
+    URL = location.href;
+    if (URL.indexOf("#") < 0)
+      location.href = "#home";
+})();
+
+function $get(id) { return document.getElementById(id); }
 
 function SyncedTimeOut (func, time) {
   if (!time) {
@@ -51,7 +71,7 @@ function SyncedTimeOut (func, time) {
             loaders = document.getElementsByClassName("loadingMemFileContentsDiv");
       
           if (!realTimePercentage)
-            realTimePercentage = document.getElementById("lofiWarningProgress");
+            realTimePercentage = $get("lofiWarningProgress");
 
           for (var i = 0; i < loaders.length; i++) {
             loaders[i].textContent = percentage;
@@ -64,11 +84,6 @@ function SyncedTimeOut (func, time) {
   progressReporter();
 })();
 
-
-var AAJS = {};
-// only for *right now*
-var SunData = { getSunEarthDistance : function() { return 1; } };
-var AAJSLoFi = {};
 
 (function () {
 
@@ -1235,7 +1250,7 @@ border-bottom: solid 1px #AAAAAA;
                 
                 <div id="mapHolder"></div>
 
-                <h3>Time argument for ephemerides</h3>
+                <h3>Time argument</h3>
                 <label class="settingsLabel">Start from: <br/><input type="date" id="startingDate"></input></label>
                 <label class="settingsLabel">increment [days]: <br/><input type="number" id="incrementDate"></input></label>
                 <label class="settingsLabel">for [days]:<br/><input type="number" id="numberOfDays"></input></label>
@@ -1532,104 +1547,16 @@ title="opens in a new window">Bits of software</a><br>
 <script type="text/JavaScript" async="" src="js/solareclipsespage.js"></script>
 <script type="text/JavaScript" async="" src="js/moon.js"></script>
 
+<script type="text/JavaScript" async="" src="js/physicalpositionaltoggler.js"></script>
+<script type="text/JavaScript" async="" src="js/scrollbehavior.js"></script>
+<script type="text/JavaScript" async="" src="js/promotedmenu.js"></script>
 
  <script>
 
 "use strict";
 
-(function(){
-    var URL = document.URL;
-    if (URL.slice(-11) == "ephemerides")
-        location.href = URL + "/";
-    URL = location.href;
-    if (URL.indexOf("#") < 0)
-      location.href = "#home";
-})();
-
-
-var $get = function (id) { return document.getElementById(id); }
 $get("JSDisabledPage").style.display = "none";
 
-function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
-    var pageElement = $get(pageId);
-    this.table = pageElement.getElementsByClassName("planetTable")[0];
-    this.cellsToHide_physical = false;
-    this.cellsToHide_positional = false;
-    
-    this.positionalButton = pageElement.getElementsByClassName("positionalButton")[0];
-    this.physicalButton = pageElement.getElementsByClassName("physicalButton")[0];
-    if (typeof firstPhysicalColumnIndex == 'undefined')
-        this.firstPhysicalColumnIndex = 16;
-    else
-        this.firstPhysicalColumnIndex = firstPhysicalColumnIndex;
-}
-
-(function() {
-PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
-    this.cellsToHide_physical = [];
-    this.cellsToHide_positional = [];
-    for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
-        var cells = this.table.rows[rowIndex].cells;
-        for (var colIndex = 16; colIndex < cells.length; colIndex++)
-            this.cellsToHide_physical.push(cells[colIndex]);
-        for (var colIndex = 0; colIndex < 16; colIndex++)
-            this.cellsToHide_positional.push(cells[colIndex]);
-    }
-}
-
-PhysicalPositionalToggler.prototype['init'] = function () {
-    var _this = this;
-
-    this.positionalButton.onclick = function () {
-        _this.positionalButton.classList.add("activeButton");
-        _this.physicalButton.classList.remove("activeButton");
-        _this.table.classList.remove ("showPhysical");
-        _this.table.classList.add ("showPositional");
-        if (!_this.cellsToHide_physical)
-            _this.updateCellsToHide();
-            
-        for (var i = 0; i < _this.cellsToHide_physical.length; i++) {
-            _this.cellsToHide_physical[i].classList.remove("physPosVisible");
-            _this.cellsToHide_physical[i].classList.add("physPosHidden");
-        }
-            
-        for (var i = 0; i < _this.cellsToHide_positional.length; i++) {
-            _this.cellsToHide_positional[i].classList.remove("physPosHidden");
-            _this.cellsToHide_positional[i].classList.add("physPosVisible");
-        }
-    }
- 
-    this.physicalButton.onclick = function () {
-        _this.physicalButton.classList.add("activeButton");
-        _this.positionalButton.classList.remove("activeButton");
-
-        _this.table.classList.remove ("showPositional");
-        _this.table.classList.add ("showPhysical");
-        if (!_this.cellsToHide_physical)
-            _this.updateCellsToHide();
-
-         for (var i = 0; i < _this.cellsToHide_physical.length; i++) {
-             _this.cellsToHide_physical[i].classList.remove("physPosHidden");  
-             _this.cellsToHide_physical[i].classList.add("physPosVisible");
-         }
-             
-         for (var i = 0; i < _this.cellsToHide_positional.length; i++) {
-             _this.cellsToHide_positional[i].classList.remove("physPosVisible");
-             _this.cellsToHide_positional[i].classList.add("physPosHidden");
-         }
-     }
- }
-
-var jupiterToggler = new PhysicalPositionalToggler("Jupiter Ephemeris");
-jupiterToggler.init();
-
-var marsToggler = new PhysicalPositionalToggler("Mars Ephemeris");
-marsToggler.init();
-})();    
-                
-PageTimeInterval = { "JD" :  false, "days" : false, "stepSize" : false };
-
-var PageTimeInterval = {};
 var Pages = {"addPlainPages" : function(titles){
     for (var i = 0; i < titles.length; i++) {
         var title = titles[i];
@@ -1666,71 +1593,6 @@ $get ("cancelSettingsChanges").addEventListener("click", function() {
     alert("Changes discarded.");
 });
 
-(function(){
-var sourceMenu = $get("navigation");
-var oldScrollTop = 0;
-    
-window.addEventListener("scroll", function() {
-    var scrolledTop = document.body.scrollTop || (document.body.getBoundingClientRect().y * -1);
-    var scrolled = scrolledTop >= 20;
-    var pageObj = false;
-    if (previousPage) {
-        pageObj = Pages [previousPage.id];
-        if (pageObj && pageObj.hostElement && pageObj.hostElement['rows'] && pageObj.hostElement['rows'][1]) {
-            if (scrolled) {
-                // get the first two rows
-                pageObj.hostElement.rows[0].classList.remove ("firstHeaderRow");
-                pageObj.hostElement.rows[0].classList.add ("firstHeaderRowScrolled");
-
-                pageObj.hostElement.rows[1].classList.remove ("secondHeaderRow");
-                pageObj.hostElement.rows[1].classList.add ("secondHeaderRowScrolled");
-            } else {
-                pageObj.hostElement.rows[0].classList.add ("firstHeaderRow");
-                pageObj.hostElement.rows[0].classList.remove ("firstHeaderRowScrolled");
-
-                pageObj.hostElement.rows[1].classList.add ("secondHeaderRow");
-                pageObj.hostElement.rows[1].classList.remove ("secondHeaderRowScrolled");                    
-            }
-        }            
-    }
-    
-    if (scrolled) {
-        sourceMenu.classList.add ("withDropShadow");
-    } else {
-        sourceMenu.classList.remove ("withDropShadow");
-    }
-    
-    var hysterezis = 15;
-    // is it on a small screen?
-if (pageObj && pageObj.hostElement && pageObj.hostElement['rows'] && pageObj.hostElement['rows'][1]) {    if (scrolledTop > oldScrollTop + hysterezis && scrolledTop > 180 ) {
-        // scrolled down
-        sourceMenu.classList.add ("movedMenu");
-        if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
-            pageObj.hostElement.rows[0].classList.add ("movedMenu");
-            pageObj.hostElement.rows[1].classList.add ("movedMenu");
-        }
-    } else if (scrolledTop < oldScrollTop - hysterezis || scrolledTop < 180) {
-    // scrolled up
-        sourceMenu.classList.remove ("movedMenu");
-        if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
-            pageObj.hostElement.rows[0].classList.remove ("movedMenu");
-            pageObj.hostElement.rows[1].classList.remove ("movedMenu");
-        }
-    }
-    
-    oldScrollTop = scrolledTop;
-}
-});
-
-$get("showNavigationMenu").onclick = function () {
-    var pageObj = Pages [previousPage.id];
-    sourceMenu.classList.remove ("movedMenu");
-    if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
-        pageObj.hostElement.rows[0].classList.remove ("movedMenu");
-        pageObj.hostElement.rows[1].classList.remove ("movedMenu");
-    }
-}
-})();
 
 function updateTimeAtAAJSLoad() {
   
@@ -1810,28 +1672,6 @@ function onhashchange(){
 
 window.addEventListener("hashchange", onhashchange, false);
 if (location.hash) SyncedTimeOut(onhashchange, Timeout.onInit);
-
-(function(){
-  var menu = $get("promotedMenu");
-  function toggleArrows(){
-      if (menu.scrollLeft < 30) {
-        menu.classList.add("noLeft");
-      } else {
-        menu.classList.remove("noLeft");
-      }
-
-      var rightLimit = menu.scrollWidth - menu.clientWidth - 30;
-      if (menu.scrollLeft > rightLimit) {
-        menu.classList.add("noRight");
-      } else {
-        menu.classList.remove("noRight");
-      }
-  }
-
-  menu.addEventListener("scroll", function() { requestAnimationFrame(toggleArrows); }, false);
-  toggleArrows();
-
-})();
 
 (function(){
 var registerWorker = function () {
