@@ -1532,6 +1532,7 @@ title="opens in a new window">Bits of software</a><br>
 <script type="text/JavaScript" async="" src="js/solareclipsespage.js"></script>
 <script type="text/JavaScript" async="" src="js/moon.js"></script>
 
+<script type="text/JavaScript" async="" src="js/physicalpositionaltoggler.js"></script>
 
  <script>
 
@@ -1550,83 +1551,6 @@ title="opens in a new window">Bits of software</a><br>
 var $get = function (id) { return document.getElementById(id); }
 $get("JSDisabledPage").style.display = "none";
 
-function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
-    var pageElement = $get(pageId);
-    this.table = pageElement.getElementsByClassName("planetTable")[0];
-    this.cellsToHide_physical = false;
-    this.cellsToHide_positional = false;
-    
-    this.positionalButton = pageElement.getElementsByClassName("positionalButton")[0];
-    this.physicalButton = pageElement.getElementsByClassName("physicalButton")[0];
-    if (typeof firstPhysicalColumnIndex == 'undefined')
-        this.firstPhysicalColumnIndex = 16;
-    else
-        this.firstPhysicalColumnIndex = firstPhysicalColumnIndex;
-}
-
-(function() {
-PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
-    this.cellsToHide_physical = [];
-    this.cellsToHide_positional = [];
-    for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
-        var cells = this.table.rows[rowIndex].cells;
-        for (var colIndex = 16; colIndex < cells.length; colIndex++)
-            this.cellsToHide_physical.push(cells[colIndex]);
-        for (var colIndex = 0; colIndex < 16; colIndex++)
-            this.cellsToHide_positional.push(cells[colIndex]);
-    }
-}
-
-PhysicalPositionalToggler.prototype['init'] = function () {
-    var _this = this;
-
-    this.positionalButton.onclick = function () {
-        _this.positionalButton.classList.add("activeButton");
-        _this.physicalButton.classList.remove("activeButton");
-        _this.table.classList.remove ("showPhysical");
-        _this.table.classList.add ("showPositional");
-        if (!_this.cellsToHide_physical)
-            _this.updateCellsToHide();
-            
-        for (var i = 0; i < _this.cellsToHide_physical.length; i++) {
-            _this.cellsToHide_physical[i].classList.remove("physPosVisible");
-            _this.cellsToHide_physical[i].classList.add("physPosHidden");
-        }
-            
-        for (var i = 0; i < _this.cellsToHide_positional.length; i++) {
-            _this.cellsToHide_positional[i].classList.remove("physPosHidden");
-            _this.cellsToHide_positional[i].classList.add("physPosVisible");
-        }
-    }
- 
-    this.physicalButton.onclick = function () {
-        _this.physicalButton.classList.add("activeButton");
-        _this.positionalButton.classList.remove("activeButton");
-
-        _this.table.classList.remove ("showPositional");
-        _this.table.classList.add ("showPhysical");
-        if (!_this.cellsToHide_physical)
-            _this.updateCellsToHide();
-
-         for (var i = 0; i < _this.cellsToHide_physical.length; i++) {
-             _this.cellsToHide_physical[i].classList.remove("physPosHidden");  
-             _this.cellsToHide_physical[i].classList.add("physPosVisible");
-         }
-             
-         for (var i = 0; i < _this.cellsToHide_positional.length; i++) {
-             _this.cellsToHide_positional[i].classList.remove("physPosVisible");
-             _this.cellsToHide_positional[i].classList.add("physPosHidden");
-         }
-     }
- }
-
-var jupiterToggler = new PhysicalPositionalToggler("Jupiter Ephemeris");
-jupiterToggler.init();
-
-var marsToggler = new PhysicalPositionalToggler("Mars Ephemeris");
-marsToggler.init();
-})();    
-                
 PageTimeInterval = { "JD" :  false, "days" : false, "stepSize" : false };
 
 var PageTimeInterval = {};
