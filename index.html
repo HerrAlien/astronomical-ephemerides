@@ -436,7 +436,6 @@ th {
 
  .MenuLinkDiv::after {
     content: "More ...";
-    margin: -2px auto 2px auto;
 }
 
  .SettingsLink::after { content: 
@@ -698,7 +697,7 @@ border-bottom: solid 1px #AAAAAA;
 #searchArea {
     display: inline-block;
     padding: 0px;
-    margin: 20px 0px 0px 0px;
+    margin: 10px 0px 0px 0px;
     float: right;
     /* expanded */
 }
@@ -919,6 +918,14 @@ border-bottom: solid 1px #AAAAAA;
 .LunarEclipsesBackground {
     background-image: url('images/sprite.svg#lunar-eclipse');
 }
+
+.MenuBackground {
+    background-image: url('images/sprite.svg#menu');
+}
+.SettingsBackground {
+    background-image: url('images/sprite.svg#settings');
+}
+
 
 .GalileanMoonsBackground.topmenulink,
 .SaturnMoonsBackground.topmenulink,
@@ -1225,8 +1232,8 @@ border-bottom: solid 1px #AAAAAA;
           <div id="HomeLinkButton" class="topmenulink"></div>
           <div id="HomeLinkText">Astronomical Ephemerides</div>
         </a>
-        <a href="#settings" title="Settings" alt="Settings"><div class="SettingsLink topmenulink linkButton"><img src="images/sprite.svg#settings" class="linkButtonImg" alt="Settings"></div></a>
-        <a href="#more" id="MenuLink" title="More ..." alt="More ..."><div class="MenuLinkDiv topmenulink linkButton"><img src="images/sprite.svg#menu" class="linkButtonImg"  alt="More ..."></div></a>
+        <a href="#settings" title="Settings" alt="Settings"><div class="SettingsLink topmenulink linkButton SettingsBackground"> </div></a>
+        <a href="#more" id="MenuLink" title="More ..." alt="More ..."><div class="MenuLinkDiv topmenulink linkButton MenuBackground"> </div></a>
         <div id="searchArea" class="linkButton">
             <input type="text" class="hidden" id="searchTerms" placeholder="   [Search]"/>
             <a nohref="" id="searchButton"><img id="searchAreaImg" src="images/sprite.svg#magnifying-glass" alt="Search" /></a>
