@@ -59,6 +59,7 @@ var urlsToCache = [
 "js/planetdata.js",
 "js/planetpage.js",
 "js/physicalpositionaltoggler.js",
+"js/promotedmenu.js",
 "js/realtime.js",
 "js/realtimedata.js",
 "js/saturn.js",
