@@ -402,7 +402,12 @@ th {
     float: right;
     margin-right: 5px;
     margin-left: 5px;
-}
+    background-size: 82px 82px;
+    background-position: center;
+    width: 82px;
+    height: 82px;
+    background-repeat: no-repeat;
+    }
 
  .linkButton {
     text-align: center;
@@ -426,6 +431,7 @@ th {
     text-align: center;
     color: #000000;
     font-family: Verdana, Sans-Serif;
+        margin-top: 82px;
 }
 
  .MenuLinkDiv::after {
@@ -503,7 +509,7 @@ th {
     text-align: right;
     text-shadow: 0px 0px 30px #fff;
     font-size: 26px;
-    line-height: 8.5;
+    line-height: 7.9;
     font-weight: 900;
     font-style: italic;
 }
@@ -744,6 +750,7 @@ border-bottom: solid 1px #AAAAAA;
     margin-left: auto;
     margin-right: auto;
     white-space: nowrap;
+    height: 110px;
 }
 
 #promotedMenu::after, #promotedMenu::before {
@@ -864,39 +871,61 @@ border-bottom: solid 1px #AAAAAA;
 }
 
 .SunBackground {
-    background-image: url('images/sprite.svg#color-sun');
+    background-image: url('images/sprite.svg#sun');
 }
 
 .JupiterBackground {
-    background-image: url('images/sprite.svg#color-jupiter');
+    background-image: url('images/sprite.svg#jupiter');
 }
 
 .MarsBackground {
-    background-image: url('images/sprite.svg#color-mars');
+    background-image: url('images/sprite.svg#mars');
 }
 
 .SaturnBackground {
-    background-image: url('images/sprite.svg#color-saturn');
+    background-image: url('images/sprite.svg#saturn');
 }
 
 .MoonBackground {
-    background-image: url('images/sprite.svg#color-moon');
+    background-image: url('images/sprite.svg#moon');
 }
 
 .VenusBackground {
-    background-image: url('images/sprite.svg#color-venus');
+    background-image: url('images/sprite.svg#venus');
 }
 
 .MercuryBackground {
-    background-image: url('images/sprite.svg#color-mercury');
+    background-image: url('images/sprite.svg#mercury');
 }
 
 .UranusBackground {
-    background-image: url('images/sprite.svg#color-uranus');
+    background-image: url('images/sprite.svg#uranus');
 }
 
 .NeptuneBackground {
-    background-image: url('images/sprite.svg#color-neptune');
+    background-image: url('images/sprite.svg#neptune');
+}
+
+.GalileanMoonsBackground {
+    background-image: url('images/sprite.svg#galilean-moons');
+}
+
+.SaturnMoonsBackground {
+    background-image: url('images/sprite.svg#saturn-moons');
+}
+.SolarEclipsesBackground {
+    background-image: url('images/sprite.svg#solar-eclipse');
+}
+.LunarEclipsesBackground {
+    background-image: url('images/sprite.svg#lunar-eclipse');
+}
+
+.GalileanMoonsBackground.topmenulink,
+.SaturnMoonsBackground.topmenulink,
+.SolarEclipsesBackground.topmenulink,
+.LunarEclipsesBackground.topmenulink
+{
+  width: 140px;
 }
 
 
@@ -1031,7 +1060,7 @@ border-bottom: solid 1px #AAAAAA;
         height: 90px;
         background-size: 90px 90px;
     font-size: 20px;
-    line-height: 8.5;
+    line-height: 7.9;
      }
 
     #searchArea {
@@ -1203,19 +1232,19 @@ border-bottom: solid 1px #AAAAAA;
             <a nohref="" id="searchButton"><img id="searchAreaImg" src="images/sprite.svg#magnifying-glass" alt="Search" /></a>
         </div>
         <div id="promotedMenu">
-            <a class="promotedMenuLink" href="#Sun Ephemeris"><div class="SunLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#sun" alt="Sun"></div></a>
-            <a class="promotedMenuLink" href="#Moon Ephemeris"><div class="MoonLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#moon" alt="Moon"></div></a>
-            <a class="promotedMenuLink" href="#Jupiter Ephemeris"><div class="JupiterLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#jupiter" alt="Jupiter"></div></a>
-            <a class="promotedMenuLink" href="#Saturn Ephemeris"><div class="SaturnLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#saturn" alt="Saturn"></div></a>
-            <a class="promotedMenuLink" href="#Solar Eclipses"><div class="SolarEclipseLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#solar-eclipse"  alt="Solar Eclipses"></div></a>
-            <a class="promotedMenuLink" href="#Lunar Eclipses"><div class="LunarEclipseLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#lunar-eclipse" alt="Lunar Eclipses"></div></a>
-            <a class="promotedMenuLink" href="#Elongations of Galilean Moons"><div class="GalileanMoonsLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#galilean-moons" alt="Galilean Moons"></div></a>
-            <a class="promotedMenuLink" href="#Mars Ephemeris"><div class="MarsLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#mars" alt="Mars"></div></a>
-            <a class="promotedMenuLink" href="#Elongations of Saturn Moons"><div class="SaturnMoonsLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#saturn-moons" alt="Moons of Saturn"></div></a>
-            <a class="promotedMenuLink" href="#Mercury Ephemeris"><div class="MercuryLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#mercury" alt="Mercury"></div></a>
-            <a class="promotedMenuLink" href="#Venus Ephemeris"><div class="VenusLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#venus"  alt="Venus"></div></a>
-            <a class="promotedMenuLink" href="#Uranus Ephemeris"><div class="UranusLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#uranus" alt="Uranus"></div></a>
-            <a class="promotedMenuLink" href="#Neptune Ephemeris"><div class="NeptuneLinkButton topmenulink linkButton"><img  class="linkButtonImg" src="images/sprite.svg#neptune" alt="Neptune"></div></a>
+            <a class="promotedMenuLink" href="#Sun Ephemeris"><div class="SunLinkButton topmenulink linkButton SunBackground">   </div></a>
+            <a class="promotedMenuLink" href="#Moon Ephemeris"><div class="MoonLinkButton topmenulink linkButton MoonBackground">  </div></a>
+            <a class="promotedMenuLink" href="#Jupiter Ephemeris"><div class="JupiterLinkButton topmenulink linkButton JupiterBackground"> </div></a>
+            <a class="promotedMenuLink" href="#Saturn Ephemeris"><div class="SaturnLinkButton topmenulink linkButton SaturnBackground"> </div></a>
+            <a class="promotedMenuLink" href="#Solar Eclipses"><div class="SolarEclipseLinkButton topmenulink linkButton SolarEclipsesBackground"> </div></a>
+            <a class="promotedMenuLink" href="#Lunar Eclipses"><div class="LunarEclipseLinkButton topmenulink linkButton LunarEclipsesBackground"> </div></a>
+            <a class="promotedMenuLink" href="#Elongations of Galilean Moons"><div class="GalileanMoonsLinkButton topmenulink linkButton GalileanMoonsBackground"> </div></a>
+            <a class="promotedMenuLink" href="#Mars Ephemeris"><div class="MarsLinkButton topmenulink linkButton MarsBackground"> </div></a>
+            <a class="promotedMenuLink" href="#Elongations of Saturn Moons"><div class="SaturnMoonsLinkButton topmenulink linkButton SaturnMoonsBackground"> </div></a>
+            <a class="promotedMenuLink" href="#Mercury Ephemeris"><div class="MercuryLinkButton topmenulink linkButton MercuryBackground"> </div></a>
+            <a class="promotedMenuLink" href="#Venus Ephemeris"><div class="VenusLinkButton topmenulink linkButton VenusBackground"> </div></a>
+            <a class="promotedMenuLink" href="#Uranus Ephemeris"><div class="UranusLinkButton topmenulink linkButton UranusBackground"> </div></a>
+            <a class="promotedMenuLink" href="#Neptune Ephemeris"><div class="NeptuneLinkButton topmenulink linkButton NeptuneBackground"> </div></a>
         </div>
     </div>
     <a nohref="" id="showNavigationMenu"><div id="showNavigationMenuContainer"><img id="showNavigationMenuContainerImg" src="images/sprite.svg#menu" alt="More ..."></div></a>
