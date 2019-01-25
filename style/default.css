@@ -29,6 +29,7 @@
 .largeButtons.linkButton::after {
     font-size: 30px;
     text-decoration: underline;
+    margin-top: 0px;
 }
 
 .menuPageItemImg {
