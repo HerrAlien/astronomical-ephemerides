@@ -28,6 +28,12 @@ var Timeout = {
     onNewData : 1
 };
 
+var AAJS = {};
+// only for *right now*
+var AAJSLoFi = {};
+
+var SunData = { getSunEarthDistance : function() { return 1; } };
+
 (function(){
     var URL = document.URL;
     if (URL.slice(-11) == "ephemerides")
@@ -79,13 +85,7 @@ function SyncedTimeOut (func, time) {
 })();
 
 
-var AAJS = {};
-// only for *right now*
-var AAJSLoFi = {};
-
 (function () {
-
-var SunData = { getSunEarthDistance : function() { return 1; } };
 
 var CSYS = { x:0, y:1, z:2 };
 function Vector(x,y,z) { this.coords = [x, y, z]; }
