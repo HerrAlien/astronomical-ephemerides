@@ -64,6 +64,7 @@ var urlsToCache = [
 "js/saturn.js",
 "js/saturnmoonsdata.js",
 "js/saturnmoonspage.js",
+"js/scrollbehavior.js",
 "js/searchform.js",
 "js/solareclipsesdata.js",
 "js/solareclipsespage.js",
