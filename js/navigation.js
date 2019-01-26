@@ -2,6 +2,56 @@
 
 var navigationLinks = {};
 
+(function(){
+
+    function IsNormalBackground(clsName) {
+        return clsName && (clsName.toLowerCase().indexOf("background") >= 0);
+    }
+
+    function GetActiveBackground(clsName) {
+        return "Color" + clsName;
+    }
+
+    function ProcessLinksFor(links, target) {
+        for (var i = 0; i < links.length; i++) {
+            var menuLink = links[i];
+            var correspondingURL = menuLink.hash;
+            if (!correspondingURL) {
+                continue;
+            }
+            var pageTitle = decodeURIComponent(correspondingURL.substr(1));
+            var linkFixture = menuLink.firstElementChild;
+            var linkData = { 'link' : linkFixture };
+
+            // go through class list ...
+            var classList = linkFixture.classList;
+            for (var classIndex = 0; classIndex < classList.length; classIndex++) {
+                var currentClass = classList[classIndex];
+                if (IsNormalBackground(currentClass)) {
+                    linkData['normalBackground'] = currentClass;
+                    linkData['activeBackground'] = GetActiveBackground(currentClass);
+                }
+            }
+
+            var linkDataObject = navigationLinks[pageTitle] || { };
+            linkDataObject[target] = linkData;
+            navigationLinks[pageTitle] = linkDataObject;
+        }
+    }
+
+    var promotedMenuLinks = document.getElementsByClassName("promotedMenuLink");
+    ProcessLinksFor (promotedMenuLinks, 'promotedMenu');
+
+    var mainMenuListItems = document.getElementsByClassName("menuListItem");
+    var menuPageLinks = new Array(mainMenuListItems.length);
+    for (var i = 0; i < menuPageLinks.length; i++) {
+        menuPageLinks[i] = mainMenuListItems[i].firstElementChild;
+    }
+    ProcessLinksFor (menuPageLinks, 'menuPage');
+
+})();
+
+
 function SetColorLinkDataObject (linkDataObject) {
     if (linkDataObject) {
         linkDataObject['link'].classList.add(linkDataObject['activeBackground']);
@@ -17,10 +67,13 @@ function SetNormalLinkDataObject (linkDataObject) {
 }
 
 function ColorLinkOfPage(pageName) {
-    for (var curentPageName in navigationLinks) {
-        var linksForPage = navigationLinks[pageName];
+    if ("more" == pageName) {
+        return;
+    }
+    for (var currentPageName in navigationLinks) {
+        var linksForPage = navigationLinks[currentPageName];
         if (linksForPage) {
-            if (pageName == curentPageName) {
+            if (pageName == currentPageName) {
                 SetColorLinkDataObject(linksForPage['promotedMenu']);
                 SetColorLinkDataObject(linksForPage['menuPage']);
             } else {
