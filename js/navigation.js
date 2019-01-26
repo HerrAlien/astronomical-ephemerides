@@ -1,6 +1,7 @@
 (function() {
 
 var navigationLinks = {};
+var lastVisited = false;
 
 (function(){
 
@@ -70,25 +71,28 @@ function ColorLinkOfPage(pageName) {
     if ("more" == pageName) {
         return;
     }
-    for (var currentPageName in navigationLinks) {
-        var linksForPage = navigationLinks[currentPageName];
-        if (linksForPage) {
-            if (pageName == currentPageName) {
-                SetColorLinkDataObject(linksForPage['promotedMenu']);
-                SetColorLinkDataObject(linksForPage['menuPage']);
-            } else {
-                SetNormalLinkDataObject(linksForPage['promotedMenu']);
-                SetNormalLinkDataObject(linksForPage['menuPage']);
-            }
+
+    if (lastVisited) {
+        var lastVisitedLinkData = navigationLinks[lastVisited];
+        if (lastVisitedLinkData) {
+            SetNormalLinkDataObject(lastVisitedLinkData['promotedMenu']);
+            SetNormalLinkDataObject(lastVisitedLinkData['menuPage']);
         }
+    }
+
+    lastVisited = pageName;
+    var linksForPage = navigationLinks[pageName];
+    if (linksForPage) {
+        SetColorLinkDataObject(linksForPage['promotedMenu']);
+        SetColorLinkDataObject(linksForPage['menuPage']);
     }
 }
 
 function DisplayPage (pageName) {
     var delayedDisplay = function () {
         try {
-            Pages[pageName].displayPage();
             ColorLinkOfPage(pageName);
+            Pages[pageName].displayPage();
         } catch (err) {
             SyncedTimeOut(delayedDisplay, Timeout.onInit);
         }
