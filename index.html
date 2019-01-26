@@ -924,6 +924,59 @@ border-bottom: solid 1px #AAAAAA;
 }
 
 
+/* color backgrounds */
+.ColorSunBackground {
+    background-image: url('images/sprite.svg#color-sun');
+}
+
+.ColorJupiterBackground {
+    background-image: url('images/sprite.svg#color-jupiter');
+}
+
+.ColorMarsBackground {
+    background-image: url('images/sprite.svg#color-mars');
+}
+
+.ColorSaturnBackground {
+    background-image: url('images/sprite.svg#color-saturn');
+}
+
+.ColorMoonBackground {
+    background-image: url('images/sprite.svg#color-moon');
+}
+
+.ColorVenusBackground {
+    background-image: url('images/sprite.svg#color-venus');
+}
+
+.ColorMercuryBackground {
+    background-image: url('images/sprite.svg#color-mercury');
+}
+
+.ColorUranusBackground {
+    background-image: url('images/sprite.svg#color-uranus');
+}
+
+.ColorNeptuneBackground {
+    background-image: url('images/sprite.svg#color-neptune');
+}
+
+.ColorGalileanMoonsBackground {
+    background-image: url('images/sprite.svg#color-galilean-moons');
+}
+
+.ColorSaturnMoonsBackground {
+    background-image: url('images/sprite.svg#color-saturn-moons');
+}
+.ColorSolarEclipsesBackground {
+    background-image: url('images/sprite.svg#color-solar-eclipse');
+}
+.ColorLunarEclipsesBackground {
+    background-image: url('images/sprite.svg#color-lunar-eclipse');
+}
+
+
+
 .GalileanMoonsBackground.topmenulink,
 .SaturnMoonsBackground.topmenulink,
 .SolarEclipsesBackground.topmenulink,
@@ -1242,19 +1295,19 @@ border-bottom: solid 1px #AAAAAA;
         <div id="more" class="page">
             <h1>Menu</h1>
             <ul id="menuList">
-                <li class="menuListItem"><a href="#Sun Ephemeris"><div                  class="largeButtons SunLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#sun" alt="Sun"></div></a></li>
-                <li class="menuListItem"><a href="#Moon Ephemeris"><div                 class="largeButtons MoonLinkButton   linkButton"><img class="menuPageItemImg" src="images/sprite.svg#moon" alt="Moon"></div></a></li>
-                <li class="menuListItem"><a href="#Lunar Eclipses"><div                 class="largeButtons LunarEclipseLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#lunar-eclipse" alt="Lunar Eclipses"></div></a></li>
-                <li class="menuListItem"><a href="#Solar Eclipses"><div                 class="largeButtons SolarEclipseLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#solar-eclipse" alt="Solar Eclipses"></div></a></li>
-                <li class="menuListItem"><a href="#Mercury Ephemeris"><div              class="largeButtons MercuryLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#mercury" alt="Mercury"></div></a></li>
-                <li class="menuListItem"><a href="#Venus Ephemeris"><div                class="largeButtons VenusLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#venus" alt="Venus"></div></a></li>
-                <li class="menuListItem"><a href="#Mars Ephemeris"><div                 class="largeButtons MarsLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#mars" alt="Mars"></div></a></li>
-                <li class="menuListItem"><a href="#Jupiter Ephemeris"><div              class="largeButtons JupiterLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#jupiter" alt="Jupiter"></div></a></li>
-                <li class="menuListItem"><a href="#Elongations of Galilean Moons"><div  class="largeButtons GalileanMoonsLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#galilean-moons" alt="Galilean Moons"></div></a></li>
-                <li class="menuListItem"><a href="#Saturn Ephemeris"><div               class="largeButtons SaturnLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#saturn" alt="Saturn"></div></a></li>
-                <li class="menuListItem"><a href="#Elongations of Saturn Moons"><div    class="largeButtons SaturnMoonsLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#saturn-moons" alt="Moons of Saturn"></div></a></li>
-                <li class="menuListItem"><a href="#Uranus Ephemeris"><div               class="largeButtons UranusLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#uranus" alt="Uranus"></div></a></li>
-                <li class="menuListItem"><a href="#Neptune Ephemeris"><div              class="largeButtons NeptuneLinkButton   linkButton"><img  class="menuPageItemImg" src="images/sprite.svg#neptune" alt="Neptune"></div></a></li>
+                <li class="menuListItem"><a href="#Sun Ephemeris"><div                  class="largeButtons menuPageItemImg linkButton SunLinkButton SunBackground"> </div></a></li>
+                <li class="menuListItem"><a href="#Moon Ephemeris"><div                 class="largeButtons menuPageItemImg linkButton MoonLinkButton MoonBackground"> </div></a></li>
+                <li class="menuListItem"><a href="#Lunar Eclipses"><div                 class="largeButtons menuPageItemImg linkButton LunarEclipseLinkButton LunarEclipsesBackground"> </div></a></li>
+                <li class="menuListItem"><a href="#Solar Eclipses"><div                 class="largeButtons menuPageItemImg linkButton SolarEclipseLinkButton SolarEclipsesBackground"> </div></a></li>
+                <li class="menuListItem"><a href="#Mercury Ephemeris"><div              class="largeButtons menuPageItemImg linkButton MercuryLinkButton MercuryBackground"> </div></a></li>
+                <li class="menuListItem"><a href="#Venus Ephemeris"><div                class="largeButtons menuPageItemImg linkButton VenusLinkButton VenusBackground"> </div></a></li>
+                <li class="menuListItem"><a href="#Mars Ephemeris"><div                 class="largeButtons menuPageItemImg linkButton MarsLinkButton MarsBackground"> </div></a></li>
+                <li class="menuListItem"><a href="#Jupiter Ephemeris"><div              class="largeButtons menuPageItemImg linkButton JupiterLinkButton JupiterBackground"> </div></a></li>
+                <li class="menuListItem"><a href="#Elongations of Galilean Moons"><div  class="largeButtons menuPageItemImg linkButton GalileanMoonsLinkButton GalileanMoonsBackground"> </div></a></li>
+                <li class="menuListItem"><a href="#Saturn Ephemeris"><div               class="largeButtons menuPageItemImg linkButton SaturnLinkButton SaturnBackground"> </div></a></li>
+                <li class="menuListItem"><a href="#Elongations of Saturn Moons"><div    class="largeButtons menuPageItemImg linkButton SaturnMoonsLinkButton SaturnMoonsBackground"> </div></a></li>
+                <li class="menuListItem"><a href="#Uranus Ephemeris"><div               class="largeButtons menuPageItemImg linkButton UranusLinkButton UranusBackground"> </div></a></li>
+                <li class="menuListItem"><a href="#Neptune Ephemeris"><div              class="largeButtons menuPageItemImg linkButton NeptuneLinkButton NeptuneBackground"> </div></a></li>
             </ul>
             <div class="clear">&nbsp;</div>
         </div>

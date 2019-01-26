@@ -35,6 +35,10 @@
 .menuPageItemImg {
     width: 120px;
     height: 120px;
+    background-repeat: no-repeat;
+    background-size: 120px 120px;
+    padding-top:120px;
+    margin-top:-30px;
 }
 
 .largeButtons {
