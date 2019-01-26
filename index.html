@@ -1648,7 +1648,7 @@ $get("JSDisabledPage").style.display = "none";
 var Pages = {"addPlainPages" : function(titles){
     for (var i = 0; i < titles.length; i++) {
         var title = titles[i];
-        Pages[title] = {"displayPage" : function() {}};
+        Pages[title] = {"displayPage" : function() {}, "reset" : function() {}};
     }
 }};
 
