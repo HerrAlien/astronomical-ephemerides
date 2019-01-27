@@ -242,13 +242,13 @@ function PlanetPage (planetDataSource, tableName) {
         return {"row1" : rows[0], "row2" : rows[1] };
     };
 
-    PlanetPage.prototype["reset"] = function () {
+    PlanetPage.prototype["reset"] = function (keepData) {
         while (this.hostElement.hasChildNodes()) {
             this.hostElement.removeChild(this.hostElement.firstChild);
         }
         this.pageRendered = false;
         // reset the data - transits depend on the longitude
-        if (this.dataSource.reset) {
+        if (keepData && this.dataSource.reset) {
             this.dataSource.reset();
         }
     };
