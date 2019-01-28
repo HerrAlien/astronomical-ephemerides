@@ -399,7 +399,6 @@ th {
 }
 
  .topmenulink-linkButton {
-    float: right;
     margin-right: 5px;
     margin-left: 5px;
     background-size: 82px 82px;
@@ -412,10 +411,9 @@ th {
     text-align: center;
     color: #000000;
     font-family: Verdana, Sans-Serif;
-    display: block;
+    display: inline-block;
     line-height: 10;
-
-    }
+}
 
  .MenuLinkDiv::after {
     content: "More ...";
@@ -659,8 +657,6 @@ label > h3 {
     width: 100%;
     background: #ffffff;
     z-index: 1403;
-    height: 110px;
-    overflow: hidden;
 }
 
 .rightNowFrontPageWidget:hover {
@@ -693,6 +689,10 @@ label > h3 {
     /* expanded */
 }
 
+.SettingsLink {
+  float: right;
+}
+
 #searchAreaImg {
     width:82px;
     float: left;
@@ -723,24 +723,29 @@ label > h3 {
 
 .MenuLinkDiv {
     display: block;
+    float: right;
 }
 
 
 
 .promotedMenuLink {
-    display: inline-block;
     margin-top: 2px;
     margin-left: 15px;
+    float: left;
 }
 
 #promotedMenu {
     overflow-x: auto;
     overflow-y: hidden;
-    max-width: 1460px;
     margin-left: auto;
     margin-right: auto;
     white-space: nowrap;
-    height: 110px;
+    
+}
+
+#promotedMenuScrollableContents {
+  height: 110px;
+  width: 1560px;
 }
 
 #promotedMenu::after, #promotedMenu::before {
@@ -821,7 +826,6 @@ label > h3 {
       #navigation {
         border-top: solid 1px #AAAAAA;
         position: fixed;
-        width: 100%;
         background: #ffffff;
         z-index: 3;
         bottom: 0px;
@@ -1124,9 +1128,6 @@ label > h3 {
   .scrollableRT {
       margin-top: 50px;
   }
-  .promotedMenuLink {
-    float: left;
-  }
 
   .MenuLinkDiv {
     display: block;
@@ -1258,13 +1259,17 @@ label > h3 {
             <div id="tagline">For any time span or location, even offline!</div>
           </div>
         </a>
+
+
         <a href="#settings" title="Settings" alt="Settings" class="SettingsLink topmenulink-linkButton SettingsBackground"></a>
         <a href="#more" id="MenuLink" title="More ..." alt="More ..." class="MenuLinkDiv topmenulink-linkButton MenuBackground"></a>
         <div id="searchArea" class="linkButton">
             <input type="text" class="hidden" id="searchTerms" placeholder="   [Search]"/>
             <a nohref="" id="searchButton"><img id="searchAreaImg" src="images/sprite.svg#magnifying-glass" alt="Search" /></a>
         </div>
+
         <div id="promotedMenu">
+          <div id="promotedMenuScrollableContents">
             <a href="#Sun Ephemeris"                 class="promotedMenuLink SunLinkButton topmenulink-linkButton SunBackground"></a>
             <a href="#Moon Ephemeris"                class="promotedMenuLink MoonLinkButton topmenulink-linkButton MoonBackground"></a>
             <a href="#Jupiter Ephemeris"             class="promotedMenuLink JupiterLinkButton topmenulink-linkButton JupiterBackground"></a>
@@ -1272,13 +1277,17 @@ label > h3 {
             <a href="#Solar Eclipses"                class="promotedMenuLink SolarEclipseLinkButton topmenulink-linkButton SolarEclipsesBackground"></a>
             <a href="#Lunar Eclipses"                class="promotedMenuLink LunarEclipseLinkButton topmenulink-linkButton LunarEclipsesBackground"> </a>
             <a href="#Elongations of Galilean Moons" class="promotedMenuLink GalileanMoonsLinkButton topmenulink-linkButton GalileanMoonsBackground"> </a>
-            <a href="#Mars Ephemeris"                class="promotedMenuLink MarsLinkButton topmenulink-linkButton MarsBackground"> </div></a>
+            <a href="#Mars Ephemeris"                class="promotedMenuLink MarsLinkButton topmenulink-linkButton MarsBackground"></a>
             <a href="#Elongations of Saturn Moons"   class="promotedMenuLink SaturnMoonsLinkButton topmenulink-linkButton SaturnMoonsBackground"></a>
             <a href="#Mercury Ephemeris"             class="promotedMenuLink MercuryLinkButton topmenulink-linkButton MercuryBackground"></a>
             <a href="#Venus Ephemeris"               class="promotedMenuLink VenusLinkButton topmenulink-linkButton VenusBackground"></a>
             <a href="#Uranus Ephemeris"              class="promotedMenuLink UranusLinkButton topmenulink-linkButton UranusBackground"></a>
             <a href="#Neptune Ephemeris"             class="promotedMenuLink NeptuneLinkButton topmenulink-linkButton NeptuneBackground"></a>
+          </div>
         </div>
+
+
+
     </div>
     <a nohref="" id="showNavigationMenu"><div id="showNavigationMenuContainer"><img id="showNavigationMenuContainerImg" src="images/sprite.svg#menu" alt="More ..."></div></a>
     
