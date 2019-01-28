@@ -408,7 +408,13 @@ th {
     height: 82px;
     background-repeat: no-repeat;
     margin-bottom: 25px;
+    font-size: 18px;
     text-align: center;
+    color: #000000;
+    font-family: Verdana, Sans-Serif;
+    display: block;
+    line-height: 10;
+
     }
 
  .MenuLinkDiv::after {
@@ -470,16 +476,6 @@ th {
  "Saturn Moons";
 }
 
-
-.topmenulink-linkButton::after 
-{
-    font-size: 18px;
-    display: block;
-    text-align: center;
-    color: #000000;
-    font-family: Verdana, Sans-Serif;
-    margin-top: 82px;
-}
 
  #HomeLinkButton {
     float: left;
@@ -656,13 +652,15 @@ label > h3 {
     background: #FFFFFF; 
 }
 
-     #navigation {
-margin: 0px 0px -10px 0px;
-border-bottom: solid 1px #AAAAAA;
+#navigation {
+    margin: 0px 0px -10px 0px;
+    border-bottom: solid 1px #AAAAAA;
     position: fixed;
     width: 100%;
     background: #ffffff;
     z-index: 1403;
+    height: 110px;
+    overflow: hidden;
 }
 
 .rightNowFrontPageWidget:hover {
@@ -1255,31 +1253,31 @@ border-bottom: solid 1px #AAAAAA;
 <body>
     <div id="navigation">
         <a href="#home" id="HomeLink" title="Home" alt="Home">
-          <div id="HomeLinkButton" class="topmenulink"></div>
+          <div id="HomeLinkButton"></div>
           <div id="HomeLinkText">Astronomical Ephemerides
             <div id="tagline">For any time span or location, even offline!</div>
           </div>
         </a>
-        <a href="#settings" title="Settings" alt="Settings"><div class="SettingsLink topmenulink-linkButton SettingsBackground"> </div></a>
-        <a href="#more" id="MenuLink" title="More ..." alt="More ..."><div class="MenuLinkDiv topmenulink-linkButton MenuBackground"> </div></a>
+        <a href="#settings" title="Settings" alt="Settings" class="SettingsLink topmenulink-linkButton SettingsBackground"></a>
+        <a href="#more" id="MenuLink" title="More ..." alt="More ..." class="MenuLinkDiv topmenulink-linkButton MenuBackground"></a>
         <div id="searchArea" class="linkButton">
             <input type="text" class="hidden" id="searchTerms" placeholder="   [Search]"/>
             <a nohref="" id="searchButton"><img id="searchAreaImg" src="images/sprite.svg#magnifying-glass" alt="Search" /></a>
         </div>
         <div id="promotedMenu">
-            <a class="promotedMenuLink" href="#Sun Ephemeris"><div class="SunLinkButton topmenulink-linkButton SunBackground">   </div></a>
-            <a class="promotedMenuLink" href="#Moon Ephemeris"><div class="MoonLinkButton topmenulink-linkButton MoonBackground">  </div></a>
-            <a class="promotedMenuLink" href="#Jupiter Ephemeris"><div class="JupiterLinkButton topmenulink-linkButton JupiterBackground"> </div></a>
-            <a class="promotedMenuLink" href="#Saturn Ephemeris"><div class="SaturnLinkButton topmenulink-linkButton SaturnBackground"> </div></a>
-            <a class="promotedMenuLink" href="#Solar Eclipses"><div class="SolarEclipseLinkButton topmenulink-linkButton SolarEclipsesBackground"> </div></a>
-            <a class="promotedMenuLink" href="#Lunar Eclipses"><div class="LunarEclipseLinkButton topmenulink-linkButton LunarEclipsesBackground"> </div></a>
-            <a class="promotedMenuLink" href="#Elongations of Galilean Moons"><div class="GalileanMoonsLinkButton topmenulink-linkButton GalileanMoonsBackground"> </div></a>
-            <a class="promotedMenuLink" href="#Mars Ephemeris"><div class="MarsLinkButton topmenulink-linkButton MarsBackground"> </div></a>
-            <a class="promotedMenuLink" href="#Elongations of Saturn Moons"><div class="SaturnMoonsLinkButton topmenulink-linkButton SaturnMoonsBackground"> </div></a>
-            <a class="promotedMenuLink" href="#Mercury Ephemeris"><div class="MercuryLinkButton topmenulink-linkButton MercuryBackground"> </div></a>
-            <a class="promotedMenuLink" href="#Venus Ephemeris"><div class="VenusLinkButton topmenulink-linkButton VenusBackground"> </div></a>
-            <a class="promotedMenuLink" href="#Uranus Ephemeris"><div class="UranusLinkButton topmenulink-linkButton UranusBackground"> </div></a>
-            <a class="promotedMenuLink" href="#Neptune Ephemeris"><div class="NeptuneLinkButton topmenulink-linkButton NeptuneBackground"> </div></a>
+            <a href="#Sun Ephemeris"                 class="promotedMenuLink SunLinkButton topmenulink-linkButton SunBackground"></a>
+            <a href="#Moon Ephemeris"                class="promotedMenuLink MoonLinkButton topmenulink-linkButton MoonBackground"></a>
+            <a href="#Jupiter Ephemeris"             class="promotedMenuLink JupiterLinkButton topmenulink-linkButton JupiterBackground"></a>
+            <a href="#Saturn Ephemeris"              class="promotedMenuLink SaturnLinkButton topmenulink-linkButton SaturnBackground"></a>
+            <a href="#Solar Eclipses"                class="promotedMenuLink SolarEclipseLinkButton topmenulink-linkButton SolarEclipsesBackground"></a>
+            <a href="#Lunar Eclipses"                class="promotedMenuLink LunarEclipseLinkButton topmenulink-linkButton LunarEclipsesBackground"> </a>
+            <a href="#Elongations of Galilean Moons" class="promotedMenuLink GalileanMoonsLinkButton topmenulink-linkButton GalileanMoonsBackground"> </a>
+            <a href="#Mars Ephemeris"                class="promotedMenuLink MarsLinkButton topmenulink-linkButton MarsBackground"> </div></a>
+            <a href="#Elongations of Saturn Moons"   class="promotedMenuLink SaturnMoonsLinkButton topmenulink-linkButton SaturnMoonsBackground"></a>
+            <a href="#Mercury Ephemeris"             class="promotedMenuLink MercuryLinkButton topmenulink-linkButton MercuryBackground"></a>
+            <a href="#Venus Ephemeris"               class="promotedMenuLink VenusLinkButton topmenulink-linkButton VenusBackground"></a>
+            <a href="#Uranus Ephemeris"              class="promotedMenuLink UranusLinkButton topmenulink-linkButton UranusBackground"></a>
+            <a href="#Neptune Ephemeris"             class="promotedMenuLink NeptuneLinkButton topmenulink-linkButton NeptuneBackground"></a>
         </div>
     </div>
     <a nohref="" id="showNavigationMenu"><div id="showNavigationMenuContainer"><img id="showNavigationMenuContainerImg" src="images/sprite.svg#menu" alt="More ..."></div></a>
@@ -1289,19 +1287,19 @@ border-bottom: solid 1px #AAAAAA;
         <div id="more" class="page">
             <h1>Menu</h1>
             
-                <a href="#Sun Ephemeris"><div                  class="largeButtons-menuPageItemImg-linkButton SunLinkButton SunBackground"> </div></a>
-                <a href="#Moon Ephemeris"><div                 class="largeButtons-menuPageItemImg-linkButton MoonLinkButton MoonBackground"> </div></a>
-                <a href="#Lunar Eclipses"><div                 class="largeButtons-menuPageItemImg-linkButton LunarEclipseLinkButton LunarEclipsesBackground"> </div></a>
-                <a href="#Solar Eclipses"><div                 class="largeButtons-menuPageItemImg-linkButton SolarEclipseLinkButton SolarEclipsesBackground"> </div></a>
-                <a href="#Mercury Ephemeris"><div              class="largeButtons-menuPageItemImg-linkButton MercuryLinkButton MercuryBackground"> </div></a>
-                <a href="#Venus Ephemeris"><div                class="largeButtons-menuPageItemImg-linkButton VenusLinkButton VenusBackground"> </div></a>
-                <a href="#Mars Ephemeris"><div                 class="largeButtons-menuPageItemImg-linkButton MarsLinkButton MarsBackground"> </div></a>
-                <a href="#Jupiter Ephemeris"><div              class="largeButtons-menuPageItemImg-linkButton JupiterLinkButton JupiterBackground"> </div></a>
-                <a href="#Elongations of Galilean Moons"><div  class="largeButtons-menuPageItemImg-linkButton GalileanMoonsLinkButton GalileanMoonsBackground"> </div></a>
-                <a href="#Saturn Ephemeris"><div               class="largeButtons-menuPageItemImg-linkButton SaturnLinkButton SaturnBackground"> </div></a></li>
-                <a href="#Elongations of Saturn Moons"><div    class="largeButtons-menuPageItemImg-linkButton SaturnMoonsLinkButton SaturnMoonsBackground"> </div></a>
-                <a href="#Uranus Ephemeris"><div               class="largeButtons-menuPageItemImg-linkButton UranusLinkButton UranusBackground"> </div></a>
-                <a href="#Neptune Ephemeris"><div              class="largeButtons-menuPageItemImg-linkButton NeptuneLinkButton NeptuneBackground"> </div></a>
+                <a href="#Sun Ephemeris"                  class="largeButtons-menuPageItemImg-linkButton SunLinkButton SunBackground"></a>
+                <a href="#Moon Ephemeris"                 class="largeButtons-menuPageItemImg-linkButton MoonLinkButton MoonBackground"></a>
+                <a href="#Lunar Eclipses"                 class="largeButtons-menuPageItemImg-linkButton LunarEclipseLinkButton LunarEclipsesBackground"></a>
+                <a href="#Solar Eclipses"                 class="largeButtons-menuPageItemImg-linkButton SolarEclipseLinkButton SolarEclipsesBackground"></a>
+                <a href="#Mercury Ephemeris"              class="largeButtons-menuPageItemImg-linkButton MercuryLinkButton MercuryBackground"></a>
+                <a href="#Venus Ephemeris"                class="largeButtons-menuPageItemImg-linkButton VenusLinkButton VenusBackground"></a>
+                <a href="#Mars Ephemeris"                 class="largeButtons-menuPageItemImg-linkButton MarsLinkButton MarsBackground"></a>
+                <a href="#Jupiter Ephemeris"              class="largeButtons-menuPageItemImg-linkButton JupiterLinkButton JupiterBackground"></a>
+                <a href="#Elongations of Galilean Moons"  class="largeButtons-menuPageItemImg-linkButton GalileanMoonsLinkButton GalileanMoonsBackground"></a>
+                <a href="#Saturn Ephemeris"               class="largeButtons-menuPageItemImg-linkButton SaturnLinkButton SaturnBackground"></a>
+                <a href="#Elongations of Saturn Moons"    class="largeButtons-menuPageItemImg-linkButton SaturnMoonsLinkButton SaturnMoonsBackground"></a>
+                <a href="#Uranus Ephemeris"               class="largeButtons-menuPageItemImg-linkButton UranusLinkButton UranusBackground"></a>
+                <a href="#Neptune Ephemeris"              class="largeButtons-menuPageItemImg-linkButton NeptuneLinkButton NeptuneBackground"></a>
             
             <div class="clear">&nbsp;</div>
         </div>

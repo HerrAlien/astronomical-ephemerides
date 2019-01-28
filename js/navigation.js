@@ -21,7 +21,7 @@ var lastVisited = false;
                 continue;
             }
             var pageTitle = decodeURIComponent(correspondingURL.substr(1));
-            var linkFixture = menuLink.firstElementChild;
+            var linkFixture = menuLink;
             var linkData = { 'link' : linkFixture };
 
             // go through class list ...
