@@ -36,7 +36,7 @@ var urlsToCache = [
 "index.html",
 "manifest.json",
 "style/default.css",
-"style/common.css",
+"../style/common.css",
 "style/largescreen.css",
 "style/print.css",
 "js/besselianelements.js",
