@@ -21,7 +21,7 @@ var lastVisited = false;
                 continue;
             }
             var pageTitle = decodeURIComponent(correspondingURL.substr(1));
-            var linkFixture = menuLink.firstElementChild;
+            var linkFixture = menuLink;
             var linkData = { 'link' : linkFixture };
 
             // go through class list ...
@@ -43,11 +43,7 @@ var lastVisited = false;
     var promotedMenuLinks = document.getElementsByClassName("promotedMenuLink");
     ProcessLinksFor (promotedMenuLinks, 'promotedMenu');
 
-    var mainMenuListItems = document.getElementsByClassName("menuListItem");
-    var menuPageLinks = new Array(mainMenuListItems.length);
-    for (var i = 0; i < menuPageLinks.length; i++) {
-        menuPageLinks[i] = mainMenuListItems[i].firstElementChild;
-    }
+    var menuPageLinks=document.getElementById("more").getElementsByTagName("a");
     ProcessLinksFor (menuPageLinks, 'menuPage');
 
 })();
