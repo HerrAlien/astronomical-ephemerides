@@ -186,20 +186,25 @@ function PlanetPage (planetDataSource, tableName) {
         };
     
     PlanetPage.prototype["appendLine"] = function (dataArray, classes, docFragment) {
-            var line = this.hostElement.ownerDocument.createElement("tr");
+            //var line = this.hostElement.ownerDocument.createElement("tr");
+            var line = "";
+
             if (!docFragment)
                 docFragment = this.hostElement;
             
-            var changedMonth = this.lastAppendedLine && dataArray[0] && this.lastAppendedLine[0] != dataArray[0];
+            var changedMonth = !this.lastAppendedLine || (dataArray[0] && this.lastAppendedLine[0] != dataArray[0]);
+            
+            if (!changedMonth)
+                line = "  " + line;
+
+            if (dataArray[1] < 10 && !changedMonth)
+                line = " " + line;
+
             var i = 0;
             for (i = 0; i < dataArray.length; i++) {
-                var td = line.ownerDocument.createElement("td");
-                line.appendChild(td);
-                td.textContent = dataArray[i];
-                if (changedMonth)
-                    td.classList.add("topBorder");
+                line += dataArray[i] + " ";
 
-                if (i > 1)
+                /*if (i > 1)
                 {
                     if (i < 15)
                         td.classList.add ("positionEphemeris");
@@ -211,33 +216,35 @@ function PlanetPage (planetDataSource, tableName) {
                     var colClasses = classes[i];
                     for (var classIndex = 0; classIndex < colClasses.length; classIndex++)
                         td.classList.add (colClasses[classIndex]);
-                }
+                } */
             }
-            docFragment.appendChild(line);
+            docFragment.textContent = docFragment.textContent + line + "\n";
             this.lastAppendedLine = dataArray;
         };
         
     PlanetPage.prototype["addTableHeader"] = function (table, rowClasses, columnClasses) {
         var rows = [];
         for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
-            var row = this.addNodeChild (table, "tr");
-            var currentRowClasses = rowClasses[rowIndex];
-            for (var classIndex = 0; classIndex < rowClasses.length; classIndex++)
-                row.classList.add (currentRowClasses[classIndex]);
+            var row = "";
+            //var currentRowClasses = rowClasses[rowIndex];
+            //for (var classIndex = 0; classIndex < rowClasses.length; classIndex++)
+            //    row.classList.add (currentRowClasses[classIndex]);
 
             for (var headerKey in this.tableHeaderInfo) {
-                var th = this.addNodeChild (row, "th", this.tableHeaderInfo[headerKey][rowIndex]['text']);
-                th['title'] = this.tableHeaderInfo[headerKey].longText;
-                th.onclick = function () { alert (this.title); }
-                
-                var columnsClasses = this.tableHeaderInfo[headerKey][rowIndex]['classes']
-                if (!!columnsClasses)
-                {
-                    for (var columnsClassesIndex in columnsClasses)
-                        th.classList.add (columnsClasses[columnsClassesIndex]);
-                }
+                //var th = this.addNodeChild (row, "th", this.tableHeaderInfo[headerKey][rowIndex]['text']);
+                row += this.tableHeaderInfo[headerKey][rowIndex]['text'] + " ";
+                    //var title = this.tableHeaderInfo[headerKey].longText;
+                    //th.onclick = function () { alert (title); }
+
+                //var columnsClasses = this.tableHeaderInfo[headerKey][rowIndex]['classes']
+                //if (!!columnsClasses)
+                //{
+                //    for (var columnsClassesIndex in columnsClasses)
+                //        th.classList.add (columnsClasses[columnsClassesIndex]);
+                //}
             }
-            rows[rowIndex] = row;
+            rows[rowIndex] = row + "\n";
+            table.textContent = table.textContent + rows[rowIndex];
         }
         return {"row1" : rows[0], "row2" : rows[1] };
     };
