@@ -149,6 +149,8 @@ table {
 .planetTable {
     margin-top: 50px;
     font-size: 16px;
+    margin-left: auto;
+    margin-right:  auto;
 }
 
  td,  th {
@@ -182,150 +184,18 @@ tr.secondHeaderRowScrolled th:last-of-type {
 }
 
 
-/** ----------------------------- M O O N --------------------------------------- **/
 
-#MoonTable .firstHeaderRow, #MoonTable .secondHeaderRow, .muddle,
-#MoonTable .firstHeaderRowScrolled, #MoonTable .secondHeaderRowScrolled {
-    width: 770px;
-}
-
-#MoonTable td:nth-of-type(2), #MoonTable td:nth-of-type(5), #MoonTable td:nth-of-type(8), #MoonTable td:nth-of-type(11), #MoonTable td:nth-of-type(14), #MoonTable td:nth-of-type(16), #MoonTable td:nth-of-type(17), #MoonTable td:nth-of-type(18), #MoonTable td:nth-of-type(19), #MoonTable td:nth-of-type(22), #MoonTable td:nth-of-type(23) {
-    border-right: 1px solid black;
-}
-
-#MoonTable td:nth-of-type(9), #MoonTable td:nth-of-type(10), #MoonTable td:nth-of-type(12), #MoonTable td:nth-of-type(13), #MoonTable td:nth-of-type(15){
-    border-right: none;
-}
-
-/** -------------------------------------- S U N -------------------------------- **/
-
-#SunTable .firstHeaderRow, #SunTable .secondHeaderRow, .muddle,
-#SunTable .firstHeaderRowScrolled, #SunTable .secondHeaderRowScrolled {
-    min-width: 724px;
-}
-
-#SunTable td:nth-of-type(2), #SunTable td:nth-of-type(5), #SunTable td:nth-of-type(8), #SunTable td:nth-of-type(9), #SunTable td:nth-of-type(11),
-#SunTable td:nth-of-type(14), #SunTable td:nth-of-type(15), #SunTable td:nth-of-type(16), #SunTable td:nth-of-type(17), #SunTable td:nth-of-type(12), #SunTable td:nth-of-type(13) {
-    border-right: 1px solid black;
-}
-
-#SunTable td:nth-of-type(10) {
-    border-right: none;
-}
 
 .muddle {
     margin-left:auto;
     margin-right:auto;
-}
-
-/** ---------------------------------- P L A N E T ------------------------------ **/
-.firstHeaderRow, .secondHeaderRow, .planetTable, .muddle,
-.firstHeaderRowScrolled, .secondHeaderRowScrolled {
     width: 633px;
-}
-
-.minWidth1{
-	min-width: 1px;
-}
-
-.minWidth5 {
-    min-width: 5px;
-}
-
-.minWidth15 {
-    min-width : 15px;
-}
-
-.minWidth20 {
-    min-width : 20px;
-}
-
-.minWidth25 {
-    min-width : 25px;
-}
-
-.minWidth30 {
-    min-width: 30px;
-}
-
-.minWidth40 {
-    min-width : 40px;
-}
-
-.minWidth45 {
-    min-width : 45px;
-}
-
-.minWidth50 {
-    min-width: 50px;
-}
-
-.minWidth52 {
-    min-width: 52px;
-}
-
-.minWidth55 {
-    min-width: 55px;
-}
-
-.minWidth62 {
-    min-width : 62px;
-}
-
-.minWidth65 {
-    min-width : 65px;
-}
-
-.borderRight,
-.planetTable td:nth-of-type(2) ,
-.planetTable td:nth-of-type(5),
-.planetTable td:nth-of-type(8),
-.planetTable td:nth-of-type(9),
-.planetTable td:nth-of-type(10),
-.planetTable td:nth-of-type(11),
-.planetTable td:nth-of-type(12),
-.planetTable td:nth-of-type(13),
-.planetTable td:nth-of-type(14),
-.planetTable td:nth-of-type(15){
-    border-right: solid 1px black;
-}
-
-.minWidth15 {
-    min-width: 15px;    
-}
-
-.minWidth70 {
-    min-width:70px;
 }
 
 @media screen {
 }
 
-/* ---------------------------- M A R S ------------------------------------ */
 
-#MarsTable tr.firstHeaderRow,
-#MarsTable tr.secondHeaderRow,
-#MarsTable tr.firstHeaderRowScrolled, 
-#MarsTable tr.secondHeaderRowScrolled {
-    width: 832px;
-}
-#MarsTable td:nth-of-type(16), 
-#MarsTable td:nth-of-type(18), 
-#MarsTable td:nth-of-type(19), 
-#MarsTable td:nth-of-type(20), 
-#MarsTable td:nth-of-type(21){
-    border-right: solid 1px black;
-}
-
-/* ---------------------------- J U P I T E R ---------------------- */
-#JupiterTable td:nth-of-type(16), 
-#JupiterTable td:nth-of-type(18), 
-#JupiterTable td:nth-of-type(19), 
-#JupiterTable td:nth-of-type(20), 
-#JupiterTable td:nth-of-type(21), 
-#JupiterTable td:nth-of-type(22){
-    border-right: solid 1px black;
-}
 
 #Elongations of Galilean Moons, #Elongations of Saturn Moons {
     text-align: center;
