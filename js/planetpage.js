@@ -16,16 +16,19 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
-var Formatting = {
-    "padFrontWithSpaces_2" : function (v) {
-        var res = String(v);
-        if (res.length < 1)
-            res = "  ";
-        else if (res.length < 2)
-            res = " " + res;
-        return res;
-    }
-};
+function prePadTo(v, pad, cnt) {
+    var res = String(v);
+    while (res.length < cnt)
+        res = pad + res;
+    return res;
+}
+
+function postPadTo(v, pad, cnt) {
+    var res = String(v);
+    while (res.length < cnt)
+        res += pad;
+    return res;
+}
 
 
 function PlanetPage (planetDataSource, tableName) {
@@ -42,99 +45,99 @@ function PlanetPage (planetDataSource, tableName) {
 
     this.tableHeaderInfo = {
         "0" : {
-                "0" : { "text" : "Date", "formattingFunc" : function(v) { return v + " ";} },
-                "1" : { "text" : "",     "formattingFunc" : function(v) { return "     ";}  },
+                "0" : { "text" : "Date " },
+                "1" : { "text" : "    " },
                 "longText" : "Date: month",
                 "dataKey" : 'Month'
             } ,
 
         "1" : {
-                "0" : { "text" : "", "formattingFunc" : function(v) { return v;} },
-                "1" : { "text" : "", "formattingFunc" : function(v) { return v;} },
+                "0" : { "text" : ""},
+                "1" : { "text" : ""},
                 "longText" : "Date: day",
                 "dataKey" : 'Day'
             },
         "2" : {
-                "0" : { "text" : "\u03B1", "formattingFunc" : function(v) { return " " + v + " ";}  },
-                "1" : { "text" : "h",      "formattingFunc" : function(v) { return " " + v + " ";} },
+                "0" : { "text" : " \u03B1 "},
+                "1" : { "text" : " h "},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension",
                 "dataKey" : 'RA'
             },
         "3" : {
-                "0" : { "text" : "(RA)", "formattingFunc" : function(v) { return v + "  ";}  },
-                "1" : { "text" : "m",    "formattingFunc" : function(v)  { return " " + v + " ";}   },
+                "0" : { "text" : "(RA)  "},
+                "1" : { "text" : " m "},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "4" : {
-                "0" : { "text" : "",  "formattingFunc" : function(v) { return v;}  },
-                "1" : { "text" : "s", "formattingFunc" : function(v)  { return "  " + v + " ";}  },
+                "0" : { "text" : ""},
+                "1" : { "text" : " s  "},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "5" :  {
-                "0" : { "text" : "\u03B4", "formattingFunc" : function(v) { return "   " + v + " ";} },
-                "1" : { "text" : "\u00B0", "formattingFunc" : function(v) { return "  " + v + " ";} },
+                "0" : { "text" : "\u03B4"},
+                "1" : { "text" : "\u00B0"},
                 "longText" : "Apparent geocentric equatorial coordinates: Declination",
                 "dataKey" : 'Dec'
             },
         "6" :  {
-                "0" : { "text" : "(Dec)", "formattingFunc" : function(v) { return v + " ";}  },
-                "1" : { "text" : "'",     "formattingFunc" : function(v) { return " " + v + " ";}  },
+                "0" : { "text" : "(Dec)"},
+                "1" : { "text" : "'"},
                 "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
         "7" :  {
-                "0" : { "text" : "",   "formattingFunc" : function(v) { return v;}  },
-                "1" : { "text" : "\"", "formattingFunc" : function(v) { return " " + v + " ";}  },
+                "0" : { "text" : ""},
+                "1" : { "text" : "''" },
                 "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
         "8" :  {
-                "0" : { "text" : "\u03D5", "formattingFunc" : function(v) { return " " + v + " ";}   },
-                "1" : { "text" : "\"",     "formattingFunc" : function(v) { return " " + v + " ";}   },
+                "0" : { "text" : "\u03D5"},
+                "1" : { "text" : "''"},
                 "longText" : "Apparent diameter",
                 "dataKey" : 'Diameter'
             },
         "9" : {
-                   "0" : { "text" : "Rise",  "formattingFunc" : function(v) { return v + " ";}  },
-                   "1" : { "text" : "hh:mm", "formattingFunc" : function(v) { return v + " ";}  },
+                   "0" : { "text" : "Rise"},
+                   "1" : { "text" : "hh:mm"},
                    "longText" : "The time of rise above horizon",
                 "dataKey" : 'Rise'
             },
         "10" : {
-                   "0" : { "text" : "Transit", "formattingFunc" : function(v) { return v;} },
-                   "1" : { "text" : "hh:mm",   "formattingFunc" : function(v) { return v + " ";} },
+                   "0" : { "text" : "Transit" },
+                   "1" : { "text" : "hh:mm" },
                    "longText" : "The time of the transit across the meridian",
                 "dataKey" : 'MeridianTransit'
             },
         "11" : {
-                   "0" : { "text" : "Set",   "formattingFunc" : function(v) { return v;}  },
-                   "1" : { "text" : "hh:mm", "formattingFunc" : function(v) { return v + " ";}  },
+                   "0" : { "text" : "Set" },
+                   "1" : { "text" : "hh:mm" },
                    "longText" : "The time of setting",
                 "dataKey" : 'Set'
             },
 
             "12" :  {
-                "0" : { "text" : "\u0394", "formattingFunc" : function(v) { return v;}  },
-                "1" : { "text" : "au",     "formattingFunc" : function(v) { return v;}  },
+                "0" : { "text" : "\u0394" },
+                "1" : { "text" : "au" },
                 "longText" : "Distance to Earth, in astronomical units",
                 "dataKey" : 'DistanceToEarth'
             },
 
             "13" :  {
-                "0" : { "text" : "R",  "formattingFunc" : function(v) { return v;}  },
-                "1" : { "text" : "au", "formattingFunc" : function(v) { return v;}  },
+                "0" : { "text" : "R" },
+                "1" : { "text" : "au" },
                 "longText" : "Distance to Sun, in astronomical units",
                 "dataKey" : 'DistanceToSun'
             },
 
             "14" :  {
-                "0" : { "text" : "Elong", "formattingFunc" : function(v) { return v;}  },
-                "1" : { "text" : "\u00B0","formattingFunc" : function(v) { return v;}  },
+                "0" : { "text" : "Elong" },
+                "1" : { "text" : "\u00B0" },
                 "longText" : "Elongation angle from the Sun",
                 "dataKey" : 'Elongation'
             },
 
         "15" :  {
-                "0" : { "text" : "Phase", "formattingFunc" : function(v) { return v;}  },
-                "1" : { "text" : "",      "formattingFunc" : function(v) { return v;}  },
+                "0" : { "text" : "Phase" },
+                "1" : { "text" : "" },
                 "longText" : "The phase of the planet (illuminated fraction of disk, as seen from Earth)",
                 "dataKey" : 'Phase'
             }
@@ -143,10 +146,25 @@ function PlanetPage (planetDataSource, tableName) {
     this.lastDisplayedMonth = -1;
     this.months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     
-    this.firstDataRowColumnClasses = [ ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"],
-                           ["minWidth25"], ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth50"], 
-                           ["minWidth50"], ["minWidth50"], ["minWidth55"], ["minWidth55"], ["minWidth62"],
-                           ["minWidth45"] ];
+    this.formattingFunctions = [ 
+    function(month) { return prePadTo(month, " ", 3); }, 
+    function (day) { return prePadTo(day, " ", 2); }, 
+    function (RA_h) { return prePadTo(RA_h, " ", 2); },
+    function (RA_m) { return prePadTo(RA_m, " ", 2); }, 
+    function (RA_s) { return prePadTo(RA_s, " ", 4);  },
+    function (dec_deg) { return prePadTo(dec_deg, " ", 3); },
+    function (dec_m) { return prePadTo(dec_m, " ", 2); },
+    function (dec_s) { return prePadTo(dec_s, " ", 2); },
+    function (phi) { return prePadTo(phi, " ", 2); },
+    function (rise) { return rise; },
+    function (transit) { return transit; },
+    function (set) { return set; },
+    function (delta) { return postPadTo(delta, " ", 6); },
+    function (R) { return postPadTo(R, " ", 6); },
+    function (E) { return prePadTo(E, " ", 7); },
+    function (P) { return postPadTo(P, " ", 5); },
+
+    ];
 }
 
 (function(){
@@ -206,15 +224,9 @@ function PlanetPage (planetDataSource, tableName) {
             
             var changedMonth = !this.lastAppendedLine || (dataArray[0] && this.lastAppendedLine[0] != dataArray[0]);
             
-            if (!changedMonth)
-                line = "  " + line;
-
-            if (dataArray[1] < 10 && !changedMonth)
-                line = " " + line;
-
             var i = 0;
             for (i = 0; i < dataArray.length; i++) {
-                line += dataArray[i] + " ";
+                line += this.formattingFunctions[i](dataArray[i]) + " ";
 
                 /*if (i > 1)
                 {
@@ -238,15 +250,13 @@ function PlanetPage (planetDataSource, tableName) {
         var rows = [];
         for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
             var row = "";
-            // var currentRowFuncs = rowClasses[rowIndex];
+            //var currentRowClasses = rowClasses[rowIndex];
             //for (var classIndex = 0; classIndex < rowClasses.length; classIndex++)
             //    row.classList.add (currentRowClasses[classIndex]);
 
             for (var headerKey in this.tableHeaderInfo) {
                 //var th = this.addNodeChild (row, "th", this.tableHeaderInfo[headerKey][rowIndex]['text']);
-                row += 
-                    this.tableHeaderInfo[headerKey][rowIndex]['formattingFunc'] (
-                        this.tableHeaderInfo[headerKey][rowIndex]['text']);
+                row += this.tableHeaderInfo[headerKey][rowIndex]['text'] + " ";
                     //var title = this.tableHeaderInfo[headerKey].longText;
                     //th.onclick = function () { alert (title); }
 
