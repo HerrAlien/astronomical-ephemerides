@@ -45,98 +45,98 @@ function PlanetPage (planetDataSource, tableName) {
 
     this.tableHeaderInfo = {
         "0" : {
-                "0" : { "text" : "Date " },
-                "1" : { "text" : "    " },
+                "0" : { "text" : "Date  " },
+                "1" : { "text" : "     " },
                 "longText" : "Date: month",
                 "dataKey" : 'Month'
             } ,
 
         "1" : {
-                "0" : { "text" : ""},
-                "1" : { "text" : ""},
+                "0" : { "text" : " "},
+                "1" : { "text" : " "},
                 "longText" : "Date: day",
                 "dataKey" : 'Day'
             },
         "2" : {
-                "0" : { "text" : " \u03B1 "},
-                "1" : { "text" : " h "},
+                "0" : { "text" : "  \u03B1 "},
+                "1" : { "text" : "  h  "},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension",
                 "dataKey" : 'RA'
             },
         "3" : {
-                "0" : { "text" : "(RA)  "},
-                "1" : { "text" : " m "},
+                "0" : { "text" : "(RA)   "},
+                "1" : { "text" : "m  "},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "4" : {
-                "0" : { "text" : ""},
-                "1" : { "text" : " s  "},
+                "0" : { "text" : " "},
+                "1" : { "text" : " s   "},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "5" :  {
-                "0" : { "text" : "\u03B4"},
-                "1" : { "text" : "\u00B0"},
+                "0" : { "text" : " \u03B4 "},
+                "1" : { "text" : " \u00B0 "},
                 "longText" : "Apparent geocentric equatorial coordinates: Declination",
                 "dataKey" : 'Dec'
             },
         "6" :  {
-                "0" : { "text" : "(Dec)"},
-                "1" : { "text" : "'"},
+                "0" : { "text" : "(Dec) "},
+                "1" : { "text" : " ' "},
                 "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
         "7" :  {
-                "0" : { "text" : ""},
-                "1" : { "text" : "''" },
+                "0" : { "text" : " "},
+                "1" : { "text" : " \" " },
                 "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
         "8" :  {
-                "0" : { "text" : "\u03D5"},
-                "1" : { "text" : "''"},
+                "0" : { "text" : "\u03D5 "},
+                "1" : { "text" : " \" "},
                 "longText" : "Apparent diameter",
                 "dataKey" : 'Diameter'
             },
         "9" : {
-                   "0" : { "text" : "Rise"},
-                   "1" : { "text" : "hh:mm"},
+                   "0" : { "text" : "Rise "},
+                   "1" : { "text" : "hh:mm "},
                    "longText" : "The time of rise above horizon",
                 "dataKey" : 'Rise'
             },
         "10" : {
                    "0" : { "text" : "Transit" },
-                   "1" : { "text" : "hh:mm" },
+                   "1" : { "text" : "hh:mm " },
                    "longText" : "The time of the transit across the meridian",
                 "dataKey" : 'MeridianTransit'
             },
         "11" : {
-                   "0" : { "text" : "Set" },
-                   "1" : { "text" : "hh:mm" },
+                   "0" : { "text" : " Set " },
+                   "1" : { "text" : "hh:mm " },
                    "longText" : "The time of setting",
                 "dataKey" : 'Set'
             },
 
             "12" :  {
-                "0" : { "text" : "\u0394" },
-                "1" : { "text" : "au" },
+                "0" : { "text" : "    \u0394   " },
+                "1" : { "text" : "   au   " },
                 "longText" : "Distance to Earth, in astronomical units",
                 "dataKey" : 'DistanceToEarth'
             },
 
             "13" :  {
-                "0" : { "text" : "R" },
-                "1" : { "text" : "au" },
+                "0" : { "text" : "   R   " },
+                "1" : { "text" : "  au   " },
                 "longText" : "Distance to Sun, in astronomical units",
                 "dataKey" : 'DistanceToSun'
             },
 
             "14" :  {
-                "0" : { "text" : "Elong" },
+                "0" : { "text" : " Elong" },
                 "1" : { "text" : "\u00B0" },
                 "longText" : "Elongation angle from the Sun",
                 "dataKey" : 'Elongation'
             },
 
         "15" :  {
-                "0" : { "text" : "Phase" },
+                "0" : { "text" : "  Phase" },
                 "1" : { "text" : "" },
                 "longText" : "The phase of the planet (illuminated fraction of disk, as seen from Earth)",
                 "dataKey" : 'Phase'
@@ -256,7 +256,7 @@ function PlanetPage (planetDataSource, tableName) {
 
             for (var headerKey in this.tableHeaderInfo) {
                 //var th = this.addNodeChild (row, "th", this.tableHeaderInfo[headerKey][rowIndex]['text']);
-                row += this.tableHeaderInfo[headerKey][rowIndex]['text'] + " ";
+                row += this.tableHeaderInfo[headerKey][rowIndex]['text'];
                     //var title = this.tableHeaderInfo[headerKey].longText;
                     //th.onclick = function () { alert (title); }
 
