@@ -16,6 +16,18 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
+var Formatting = {
+    "padFrontWithSpaces_2" : function (v) {
+        var res = String(v);
+        if (res.length < 1)
+            res = "  ";
+        else if (res.length < 2)
+            res = " " + res;
+        return res;
+    }
+};
+
+
 function PlanetPage (planetDataSource, tableName) {
     if (planetDataSource) {
         this.dataSource = planetDataSource;
@@ -30,99 +42,99 @@ function PlanetPage (planetDataSource, tableName) {
 
     this.tableHeaderInfo = {
         "0" : {
-                "0" : { "text" : "Date", "classes" : ["minWidth20"] },
-                "1" : { "text" : "", "classes" : ["minWidth20"] },
+                "0" : { "text" : "Date", "formattingFunc" : function(v) { return v + " ";} },
+                "1" : { "text" : "",     "formattingFunc" : function(v) { return "     ";}  },
                 "longText" : "Date: month",
                 "dataKey" : 'Month'
             } ,
 
         "1" : {
-                "0" : { "text" : "", "classes" : ["minWidth20"] },
-                "1" : { "text" : "", "classes" : ["minWidth20"] },
+                "0" : { "text" : "", "formattingFunc" : function(v) { return v;} },
+                "1" : { "text" : "", "formattingFunc" : function(v) { return v;} },
                 "longText" : "Date: day",
                 "dataKey" : 'Day'
             },
         "2" : {
-                "0" : { "text" : "\u03B1", "classes" : ["minWidth20"] },
-                "1" : { "text" : "h", "classes" : ["minWidth20"] },
+                "0" : { "text" : "\u03B1", "formattingFunc" : function(v) { return " " + v + " ";}  },
+                "1" : { "text" : "h",      "formattingFunc" : function(v) { return " " + v + " ";} },
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension",
                 "dataKey" : 'RA'
             },
         "3" : {
-                "0" : { "text" : "(RA)", "classes" : ["minWidth20", "screenOnly"] },
-                "1" : { "text" : "m", "classes" : ["minWidth20"] },
+                "0" : { "text" : "(RA)", "formattingFunc" : function(v) { return v + "  ";}  },
+                "1" : { "text" : "m",    "formattingFunc" : function(v)  { return " " + v + " ";}   },
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "4" : {
-                "0" : { "text" : "", "classes" : ["minWidth20"] },
-                "1" : { "text" : "s", "classes" : ["minWidth40"] },
+                "0" : { "text" : "",  "formattingFunc" : function(v) { return v;}  },
+                "1" : { "text" : "s", "formattingFunc" : function(v)  { return "  " + v + " ";}  },
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "5" :  {
-                "0" : { "text" : "\u03B4", "classes" : ["minWidth20"] },
-                "1" : { "text" : "\u00B0", "classes" : ["minWidth25"] },
+                "0" : { "text" : "\u03B4", "formattingFunc" : function(v) { return "   " + v + " ";} },
+                "1" : { "text" : "\u00B0", "formattingFunc" : function(v) { return "  " + v + " ";} },
                 "longText" : "Apparent geocentric equatorial coordinates: Declination",
                 "dataKey" : 'Dec'
             },
         "6" :  {
-                "0" : { "text" : "(Dec)", "classes" : ["minWidth20", "screenOnly" ] },
-                "1" : { "text" : "'", "classes" : ["minWidth20"] },
+                "0" : { "text" : "(Dec)", "formattingFunc" : function(v) { return v + " ";}  },
+                "1" : { "text" : "'",     "formattingFunc" : function(v) { return " " + v + " ";}  },
                 "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
         "7" :  {
-                "0" : { "text" : "", "classes" : ["minWidth10"  ] },
-                "1" : { "text" : "''", "classes" : ["minWidth25"] },
+                "0" : { "text" : "",   "formattingFunc" : function(v) { return v;}  },
+                "1" : { "text" : "\"", "formattingFunc" : function(v) { return " " + v + " ";}  },
                 "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
         "8" :  {
-                "0" : { "text" : "\u03D5", "classes" : ["minWidth20"] },
-                "1" : { "text" : "''", "classes" : ["minWidth20"    ] },
+                "0" : { "text" : "\u03D5", "formattingFunc" : function(v) { return " " + v + " ";}   },
+                "1" : { "text" : "\"",     "formattingFunc" : function(v) { return " " + v + " ";}   },
                 "longText" : "Apparent diameter",
                 "dataKey" : 'Diameter'
             },
         "9" : {
-                   "0" : { "text" : "Rise", "classes" :  ["minWidth50"] },
-                   "1" : { "text" : "hh:mm", "classes" : ["minWidth50"] },
+                   "0" : { "text" : "Rise",  "formattingFunc" : function(v) { return v + " ";}  },
+                   "1" : { "text" : "hh:mm", "formattingFunc" : function(v) { return v + " ";}  },
                    "longText" : "The time of rise above horizon",
                 "dataKey" : 'Rise'
             },
         "10" : {
-                   "0" : { "text" : "Transit", "classes" : ["minWidth40"  ] },
-                   "1" : { "text" : "hh:mm", "classes" : ["minWidth50"] },
+                   "0" : { "text" : "Transit", "formattingFunc" : function(v) { return v;} },
+                   "1" : { "text" : "hh:mm",   "formattingFunc" : function(v) { return v + " ";} },
                    "longText" : "The time of the transit across the meridian",
                 "dataKey" : 'MeridianTransit'
             },
         "11" : {
-                   "0" : { "text" : "Set", "classes" : ["minWidth40"  ] },
-                   "1" : { "text" : "hh:mm", "classes" : ["minWidth55"] },
+                   "0" : { "text" : "Set",   "formattingFunc" : function(v) { return v;}  },
+                   "1" : { "text" : "hh:mm", "formattingFunc" : function(v) { return v + " ";}  },
                    "longText" : "The time of setting",
                 "dataKey" : 'Set'
             },
 
             "12" :  {
-                "0" : { "text" : "\u0394", "classes" : ["minWidth55"] },
-                "1" : { "text" : "au", "classes" : ["minWidth55"  ] },
+                "0" : { "text" : "\u0394", "formattingFunc" : function(v) { return v;}  },
+                "1" : { "text" : "au",     "formattingFunc" : function(v) { return v;}  },
                 "longText" : "Distance to Earth, in astronomical units",
                 "dataKey" : 'DistanceToEarth'
             },
 
             "13" :  {
-                "0" : { "text" : "R", "classes" : ["minWidth55"   ] },
-                "1" : { "text" : "au", "classes" : ["minWidth55"] },
+                "0" : { "text" : "R",  "formattingFunc" : function(v) { return v;}  },
+                "1" : { "text" : "au", "formattingFunc" : function(v) { return v;}  },
                 "longText" : "Distance to Sun, in astronomical units",
                 "dataKey" : 'DistanceToSun'
             },
 
             "14" :  {
-                "0" : { "text" : "Elong", "classes" : ["minWidth70" ] },
-                "1" : { "text" : "\u00B0", "classes" : ["minWidth62"] },
+                "0" : { "text" : "Elong", "formattingFunc" : function(v) { return v;}  },
+                "1" : { "text" : "\u00B0","formattingFunc" : function(v) { return v;}  },
                 "longText" : "Elongation angle from the Sun",
                 "dataKey" : 'Elongation'
             },
 
         "15" :  {
-                "0" : { "text" : "Phase", "classes" : ["minWidth50"] },
-                "1" : { "text" : "", "classes" : ["minWidth50"] },
+                "0" : { "text" : "Phase", "formattingFunc" : function(v) { return v;}  },
+                "1" : { "text" : "",      "formattingFunc" : function(v) { return v;}  },
                 "longText" : "The phase of the planet (illuminated fraction of disk, as seen from Earth)",
                 "dataKey" : 'Phase'
             }
@@ -226,13 +238,15 @@ function PlanetPage (planetDataSource, tableName) {
         var rows = [];
         for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
             var row = "";
-            //var currentRowClasses = rowClasses[rowIndex];
+            // var currentRowFuncs = rowClasses[rowIndex];
             //for (var classIndex = 0; classIndex < rowClasses.length; classIndex++)
             //    row.classList.add (currentRowClasses[classIndex]);
 
             for (var headerKey in this.tableHeaderInfo) {
                 //var th = this.addNodeChild (row, "th", this.tableHeaderInfo[headerKey][rowIndex]['text']);
-                row += this.tableHeaderInfo[headerKey][rowIndex]['text'] + " ";
+                row += 
+                    this.tableHeaderInfo[headerKey][rowIndex]['formattingFunc'] (
+                        this.tableHeaderInfo[headerKey][rowIndex]['text']);
                     //var title = this.tableHeaderInfo[headerKey].longText;
                     //th.onclick = function () { alert (title); }
 
