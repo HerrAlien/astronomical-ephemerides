@@ -80,153 +80,174 @@ var MoonData = {
         dataSource : MoonData,
         tableHeaderInfo : {
         "0" : {
-                "0" : { "text" : "Date", "classes" : ["minWidth20"] },
-                "1" : { "text" : "", "classes" : ["minWidth20"] },
+                "0" : { "text" : "Date"},
+                "1" : { "text" : ""},
                 "longText" : "Date: month",
                 "dataKey" : 'Month'
             } ,
 
         "1" : {
-                "0" : { "text" : "", "classes" : ["minWidth20"] },
-                "1" : { "text" : "", "classes" : ["minWidth20"] },
+                "0" : { "text" : ""},
+                "1" : { "text" : ""},
                 "longText" : "Date: day",
                 "dataKey" : 'Day'
             },
         "2" : {
-                "0" : { "text" : "\u03B1", "classes" : ["minWidth20"] },
-                "1" : { "text" : "h", "classes" : ["minWidth20"] },
+                "0" : { "text" : "\u03B1"},
+                "1" : { "text" : "h"},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension",
                 "dataKey" : 'RaGeo'
             },
         "3" : {
-                "0" : { "text" : "(RA)", "classes" : ["minWidth20", "screenOnly"] },
-                "1" : { "text" : "m", "classes" : ["minWidth20"] },
+                "0" : { "text" : "(RA)"},
+                "1" : { "text" : "m"},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "4" : {
-                "0" : { "text" : "", "classes" : ["minWidth20"] },
-                "1" : { "text" : "s", "classes" : ["minWidth40"] },
+                "0" : { "text" : ""},
+                "1" : { "text" : "s"},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "5" :  {
-                "0" : { "text" : "\u03B4", "classes" : ["minWidth20"] },
-                "1" : { "text" : "\u00B0", "classes" : ["minWidth25"] },
+                "0" : { "text" : "\u03B4"},
+                "1" : { "text" : "\u00B0"},
                 "longText" : "Apparent geocentric equatorial coordinates: Declination",
                 "dataKey" : 'DecGeo'
             },
         "6" :  {
-                "0" : { "text" : "(Dec)", "classes" : ["minWidth20" , "screenOnly"] },
-                "1" : { "text" : "'", "classes" : ["minWidth20"] },
+                "0" : { "text" : "(Dec)"},
+                "1" : { "text" : "'"},
                 "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
         "7" :  {
-                "0" : { "text" : "", "classes" : ["minWidth10"  ] },
-                "1" : { "text" : "''", "classes" : ["minWidth25"] },
+                "0" : { "text" : ""},
+                "1" : { "text" : "''"},
                 "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
 
             "8" : {
-                    "0" : { "text" :"\u03B1", "classes" : ["minWidth20", "positionEphemeris"] },
-                    "1" : { "text" :"h"     , "classes" : ["minWidth20", "positionEphemeris"] },
+                    "0" : { "text" :"\u03B1"},
+                    "1" : { "text" :"h"     },
                     "longText" : "Apparent topocentric equatorial coordinates: Right Ascension",
                     "dataKey" : "RaTopo"
                 },
             "9" : {
-                    "0" : { "text" :"topo", "classes" : ["minWidth20", "positionEphemeris"] },
-                    "1" : { "text" :"m"   , "classes" : ["minWidth20", "positionEphemeris"] },
+                    "0" : { "text" :"topo"},
+                    "1" : { "text" :"m"   },
                     "longText" : "Apparent topocentric equatorial coordinates: Right Ascension"
                 },
             "10" : {
-                    "0" : { "text" :"" , "classes" : ["minWidth20", "positionEphemeris"] },
-                    "1" : { "text" :"s", "classes" : ["minWidth30", "positionEphemeris"] },
+                    "0" : { "text" :"" },
+                    "1" : { "text" :"s"},
                     "longText" : "Apparent topocentric equatorial oordinates: Right Ascension"
                 },
             "11" :  {
-                    "0" : { "text" :"\u03B4", "classes" : ["minWidth25", "positionEphemeris"] },
-                    "1" : { "text" :"\u00B0", "classes" : ["minWidth25", "positionEphemeris"] },
+                    "0" : { "text" :"\u03B4"},
+                    "1" : { "text" :"\u00B0"},
                     "longText" : "Apparent topocentric equatorial coordinates: Declination",
                     "dataKey" : "DecTopo"
                 },
             "12" :  {
-                    "0" : { "text" :"topo", "classes" : ["minWidth20", "positionEphemeris"] },
-                    "1" : { "text" :"'"   , "classes" : ["minWidth20", "positionEphemeris"] },
+                    "0" : { "text" :"topo"},
+                    "1" : { "text" :"'"   },
                     "longText" : "Apparent topocentric equatorial coordinates: Declination"
                 },
             "13" :  {
-                    "0" : { "text" :""  , "classes" : ["minWidth20", "positionEphemeris"] },
-                    "1" : { "text" :"''", "classes" : ["minWidth30", "positionEphemeris"] },
+                    "0" : { "text" :""  },
+                    "1" : { "text" :"''"},
                     "longText" : "Apparent topocentric equatorial coordinates: Declination"
                 },
 
            
             "14" :  {
-                    "0" : { "text" :"\u03D5", "classes" : ["minWidth20", "positionEphemeris"] },
-                    "1" : { "text" :"'"     , "classes" : ["minWidth20", "positionEphemeris"] },
+                    "0" : { "text" :"\u03D5"},
+                    "1" : { "text" :"'"     },
                     "longText" : "Apparent diameter",
                 "dataKey" : 'Diameter'
                 },
             "15" :  {
-                    "0" : { "text" :""  , "classes" : ["minWidth15", "positionEphemeris"] },
-                    "1" : { "text" :"''", "classes" : ["minWidth30", "positionEphemeris"] },
+                    "0" : { "text" :""  },
+                    "1" : { "text" :"''"},
                     "longText" : "Apparent diameter"
                 },
                 
             "16" : {
-                    "0" : { "text" :"Rise", "classes" : ["minWidth50", "positionEphemeris"] },
-                    "1" : { "text" :"hh:mm"      , "classes" : ["minWidth50", "positionEphemeris"] },
+                    "0" : { "text" :"Rise"},
+                    "1" : { "text" :"hh:mm"      },
                     "longText" : "The time of rise above horizon",
                 "dataKey" : 'Rise'
                 },
             "17" : {
-                    "0" : { "text" :"Transit" , "classes" : ["minWidth50", "positionEphemeris"] },
-                    "1" : { "text" :"hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
+                    "0" : { "text" :"Transit" },
+                    "1" : { "text" :"hh:mm"},
                     "longText" : "The time of the transit across the meridian",
                 "dataKey" : 'MeridianTransit'
                 },
             "18" : {
-                    "0" : { "text" :"Set" , "classes" : ["minWidth55", "positionEphemeris"] },
-                    "1" : { "text" :"hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
+                    "0" : { "text" :"Set" },
+                    "1" : { "text" :"hh:mm"},
                     "longText" : "The time of setting",
                 "dataKey" : 'Set'
                 },
  
             "19" :  {
-                    "0" : { "text" :"\u03C0", "classes" : ["minWidth15", "positionEphemeris"] },
-                    "1" : { "text" :"\u00B0", "classes" : ["minWidth15", "positionEphemeris"] },
+                    "0" : { "text" :"\u03C0"},
+                    "1" : { "text" :"\u00B0"},
                     "longText" : "Equatorial horizontal parallax",
                 "dataKey" : 'Parallax'
                 },
                 
             "20" :  {
-                    "0" : { "text" :"" , "classes" : ["minWidth20", "physicalEphemeris"] },
-                    "1" : { "text" :"'", "classes" : ["minWidth20", "physicalEphemeris"] },
+                    "0" : { "text" :"" },
+                    "1" : { "text" :"'"},
                     "longText" : "Equatorial horizontal parallax"
                 },
 
             "21" :  {
-                    "0" : { "text" :""  , "classes" : ["minWidth20", "physicalEphemeris"] },
-                    "1" : { "text" :"''", "classes" : ["minWidth20", "physicalEphemeris"] },
+                    "0" : { "text" :""  },
+                    "1" : { "text" :"''"},
                     "longText" : "Equatorial horizontal parallax"
                 },
             "22" :  {
-                    "0" : { "text" :"90-l0" , "classes" : ["minWidth52", "physicalEphemeris"] },
-                    "1" : { "text" :"\u00B0", "classes" : ["minWidth52", "physicalEphemeris"] },
+                    "0" : { "text" :"90-l0" },
+                    "1" : { "text" :"\u00B0"},
                     "longText" : "colongitude of the Sun (physical ephemeris)",
                 "dataKey" : 'Colongitude'
                 },
             "23" :  {
-                    "0" : { "text" :"b0"    , "classes" : ["minWidth65", "physicalEphemeris"] },
-                    "1" : { "text" :"\u00B0", "classes" : ["minWidth65", "physicalEphemeris"] },
+                    "0" : { "text" :"b0"    },
+                    "1" : { "text" :"\u00B0"},
                     "longText" : "latitude of the Sun (physical ephemeris)",
                 "dataKey" : 'b0'
                 },
         },
         
-        firstDataRowColumnClasses : [["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"], 
-                         ["minWidth25"], ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"], 
-                         ["minWidth20"], ["minWidth25"], ["minWidth20"], ["minWidth30"], ["minWidth20"],
-                         ["minWidth20"], ["minWidth50"], ["minWidth50"], ["minWidth50"], ["minWidth15"],
-                         ["minWidth20"], ["minWidth20"], ["minWidth52"], ["minWidth52"]],
+        formattingFunctions : [
+        function(month) { return prePadTo(month, " ", 3); }, 
+        function (day) { return prePadTo(day, " ", 2); }, 
+        function (RA_h) { return prePadTo(RA_h, " ", 2); },
+        function (RA_m) { return prePadTo(RA_m, " ", 2); }, 
+        function (RA_s) { return prePadTo(RA_s, " ", 4);  },
+        function (dec_deg) { return prePadTo(dec_deg, " ", 3); },
+        function (dec_m) { return prePadTo(dec_m, " ", 2); },
+        function (dec_s) { return prePadTo(dec_s, " ", 2); },
+        function (RA_h) { return prePadTo(RA_h, " ", 2); },
+        function (RA_m) { return prePadTo(RA_m, " ", 2); }, 
+        function (RA_s) { return prePadTo(RA_s, " ", 4);  },
+        function (dec_deg) { return prePadTo(dec_deg, " ", 3); },
+        function (dec_m) { return prePadTo(dec_m, " ", 2); },
+        function (dec_s) { return prePadTo(dec_s, " ", 2); },
+        function (phi_min) { return prePadTo(phi_min, " ", 2); },
+        function (phi_sec) { return prePadTo(phi_sec, " ", 2); },
+        function(v) { return prePadTo(v, " ", 1); }, 
+        function(v) { return prePadTo(v, " ", 1); }, 
+        function(v) { return prePadTo(v, " ", 1); }, 
+        function(v) { return prePadTo(v, " ", 1); }, 
+        function (pi_min) { return prePadTo(pi_min, " ", 2); },
+        function (pi_sec) { return prePadTo(pi_sec, " ", 2); },
+        function(v) { return prePadTo(v, " ", 7); }, 
+        function(v) { return prePadTo(v, " ", 6); }
+        ],
  
         lastDisplayedMonth : -1,
         months : ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
@@ -289,11 +310,6 @@ var MoonData = {
     
     MoonPage.addTableHeader = function (table, classes, tBody) {            
         var result = this.oldHeaderFunc(table, classes, tBody);
-        result.row1.cells[22].textContent = "90-l";
-        this.addNodeChild(result.row1.cells[22], "sub", "0");
-        result.row1.cells[23].textContent = "b";
-        this.addNodeChild(result.row1.cells[23], "sub", "0");
-        
         return result;
     };
     
