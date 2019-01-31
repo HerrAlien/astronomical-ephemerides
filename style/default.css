@@ -9,6 +9,7 @@
         margin-left: auto;
         margin-right: auto;
         padding-top: 0px;
+        width: 100%;
     }
 
     .showPositional #JupiterTable tr.firstHeaderRow, 
@@ -151,6 +152,7 @@ table {
     font-size: 16px;
     margin-left: auto;
     margin-right:  auto;
+    width: 675px;
 }
 
  td,  th {
@@ -183,7 +185,9 @@ tr.secondHeaderRowScrolled th:last-of-type {
     box-shadow: 0px 2px 1px #CCCCCC;
 }
 
-
+#MarsTable, #JupiterTable {
+    width: 920px;
+}
 
 
 .muddle {
