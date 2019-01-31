@@ -51,8 +51,8 @@ var JupiterData = {};
                 "longText" : "Date: day",
                 "dataKey" : 'Day'
             };
-            Page.tableHeaderInfo['18'] = {  "dataKey" : 'CentralMeridianApparentLongitude_System1', "0" : {"text" : "L0-S1"}, "1" : {"text" : "  \u00B0"}, "longText" : "Longitude of central meridian (physical ephemeris)" };
-            Page.tableHeaderInfo['19'] = {  "dataKey" : 'CentralMeridianApparentLongitude_System2', "0" : {"text" : " L0-S2"}, "1" : {"text" : "      \u00B0"}, "longText" : "Longitude of central meridian (physical ephemeris)" };
+            Page.tableHeaderInfo['18'] = {  "dataKey" : 'CentralMeridianApparentLongitude_System1', "0" : {"text" : "L0-S1"}, "1" : {"text" : "  \u00B0"}, "longText" : "Longitude of central meridian, System 1 (physical ephemeris)" };
+            Page.tableHeaderInfo['19'] = {  "dataKey" : 'CentralMeridianApparentLongitude_System2', "0" : {"text" : " L0-S2"}, "1" : {"text" : "      \u00B0"}, "longText" : "Longitude of central meridian, System 2 (physical ephemeris)" };
             Page.tableHeaderInfo['20'] = {  "dataKey" : 'EarthDeclination', "0" : {"text" : "    DE"}, "1" : {"text" : "     \u00B0"}, "longText" : "Planetocentric declination of Earth (physical ephemeris)" };
             Page.tableHeaderInfo['21'] = {  "dataKey" : 'SunDeclination', "0" : {"text" : "   DS"}, "1" : {"text" : "    \u00B0"}, "longText" : "Planetocentric declination of the Sun (physical ephemeris)" };
             Page.tableHeaderInfo['22'] = {  "dataKey" : 'P', "0" : {"text" : "    P" }, "1" : {"text" : "    \u00B0"}, "longText" : "Position angle of the North Pole (physical ephemeris)" };
