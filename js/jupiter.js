@@ -39,15 +39,34 @@ var JupiterData = {};
 
             var Page = new PlanetPage (JupiterData, "JupiterTable");
 
-            Page.tableHeaderInfo['16'] = { "0" : {"text" : "Date", "classes" :  ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: month" };
-            Page.tableHeaderInfo['17'] = { "0" : {"text" :"" , "classes" :      ["minWidth20", "physSeenAtSmallWidth", "physPosHidden"]}, "1" : {"text" : "", "classes" :       ["minWidth30", "physSeenAtSmallWidth", "physPosHidden"]}, "longText" : "Date: day" };
-            Page.tableHeaderInfo['18'] = {  "dataKey" : 'CentralMeridianApparentLongitude_System1', "0" : {"text" : "L0-S1", "classes" : ["minWidth50", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth50", "physPosHidden"]}, "longText" : "Longitude of central meridian, System 1 (physical ephemeris)" };
-            Page.tableHeaderInfo['19'] = {  "dataKey" : 'CentralMeridianApparentLongitude_System2', "0" : {"text" :"L0-S2" , "classes" : ["minWidth50", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth50", "physPosHidden"]}, "longText" : "Longitude of central meridian, System 2 (physical ephemeris)" };
-            Page.tableHeaderInfo['20'] = {  "dataKey" : 'EarthDeclination', "0" : {"text" :"DE"    , "classes" : ["minWidth40", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physPosHidden"]}, "longText" : "Planetocentric declination of Earth (physical ephemeris)" };
-            Page.tableHeaderInfo['21'] = {  "dataKey" : 'SunDeclination', "0" : {"text" :"DS"    , "classes" : ["minWidth45", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth45", "physPosHidden"]}, "longText" : "Planetocentric declination of the Sun (physical ephemeris)" };
-            Page.tableHeaderInfo['22'] = {  "dataKey" : 'P', "0" : {"text" :"P"     , "classes" : ["minWidth45", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth45", "physPosHidden"]}, "longText" : "Position angle of the North Pole (physical ephemeris)" };
+            Page.tableHeaderInfo['16'] = {
+                "0" : { "text" : " Date  " },
+                "1" : { "text" : "          " },
+                "longText" : "Date: month",
+                "dataKey" : 'Month'
+            };
+            Page.tableHeaderInfo['17'] = {
+                "0" : { "text" : " "},
+                "1" : { "text" : "          "},
+                "longText" : "Date: day",
+                "dataKey" : 'Day'
+            };
+            Page.tableHeaderInfo['18'] = {  "dataKey" : 'CentralMeridianApparentLongitude_System1', "0" : {"text" : "L0-S1"}, "1" : {"text" : "  \u00B0"}, "longText" : "Longitude of central meridian (physical ephemeris)" };
+            Page.tableHeaderInfo['19'] = {  "dataKey" : 'CentralMeridianApparentLongitude_System2', "0" : {"text" : " L0-S2"}, "1" : {"text" : "      \u00B0"}, "longText" : "Longitude of central meridian (physical ephemeris)" };
+            Page.tableHeaderInfo['20'] = {  "dataKey" : 'EarthDeclination', "0" : {"text" : "    DE"}, "1" : {"text" : "     \u00B0"}, "longText" : "Planetocentric declination of Earth (physical ephemeris)" };
+            Page.tableHeaderInfo['21'] = {  "dataKey" : 'SunDeclination', "0" : {"text" : "   DS"}, "1" : {"text" : "    \u00B0"}, "longText" : "Planetocentric declination of the Sun (physical ephemeris)" };
+            Page.tableHeaderInfo['22'] = {  "dataKey" : 'P', "0" : {"text" : "    P" }, "1" : {"text" : "    \u00B0"}, "longText" : "Position angle of the North Pole (physical ephemeris)" };
 
-            //Page.firstDataRowColumnClasses = Page.firstDataRowColumnClasses.concat([["minWidth20", "physSeenAtSmallWidth"], ["minWidth20", "physSeenAtSmallWidth"], ["minWidth50"], ["minWidth50"], ["minWidth40"], ["minWidth40"], ["minWidth40"]]);
+
+            Page.formattingFunctions = Page.formattingFunctions.concat([
+            function(month) { return prePadTo(month, " ", 3); }, 
+            function (day) { return prePadTo(day, " ", 2); }, 
+            function(L01) { return prePadTo(L01, " ", 5); }, 
+            function(L02) { return prePadTo(L02, " ", 5); }, 
+            function(DE) { return prePadTo(DE, " ", 5); }, 
+            function(DS) { return prePadTo(DS, " ", 4); }, 
+            function(P) { return prePadTo(P, " ", 4); }
+            ]);
 
             Page["old_prepareOneDayDataObjectForView"] = Page.prepareOneDayDataObjectForView;
             Page.prepareOneDayDataObjectForView = function (obj, JD) {
