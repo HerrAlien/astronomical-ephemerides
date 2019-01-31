@@ -183,7 +183,8 @@ function PlanetPage (planetDataSource, tableName) {
             if (!this.pageRendered) {
                 this.reset();
                 
-                this.addTableHeader (this.hostElement, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
+                // so far we have no styling, so suppress the first header for now.
+                // this.addTableHeader (this.hostElement, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
 
                 var hostElement = pageObj.hostElement;
                 var columnClasses = pageObj.firstDataRowColumnClasses;
@@ -203,9 +204,7 @@ function PlanetPage (planetDataSource, tableName) {
                         var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JD, true), JD);
                         pageObj.appendLine (preparedData, columnClasses, docFragment);
                     }
-                    
-                    pageObj.addTableHeader (docFragment, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
-                    
+                                        
                     hostElement.appendChild(docFragment);
                     
                     requestAnimationFrame (function() {delayedAppendData (JD, endJD, steps, hostElement, columnClasses, dataSource); });
@@ -216,32 +215,22 @@ function PlanetPage (planetDataSource, tableName) {
         };
     
     PlanetPage.prototype["appendLine"] = function (dataArray, classes, docFragment) {
-            //var line = this.hostElement.ownerDocument.createElement("tr");
-            var line = "";
-
             if (!docFragment)
                 docFragment = this.hostElement;
             
             var changedMonth = !this.lastAppendedLine || (dataArray[0] && this.lastAppendedLine[0] != dataArray[0]);
             
+            if (changedMonth) {
+                this.addTableHeader (docFragment, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
+            }
+
+            var line = "";
             var i = 0;
             for (i = 0; i < dataArray.length; i++) {
                 line += this.formattingFunctions[i](dataArray[i]) + " ";
 
-                /*if (i > 1)
-                {
-                    if (i < 15)
-                        td.classList.add ("positionEphemeris");
-                    else
-                        td.classList.add ("physicalEphemeris");
-                }
-                
-                if (!!classes && !!classes[i]) {
-                    var colClasses = classes[i];
-                    for (var classIndex = 0; classIndex < colClasses.length; classIndex++)
-                        td.classList.add (colClasses[classIndex]);
-                } */
             }
+
             docFragment.textContent = docFragment.textContent + line + "\n";
             this.lastAppendedLine = dataArray;
         };

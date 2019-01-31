@@ -46,7 +46,7 @@ var MarsData = {};
             Page.tableHeaderInfo['19'] = {  "dataKey" : 'EarthDeclination', "0" : {"text" : "DE", "classes" : ["minWidth40", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physPosHidden"]}, "longText" : "Planetocentric declination of Earth (physical ephemeris)" };
             Page.tableHeaderInfo['20'] = {  "dataKey" : 'SunDeclination', "0" : {"text" : "DS", "classes" : ["minWidth40", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth40", "physPosHidden"]}, "longText" : "Planetocentric declination of the Sun (physical ephemeris)" };
             Page.tableHeaderInfo['21'] = {  "dataKey" : 'P', "0" : {"text" : "P" , "classes" : ["minWidth55", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth55", "physPosHidden"]}, "longText" : "Position angle of the North Pole (physical ephemeris)" };
-            Page.firstDataRowColumnClasses = Page.firstDataRowColumnClasses.concat([["minWidth20", "physSeenAtSmallWidth"], ["minWidth20", "physSeenAtSmallWidth"], ["minWidth50"], ["minWidth40"], ["minWidth40"], ["minWidth40"]]);
+            //Page.firstDataRowColumnClasses = Page.firstDataRowColumnClasses.concat([["minWidth20", "physSeenAtSmallWidth"], ["minWidth20", "physSeenAtSmallWidth"], ["minWidth50"], ["minWidth40"], ["minWidth40"], ["minWidth40"]]);
 
             Page["old_addPlanetTableHeader"] = Page.addPlanetTableHeader;
             Page["old_prepareOneDayDataObjectForView"] = Page.prepareOneDayDataObjectForView;

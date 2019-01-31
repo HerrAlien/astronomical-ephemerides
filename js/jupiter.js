@@ -47,7 +47,7 @@ var JupiterData = {};
             Page.tableHeaderInfo['21'] = {  "dataKey" : 'SunDeclination', "0" : {"text" :"DS"    , "classes" : ["minWidth45", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth45", "physPosHidden"]}, "longText" : "Planetocentric declination of the Sun (physical ephemeris)" };
             Page.tableHeaderInfo['22'] = {  "dataKey" : 'P', "0" : {"text" :"P"     , "classes" : ["minWidth45", "physPosHidden"]}, "1" : {"text" : "\u00B0", "classes" : ["minWidth45", "physPosHidden"]}, "longText" : "Position angle of the North Pole (physical ephemeris)" };
 
-            Page.firstDataRowColumnClasses = Page.firstDataRowColumnClasses.concat([["minWidth20", "physSeenAtSmallWidth"], ["minWidth20", "physSeenAtSmallWidth"], ["minWidth50"], ["minWidth50"], ["minWidth40"], ["minWidth40"], ["minWidth40"]]);
+            //Page.firstDataRowColumnClasses = Page.firstDataRowColumnClasses.concat([["minWidth20", "physSeenAtSmallWidth"], ["minWidth20", "physSeenAtSmallWidth"], ["minWidth50"], ["minWidth50"], ["minWidth40"], ["minWidth40"], ["minWidth40"]]);
 
             Page["old_prepareOneDayDataObjectForView"] = Page.prepareOneDayDataObjectForView;
             Page.prepareOneDayDataObjectForView = function (obj, JD) {
