@@ -31,15 +31,7 @@ function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
 }
 
 PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
-    this.cellsToHide_physical = [];
-    this.cellsToHide_positional = [];
-    for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
-        var cells = this.table.rows[rowIndex].cells;
-        for (var colIndex = 16; colIndex < cells.length; colIndex++)
-            this.cellsToHide_physical.push(cells[colIndex]);
-        for (var colIndex = 0; colIndex < 16; colIndex++)
-            this.cellsToHide_positional.push(cells[colIndex]);
-    }
+    return [];
 }
 
 PhysicalPositionalToggler.prototype['init'] = function () {

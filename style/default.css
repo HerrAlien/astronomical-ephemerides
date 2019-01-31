@@ -260,7 +260,7 @@ tr.secondHeaderRowScrolled th:last-of-type {
 
 .physicalPositionalButtonsHolder {
     position: fixed;
-    bottom: 134px;
+    bottom: 118px;
     background: #ffffff;
     padding: 2px 0px 2px 2px;
     width: 100%;
@@ -292,22 +292,11 @@ tr.secondHeaderRowScrolled th:last-of-type {
     }
 
     #jupiterHorizontalScroller, #marsHorizontalScroller {
-        width: 647px;
+        width: 675px;
     }
 
-    #JupiterTable tr.firstHeaderRow, 
-    #JupiterTable tr.secondHeaderRow,
-    #JupiterTable tr.firstHeaderRowScrolled, 
-    #JupiterTable tr.secondHeaderRowScrolled, 
-    #MarsTable tr.firstHeaderRow, 
-    #MarsTable tr.secondHeaderRow,
-    #MarsTable tr.firstHeaderRowScrolled, 
-    #MarsTable tr.secondHeaderRowScrolled  {
-        width: 635px;
-    }
-    
     .showPhysical {
-        margin-left: -650px;
+        margin-left: -675px;
         margin-right: auto;
     }
     
@@ -361,17 +350,18 @@ tr.secondHeaderRowScrolled th:last-of-type {
 }
     
 .positionalButton, .physicalButton {
-    height:23px; 
-    border: solid 1px #000000; 
-    float: left; 
-    padding-top: 2px; 
-    padding-left: 5px; 
-    width: 170px; 
-    text-align: center;        
+    height: 33px;
+    border: solid 1px #000000;
+    float: left;
+    padding-top: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    /* width: 170px; */
+    text-align: center;
     cursor: pointer;
     user-select: none;
     font-family: Verdana;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .positionalButton {
