@@ -156,6 +156,15 @@ table {
     font-family: Courier;
 }
 
+#SunTable {
+    width: 760px;
+}
+
+#MoonTable {
+    width: 840px;
+}
+
+
  td,  th {
     padding: 2px;
 }
