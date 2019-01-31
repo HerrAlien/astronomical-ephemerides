@@ -80,106 +80,109 @@ var MoonData = {
         dataSource : MoonData,
         tableHeaderInfo : {
         "0" : {
-                "0" : { "text" : "Date"},
-                "1" : { "text" : ""},
+                "0" : { "text" : "Date  " },
+                "1" : { "text" : "     " },
                 "longText" : "Date: month",
                 "dataKey" : 'Month'
             } ,
 
         "1" : {
-                "0" : { "text" : ""},
-                "1" : { "text" : ""},
+                "0" : { "text" : " "},
+                "1" : { "text" : " "},
                 "longText" : "Date: day",
                 "dataKey" : 'Day'
             },
+
+
         "2" : {
-                "0" : { "text" : "\u03B1"},
-                "1" : { "text" : "h"},
+                "0" : { "text" : "  \u03B1 "},
+                "1" : { "text" : "  h  "},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension",
                 "dataKey" : 'RaGeo'
             },
         "3" : {
-                "0" : { "text" : "(RA)"},
-                "1" : { "text" : "m"},
+                "0" : { "text" : "(RA)   "},
+                "1" : { "text" : "m  "},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "4" : {
-                "0" : { "text" : ""},
-                "1" : { "text" : "s"},
+                "0" : { "text" : " "},
+                "1" : { "text" : " s   "},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "5" :  {
-                "0" : { "text" : "\u03B4"},
-                "1" : { "text" : "\u00B0"},
+                "0" : { "text" : " \u03B4 "},
+                "1" : { "text" : " \u00B0 "},
                 "longText" : "Apparent geocentric equatorial coordinates: Declination",
                 "dataKey" : 'DecGeo'
             },
         "6" :  {
-                "0" : { "text" : "(Dec)"},
-                "1" : { "text" : "'"},
+                "0" : { "text" : "(Dec) "},
+                "1" : { "text" : " ' "},
                 "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
         "7" :  {
-                "0" : { "text" : ""},
-                "1" : { "text" : "''"},
+                "0" : { "text" : " "},
+                "1" : { "text" : " \" " },
                 "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
 
+
             "8" : {
-                    "0" : { "text" :"\u03B1"},
-                    "1" : { "text" :"h"     },
+                    "0" : { "text" :"  \u03B1"},
+                    "1" : { "text" :" h"     },
                     "longText" : "Apparent topocentric equatorial coordinates: Right Ascension",
                     "dataKey" : "RaTopo"
                 },
             "9" : {
-                    "0" : { "text" :"topo"},
-                    "1" : { "text" :"m"   },
+                    "0" : { "text" :" topo "},
+                    "1" : { "text" :"  m"   },
                     "longText" : "Apparent topocentric equatorial coordinates: Right Ascension"
                 },
             "10" : {
                     "0" : { "text" :"" },
-                    "1" : { "text" :"s"},
+                    "1" : { "text" :"   s"},
                     "longText" : "Apparent topocentric equatorial oordinates: Right Ascension"
                 },
             "11" :  {
-                    "0" : { "text" :"\u03B4"},
-                    "1" : { "text" :"\u00B0"},
+                    "0" : { "text" :"    \u03B4"},
+                    "1" : { "text" :"    \u00B0"},
                     "longText" : "Apparent topocentric equatorial coordinates: Declination",
                     "dataKey" : "DecTopo"
                 },
             "12" :  {
-                    "0" : { "text" :"topo"},
-                    "1" : { "text" :"'"   },
+                    "0" : { "text" :" topo "},
+                    "1" : { "text" :"  '"   },
                     "longText" : "Apparent topocentric equatorial coordinates: Declination"
                 },
             "13" :  {
                     "0" : { "text" :""  },
-                    "1" : { "text" :"''"},
+                    "1" : { "text" :"  \""},
                     "longText" : "Apparent topocentric equatorial coordinates: Declination"
                 },
 
            
             "14" :  {
-                    "0" : { "text" :"\u03D5"},
-                    "1" : { "text" :"'"     },
+                    "0" : { "text" :"   \u03D5"},
+                    "1" : { "text" :"  '"     },
                     "longText" : "Apparent diameter",
                 "dataKey" : 'Diameter'
                 },
             "15" :  {
                     "0" : { "text" :""  },
-                    "1" : { "text" :"''"},
+                    "1" : { "text" :"  \""},
                     "longText" : "Apparent diameter"
                 },
                 
             "16" : {
-                    "0" : { "text" :"Rise"},
-                    "1" : { "text" :"hh:mm"      },
+                    "0" : { "text" :"   Rise"},
+                    "1" : { "text" :" hh:mm"      },
                     "longText" : "The time of rise above horizon",
                 "dataKey" : 'Rise'
                 },
             "17" : {
-                    "0" : { "text" :"Transit" },
-                    "1" : { "text" :"hh:mm"},
+                    "0" : { "text" :" Transit " },
+                    "1" : { "text" :" hh:mm "},
                     "longText" : "The time of the transit across the meridian",
                 "dataKey" : 'MeridianTransit'
                 },
@@ -191,32 +194,32 @@ var MoonData = {
                 },
  
             "19" :  {
-                    "0" : { "text" :"\u03C0"},
-                    "1" : { "text" :"\u00B0"},
+                    "0" : { "text" :"     \u03C0"},
+                    "1" : { "text" :" \u00B0"},
                     "longText" : "Equatorial horizontal parallax",
                 "dataKey" : 'Parallax'
                 },
                 
             "20" :  {
                     "0" : { "text" :"" },
-                    "1" : { "text" :"'"},
+                    "1" : { "text" :"  '"},
                     "longText" : "Equatorial horizontal parallax"
                 },
 
             "21" :  {
                     "0" : { "text" :""  },
-                    "1" : { "text" :"''"},
+                    "1" : { "text" :"  \""},
                     "longText" : "Equatorial horizontal parallax"
                 },
             "22" :  {
-                    "0" : { "text" :"90-l0" },
-                    "1" : { "text" :"\u00B0"},
+                    "0" : { "text" :"    90-l0" },
+                    "1" : { "text" :"   \u00B0"},
                     "longText" : "colongitude of the Sun (physical ephemeris)",
                 "dataKey" : 'Colongitude'
                 },
             "23" :  {
-                    "0" : { "text" :"b0"    },
-                    "1" : { "text" :"\u00B0"},
+                    "0" : { "text" :"     b0"    },
+                    "1" : { "text" :"       \u00B0"},
                     "longText" : "latitude of the Sun (physical ephemeris)",
                 "dataKey" : 'b0'
                 },
