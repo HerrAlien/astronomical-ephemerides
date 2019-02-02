@@ -160,6 +160,10 @@ table {
     background-size: contain;
 }
 
+.planetTableHeader {
+    background: #ffffff;
+}
+
 #SunTable {
     width: 760px;
 }

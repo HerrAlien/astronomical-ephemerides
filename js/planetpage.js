@@ -196,13 +196,15 @@ function PlanetPage (planetDataSource, tableName) {
                     
                     var i = 0;
                     var docFragment = hostElement.ownerDocument.createDocumentFragment();
+                    pageObj.addTableHeader (docFragment, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
+                    var span = pageObj.addNodeChild(docFragment, "span");
                     
                     for (i = 0; i < steps; i++, JD+=stepSize) {
                         if (JD >= endJD)
                             break;
                         
                         var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JD, true), JD);
-                        pageObj.appendLine (preparedData, columnClasses, docFragment);
+                        pageObj.appendLine (preparedData, columnClasses, span);
                     }
                                         
                     hostElement.appendChild(docFragment);
@@ -257,8 +259,11 @@ function PlanetPage (planetDataSource, tableName) {
                 //}
             }
             rows[rowIndex] = row + "\n";
-            table.textContent = table.textContent + rows[rowIndex];
         }
+        
+        var header = this.addNodeChild (table, "span",  rows[0] + rows[1]);
+        header.classList.add("planetTableHeader");
+
         return {"row1" : rows[0], "row2" : rows[1] };
     };
 
