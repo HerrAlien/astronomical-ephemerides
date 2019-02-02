@@ -162,6 +162,9 @@ table {
 
 .planetTableHeader {
     background: #ffffff;
+    display: block;
+    border-bottom: solid 1px #000000;
+    border-top: solid 1px;
 }
 
 #SunTable {

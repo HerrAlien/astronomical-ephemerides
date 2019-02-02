@@ -196,14 +196,23 @@ function PlanetPage (planetDataSource, tableName) {
                     
                     var i = 0;
                     var docFragment = hostElement.ownerDocument.createDocumentFragment();
-                    pageObj.addTableHeader (docFragment, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
+                    /*pageObj.addTableHeader (docFragment, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);*/
                     var span = pageObj.addNodeChild(docFragment, "span");
                     
                     for (i = 0; i < steps; i++, JD+=stepSize) {
                         if (JD >= endJD)
                             break;
-                        
+
                         var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JD, true), JD);
+
+            var changedMonth = !pageObj.lastAppendedLine || (preparedData[0] && pageObj.lastAppendedLine[0] != preparedData[0]);
+            
+            if (changedMonth) {
+                pageObj.addTableHeader (docFragment, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
+                span = pageObj.addNodeChild(docFragment, "span");
+            }
+
+
                         pageObj.appendLine (preparedData, columnClasses, span);
                     }
                                         
@@ -217,15 +226,7 @@ function PlanetPage (planetDataSource, tableName) {
         };
     
     PlanetPage.prototype["appendLine"] = function (dataArray, classes, docFragment) {
-            if (!docFragment)
-                docFragment = this.hostElement;
             
-            var changedMonth = !this.lastAppendedLine || (dataArray[0] && this.lastAppendedLine[0] != dataArray[0]);
-            
-            if (changedMonth) {
-                this.addTableHeader (docFragment, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
-            }
-
             var line = "";
             var i = 0;
             for (i = 0; i < dataArray.length; i++) {
