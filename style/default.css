@@ -169,6 +169,7 @@ table {
 
 #SunTable {
     width: 760px;
+    background: url('../images/sprite.svg#sun-table');
 }
 
 #MoonTable {
