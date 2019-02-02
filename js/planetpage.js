@@ -170,64 +170,63 @@ function PlanetPage (planetDataSource, tableName) {
 }
 
 (function(){
-    
-    
+
     PlanetPage.prototype["displayPage"] = function () {
-            var pageObj = this;
-            if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
-                return SyncedTimeOut (function() { pageObj.displayPage(); }, Timeout.onInit);
+        var pageObj = this;
+        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
+            return SyncedTimeOut (function() { pageObj.displayPage(); }, Timeout.onInit);
+        
+        var JD = PageTimeInterval.JD;
+        var daysAfter =  PageTimeInterval.days;
+        var stepSize = PageTimeInterval.stepSize;
+        
+        this.lastAppendedLine = false;
+        if (!this.pageRendered) {
+            this.reset();
             
-            var JD = PageTimeInterval.JD;
-            var daysAfter =  PageTimeInterval.days;
-            var stepSize = PageTimeInterval.stepSize;
+            // so far we have no styling, so suppress the first header for now.
+            // this.addTableHeader (this.hostElement, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
+
+            var hostElement = pageObj.hostElement;
+            var columnClasses = pageObj.firstDataRowColumnClasses;
+            var dataSource = pageObj.dataSource;
             
-            this.lastAppendedLine = false;
-            if (!this.pageRendered) {
-                this.reset();
+            var delayedAppendData = function (JD, endJD, steps, hostElement, columnClasses, dataSource) {
+                if (JD >= endJD)
+                    return;
                 
-                // so far we have no styling, so suppress the first header for now.
-                // this.addTableHeader (this.hostElement, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
-
-                var hostElement = pageObj.hostElement;
-                var columnClasses = pageObj.firstDataRowColumnClasses;
-                var dataSource = pageObj.dataSource;
+                var i = 0;
+                var docFragment = hostElement.ownerDocument.createDocumentFragment();
+                var span = pageObj.addNodeChild(docFragment, "span");
                 
-                var delayedAppendData = function (JD, endJD, steps, hostElement, columnClasses, dataSource) {
-                    if (JD >= endJD)
-                        return;
-                    
-                    var i = 0;
-                    var docFragment = hostElement.ownerDocument.createDocumentFragment();
-                    var span = pageObj.addNodeChild(docFragment, "span");
-                    
-                    for (i = 0; i < steps; i++, JD+=stepSize) {
-                        if (JD >= endJD)
-                            break;
-
-                        var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JD, true), JD);
-
-            var changedMonth = !pageObj.lastAppendedLine || (preparedData[0] && pageObj.lastAppendedLine[0] != preparedData[0]);
-            
-            if (changedMonth) {
-                var header = pageObj.addTableHeader (docFragment);
-                if (!pageObj.header) {
-                    pageObj.header = header;
-                }
-                span = pageObj.addNodeChild(docFragment, "span");
-            }
-
-
-                        pageObj.appendLine (preparedData, columnClasses, span);
+                for (i = 0; i < steps; i++, JD+=stepSize) {
+                    if (JD >= endJD) {
+                        break;
                     }
-                                        
-                    hostElement.appendChild(docFragment);
-                    
-                    requestAnimationFrame (function() {delayedAppendData (JD, endJD, steps, hostElement, columnClasses, dataSource); });
+
+                    var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JD, true), JD);
+                    var changedMonth = !pageObj.lastAppendedLine || 
+                                        (preparedData[0] && pageObj.lastAppendedLine[0] != preparedData[0]);
+        
+                    if (changedMonth) {
+                        var header = pageObj.addTableHeader (docFragment);
+                        if (!pageObj.header) {
+                            pageObj.header = header;
+                        }
+                        span = pageObj.addNodeChild(docFragment, "span");
+                    }
+
+
+                    pageObj.appendLine (preparedData, columnClasses, span);
                 }
-                delayedAppendData (JD, JD + daysAfter, 20, hostElement, columnClasses, dataSource);
-                this.pageRendered = true;
+                                        
+                hostElement.appendChild(docFragment);
+                requestAnimationFrame (function() {delayedAppendData (JD, endJD, steps, hostElement, columnClasses, dataSource); });
             }
-        };
+            delayedAppendData (JD, JD + daysAfter, 20, hostElement, columnClasses, dataSource);
+            this.pageRendered = true;
+        }
+    };
     
     PlanetPage.prototype["appendLine"] = function (dataArray, classes, docFragment) {
             
