@@ -165,6 +165,8 @@ function PlanetPage (planetDataSource, tableName) {
     function (P) { return postPadTo(P, " ", 5); },
 
     ];
+
+    this.header = null;
 }
 
 (function(){
@@ -196,7 +198,6 @@ function PlanetPage (planetDataSource, tableName) {
                     
                     var i = 0;
                     var docFragment = hostElement.ownerDocument.createDocumentFragment();
-                    /*pageObj.addTableHeader (docFragment, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);*/
                     var span = pageObj.addNodeChild(docFragment, "span");
                     
                     for (i = 0; i < steps; i++, JD+=stepSize) {
@@ -208,7 +209,10 @@ function PlanetPage (planetDataSource, tableName) {
             var changedMonth = !pageObj.lastAppendedLine || (preparedData[0] && pageObj.lastAppendedLine[0] != preparedData[0]);
             
             if (changedMonth) {
-                pageObj.addTableHeader (docFragment, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
+                var header = pageObj.addTableHeader (docFragment);
+                if (!pageObj.header) {
+                    pageObj.header = header;
+                }
                 span = pageObj.addNodeChild(docFragment, "span");
             }
 
@@ -239,33 +243,17 @@ function PlanetPage (planetDataSource, tableName) {
         };
         
     PlanetPage.prototype["addTableHeader"] = function (table, rowClasses, columnClasses) {
-        var rows = [];
+        var headerText = "";
         for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
-            var row = "";
-            //var currentRowClasses = rowClasses[rowIndex];
-            //for (var classIndex = 0; classIndex < rowClasses.length; classIndex++)
-            //    row.classList.add (currentRowClasses[classIndex]);
-
             for (var headerKey in this.tableHeaderInfo) {
-                //var th = this.addNodeChild (row, "th", this.tableHeaderInfo[headerKey][rowIndex]['text']);
-                row += this.tableHeaderInfo[headerKey][rowIndex]['text'];
-                    //var title = this.tableHeaderInfo[headerKey].longText;
-                    //th.onclick = function () { alert (title); }
-
-                //var columnsClasses = this.tableHeaderInfo[headerKey][rowIndex]['classes']
-                //if (!!columnsClasses)
-                //{
-                //    for (var columnsClassesIndex in columnsClasses)
-                //        th.classList.add (columnsClasses[columnsClassesIndex]);
-                //}
+                headerText += this.tableHeaderInfo[headerKey][rowIndex]['text'];
             }
-            rows[rowIndex] = row + "\n";
+            headerText += "\n";
         }
         
-        var header = this.addNodeChild (table, "span",  rows[0] + rows[1]);
+        var header = this.addNodeChild (table, "span",  headerText);
         header.classList.add("planetTableHeader");
-
-        return {"row1" : rows[0], "row2" : rows[1] };
+        return header;
     };
 
     PlanetPage.prototype["reset"] = function (keepData) {
