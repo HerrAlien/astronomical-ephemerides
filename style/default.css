@@ -176,6 +176,15 @@ table {
     width: 840px;
 }
 
+#JupiterTable {
+    width: 980px;
+    background: url('../images/sprite.svg#jupiter-table');
+}
+
+
+#MarsTable {
+    width: 920px;
+}
 
  td,  th {
     padding: 2px;
@@ -205,10 +214,6 @@ tr.secondHeaderRowScrolled th, .withDropShadow {
 
 tr.secondHeaderRowScrolled th:last-of-type {
     box-shadow: 0px 2px 1px #CCCCCC;
-}
-
-#MarsTable, #JupiterTable {
-    width: 920px;
 }
 
 
