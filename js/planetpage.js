@@ -116,7 +116,7 @@ function PlanetPage (planetDataSource, tableName) {
 
             "12" :  {
                 "0" : { "text" : "    \u0394   " },
-                "1" : { "text" : "   au   " },
+                "1" : { "text" : "  au   " },
                 "longText" : "Distance to Earth, in astronomical units",
                 "dataKey" : 'DistanceToEarth'
             },
@@ -130,7 +130,7 @@ function PlanetPage (planetDataSource, tableName) {
 
             "14" :  {
                 "0" : { "text" : " Elong" },
-                "1" : { "text" : "\u00B0" },
+                "1" : { "text" : "   \u00B0" },
                 "longText" : "Elongation angle from the Sun",
                 "dataKey" : 'Elongation'
             },
