@@ -183,7 +183,8 @@ table {
 
 
 #MarsTable {
-    width: 920px;
+    width: 950px;
+    background: url('../images/sprite.svg#mars-table');
 }
 
  td,  th {

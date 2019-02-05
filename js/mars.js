@@ -40,29 +40,29 @@ var MarsData = {};
             var Page = new PlanetPage (MarsData, "MarsTable");
 
 
-            Page.tableHeaderInfo['16'] = {
+            Page.tableHeaderInfo['20'] = {
                 "0" : { "text" : " Date  " },
                 "1" : { "text" : "          " },
                 "longText" : "Date: month",
                 "dataKey" : 'Month'
             };
-            Page.tableHeaderInfo['17'] = {
+            Page.tableHeaderInfo['21'] = {
                 "0" : { "text" : " "},
                 "1" : { "text" : "          "},
                 "longText" : "Date: day",
                 "dataKey" : 'Day'
             };
-            Page.tableHeaderInfo['18'] = {  "dataKey" : 'CentralMeridianLongitude', "0" : {"text" : "  L0"}, "1" : {"text" : "  \u00B0"}, "longText" : "Longitude of central meridian (physical ephemeris)" };
-            Page.tableHeaderInfo['19'] = {  "dataKey" : 'EarthDeclination', "0" : {"text" : "    DE"}, "1" : {"text" : "     \u00B0"}, "longText" : "Planetocentric declination of Earth (physical ephemeris)" };
-            Page.tableHeaderInfo['20'] = {  "dataKey" : 'SunDeclination', "0" : {"text" : "    DS"}, "1" : {"text" : "     \u00B0"}, "longText" : "Planetocentric declination of the Sun (physical ephemeris)" };
-            Page.tableHeaderInfo['21'] = {  "dataKey" : 'P', "0" : {"text" : "     P" }, "1" : {"text" : "     \u00B0"}, "longText" : "Position angle of the North Pole (physical ephemeris)" };
+            Page.tableHeaderInfo['16'] = {  "dataKey" : 'CentralMeridianLongitude', "0" : {"text" : "    L0"}, "1" : {"text" : "             \u00B0"}, "longText" : "Longitude of central meridian (physical ephemeris)" };
+            Page.tableHeaderInfo['17'] = {  "dataKey" : 'EarthDeclination', "0" : {"text" : "    DE"}, "1" : {"text" : "     \u00B0"}, "longText" : "Planetocentric declination of Earth (physical ephemeris)" };
+            Page.tableHeaderInfo['18'] = {  "dataKey" : 'SunDeclination', "0" : {"text" : "    DS"}, "1" : {"text" : "     \u00B0"}, "longText" : "Planetocentric declination of the Sun (physical ephemeris)" };
+            Page.tableHeaderInfo['19'] = {  "dataKey" : 'P', "0" : {"text" : "    P  " }, "1" : {"text" : "     \u00B0"}, "longText" : "Position angle of the North Pole (physical ephemeris)" };
             Page.formattingFunctions = Page.formattingFunctions.concat([
-            function(month) { return prePadTo(month, " ", 3); }, 
-            function (day) { return prePadTo(day, " ", 2); }, 
             function(L0) { return prePadTo(L0, " ", 5); }, 
             function(DE) { return prePadTo(DE, " ", 5); }, 
             function(DS) { return prePadTo(DS, " ", 5); }, 
             function(P) { return prePadTo(P, " ", 5); }, 
+            function(month) { return prePadTo(month, " ", 3); }, 
+            function (day) { return prePadTo(day, " ", 2); }, 
             ]);
 
             Page["old_addPlanetTableHeader"] = Page.addPlanetTableHeader;
@@ -78,12 +78,12 @@ var MarsData = {};
 
             Page.prepareOneDayDataObjectForView = function (obj, JD) {
                 var preparedLine = this.old_prepareOneDayDataObjectForView(obj, JD);
-                preparedLine[preparedLine.length] = preparedLine[0];
-                preparedLine[preparedLine.length] = preparedLine[1];
                 preparedLine[preparedLine.length] = Math.round(obj.CentralMeridianLongitude * 10) / 10;
                 preparedLine[preparedLine.length] = Math.round(obj.EarthDeclination * 10) / 10;
                 preparedLine[preparedLine.length] = Math.round(obj.SunDeclination * 10) / 10;
                 preparedLine[preparedLine.length] = Math.round(obj.P * 10) / 10;
+                preparedLine[preparedLine.length] = preparedLine[0];
+                preparedLine[preparedLine.length] = preparedLine[1];
                 return preparedLine;
             }
 
