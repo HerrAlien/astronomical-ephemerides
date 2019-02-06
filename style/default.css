@@ -10,6 +10,7 @@
         margin-right: auto;
         padding-top: 0px;
         width: 100%;
+        z-index: 4;
     }
 
     .showPositional #JupiterTable tr.firstHeaderRow, 
@@ -357,12 +358,10 @@ tr.secondHeaderRowScrolled th:last-of-type {
     }
     
     @media (orientation: portrait) {
-        tr.firstHeaderRowScrolled.movedMenu {
-            top: 0;
+        .planetTableHeader.fixed {
+            top: 0px;
         }
-        tr.secondHeaderRowScrolled.movedMenu {
-            top: 22;
-        }
+
     }
 
     @media (orientation: landscape) {
@@ -375,22 +374,14 @@ tr.secondHeaderRowScrolled th:last-of-type {
         width: 100%;
         }
 
-        tr.fixed.firstHeaderRowScrolled.movedMenu {
+        .planetTableHeader.movedMenu.fixed {
             top: 40px;
         }
-        tr.fixed.secondHeaderRowScrolled.movedMenu {
-            top: 62px;
-        }
-        
-        tr.fixed.firstHeaderRowScrolled{
-            top: 148px;
+
+        .planetTableHeader.fixed {
+            top: 120px;
         }
 
-        tr.fixed.secondHeaderRowScrolled{
-            top: 170px;
-        }
-
-        
     }
 
 .leftaligned {
