@@ -24,20 +24,11 @@ window.addEventListener("scroll", function() {
     var pageObj = false;
     if (previousPage) {
         pageObj = Pages [previousPage.id];
-        if (pageObj && pageObj.hostElement && pageObj.hostElement['rows'] && pageObj.hostElement['rows'][1]) {
+        if (pageObj && pageObj.header) {
             if (scrolled) {
-                // get the first two rows
-                pageObj.hostElement.rows[0].classList.remove ("firstHeaderRow");
-                pageObj.hostElement.rows[0].classList.add ("firstHeaderRowScrolled");
-
-                pageObj.hostElement.rows[1].classList.remove ("secondHeaderRow");
-                pageObj.hostElement.rows[1].classList.add ("secondHeaderRowScrolled");
+                pageObj.header.classList.add("fixed");
             } else {
-                pageObj.hostElement.rows[0].classList.add ("firstHeaderRow");
-                pageObj.hostElement.rows[0].classList.remove ("firstHeaderRowScrolled");
-
-                pageObj.hostElement.rows[1].classList.add ("secondHeaderRow");
-                pageObj.hostElement.rows[1].classList.remove ("secondHeaderRowScrolled");                    
+                pageObj.header.classList.remove("fixed");
             }
         }            
     }
@@ -50,7 +41,8 @@ window.addEventListener("scroll", function() {
     
     var hysterezis = 15;
     // is it on a small screen?
-if (pageObj && pageObj.hostElement && pageObj.hostElement['rows'] && pageObj.hostElement['rows'][1]) {    if (scrolledTop > oldScrollTop + hysterezis && scrolledTop > 180 ) {
+if (pageObj && pageObj.hostElement && pageObj.hostElement['rows'] && pageObj.hostElement['rows'][1]) {   
+    if (scrolledTop > oldScrollTop + hysterezis && scrolledTop > 180 ) {
         // scrolled down
         sourceMenu.classList.add ("movedMenu");
         if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {

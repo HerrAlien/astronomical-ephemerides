@@ -152,7 +152,6 @@ table {
     font-size: 14.75px;
     margin-left: auto;
     margin-right:  auto;
-    width: 675px;
     font-family: Courier;
     background: url('../images/sprite.svg#default-table');
     background-repeat-x: no-repeat;
@@ -167,29 +166,48 @@ table {
     border-top: solid 1px;
 }
 
+.planetTable, .planetTable > .planetTableHeader {
+   width: 675px;
+}
+
+.planetTableHeader.fixed {
+    top: 112px;
+}
 
 .planetTableHeader.printOnly {
     display:none;
 }
 
-#SunTable {
+#SunTable, #SunTable > .planetTableHeader {
     width: 760px;
-    background: url('../images/sprite.svg#sun-table');
+}
+
+#SunTable{
+        background: url('../images/sprite.svg#sun-table');
+}
+
+#MoonTable, #MoonTable > .planetTableHeader {
+    width: 840px;
 }
 
 #MoonTable {
-    width: 840px;
     background: url('../images/sprite.svg#moon-table');
 }
 
+#JupiterTable, #JupiterTable > .planetTableHeader {
+    width: 985px;
+}
+
 #JupiterTable {
-    width: 980px;
     background: url('../images/sprite.svg#jupiter-table');
 }
 
 
-#MarsTable {
+#MarsTable, #MarsTable > .planetTableHeader {
     width: 950px;
+}
+
+#MarsTable {
     background: url('../images/sprite.svg#mars-table');
 }
 
