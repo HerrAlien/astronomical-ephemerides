@@ -11,6 +11,7 @@
         padding-top: 0px;
         width: 100%;
         z-index: 4;
+        /* position: static; */
     }
 
     .showPositional #JupiterTable tr.firstHeaderRow, 
@@ -348,7 +349,9 @@ tr.secondHeaderRowScrolled th:last-of-type {
         visibility: hidden;
     }
 
-    #jupiterHorizontalScroller, #marsHorizontalScroller {
+    #jupiterHorizontalScroller, #marsHorizontalScroller,
+    #JupiterTable.showPositional > .planetTableHeader,
+    #MarsTable.showPositional > .planetTableHeader  {
         width: 675px;
     }
 
@@ -356,6 +359,12 @@ tr.secondHeaderRowScrolled th:last-of-type {
         margin-left: -675px;
         margin-right: auto;
     }
+
+    #JupiterTable.showPositional > .planetTableHeader,
+    #MarsTable.showPositional > .planetTableHeader {
+        overflow-x: hidden;
+    }
+
     
     @media (orientation: portrait) {
         .planetTableHeader.fixed {
