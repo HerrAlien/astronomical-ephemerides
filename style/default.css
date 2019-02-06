@@ -167,6 +167,11 @@ table {
     border-top: solid 1px;
 }
 
+
+.planetTableHeader.printOnly {
+    display:none;
+}
+
 #SunTable {
     width: 760px;
     background: url('../images/sprite.svg#sun-table');

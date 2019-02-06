@@ -212,6 +212,9 @@ function PlanetPage (planetDataSource, tableName) {
                         var header = pageObj.addTableHeader (docFragment);
                         if (!pageObj.header) {
                             pageObj.header = header;
+                            header.classList.add("fixed");
+                        } else {
+                            header.classList.add("printOnly");
                         }
                         span = pageObj.addNodeChild(docFragment, "span");
                     }
