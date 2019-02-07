@@ -119,28 +119,6 @@
     list-style-type:none;
 }
 
-tr.firstHeaderRow{
-    margin-top: -47px;
-    background: #ffffff;
-}
-
-tr.secondHeaderRow {
-    margin-top: -25px;
-    background: #ffffff;
-}
-
-tr.firstHeaderRowScrolled{
-    top: 0px;
-}
-
-tr.secondHeaderRowScrolled{
-    top: 22px;
-}
-
-tr.firstHeaderRow, tr.firstHeaderRowScrolled {
-    text-decoration: underline;
-}
-
 table {
     margin-top: 10px;
     font-family : Courier;
@@ -334,6 +312,9 @@ tr.secondHeaderRowScrolled th:last-of-type {
     text-align: left;
 }
 
+.hidePhaseOnPhysical {
+    display: none;
+}
 
 @media  screen and  (max-width: 936px)  {
     
@@ -365,6 +346,16 @@ tr.secondHeaderRowScrolled th:last-of-type {
         overflow-x: hidden;
     }
 
+    #JupiterTable.showPhysical > span > .hidePhaseOnPhysical,
+    #MarsTable.showPhysical > span > .hidePhaseOnPhysical{
+        position: fixed;
+        top: 0;
+        left: 0px;
+        width: 60px;
+        height: 60px;
+        background: #ffffff;
+        display: block;
+    }
     
     @media (orientation: portrait) {
         .planetTableHeader.fixed {

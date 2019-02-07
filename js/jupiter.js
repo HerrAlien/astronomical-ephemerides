@@ -81,16 +81,12 @@ var JupiterData = {};
                 return preparedLine;
             }
 
-            Page["old_addPlanetTableHeader"] = Page.addPlanetTableHeader;
-            Page.addPlanetTableHeader = function (table, classes) {
-                var headerRows = this.old_addPlanetTableHeader(table, classes);
-                var cellL0S1 = headerRows.row1.cells[16];
-                cellL0S1.textContent = "L";
-                this.addNodeChild (cellL0S1, "sub", "0,S1"); 
-                var cellL0S2 = headerRows.row1.cells[17];
-                cellL0S2.textContent = "L";
-                this.addNodeChild (cellL0S2, "sub", "0,S2"); 
-                return headerRows;
+            Page["old_addPlanetTableHeader"] = Page.addTableHeader;
+            Page.addTableHeader = function (table, classes) {
+                var header = this.old_addPlanetTableHeader(table, classes);
+                var divPhysical = PlanetPage.prototype["addNodeChild"](header, "div");
+                divPhysical.classList.add("hidePhaseOnPhysical");
+                return header;
             }
 
             Pages["Jupiter Ephemeris"] = Page;

@@ -65,15 +65,14 @@ var MarsData = {};
             function (day) { return prePadTo(day, " ", 2); }, 
             ]);
 
-            Page["old_addPlanetTableHeader"] = Page.addPlanetTableHeader;
+            Page["old_addPlanetTableHeader"] = Page.addTableHeader;
             Page["old_prepareOneDayDataObjectForView"] = Page.prepareOneDayDataObjectForView;
 
-            Page.addPlanetTableHeader = function (table, classes) {
-                var headerRows = this.old_addPlanetTableHeader(table, classes);
-                var cellL0 = headerRows.row1.cells[16];
-                cellL0.textContent = "L";
-                this.addNodeChild (cellL0, "sub", "0"); 
-                return headerRows;
+            Page.addTableHeader = function (table, classes) {
+                var header = this.old_addPlanetTableHeader(table, classes);
+                var divPhysical = PlanetPage.prototype["addNodeChild"](header, "div");
+                divPhysical.classList.add("hidePhaseOnPhysical");
+                return header;
             }
 
             Page.prepareOneDayDataObjectForView = function (obj, JD) {
