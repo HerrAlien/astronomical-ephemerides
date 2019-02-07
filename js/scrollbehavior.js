@@ -24,20 +24,11 @@ window.addEventListener("scroll", function() {
     var pageObj = false;
     if (previousPage) {
         pageObj = Pages [previousPage.id];
-        if (pageObj && pageObj.hostElement && pageObj.hostElement['rows'] && pageObj.hostElement['rows'][1]) {
+        if (pageObj && pageObj.header) {
             if (scrolled) {
-                // get the first two rows
-                pageObj.hostElement.rows[0].classList.remove ("firstHeaderRow");
-                pageObj.hostElement.rows[0].classList.add ("firstHeaderRowScrolled");
-
-                pageObj.hostElement.rows[1].classList.remove ("secondHeaderRow");
-                pageObj.hostElement.rows[1].classList.add ("secondHeaderRowScrolled");
+                pageObj.header.classList.add("fixed");
             } else {
-                pageObj.hostElement.rows[0].classList.add ("firstHeaderRow");
-                pageObj.hostElement.rows[0].classList.remove ("firstHeaderRowScrolled");
-
-                pageObj.hostElement.rows[1].classList.add ("secondHeaderRow");
-                pageObj.hostElement.rows[1].classList.remove ("secondHeaderRowScrolled");                    
+                pageObj.header.classList.remove("fixed");
             }
         }            
     }
@@ -50,32 +41,26 @@ window.addEventListener("scroll", function() {
     
     var hysterezis = 15;
     // is it on a small screen?
-if (pageObj && pageObj.hostElement && pageObj.hostElement['rows'] && pageObj.hostElement['rows'][1]) {    if (scrolledTop > oldScrollTop + hysterezis && scrolledTop > 180 ) {
-        // scrolled down
-        sourceMenu.classList.add ("movedMenu");
-        if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
-            pageObj.hostElement.rows[0].classList.add ("movedMenu");
-            pageObj.hostElement.rows[1].classList.add ("movedMenu");
+    if (pageObj && pageObj.header) {   
+        if (scrolledTop > oldScrollTop + hysterezis && scrolledTop > 180 ) {
+            // scrolled down
+            sourceMenu.classList.add ("movedMenu");
+            pageObj.header.classList.add ("movedMenu");
+        } else if (scrolledTop < oldScrollTop - hysterezis || scrolledTop < 180) {
+        // scrolled up
+            sourceMenu.classList.remove ("movedMenu");
+            pageObj.header.classList.remove ("movedMenu");
         }
-    } else if (scrolledTop < oldScrollTop - hysterezis || scrolledTop < 180) {
-    // scrolled up
-        sourceMenu.classList.remove ("movedMenu");
-        if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
-            pageObj.hostElement.rows[0].classList.remove ("movedMenu");
-            pageObj.hostElement.rows[1].classList.remove ("movedMenu");
-        }
-    }
     
-    oldScrollTop = scrolledTop;
-}
+        oldScrollTop = scrolledTop;
+    }
 });
 
 $get("showNavigationMenu").onclick = function () {
     var pageObj = Pages [previousPage.id];
     sourceMenu.classList.remove ("movedMenu");
-    if (pageObj && pageObj.hostElement && pageObj.hostElement['rows']) {
-        pageObj.hostElement.rows[0].classList.remove ("movedMenu");
-        pageObj.hostElement.rows[1].classList.remove ("movedMenu");
+    if (pageObj && pageObj.header) {
+            pageObj.header.classList.remove ("movedMenu");
     }
 }
 })();
