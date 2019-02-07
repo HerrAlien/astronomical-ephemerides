@@ -346,16 +346,26 @@ tr.secondHeaderRowScrolled th:last-of-type {
         overflow-x: hidden;
     }
 
-    #JupiterTable.showPhysical > span > .hidePhaseOnPhysical,
-    #MarsTable.showPhysical > span > .hidePhaseOnPhysical{
+    .showPhysical > span > .hidePhaseOnPhysical{
         position: fixed;
-        top: 0;
+        top: 0px;
         left: 0px;
-        width: 60px;
-        height: 60px;
+        width: calc(50% - 337px);
+        height: 260px;
         background: #ffffff;
         display: block;
     }
+
+    .showPhysical > span.movedMenu > .hidePhaseOnPhysical{
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: calc(50% - 337px);
+        height: 160px;
+        background: #ffffff;
+        display: block;
+    }
+
     
     @media (orientation: portrait) {
         .planetTableHeader.fixed {
