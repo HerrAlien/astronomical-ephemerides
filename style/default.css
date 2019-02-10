@@ -133,10 +133,15 @@ table {
     margin-left: auto;
     margin-right:  auto;
     font-family: Courier;
-    background: url('../images/sprite.svg#default-table');
-    background-repeat-x: no-repeat;
-    background-position: center;
-    background-size: contain;
+}
+
+@supports not (-webkit-overflow-scrolling: touch) {
+    .planetTable {
+        background: url('../images/sprite.svg#default-table');
+        background-repeat-x: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
 }
 
 .planetTableHeader {
@@ -162,33 +167,42 @@ table {
     width: 760px;
 }
 
-#SunTable{
-        background: url('../images/sprite.svg#sun-table');
+
+@supports not (-webkit-overflow-scrolling: touch) {
+    .planetTable {
+        background: url('../images/sprite.svg#default-table');
+        background-repeat-x: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+
+    #SunTable{
+            background: url('../images/sprite.svg#sun-table');
+    }
+
+    #MoonTable {
+        background: url('../images/sprite.svg#moon-table');
+    }
+
+    #JupiterTable {
+        background: url('../images/sprite.svg#jupiter-table');
+    }
+
+    #MarsTable {
+        background: url('../images/sprite.svg#mars-table');
+    }
 }
 
 #MoonTable, #MoonTable > .planetTableHeader {
     width: 840px;
 }
 
-#MoonTable {
-    background: url('../images/sprite.svg#moon-table');
-}
-
 #JupiterTable, #JupiterTable > .planetTableHeader {
     width: 985px;
 }
 
-#JupiterTable {
-    background: url('../images/sprite.svg#jupiter-table');
-}
-
-
 #MarsTable, #MarsTable > .planetTableHeader {
     width: 950px;
-}
-
-#MarsTable {
-    background: url('../images/sprite.svg#mars-table');
 }
 
  td,  th {
