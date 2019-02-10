@@ -539,6 +539,7 @@ h1, h2, hr {
  h2 {
     font-size: 40px;
     margin-top: 40px;
+    padding-top:40px;
     margin-bottom: 0px;
 }
 
@@ -1344,7 +1345,7 @@ label > h3 {
 
               </div>
 
-                <h2>Show on home page</h2>
+                <h2 id="realTimeSettingsTitle">Show on home page</h2>
                 <div id="realTimeSettingsContainer">
                     
                 </div>
@@ -1361,8 +1362,13 @@ label > h3 {
             <h1 id="homeH1">Right now:</h1>
             <div id="rightNowFrontPage">
             </div>
-                <div id="lofiWarning">Loading high accuracy algorithm ...(<span id="lofiWarningProgress"></span>)</div>
-             <div class="clear maxWidth">&nbsp;</div>
+            <a id="rightNowFrontPageSettingsLink"
+            href='#{"page":"settings","actions":[{"name":"scroll","parameters":"realTimeSettingsTitle"}]}'>
+              Configure ...
+            </a>
+
+            <div id="lofiWarning">Loading high accuracy algorithm ...(<span id="lofiWarningProgress"></span>)</div>
+            <div class="clear maxWidth">&nbsp;</div>
 
         <br/>
 <a href="#about">What time argument is used? What type of positions are computed?</a>
