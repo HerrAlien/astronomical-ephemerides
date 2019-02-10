@@ -22,6 +22,10 @@ var RealTimeDataViewer = {
 
     views : {},
 
+    getRtSettingsSectionId : function (pageName) {
+        return pageName + " settings section";
+    },
+
     rtDomHost : document.getElementById("rightNowFrontPage"),
 
     New: function (pageName) {
@@ -131,9 +135,22 @@ var RealTimeDataViewer = {
         createdDoms['a'] = createDom(div, "a");
         createdDoms['a'].setAttribute("href", "#" + pageName);
 
-
         var span = createDom(createdDoms['a'], "span", objectName);
         span.classList.add("realtimeTitle");
+
+        var configureAnchor = createDom(div, "a");
+        configureAnchor.textContent = "Configure ...";
+        configureAnchor.classList.add("settingsLabel");
+        configureAnchor['href'] = '#{"page":"settings",\
+        "actions":[\
+            {"name":"scroll","parameters":"' + RealTimeDataViewer.getRtSettingsSectionId(pageName) + '"},\
+            {"name":"classListRemove",\
+             "parameters":{\
+                "target" : "' + RealTimeDataViewer.getRtSettingsSectionId(pageName) + '",\
+                "classes" : ["collapsed"]\
+             }}\
+            ]}';
+
         return createdDoms;
     },
 
@@ -304,6 +321,9 @@ var RealTimeDataViewer = {
         var bodySectionDiv = createDom (topDiv, "div");
         bodySectionDiv.classList.add ("rtsettings");
         bodySectionDiv.classList.add ("collapsed");
+
+        bodySectionDiv['id'] = RealTimeDataViewer.getRtSettingsSectionId(pageName);
+
         // <h3>Sun</h3>
         // TODO: this should be from the page object.
         createDom (bodySectionDiv, "div", " ").classList.add("clear");

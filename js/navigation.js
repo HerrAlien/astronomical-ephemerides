@@ -139,6 +139,22 @@ function onhashchange(){
                         if (targetDiv) {
                             targetDiv.scrollIntoView();
                         }
+                    } else if (action.name == "classListRemove") {
+                        var targetDiv = document.getElementById(action.parameters.target);
+                        if (targetDiv) {
+                            var classes = action.parameters.classes;
+                            for (var clsIndex = 0; clsIndex < classes.length; clsIndex++) {
+                                targetDiv.classList.remove(classes[clsIndex]);
+                            }
+                        }
+                    } else if (action.name == "classListAdd") {
+                        var targetDiv = document.getElementById(action.parameters.target);
+                        if (targetDiv) {
+                            var classes = action.parameters.classes;
+                            for (var clsIndex = 0; clsIndex < classes.length; clsIndex++) {
+                                targetDiv.classList.add(classes[clsIndex]);
+                            }
+                        }
                     }
                 }
 
