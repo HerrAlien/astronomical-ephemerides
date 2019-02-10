@@ -165,10 +165,10 @@ function onhashchange(){
                 /* {"page":"settings","actions":[{"name":"scroll","parameters":"realTimeSettingsContainer"}]} */
                 var payload = JSON.parse(pageName);
                 actions = payload.actions;
-                window.location.href = "#" + payload.page;
+                window.location.replace("#" + payload.page);
             } catch (err){
                 error404 (pageName);
-                window.location.href = "#Search results";
+                window.location.replace("#Search results");
             }
         }
     }
