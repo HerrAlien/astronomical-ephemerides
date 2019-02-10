@@ -139,8 +139,8 @@ var RealTimeDataViewer = {
         span.classList.add("realtimeTitle");
 
         var configureAnchor = createDom(div, "a");
+        configureAnchor.classList.add("configureRtView");
         configureAnchor.textContent = "Configure ...";
-        configureAnchor.classList.add("settingsLabel");
         configureAnchor['href'] = '#{"page":"settings",\
         "actions":[\
             {"name":"scroll","parameters":"' + RealTimeDataViewer.getRtSettingsSectionId(pageName) + '"},\
