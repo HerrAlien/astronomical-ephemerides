@@ -110,6 +110,8 @@ function error404(pageName) {
     }
 }
 
+var actions = null;
+
 function onhashchange(){
     if (typeof PageRank == 'undefined') {
         SyncedTimeOut(onhashchange, Timeout.onInit);
@@ -129,9 +131,29 @@ function onhashchange(){
 
         if (previousPage){
             DisplayPage (pageName);
+            if (actions) {
+                for (var i = 0; i < actions.length; i++) {
+                    var action = actions[i];
+                    if (action.name == "scroll") {
+                        var targetDiv = document.getElementById(action.parameters);
+                        if (targetDiv) {
+                            targetDiv.scrollIntoView();
+                        }
+                    }
+                }
+
+                actions = null;
+            }
         } else {
-            error404 (pageName);
-            window.location.href = "#Search results";
+            try{
+                /* {"page":"settings","actions":[{"name":"scroll","parameters":"realTimeSettingsContainer"}]} */
+                var payload = JSON.parse(pageName);
+                actions = payload.actions;
+                window.location.href = "#" + payload.page;
+            } catch (err){
+                error404 (pageName);
+                window.location.href = "#Search results";
+            }
         }
     }
 }
