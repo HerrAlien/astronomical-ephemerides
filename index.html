@@ -475,7 +475,7 @@ th {
 }
 
 
- #HomeLinkButton {
+ .HomeLinkButton {
     float: left;
     margin-top: 2px;
     margin-right: 20px;
@@ -495,11 +495,23 @@ th {
     text-shadow: 1px 2px 0px #ffffff;
 }
 
-#HomeLinkText {
+.HomeLinkButtonMobile {
+    height: 120px;
+    background: url('images/sprite.svg#icon');
+    background-size: 120px 120px;
+    background-position: left;
+    background-repeat: no-repeat;
+    display: none;
+}
+
+.HomeLinkText {
     display: none;
     width: 200px;
     float: left;
     font-size: 30px;
+}
+
+.HomeLinkText, .HomeLinkTextMobile {
     line-height: 1;
     font-family: "Arial";
     font-style: italic;
@@ -509,7 +521,7 @@ th {
     color: black;
 }
 
-#tagline {
+.tagline {
   font-size: 16px;
     line-height: 1.25;
     font-weight: normal;
@@ -841,6 +853,21 @@ label > h3 {
         border-bottom: 6px solid #AAAAAA;
     }
 
+    .HomeLinkTextMobile {
+      font-size: 45px;
+      display: block;
+      margin-left: 150px;
+      padding-top: 20px;
+    }
+
+    .HomeLinkButtonMobile {
+      display: block;      
+    }
+
+    .tagline {
+      font-size: 30px;
+    }
+
      .scrollableRTdiv {
         font-size: 40px;
     }
@@ -1139,12 +1166,12 @@ label > h3 {
       width: auto;
     }
 
-     #HomeLinkButton {
+ .HomeLinkButton {
     width: 100px;
     height: 100px;
     background-size: 100px 100px;
     margin-bottom: 0px;
-     }
+  }
   
   #searchAreaImg {
     width: 84px;
@@ -1167,8 +1194,8 @@ label > h3 {
     margin-top: 2px;
   }
 
-  #HomeLinkText {
-    display: inline-block;
+  .HomeLinkText {
+    display: block;
   }
 
 
@@ -1288,9 +1315,9 @@ label > h3 {
 <body>
     <div id="navigation">
         <a href="#home" id="HomeLink" title="Home" alt="Home">
-          <div id="HomeLinkButton"></div>
-          <div id="HomeLinkText">Astronomical Ephemerides
-            <div id="tagline">For any time span or location, even offline!</div>
+          <div class="HomeLinkButton" id="HomeLinkButton"></div>
+          <div class="HomeLinkText">Astronomical Ephemerides
+            <div class="tagline">For any time span or location, even offline!</div>
           </div>
         </a>
 
@@ -1391,6 +1418,13 @@ label > h3 {
         </div>
 
         <div id="home" class="page">
+
+          <div class="HomeLinkButtonMobile">
+            <div class="HomeLinkTextMobile">Astronomical Ephemerides
+              <div class="tagline">For any time span or location, even offline!</div>
+            </div>
+          </div>
+
             <h1 id="homeH1">Right now:</h1>
             <div id="rightNowFrontPage">
             </div>
