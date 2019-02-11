@@ -546,6 +546,7 @@ h1, h2, hr {
 #homeH1 {
     font-size: 70px;
     text-align: left;
+    float:left;
 }
 
  h2 {
@@ -816,25 +817,17 @@ label > h3 {
 
   #rightNowFrontPageSettingsLink {
     display: block;
-    margin-top: 20px;
+    margin-top: 30px;
     background-image: url(images/sprite.svg#settings-light);
     background-size: 64px 64px;
-    width:128px;
+    width:64px;
     height:64px;
     margin-bottom: 40px;
     background-position:center;
     background-repeat: no-repeat;
-  text-align:center;
+    text-align:center;
+    float:left;
 }
-
-#rightNowFrontPageSettingsLink::after {
-  content: "Configure";
-  line-height:160px;
-  text-align:center;
-  display:block;
-}
-
-
 
 @media  screen and  (max-width: 936px)  {
 
@@ -849,12 +842,6 @@ label > h3 {
     width:64px;
     height:64px;
   }
-
-  #rightNowFrontPageSettingsLink {
-  margin-top: 40px;
-}
-
-
 
     .scrollableRT {
         margin-top:130px;
@@ -1441,11 +1428,12 @@ label > h3 {
           </div>
 
             <h1 id="homeH1">Right now:</h1>
-            <div id="rightNowFrontPage">
-            </div>
             <a id="rightNowFrontPageSettingsLink" title="Configure the 'Right Now' view"
             href='#{"page":"settings","actions":[{"name":"scroll","parameters":"realTimeSettingsTitle"}]}'>
             </a>
+
+            <div id="rightNowFrontPage">
+            </div>
 
             <div id="lofiWarning">Loading high accuracy algorithm ...(<span id="lofiWarningProgress"></span>)</div>
             <div class="clear maxWidth">&nbsp;</div>
