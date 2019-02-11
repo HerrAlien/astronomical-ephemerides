@@ -815,8 +815,23 @@ label > h3 {
   }
 
   #rightNowFrontPageSettingsLink {
-  display: block;
-  margin-top: 20px;
+    display: block;
+    margin-top: 20px;
+    background-image: url(images/sprite.svg#settings-light);
+    background-size: 64px 64px;
+    width:128px;
+    height:64px;
+    margin-bottom: 40px;
+    background-position:center;
+    background-repeat: no-repeat;
+  text-align:center;
+}
+
+#rightNowFrontPageSettingsLink::after {
+  content: "Configure";
+  line-height:160px;
+  text-align:center;
+  display:block;
 }
 
 
@@ -1428,9 +1443,8 @@ label > h3 {
             <h1 id="homeH1">Right now:</h1>
             <div id="rightNowFrontPage">
             </div>
-            <a id="rightNowFrontPageSettingsLink" 
+            <a id="rightNowFrontPageSettingsLink" title="Configure the 'Right Now' view"
             href='#{"page":"settings","actions":[{"name":"scroll","parameters":"realTimeSettingsTitle"}]}'>
-              Configure ...
             </a>
 
             <div id="lofiWarning">Loading high accuracy algorithm ...(<span id="lofiWarningProgress"></span>)</div>
