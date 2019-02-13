@@ -540,9 +540,15 @@ input[type=date]::-webkit-inner-spin-button {
     width: 230px;
 }
 
+#futureEventsNumberOfDays {
+    width: 90px;
+    display: inline-block;
+    height: 60px;
+}
 
-#latitudeInput, #longitudeInput, #altitudeInput, #incrementDate, #numberOfDays {
-    font-size: 26px;
+
+#latitudeInput, #longitudeInput, #altitudeInput, #incrementDate, #numberOfDays, #futureEventsNumberOfDays {
+    font-size: 50px;
 }
 
 #settings label, #getFromGeolocationAnchor {
