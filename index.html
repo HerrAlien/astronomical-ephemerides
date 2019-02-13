@@ -543,10 +543,14 @@ h1, h2, hr {
     text-align: center;
 }
 
-#homeH1 {
+#homeH1, #futureEventsH1 {
     font-size: 70px;
     text-align: left;
     float:left;
+}
+
+#futureEventsH1 {
+  margin-top: 50px;
 }
 
  h2 {
@@ -1450,6 +1454,20 @@ h1 {
 
             <div id="rightNowFrontPage">
             </div>
+
+
+
+            <h1 id="futureEventsH1">Future events:
+              <a id="rightNowFrontPageSettingsLink" title="Configure the 'Right Now' view"
+              href='#{"page":"settings","actions":[{"name":"scroll","parameters":"realTimeSettingsTitle"}]}'>
+              </a>
+            </h1>
+    <div class="clear maxWidth">&nbsp;</div>
+
+            <div id="upcommingEventsFrontPage">
+            </div>
+
+
 
             <div id="lofiWarning">Loading high accuracy algorithm ...(<span id="lofiWarningProgress"></span>)</div>
             <div class="clear maxWidth">&nbsp;</div>
