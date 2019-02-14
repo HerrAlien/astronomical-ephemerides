@@ -53,6 +53,7 @@ var urlsToCache = [
 "js/moonsdata.js",
 "js/moonspage.js",
 "js/navigation.js",
+"js/nextdayseventsdata.js",
 "js/neptune.js",
 "js/notifications.js",
 "js/numerical.js",
