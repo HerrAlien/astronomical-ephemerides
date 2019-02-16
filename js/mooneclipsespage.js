@@ -225,10 +225,16 @@ var MoonEclipsesPage = {
         var addNodeChild = PlanetPage.prototype.addNodeChild;
         var mainDiv = addNodeChild(MoonEclipsesPage.hostElement, "div");
         mainDiv.classList.add("moonEclipse");
+        mainDiv['id'] = this.getId(oppositionData);
         
         MoonEclipsesPage.displayTimings (oppositionData, mainDiv);
         MoonEclipsesPage.displayGraph (oppositionData, mainDiv); 
     },
+
+    getId (oppositionData) {
+        return "moonEclipse" + Math.floor(oppositionData.Timings.Penumbral.firstContact);
+    },
+
     keywordsArray : ["Shadow", "Umbra", "Penumbra", "Partial", "Total", "Eclipse",
                       "Contact", "First", "Last"]
     // clears up the rendered thing
