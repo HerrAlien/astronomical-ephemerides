@@ -153,10 +153,23 @@ function onhashchange(){
                 for (var i = 0; i < actions.length; i++) {
                     var action = actions[i];
                     if (action.name == "scroll") {
-                        var targetDiv = document.getElementById(action.parameters);
-                        if (targetDiv) {
-                            targetDiv.scrollIntoView();
-                        }
+                        (function(){
+                            var targetDiv = false;
+                            var attemptsCount = 0;
+                            var maxAttempts = 5;
+                            var timeout = 250;
+                            var scollAction = function () {
+                                targetDiv = document.getElementById(action.parameters);
+                                if (targetDiv) {
+                                    targetDiv.scrollIntoView();
+                                }
+                                if (attemptsCount < maxAttempts) {
+                                    setTimeout (scollAction, timeout);
+                                }
+                                attemptsCount++;
+                            }
+                            scollAction();
+                        })();
                     } else if (action.name == "classListRemove") {
                         var targetDiv = document.getElementById(action.parameters.target);
                         if (targetDiv) {
