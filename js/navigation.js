@@ -162,6 +162,7 @@ function onhashchange(){
                                 targetDiv = document.getElementById(action.parameters);
                                 if (targetDiv) {
                                     targetDiv.scrollIntoView();
+                                    return;
                                 }
                                 if (attemptsCount < maxAttempts) {
                                     setTimeout (scollAction, timeout);
