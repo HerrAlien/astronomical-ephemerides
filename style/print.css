@@ -4,9 +4,14 @@
     text-decoration: none;
     }
 
-    tr.firstHeaderRow.fixed, tr.secondHeaderRow.fixed, 
-    .fixed {
+    .planetTable, .planetTable > .planetTableHeader,
+    .planetTable > .planetTableHeader.fixed {
         position: relative;
+        top: 0px;
+    }
+
+    .planetTable > .planetTableHeader.printOnly {
+        display: block;
     }
 
     .screenOnly {
@@ -18,24 +23,6 @@
         display: none;
     }
 
-     tr.printOnly{
-        background: #ffffff;
-        font-family : Courier;
-        font-size: 12px;
-        height: 14px;
-        position: relative;
-        display: table-row;
-    }
-    
-    tr.printOnly:nth-of-type(odd) th {
-        border-top: 1px solid black;
-        padding: 0px;
-    }
-    tr.printOnly:nth-of-type(even) th {
-        border-bottom: 1px solid black;
-        padding: 0px;
-    }
-    
     #scroller {
         position: relative;
         width: 100%;
