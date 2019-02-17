@@ -15,3 +15,14 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
+
+/* Requirement for data sources:
+    GetEvents (startJD, endJD) 
+    -> { jd : { title: string, linkActions : [actions]},
+        ...
+     }
+
+   Data sources for next events:
+    - the moon and sun eclipses
+    - occultations
+*/

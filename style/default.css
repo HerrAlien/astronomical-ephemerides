@@ -547,8 +547,8 @@ input[type=date]::-webkit-inner-spin-button {
 }
 
 
-#latitudeInput, #longitudeInput, #altitudeInput, #incrementDate, #numberOfDays, #futureEventsNumberOfDays {
-    font-size: 50px;
+#latitudeInput, #longitudeInput, #altitudeInput, #incrementDate, #numberOfDays {
+    font-size: 40px;
 }
 
 #settings label, #getFromGeolocationAnchor {
