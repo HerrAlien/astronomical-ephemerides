@@ -30,6 +30,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
            );
 
            GalileanMoonsPage.reset = PlanetPage.prototype.reset;
+           GalileanMoonsPage.keywords = ["Jupiter", "Moon", "Galilean", "Jovian"];
+
     
            Pages["Elongations of Galilean Moons"] = GalileanMoonsPage;
         } catch (err) {

@@ -20,7 +20,7 @@ var MoonEclipsesPage = {
 
     hostElement : document.getElementById("MoonEclipsesContainer"),
     pageRendered : false,
-    
+    keywords: ["Lunar", "Eclipse", "Moon"],
 
     displayPage : function () {
         

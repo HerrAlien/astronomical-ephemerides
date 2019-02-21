@@ -71,6 +71,7 @@ var SunData = {
     var Sun = {
         hostElement : document.getElementById("SunTable"),
         pageRendered : false,
+        keywords : ["Sun", "Sol", "Solar"],
         dataSource : SunData,
         tableHeaderInfo : {
         "0" : {

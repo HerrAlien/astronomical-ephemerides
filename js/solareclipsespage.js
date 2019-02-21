@@ -21,6 +21,7 @@ var SolarEclipsesPage = {
     
     hostElement : document.getElementById("SolarEclipsesContainer"),
     pageRendered : false,
+    keywords: ["Solar", "Eclipse", "Sun"],
 
     // clears up the rendered thing
     displayPage : function () {
