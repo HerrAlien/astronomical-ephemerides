@@ -17,10 +17,12 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 "use strict";
 
 /* Requirement for data sources:
-    GetEvents (startJD, endJD) 
-    -> { jd : { title: string, linkActions : [actions]},
-        ...
-     }
+    // IncrementHint is just a hint on the sample rate for getting from the inernal data sources.
+    // If there is reasonable evidence to suspect an event, a finer icrement should be used.
+    GetEvents (startJD, endJD, incrementHint) 
+    -> [ { start: <JD>, end: <JD>, title: string, linkActions : [actions]},
+         ... ... ...
+     ]
 
    Data sources for next events:
     - the moon and sun eclipses
