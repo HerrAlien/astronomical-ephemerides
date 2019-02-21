@@ -534,6 +534,13 @@ input[type=date]::-webkit-inner-spin-button {
     height: 60px;
 }
 
+
+#startingDate {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-color: var(--inactive-dark);
+    border-bottom-width: 2px;
     width: 220px;
     display: block;
     font-size: 26px;
