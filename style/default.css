@@ -455,18 +455,6 @@ label {
     font-size: 18px;
 }
 
-input[type=date] {
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-color: #AAAAAA;
-    border-bottom-width: 2px;
-    width: 100%;
-    display: block;
-    font-size: 26px;
-    color: #666666;
-    transition: 0.25s;
-}
 
 label input:hover {
     color: #003377;
@@ -549,8 +537,22 @@ input[type=date]::-webkit-inner-spin-button {
     width: 230px;
 }
 
+#startingDate {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-color: var(--inactive-dark);
+    border-bottom-width: 2px;
+    width: 220px;
+    display: block;
+    font-size: 26px;
+    color: #666666;
+    transition: 0.25s;
+}
 
-#latitudeInput, #longitudeInput, #altitudeInput, #incrementDate, #numberOfDays {
+
+#latitudeInput, #longitudeInput, #altitudeInput, 
+#incrementDate, #numberOfDays {
     font-size: 26px;
 }
 
@@ -633,6 +635,9 @@ tr.firstHeaderRowScrolled{
 
 tr.secondHeaderRowScrolled{
     top: 126px;
+}
+#startingDate {
+    width: 240px;
 }
 }
 
