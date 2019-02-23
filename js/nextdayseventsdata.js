@@ -38,6 +38,12 @@ var NextEvents = {};
                 // test with k. Is it an opposition?
                 // if yes, test with eclipses
                 // if yes, add it to the array of events
+                var eclipseData = MoonEclipsesData.calculateEclipseForJD (JD);
+                if (eclipseData.eclipse) {
+                    // build th object
+                    var id = MoonEclipsesPage.getId(eclipseData);
+                    // set the eclipseData['start'], 'title' and 'linkActions'
+                }
             }
             return events;
         }
