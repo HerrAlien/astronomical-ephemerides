@@ -28,3 +28,18 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     - the moon and sun eclipses
     - occultations
 */
+
+var NextEvents = {};
+(function(){
+    NextEvents["MoonEclipsesPage"] = {
+        GetEvents : function (startJD, endJD, incrementHint) {
+            var events = [];
+            for (var jd = startJD; jd < endJD; jd += incrementHint) {
+                // test with k. Is it an opposition?
+                // if yes, test with eclipses
+                // if yes, add it to the array of events
+            }
+            return events;
+        }
+    };
+})();
