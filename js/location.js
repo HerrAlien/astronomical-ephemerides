@@ -68,29 +68,23 @@ var Location = {
 	},
 
     initMap : function () {
-    	var localInitMap = function() {
-			try {
-			  Location.Controls.map = L.map('mapHolder').setView([Location.latitude, Location.longitude], 8);
-				L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-					attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-					maxZoom: 18,
-					id: 'mapbox.outdoors',
-					accessToken: 'pk.eyJ1IjoiaGVycmFsaWVuIiwiYSI6ImNqbzl2cWQ4MTAyNzYzcW53YTQxNW9sN2cifQ.5lYnsEwiJsHPv3Ss6l3hHw'
-				}).addTo(Location.Controls.map);
-				Location.Controls.marker = L.marker([Location.latitude, Location.longitude]).addTo(Location.Controls.map);
-				Location.Controls.map.on('click', function(evt){
+	  Location.Controls.map = L.map('mapHolder').setView([Location.latitude, Location.longitude], 8);
+		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+			maxZoom: 18,
+			id: 'mapbox.outdoors',
+			accessToken: 'pk.eyJ1IjoiaGVycmFsaWVuIiwiYSI6ImNqbzl2cWQ4MTAyNzYzcW53YTQxNW9sN2cifQ.5lYnsEwiJsHPv3Ss6l3hHw'
+		}).addTo(Location.Controls.map);
+		Location.Controls.marker = L.marker([Location.latitude, Location.longitude]).addTo(Location.Controls.map);
+		Location.Controls.map.on('click', function(evt){
 
-					Location.Controls.marker.setLatLng(evt.latlng);
+			Location.Controls.marker.setLatLng(evt.latlng);
 
-					Location.Controls.lat.value = evt.latlng.lat;
-					Location.Controls.long.value = evt.latlng.lng;
-					Location.Controls.alt.value = isNaN(evt.latlng.alt) ? 0 : evt.latlng.alt;
+			Location.Controls.lat.value = evt.latlng.lat;
+			Location.Controls.long.value = evt.latlng.lng;
+			Location.Controls.alt.value = isNaN(evt.latlng.alt) ? 0 : evt.latlng.alt;
 
-				});
-    		} catch (err) {
-    			setTimeout (localInitMap, 500);
-    		}
-    	};
+		});	
       },
     
     load : function() {
