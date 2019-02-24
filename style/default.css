@@ -9,6 +9,9 @@
         margin-left: auto;
         margin-right: auto;
         padding-top: 0px;
+        width: 100%;
+        z-index: 4;
+        /* position: static; */
     }
 
     .showPositional #JupiterTable tr.firstHeaderRow, 
@@ -116,28 +119,6 @@
     list-style-type:none;
 }
 
-tr.firstHeaderRow{
-    margin-top: -47px;
-    background: #ffffff;
-}
-
-tr.secondHeaderRow {
-    margin-top: -25px;
-    background: #ffffff;
-}
-
-tr.firstHeaderRowScrolled{
-    top: 0px;
-}
-
-tr.secondHeaderRowScrolled{
-    top: 22px;
-}
-
-tr.firstHeaderRow, tr.firstHeaderRowScrolled {
-    text-decoration: underline;
-}
-
 table {
     margin-top: 10px;
     font-family : Courier;
@@ -148,6 +129,80 @@ table {
 
 .planetTable {
     margin-top: 50px;
+    font-size: 14.75px;
+    margin-left: auto;
+    margin-right:  auto;
+    font-family: Courier;
+}
+
+@supports not (-webkit-overflow-scrolling: touch) {
+    .planetTable {
+        background: url('../images/sprite.svg#default-table');
+        background-repeat-x: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+}
+
+.planetTableHeader {
+    background: #ffffff;
+    display: block;
+    border-bottom: solid 1px #000000;
+    border-top: solid 1px;
+}
+
+.planetTable, .planetTable > .planetTableHeader {
+   width: 675px;
+}
+
+.planetTableHeader.fixed {
+    top: 112px;
+}
+
+.planetTableHeader.printOnly {
+    display:none;
+}
+
+#SunTable, #SunTable > .planetTableHeader {
+    width: 760px;
+}
+
+
+@supports not (-webkit-overflow-scrolling: touch) {
+    .planetTable {
+        background: url('../images/sprite.svg#default-table');
+        background-repeat-x: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+
+    #SunTable{
+            background: url('../images/sprite.svg#sun-table');
+    }
+
+    #MoonTable {
+        background: url('../images/sprite.svg#moon-table');
+    }
+
+    #JupiterTable {
+        background: url('../images/sprite.svg#jupiter-table');
+    }
+
+    #MarsTable {
+        background: url('../images/sprite.svg#mars-table');
+    }
+}
+
+#MoonTable, #MoonTable > .planetTableHeader {
+    width: 840px;
+}
+
+#JupiterTable, #JupiterTable > .planetTableHeader {
+    width: 985px;
+}
+
+#MarsTable, #MarsTable > .planetTableHeader {
+    width: 950px;
 }
 
  td,  th {
@@ -181,150 +236,16 @@ tr.secondHeaderRowScrolled th:last-of-type {
 }
 
 
-/** ----------------------------- M O O N --------------------------------------- **/
-
-#MoonTable .firstHeaderRow, #MoonTable .secondHeaderRow, .muddle,
-#MoonTable .firstHeaderRowScrolled, #MoonTable .secondHeaderRowScrolled {
-    width: 770px;
-}
-
-#MoonTable td:nth-of-type(2), #MoonTable td:nth-of-type(5), #MoonTable td:nth-of-type(8), #MoonTable td:nth-of-type(11), #MoonTable td:nth-of-type(14), #MoonTable td:nth-of-type(16), #MoonTable td:nth-of-type(17), #MoonTable td:nth-of-type(18), #MoonTable td:nth-of-type(19), #MoonTable td:nth-of-type(22), #MoonTable td:nth-of-type(23) {
-    border-right: 1px solid black;
-}
-
-#MoonTable td:nth-of-type(9), #MoonTable td:nth-of-type(10), #MoonTable td:nth-of-type(12), #MoonTable td:nth-of-type(13), #MoonTable td:nth-of-type(15){
-    border-right: none;
-}
-
-/** -------------------------------------- S U N -------------------------------- **/
-
-#SunTable .firstHeaderRow, #SunTable .secondHeaderRow, .muddle,
-#SunTable .firstHeaderRowScrolled, #SunTable .secondHeaderRowScrolled {
-    min-width: 724px;
-}
-
-#SunTable td:nth-of-type(2), #SunTable td:nth-of-type(5), #SunTable td:nth-of-type(8), #SunTable td:nth-of-type(9), #SunTable td:nth-of-type(11),
-#SunTable td:nth-of-type(14), #SunTable td:nth-of-type(15), #SunTable td:nth-of-type(16), #SunTable td:nth-of-type(17), #SunTable td:nth-of-type(12), #SunTable td:nth-of-type(13) {
-    border-right: 1px solid black;
-}
-
-#SunTable td:nth-of-type(10) {
-    border-right: none;
-}
-
 .muddle {
     margin-left:auto;
     margin-right:auto;
-}
-
-/** ---------------------------------- P L A N E T ------------------------------ **/
-.firstHeaderRow, .secondHeaderRow, .planetTable, .muddle,
-.firstHeaderRowScrolled, .secondHeaderRowScrolled {
     width: 633px;
-}
-
-.minWidth1{
-	min-width: 1px;
-}
-
-.minWidth5 {
-    min-width: 5px;
-}
-
-.minWidth15 {
-    min-width : 15px;
-}
-
-.minWidth20 {
-    min-width : 20px;
-}
-
-.minWidth25 {
-    min-width : 25px;
-}
-
-.minWidth30 {
-    min-width: 30px;
-}
-
-.minWidth40 {
-    min-width : 40px;
-}
-
-.minWidth45 {
-    min-width : 45px;
-}
-
-.minWidth50 {
-    min-width: 50px;
-}
-
-.minWidth52 {
-    min-width: 52px;
-}
-
-.minWidth55 {
-    min-width: 55px;
-}
-
-.minWidth62 {
-    min-width : 62px;
-}
-
-.minWidth65 {
-    min-width : 65px;
-}
-
-.borderRight,
-.planetTable td:nth-of-type(2) ,
-.planetTable td:nth-of-type(5),
-.planetTable td:nth-of-type(8),
-.planetTable td:nth-of-type(9),
-.planetTable td:nth-of-type(10),
-.planetTable td:nth-of-type(11),
-.planetTable td:nth-of-type(12),
-.planetTable td:nth-of-type(13),
-.planetTable td:nth-of-type(14),
-.planetTable td:nth-of-type(15){
-    border-right: solid 1px black;
-}
-
-.minWidth15 {
-    min-width: 15px;    
-}
-
-.minWidth70 {
-    min-width:70px;
 }
 
 @media screen {
 }
 
-/* ---------------------------- M A R S ------------------------------------ */
 
-#MarsTable tr.firstHeaderRow,
-#MarsTable tr.secondHeaderRow,
-#MarsTable tr.firstHeaderRowScrolled, 
-#MarsTable tr.secondHeaderRowScrolled {
-    width: 832px;
-}
-#MarsTable td:nth-of-type(16), 
-#MarsTable td:nth-of-type(18), 
-#MarsTable td:nth-of-type(19), 
-#MarsTable td:nth-of-type(20), 
-#MarsTable td:nth-of-type(21){
-    border-right: solid 1px black;
-}
-
-/* ---------------------------- J U P I T E R ---------------------- */
-#JupiterTable td:nth-of-type(16), 
-#JupiterTable td:nth-of-type(18), 
-#JupiterTable td:nth-of-type(19), 
-#JupiterTable td:nth-of-type(20), 
-#JupiterTable td:nth-of-type(21), 
-#JupiterTable td:nth-of-type(22){
-    border-right: solid 1px black;
-}
 
 #Elongations of Galilean Moons, #Elongations of Saturn Moons {
     text-align: center;
@@ -389,7 +310,7 @@ tr.secondHeaderRowScrolled th:last-of-type {
 
 .physicalPositionalButtonsHolder {
     position: fixed;
-    bottom: 134px;
+    bottom: 118px;
     background: #ffffff;
     padding: 2px 0px 2px 2px;
     width: 100%;
@@ -405,6 +326,9 @@ tr.secondHeaderRowScrolled th:last-of-type {
     text-align: left;
 }
 
+.hidePhaseOnPhysical {
+    display: none;
+}
 
 @media  screen and  (max-width: 936px)  {
     
@@ -420,33 +344,48 @@ tr.secondHeaderRowScrolled th:last-of-type {
         visibility: hidden;
     }
 
-    #jupiterHorizontalScroller, #marsHorizontalScroller {
-        width: 647px;
+    #jupiterHorizontalScroller, #marsHorizontalScroller,
+    #JupiterTable.showPositional > .planetTableHeader,
+    #MarsTable.showPositional > .planetTableHeader  {
+        width: 675px;
     }
 
-    #JupiterTable tr.firstHeaderRow, 
-    #JupiterTable tr.secondHeaderRow,
-    #JupiterTable tr.firstHeaderRowScrolled, 
-    #JupiterTable tr.secondHeaderRowScrolled, 
-    #MarsTable tr.firstHeaderRow, 
-    #MarsTable tr.secondHeaderRow,
-    #MarsTable tr.firstHeaderRowScrolled, 
-    #MarsTable tr.secondHeaderRowScrolled  {
-        width: 635px;
-    }
-    
     .showPhysical {
-        margin-left: -650px;
+        margin-left: -675px;
         margin-right: auto;
     }
+
+    #JupiterTable.showPositional > .planetTableHeader,
+    #MarsTable.showPositional > .planetTableHeader {
+        overflow-x: hidden;
+    }
+
+    .showPhysical > span > .hidePhaseOnPhysical{
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: calc(50% - 337px);
+        height: 260px;
+        background: #ffffff;
+        display: block;
+    }
+
+    .showPhysical > span.movedMenu > .hidePhaseOnPhysical{
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: calc(50% - 337px);
+        height: 160px;
+        background: #ffffff;
+        display: block;
+    }
+
     
     @media (orientation: portrait) {
-        tr.firstHeaderRowScrolled.movedMenu {
-            top: 0;
+        .planetTableHeader.fixed {
+            top: 0px;
         }
-        tr.secondHeaderRowScrolled.movedMenu {
-            top: 22;
-        }
+
     }
 
     @media (orientation: landscape) {
@@ -459,23 +398,13 @@ tr.secondHeaderRowScrolled th:last-of-type {
         width: 100%;
         }
 
-        tr.fixed.firstHeaderRowScrolled.movedMenu {
+        .planetTableHeader.movedMenu.fixed {
             top: 40px;
         }
-        tr.fixed.secondHeaderRowScrolled.movedMenu {
-            top: 62px;
-        }
-        
-        tr.fixed.firstHeaderRowScrolled{
-            top: 148px;
-        }
 
-        tr.fixed.secondHeaderRowScrolled{
-            top: 170px;
+        .planetTableHeader.fixed {
+            top: 120px;
         }
-
-        
-    }
 
 .leftaligned {
     margin-top: 30px;
@@ -490,17 +419,18 @@ tr.secondHeaderRowScrolled th:last-of-type {
 }
     
 .positionalButton, .physicalButton {
-    height:23px; 
-    border: solid 1px #000000; 
-    float: left; 
-    padding-top: 2px; 
-    padding-left: 5px; 
-    width: 170px; 
-    text-align: center;        
+    height: 33px;
+    border: solid 1px #000000;
+    float: left;
+    padding-top: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    /* width: 170px; */
+    text-align: center;
     cursor: pointer;
     user-select: none;
     font-family: Verdana;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .positionalButton {
@@ -525,18 +455,6 @@ label {
     font-size: 18px;
 }
 
-input[type=date] {
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-color: #AAAAAA;
-    border-bottom-width: 2px;
-    width: 100%;
-    display: block;
-    font-size: 26px;
-    color: #666666;
-    transition: 0.25s;
-}
 
 label input:hover {
     color: #003377;
@@ -619,8 +537,22 @@ input[type=date]::-webkit-inner-spin-button {
     width: 230px;
 }
 
+#startingDate {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-color: var(--inactive-dark);
+    border-bottom-width: 2px;
+    width: 220px;
+    display: block;
+    font-size: 26px;
+    color: #666666;
+    transition: 0.25s;
+}
 
-#latitudeInput, #longitudeInput, #altitudeInput, #incrementDate, #numberOfDays {
+
+#latitudeInput, #longitudeInput, #altitudeInput, 
+#incrementDate, #numberOfDays {
     font-size: 26px;
 }
 
@@ -703,6 +635,9 @@ tr.firstHeaderRowScrolled{
 
 tr.secondHeaderRowScrolled{
     top: 126px;
+}
+#startingDate {
+    width: 240px;
 }
 }
 

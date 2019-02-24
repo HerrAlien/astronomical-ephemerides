@@ -74,120 +74,140 @@ var SunData = {
         dataSource : SunData,
         tableHeaderInfo : {
         "0" : {
-                "0" : { "text" : "Date", "classes" : ["minWidth20"] },
-                "1" : { "text" : "", "classes" : ["minWidth20"] },
+                "0" : { "text" : "Date  " },
+                "1" : { "text" : "     " },
                 "longText" : "Date: month",
                 "dataKey" : 'Month'
             } ,
 
         "1" : {
-                "0" : { "text" : "", "classes" : ["minWidth20"] },
-                "1" : { "text" : "", "classes" : ["minWidth20"] },
+                "0" : { "text" : " "},
+                "1" : { "text" : " "},
                 "longText" : "Date: day",
                 "dataKey" : 'Day'
             },
         "2" : {
-                "0" : { "text" : "\u03B1", "classes" : ["minWidth20"] },
-                "1" : { "text" : "h", "classes" : ["minWidth20"] },
+                "0" : { "text" : "  \u03B1 "},
+                "1" : { "text" : "  h  "},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension",
                 "dataKey" : 'RA'
             },
         "3" : {
-                "0" : { "text" : "(RA)", "classes" : ["minWidth20"] },
-                "1" : { "text" : "m", "classes" : ["minWidth20"] },
+                "0" : { "text" : "(RA)   "},
+                "1" : { "text" : "m  "},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "4" : {
-                "0" : { "text" : "", "classes" : ["minWidth20"] },
-                "1" : { "text" : "s", "classes" : ["minWidth40"] },
+                "0" : { "text" : " "},
+                "1" : { "text" : " s   "},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "5" :  {
-                "0" : { "text" : "\u03B4", "classes" : ["minWidth20"] },
-                "1" : { "text" : "\u00B0", "classes" : ["minWidth25"] },
+                "0" : { "text" : " \u03B4 "},
+                "1" : { "text" : " \u00B0 "},
                 "longText" : "Apparent geocentric equatorial coordinates: Declination",
                 "dataKey" : 'Dec'
             },
         "6" :  {
-                "0" : { "text" : "(Dec)", "classes" : ["minWidth20" ] },
-                "1" : { "text" : "'", "classes" : ["minWidth20"] },
+                "0" : { "text" : "(Dec) "},
+                "1" : { "text" : " ' "},
                 "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
         "7" :  {
-                "0" : { "text" : "", "classes" : ["minWidth10"  ] },
-                "1" : { "text" : "''", "classes" : ["minWidth25"] },
+                "0" : { "text" : " "},
+                "1" : { "text" : " \" " },
                 "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
+
             "8" :  {
-                    "0" : { "text" :"\u0394", "classes" : ["minWidth50", "positionEphemeris"] },
-                    "1" : { "text" :"au",   "classes" : ["minWidth50", "positionEphemeris"] },
+                    "0" : { "text" :"  \u0394" },
+                    "1" : { "text" :"  au",   },
                     "longText" : "Distance to Earth, in astronomical units",
                 "dataKey" : 'DistanceToEarth'
                 },
             
             "9" :  {
-                    "0" : { "text" :"\u03D5", "classes" : ["minWidth20", "positionEphemeris"] },
-                    "1" : { "text" :"'",      "classes" : ["minWidth20", "positionEphemeris"] },
+                    "0" : { "text" :"     \u03D5" },
+                    "1" : { "text" :"   '"  },
                     "longText" : "Apparent diameter of the Sun",
                 "dataKey" : 'Diameter'
                 },
             "10" :  {
-                    "0" : { "text" :"",    "classes" : ["minWidth20", "positionEphemeris"] },
-                    "1" : { "text" :"''",  "classes" : ["minWidth20", "positionEphemeris"] },
+                    "0" : { "text" :"  "     },
+                    "1" : { "text" :"  \" " },
                     "longText" : "Apparent diameter of the Sun"
                 },
-                
-        "11" : {
-                    "0" : { "text" : "Rise", "classes" :  ["minWidth50", "positionEphemeris"] },
-                    "1" : { "text" : "hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
-                    "longText" : "The time of rise above horizon",
+
+
+       "11" : {
+                   "0" : { "text" : "Rise "},
+                   "1" : { "text" : "hh:mm "},
+                   "longText" : "The time of rise above horizon",
                 "dataKey" : 'Rise'
-            },      
-        "12" : {    
-                    "0" : { "text" : "Transit", "classes" : ["minWidth40"  , "positionEphemeris"] },
-                    "1" : { "text" : "hh:mm", "classes" : ["minWidth50", "positionEphemeris"] },
-                    "longText" : "The time of the transit across the meridian",
+            },
+        "12" : {
+                   "0" : { "text" : "Transit" },
+                   "1" : { "text" : "hh:mm " },
+                   "longText" : "The time of the transit across the meridian",
                 "dataKey" : 'MeridianTransit'
-            },      
-        "13" : {    
-                    "0" : { "text" : "Set", "classes" : ["minWidth40"  , "positionEphemeris"] },
-                    "1" : { "text" : "hh:mm", "classes" : ["minWidth55", "positionEphemeris"] },
-                    "longText" : "The time of setting",
+            },
+        "13" : {
+                   "0" : { "text" : " Set " },
+                   "1" : { "text" : "hh:mm " },
+                   "longText" : "The time of setting",
                 "dataKey" : 'Set'
             },
+
+
             "14" :  {
-                    "0" : { "text" :"P",      "classes" : ["minWidth62", "physicalEphemeris"] },
-                    "1" : { "text" :"\u00B0", "classes" : ["minWidth62", "physicalEphemeris"] },
+                    "0" : { "text" :"     P"      },
+                    "1" : { "text" :"    \u00B0" },
                     "longText" : "Position angle of the N end of the axis of rotation (physical ephemeris). It is positive when east of the north point of the disk, negative if west.",
                 "dataKey" : 'P'
                 },
 
             "15" :  {
-                    "0" : { "text" :"B",      "classes" : ["minWidth62", "physicalEphemeris"] },
-                    "1" : { "text" :"\u00B0", "classes" : ["minWidth62", "physicalEphemeris"] },
+                    "0" : { "text" :"     B"      },
+                    "1" : { "text" :"     \u00B0" },
                     "longText" : "Heliographic latitude of the centre of the disk (physical ephemeris).",
                 "dataKey" : 'B0'
                 },
 
             "16" :  {
-                    "0" : { "text" :"L",      "classes" : ["minWidth62", "physicalEphemeris"] },
-                    "1" : { "text" :"\u00B0", "classes" : ["minWidth62", "physicalEphemeris"] },
+                    "0" : { "text" :"        L"     },
+                    "1" : { "text" :"        \u00B0"},
                     "longText" : "Heliographic longitude of the centre of the disk (physical ephemeris).",
                 "dataKey" : 'L0'
                 },
                 // \u03C0
             "17" :  {
-                    "0" : { "text" :"\u03C0", "classes" : ["minWidth50", "physicalEphemeris"] },
-                    "1" : { "text" :"''",     "classes" : ["minWidth50", "physicalEphemeris"] },
+                    "0" : { "text" :"    \u03C0" },
+                    "1" : { "text" :"    \""     },
                     "longText" : "Equatorial horizontal parallax",
                 "dataKey" : 'Parallax'
                 }
         },
         
-        firstDataRowColumnClasses : [ ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"],
-                          ["minWidth25"], ["minWidth20"], ["minWidth20"], ["minWidth50"], ["minWidth20"], 
-                          ["minWidth20"], ["minWidth50"], ["minWidth50"], ["minWidth50"], ["minWidth62"],
-                          ["minWidth62"], ["minWidth62"], ["minWidth30"] ],
+        formattingFunctions : [ 
+        function(month) { return prePadTo(month, " ", 3); }, 
+        function (day) { return prePadTo(day, " ", 2); }, 
+        function (RA_h) { return prePadTo(RA_h, " ", 2); },
+        function (RA_m) { return prePadTo(RA_m, " ", 2); }, 
+        function (RA_s) { return prePadTo(RA_s, " ", 4);  },
+        function (dec_deg) { return prePadTo(dec_deg, " ", 3); },
+        function (dec_m) { return prePadTo(dec_m, " ", 2); },
+        function (dec_s) { return prePadTo(dec_s, " ", 2); },
+        function (delta) { return postPadTo(delta, " ", 5); },
+        function (phi_min) { return prePadTo(phi_min, " ", 2); },
+        function (phi_sec) { return prePadTo(phi_sec, " ", 2); },
+		function(v) { return v; },
+		function(v) { return v; },
+		function(v) { return v; },
+		function(v) { return prePadTo(v, " ", 7); },
+		function(v) { return prePadTo(v, " ", 6); },
+		function(v) { return prePadTo(v, " ", 7); },
+		function(v) { return prePadTo(v, " ", 5); },
+		],
                            
         lastDisplayedMonth : -1,
         months : ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
@@ -241,8 +261,6 @@ var SunData = {
 
             var result = this.oldAddHeader(table, classes);
             // add some subscripts
-            this.addNodeChild (result.row1.cells[15], "sub", "0");
-            this.addNodeChild (result.row1.cells[16], "sub", "0");
             return result;
         },
         
