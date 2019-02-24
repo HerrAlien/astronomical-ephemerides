@@ -20,7 +20,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     // IncrementHint is just a hint on the sample rate for getting from the inernal data sources.
     // If there is reasonable evidence to suspect an event, a finer icrement should be used.
     GetEvents (startJD, endJD, incrementHint) 
-    -> [ { start: <JD>, end: <JD>, title: string, linkActions : [actions]},
+    -> [ { start: <JD>, end: <JD>, title: string, target : [actions]},
          ... ... ...
      ]
 
@@ -43,6 +43,14 @@ var NextEvents = {};
                     // build th object
                     var id = MoonEclipsesPage.getId(eclipseData);
                     // set the eclipseData['start'], 'title' and 'linkActions'
+                    events.push ({
+                        start : eclipseData.Timings.Penumbral.firstContact,
+                        end :   eclipseData.Timings.Penumbral.lastContact,
+                        target : JSON.stringify({
+                            page:"Lunar Eclipses",
+                            actions:[{name:"scroll", parameters: id}]
+                            })
+                    });
                 }
             }
             return events;
