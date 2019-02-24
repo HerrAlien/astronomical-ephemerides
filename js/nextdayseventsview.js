@@ -32,4 +32,19 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 (function(){
 
+    var domHost = document.getElementById("upcommingEventsFrontPage");
+    var events = [];
+    function init() {
+        try {
+
+            events = NextEvents["GetEvents"]();
+
+
+
+        } catch (err) {
+            setTimeout(init, 500);
+        }
+    }
+    init();
+    
 })();

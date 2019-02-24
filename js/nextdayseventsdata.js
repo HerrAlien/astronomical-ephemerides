@@ -54,11 +54,12 @@ var NextEvents = {
     };
 
     NextEvents["MoonEclipsesPage"] = {
-        GetForDays : function (startJD, endJD, incrementHint) {
+        GetForDays : function () {
             NextEvents.init();
             var events = [];
-            for (var jd = startJD; jd < endJD; jd += incrementHint) {
-                var eclipseData = MoonEclipsesData.calculateEclipseForJD (JD);
+            var jd = NextEvents.startJd;
+            for (var i = 0; i < NextEvents.numberOfDays; i++) {
+                var eclipseData = MoonEclipsesData.calculateEclipseForJD (jd + i);
                 if (eclipseData.eclipse) {
                     var id = MoonEclipsesPage.getId(eclipseData);
                     events.push ({
@@ -74,4 +75,19 @@ var NextEvents = {
             return events;
         }
     };
+
+
+    NextEvents["GetEvents"] = function() {
+        var events = [];
+        for (var key in NextEvents) {
+            if (((typeof NextEvents[key]).toUpperCase() == "OBJECT") &&
+                ((typeof NextEvents[key]["GetEvents"]).toUpperCase() == "FUNCTION")) {
+                var eventsForObj = NextEvents[key]["GetEvents"]();
+                events = events.concat(eventsForObj);
+            }
+        }
+
+        events.sort(function(a, b) { return a.start - b.start; });
+    };
+
 })();
