@@ -19,7 +19,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 /* Requirement for data sources:
     // IncrementHint is just a hint on the sample rate for getting from the inernal data sources.
     // If there is reasonable evidence to suspect an event, a finer icrement should be used.
-    GetEvents (startJD, endJD, incrementHint) 
+    GetEvents (countOfDays) 
     -> [ { start: <JD>, end: <JD>, title: string, target : [actions]},
          ... ... ...
      ]
@@ -29,20 +29,38 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     - occultations
 */
 
-var NextEvents = {};
+var NextEvents = {
+    numberOfDays : false,
+    startJd : false
+};
+
 (function(){
+    NextEvents["init"] = function() {
+        if (!this.numberOfDays) {
+            this.numberOfDays = document.getElementById("futureEventsNumberOfDays").value;
+        }
+        if (!this.startJd) {
+            var rightNow = new Date();
+            var y = rightNow.getUTCFullYear();
+            var m = 1 + rightNow.getUTCMonth();
+            var d = rightNow.getUTCDate();
+            this.startJd = GetAAJS().Date.DateToJD (y, m, d, true);
+        }
+    };
+
+    NextEvents["reset"] = function() {
+        this.numberOfDays = false;
+        this.startJd = false;
+    };
+
     NextEvents["MoonEclipsesPage"] = {
-        GetEvents : function (startJD, endJD, incrementHint) {
+        GetForDays : function (startJD, endJD, incrementHint) {
+            NextEvents.init();
             var events = [];
             for (var jd = startJD; jd < endJD; jd += incrementHint) {
-                // test with k. Is it an opposition?
-                // if yes, test with eclipses
-                // if yes, add it to the array of events
                 var eclipseData = MoonEclipsesData.calculateEclipseForJD (JD);
                 if (eclipseData.eclipse) {
-                    // build th object
                     var id = MoonEclipsesPage.getId(eclipseData);
-                    // set the eclipseData['start'], 'title' and 'linkActions'
                     events.push ({
                         start : eclipseData.Timings.Penumbral.firstContact,
                         end :   eclipseData.Timings.Penumbral.lastContact,
