@@ -19,6 +19,22 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff" />   
 
+<script type="text/JavaScript" async="" src="js/aajs.js"></script>
+<script type="text/javascript" async="" src="js/matrix.js"></script>
+<script type="text/javascript" async="" src="js/numerical.js"></script>
+<script type="text/JavaScript" async="" src="js/besselianelements.js"></script>
+
+<script type="text/JavaScript" async="" src="js/moonsdata.js"></script>
+<script type="text/JavaScript" async="" src="js/galileanmoonsdata.js"></script>
+<script type="text/JavaScript" async="" src="js/saturnmoonsdata.js"></script>
+
+<script type="text/JavaScript" async="" src="js/mooneclipsesdata.js"></script>
+<script type="text/JavaScript" async="" src="js/solareclipsesdata.js"></script>
+<script type="text/JavaScript" async="" src="js/realtimedata.js"></script>
+
+<script type="text/JavaScript" async="" src="js/notifications.js"></script>
+<script type="text/JavaScript" async="" src="js/pagerank.js"></script>
+
     <script type="text/JavaScript">
 
 var PageTimeInterval = {};
@@ -299,21 +315,6 @@ function GetAAJS() {
 
 </script>
 
-<script type="text/JavaScript" async="" src="js/aajs.js"></script>
-<script type="text/javascript" async="" src="js/matrix.js"></script>
-<script type="text/javascript" async="" src="js/numerical.js"></script>
-<script type="text/JavaScript" async="" src="js/besselianelements.js"></script>
-
-<script type="text/JavaScript" async="" src="js/moonsdata.js"></script>
-<script type="text/JavaScript" async="" src="js/galileanmoonsdata.js"></script>
-<script type="text/JavaScript" async="" src="js/saturnmoonsdata.js"></script>
-
-<script type="text/JavaScript" async="" src="js/mooneclipsesdata.js"></script>
-<script type="text/JavaScript" async="" src="js/solareclipsesdata.js"></script>
-<script type="text/JavaScript" async="" src="js/realtimedata.js"></script>
-
-<script type="text/JavaScript" async="" src="js/notifications.js"></script>
-<script type="text/JavaScript" async="" src="js/pagerank.js"></script>
 
     <link rel="icon" type="image/png" href="images/ae-icon.png" />
 
@@ -1281,15 +1282,12 @@ h1 {
 
 </script>
 
-
+<!--
  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
    crossorigin=""/>
-
+-->
 <!-- Make sure you put this AFTER Leaflet's CSS -->
- <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
-   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
-   crossorigin=""></script>
 
 </head>
 
@@ -1769,6 +1767,7 @@ var injectCssDom = function(url) {
 injectCssDom("../style/common.css");
 injectCssDom("style/default.css");
 injectCssDom("style/print.css");
+injectCssDom("https://unpkg.com/leaflet@1.3.4/dist/leaflet.css");
 
 var appInit = function() {
    if (typeof Location == 'undefined' || typeof TimeStepsData == 'undefined' || typeof Notifications == 'undefined'
@@ -1811,3 +1810,6 @@ caches.keys().then(names => {
 });
 })();
 </script>
+ <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+   crossorigin=""></script>
