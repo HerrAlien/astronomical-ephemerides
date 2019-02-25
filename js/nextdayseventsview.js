@@ -44,7 +44,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             for (var i = 0; i < events.length; i++) {
                 var currentEvent = events[i];
                 var anchor = addDomNode(documentFrag, "a", currentEvent.title);
-                anchor["href"] = "#" + encodeURIComponent(JSON.stringify(currentEvent.navigActionObj));
+                anchor["href"] = "#" + JSON.stringify(currentEvent.navigActionObj);
             }
 
             domHost.appendChild(documentFrag);

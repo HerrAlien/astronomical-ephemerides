@@ -58,17 +58,25 @@ var NextEvents = {
             NextEvents.init();
             var events = [];
             var jd = NextEvents.startJd;
+            var lastEclipseJd = false;
             for (var i = 0; i < NextEvents.numberOfDays; i++) {
+
+                if (lastEclipseJd && Math.abs(jd + i - lastEclipseJd) < 27) {
+                    continue;
+                }
 
                 var eclipseData = {eclipse: false};
                 try {
+                    if (!AAJS.AllDependenciesLoaded()) 
+                        throw "AAJS not loaded";
                     eclipseData = MoonEclipsesData.calculateEclipseForJD (jd + i);
                 } catch (err) {
                     var errStr = String(err);
-                    if (0 < errStr.indexOf("Cannot obtain JD for opposition"))
+                    if (0 > errStr.indexOf("Cannot obtain JD for opposition"))
                         throw err;
                 }
                 if (eclipseData.eclipse) {
+                    lastEclipseJd = eclipseData.Timings.Penumbral.firstContact;
                     var id = MoonEclipsesPage.getId(eclipseData);
                     events.push ({
                         start : eclipseData.Timings.Penumbral.firstContact,
@@ -76,10 +84,12 @@ var NextEvents = {
                         navigActionObj : {
                             page:"Lunar Eclipses",
                             actions:[{name:"scroll", parameters: id}]
-                            }
+                            },
+                       title: id
                     });
                 }
             }
+
             return events;
         }
     };
