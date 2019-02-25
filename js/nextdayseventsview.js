@@ -20,7 +20,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     // IncrementHint is just a hint on the sample rate for getting from the inernal data sources.
     // If there is reasonable evidence to suspect an event, a finer icrement should be used.
     GetEvents (countOfDays) 
-    -> [ { start: <JD>, end: <JD>, title: string, target : [actions]},
+    -> [ { start: <JD>, end: <JD>, title: string, navigActionObj : {}},
          ... ... ...
      ]
 
@@ -33,18 +33,29 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 (function(){
 
     var domHost = document.getElementById("upcommingEventsFrontPage");
-    var events = [];
+
     function init() {
         try {
 
-            events = NextEvents["GetEvents"]();
+            var events = NextEvents["GetEvents"]();
+            var addDomNode = PlanetPage.prototype.addNodeChild;
 
+            var documentFrag = document.createDocumentFragment();
+            for (var i = 0; i < events.length; i++) {
+                var currentEvent = events[i];
+                var anchor = addDomNode(documentFrag, "a", currentEvent.title);
+                anchor["href"] = "#" + encodeURIComponent(JSON.stringify(currentEvent.navigActionObj));
+            }
+
+            domHost.appendChild(documentFrag);
 
 
         } catch (err) {
             setTimeout(init, 500);
         }
     }
-    init();
     
+    init();
+
+
 })();

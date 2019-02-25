@@ -20,7 +20,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     // IncrementHint is just a hint on the sample rate for getting from the inernal data sources.
     // If there is reasonable evidence to suspect an event, a finer icrement should be used.
     GetEvents (countOfDays) 
-    -> [ { start: <JD>, end: <JD>, title: string, target : [actions]},
+    -> [ { start: <JD>, end: <JD>, title: string, navigActionObj : [actions]},
          ... ... ...
      ]
 
@@ -37,14 +37,14 @@ var NextEvents = {
 (function(){
     NextEvents["init"] = function() {
         if (!this.numberOfDays) {
-            this.numberOfDays = document.getElementById("futureEventsNumberOfDays").value;
+            this.numberOfDays = Number(document.getElementById("futureEventsNumberOfDays").value);
         }
         if (!this.startJd) {
             var rightNow = new Date();
             var y = rightNow.getUTCFullYear();
             var m = 1 + rightNow.getUTCMonth();
             var d = rightNow.getUTCDate();
-            this.startJd = GetAAJS().Date.DateToJD (y, m, d, true);
+            this.startJd = AAJS.Date.DateToJD (y, m, d, true);
         }
     };
 
@@ -54,21 +54,29 @@ var NextEvents = {
     };
 
     NextEvents["MoonEclipsesPage"] = {
-        GetForDays : function () {
+        GetEvents : function () {
             NextEvents.init();
             var events = [];
             var jd = NextEvents.startJd;
             for (var i = 0; i < NextEvents.numberOfDays; i++) {
-                var eclipseData = MoonEclipsesData.calculateEclipseForJD (jd + i);
+
+                var eclipseData = {eclipse: false};
+                try {
+                    eclipseData = MoonEclipsesData.calculateEclipseForJD (jd + i);
+                } catch (err) {
+                    var errStr = String(err);
+                    if (0 < errStr.indexOf("Cannot obtain JD for opposition"))
+                        throw err;
+                }
                 if (eclipseData.eclipse) {
                     var id = MoonEclipsesPage.getId(eclipseData);
                     events.push ({
                         start : eclipseData.Timings.Penumbral.firstContact,
                         end :   eclipseData.Timings.Penumbral.lastContact,
-                        target : JSON.stringify({
+                        navigActionObj : {
                             page:"Lunar Eclipses",
                             actions:[{name:"scroll", parameters: id}]
-                            })
+                            }
                     });
                 }
             }
@@ -88,6 +96,7 @@ var NextEvents = {
         }
 
         events.sort(function(a, b) { return a.start - b.start; });
+        return events;
     };
 
 })();
