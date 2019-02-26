@@ -40,10 +40,10 @@ var JupiterData = {};
             var Page = new PlanetPage (JupiterData, "JupiterTable");
 
             Page.tableHeaderInfo['16'] = {  "dataKey" : 'CentralMeridianApparentLongitude_System1', "0" : {"text" : "  L0-S1"}, "1" : {"text" : "             \u00B0"}, "longText" : "Longitude of central meridian, System 1 (physical ephemeris)" };
-            Page.tableHeaderInfo['17'] = {  "dataKey" : 'CentralMeridianApparentLongitude_System2', "0" : {"text" : " L0-S2"}, "1" : {"text" : "      \u00B0"}, "longText" : "Longitude of central meridian, System 2 (physical ephemeris)" };
+            Page.tableHeaderInfo['17'] = {  "dataKey" : 'CentralMeridianApparentLongitude_System2', "0" : {"text" : " L0-S2"}, "1" : {"text" : "     \u00B0 "}, "longText" : "Longitude of central meridian, System 2 (physical ephemeris)" };
             Page.tableHeaderInfo['18'] = {  "dataKey" : 'EarthDeclination', "0" : {"text" : "  DE"}, "1" : {"text" : "    \u00B0"}, "longText" : "Planetocentric declination of Earth (physical ephemeris)" };
             Page.tableHeaderInfo['19'] = {  "dataKey" : 'SunDeclination', "0" : {"text" : "   DS"}, "1" : {"text" : "    \u00B0"}, "longText" : "Planetocentric declination of the Sun (physical ephemeris)" };
-            Page.tableHeaderInfo['20'] = {  "dataKey" : 'P', "0" : {"text" : "    P " }, "1" : {"text" : "    \u00B0"}, "longText" : "Position angle of the North Pole (physical ephemeris)" };
+            Page.tableHeaderInfo['20'] = {  "dataKey" : 'P', "0" : {"text" : "    P  " }, "1" : {"text" : "    \u00B0"}, "longText" : "Position angle of the North Pole (physical ephemeris)" };
 
             Page.tableHeaderInfo['21'] = {
                 "0" : { "text" : " Date  " },
@@ -63,7 +63,7 @@ var JupiterData = {};
             function(L02) { return prePadTo(L02, " ", 5); }, 
             function(DE) { return prePadTo(DE, " ", 5); }, 
             function(DS) { return prePadTo(DS, " ", 4); }, 
-            function(P) { return prePadTo(P, " ", 4); },
+            function(P) { return prePadTo(P, " ", 5); },
             function(month) { return prePadTo(month, " ", 3); }, 
             function (day) { return prePadTo(day, " ", 2); }, 
             ]);
