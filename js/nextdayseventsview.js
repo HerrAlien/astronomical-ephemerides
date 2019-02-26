@@ -34,7 +34,15 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
     var domHost = document.getElementById("upcommingEventsFrontPage");
 
+    function reset() {
+        NextEvents["reset"]();
+        while (domHost.hasChildNodes()) {
+            domHost.removeChild(domHost.firstChild);
+        }
+    }
+
     function init() {
+
         try {
 
             var events = NextEvents["GetEvents"]();
@@ -49,7 +57,6 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
             domHost.appendChild(documentFrag);
 
-
         } catch (err) {
             setTimeout(init, 500);
         }
@@ -57,5 +64,25 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     
     init();
 
+    (function(){
+        var daysInput = document.getElementById("futureEventsNumberOfDays");
+        var lastInputValue = daysInput.value;
+        
+        var initOnChange = function() {
+            if (daysInput.value != lastInputValue) {
+                lastInputValue = daysInput.value;
+                reset();
+                init();
+            }
+        }
+
+        daysInput.onblur = initOnChange;
+        daysInput.onkeypress = function(keyboardEvent) {
+            if (keyboardEvent.key.toUpperCase() == "ENTER") {
+                initOnChange();
+            }
+        };
+
+    })();
 
 })();

@@ -58,10 +58,10 @@ var NextEvents = {
             NextEvents.init();
             var events = [];
             var jd = NextEvents.startJd;
-            var lastEclipseJd = false;
+            var lastOppositionJd = false;
             for (var i = 0; i < NextEvents.numberOfDays; i++) {
 
-                if (lastEclipseJd && Math.abs(jd + i - lastEclipseJd) < 27) {
+                if (lastOppositionJd && Math.abs(jd + i - lastOppositionJd) < 27) {
                     continue;
                 }
 
@@ -75,8 +75,10 @@ var NextEvents = {
                     if (0 > errStr.indexOf("Cannot obtain JD for opposition"))
                         throw err;
                 }
+
+                lastOppositionJd = eclipseData.JD;
+
                 if (eclipseData.eclipse) {
-                    lastEclipseJd = eclipseData.Timings.Penumbral.firstContact;
                     var id = MoonEclipsesPage.getId(eclipseData);
                     events.push ({
                         start : eclipseData.Timings.Penumbral.firstContact,
@@ -85,7 +87,7 @@ var NextEvents = {
                             page:"Lunar Eclipses",
                             actions:[{name:"scroll", parameters: id}]
                             },
-                       title: id
+                       title: "Lunar Eclipse: " + MoonEclipsesPage.getTypeOfEclipseString(eclipseData)
                     });
                 }
             }

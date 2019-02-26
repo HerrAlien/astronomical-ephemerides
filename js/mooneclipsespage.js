@@ -51,19 +51,24 @@ var MoonEclipsesPage = {
         
         processJD(startJD);
     },
+
+
+    getTypeOfEclipseString : function (oppositionData) {
+        if (oppositionData.umbralPartialEclipse)
+            return "Partial eclipse";
+        if (oppositionData.umbralTotalEclipse)
+            return "Total eclipse";
+        return "Eclipse through the penumbra";
+    },
+
     
     displayTimings : function (oppositionData, mainDiv) {
         var addNodeChild = PlanetPage.prototype.addNodeChild;
         
         var yyyymmdd_hhmmOfJD  = PlanetPage.prototype.yyyymmdd_hhmmOfJD;
         
-        // get the JD of the opposition
+        var description = this.getTypeOfEclipseString(oppositionData);
         var oppositionDateTime = yyyymmdd_hhmmOfJD(oppositionData.JD);
-        var description = "Eclipse through the penumbra";
-        if (oppositionData.umbralPartialEclipse)
-            description = "Partial eclipse";
-        if (oppositionData.umbralTotalEclipse)
-            description = "Total eclipse";
         
         // the contents of this title is temporary. It may change, if the eclipse starts on one day and ends in another.
         var eclipseTitle = addNodeChild (mainDiv, "h2", oppositionDateTime.date.Y + "-" + oppositionDateTime.date.M + "-" + oppositionDateTime.date.D + " " + description);

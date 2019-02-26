@@ -529,9 +529,9 @@ input[type=date]::-webkit-inner-spin-button {
 }
 
 #futureEventsNumberOfDays {
-    width: 90px;
     display: inline-block;
     height: 60px;
+    width: 150px;
 }
 
 
