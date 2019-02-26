@@ -81,8 +81,8 @@ var NextEvents = {
                 if (eclipseData.eclipse) {
                     var id = MoonEclipsesPage.getId(eclipseData);
                     events.push ({
-                        start : eclipseData.Timings.Penumbral.firstContact,
-                        end :   eclipseData.Timings.Penumbral.lastContact,
+                        start : eclipseData.umbralPartialEclipse? eclipseData.Timings.Umbral.firstContact: eclipseData.Timings.Penumbral.firstContact,
+                        end :   eclipseData.umbralPartialEclipse? eclipseData.Timings.Umbral.lastContact: eclipseData.Timings.Penumbral.lastContact,
                         navigActionObj : {
                             page:"Lunar Eclipses",
                             actions:[{name:"scroll", parameters: id}]

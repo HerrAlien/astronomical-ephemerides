@@ -54,11 +54,12 @@ var MoonEclipsesPage = {
 
 
     getTypeOfEclipseString : function (oppositionData) {
+        var type = "Eclipse through the penumbra";
         if (oppositionData.umbralPartialEclipse)
-            return "Partial eclipse";
+            type = "Partial eclipse";
         if (oppositionData.umbralTotalEclipse)
-            return "Total eclipse";
-        return "Eclipse through the penumbra";
+            type = "Total eclipse";
+        return type;
     },
 
     
