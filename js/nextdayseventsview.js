@@ -48,14 +48,23 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             var events = NextEvents["GetEvents"]();
             var addDomNode = PlanetPage.prototype.addNodeChild;
 
+            var yyyymmdd_hhmmOfJD =   PlanetPage.prototype["yyyymmdd_hhmmOfJD"];
+
             var documentFrag = document.createDocumentFragment();
             for (var i = 0; i < events.length; i++) {
                 var currentEvent = events[i];
-                var anchor = addDomNode(documentFrag, "a", currentEvent.title);
+                var listItem = addDomNode(documentFrag, "li");
+                
+                var timing = yyyymmdd_hhmmOfJD (currentEvent.start);
+                var anchorText = timing.date.Y + "-" + timing.date.M + "-" + timing.date.D + " " +
+                                 timing.time.Ord3 + ":" + timing.time.Ord2 + " " + currentEvent.title;
+
+                var anchor = addDomNode(listItem, "a", anchorText);
                 anchor["href"] = "#" + JSON.stringify(currentEvent.navigActionObj);
             }
-
-            domHost.appendChild(documentFrag);
+            
+            var list = addDomNode(domHost, "ol");
+            list.appendChild(documentFrag);
 
         } catch (err) {
             setTimeout(init, 500);
