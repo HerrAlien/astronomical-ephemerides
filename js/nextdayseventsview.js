@@ -41,6 +41,27 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         }
     }
 
+    var daysInput = document.getElementById("futureEventsNumberOfDays");
+    var lastInputValue = daysInput.value;
+
+    function updateMaxDays() {
+        var max =  Math.round(PageTimeInterval.JD + PageTimeInterval.days - 
+                   NextEvents.startJd); 
+        daysInput["max"] = max;
+        if (Number(daysInput.value) > max) {
+            daysInput.value = max;
+        }
+    }
+    
+    function onDaysCountChange() {
+        updateMaxDays();
+        if (daysInput.value != lastInputValue) {
+            lastInputValue = daysInput.value;
+            reset();
+            init();
+        }
+    }
+
     function init() {
 
         try {
@@ -74,21 +95,12 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     init();
 
     (function(){
-        var daysInput = document.getElementById("futureEventsNumberOfDays");
-        var lastInputValue = daysInput.value;
-        
-        var initOnChange = function() {
-            if (daysInput.value != lastInputValue) {
-                lastInputValue = daysInput.value;
-                reset();
-                init();
-            }
-        }
 
-        daysInput.onblur = initOnChange;
+        daysInput.onblur = onDaysCountChange;
+        daysInput.onchange = onDaysCountChange;
         daysInput.onkeypress = function(keyboardEvent) {
             if (keyboardEvent.key.toUpperCase() == "ENTER") {
-                initOnChange();
+                onDaysCountChange();
             }
         };
 
