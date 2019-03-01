@@ -53,6 +53,21 @@ var NextEvents = {
         this.startJd = false;
     };
 
+    NextEvents["GetEvents"] = function() {
+        var events = [];
+        for (var key in NextEvents) {
+            if (((typeof NextEvents[key]).toUpperCase() == "OBJECT") &&
+                ((typeof NextEvents[key]["GetEvents"]).toUpperCase() == "FUNCTION")) {
+                var eventsForObj = NextEvents[key]["GetEvents"]();
+                events = events.concat(eventsForObj);
+            }
+        }
+
+        events.sort(function(a, b) { return a.start - b.start; });
+        return events;
+    };
+
+/////////////////// Moon Eclipses //////////////////////////
     NextEvents["MoonEclipsesPage"] = {
         GetEvents : function () {
             NextEvents.init();
@@ -96,19 +111,45 @@ var NextEvents = {
         }
     };
 
+/////////////////// Moon Eclipses //////////////////////////
+    NextEvents["SolarEclipsesPage"] = {
+        GetEvents : function () {
+            NextEvents.init();
+            var events = [];
+            var jd = NextEvents.startJd;
+            var lastK = false;
 
-    NextEvents["GetEvents"] = function() {
-        var events = [];
-        for (var key in NextEvents) {
-            if (((typeof NextEvents[key]).toUpperCase() == "OBJECT") &&
-                ((typeof NextEvents[key]["GetEvents"]).toUpperCase() == "FUNCTION")) {
-                var eventsForObj = NextEvents[key]["GetEvents"]();
-                events = events.concat(eventsForObj);
+            for (var i = 0; i < NextEvents.numberOfDays; i++) {
+
+                // check if there's an eclipse.
+                var k = AAJS.Moon.kForJD (jd + i);
+                if (k < 0)
+                    k = -1 * Math.ceil(Math.abs(k));
+                else
+                    k = Math.ceil(Math.abs(k));
+
+                if (lastK && lastK == k) {
+                    continue;
+                }
+
+                lastK = k;
+
+                var eclipseData = SolarEclipses.EclipseDataForK(k);
+                if (eclipseData.bEclipse) {
+                    var id = SolarEclipsesPage.getId(eclipseData);
+                    events.push ({
+                        start :  eclipseData.t0,
+                        end :    eclipseData.t0,
+                        navigActionObj : {
+                            page:"Solar Eclipses",
+                            actions:[{name:"scroll", parameters: id}]
+                            },
+                       title: "Solar Eclipse: " + SolarEclipsesPage.getTypeOfEclipseString(eclipseData)
+                    });
+                }
             }
+            return events;
         }
-
-        events.sort(function(a, b) { return a.start - b.start; });
-        return events;
     };
 
 })();
