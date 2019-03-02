@@ -72,11 +72,7 @@ var SolarEclipsesPage = {
             description += "Hybrid ";
         description += "Eclipse.";
         
-        if (eclipseData.besselianElements.besselianEngine.deltaLocalMax < Math.abs(eclipseData.besselianElements.besselianEngine.l2LocalMax)) {
-            description += " Visible as total from your location.";
-        } else if (eclipseData.besselianElements.besselianEngine.deltaLocalMax < Math.abs(eclipseData.besselianElements.besselianEngine.l1LocalMax)) {
-            description += " Visible as partial from your location.";
-        } else {
+        if (eclipseData.besselianElements.besselianEngine.deltaLocalMax > Math.abs(eclipseData.besselianElements.besselianEngine.l1LocalMax)) {
             description += " Not visible from your location."
         }
         return description;

@@ -43,7 +43,59 @@ var SolarEclipses = {
             // if yes, compute the besselian elements
             eclipseData["t0"] = Math.round (eclipseData.JdOfMaximumEclipse * 24) / 24;
             eclipseData["besselianElements"] = this.ComputeBesselianElements(eclipseData["t0"]);
+        
+
+            function _poly (coeffs, time) {
+                var val = 0;
+                var poweredTime = 1;
+                for (var i = 0; i < coeffs.length;i++) {
+                    val += coeffs[i] * poweredTime;
+                    poweredTime *= time;
+                }
+                return val;
+            }
+            
+            var besselianElements = eclipseData.besselianElements;
+            var localElements = besselianElements.besselianEngine.localCircumstancesLSF;
+            var tMinusT0OnMax = besselianElements.besselianEngine.timeMinusT0OfMaxEclipse;
+
+            // now, compute local x, y, z for tmax
+            var x = _poly(localElements.x, tMinusT0OnMax);
+            var y = _poly(localElements.y, tMinusT0OnMax);
+            var z = _poly(localElements.z, tMinusT0OnMax);
+
+            var X = _poly(besselianElements.x, tMinusT0OnMax);
+            var Y = _poly(besselianElements.y, tMinusT0OnMax);
+
+            var U = X - x;
+            var V = Y - y;
+
+            var _x = localElements.x[1] + 2 * localElements.x[2] * tMinusT0OnMax;
+            var _y = localElements.y[1] + 2 * localElements.y[2] * tMinusT0OnMax;
+
+            var _X = besselianElements.x[1] + 2 * besselianElements.x[2] * tMinusT0OnMax;
+            var _Y = besselianElements.y[1] + 2 * besselianElements.y[2] * tMinusT0OnMax;
+
+            var _U = _X - _x;
+            var _V = _Y - _y;
+
+            var correctionOnT = - (U * _U + V * _V)/(_U*_U + _V*_V);
+            var hourOfMax = eclipseData["t0"] + tMinusT0OnMax + correctionOnT;
+
+            var lm = Math.sqrt(U*U + V*V);
+            var le = _poly(localElements.l1, tMinusT0OnMax + correctionOnT);
+            var li = _poly(localElements.l2, tMinusT0OnMax + correctionOnT);
+
+            var g = (le + lm) / (2 * (le - besselianElements.besselianEngine.occultorRadius));
+
+            var g2 = (le - lm)/(le - li);
+
+            // g2 negative? Not visible.
+
+            var phase = 0;
         }
+
+
         return eclipseData;
     },
 
