@@ -111,7 +111,7 @@ var NextEvents = {
         }
     };
 
-/////////////////// Moon Eclipses //////////////////////////
+/////////////////// Solar Eclipses //////////////////////////
     NextEvents["SolarEclipsesPage"] = {
         GetEvents : function () {
             NextEvents.init();
