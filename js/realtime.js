@@ -22,6 +22,10 @@ var RealTimeDataViewer = {
 
     views : {},
 
+    getRtSettingsSectionId : function (pageName) {
+        return pageName + " settings section";
+    },
+
     rtDomHost : document.getElementById("rightNowFrontPage"),
 
     New: function (pageName) {
@@ -131,9 +135,21 @@ var RealTimeDataViewer = {
         createdDoms['a'] = createDom(div, "a");
         createdDoms['a'].setAttribute("href", "#" + pageName);
 
-
         var span = createDom(createdDoms['a'], "span", objectName);
         span.classList.add("realtimeTitle");
+
+        var configureAnchor = createDom(div, "a");
+        configureAnchor.classList.add("configureRtView");
+        configureAnchor['href'] = '#{"page":"settings",\
+        "actions":[\
+            {"name":"scroll","parameters":"' + RealTimeDataViewer.getRtSettingsSectionId(pageName) + '"},\
+            {"name":"classListRemove",\
+             "parameters":{\
+                "target" : "' + RealTimeDataViewer.getRtSettingsSectionId(pageName) + '",\
+                "classes" : ["collapsed"]\
+             }}\
+            ]}';
+
         return createdDoms;
     },
 
@@ -194,31 +210,21 @@ var RealTimeDataViewer = {
         IsVisible : function (pageName, key) {
             var visible = localStorage.getItem(RealTimeDataViewer.Persistent.GetRTStorageKey(RealTimeDataViewer.Persistent.purposes.visibility, pageName, key));
             if (visible == null) {
-                visible = 'true';
-                if (pageName == "Jupiter Ephemeris") {
-                    if (key == "CentralMeridianGeometricLongitude_System1" ||
-                        key == "CentralMeridianGeometricLongitude_System2") {
-                        visible = false;
+                visible = 'false';
+                if (pageName == 'Venus Ephemeris' || pageName == 'Jupiter Ephemeris') {
+                    
+                    if (key) {
+                        if (pageName == 'Venus Ephemeris' && key == 'Phase') {
+                            visible = 'true';
+                        }
+                        if (pageName ==  'Jupiter Ephemeris' && (key == 'RA' || key == 'Dec')) {
+                            visible = 'true';
+                        }
+                    } else {
+                        visible = 'true';
                     }
-                }
-                if (pageName == "Moon Ephemeris") {
-                    if (key == "RA" || key == "Dec" || key == "R") {
-                        visible = false;
-                    }
-                }
-
-                if (pageName != 'Venus Ephemeris' && pageName != 'Mars Ephemeris' &&
-                    pageName != 'Jupiter Ephemeris' && pageName != 'Saturn Ephemeris') {
-                    visible = false;
                 }
                 
-               if (key)
-                    visible = 'true';
-
-                if (key && key != 'RA' && key != 'Dec' && key != 'RaGeo' && key != 'DecGeo') {
-                    visible = false;
-                }
-
                 localStorage.setItem(RealTimeDataViewer.Persistent.GetRTStorageKey(RealTimeDataViewer.Persistent.purposes.visibility, pageName, key), visible);
             }
             return ('true' == visible);
@@ -304,6 +310,9 @@ var RealTimeDataViewer = {
         var bodySectionDiv = createDom (topDiv, "div");
         bodySectionDiv.classList.add ("rtsettings");
         bodySectionDiv.classList.add ("collapsed");
+
+        bodySectionDiv['id'] = RealTimeDataViewer.getRtSettingsSectionId(pageName);
+
         // <h3>Sun</h3>
         // TODO: this should be from the page object.
         createDom (bodySectionDiv, "div", " ").classList.add("clear");

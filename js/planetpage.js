@@ -16,6 +16,21 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
+function prePadTo(v, pad, cnt) {
+    var res = String(v);
+    while (res.length < cnt)
+        res = pad + res;
+    return res;
+}
+
+function postPadTo(v, pad, cnt) {
+    var res = String(v);
+    while (res.length < cnt)
+        res += pad;
+    return res;
+}
+
+
 function PlanetPage (planetDataSource, tableName) {
     if (planetDataSource) {
         this.dataSource = planetDataSource;
@@ -30,99 +45,99 @@ function PlanetPage (planetDataSource, tableName) {
 
     this.tableHeaderInfo = {
         "0" : {
-                "0" : { "text" : "Date", "classes" : ["minWidth20"] },
-                "1" : { "text" : "", "classes" : ["minWidth20"] },
+                "0" : { "text" : "Date  " },
+                "1" : { "text" : "     " },
                 "longText" : "Date: month",
                 "dataKey" : 'Month'
             } ,
 
         "1" : {
-                "0" : { "text" : "", "classes" : ["minWidth20"] },
-                "1" : { "text" : "", "classes" : ["minWidth20"] },
+                "0" : { "text" : " "},
+                "1" : { "text" : " "},
                 "longText" : "Date: day",
                 "dataKey" : 'Day'
             },
         "2" : {
-                "0" : { "text" : "\u03B1", "classes" : ["minWidth20"] },
-                "1" : { "text" : "h", "classes" : ["minWidth20"] },
+                "0" : { "text" : "  \u03B1 "},
+                "1" : { "text" : "  h  "},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension",
                 "dataKey" : 'RA'
             },
         "3" : {
-                "0" : { "text" : "(RA)", "classes" : ["minWidth20", "screenOnly"] },
-                "1" : { "text" : "m", "classes" : ["minWidth20"] },
+                "0" : { "text" : "(RA)   "},
+                "1" : { "text" : "m  "},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "4" : {
-                "0" : { "text" : "", "classes" : ["minWidth20"] },
-                "1" : { "text" : "s", "classes" : ["minWidth40"] },
+                "0" : { "text" : " "},
+                "1" : { "text" : " s   "},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension"
             },
         "5" :  {
-                "0" : { "text" : "\u03B4", "classes" : ["minWidth20"] },
-                "1" : { "text" : "\u00B0", "classes" : ["minWidth25"] },
+                "0" : { "text" : " \u03B4 "},
+                "1" : { "text" : " \u00B0 "},
                 "longText" : "Apparent geocentric equatorial coordinates: Declination",
                 "dataKey" : 'Dec'
             },
         "6" :  {
-                "0" : { "text" : "(Dec)", "classes" : ["minWidth20", "screenOnly" ] },
-                "1" : { "text" : "'", "classes" : ["minWidth20"] },
+                "0" : { "text" : "(Dec) "},
+                "1" : { "text" : " ' "},
                 "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
         "7" :  {
-                "0" : { "text" : "", "classes" : ["minWidth10"  ] },
-                "1" : { "text" : "''", "classes" : ["minWidth25"] },
+                "0" : { "text" : " "},
+                "1" : { "text" : " \" " },
                 "longText" : "Apparent geocentric equatorial coordinates: Declination"
             },
         "8" :  {
-                "0" : { "text" : "\u03D5", "classes" : ["minWidth20"] },
-                "1" : { "text" : "''", "classes" : ["minWidth20"    ] },
+                "0" : { "text" : "\u03D5 "},
+                "1" : { "text" : " \" "},
                 "longText" : "Apparent diameter",
                 "dataKey" : 'Diameter'
             },
         "9" : {
-                   "0" : { "text" : "Rise", "classes" :  ["minWidth50"] },
-                   "1" : { "text" : "hh:mm", "classes" : ["minWidth50"] },
+                   "0" : { "text" : "Rise "},
+                   "1" : { "text" : "hh:mm "},
                    "longText" : "The time of rise above horizon",
                 "dataKey" : 'Rise'
             },
         "10" : {
-                   "0" : { "text" : "Transit", "classes" : ["minWidth40"  ] },
-                   "1" : { "text" : "hh:mm", "classes" : ["minWidth50"] },
+                   "0" : { "text" : "Transit" },
+                   "1" : { "text" : "hh:mm " },
                    "longText" : "The time of the transit across the meridian",
                 "dataKey" : 'MeridianTransit'
             },
         "11" : {
-                   "0" : { "text" : "Set", "classes" : ["minWidth40"  ] },
-                   "1" : { "text" : "hh:mm", "classes" : ["minWidth55"] },
+                   "0" : { "text" : " Set " },
+                   "1" : { "text" : "hh:mm " },
                    "longText" : "The time of setting",
                 "dataKey" : 'Set'
             },
 
             "12" :  {
-                "0" : { "text" : "\u0394", "classes" : ["minWidth55"] },
-                "1" : { "text" : "au", "classes" : ["minWidth55"  ] },
+                "0" : { "text" : "    \u0394   " },
+                "1" : { "text" : "  au   " },
                 "longText" : "Distance to Earth, in astronomical units",
                 "dataKey" : 'DistanceToEarth'
             },
 
             "13" :  {
-                "0" : { "text" : "R", "classes" : ["minWidth55"   ] },
-                "1" : { "text" : "au", "classes" : ["minWidth55"] },
+                "0" : { "text" : "   R   " },
+                "1" : { "text" : "  au   " },
                 "longText" : "Distance to Sun, in astronomical units",
                 "dataKey" : 'DistanceToSun'
             },
 
             "14" :  {
-                "0" : { "text" : "Elong", "classes" : ["minWidth70" ] },
-                "1" : { "text" : "\u00B0", "classes" : ["minWidth62"] },
+                "0" : { "text" : " Elong" },
+                "1" : { "text" : "   \u00B0" },
                 "longText" : "Elongation angle from the Sun",
                 "dataKey" : 'Elongation'
             },
 
         "15" :  {
-                "0" : { "text" : "Phase", "classes" : ["minWidth50"] },
-                "1" : { "text" : "", "classes" : ["minWidth50"] },
+                "0" : { "text" : "  Phase" },
+                "1" : { "text" : "" },
                 "longText" : "The phase of the planet (illuminated fraction of disk, as seen from Earth)",
                 "dataKey" : 'Phase'
             }
@@ -131,124 +146,124 @@ function PlanetPage (planetDataSource, tableName) {
     this.lastDisplayedMonth = -1;
     this.months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     
-    this.firstDataRowColumnClasses = [ ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth20"],
-                           ["minWidth25"], ["minWidth20"], ["minWidth20"], ["minWidth20"], ["minWidth50"], 
-                           ["minWidth50"], ["minWidth50"], ["minWidth55"], ["minWidth55"], ["minWidth62"],
-                           ["minWidth45"] ];
+    this.formattingFunctions = [ 
+    function(month) { return prePadTo(month, " ", 3); }, 
+    function (day) { return prePadTo(day, " ", 2); }, 
+    function (RA_h) { return prePadTo(RA_h, " ", 2); },
+    function (RA_m) { return prePadTo(RA_m, " ", 2); }, 
+    function (RA_s) { return prePadTo(RA_s, " ", 4);  },
+    function (dec_deg) { return prePadTo(dec_deg, " ", 3); },
+    function (dec_m) { return prePadTo(dec_m, " ", 2); },
+    function (dec_s) { return prePadTo(dec_s, " ", 2); },
+    function (phi) { return prePadTo(phi, " ", 2); },
+    function (rise) { return rise; },
+    function (transit) { return transit; },
+    function (set) { return set; },
+    function (delta) { return postPadTo(delta, " ", 6); },
+    function (R) { return postPadTo(R, " ", 6); },
+    function (E) { return prePadTo(E, " ", 7); },
+    function (P) { return postPadTo(P, " ", 5); },
+
+    ];
+
+    this.header = null;
 }
 
 (function(){
-    
-    
-    PlanetPage.prototype["displayPage"] = function () {
-            var pageObj = this;
-            if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
-                return SyncedTimeOut (function() { pageObj.displayPage(); }, Timeout.onInit);
-            
-            var JD = PageTimeInterval.JD;
-            var daysAfter =  PageTimeInterval.days;
-            var stepSize = PageTimeInterval.stepSize;
-            
-            this.lastAppendedLine = false;
-            if (!this.pageRendered) {
-                this.reset();
-                
-                this.addTableHeader (this.hostElement, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
 
-                var hostElement = pageObj.hostElement;
-                var columnClasses = pageObj.firstDataRowColumnClasses;
-                var dataSource = pageObj.dataSource;
+    PlanetPage.prototype["displayPage"] = function () {
+        var pageObj = this;
+        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
+            return SyncedTimeOut (function() { pageObj.displayPage(); }, Timeout.onInit);
+        
+        var JD = PageTimeInterval.JD;
+        var daysAfter =  PageTimeInterval.days;
+        var stepSize = PageTimeInterval.stepSize;
+        
+        this.lastAppendedLine = false;
+        if (!this.pageRendered) {
+            this.reset();
+            
+            // so far we have no styling, so suppress the first header for now.
+            // this.addTableHeader (this.hostElement, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
+
+            var hostElement = pageObj.hostElement;
+            var columnClasses = pageObj.firstDataRowColumnClasses;
+            var dataSource = pageObj.dataSource;
+            
+            var delayedAppendData = function (JD, endJD, steps, hostElement, columnClasses, dataSource) {
+                if (JD >= endJD)
+                    return;
                 
-                var delayedAppendData = function (JD, endJD, steps, hostElement, columnClasses, dataSource) {
-                    if (JD >= endJD)
-                        return;
-                    
-                    var i = 0;
-                    var docFragment = hostElement.ownerDocument.createDocumentFragment();
-                    
-                    for (i = 0; i < steps; i++, JD+=stepSize) {
-                        if (JD >= endJD)
-                            break;
-                        
-                        var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JD, true), JD);
-                        pageObj.appendLine (preparedData, columnClasses, docFragment);
+                var i = 0;
+                var docFragment = hostElement.ownerDocument.createDocumentFragment();
+                var span = pageObj.addNodeChild(docFragment, "span");
+                
+                for (i = 0; i < steps; i++, JD+=stepSize) {
+                    if (JD >= endJD) {
+                        break;
                     }
-                    
-                    pageObj.addTableHeader (docFragment, [["fixed", "printOnly"], ["fixed", "printOnly"]]);
-                    
-                    hostElement.appendChild(docFragment);
-                    
-                    requestAnimationFrame (function() {delayedAppendData (JD, endJD, steps, hostElement, columnClasses, dataSource); });
+
+                    var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JD, true), JD);
+                    var changedMonth = !pageObj.lastAppendedLine || 
+                                        (preparedData[0] && pageObj.lastAppendedLine[0] != preparedData[0]);
+        
+                    if (changedMonth) {
+                        var header = pageObj.addTableHeader (docFragment);
+                        if (!pageObj.header) {
+                            pageObj.header = header;
+                        } else {
+                            header.classList.add("printOnly");
+                        }
+                        span = pageObj.addNodeChild(docFragment, "span");
+                    }
+
+
+                    pageObj.appendLine (preparedData, columnClasses, span);
                 }
-                delayedAppendData (JD, JD + daysAfter, 20, hostElement, columnClasses, dataSource);
-                this.pageRendered = true;
+                                        
+                hostElement.appendChild(docFragment);
+                requestAnimationFrame (function() {delayedAppendData (JD, endJD, steps, hostElement, columnClasses, dataSource); });
             }
-        };
+            delayedAppendData (JD, JD + daysAfter, 20, hostElement, columnClasses, dataSource);
+            this.pageRendered = true;
+        }
+    };
     
     PlanetPage.prototype["appendLine"] = function (dataArray, classes, docFragment) {
-            var line = this.hostElement.ownerDocument.createElement("tr");
-            if (!docFragment)
-                docFragment = this.hostElement;
             
-            var changedMonth = this.lastAppendedLine && dataArray[0] && this.lastAppendedLine[0] != dataArray[0];
+            var line = "";
             var i = 0;
             for (i = 0; i < dataArray.length; i++) {
-                var td = line.ownerDocument.createElement("td");
-                line.appendChild(td);
-                td.textContent = dataArray[i];
-                if (changedMonth)
-                    td.classList.add("topBorder");
+                line += this.formattingFunctions[i](dataArray[i]) + " ";
 
-                if (i > 1)
-                {
-                    if (i < 15)
-                        td.classList.add ("positionEphemeris");
-                    else
-                        td.classList.add ("physicalEphemeris");
-                }
-                
-                if (!!classes && !!classes[i]) {
-                    var colClasses = classes[i];
-                    for (var classIndex = 0; classIndex < colClasses.length; classIndex++)
-                        td.classList.add (colClasses[classIndex]);
-                }
             }
-            docFragment.appendChild(line);
+
+            docFragment.textContent = docFragment.textContent + line + "\n";
             this.lastAppendedLine = dataArray;
         };
         
     PlanetPage.prototype["addTableHeader"] = function (table, rowClasses, columnClasses) {
-        var rows = [];
+        var headerText = "";
         for (var rowIndex = 0; rowIndex < 2; rowIndex++) {
-            var row = this.addNodeChild (table, "tr");
-            var currentRowClasses = rowClasses[rowIndex];
-            for (var classIndex = 0; classIndex < rowClasses.length; classIndex++)
-                row.classList.add (currentRowClasses[classIndex]);
-
             for (var headerKey in this.tableHeaderInfo) {
-                var th = this.addNodeChild (row, "th", this.tableHeaderInfo[headerKey][rowIndex]['text']);
-                th['title'] = this.tableHeaderInfo[headerKey].longText;
-                th.onclick = function () { alert (this.title); }
-                
-                var columnsClasses = this.tableHeaderInfo[headerKey][rowIndex]['classes']
-                if (!!columnsClasses)
-                {
-                    for (var columnsClassesIndex in columnsClasses)
-                        th.classList.add (columnsClasses[columnsClassesIndex]);
-                }
+                headerText += this.tableHeaderInfo[headerKey][rowIndex]['text'];
             }
-            rows[rowIndex] = row;
+            headerText += "\n";
         }
-        return {"row1" : rows[0], "row2" : rows[1] };
+        
+        var header = this.addNodeChild (table, "span",  headerText);
+        header.classList.add("planetTableHeader");
+        return header;
     };
 
-    PlanetPage.prototype["reset"] = function () {
+    PlanetPage.prototype["reset"] = function (keepData) {
         while (this.hostElement.hasChildNodes()) {
             this.hostElement.removeChild(this.hostElement.firstChild);
         }
         this.pageRendered = false;
         // reset the data - transits depend on the longitude
-        if (this.dataSource.reset) {
+        if (keepData && this.dataSource.reset) {
             this.dataSource.reset();
         }
     };
@@ -307,7 +322,7 @@ function PlanetPage (planetDataSource, tableName) {
         if (sunRA < planetRA )
             cardinalCoordinateRelativeToSun = "E";
         
-        displayableLine[di++] = GetAAJS().Numerical.RoundTo1Decimal (obj.Elongation * 180 / Math.PI) + " " + cardinalCoordinateRelativeToSun;
+        displayableLine[di++] = GetAAJS().Numerical.RoundTo1Decimal (obj.Elongation) + " " + cardinalCoordinateRelativeToSun;
         displayableLine[di++] = GetAAJS().Numerical.RoundTo3Decimals (obj.Phase);
         
         return displayableLine;

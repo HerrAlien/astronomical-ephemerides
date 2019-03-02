@@ -59,14 +59,7 @@ var SolarEclipsesPage = {
         processK(startK, endK);
     },
 
-    drawNewEclipse: function (eclipseData) {
-        var yyyymmdd_hhmmOfJD  = PlanetPage.prototype.yyyymmdd_hhmmOfJD;
-        
-        var addNodeChild = PlanetPage.prototype.addNodeChild;
-        var mainDiv = addNodeChild(SolarEclipsesPage.hostElement, "div");
-        mainDiv.classList.add("solarEclipse");
-        var dateTime = yyyymmdd_hhmmOfJD(eclipseData.t0);
-        
+    getTypeOfEclipseString : function (eclipseData) {
         var description = "";
      
         if (eclipseData.isPartial)
@@ -86,6 +79,24 @@ var SolarEclipsesPage = {
         } else {
             description += " Not visible from your location."
         }
+        return description;
+    },
+
+    getId : function (eclipseData) {
+        return "SolarEclipse" + eclipseData.t0;
+    },
+
+    drawNewEclipse: function (eclipseData) {
+        var yyyymmdd_hhmmOfJD  = PlanetPage.prototype.yyyymmdd_hhmmOfJD;
+        
+        var addNodeChild = PlanetPage.prototype.addNodeChild;
+        var mainDiv = addNodeChild(SolarEclipsesPage.hostElement, "div");
+        mainDiv["id"] = this.getId(eclipseData);
+        mainDiv.classList.add("solarEclipse");
+
+        var dateTime = yyyymmdd_hhmmOfJD(eclipseData.t0);
+        
+        var description = this.getTypeOfEclipseString(eclipseData);
         
         var decimalsFactor = 1e5; 
 

@@ -9,25 +9,31 @@
         }
     }
 
+    searchFormInput.onblur = function() {
+            button.classList.add("visible");
+            button.classList.remove("hidden");
+            menu.classList.remove("searchTermsVisible");
+            searchFormInput.classList.remove("visible");
+            searchFormInput.classList.add("hidden");
+    };
+
     button.onclick = function() {
-        if (searchFormInput.classList.contains("hidden")) {
+        button.classList.add("hidden");
+        button.classList.remove("visible");
+
             searchFormInput.classList.remove("hidden");
             searchFormInput.classList.add("visible");
             searchFormInput.value = "";
             searchFormInput.focus();
             menu.classList.add("searchTermsVisible");
-        } else {
-            searchFormInput.classList.remove("visible");
-            searchFormInput.classList.add("hidden");
-            menu.classList.remove("searchTermsVisible");
-            search();
-        }
     }
 
     searchFormInput.onkeydown = function (evt) {
       if (evt.key == "Enter") {
-          button.onclick();
+          searchFormInput.onblur();
+          search();
       }
     }
+
 
 })();

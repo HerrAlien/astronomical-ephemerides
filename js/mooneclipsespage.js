@@ -51,21 +51,27 @@ var MoonEclipsesPage = {
         
         processJD(startJD);
     },
+
+
+    getTypeOfEclipseString : function (oppositionData) {
+        var type = "Eclipse through the penumbra";
+        if (oppositionData.umbralPartialEclipse)
+            type = "Partial eclipse";
+        if (oppositionData.umbralTotalEclipse)
+            type = "Total eclipse";
+        return type;
+    },
+
     
     displayTimings : function (oppositionData, mainDiv) {
         var addNodeChild = PlanetPage.prototype.addNodeChild;
         
         var yyyymmdd_hhmmOfJD  = PlanetPage.prototype.yyyymmdd_hhmmOfJD;
         
-        // get the JD of the opposition
+        var description = this.getTypeOfEclipseString(oppositionData);
         var oppositionDateTime = yyyymmdd_hhmmOfJD(oppositionData.JD);
-        var description = "Eclipse through the penumbra";
-        if (oppositionData.umbralPartialEclipse)
-            description = "Partial eclipse";
-        if (oppositionData.umbralTotalEclipse)
-            description = "Total eclipse";
         
-
+        // the contents of this title is temporary. It may change, if the eclipse starts on one day and ends in another.
         var eclipseTitle = addNodeChild (mainDiv, "h2", oppositionDateTime.date.Y + "-" + oppositionDateTime.date.M + "-" + oppositionDateTime.date.D + " " + description);
         addNodeChild (mainDiv, "span", "magnitude: " + GetAAJS().Numerical.RoundTo2Decimals(oppositionData.magnitude) + "; penumbral magnitude: " + GetAAJS().Numerical.RoundTo2Decimals(oppositionData.penumbralMagnitude));
         
@@ -90,35 +96,42 @@ var MoonEclipsesPage = {
             if (!IsVisible(JD)) {
                 tr.classList.add("notVisible");
             }
+
+            return {"tableRow" : tr, "dateTime": dt};
         }
         
-        addTiming (oppositionData.Timings.Penumbral.firstContact, 
-                   "Penumbral Eclipse Begins (TP1)", timingsTable);
+        var beginsAt = addTiming (oppositionData.Timings.Penumbral.firstContact, 
+                   "Penumbral Eclipse Begins (P1)", timingsTable);
                    
         if (oppositionData.umbralPartialEclipse) {
             addTiming (oppositionData.Timings.Umbral.firstContact,
-                       "Partial Eclipse Begins (TU1)", timingsTable);
+                       "Partial Eclipse Begins (U1)", timingsTable);
 
             if (oppositionData.umbralTotalEclipse)
                 addTiming (oppositionData.Timings.Umbral.beginFullImmersion,
-                         "Total Eclipse Begins (TU2)", timingsTable);
+                         "Total Eclipse Begins (U2)", timingsTable);
         }
         
         // maximum ...
         addTiming (oppositionData.Timings.Maximum, 
-                   "Eclipse maximum (TM)", timingsTable);
+                   "Eclipse maximum (M)", timingsTable);
         
         if (oppositionData.umbralPartialEclipse) {
             if (oppositionData.umbralTotalEclipse)
                 addTiming (oppositionData.Timings.Umbral.endFullImmersion,
-                           "Total Eclipse Ends (TU3)", timingsTable);
+                           "Total Eclipse Ends (U3)", timingsTable);
                        
             addTiming (oppositionData.Timings.Umbral.lastContact,
-                      "Partial Eclipse Ends (TU4)", timingsTable);
+                      "Partial Eclipse Ends (U4)", timingsTable);
         }
         
-        addTiming (oppositionData.Timings.Penumbral.lastContact,
-                   "Penumbral Eclipse Ends (TP4)", timingsTable);
+        var endsAt = addTiming (oppositionData.Timings.Penumbral.lastContact,
+                   "Penumbral Eclipse Ends (P4)", timingsTable);
+
+        if (beginsAt.dateTime.date.D != endsAt.dateTime.date.D){
+            eclipseTitle.textContent = beginsAt.dateTime.date.Y + "-" + beginsAt.dateTime.date.M + "-" + beginsAt.dateTime.date.D + " -- " +
+                                       endsAt.dateTime.date.Y + "-" + endsAt.dateTime.date.M + "-" + endsAt.dateTime.date.D +  " " + description;
+        }
     },
     
     circle : function (svg, R, CX, CY, fillColor, strokeColor) {
@@ -218,10 +231,16 @@ var MoonEclipsesPage = {
         var addNodeChild = PlanetPage.prototype.addNodeChild;
         var mainDiv = addNodeChild(MoonEclipsesPage.hostElement, "div");
         mainDiv.classList.add("moonEclipse");
+        mainDiv['id'] = this.getId(oppositionData);
         
         MoonEclipsesPage.displayTimings (oppositionData, mainDiv);
         MoonEclipsesPage.displayGraph (oppositionData, mainDiv); 
     },
+
+    getId (oppositionData) {
+        return "moonEclipse" + Math.floor(oppositionData.Timings.Penumbral.firstContact);
+    },
+
     keywordsArray : ["Shadow", "Umbra", "Penumbra", "Partial", "Total", "Eclipse",
                       "Contact", "First", "Last"]
     // clears up the rendered thing

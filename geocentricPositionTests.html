@@ -20,7 +20,6 @@
 
 
         <script type="text/JavaScript" src="js/planetdata.js"></script>
-        <script type="text/JavaScript" src="js/risetransitset.js"></script>
         <script type="text/javascript" src="js/sun.js"></script>
        <script type="text/javascript" src="js/jupiter.js"></script>
        <script type="text/javascript" src="js/mars.js"></script>
@@ -48,7 +47,7 @@
         {
             name : "Geocentric Moon Data for 1992-04-12 00:00 UTC, lat. 0, long. 0, alt. 0",
             input : AAJS.Date.DateToJD (1992, 4, 12, true),
-            expectedOutput :  [ 8 + (58+45.1/60)/60,  (13+((46+6/60)/60)) ],
+            expectedOutput :  [ 8 + (58+45.1/60)/60,  (13+((46+6/60.0)/60.0)) ],
             actualOutput : [],
             accurracy : [4e-5, 4e-5],
             test : function () {
@@ -78,10 +77,10 @@
             13 + (6 + 32.3/60)/60, // RA
             -(5+(48+18/60)/60), // DEC
             33.92 / 3600, // diameter in degrees
-			16+9/60, // transit time
+			AAJS.Date.DateToJD (2017, 8, 5, true) + (16+9/60.0)/24, // transit time
 			5.80406, // delta
 			5.44960, // R
-            64.8* Math.PI/180, // elongation
+            64.8, // elongation
             0.99, // phase
             ]
             ,
@@ -91,7 +90,7 @@
 				5e-3,
 				2e-5,
 				2e-6,
-				5e-4,
+				3e-2,
 				3e-3,
 				],
             test : function () {
@@ -132,10 +131,10 @@
             8 + (50 + 54.4/60)/60, // RA
             18+(49 + 42/60)/60, // DEC
             3.52 / 3600, // diameter in degrees
-			11+55/60, // transit time
+			AAJS.Date.DateToJD (2017, 8, 5, true) + 1/24.0 * (11+55/60.0), // transit time
 			2.65816, // delta
 			1.64604, // R
-            3* Math.PI/180, // elongation
+            3, // elongation
             1, // phase
             ]
             ,
@@ -145,7 +144,7 @@
 				2e-2,
 				5e-6,
 				6e-8,
-				1e-3,
+				5e-2,
 				3e-4,
 				],
             test : function () {
@@ -186,10 +185,10 @@
 				1+(32+33.1/60)/60, // RA
 				8+(02+21/60)/60, // DEC
 				11.02 / 3600, // diameter in degrees
-				10 + 50 / 60.0, // transit
+				AAJS.Date.DateToJD (2017, 5, 2, true) + 1/24.0 * (10 + 50 / 60.0), // transit
 				0.60982, // delta in AU
 				0.46380,
-				17.5* Math.PI/180, // elongation
+				17.5, // elongation
 				0.121, // phase
 				]
 				,
@@ -199,7 +198,7 @@
 				6e-3,
 				2e-5,
 				2e-5,
-				5e-4, 
+				5e-2, 
 				1e-4,
 				],
 				test : function () {
@@ -241,10 +240,10 @@
             23 + (0 + 25/60)/60, // RA
             -(7+(22+9/60)/60), // DEC
             2.31 / 3600, // diameter in degrees
-			1+30/60, // transit time
+			AAJS.Date.DateToJD (2017, 8, 14, true) + 1/24.0 * (1+30/60.0), // transit time
 			29.0060, // delta
 			29.9474, // R
-            158* Math.PI/180, // elongation
+            158, // elongation
             1, // phase
             ]
             ,
@@ -254,7 +253,7 @@
 				5e-3,
 				1e-4,
 				2e-4,
-				2e-3,
+				5e-2,
 				5e-5,
 				],
             test : function () {
@@ -293,10 +292,10 @@
             17 + (23 + 24.2/60)/60, // RA
             -(21+(55+31/60)/60), // DEC
             17.61 / 3600, // diameter in degrees
-			20+25/60, // transit time
+			AAJS.Date.DateToJD (2017, 8, 5, true) + 1/24.0 * (20+25/60.0), // transit time
 			9.39478, // delta
 			10.0605, // R
-            128.7* Math.PI/180, // elongation
+            128.7, // elongation
             0.998, // phase
             ]
             ,
@@ -306,7 +305,7 @@
 				3e-4,
 				2e-5,
 				5e-5,
-				4e-4,
+				5e-2,
 				1e-3,
 				],
             test : function () {
@@ -347,10 +346,10 @@
             6 + (6 + 51.7/60)/ 60, // RA
             21+(54+5/60)/60, // DEC
             14.46 / 3600, // diameter in degrees
-			9+24/60, // transit time
+			AAJS.Date.DateToJD (2017, 8, 2, true) + 1/24.0 * (9+24/60.0), // transit time
 			1.15387, // delta
 			0.72419, // R
-            38.3* Math.PI/180, // elongation
+            38.3, // elongation
             0.75, // phase
             ]
             ,
@@ -360,7 +359,7 @@
 				3e-3,
 				1e-5,
 				1e-5,
-				1e-3,
+				5e-2,
 				3e-3,
 				],
             test : function () {
@@ -401,10 +400,10 @@
             1 + (46 + 41.7/60)/60, // RA
             (10+(22+54/60)/60), // DEC
             3.59 / 3600, // diameter in degrees
-			4+16/60, // transit time
+			AAJS.Date.DateToJD (2017, 8, 14, true) + 1/24.0 * (4+16/60.0), // transit time
 			19.5009, // delta
 			19.9175, // R
-            112.9* Math.PI/180, // elongation
+            112.9, // elongation
             1, // phase
             ]
             ,
@@ -414,7 +413,7 @@
 				8e-3,
 				7e-5,
 				5e-5,
-				1e-3,
+				5e-2,
 				6e-4,
 				],
             test : function () {

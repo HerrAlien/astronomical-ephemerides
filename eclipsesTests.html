@@ -183,7 +183,7 @@
                     "eclipse" : true,
                     
                     'umbralRadius' : 0.993 * 46.3/60,
-                    'penumbralRadius' : 0.988 * 78.7/60,
+                    'penumbralRadius' : 0.993 * 78.7/60,
 
                     'y0' : (24 + 44.4/60)/60,
                     'dy' : -14.54/60,
@@ -233,14 +233,20 @@
                 this.actualOutput.MoonPositions = false;
                 this.actualOutput.Timings = false;
                 
+                var noErrors = true;
+
                 for (var key in this.expectedOutput) {
                     if (!testlib.doubleEq (this.actualOutput[key], 
                                            this.expectedOutput[key], 
                                            this.errors[i++])) {
-                        return false;
+                        noErrors = false;
+                        console.log( "For this.actualOutput[" + key + "]" +
+                              " I got " +  this.actualOutput[key] + 
+                              ", expecting " + this.expectedOutput[key] + 
+                              " +/- " + this.errors[i - 1]);
                     }
                 }
-                return true;
+                return noErrors;
             }
         },
         
@@ -268,7 +274,7 @@
                     "eclipse" : true,
                     
                     'umbralRadius' : 0.993 * 46.3/60,
-                    'penumbralRadius' : 0.988 * 78.7/60,
+                    'penumbralRadius' : 0.993 * 78.7/60,
 
                     'y0' : (24 + 44.4/60)/60,
                     'dy' : -14.54/60,
@@ -356,12 +362,18 @@
 
                 this.expectedOutput.Timings = false;
                 
+                var noErrors = true;
+
                 
                 for (var key in this.expectedOutput) {
                     if (!testlib.doubleEq (this.actualOutput[key], 
                                            this.expectedOutput[key], 
                                            this.geometricErrors[i++])) {
-                        return false;
+                        noErrors = false;
+                        console.log("For this.actualOutput[" + key + "]" +
+                              " I got " +  this.actualOutput[key] + 
+                              ", expecting " + this.expectedOutput[key] + 
+                              " +/- " + this.geometricErrors[i - 1]);
                     }
                 }
                 
@@ -372,11 +384,15 @@
                     if (!testlib.doubleEq (this.actualOutput.Timings.Umbral[key], 
                                            this.expectedOutput.Timings.Umbral[key], 
                                            this.timingErrors[i++])) {
-                        return false;
+                        noErrors = false;
+                        console.log("For this.actualOutput.Timings.Umbral[" + key + "]" +
+                               " I got " +  this.actualOutput.Timings.Umbral[key] + 
+                               ", expecting " + this.expectedOutput.Timings.Umbral[key] + 
+                               " +/- " + this.timingErrors[i - 1]);
                     }
                 }
                 
-                return true;
+                return noErrors;
             }
         },
 
@@ -384,10 +400,10 @@
             name : "umbral timimgs for eclipse 2017-08-07",
             input : AAJS.Date.DateToJD (2017, 08, 07, true),
             expectedOutput : {
-                    'firstContact' : AAJS.Date.DateToJD (2017, 08, 07, true) + (17 + (22+56/60)/60)/24,
+                    'firstContact' : AAJS.Date.DateToJD (2017, 08, 07, true) + (17 + 23.0/60)/24,
                     'beginFullImmersion' : false,
                     'endFullImmersion' : false,
-                    'lastContact' : AAJS.Date.DateToJD (2017, 08, 07, true) + (19 + (18+9/60)/60)/24,
+                    'lastContact' : AAJS.Date.DateToJD (2017, 08, 07, true) + (19 + 18/60)/24,
                 },
                   
             actualOutput : false,
@@ -404,16 +420,20 @@
                 this.actualOutput = MoonEclipsesData.getOppositionAroundJD (this.input);
                 this.actualOutput = MoonEclipsesData.addTimingsAndGeometry (this.actualOutput);
                 this.actualOutput = this.actualOutput.Timings.Umbral;
-
+                var noErrors = true;
                 for (var key in this.expectedOutput) {
                     if (!testlib.doubleEq (this.actualOutput[key], 
                                            this.expectedOutput[key], 
                                            this.timingErrors[i++])) {
-                        return false;
+                        noErrors = false;
+                        console.log("For this.actualOutput[" + key + "]" +
+                               " I got " +  this.actualOutput[key] + 
+                               ", expecting " + this.expectedOutput[key] + 
+                               " +/- " + this.timingErrors[i - 1]);
                     }
                 }
                 
-                return true;
+                return noErrors;
             }
         },
         

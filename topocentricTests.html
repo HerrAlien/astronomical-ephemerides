@@ -5,7 +5,6 @@
         <script type="text/javascript">
             var Pages = {};
         </script>
-        <script type="text/JavaScript" src="js/risetransitset.js"></script>
         <script type="text/JavaScript" src="js/planetdata.js"></script>
         <script type="text/JavaScript" src="js/planetpage.js"></script>
         
@@ -34,7 +33,7 @@
             {
                 name : "Sun transit time in UTC, for 2017-05-17, lat. 44.42677, long. 26.10254",
                 input : AAJS.Date.DateToJD (2017, 5, 17, true), 
-                expectedOutput : 10+12/60,
+                expectedOutput : AAJS.Date.DateToJD (2017, 5, 17, true) + 1/24.0 * (10+12/60.0),
                 actualOutput : false,
                 test : function () {
                     var data = SunData.getDataAsObjectForJD(this.input, true);
@@ -46,7 +45,7 @@
             {
                 name : "Moon transit time in UTC, for 2017-05-17, lat. 44.42677, long. 26.10254",
                 input : AAJS.Date.DateToJD (2017, 5, 17, true), 
-                expectedOutput : 3+1/60,
+                expectedOutput : AAJS.Date.DateToJD (2017, 5, 17, true) + 1/24.0 * (3+1/60.0),
                 actualOutput : false,
                 test : function () {
                     var data = MoonData.getDataAsObjectForJD (this.input, true);
@@ -193,10 +192,10 @@
             0 + (47+47/60)/60, // RA
             -(0+(24+1/60)/60), // DEC
             19.72 / 3600, // diameter in degrees
-			1+21/60, // transit time
+			 AAJS.Date.DateToJD (1988, 8, 17, true) + 1/24.0*(1+21/60.0), // transit time
 			0.47461062356446715, // delta
 			1.3816790381381947, // R
-            2.326119685116676, // elongation
+            133.3, // elongation
             0.923, // phase
             245.1,
             -20.27,
@@ -210,7 +209,7 @@
 				4e-3,
 				5e-6,
 				6e-8,
-				1e-3,
+				5e-2,
 				3e-4,
                 0.3,
                 0.01,
