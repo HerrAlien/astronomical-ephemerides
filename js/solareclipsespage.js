@@ -60,6 +60,9 @@ var SolarEclipsesPage = {
     },
 
     getTypeOfEclipseString : function (eclipseData) {
+        var oldOpt = TimeStepsData.useLocalTime;
+        TimeStepsData.useLocalTime = false;
+        TimeStepsData.useLocalTime = oldOpt;
         var description = "";
      
         if (eclipseData.isPartial)
