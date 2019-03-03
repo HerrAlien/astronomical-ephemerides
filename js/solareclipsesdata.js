@@ -57,35 +57,42 @@ var SolarEclipses = {
             var localElements = besselianElements.besselianEngine.localCircumstancesLSF;
             var tMinusT0OnMax = besselianElements.besselianEngine.timeMinusT0OfMaxEclipse;
 
-            var U, V, _U, _V;
+            var U, V, _U, _V, le, li;
 
-            for (var iter = 0; iter < 2; iter++) {                
-                var squaredTMinusT0 = tMinusT0OnMax * tMinusT0OnMax;
-                // now, compute local x, y, z for tmax
-                var x = _poly(localElements.x, tMinusT0OnMax);
-                var y = _poly(localElements.y, tMinusT0OnMax);
-                var z = _poly(localElements.z, tMinusT0OnMax);
+            var ComputeUvAndDerivative = function (_time) {
+                var squaredTime = _time * _time;
+                var x = _poly(localElements.x, _time);
+                var y = _poly(localElements.y, _time);
+                var z = _poly(localElements.z, _time);
 
-                var X = _poly(besselianElements.x, tMinusT0OnMax);
-                var Y = _poly(besselianElements.y, tMinusT0OnMax);
+                var X = _poly(besselianElements.x, _time);
+                var Y = _poly(besselianElements.y, _time);
 
                 U = X - x;
                 V = Y - y;
 
-                var _x = localElements.x[1] + 2 * localElements.x[2] * tMinusT0OnMax 
-                         + 3 * localElements.x[3] * squaredTMinusT0;
-                var _y = localElements.y[1] + 2 * localElements.y[2] * tMinusT0OnMax
-                         +  3 * localElements.y[3] * squaredTMinusT0;
+                var _x = localElements.x[1] + 2 * localElements.x[2] * _time 
+                         + 3 * localElements.x[3] * squaredTime;
+                var _y = localElements.y[1] + 2 * localElements.y[2] * _time
+                         +  3 * localElements.y[3] * squaredTime;
 
-                var _X = besselianElements.x[1] + 2 * besselianElements.x[2] * tMinusT0OnMax
-                         + 3 * besselianElements.x[3] * squaredTMinusT0;
-                var _Y = besselianElements.y[1] + 2 * besselianElements.y[2] * tMinusT0OnMax
-                         + 3 * besselianElements.y[3] * squaredTMinusT0;
+                var _X = besselianElements.x[1] + 2 * besselianElements.x[2] * _time
+                         + 3 * besselianElements.x[3] * squaredTime;
+                var _Y = besselianElements.y[1] + 2 * besselianElements.y[2] * _time
+                         + 3 * besselianElements.y[3] * squaredTime;
 
                 _U = _X - _x;
                 _V = _Y - _y;
-            
-                var correctionOnT = - (U * _U + V * _V)/(_U*_U + _V*_V);
+                le = _poly(localElements.l1, _time );
+                li = _poly(localElements.l2, _time );
+            }
+
+            var correctionOnT = 1;
+            var epsT = 1 / 3600.0;
+
+            for (var iter = 0; iter < 20 && Math.abs(correctionOnT) > epsT; iter++) {                
+                ComputeUvAndDerivative (tMinusT0OnMax);
+                correctionOnT = - (U * _U + V * _V)/(_U*_U + _V*_V);
                 tMinusT0OnMax += correctionOnT;
             }
 
@@ -96,33 +103,24 @@ var SolarEclipses = {
             eclipseData["tMax"] =  hourOfMax + dtCorrection;
 
             var lm = Math.sqrt(U*U + V*V);
-            var le = _poly(localElements.l1, tMinusT0OnMax );
-            var li = _poly(localElements.l2, tMinusT0OnMax );
 
             var g2 = (le - lm)/(le - li);
             if (g2 > 0) {// Chauvenet
-                var M = Math.atan2 (U, V);
-                var m = U / Math.sin(M);
+                var M, m, N, n, L, sin_psi, psi, tau;
 
-                var N = Math.atan2 (_U, _V);
-                var n = _U / Math.sin(N);
-
-                var L = le;
-                var sin_psi = m * (M - N) / L;
-                var psi = Math.asin(sin_psi);
-                if (L > 0) {
-                    if (Math.cos(psi) > 0) {
-                        psi = Math.PI - psi;
-                    }
-                } else {
-                    if (Math.cos(psi) < 0) {
-                        psi = Math.PI - psi;
+                var computePsiForStart = function() {
+                    if (L > 0) {
+                        if (Math.cos(psi) > 0) {
+                            psi = Math.PI - psi;
+                        }
+                    } else {
+                        if (Math.cos(psi) < 0) {
+                            psi = Math.PI - psi;
+                        }
                     }
                 }
 
-                var tau = L * Math.cos(psi) / n - m*Math.cos(M-N)/n;                
-                if (!isNaN(tau)) {
-                    eclipseData["t1"] = hourOfMax + tau / 24.0 + dtCorrection;              
+                var computePsiForEnd = function() {
                     if (L > 0) {
                         if (Math.cos(psi) < 0) {
                             psi = Math.PI - psi;
@@ -132,11 +130,33 @@ var SolarEclipses = {
                             psi = Math.PI - psi;
                         }
                     }
-                    tau = L * Math.cos(psi) / n - m*Math.cos(M-N)/n;
-                    if (!isNaN(tau)) {
-                        eclipseData["t4"] = hourOfMax + tau / 24.0 + dtCorrection;
+                }
+
+                var computeAuxiliaries = function () {
+                    M = Math.atan2 (U, V);
+                    m = U / Math.sin(M);
+
+                    N = Math.atan2 (_U, _V);
+                    n = _U / Math.sin(N);
+
+                    L = le;
+                    sin_psi = m * (M - N) / L;
+                    psi = Math.asin(sin_psi);
+
+                }
+
+                computeAuxiliaries();
+                computePsiForStart();
+                var correctionForStart = L * Math.cos(psi) / n - m*Math.cos(M-N)/n;  
+                              
+                if (!isNaN(correctionForStart)) {
+                    eclipseData["t1"] = hourOfMax + correctionForStart / 24.0 + dtCorrection;              
+                    computePsiForEnd();
+                    var correctionForEnd = L * Math.cos(psi) / n - m*Math.cos(M-N)/n;
+                    if (!isNaN(correctionForEnd)) {
+                        eclipseData["t4"] = hourOfMax + correctionForEnd / 24.0 + dtCorrection;
                     }
-                    
+
                     var delta = Math.abs(L*sin_psi);
                     eclipseData["magnitude"] = (L - delta) / (2 * (L - besselianElements.besselianEngine.occultorRadius));
                 }
