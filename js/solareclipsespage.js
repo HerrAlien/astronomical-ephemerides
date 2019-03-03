@@ -65,7 +65,10 @@ var SolarEclipsesPage = {
         var addNodeChild = PlanetPage.prototype.addNodeChild;
         var mainDiv = addNodeChild(SolarEclipsesPage.hostElement, "div");
         mainDiv.classList.add("solarEclipse");
+        var oldOpt = TimeStepsData.useLocalTime;
+        TimeStepsData.useLocalTime = false;
         var dateTime = yyyymmdd_hhmmOfJD(eclipseData.t0);
+        TimeStepsData.useLocalTime = oldOpt;
         
         var description = "";
         if (eclipseData.isPartial)
