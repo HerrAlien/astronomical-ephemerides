@@ -109,15 +109,15 @@ var SolarEclipsesPage = {
             addNodeChild (mainDiv, "h3", "Local circumstances:");
             var timings = addNodeChild (mainDiv, "span");
             var t1 = yyyymmdd_hhmmOfJD(eclipseData.t1);
-            var contents = "T1: " + t1.time.Ord3 + ":" +  t1.time.Ord2 + ":" + t1.time.Ord1;
+            var contents = "T1: " + t1.time.Ord3 + ":" +  t1.time.Ord2;
 
             var tMax = eclipseData["tMax"];
 
             var splitTmax = yyyymmdd_hhmmOfJD(tMax);
-            contents += "Tmax: " + splitTmax.time.Ord3 + ":" +  splitTmax.time.Ord2 + ":" + splitTmax.time.Ord1;
+            contents += "Tmax: " + splitTmax.time.Ord3 + ":" +  splitTmax.time.Ord2;
 
             var t4 = yyyymmdd_hhmmOfJD(eclipseData.t4);
-            contents += "T4: " + t4.time.Ord3 + ":" +  t4.time.Ord2 + ":" + t4.time.Ord1;
+            contents += "T4: " + t4.time.Ord3 + ":" +  t4.time.Ord2;
             
             contents += "Magnitude: " +  GetAAJS().Numerical.RoundTo2Decimals(eclipseData["magnitude"]);
 
