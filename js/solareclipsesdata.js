@@ -18,7 +18,6 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var SolarEclipses = {
     ComputeBesselianElements : function (jd) {
-
         var besselianEngine = new BesselianElements (MoonData, SunData, 0.27305, jd);
         var elements = besselianEngine.leastSquareFitCoeff;
         
@@ -66,7 +65,7 @@ var SolarEclipses = {
                 var x = _poly(localElements.x, tMinusT0OnMax);
                 var y = _poly(localElements.y, tMinusT0OnMax);
                 var z = _poly(localElements.z, tMinusT0OnMax);
-                
+
                 var X = _poly(besselianElements.x, tMinusT0OnMax);
                 var Y = _poly(besselianElements.y, tMinusT0OnMax);
 
@@ -90,7 +89,11 @@ var SolarEclipses = {
                 tMinusT0OnMax += correctionOnT;
             }
 
+            var dtCorrection = GetAAJS().DynamicalTime.DeltaT(eclipseData["t0"])/(3600 * 24);
+
             var hourOfMax = eclipseData["t0"] + (tMinusT0OnMax) / 24.0;
+            
+            eclipseData["tMax"] =  hourOfMax + dtCorrection;
 
             var lm = Math.sqrt(U*U + V*V);
             var le = _poly(localElements.l1, tMinusT0OnMax );
@@ -105,7 +108,8 @@ var SolarEclipses = {
                 var n = _U / Math.sin(N);
 
                 var L = le;
-                var psi = Math.asin(m*(M-N)/L);
+                var sin_psi = m * (M - N) / L;
+                var psi = Math.asin(sin_psi);
                 if (L > 0) {
                     if (Math.cos(psi) > 0) {
                         psi = Math.PI - psi;
@@ -118,7 +122,7 @@ var SolarEclipses = {
 
                 var tau = L * Math.cos(psi) / n - m*Math.cos(M-N)/n;                
                 if (!isNaN(tau)) {
-                    eclipseData["t1"] = hourOfMax + tau / 24.0;              
+                    eclipseData["t1"] = hourOfMax + tau / 24.0 + dtCorrection;              
                     if (L > 0) {
                         if (Math.cos(psi) < 0) {
                             psi = Math.PI - psi;
@@ -130,8 +134,11 @@ var SolarEclipses = {
                     }
                     tau = L * Math.cos(psi) / n - m*Math.cos(M-N)/n;
                     if (!isNaN(tau)) {
-                        eclipseData["t4"] = hourOfMax + tau / 24.0;
+                        eclipseData["t4"] = hourOfMax + tau / 24.0 + dtCorrection;
                     }
+                    
+                    var delta = Math.abs(L*sin_psi);
+                    eclipseData["magnitude"] = (L - delta) / (2 * (L - besselianElements.besselianEngine.occultorRadius));
                 }
             }
         }
