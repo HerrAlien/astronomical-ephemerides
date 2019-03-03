@@ -75,7 +75,8 @@ var SolarEclipsesPage = {
             description += "Hybrid ";
         description += "Eclipse.";
         
-        if (eclipseData.besselianElements.besselianEngine.deltaLocalMax > Math.abs(eclipseData.besselianElements.besselianEngine.l1LocalMax)) {
+        if ((eclipseData.besselianElements.besselianEngine.deltaLocalMax > Math.abs(eclipseData.besselianElements.besselianEngine.l1LocalMax)) ||
+            !eclipseData["t1"]) {
             description += " Not visible from your location."
         }
         return description;
