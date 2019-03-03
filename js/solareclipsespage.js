@@ -90,14 +90,48 @@ var SolarEclipsesPage = {
         mainDiv["id"] = this.getId(eclipseData);
         mainDiv.classList.add("solarEclipse");
 
+        var oldOpt = TimeStepsData.useLocalTime;
+        TimeStepsData.useLocalTime = false;
         var dateTime = yyyymmdd_hhmmOfJD(eclipseData.t0);
+        TimeStepsData.useLocalTime = oldOpt;
         
         var description = this.getTypeOfEclipseString(eclipseData);
         
         var decimalsFactor = 1e5; 
 
-        var eclipseTitle = addNodeChild (mainDiv, "h2", dateTime.date.Y + "-" + dateTime.date.M + "-" + dateTime.date.D + " " + description);
-        var eclipseTitle = addNodeChild (mainDiv, "h3", "Besselian elements:");
+        addNodeChild (mainDiv, "h2", dateTime.date.Y + "-" + dateTime.date.M + "-" + dateTime.date.D + " " + description);
+
+        if (eclipseData.t1) {
+            addNodeChild (mainDiv, "h3", "Local circumstances:");
+            var timings = addNodeChild (mainDiv, "span");
+            var t1 = yyyymmdd_hhmmOfJD(eclipseData.t1);
+            var contents = "T1: " + t1.time.Ord3 + ":" +  t1.time.Ord2 + ":" + t1.time.Ord1;
+
+            var tMax = eclipseData.besselianElements.besselianEngine.timeMinusT0OfMaxEclipse / 24 +
+                       eclipseData["t0"];
+
+
+            if(eclipseData.t2) {
+                var t2 = yyyymmdd_hhmmOfJD(eclipseData.t2);
+                contents += "T2: " + t2.time.Ord3 + ":" +  t2.time.Ord2 + ":" + t2.time.Ord1;
+
+            }
+            var splitTmax = yyyymmdd_hhmmOfJD(tMax);
+            contents += "Tmax: " + splitTmax.time.Ord3 + ":" +  splitTmax.time.Ord2 + ":" + splitTmax.time.Ord1;
+
+            if(eclipseData.t3) {
+                var t3 = yyyymmdd_hhmmOfJD(eclipseData.t3);
+                contents += "T2: " + t3.time.Ord3 + ":" +  t3.time.Ord2 + ":" + t3.time.Ord1;
+                
+            }
+
+            var t4 = yyyymmdd_hhmmOfJD(eclipseData.t4);
+            contents += "T4: " + t4.time.Ord3 + ":" +  t4.time.Ord2 + ":" + t4.time.Ord1;
+            timings.textContent = contents;
+        }
+        
+
+        addNodeChild (mainDiv, "h3", "Besselian elements:");
         addNodeChild (mainDiv, "span", "T0 = " + dateTime.time.Ord3 + ":" +  dateTime.time.Ord2 + " UTC");
         
         var table = addNodeChild (mainDiv, "table");
