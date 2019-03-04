@@ -138,8 +138,19 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
         values.y = r * (Math.sin(occultorDecRads) * Math.cos(d) - Math.cos(occultorDecRads) * Math.sin(d) * Math.cos(occultorRaMinusA_Rads));
         var z = r * (Math.sin(occultorDecRads) * Math.sin(d) + Math.cos(occultorDecRads) * Math.cos(d) * Math.cos(occultorRaMinusA_Rads));
         
-        // -------------------------------------------------
         var r_prime =  1 / Math.sin(occultedParallaxRads);
+
+           // var xMoon = r * Math.cos(occultorDecRads) * Math.cos(occultorData.RA*degra*15);
+            var xMoon = r * Math.cos(occultorDecRads) * Math.sin(occultorData.RA*degra*15);
+
+           // var xSun = r_prime * Math.cos(occultedData.Dec*degra) * Math.cos(occultedData.RA*degra*15);
+            var xSun = r_prime * Math.cos(occultedData.Dec*degra) * Math.sin(occultedData.RA*degra*15);
+            
+            values.x = xMoon + (r / (r_prime - r)) * (xMoon - xSun);
+            // values.y = yMoon + (r / (r_prime - r)) * (yMoon - ySun);
+
+
+        // -------------------------------------------------
         var H = (occultedData.Diameter / 2) * degra;
         var g = 1- b;
         var occultorEarthRadiiRatio = this.occultorRadius; //0.27227;
