@@ -18,7 +18,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var SolarEclipses = {
     ComputeBesselianElements : function (jd) {
-        var besselianEngine = new BesselianElements (MoonData, SunData, 0.27305, jd);
+        var besselianEngine = new BesselianElements (MoonData, SunData, 0.2727/*0.27305*/, jd);
         var elements = besselianEngine.leastSquareFitCoeff;
         
         elements['besselianEngine'] = besselianEngine;
@@ -87,24 +87,23 @@ var SolarEclipses = {
                 li = _poly(localElements.l2, tMinusT0 );
             }
 
-
+            eclipseData["tMax"] =  eclipseData["t0"] + (tMinusT0OnMax) / 24.0;
             var dtCorrection = GetAAJS().DynamicalTime.DeltaT(eclipseData["t0"])/(3600 * 24);
             var correction = 1;
             var timeEps = 1 / (24.0 * 3600); // 1 sec.
 
 ////////////// to be iterated ////////////////
-for (var iteration = 0; iteration < 20 && Math.abs(correction) > timeEps; iteration++)
+for (var iteration = 0; iteration < 100 && Math.abs(correction) > timeEps; iteration++)
 {
             var hourOfMax = eclipseData["t0"] + (tMinusT0OnMax) / 24.0;
             
-            eclipseData["tMax"] =  hourOfMax;
-
             ComputeUvAndDerivative (tMinusT0OnMax);
 
             var lm = Math.sqrt(U*U + V*V);
 
             var g2 = (le - lm)/(le - li);
-            if (g2 > 0) {// Chauvenet
+            //if (g2 > 0) 
+            {// Chauvenet
                 var M, m, N, n, L, sin_psi, psi, tau;
 
                 var computePsiForStart = function() {
@@ -158,6 +157,7 @@ for (var iteration = 0; iteration < 20 && Math.abs(correction) > timeEps; iterat
                         var newTmax =  (eclipseData["t4"] + eclipseData["t1"]) / 2.0;
                         correction = (newTmax - eclipseData["tMax"]) / 24.0;
                         tMinusT0OnMax += correction;
+                        eclipseData["tMax"] = newTmax;
                     }
 
                     var delta = Math.abs(L*sin_psi);
