@@ -32,6 +32,8 @@ var MoonData = {
             // convert from JD to gregorian
             data['Month'] = _date.M;
             data['Day'] = _date.D;
+
+            JD += GetAAJS().DynamicalTime.DeltaT(JD)/(3600 * 24);
             
             var posData = GetAAJS().Moon.PositionalEphemeris(JD, Location.latitude, Location.longitude, Location.altitude);
             

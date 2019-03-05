@@ -404,7 +404,7 @@
                     4e-4,
                     0,
                     0,
-                    2e-4
+                    2.2e-4
                 ],
 
             test : function () {
@@ -455,7 +455,8 @@ Tan ƒ2	0.0045992
                     "l1" : [0.54211, 0.00012, -0.00001, 0], // earth radii
                     "l2" : [-0.00403, 0.00012, -0.00001, 0], // earth radii
                     "tan_f1" : 0.0046222,
-                    "tan_f2" : 0.0045992
+                    "tan_f2" : 0.0045992,
+                    "besselianEngine" : 0
                 },
                   
                   
@@ -474,6 +475,7 @@ Tan ƒ2	0.0045992
                       
             test : function () {
                 this.actualOutput = SolarEclipses.ComputeBesselianElements (this.input);
+                this.actualOutput.besselianEngine = 0;
                 return testlib.doubleEqArr (this.actualOutput.x, 
                                           this.expectedOutput.x, 
                                               this.accuracies.x) &&
@@ -509,12 +511,13 @@ Tan ƒ2	0.0045992
                     "l1" : [0.55249, -0.00013, -0.00001, 0], // earth radii
                     "l2" : [0.00630, -0.00013, -0.00001, 0], // earth radii
                     "tan_f1" : 0.0047219,
-                    "tan_f2" : 0.0046984
+                    "tan_f2" : 0.0046984,
+                    "besselianEngine" : 0
                 },
                   
                   
             accuracies : {
-                    "x"  : 1.3e-3,
+                    "x"  : 4e-4,
                     "y"  : 4e-4,
                     "d"  : 1e-4,
                     "mu" : 1e-4,
@@ -528,6 +531,7 @@ Tan ƒ2	0.0045992
                       
             test : function () {
                 this.actualOutput = SolarEclipses.ComputeBesselianElements (this.input);
+                this.actualOutput.besselianEngine = 0;
                 return testlib.doubleEqArr (this.actualOutput.x, 
                                           this.expectedOutput.x, 
                                               this.accuracies.x) &&

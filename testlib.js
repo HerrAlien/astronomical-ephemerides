@@ -1,17 +1,17 @@
 var testlib = {
     
-        logTest: function  (test, passed)
+        logTest: function  (__test, passed)
         {
-            var paragraph = document.createElement("p");
+           var paragraph = document.createElement("p");
            if (passed)
            {
                 paragraph.style.color = "green";
-                paragraph.innerHTML = test.name + " passed.";
+                paragraph.innerHTML = __test.name + " passed.";
             }
             else
              {
                 paragraph.style.color = "red";
-                paragraph.innerHTML = test.name + " failed. Expected " + JSON.stringify(test.expectedOutput) + ", got instead " + JSON.stringify(test.actualOutput);
+                paragraph.innerHTML = __test.name + " failed. Expected " + JSON.stringify(__test.expectedOutput) + ", got instead " + JSON.stringify(__test.actualOutput);
             }
             document.body.appendChild (paragraph);
         },
