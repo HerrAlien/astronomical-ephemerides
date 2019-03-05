@@ -17,7 +17,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 "use strict";
 
 function MoonEclipse (JD) {
-    
+
         var sunData = SunData.getDataAsObjectForJD (JD);
         var moonData = MoonData.getDataAsObjectForJD (JD);
         
@@ -36,7 +36,7 @@ function MoonEclipse (JD) {
         this.dRaMoon  = 15 * (moonDataPlus.RaGeo - moonDataMinus.RaGeo) / dT;
         this.dDecMoon = (moonDataPlus.DecGeo - moonDataMinus.DecGeo) / dT;
                 
-        this.JD = JD ;
+        this.JD = JD;
         this.ParallaxSun = sunData.Parallax;
         this.ParallaxMoon = moonData.parallax;
 
@@ -65,9 +65,6 @@ function MoonEclipse (JD) {
         /* Danjon ... */
         this.umbralRadius = 1.01 * (this.ParallaxMoon - this.SunDiameter/2 + this.ParallaxSun);
         this.penumbralRadius = 1.01 * (this.ParallaxMoon + this.SunDiameter/2 + this.ParallaxSun);
-        
-        // from dynamic time to UTC
-        this.JD -= GetAAJS().DynamicalTime.DeltaT(this.JD)/(3600 * 24);
 }
 
 (function(){

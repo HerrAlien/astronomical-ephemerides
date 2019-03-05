@@ -212,6 +212,7 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
         
         // -------------------------------------------------
         var r = 1 / Math.sin (occultorParallaxRads);
+        var r_prime =  1 / Math.sin(occultedParallaxRads);
         var b = Math.sin(occultedParallaxRads) * r ;
         values.d = occultedData.Dec - (b / (1-b))*(occultorData.Dec - occultedData.Dec);
         if (values.d < 0)
@@ -229,7 +230,7 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
         values.x = r * Math.cos(occultorDecRads) * Math.sin(occultorRaMinusA_Rads);
         values.y = r * (Math.sin(occultorDecRads) * Math.cos(d) - Math.cos(occultorDecRads) * Math.sin(d) * Math.cos(occultorRaMinusA_Rads));
         var z = r * (Math.sin(occultorDecRads) * Math.sin(d) + Math.cos(occultorDecRads) * Math.cos(d) * Math.cos(occultorRaMinusA_Rads));
-        
+
         // -------------------------------------------------
         var r_prime =  1 / Math.sin(occultedParallaxRads);
         var H = (occultedData.Diameter / 2) * degra;
