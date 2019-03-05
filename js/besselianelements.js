@@ -120,6 +120,7 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
         
         // -------------------------------------------------
         var r = 1 / Math.sin (occultorParallaxRads);
+        var r_prime =  1 / Math.sin(occultedParallaxRads);
         var b = Math.sin(occultedParallaxRads) * r ;
         values.d = occultedData.Dec - (b / (1-b))*(occultorData.Dec - occultedData.Dec);
         if (values.d < 0)
@@ -137,18 +138,6 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
         values.x = r * Math.cos(occultorDecRads) * Math.sin(occultorRaMinusA_Rads);
         values.y = r * (Math.sin(occultorDecRads) * Math.cos(d) - Math.cos(occultorDecRads) * Math.sin(d) * Math.cos(occultorRaMinusA_Rads));
         var z = r * (Math.sin(occultorDecRads) * Math.sin(d) + Math.cos(occultorDecRads) * Math.cos(d) * Math.cos(occultorRaMinusA_Rads));
-        
-        var r_prime =  1 / Math.sin(occultedParallaxRads);
-
-           // var xMoon = r * Math.cos(occultorDecRads) * Math.cos(occultorData.RA*degra*15);
-            var xMoon = r * Math.cos(occultorDecRads) * Math.sin(occultorData.RA*degra*15);
-
-           // var xSun = r_prime * Math.cos(occultedData.Dec*degra) * Math.cos(occultedData.RA*degra*15);
-            var xSun = r_prime * Math.cos(occultedData.Dec*degra) * Math.sin(occultedData.RA*degra*15);
-            
-            values.x = xMoon + (r / (r_prime - r)) * (xMoon - xSun);
-            // values.y = yMoon + (r / (r_prime - r)) * (yMoon - ySun);
-
 
         // -------------------------------------------------
         var H = (occultedData.Diameter / 2) * degra;
