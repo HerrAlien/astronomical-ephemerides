@@ -18,7 +18,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var SolarEclipses = {
     ComputeBesselianElements : function (jd) {
-        var besselianEngine = new BesselianElements (MoonData, SunData, 0.2727/*0.27305*/, jd);
+        var besselianEngine = new BesselianElements (MoonData, SunData, 0.2727/*0.27305*/,
+                               jd - GetAAJS().DynamicalTime.DeltaT(jd)/(3600 * 24));
         var elements = besselianEngine.leastSquareFitCoeff;
         
         elements['besselianEngine'] = besselianEngine;
