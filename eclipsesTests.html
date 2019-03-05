@@ -532,7 +532,7 @@ Tan ƒ2	0.0045992
             test : function () {
                 this.actualOutput = SolarEclipses.ComputeBesselianElements (this.input);
                 this.actualOutput.besselianEngine = 0;
-                if (!testlib.doubleEqArr (this.actualOutput.x, 
+                return testlib.doubleEqArr (this.actualOutput.x, 
                                           this.expectedOutput.x, 
                                               this.accuracies.x) &&
                        testlib.doubleEqArr (this.actualOutput.y, 
