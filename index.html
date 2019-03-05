@@ -1887,8 +1887,16 @@ var appInit = function() {
        || !Location.init || !TimeStepsData.init) {
        SyncedTimeOut (appInit, Timeout.onInit);
    } else {
+     try {
        Location.init();
+     } catch (locationInitError) {
+       console.log(locationInitError);
+     }
+     try {
        TimeStepsData.init();
+     } catch (timeSettingsError) {
+       console.log(timeSettingsError);
+     }
    }
 }
 
