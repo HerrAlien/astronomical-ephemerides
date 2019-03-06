@@ -19,21 +19,21 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 var MoonData = {
     cache : {},
        
-   getDataAsObjectForJD : function (JD, computeRiseTransitSet) {
+   getDataAsObjectForJD : function (JD_UTC, computeRiseTransitSet) {
         
-        var data = this.cache[JD];
+        var data = this.cache[JD_UTC];
         
         if (!data) {
             data = {};
         
             var i = 0;
             
-            var _date = GetAAJS().Date.JD2Date(JD);
+            var _date = GetAAJS().Date.JD2Date(JD_UTC);
             // convert from JD to gregorian
             data['Month'] = _date.M;
             data['Day'] = _date.D;
 
-            JD += GetAAJS().DynamicalTime.DeltaT(JD)/(3600 * 24);
+            var JD = JD_UTC + GetAAJS().DynamicalTime.DeltaT(JD_UTC)/(3600 * 24);
             
             var posData = GetAAJS().Moon.PositionalEphemeris(JD, Location.latitude, Location.longitude, Location.altitude);
             
@@ -55,13 +55,13 @@ var MoonData = {
             data['Colongitude'] = colongitude;
             data['b0'] = selenographicCoordsOfSun.b0;
             
-            this.cache[JD] = data;
+            this.cache[JD_UTC] = data;
         }
         
         if (computeRiseTransitSet) {
             this.riseSetAngle = 0.7275 * data.parallax - 0.56666666666666666666666666666667;
-            data = this.addRiseTransitSetData(JD, data);
-            this.cache[JD] = data;
+            data = this.addRiseTransitSetData(JD_UTC, data);
+            this.cache[JD_UTC] = data;
         }
 
         return data;
