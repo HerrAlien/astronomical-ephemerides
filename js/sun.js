@@ -19,11 +19,12 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 var SunData = {
     cache : {},
 
-    getDataAsObjectForJD : function (JD, computeRiseTransitSet) {
-        var data = this.cache[JD];
+    getDataAsObjectForJD : function (JD_UTC, computeRiseTransitSet) {
+        var data = this.cache[JD_UTC];
         if (!data) {
             data = {};
-            var _date = GetAAJS().Date.JD2Date(JD);
+            var _date = GetAAJS().Date.JD2Date(JD_UTC);
+            var JD = JD_UTC + GetAAJS().DynamicalTime.DeltaT(JD_UTC)/(3600 * 24);
             // convert from JD to gregorian
             data['Month'] = _date.M;
             data['Day'] = _date.D;
@@ -40,12 +41,12 @@ var SunData = {
             data['B0'] = physical.B0; // [deg.dddd]
             data['L0'] = physical.L0; // [deg.dddd]
             data['Parallax'] = Math.atan2(6.378137e+6,149597870700 * sunDistance) * 180/Math.PI; // [deg.dddd]
-            this.cache[JD] = data;
+            this.cache[JD_UTC] = data;
         }
         
         if (computeRiseTransitSet) {
-            data = this.addRiseTransitSetData(JD, data);
-            this.cache[JD] = data;
+            data = this.addRiseTransitSetData(JD_UTC, data);
+            this.cache[JD_UTC] = data;
         }
         
         return data;

@@ -121,14 +121,14 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
         // -------------------------------------------------
         var r = 1 / Math.sin (occultorParallaxRads);
         var r_prime =  1 / Math.sin(occultedParallaxRads);
-        var b = Math.sin(occultedParallaxRads) * r ;
-        values.d = occultedData.Dec - (b / (1-b))*(occultorData.Dec - occultedData.Dec);
+        var b =  r / r_prime;
+        var g = 1- b;
+        values.d = occultedData.Dec - (b / g)*(occultorData.Dec - occultedData.Dec);
         if (values.d < 0)
             values.d += 360;
 
         var a = occultedData.RA - (b / (1-b))*Math.cos(occultorDecRads)/Math.cos(occultedData.Dec * degra) * (occultorData.RA - occultedData.RA);
-        values.mu = 15*(GetAAJS().Sidereal.ApparentGreenwichSiderealTime(jd 
-        + GetAAJS().DynamicalTime.DeltaT(jd)/(3600 * 24)) - a);
+        values.mu = 15*(GetAAJS().Sidereal.ApparentGreenwichSiderealTime(jd) - a);
         if (values.mu < 0)
             values.mu += 360;
         
@@ -142,7 +142,6 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
 
         // -------------------------------------------------
         var H = (occultedData.Diameter / 2) * degra;
-        var g = 1- b;
         var occultorEarthRadiiRatio = this.occultorRadius; //0.27227;
         // penumbral
         var f1 = Math.asin( (Math.sin(H) + occultorEarthRadiiRatio*Math.sin(occultedParallaxRads)) / ( g ) );
