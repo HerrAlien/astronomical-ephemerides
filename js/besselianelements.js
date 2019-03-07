@@ -220,7 +220,9 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
             values.d += 360;
 
         var a = occultedData.RA - (b / (1-b))*Math.cos(occultorDecRads)/Math.cos(occultedData.Dec * degra) * (occultorData.RA - occultedData.RA);
-        values.mu = 15*(GetAAJS().Sidereal.ApparentGreenwichSiderealTime(jd) - a);
+        // GMST needs to be determined ftom JD, UTC
+        var GMST = GetAAJS().Sidereal.ApparentGreenwichSiderealTime(jd);
+        values.mu = 15*(GMST - a);
         if (values.mu < 0)
             values.mu += 360;
         

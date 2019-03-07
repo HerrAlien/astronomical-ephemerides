@@ -19,34 +19,33 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 var SunData = {
     cache : {},
 
-    getDataAsObjectForJD : function (JD_UTC, computeRiseTransitSet) {
-        var data = this.cache[JD_UTC];
+    getDataAsObjectForJD : function (JDE, computeRiseTransitSet) {
+        var data = this.cache[JDE];
         if (!data) {
             data = {};
-            var _date = GetAAJS().Date.JD2Date(JD_UTC);
-            var JD = JD_UTC + GetAAJS().DynamicalTime.DeltaT(JD_UTC)/(3600 * 24);
+            var _date = GetAAJS().Date.JD2Date(JDE);
             // convert from JD to gregorian
             data['Month'] = _date.M;
             data['Day'] = _date.D;
-            var radec = GetAAJS().Sun.EquatorialCoordinates(JD, true);
+            var radec = GetAAJS().Sun.EquatorialCoordinates(JDE, true);
             data['RA'] = radec.X; // RA [h.hhhh]
             data['Dec'] = radec.Y; // DEC [deg.dddd]
-            var sunDistance = GetAAJS().Sun.Distance(JD, true);
+            var sunDistance = GetAAJS().Sun.Distance(JDE, true);
 			data['DistanceToEarth'] = sunDistance;// [au]
-            data['Diameter'] = GetAAJS().Sun.Diameter(JD, true)/3600; // [deg.dddd]
+            data['Diameter'] = GetAAJS().Sun.Diameter(JDE, true)/3600; // [deg.dddd]
             
             data['MeridianTransit'] = false;
-            var physical = GetAAJS().Sun.CalculatePhysicalDetails(JD, true);
+            var physical = GetAAJS().Sun.CalculatePhysicalDetails(JDE, true);
             data['P'] = physical.P; // [deg.dddd]
             data['B0'] = physical.B0; // [deg.dddd]
             data['L0'] = physical.L0; // [deg.dddd]
             data['Parallax'] = Math.atan2(6.378137e+6,149597870700 * sunDistance) * 180/Math.PI; // [deg.dddd]
-            this.cache[JD_UTC] = data;
+            this.cache[JDE] = data;
         }
         
         if (computeRiseTransitSet) {
-            data = this.addRiseTransitSetData(JD_UTC, data);
-            this.cache[JD_UTC] = data;
+            data = this.addRiseTransitSetData(JDE, data);
+            this.cache[JDE] = data;
         }
         
         return data;
