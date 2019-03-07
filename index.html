@@ -416,6 +416,10 @@ th {
     line-height: 10.4;
 }
 
+#futureEventsNumberOfDays {
+  font-size: 50px;
+}
+
  .MenuLinkDiv::after {
     content: "More ...";
 }
@@ -544,14 +548,20 @@ h1, h2, hr {
     text-align: center;
 }
 
-#homeH1 {
-    font-size: 70px;
+#homeH1, #futureEventsH1 {
+    font-size: 60px;
     text-align: left;
+    float:left;
+}
+
+#futureEventsH1 {
+  margin-top: 50px;
 }
 
  h2 {
     font-size: 40px;
-    margin-top: 40px;
+    margin-top: 0px;
+    padding-top: 100px;
     margin-bottom: 0px;
 }
 
@@ -803,6 +813,31 @@ label > h3 {
     height: 0px;
 }
 
+  .configureRtView {
+    margin-top: 120px;
+    position: absolute;
+    display: block;
+    background-image: url(images/sprite.svg#settings-light);
+    background-size: 32px 32px;
+    width:32px;
+    height:32px;
+    background-position:center;
+  }
+
+  #rightNowFrontPageSettingsLink {
+    display: block;
+    margin-top: 20px;
+    background-image: url(images/sprite.svg#settings-light);
+    background-size: 64px 64px;
+    width:64px;
+    height:64px;
+    margin-bottom: 40px;
+    background-position:center;
+    background-repeat: no-repeat;
+    text-align:center;
+    float:right;
+}
+
 @media  screen and  (max-width: 936px)  {
 
 h1 {
@@ -813,6 +848,13 @@ h1 {
         width:  320px;
         height: 320px;
     }
+
+  .configureRtView {
+    margin-top: 210px;
+    background-size: 64px 64px;
+    width:64px;
+    height:64px;
+  }
 
     .scrollableRT {
         margin-top:130px;
@@ -1225,6 +1267,7 @@ h1 {
   font-weight: bolder;
 }
 
+
     </style>
     
 
@@ -1384,9 +1427,54 @@ h1 {
 
               </div>
 
-                <h2>Show on home page</h2>
+                <h2 id="realTimeSettingsTitle">Show on home page</h2>
                 <div id="realTimeSettingsContainer">
                     
+                </div>
+
+                <h2 id="futureEventsSettingsTitle">Future events</h2>
+                <div id="futureEventsSettingsContainer">
+                    
+                    <div class="row">
+                      <label class="switch">
+                        <input type="checkbox" id="futureSolarEclipsesSettings" class="switchinput">
+                        <span class="slider round"></span>
+                      </label>
+                      <label for="futureSolarEclipsesSettings">
+                        <div class="settingsLabelDiv">Solar Eclipses</div>
+                      </label>
+                   </div>
+
+                    <div class="row">
+                      <label class="switch">
+                        <input type="checkbox" id="futureLunarEclipsesSettings" class="switchinput">
+                        <span class="slider round"></span>
+                      </label>
+                      <label for="futureLunarEclipsesSettings">
+                        <div class="settingsLabelDiv">Lunar Eclipses</div>
+                      </label>
+                   </div>
+
+                    <div class="row">
+                      <label class="switch">
+                        <input type="checkbox" id="futureOccultationsSettings" class="switchinput">
+                        <span class="slider round"></span>
+                      </label>
+                      <label for="futureOccultationsSettings">
+                        <div class="settingsLabelDiv">Occultations</div>
+                      </label>
+                   </div>
+
+                    <div class="row">
+                      <label class="switch">
+                        <input type="checkbox" id="futureTransitsSettings" class="switchinput">
+                        <span class="slider round"></span>
+                      </label>
+                      <label for="futureTransitsSettings">
+                        <div class="settingsLabelDiv">Transits over the Sun</div>
+                      </label>
+                   </div>
+
                 </div>
           </div>
         </div>
@@ -1405,11 +1493,33 @@ h1 {
             </div>
           </div>
 
-            <h1 id="homeH1">Right now:</h1>
+            <h1 id="homeH1">Right now:
+              <a id="rightNowFrontPageSettingsLink" title="Configure the 'Right Now' view"
+              href='#{"page":"settings","actions":[{"name":"scroll","parameters":"realTimeSettingsTitle"}]}'>
+              </a>
+            </h1>
+    <div class="clear maxWidth">&nbsp;</div>
+
             <div id="rightNowFrontPage">
             </div>
-                <div id="lofiWarning">Loading high accuracy algorithm ...(<span id="lofiWarningProgress"></span>)</div>
-             <div class="clear maxWidth">&nbsp;</div>
+
+
+
+            <h1 id="futureEventsH1">Next <input type="number" id="futureEventsNumberOfDays" value="7"> days:
+               <a id="rightNowFrontPageSettingsLink" title="Configure the 'Right Now' view"
+              href='#{"page":"settings","actions":[{"name":"scroll","parameters":"futureEventsSettingsTitle"}]}'>
+              </a>
+           </h1>
+    <div class="clear maxWidth">&nbsp;</div>
+
+            <div id="upcommingEventsFrontPage">
+
+            </div>
+
+
+
+            <div id="lofiWarning">Loading high accuracy algorithm ...(<span id="lofiWarningProgress"></span>)</div>
+            <div class="clear maxWidth">&nbsp;</div>
 
         <br/>
 <a href="#about">What time argument is used? What type of positions are computed?</a>
@@ -1674,6 +1784,9 @@ title="opens in a new window">Bits of software</a><br>
 <script type="text/JavaScript" async="" src="js/scrollbehavior.js"></script>
 <script type="text/JavaScript" async="" src="js/promotedmenu.js"></script>
 <script type="text/JavaScript" async="" src="js/navigation.js"></script>
+<script type="text/JavaScript" async="" src="js/nextdayseventsdata.js"></script>
+<script type="text/JavaScript" async="" src="js/nextdayseventsview.js"></script>
+
 
  <script>
 
