@@ -18,6 +18,10 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var SolarEclipses = {
     ComputeBesselianElements : function (jd) {
+        
+        // jd is in TD. But data objects take UTC as parameter,
+        // so we need to convert this.
+        jd -= GetAAJS().DynamicalTime.DeltaT(jd)/(3600 * 24);
 
         var besselianEngine = new BesselianElements (MoonData, SunData, 0.27227,jd);
         var elements = besselianEngine.leastSquareFitCoeff;
