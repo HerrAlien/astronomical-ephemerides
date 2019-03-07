@@ -59,18 +59,12 @@ var SolarEclipsesPage = {
         processK(startK, endK);
     },
 
-    drawNewEclipse: function (eclipseData) {
-        var yyyymmdd_hhmmOfJD  = PlanetPage.prototype.yyyymmdd_hhmmOfJD;
-        
-        var addNodeChild = PlanetPage.prototype.addNodeChild;
-        var mainDiv = addNodeChild(SolarEclipsesPage.hostElement, "div");
-        mainDiv.classList.add("solarEclipse");
+    getTypeOfEclipseString : function (eclipseData) {
         var oldOpt = TimeStepsData.useLocalTime;
         TimeStepsData.useLocalTime = false;
-        var dateTime = yyyymmdd_hhmmOfJD(eclipseData.t0);
         TimeStepsData.useLocalTime = oldOpt;
-        
         var description = "";
+     
         if (eclipseData.isPartial)
             description += "Partial ";
         if (eclipseData.isTotal)
@@ -79,12 +73,59 @@ var SolarEclipsesPage = {
             description += "Annular ";
         if (eclipseData.isAnnularTotal)
             description += "Hybrid ";
-        description += "Eclipse";
+        description += "Eclipse.";
+        
+        if ((eclipseData.besselianElements.besselianEngine.deltaLocalMax > Math.abs(eclipseData.besselianElements.besselianEngine.l1LocalMax)) ||
+            !eclipseData["t1"]) {
+            description += " Not visible from your location."
+        }
+        return description;
+    },
+
+    getId : function (eclipseData) {
+        return "SolarEclipse" + eclipseData.t0;
+    },
+
+    drawNewEclipse: function (eclipseData) {
+        var yyyymmdd_hhmmOfJD  = PlanetPage.prototype.yyyymmdd_hhmmOfJD;
+        
+        var addNodeChild = PlanetPage.prototype.addNodeChild;
+        var mainDiv = addNodeChild(SolarEclipsesPage.hostElement, "div");
+        mainDiv["id"] = this.getId(eclipseData);
+        mainDiv.classList.add("solarEclipse");
+
+        var oldOpt = TimeStepsData.useLocalTime;
+        TimeStepsData.useLocalTime = false;
+        var dateTime = yyyymmdd_hhmmOfJD(eclipseData.t0);
+        TimeStepsData.useLocalTime = oldOpt;
+        
+        var description = this.getTypeOfEclipseString(eclipseData);
         
         var decimalsFactor = 1e5; 
 
-        var eclipseTitle = addNodeChild (mainDiv, "h2", dateTime.date.Y + "-" + dateTime.date.M + "-" + dateTime.date.D + " " + description);
-        var eclipseTitle = addNodeChild (mainDiv, "h3", "Besselian elements:");
+        addNodeChild (mainDiv, "h2", dateTime.date.Y + "-" + dateTime.date.M + "-" + dateTime.date.D + " " + description);
+
+        if (eclipseData.t1) {
+            addNodeChild (mainDiv, "h3", "Local circumstances:");
+            var timings = addNodeChild (mainDiv, "span");
+            var t1 = yyyymmdd_hhmmOfJD(eclipseData.t1);
+            var contents = "T1: " + t1.time.Ord3 + ":" +  t1.time.Ord2;
+
+            var tMax = eclipseData["tMax"];
+
+            var splitTmax = yyyymmdd_hhmmOfJD(tMax);
+            contents += "Tmax: " + splitTmax.time.Ord3 + ":" +  splitTmax.time.Ord2;
+
+            var t4 = yyyymmdd_hhmmOfJD(eclipseData.t4);
+            contents += "T4: " + t4.time.Ord3 + ":" +  t4.time.Ord2;
+            
+            contents += "Magnitude: " +  GetAAJS().Numerical.RoundTo2Decimals(eclipseData["magnitude"]);
+
+            timings.textContent = contents;
+        }
+        
+
+        addNodeChild (mainDiv, "h3", "Besselian elements:");
         addNodeChild (mainDiv, "span", "T0 = " + dateTime.time.Ord3 + ":" +  dateTime.time.Ord2 + " UTC");
         
         var table = addNodeChild (mainDiv, "table");

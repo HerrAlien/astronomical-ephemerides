@@ -135,15 +135,6 @@ table {
     font-family: Courier;
 }
 
-@supports not (-webkit-overflow-scrolling: touch) {
-    .planetTable {
-        background: url('../images/sprite.svg#default-table');
-        background-repeat-x: no-repeat;
-        background-position: center;
-        background-size: contain;
-    }
-}
-
 .planetTableHeader {
     background: #ffffff;
     display: block;
@@ -499,7 +490,7 @@ input[type=date]::-webkit-inner-spin-button {
 
 .rtsettings {
     border-top: solid 1px #000000;
-    padding-top: 15px;
+    padding-top: 110px;
     padding-bottom: 65px;
     border-bottom: solid 1px #000000;
 }
@@ -536,6 +527,13 @@ input[type=date]::-webkit-inner-spin-button {
 #incrementDate, #numberOfDays {
     width: 230px;
 }
+
+#futureEventsNumberOfDays {
+    display: inline-block;
+    height: 60px;
+    width: 120px;
+}
+
 
 #startingDate {
     border-top: none;
@@ -577,6 +575,7 @@ input[type=date]::-webkit-inner-spin-button {
     overflow-y: hidden;
     border: none;
     padding-bottom: 0px;
+    padding-top: 15px;
 }
 
  .expandCollapseButton {

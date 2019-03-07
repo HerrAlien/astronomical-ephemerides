@@ -18,34 +18,43 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var FunctionFitting = {
     PolynomialLSF : function (values, args, polynomialDegree) {
-        var X = [];
-        for (var i = 0; i < args.length; i++)
-            X[i] = [];
-        
-        for (var argIndex = 0; argIndex < args.length; argIndex++) {
-            for (var degree = 0; degree <= polynomialDegree; degree++ ) {
-                X[argIndex][degree] = Math.pow(args[argIndex], degree);
+        this.ComputeInputMatrixFinalForm = function (args) {
+            var X = [];
+            for (var i = 0; i < args.length; i++)
+                X[i] = [];
+            
+            for (var argIndex = 0; argIndex < args.length; argIndex++) {
+                for (var degree = 0; degree <= polynomialDegree; degree++ ) {
+                    X[argIndex][degree] = Math.pow(args[argIndex], degree);
+                }
             }
+            
+            var X_t = Matrix.transpose(X);
+            
+            var multipliedTransposeWithSelf = Matrix.multiply (X_t, X);
+            var reversedMatrix = Matrix.inverse (multipliedTransposeWithSelf);
+            return Matrix.multiply(reversedMatrix, X_t);
         }
         
-        var X_t = Matrix.transpose(X);
+        var reversedMultipliedWTrannspose = this.ComputeInputMatrixFinalForm (args);
         
-        var multipliedTransposeWithSelf = Matrix.multiply (X_t, X);
-        var reversedMatrix = Matrix.inverse (multipliedTransposeWithSelf);
-        var reversedMultipliedWTrannspose = Matrix.multiply(reversedMatrix, X_t);
+        this.ComputePolynomialCoeffs = function (reversedMultipliedWTrannspose, values) {
         
-        var valuesColumnMatrix = [];
-        for (var i = 0; i < values.length; i++) {
-            valuesColumnMatrix[i] = [];
-            valuesColumnMatrix[i][0] = values[i];
+            var valuesColumnMatrix = [];
+            for (var i = 0; i < values.length; i++) {
+                valuesColumnMatrix[i] = [];
+                valuesColumnMatrix[i][0] = values[i];
+            }
+            
+            var coeffColumn = Matrix.multiply (reversedMultipliedWTrannspose, valuesColumnMatrix);
+            var res = [];
+            for (var i = 0; i < coeffColumn.length; i++)
+                res[i] = coeffColumn[i][0];
+            
+            return res;
         }
         
-        var coeffColumn = Matrix.multiply (reversedMultipliedWTrannspose, valuesColumnMatrix);
-        var res = [];
-        for (var i = 0; i < coeffColumn.length; i++)
-            res[i] = coeffColumn[i][0];
-        
-        return res;
+        return this.ComputePolynomialCoeffs(reversedMultipliedWTrannspose, values);
     },
     
     Taylor_ForwardDiff : function (ValuesArray) {
