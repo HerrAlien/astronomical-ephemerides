@@ -105,8 +105,6 @@ function BesselianElements (occultor, occulted, occultorRadius, JDE) {
     if (Math.abs(this.timeMinusT0OfMaxEclipse) > 3)
         this.timeMinusT0OfMaxEclipse = firstDerivativeEquals0.x2.real;
     
-    this.jdLocalMax = JDE + this.timeMinusT0OfMaxEclipse/24;
-    
     function _poly (coeffs, time) {
         var val = 0;
         var poweredTime = 1;
