@@ -111,6 +111,7 @@ var SolarEclipsesPage = {
             var timings = addNodeChild (mainDiv, "span");
             var t1 = yyyymmdd_hhmmOfJD(eclipseData.t1);
             var contents = "T1: " + t1.time.Ord3 + ":" +  t1.time.Ord2;
+            contents += " PA1: " + eclipseData.PA1;
 
             var tMax = eclipseData["tMax"];
 
@@ -119,6 +120,7 @@ var SolarEclipsesPage = {
 
             var t4 = yyyymmdd_hhmmOfJD(eclipseData.t4);
             contents += " T4: " + t4.time.Ord3 + ":" +  t4.time.Ord2;
+            contents += " PA4: " + eclipseData.PA4;
             
             contents += " Magnitude: " +  GetAAJS().Numerical.RoundTo2Decimals(eclipseData["magnitude"]);
 
