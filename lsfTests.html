@@ -1,0 +1,164 @@
+<html>
+    <head>
+        <script type="text/javascript" src="js/matrix.js"></script>
+        <script type="text/javascript" src="js/numerical.js"></script>
+        <script type="text/javascript" src="testlib.js"></script>
+        <style>
+            p {
+                line-spacing: 2px;
+            }
+        </style>
+    </head>
+    <body>
+    </body>
+</html>
+<script type="text/javascript">
+
+    (function () {
+    
+        function poly (coeffs, x) {
+            var val = 0;
+            var poweredX = 1;
+            for (var i = 0; i < coeffs.length;i++) {
+                val += coeffs[i] * poweredX;
+                poweredX *= x;
+            }
+            return val;
+        }
+            
+        var tests = [
+        
+        {
+            name : "f(x) = 1/3 * x^2 + 1/3 * x + 1; f(0) == 1",
+            input : {"f" : function (x) { return x/3*x + x/3 + 1; }, "args" : [-3, -2, -1, 0, 1, 2, 3], "x" : 0 },
+            expectedOutput : 1,
+            actualOutput : false,
+            test : function () {
+               
+               var values = [];
+               for (var i = 0; i < this.input.args.length; i++)
+                values[i] = this.input.f( this.input.args[i] );
+                
+               var fittedCoeffs = FunctionFitting.PolynomialLSF (values, this.input.args, 3);
+               this.actualOutput = poly (fittedCoeffs, this.input.x);
+               
+               return testlib.doubleEq(this.expectedOutput, this.actualOutput, 1e-10);
+            }
+        },
+
+        {
+            name : "f(x) = -1/3 * x^2 + 1/3 * x + 1; f(0) == 1",
+            input : {"f" : function (x) { return -x/3*x + x/3 + 1; }, "args" : [-3, -2, -1, 0, 1, 2, 3], "x" : 0 },
+            expectedOutput : 1,
+            actualOutput : false,
+            test : function () {
+               
+               var values = [];
+               for (var i = 0; i < this.input.args.length; i++)
+                values[i] = this.input.f( this.input.args[i] );
+                
+               var fittedCoeffs = FunctionFitting.PolynomialLSF (values, this.input.args, 3);
+               this.actualOutput = poly (fittedCoeffs, this.input.x);
+               
+               return testlib.doubleEq(this.expectedOutput, this.actualOutput, 1e-10);
+            }
+        },
+
+        {
+            name : "f(x) = -1/3 * x^2 + 1/3 * x - 1; f(0) == -1",
+            input : {"f" : function (x) { return -x/3*x + x/3 - 1; }, "args" : [-3, -2, -1, 0, 1, 2, 3], "x" : 0 },
+            expectedOutput : -1,
+            actualOutput : false,
+            test : function () {
+               
+               var values = [];
+               for (var i = 0; i < this.input.args.length; i++)
+                values[i] = this.input.f( this.input.args[i] );
+                
+               var fittedCoeffs = FunctionFitting.PolynomialLSF (values, this.input.args, 3);
+               this.actualOutput = poly (fittedCoeffs, this.input.x);
+               
+               return testlib.doubleEq(this.expectedOutput, this.actualOutput, 1e-10);
+            }
+        },
+
+        {
+            name : "f(x) = -1/3 * x^2 + 1/3 * x - 1/3; f(0) == -1/3",
+            input : {"f" : function (x) { return -x/3*x + x/3 - 1/3; }, "args" : [-3, -2, -1, 0, 1, 2, 3], "x" : 0 },
+            expectedOutput : -1/3,
+            actualOutput : false,
+            test : function () {
+               
+               var values = [];
+               for (var i = 0; i < this.input.args.length; i++)
+                values[i] = this.input.f( this.input.args[i] );
+                
+               var fittedCoeffs = FunctionFitting.PolynomialLSF (values, this.input.args, 3);
+               this.actualOutput = poly (fittedCoeffs, this.input.x);
+               
+               return testlib.doubleEq(this.expectedOutput, this.actualOutput, 1e-10);
+            }
+        },
+
+        {
+            name : "f(x) = -x^5 + x^4 - x^3 + x ^2 - x + 1; f(0) == 1, degree is 3",
+            input : {"f" : function (x) { return -x*x*x*x*x + x*x*x*x - x*x*x + x*x - x + 1; }, "args" : [-3, -2, -1, 0, 1, 2, 3], "x" : 0 },
+            expectedOutput : 1,
+            actualOutput : false,
+            test : function () {
+               
+               var values = [];
+               for (var i = 0; i < this.input.args.length; i++)
+                values[i] = this.input.f( this.input.args[i] );
+                
+               var fittedCoeffs = FunctionFitting.PolynomialLSF (values, this.input.args, 3);
+               this.actualOutput = poly (fittedCoeffs, this.input.x);
+               
+               return testlib.doubleEq(this.expectedOutput, this.actualOutput, 1e-10);
+            }
+        },
+
+        {
+            name : "f(x) = -x^5 + x^4 - x^3 + x ^2 - x + 1; f(0) == 1, degree is 5",
+            input : {"f" : function (x) { return -x*x*x*x*x + x*x*x*x - x*x*x + x*x - x + 1; }, "args" : [-3, -2, -1, 0, 1, 2, 3], "x" : 0 },
+            expectedOutput : 1,
+            actualOutput : false,
+            test : function () {
+               
+               var values = [];
+               for (var i = 0; i < this.input.args.length; i++)
+                values[i] = this.input.f( this.input.args[i] );
+                
+               var fittedCoeffs = FunctionFitting.PolynomialLSF (values, this.input.args, 5);
+               this.actualOutput = poly (fittedCoeffs, this.input.x);
+               
+               return testlib.doubleEq(this.expectedOutput, this.actualOutput, 1e-10);
+            }
+        },
+
+        {
+            name : "f(x) = -x^5 + x^4 - x^3 + x ^2 - x + 1; f(0) == 1, degree is 4",
+            input : {"f" : function (x) { return -x*x*x*x*x + x*x*x*x - x*x*x + x*x - x + 1; }, "args" : [-3, -2, -1, 0, 1, 2, 3], "x" : 0 },
+            expectedOutput : 1,
+            actualOutput : false,
+            test : function () {
+               
+               var values = [];
+               for (var i = 0; i < this.input.args.length; i++)
+                values[i] = this.input.f( this.input.args[i] );
+                
+               var fittedCoeffs = FunctionFitting.PolynomialLSF (values, this.input.args, 4);
+               this.actualOutput = poly (fittedCoeffs, this.input.x);
+               
+               return testlib.doubleEq(this.expectedOutput, this.actualOutput, 1e-10);
+            }
+        },
+
+        ];
+            
+        testlib.runTests (tests);
+            
+    })();
+            
+        </script>
+
