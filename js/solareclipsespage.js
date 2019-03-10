@@ -74,12 +74,12 @@ var SolarEclipsesPage = {
         if (eclipseData.isAnnularTotal)
             description += "Hybrid ";
         description += "Eclipse.";
-        /*
+        
         if ((eclipseData.besselianElements.besselianEngine.deltaLocalMax > Math.abs(eclipseData.besselianElements.besselianEngine.l1LocalMax)) ||
             !eclipseData["t1"]) {
-            description += " Not visible from your location."
+            description += " Not visible from your location.";
         }
-        */
+        
         return description;
     },
 
@@ -106,7 +106,6 @@ var SolarEclipsesPage = {
 
         addNodeChild (mainDiv, "h2", dateTime.date.Y + "-" + dateTime.date.M + "-" + dateTime.date.D + " " + description);
 
-        /*
         if (eclipseData.t1) {
             addNodeChild (mainDiv, "h3", "Local circumstances:");
             var timings = addNodeChild (mainDiv, "span");
@@ -125,7 +124,6 @@ var SolarEclipsesPage = {
 
             timings.textContent = contents;
         }
-        */
 
         addNodeChild (mainDiv, "h3", "Besselian elements:");
         addNodeChild (mainDiv, "span", "T0 = " + dateTime.time.Ord3 + ":" +  dateTime.time.Ord2 + " DT");
