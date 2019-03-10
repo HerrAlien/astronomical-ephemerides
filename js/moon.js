@@ -19,23 +19,21 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 var MoonData = {
     cache : {},
        
-   getDataAsObjectForJD : function (JD_UTC, computeRiseTransitSet) {
+   getDataAsObjectForJD : function (JDE, computeRiseTransitSet) {
         
-        var data = this.cache[JD_UTC];
+        var data = this.cache[JDE];
         
         if (!data) {
             data = {};
         
             var i = 0;
             
-            var _date = GetAAJS().Date.JD2Date(JD_UTC);
+            var _date = GetAAJS().Date.JD2Date(JDE);
             // convert from JD to gregorian
             data['Month'] = _date.M;
             data['Day'] = _date.D;
 
-            var JD = JD_UTC + GetAAJS().DynamicalTime.DeltaT(JD_UTC)/(3600 * 24);
-            
-            var posData = GetAAJS().Moon.PositionalEphemeris(JD, Location.latitude, Location.longitude, Location.altitude);
+            var posData = GetAAJS().Moon.PositionalEphemeris(JDE, Location.latitude, Location.longitude, Location.altitude);
             
             for (var key in posData)
                 data[key] = posData[key];
@@ -47,7 +45,7 @@ var MoonData = {
             
 			data['MeridianTransit'] = false;
 
-            var selenographicCoordsOfSun = GetAAJS().Moon.CalculateSelenographicPositionOfSun (JD, true);
+            var selenographicCoordsOfSun = GetAAJS().Moon.CalculateSelenographicPositionOfSun (JDE, true);
             var colongitude = 90 - selenographicCoordsOfSun.l0;
             if (colongitude < 0)
                 colongitude += 360;
@@ -55,13 +53,13 @@ var MoonData = {
             data['Colongitude'] = colongitude;
             data['b0'] = selenographicCoordsOfSun.b0;
             
-            this.cache[JD_UTC] = data;
+            this.cache[JDE] = data;
         }
         
         if (computeRiseTransitSet) {
             this.riseSetAngle = 0.7275 * data.parallax - 0.56666666666666666666666666666667;
-            data = this.addRiseTransitSetData(JD_UTC, data);
-            this.cache[JD_UTC] = data;
+            data = this.addRiseTransitSetData(JDE, data);
+            this.cache[JDE] = data;
         }
 
         return data;
