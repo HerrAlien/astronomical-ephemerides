@@ -107,33 +107,42 @@ var SolarEclipsesPage = {
         addNodeChild (mainDiv, "h2", dateTime.date.Y + "-" + dateTime.date.M + "-" + dateTime.date.D + " " + description);
 
         if (eclipseData.t1) {
+            
+            function timeString(t) {
+                var _t = yyyymmdd_hhmmOfJD(t);
+                return _t.time.Ord3 + ":" +  _t.time.Ord2;
+            }
+
             addNodeChild (mainDiv, "h3", "Local circumstances:");
             var timings = addNodeChild (mainDiv, "span");
-            var t1 = yyyymmdd_hhmmOfJD(eclipseData.t1);
-            var contents = "T1: " + t1.time.Ord3 + ":" +  t1.time.Ord2;
-            contents += " PA1: " + Math.round(eclipseData.PA1);
-            
-            if (eclipseData.t2) {
-                var t2 = yyyymmdd_hhmmOfJD(eclipseData.t2);
-                contents += " T2: " + t2.time.Ord3 + ":" +  t2.time.Ord2;
+            timings.textContent = "Magnitude: " +  GetAAJS().Numerical.RoundTo2Decimals(eclipseData["magnitude"]);;
+
+            var localsTable = addNodeChild (mainDiv, "table");
+            var timings = {t1:"Eclipse starts (T1)", 
+                             t2:"Totality starts (T2)", 
+                             tMax:"Time of maximum", 
+                             t3:"Totality ends (T3)", 
+                             t4:"Eclipse ends (T4)"};
+            for (var key in timings) {
+                if (!eclipseData[key]) {
+                    continue;
+                }
+                var localRow =  addNodeChild (localsTable, "tr");
+                addNodeChild(localRow, "td", timings[key]);
+                addNodeChild(localRow, "td", timeString(eclipseData[key]));
             }
 
-            var tMax = eclipseData["tMax"];
-            var splitTmax = yyyymmdd_hhmmOfJD(tMax);
-            contents += " Tmax: " + splitTmax.time.Ord3 + ":" +  splitTmax.time.Ord2;
-
-            if (eclipseData.t3) {
-                var t3 = yyyymmdd_hhmmOfJD(eclipseData.t3);
-                contents += " T3: " + t3.time.Ord3 + ":" +  t3.time.Ord2;
+            var positionAngles = {PA1:"Position angle: first contact", 
+                                  PA4:"Position angle: last contact"};
+            for (var key in positionAngles) {
+                if (!eclipseData[key]) {
+                    continue;
+                }
+                var localRow =  addNodeChild (localsTable, "tr");
+                addNodeChild(localRow, "td", positionAngles[key]);
+                addNodeChild(localRow, "td", Math.round(eclipseData[key]));
             }
-            
-            var t4 = yyyymmdd_hhmmOfJD(eclipseData.t4);
-            contents += " T4: " + t4.time.Ord3 + ":" +  t4.time.Ord2;
-            contents += " PA4: " + Math.round(eclipseData.PA4);
-            
-            contents += " Magnitude: " +  GetAAJS().Numerical.RoundTo2Decimals(eclipseData["magnitude"]);
 
-            timings.textContent = contents;
         }
 
         addNodeChild (mainDiv, "h3", "Besselian elements:");
