@@ -43,6 +43,12 @@ var SolarEclipses = {
             // if yes, compute the besselian elements
             eclipseData["t0"] = Math.round (eclipseData.JdOfMaximumEclipse * 24) / 24;
             eclipseData["besselianElements"] = this.ComputeBesselianElements(eclipseData["t0"]);
+            eclipseData = this.LocalCircumstances(eclipseData);
+        }
+        return eclipseData;
+    },
+
+    LocalCircumstances : function (eclipseData) {
         
             function _poly (coeffs, time) {
                 var val = 0;
@@ -175,7 +181,6 @@ for (var key in {"t1":0, "t4":0, "tMax":0}) {
 
 ///////////////////////////////////////////////////////
 
-        }
         return eclipseData;
     },
 
