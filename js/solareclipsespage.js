@@ -126,7 +126,7 @@ var SolarEclipsesPage = {
         
 
         addNodeChild (mainDiv, "h3", "Besselian elements:");
-        addNodeChild (mainDiv, "span", "T0 = " + dateTime.time.Ord3 + ":" +  dateTime.time.Ord2 + " UTC");
+        addNodeChild (mainDiv, "span", "T0 = " + dateTime.time.Ord3 + ":" +  dateTime.time.Ord2 + " DT");
         
         var table = addNodeChild (mainDiv, "table");
         var header = addNodeChild (table, "tr");
