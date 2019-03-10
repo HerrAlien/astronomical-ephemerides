@@ -77,8 +77,9 @@ var SolarEclipsesPage = {
         
         if ((eclipseData.besselianElements.besselianEngine.deltaLocalMax > Math.abs(eclipseData.besselianElements.besselianEngine.l1LocalMax)) ||
             !eclipseData["t1"]) {
-            description += " Not visible from your location."
+            description += " Not visible from your location.";
         }
+        
         return description;
     },
 
@@ -110,20 +111,21 @@ var SolarEclipsesPage = {
             var timings = addNodeChild (mainDiv, "span");
             var t1 = yyyymmdd_hhmmOfJD(eclipseData.t1);
             var contents = "T1: " + t1.time.Ord3 + ":" +  t1.time.Ord2;
+            contents += " PA1: " + eclipseData.PA1;
 
             var tMax = eclipseData["tMax"];
 
             var splitTmax = yyyymmdd_hhmmOfJD(tMax);
-            contents += "Tmax: " + splitTmax.time.Ord3 + ":" +  splitTmax.time.Ord2;
+            contents += " Tmax: " + splitTmax.time.Ord3 + ":" +  splitTmax.time.Ord2;
 
             var t4 = yyyymmdd_hhmmOfJD(eclipseData.t4);
-            contents += "T4: " + t4.time.Ord3 + ":" +  t4.time.Ord2;
+            contents += " T4: " + t4.time.Ord3 + ":" +  t4.time.Ord2;
+            contents += " PA4: " + eclipseData.PA4;
             
-            contents += "Magnitude: " +  GetAAJS().Numerical.RoundTo2Decimals(eclipseData["magnitude"]);
+            contents += " Magnitude: " +  GetAAJS().Numerical.RoundTo2Decimals(eclipseData["magnitude"]);
 
             timings.textContent = contents;
         }
-        
 
         addNodeChild (mainDiv, "h3", "Besselian elements:");
         addNodeChild (mainDiv, "span", "T0 = " + dateTime.time.Ord3 + ":" +  dateTime.time.Ord2 + " DT");

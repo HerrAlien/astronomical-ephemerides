@@ -19,7 +19,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 var SolarEclipses = {
     ComputeBesselianElements : function (jd) {
         
-        var besselianEngine = new BesselianElements (MoonData, SunData, 0.27227,jd);
+        var besselianEngine = new BesselianElements (MoonData, SunData, 0.27227, jd);
         var elements = besselianEngine.leastSquareFitCoeff;
         
         elements['besselianEngine'] = besselianEngine;
@@ -43,6 +43,12 @@ var SolarEclipses = {
             // if yes, compute the besselian elements
             eclipseData["t0"] = Math.round (eclipseData.JdOfMaximumEclipse * 24) / 24;
             eclipseData["besselianElements"] = this.ComputeBesselianElements(eclipseData["t0"]);
+            eclipseData = this.LocalCircumstances(eclipseData);
+        }
+        return eclipseData;
+    },
+
+    LocalCircumstances : function (eclipseData) {
         
             function _poly (coeffs, time) {
                 var val = 0;
@@ -53,6 +59,8 @@ var SolarEclipses = {
                 }
                 return val;
             }
+
+            var degra = Math.PI / 180;
             
             var besselianElements = eclipseData.besselianElements;
             var localElements = besselianElements.besselianEngine.localCircumstancesLSF;
@@ -139,7 +147,7 @@ for (var iteration = 0; iteration < 100 && Math.abs(correction) > timeEps; itera
                     n = _U / Math.sin(N);
 
                     L = le;
-                    sin_psi = m * (M - N) / L;
+                    sin_psi = m * Math.sin (M - N) / L;
                     psi = Math.asin(sin_psi);
 
                 }
@@ -149,12 +157,17 @@ for (var iteration = 0; iteration < 100 && Math.abs(correction) > timeEps; itera
                 var correctionForStart = L * Math.cos(psi) / n - m*Math.cos(M-N)/n;  
                               
                 if (!isNaN(correctionForStart)) {
-                    eclipseData["t1"] = hourOfMax + correctionForStart / 24.0;              
+                    eclipseData["t1"] = hourOfMax + correctionForStart / 24.0;  
+                    eclipseData["PA1"] = (N + psi)/degra;
+                    eclipseData["PA1"] = Math.round(eclipseData["PA1"] * 10)/10;
+
                     computePsiForEnd();
                     var correctionForEnd = L * Math.cos(psi) / n - m*Math.cos(M-N)/n;
                     if (!isNaN(correctionForEnd)) {
                         eclipseData["t4"] = hourOfMax + correctionForEnd / 24.0;
-                    
+                        eclipseData["PA4"] = (N + psi)/degra;
+                        eclipseData["PA4"] = Math.round(eclipseData["PA4"] * 10)/10;
+
                         var newTmax =  (eclipseData["t4"] + eclipseData["t1"]) / 2.0;
                         correction = (newTmax - eclipseData["tMax"]) / 24.0;
                         tMinusT0OnMax += correction;
@@ -169,13 +182,12 @@ for (var iteration = 0; iteration < 100 && Math.abs(correction) > timeEps; itera
 
 for (var key in {"t1":0, "t4":0, "tMax":0}) {
     if (eclipseData[key]) {
-        eclipseData[key] += dtCorrection;
+        eclipseData[key] -= dtCorrection;
     }
 }
 
 ///////////////////////////////////////////////////////
 
-        }
         return eclipseData;
     },
 
