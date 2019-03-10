@@ -57,72 +57,46 @@
             name : "Eclipse 2015-03-20",
             input : AAJS.Date.DateToJD (2015, 03, 20, true) + 10/24, // dynamic time
             expectedOutput : {"t1" : AAJS.Date.DateToJD (2015, 03, 20, true) + 1/24 * (8 + 48/60),
-                              "tmax" : AAJS.Date.DateToJD (2015, 03, 20, true) + 1/24 * (9 + 56/60),
+                              "tMax" : AAJS.Date.DateToJD (2015, 03, 20, true) + 1/24 * (9 + 56/60),
                               "t4" : AAJS.Date.DateToJD (2015, 03, 20, true) + 1/24 * (11 + 4/60),
                 },
                   
                   
             accuracies : {
-                    "t1"  : 1/60/24,
-                    "tmax"  : 1/60/24,
-                    "t4"  : 1/60/24
+                    "t1"  : 3/60/24,
+                    "tMax"  : 3/60/24,
+                    "t4"  : 3/60/24
                 },
                 
             actualOutput : false,
                       
             test : function () {
-                this.actualOutput = SolarEclipses.ComputeBesselianElements (this.input);
+                var t0 = this.input;
+                var eclipseData = {
+                    besselianElements: SolarEclipses.ComputeBesselianElements (t0),
+                    t0: t0
+                };
 
+                eclipseData = SolarEclipses.LocalCircumstances(eclipseData);
 
-                this.actualOutput.besselianEngine = 0;
-                this.input.besselianEngine = 0;
-
-                function exppectedEq (actual, expected, eps, key) {
+                var expectedEq = function  (actual, expected, eps, key) {
                     if (Math.abs(actual-expected) > eps) {
                         console.log ("For " + key + ", expecting " + expected + 
-                                     " got instead " + actual + ". eps = " + eps);
+                                     " got instead " + actual + ". Diff = " + 
+                                     Math.abs(actual-expected) +" , eps = " + eps);
                         return false;
                     }
                     return true;
-                }
+                };
 
-                function expectEqArrays (actual, expected, eps, key) {
-                    if (!exppectedEq(actual.length , expected.length, 0.1, key)) {
-                            return false;
-                    }
-                    for (var i = 0; i < actual.length; i++) {
-                        if (!exppectedEq(actual[i] , expected[i], eps, key)) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }
+                this.actualOutput = { t1: eclipseData.t1, tMax : eclipseData.tMax, t4: eclipseData.t4};
 
-                
-                return expectEqArrays (this.actualOutput.x, 
-                                          this.expectedOutput.x, 
-                                              this.accuracies.x, "x") &&
-                       expectEqArrays (this.actualOutput.y, 
-                                          this.expectedOutput.y, 
-                                              this.accuracies.y, "y") &&
-                       expectEqArrays (this.actualOutput.d, 
-                                          this.expectedOutput.d, 
-                                              this.accuracies.d, "d") &&
-                       expectEqArrays (this.actualOutput.mu, 
-                                          this.expectedOutput.mu, 
-                                              this.accuracies.mu, "mu") &&
-                       expectEqArrays (this.actualOutput.l1, 
-                                          this.expectedOutput.l1, 
-                                              this.accuracies.l1, "l1") &&
-                       expectEqArrays (this.actualOutput.l2, 
-                                          this.expectedOutput.l2, 
-                                              this.accuracies.l2, "l2") &&
-                       exppectedEq (this.actualOutput.tan_f1, 
-                                    this.expectedOutput.tan_f1, 
-                                    this.accuracies.tan_f1, "tan_f1") &&
-                       exppectedEq (this.actualOutput.tan_f2, 
-                                    this.expectedOutput.tan_f2, 
-                                    this.accuracies.tan_f2, "tan_f2");
+                 
+               var okT1 = expectedEq(this.actualOutput.t1, this.expectedOutput.t1, this.accuracies.t1, "t1") ;
+               var okTMax = expectedEq(this.actualOutput.tMax, this.expectedOutput.tMax, this.accuracies.tMax, "tMax");
+               var okT4 = expectedEq(this.actualOutput.t4, this.expectedOutput.t4, this.accuracies.t4, "t4") ;
+
+               return okT1 && okTMax && okT4;
             }
         },
 
