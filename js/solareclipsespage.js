@@ -115,12 +115,12 @@ var SolarEclipsesPage = {
             var tMax = eclipseData["tMax"];
 
             var splitTmax = yyyymmdd_hhmmOfJD(tMax);
-            contents += "Tmax: " + splitTmax.time.Ord3 + ":" +  splitTmax.time.Ord2;
+            contents += " Tmax: " + splitTmax.time.Ord3 + ":" +  splitTmax.time.Ord2;
 
             var t4 = yyyymmdd_hhmmOfJD(eclipseData.t4);
-            contents += "T4: " + t4.time.Ord3 + ":" +  t4.time.Ord2;
+            contents += " T4: " + t4.time.Ord3 + ":" +  t4.time.Ord2;
             
-            contents += "Magnitude: " +  GetAAJS().Numerical.RoundTo2Decimals(eclipseData["magnitude"]);
+            contents += " Magnitude: " +  GetAAJS().Numerical.RoundTo2Decimals(eclipseData["magnitude"]);
 
             timings.textContent = contents;
         }
