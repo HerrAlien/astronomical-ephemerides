@@ -29,7 +29,7 @@ function OccultedStar (RA, Dec) {
 
 /*! Both the occultor and the occulted need to provide the following method:
 
-    getDataAsObjectForJD : function (jd) -> { "RA": number-in-h-as-v.ddddd, 
+    getDataAsObjectForJD : function (JDE) -> { "RA": number-in-h-as-v.ddddd, 
                                               "Dec": number-in-degrees-as-v.ddddd, 
                                               "Parallax": number-in-degrees-as-v.ddddd, 
                                               "Diameter": number-in-degrees-as-v.ddddd }
@@ -39,9 +39,9 @@ function OccultedStar (RA, Dec) {
     occulted - the object covered by the occultor. The data object for the Sun, for a solar
                eclipse, but can be a star or a planet for occultations
     occultorRadius - radius of the occultor object, in Earth radii.
-    jd - julian date around which we're computing the polynomial approximations
+    JDE - julian date around which we're computing the polynomial approximations
 */
-function BesselianElements (occultor, occulted, occultorRadius, jd) {
+function BesselianElements (occultor, occulted, occultorRadius, JDE) {
     this.timeBasedValues = {
             "x"      : NaN,
             "y"      : NaN,
@@ -85,7 +85,7 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
     this.occulted = occulted;
     this.occultorRadius = occultorRadius;
     
-    this.ComputeFunctionValuesForElements(jd);
+    this.ComputeFunctionValuesForElements(JDE);
         
     for (var key in this.timeBasedValues) {
         this.leastSquareFitCoeff[key] = FunctionFitting.PolynomialLSF(this.timeBasedValues[key], [-3, -2, -1, 0, 1, 2, 3], 3);
@@ -105,8 +105,6 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
     if (Math.abs(this.timeMinusT0OfMaxEclipse) > 3)
         this.timeMinusT0OfMaxEclipse = firstDerivativeEquals0.x2.real;
     
-    this.jdLocalMax = jd + this.timeMinusT0OfMaxEclipse/24;
-    
     function _poly (coeffs, time) {
         var val = 0;
         var poweredTime = 1;
@@ -125,7 +123,7 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
  }
 
 (function(){
-    BesselianElements.prototype['ComputeFunctionValuesForElements'] = function (jd) {
+    BesselianElements.prototype['ComputeFunctionValuesForElements'] = function (JDE) {
         this.timeBasedValues = {
                 "x"      : [0,0,0,0,0,0,0],
                 "y"      : [0,0,0,0,0,0,0],
@@ -148,10 +146,10 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
         
         Location.recomputeGeocentricCoordinates();
         
-        // compute 7 values, at time jd -3h, jd-2h, jd -1h, jd, jd + 1h, jd + 2h, jd + 3h
+        // compute 7 values, at time JDE -3h, JDE-2h, JDE -1h, JDE, JDE + 1h, JDE + 2h, JDE + 3h
         var oneHour = 1/24;
-        var startJD = jd - 3*oneHour;
-        var endJD = jd + 3*oneHour;
+        var startJD = JDE - 3*oneHour;
+        var endJD = JDE + 3*oneHour;
         
         var i = 0;
         for (var currentJD = startJD; currentJD <= endJD; currentJD+= oneHour) {
@@ -182,7 +180,7 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
         }
     }
     
-    BesselianElements.prototype['ComputeOneFunctionValueForElements'] = function (jd) {
+    BesselianElements.prototype['ComputeOneFunctionValueForElements'] = function (JDE) {
         var values = {
             "x"      : 0,
             "y"      : 0,
@@ -202,8 +200,8 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
             }
         };
         
-        var occultedData  =  this.occulted.getDataAsObjectForJD(jd);
-        var occultorData = this.occultor.getDataAsObjectForJD(jd);
+        var occultedData  =  this.occulted.getDataAsObjectForJD(JDE);
+        var occultorData = this.occultor.getDataAsObjectForJD(JDE);
         
         var degra = Math.PI / 180;
         var occultorParallaxRads = occultorData.Parallax * degra;
@@ -219,14 +217,27 @@ function BesselianElements (occultor, occulted, occultorRadius, jd) {
         if (values.d < 0)
             values.d += 360;
 
-        var a = occultedData.RA - (b / (1-b))*Math.cos(occultorDecRads)/Math.cos(occultedData.Dec * degra) * (occultorData.RA - occultedData.RA);
-        values.mu = 15*(GetAAJS().Sidereal.ApparentGreenwichSiderealTime(jd) - a);
+        var occultorDataRa = occultorData.RA;
+        var occultedDataRa = occultedData.RA;
+
+        if (Math.abs(occultorDataRa - occultedDataRa) > 12) {
+            if (occultorDataRa > 12) {
+                occultorDataRa -= 24;
+            } else {
+                occultedDataRa -= 24;
+            }
+        }
+
+        var a = occultedDataRa - (b / (1-b))*Math.cos(occultorDecRads)/Math.cos(occultedData.Dec * degra) * (occultorDataRa - occultedDataRa);
+        // GMST needs to be determined ftom JDE, UTC
+        var GMST = GetAAJS().Sidereal.ApparentGreenwichSiderealTime(JDE);
+        values.mu = 15*(GMST - a);
         if (values.mu < 0)
             values.mu += 360;
         
         // -------------------------------------------------
         var d = values.d * degra;
-        var occultorRaMinusA_Rads = ((occultorData.RA - a) * 15 ) * degra;
+        var occultorRaMinusA_Rads = ((occultorDataRa - a) * 15 ) * degra;
 
         values.x = r * Math.cos(occultorDecRads) * Math.sin(occultorRaMinusA_Rads);
         values.y = r * (Math.sin(occultorDecRads) * Math.cos(d) - Math.cos(occultorDecRads) * Math.sin(d) * Math.cos(occultorRaMinusA_Rads));
