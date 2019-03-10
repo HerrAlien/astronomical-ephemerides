@@ -111,16 +111,25 @@ var SolarEclipsesPage = {
             var timings = addNodeChild (mainDiv, "span");
             var t1 = yyyymmdd_hhmmOfJD(eclipseData.t1);
             var contents = "T1: " + t1.time.Ord3 + ":" +  t1.time.Ord2;
-            contents += " PA1: " + eclipseData.PA1;
+            contents += " PA1: " + Math.round(eclipseData.PA1);
+            
+            if (eclipseData.t2) {
+                var t2 = yyyymmdd_hhmmOfJD(eclipseData.t2);
+                contents += " T2: " + t2.time.Ord3 + ":" +  t2.time.Ord2;
+            }
 
             var tMax = eclipseData["tMax"];
-
             var splitTmax = yyyymmdd_hhmmOfJD(tMax);
             contents += " Tmax: " + splitTmax.time.Ord3 + ":" +  splitTmax.time.Ord2;
 
+            if (eclipseData.t3) {
+                var t3 = yyyymmdd_hhmmOfJD(eclipseData.t3);
+                contents += " T3: " + t3.time.Ord3 + ":" +  t3.time.Ord2;
+            }
+            
             var t4 = yyyymmdd_hhmmOfJD(eclipseData.t4);
             contents += " T4: " + t4.time.Ord3 + ":" +  t4.time.Ord2;
-            contents += " PA4: " + eclipseData.PA4;
+            contents += " PA4: " + Math.round(eclipseData.PA4);
             
             contents += " Magnitude: " +  GetAAJS().Numerical.RoundTo2Decimals(eclipseData["magnitude"]);
 

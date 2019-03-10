@@ -50,60 +50,60 @@ var SolarEclipses = {
 
     LocalCircumstances : function (eclipseData) {
         
-            function _poly (coeffs, time) {
-                var val = 0;
-                var poweredTime = 1;
-                for (var i = 0; i < coeffs.length;i++) {
-                    val += coeffs[i] * poweredTime;
-                    poweredTime *= time;
-                }
-                return val;
+        function _poly (coeffs, time) {
+            var val = 0;
+            var poweredTime = 1;
+            for (var i = 0; i < coeffs.length;i++) {
+                val += coeffs[i] * poweredTime;
+                poweredTime *= time;
             }
+            return val;
+        }
 
-            var degra = Math.PI / 180;
-            
-            var besselianElements = eclipseData.besselianElements;
-            var localElements = besselianElements.besselianEngine.localCircumstancesLSF;
-            var tMinusT0OnMax = besselianElements.besselianEngine.timeMinusT0OfMaxEclipse;
+        var degra = Math.PI / 180;
+        
+        var besselianElements = eclipseData.besselianElements;
+        var localElements = besselianElements.besselianEngine.localCircumstancesLSF;
+        var tMinusT0OnMax = besselianElements.besselianEngine.timeMinusT0OfMaxEclipse;
 
-            var U, V, _U, _V, le, li;
+        var U, V, _U, _V, le, li;
 
-            var ComputeUvAndDerivative = function (tMinusT0) {
-                var squaredTime = tMinusT0 * tMinusT0;
-                var x = _poly(localElements.x, tMinusT0);
-                var y = _poly(localElements.y, tMinusT0);
-                var z = _poly(localElements.z, tMinusT0);
+        var ComputeUvAndDerivative = function (tMinusT0) {
+            var squaredTime = tMinusT0 * tMinusT0;
+            var x = _poly(localElements.x, tMinusT0);
+            var y = _poly(localElements.y, tMinusT0);
+            var z = _poly(localElements.z, tMinusT0);
 
-                var X = _poly(besselianElements.x, tMinusT0);
-                var Y = _poly(besselianElements.y, tMinusT0);
+            var X = _poly(besselianElements.x, tMinusT0);
+            var Y = _poly(besselianElements.y, tMinusT0);
 
-                U = X - x;
-                V = Y - y;
+            U = X - x;
+            V = Y - y;
 
-                var _x = localElements.x[1] + 2 * localElements.x[2] * tMinusT0 
-                         + 3 * localElements.x[3] * squaredTime;
-                var _y = localElements.y[1] + 2 * localElements.y[2] * tMinusT0
-                         +  3 * localElements.y[3] * squaredTime;
+            var _x = localElements.x[1] + 2 * localElements.x[2] * tMinusT0 
+                     + 3 * localElements.x[3] * squaredTime;
+            var _y = localElements.y[1] + 2 * localElements.y[2] * tMinusT0
+                     +  3 * localElements.y[3] * squaredTime;
 
-                var _X = besselianElements.x[1] + 2 * besselianElements.x[2] * tMinusT0
-                         + 3 * besselianElements.x[3] * squaredTime;
-                var _Y = besselianElements.y[1] + 2 * besselianElements.y[2] * tMinusT0
-                         + 3 * besselianElements.y[3] * squaredTime;
+            var _X = besselianElements.x[1] + 2 * besselianElements.x[2] * tMinusT0
+                     + 3 * besselianElements.x[3] * squaredTime;
+            var _Y = besselianElements.y[1] + 2 * besselianElements.y[2] * tMinusT0
+                     + 3 * besselianElements.y[3] * squaredTime;
 
-                _U = _X - _x;
-                _V = _Y - _y;
-                le = _poly(localElements.l1, tMinusT0 );
-                li = _poly(localElements.l2, tMinusT0 );
-            }
+            _U = _X - _x;
+            _V = _Y - _y;
+            le = _poly(localElements.l1, tMinusT0 );
+            li = _poly(localElements.l2, tMinusT0 );
+        }
 
-            eclipseData["tMax"] =  eclipseData["t0"] + (tMinusT0OnMax) / 24.0;
-            var dtCorrection = GetAAJS().DynamicalTime.DeltaT(eclipseData["t0"])/(3600 * 24);
-            var correction = 1;
-            var timeEps = 1 / (24.0 * 3600); // 1 sec.
+        eclipseData["tMax"] =  eclipseData["t0"] + (tMinusT0OnMax) / 24.0;
+        var dtCorrection = GetAAJS().DynamicalTime.DeltaT(eclipseData["t0"])/(3600 * 24);
+        var correction = 1;
+        var timeEps = 1 / (24.0 * 3600); // 1 sec.
 
-////////////// to be iterated ////////////////
-for (var iteration = 0; iteration < 100 && Math.abs(correction) > timeEps; iteration++)
-{
+        ////////////// to be iterated ////////////////
+        for (var iteration = 0; iteration < 100 && Math.abs(correction) > timeEps; iteration++)
+        {
             var hourOfMax = eclipseData["t0"] + (tMinusT0OnMax) / 24.0;
             
             ComputeUvAndDerivative (tMinusT0OnMax);
@@ -149,12 +149,12 @@ for (var iteration = 0; iteration < 100 && Math.abs(correction) > timeEps; itera
                 N = Math.atan2 (_U, _V);
                 n = _U / Math.sin(N);
 
-                L = le;
                 sin_psi = m * Math.sin (M - N) / L;
                 psi = Math.asin(sin_psi);
 
             }
 
+            L = le;
             computeAuxiliaries();
             computePsiForStart();
             var correctionForStart = L * Math.cos(psi) / n - m*Math.cos(M-N)/n;  
@@ -162,14 +162,12 @@ for (var iteration = 0; iteration < 100 && Math.abs(correction) > timeEps; itera
             if (!isNaN(correctionForStart)) {
                 eclipseData["t1"] = hourOfMax + correctionForStart / 24.0;  
                 eclipseData["PA1"] = (N + psi)/degra;
-                eclipseData["PA1"] = Math.round(eclipseData["PA1"] * 10)/10;
 
                 computePsiForEnd();
                 var correctionForEnd = L * Math.cos(psi) / n - m*Math.cos(M-N)/n;
                 if (!isNaN(correctionForEnd)) {
                     eclipseData["t4"] = hourOfMax + correctionForEnd / 24.0;
                     eclipseData["PA4"] = (N + psi)/degra;
-                    eclipseData["PA4"] = Math.round(eclipseData["PA4"] * 10)/10;
 
                     var newTmax =  (eclipseData["t4"] + eclipseData["t1"]) / 2.0;
                     correction = (newTmax - eclipseData["tMax"]) / 24.0;
@@ -180,9 +178,24 @@ for (var iteration = 0; iteration < 100 && Math.abs(correction) > timeEps; itera
                 var delta = Math.abs(L*sin_psi);
                 eclipseData["magnitude"] = (L - delta) / (2 * (L - besselianElements.besselianEngine.occultorRadius));
             }
+
+
+            L = li;
+            computeAuxiliaries();
+            computePsiForStart();
+            correctionForStart = L * Math.cos(psi) / n - m*Math.cos(M-N)/n;  
+            if (!isNaN(correctionForStart)) {
+                eclipseData["t2"] = hourOfMax + correctionForStart / 24.0;  
+
+                computePsiForEnd();
+                correctionForEnd = L * Math.cos(psi) / n - m*Math.cos(M-N)/n;
+                if (!isNaN(correctionForEnd)) {
+                    eclipseData["t3"] = hourOfMax + correctionForEnd / 24.0;
+                }
+            }
         }
 
-        for (var key in {"t1":0, "t4":0, "tMax":0}) {
+        for (var key in {"t1":0, "t2":0, "t3":0, "t4":0, "tMax":0}) {
             if (eclipseData[key]) {
                 eclipseData[key] -= dtCorrection;
             }
