@@ -206,18 +206,36 @@ var SolarEclipses = {
             computeAuxiliaries(ct4);
             computePsiForEnd(ct4);
             correctionForEnd = ct4.L * Math.cos(ct4.psi) / ct4.n - ct4.m*Math.cos(ct4.M-ct4.N)/ct4.n;  
+
+
+            var dt2hours = (eclipseData["t2"] - eclipseData["t0"]) * 24;
+            var ct2 = {};
+            ComputeUvAndDerivative (dt2hours, localElements, ct2);
+            ct2["L"] = ct2.li;
+            computeAuxiliaries(ct2);
+            computePsiForStart(ct2);
+            correctionForStart = ct2.L * Math.cos(ct2.psi) / ct2.n - ct2.m*Math.cos(ct2.M-ct2.N)/ct2.n;  
+                          
+            if (!isNaN(correctionForStart)) {
+                eclipseData["t2"] = eclipseData["t0"] + (dt2hours + correctionForStart) / 24.0;  
+            }
+
+            computePsiForEnd(ct2);
+            correctionForEnd = ct2.L * Math.cos(ct2.psi) / ct2.n - ct2.m*Math.cos(ct2.M-ct2.N)/ct2.n;  
+
                           
             if (!isNaN(correctionForEnd)) {
-                eclipseData["t4"] = eclipseData["t0"] + (dt4hours + correctionForEnd) / 24.0;  
-                eclipseData["PA4"] = (ct4.N + ct4.psi)/degra;
+                eclipseData["t3"] = eclipseData["t0"] + (dt2hours + correctionForEnd) / 24.0;  
             }
             
             if (!isNaN(eclipseData["t1"])) {
-                newTmax =  (eclipseData["t4"] + eclipseData["t1"]) / 2.0;
-                correction = (newTmax - eclipseData["tMax"]) / 24.0;
-                tMinusT0OnMax += correction;
-                eclipseData["tMax"] = newTmax;
+                eclipseData["tMax"] =  (eclipseData["t4"] + eclipseData["t1"]) / 2.0;
             }
+
+            if (!isNaN(eclipseData["t2"])) {
+                eclipseData["tMax"] =  (eclipseData["t2"] + eclipseData["t3"]) / 2.0;
+            }
+
 
         for (var key in {"t1":0, "t2":0, "t3":0, "t4":0, "tMax":0}) {
             if (eclipseData[key]) {
