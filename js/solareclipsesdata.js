@@ -66,19 +66,19 @@ var SolarEclipses = {
         var localElements = besselianElements.besselianEngine.localCircumstancesLSF;
         var tMinusT0OnMax = besselianElements.besselianEngine.timeMinusT0OfMaxEclipse;
 
-        var U, V, _U, _V, le, li;
+        var U, V, _U, _V, le, li, z;
 
-        var ComputeUvAndDerivative = function (tMinusT0) {
+        var ComputeUvAndDerivative = function (tMinusT0, localElements, results) {
             var squaredTime = tMinusT0 * tMinusT0;
             var x = _poly(localElements.x, tMinusT0);
             var y = _poly(localElements.y, tMinusT0);
-            var z = _poly(localElements.z, tMinusT0);
+            results["z"] = _poly(localElements.z, tMinusT0);
 
             var X = _poly(besselianElements.x, tMinusT0);
             var Y = _poly(besselianElements.y, tMinusT0);
 
-            U = X - x;
-            V = Y - y;
+            results["U"] = X - x;
+            results["V"] = Y - y;
 
             var _x = localElements.x[1] + 2 * localElements.x[2] * tMinusT0 
                      + 3 * localElements.x[3] * squaredTime;
@@ -90,115 +90,117 @@ var SolarEclipses = {
             var _Y = besselianElements.y[1] + 2 * besselianElements.y[2] * tMinusT0
                      + 3 * besselianElements.y[3] * squaredTime;
 
-            _U = _X - _x;
-            _V = _Y - _y;
-            le = _poly(localElements.l1, tMinusT0 );
-            li = _poly(localElements.l2, tMinusT0 );
+            results["_U"] = _X - _x;
+            results["_V"] = _Y - _y;
+            results["le"] = _poly(localElements.l1, tMinusT0 );
+            results["li"] = _poly(localElements.l2, tMinusT0 );
         }
 
         eclipseData["tMax"] =  eclipseData["t0"] + (tMinusT0OnMax) / 24.0;
         var dtCorrection = GetAAJS().DynamicalTime.DeltaT(eclipseData["t0"])/(3600 * 24);
         var correction = 1;
-        var timeEps = 1 / (24.0 * 3600); // 1 sec.
+        var newTmax = eclipseData["tMax"];
 
         ////////////// to be iterated ////////////////
-        for (var iteration = 0; iteration < 100 && Math.abs(correction) > timeEps; iteration++)
-        {
-            var hourOfMax = eclipseData["t0"] + (tMinusT0OnMax) / 24.0;
+
+            var estimatedJdMax = eclipseData["t0"] + (tMinusT0OnMax) / 24.0;
+
+            var c1 = {};
             
-            ComputeUvAndDerivative (tMinusT0OnMax);
-
-            var lm = Math.sqrt(U*U + V*V);
-
-            var g2 = (le - lm)/(le - li);
-            if (g2 < 0) {
-                break;
-            } 
-
+            ComputeUvAndDerivative (tMinusT0OnMax, localElements, c1);
             // Chauvenet
-            var M, m, N, n, L, sin_psi, psi, tau;
-
-            var computePsiForStart = function() {
-                if (L > 0) {
-                    if (Math.cos(psi) > 0) {
-                        psi = Math.PI - psi;
+            var computePsiForStart = function(ctxt) {
+                if (ctxt.L > 0) {
+                    if (Math.cos(ctxt.psi) > 0) {
+                        ctxt.psi = Math.PI - ctxt.psi;
                     }
                 } else {
-                    if (Math.cos(psi) < 0) {
-                        psi = Math.PI - psi;
+                    if (Math.cos(ctxt.psi) < 0) {
+                        ctxt.psi = Math.PI - ctxt.psi;
                     }
                 }
             }
 
-            var computePsiForEnd = function() {
-                if (L > 0) {
-                    if (Math.cos(psi) < 0) {
-                        psi = Math.PI - psi;
+            var computePsiForEnd = function(ctxt) {
+                if (ctxt.L > 0) {
+                    if (Math.cos(ctxt.psi) < 0) {
+                        ctxt.psi = Math.PI - ctxt.psi;
                     }
                 } else {
-                    if (Math.cos(psi) > 0) {
-                        psi = Math.PI - psi;
+                    if (Math.cos(ctxt.psi) > 0) {
+                        ctxt.psi = Math.PI - ctxt.psi;
                     }
                 }
             }
 
-            var computeAuxiliaries = function () {
-                M = Math.atan2 (U, V);
-                m = U / Math.sin(M);
+            var computeAuxiliaries = function (ctxt) {
+                ctxt["M"] = Math.atan2 (ctxt.U, ctxt.V);
+                ctxt["m"] = ctxt.U / Math.sin(ctxt.M);
 
-                N = Math.atan2 (_U, _V);
-                n = _U / Math.sin(N);
+                ctxt["N"] = Math.atan2 (ctxt._U, ctxt._V);
+                ctxt["n"] = ctxt._U / Math.sin(ctxt.N);
 
-                sin_psi = m * Math.sin (M - N) / L;
-                psi = Math.asin(sin_psi);
+                ctxt["sin_psi"] = ctxt.m * Math.sin (ctxt.M - ctxt.N) / ctxt.L;
+                ctxt["psi"] = Math.asin(ctxt.sin_psi);
 
             }
 
-            L = le;
-            computeAuxiliaries();
-            computePsiForStart();
-            var correctionForStart = L * Math.cos(psi) / n - m*Math.cos(M-N)/n;  
+            c1["L"] = c1.le;
+            computeAuxiliaries(c1);
+            computePsiForStart(c1);
+            var correctionForStart = c1.L * Math.cos(c1.psi) / c1.n - c1.m*Math.cos(c1.M-c1.N)/c1.n;  
                           
             if (!isNaN(correctionForStart)) {
-                eclipseData["t1"] = hourOfMax + correctionForStart / 24.0;  
-                eclipseData["PA1"] = (N + psi)/degra;
+                eclipseData["t1"] = estimatedJdMax + correctionForStart / 24.0;  
+                eclipseData["PA1"] = (c1.N + c1.psi)/degra;
 
-                computePsiForEnd();
-                var correctionForEnd = L * Math.cos(psi) / n - m*Math.cos(M-N)/n;
-                if (!isNaN(correctionForEnd)) {
-                    eclipseData["t4"] = hourOfMax + correctionForEnd / 24.0;
-                    eclipseData["PA4"] = (N + psi)/degra;
-
-                    var newTmax =  (eclipseData["t4"] + eclipseData["t1"]) / 2.0;
-                    correction = (newTmax - eclipseData["tMax"]) / 24.0;
-                    tMinusT0OnMax += correction;
-                    eclipseData["tMax"] = newTmax;
+                var c1e = {};
+                for (var k in c1) {
+                    c1e[k] = c1[k];
                 }
 
-                var delta = Math.abs(L*sin_psi);
-                eclipseData["magnitude"] = (L - delta) / (2 * (L - besselianElements.besselianEngine.occultorRadius));
+                computePsiForEnd(c1e);
+                var correctionForEnd = c1e.L * Math.cos(c1e.psi) / c1e.n - c1e.m*Math.cos(c1e.M-c1e.N)/c1e.n;
+                if (!isNaN(correctionForEnd)) {
+                    eclipseData["t4"] = estimatedJdMax + correctionForEnd / 24.0;
+                    eclipseData["PA4"] = (c1e.N + c1e.psi)/degra;
+                }
+
+                var delta = Math.abs(c1.L*c1.sin_psi);
+                eclipseData["magnitude"] = (c1.L - delta) / (2 * (c1.L - besselianElements.besselianEngine.occultorRadius));
             }
 
+            if (eclipseData["magnitude"] > 1) {
+                c1.L = c1.li;
+                computeAuxiliaries(c1);
+                computePsiForStart(c1);
+                correctionForStart = c1.L * Math.cos(c1.psi) / c1.n - c1.m*Math.cos(c1.M-c1.N)/c1.n;  
+                if (!isNaN(correctionForStart)) {
+                    eclipseData["t2"] = estimatedJdMax + correctionForStart / 24.0;  
 
-            L = li;
-            computeAuxiliaries();
-            computePsiForStart();
-            correctionForStart = L * Math.cos(psi) / n - m*Math.cos(M-N)/n;  
-            if (!isNaN(correctionForStart)) {
-                eclipseData["t2"] = hourOfMax + correctionForStart / 24.0;  
-
-                computePsiForEnd();
-                correctionForEnd = L * Math.cos(psi) / n - m*Math.cos(M-N)/n;
-                if (!isNaN(correctionForEnd)) {
-                    eclipseData["t3"] = hourOfMax + correctionForEnd / 24.0;
+                    computePsiForEnd(c1);
+                    correctionForEnd = c1.L * Math.cos(c1.psi) / c1.n - c1.m*Math.cos(c1.M-c1.N)/c1.n;
+                    if (!isNaN(correctionForEnd)) {
+                        eclipseData["t3"] = estimatedJdMax + correctionForEnd / 24.0;
+                    }
                 }
             }
-        }
+            
+            if (!isNaN(eclipseData["t1"])) {
+                newTmax =  (eclipseData["t4"] + eclipseData["t1"]) / 2.0;
+                correction = (newTmax - eclipseData["tMax"]) / 24.0;
+                tMinusT0OnMax += correction;
+                eclipseData["tMax"] = newTmax;
+            }
 
         for (var key in {"t1":0, "t2":0, "t3":0, "t4":0, "tMax":0}) {
             if (eclipseData[key]) {
                 eclipseData[key] -= dtCorrection;
             }
+        }
+
+        if (eclipseData["magnitude"] <= 1e-4 || z < 0.01) {
+            eclipseData["t1"] = false;
         }
 
 ///////////////////////////////////////////////////////
