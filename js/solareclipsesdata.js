@@ -255,17 +255,19 @@ var SolarEclipses = {
             var dtMax = (eclipseData["tMax"] - eclipseData["t0"]) * 24;
             c1 = new UvAndDerivative(dtMax, localElements);
             c1.ComputePsi(c1.le);
-            var delta = Math.abs(c1.le*c1.sin_psi);
-            eclipseData["magnitude"] = (c1.le - delta) / (2 * (c1.le - besselianElements.besselianEngine.occultorRadius));
             eclipseData["tMax"] = eclipseData["t0"] - c1.m*Math.cos(c1.M-c1.N)/c1.n / 24.0;
 
             dtMax = (eclipseData["tMax"] - eclipseData["t0"]) * 24;
             c1 = new UvAndDerivative(dtMax, localElements);
             c1.ComputePsi(c1.le);
-            var delta = Math.abs(c1.le*c1.sin_psi);
-            eclipseData["magnitude"] = (c1.le - delta) / (2 * (c1.le - besselianElements.besselianEngine.occultorRadius));
             eclipseData["tMax"] = eclipseData["t0"] - c1.m*Math.cos(c1.M-c1.N)/c1.n / 24.0;
         }
+
+        dtMax = (eclipseData["tMax"] - eclipseData["t0"]) * 24;
+        c1 = new UvAndDerivative(dtMax, localElements);
+        c1.ComputePsi(c1.le);
+        var delta = Math.abs(c1.le*c1.sin_psi);
+        eclipseData["magnitude"] = (c1.le - delta) / (2 * (c1.le - besselianElements.besselianEngine.occultorRadius));
 
         for (var key in {"t1":0, "t2":0, "t3":0, "t4":0, "tMax":0}) {
             if (eclipseData[key]) {
