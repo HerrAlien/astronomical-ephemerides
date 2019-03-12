@@ -8,9 +8,9 @@
             var Pages = {};
 
          var Location = {
-            latitude  : 44.42593442145313,
-            longitude : 26.119995117187504,
-            altitude  : 200,
+            latitude  : 38.685509760012025,
+            longitude : -9.124145507812502,
+            altitude  : 100,
             
             rhoSinPhi : 0,
             rhoCosPhi : 0,
@@ -54,18 +54,18 @@
             
         var tests = [
         {
-            name : "Eclipse 2015-03-20",
+            name : "Eclipse 2015-03-20 Lisbon",
             input : AAJS.Date.DateToJD (2015, 03, 20, true) + 10/24, // dynamic time
-            expectedOutput : {"t1" : AAJS.Date.DateToJD (2015, 03, 20, true) + 1/24 * (8 + 48/60),
-                              "tMax" : AAJS.Date.DateToJD (2015, 03, 20, true) + 1/24 * (9 + 56/60),
-                              "t4" : AAJS.Date.DateToJD (2015, 03, 20, true) + 1/24 * (11 + 4/60),
+            expectedOutput : {"t1" : AAJS.Date.DateToJD (2015, 03, 20, true) + 1/24 * (7 + 59/60),
+                              "tMax" : AAJS.Date.DateToJD (2015, 03, 20, true) + 1/24 * (9 + 1/60),
+                              "t4" : AAJS.Date.DateToJD (2015, 03, 20, true) + 1/24 * (10 + 8/60),
                 },
                   
                   
             accuracies : {
-                    "t1"  : 1.0/60/24,
-                    "tMax": 1.0/60/24,
-                    "t4"  : 1.0/60/24
+                    "t1"  : 1/60/24,
+                    "tMax"  : 1/60/24,
+                    "t4"  : 1/60/24
                 },
                 
             actualOutput : false,
