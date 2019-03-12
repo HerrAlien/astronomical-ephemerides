@@ -176,9 +176,11 @@ var SolarEclipses = {
             }
         }
 
+        var ct1, ct4;
+
         for (var i = 0; i < 3; i++) {
            var dt1hours = (eclipseData["t1"] - eclipseData["t0"]) * 24;
-           var ct1 = new UvAndDerivative(dt1hours, localElements);
+           ct1 = new UvAndDerivative(dt1hours, localElements);
            ct1.ComputePsi(ct1.le);
            correctionForStart = ct1.TimeCorrectionHours (ct1.le, ct1.PsiForStart(ct1.le));
 
@@ -187,7 +189,7 @@ var SolarEclipses = {
            }
 
            var dt4hours = (eclipseData["t4"] - eclipseData["t0"]) * 24;
-           var ct4 = new UvAndDerivative (dt4hours, localElements);
+           ct4 = new UvAndDerivative (dt4hours, localElements);
            ct4.ComputePsi(ct4.le);
            correctionForEnd = ct4.TimeCorrectionHours (ct4.le, ct4.PsiForEnd(ct4.le));
            if (!isNaN(correctionForEnd)) {
@@ -236,9 +238,11 @@ var SolarEclipses = {
             }
         }
 
-        if (eclipseData["magnitude"] <= 1e-4 || c1.z < 0.01) {
+        if (eclipseData["magnitude"] <= 1e-4 || 
+            (c1.z < 0.01 && ct1.z < 0.01 && ct4.z < 0.01)) {
             eclipseData["t1"] = false;
         }
+
 
 ///////////////////////////////////////////////////////
 
