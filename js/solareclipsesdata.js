@@ -216,15 +216,12 @@ var SolarEclipses = {
             eclipseData["tMax"] = (eclipseData["t2"] + eclipseData["t3"]) / 2;
         } else {
             eclipseData["tMax"] = (eclipseData["t4"] + eclipseData["t1"]) / 2.0;
-            var dtMax = (eclipseData["tMax"] - eclipseData["t0"]) * 24;
-            c1 = new UvAndDerivative(dtMax, localElements);
-            c1.ComputePsi(c1.le);
-            eclipseData["tMax"] = eclipseData["t0"] - c1.m*Math.cos(c1.M-c1.N)/c1.n / 24.0;
-
-            dtMax = (eclipseData["tMax"] - eclipseData["t0"]) * 24;
-            c1 = new UvAndDerivative(dtMax, localElements);
-            c1.ComputePsi(c1.le);
-            eclipseData["tMax"] = eclipseData["t0"] - c1.m*Math.cos(c1.M-c1.N)/c1.n / 24.0;
+            for (var i = 0; i < 2; i++) {
+                var dtMax = (eclipseData["tMax"] - eclipseData["t0"]) * 24;
+                c1 = new UvAndDerivative(dtMax, localElements);
+                c1.ComputePsi(c1.le);
+                eclipseData["tMax"] = eclipseData["t0"] - c1.m*Math.cos(c1.M-c1.N)/c1.n / 24.0;
+            }
         }
 
         var dtMax = (eclipseData["tMax"] - eclipseData["t0"]) * 24;
