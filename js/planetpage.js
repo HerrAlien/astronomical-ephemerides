@@ -264,6 +264,7 @@ function PlanetPage (planetDataSource, tableName) {
             this.hostElement.removeChild(this.hostElement.firstChild);
         }
         this.pageRendered = false;
+        this.header = false;
         // reset the data - transits depend on the longitude
         if (keepData && this.dataSource.reset) {
             this.dataSource.reset();
