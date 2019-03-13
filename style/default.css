@@ -303,7 +303,6 @@ tr.secondHeaderRowScrolled th:last-of-type {
     position: fixed;
     bottom: 118px;
     background: #ffffff;
-    padding: 2px 0px 2px 2px;
     width: 100%;
 }
 
@@ -371,7 +370,10 @@ tr.secondHeaderRowScrolled th:last-of-type {
         display: block;
     }
 
-    
+    .physicalPositionalButtonsHolder {
+        padding: 2px 0px 2px 2px;
+    }
+
     @media (orientation: portrait) {
         .planetTableHeader.fixed {
             top: 0px;
