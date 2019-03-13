@@ -23,6 +23,9 @@ function Tree (stars, granularityDeg) {
 
     for (var i = 0; i < stars.length; i++) {
         var star = stars[i];
+
+        // TODO: apply precession and proper motion
+
         var raIndex = this.getRaIndex(star.RAh);
         if (!tree[raIndex]) {
             tree[raIndex] = {};
