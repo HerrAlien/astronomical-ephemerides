@@ -1,0 +1,42 @@
+<html>
+<body>
+<pre id="pre">
+</pre>
+</body>
+</html>
+<script src="js/occultablestars.js"></script>
+
+<script>
+function Tree (stars, granularityDeg) {
+    var _granularityDeg = granularityDeg;
+
+    this.getRaIndex = function(RAh) {
+        return Math.round(RAh * 15 / _granularityDeg);
+    }
+
+    this.getDecIndex = function(DEd) {
+        return Math.round(DEd / _granularityDeg);
+    }
+
+    this.tree = {};
+
+    for (var i = 0; i < stars.length; i++) {
+        var star = stars[i];
+        var raIndex = this.getRaIndex(star.RAh);
+        if (!this.tree[raIndex]) {
+            this.tree[raIndex] = {};
+        }
+        var decIndex = this.getDecIndex(star.DEd);
+        if (!this.tree[raIndex][decIndex]) {
+            this.tree[raIndex][decIndex] = [];
+        }
+        this.tree[raIndex][decIndex].push(star);
+    }
+}
+
+var t = new Tree(OccultableStars.GetStars(), 1);
+var a = 0;
+a++;
+
+
+</script>

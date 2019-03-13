@@ -1,7 +1,6 @@
 var OccultableStars = {
-    GetStars : function {
-        return 
-[{"HR":"2491","bfID":"Alp CMa","Name":"Sirius","RAh":6.752472222,"DEd":-16.71611111,"Vmag":-1.46,"pmRA":-0.553,"pmDE":-1.205},
+    GetStars : function() {
+        return [{"HR":"2491","bfID":"Alp CMa","Name":"Sirius","RAh":6.752472222,"DEd":-16.71611111,"Vmag":-1.46,"pmRA":-0.553,"pmDE":-1.205},
 {"HR":"5340","bfID":"Alp Boo","Name":"Arcturus","RAh":14.26102778,"DEd":19.1825,"Vmag":-0.04,"pmRA":-1.093,"pmDE":-1.998},
 {"HR":"7001","bfID":"Alp Lyr","Name":"Vega","RAh":18.61563889,"DEd":38.78361111,"Vmag":0.03,"pmRA":0.202,"pmDE":0.286},
 {"HR":"1713","bfID":"Bet Ori","Name":"Rigel","RAh":5.242305556,"DEd":-8.201666667,"Vmag":0.12,"pmRA":0,"pmDE":-0.001},
@@ -1090,8 +1089,7 @@ var OccultableStars = {
 {"HR":"7534","bfID":"17 Cyg","Name":"","RAh":19.77377778,"DEd":33.72777778,"Vmag":4.99,"pmRA":0.023,"pmDE":-0.446},
 {"HR":"7659","bfID":"","Name":"","RAh":20.07211111,"DEd":-32.05638889,"Vmag":4.99,"pmRA":0.047,"pmDE":-0.015},
 {"HR":"8433","bfID":"Ups PsA","Name":"","RAh":22.14055556,"DEd":-34.04388889,"Vmag":4.99,"pmRA":0.008,"pmDE":-0.049},
-]
-;
+];
     }
 };
  
