@@ -4,11 +4,81 @@
 </pre>
 </body>
 </html>
-<script src="js/occultablestars.js"></script>
+
 
 <script>
 
-var a = 0;
-a++;
+            var Pages = {};
+
+         var Location = {
+            latitude  : 45.66012730272194,
+            longitude : 25.576171875,
+            altitude  : 300,
+            
+            rhoSinPhi : 0,
+            rhoCosPhi : 0,
+            recomputeGeocentricCoordinates : function () {
+            Location.rhoSinPhi = AAJS.Globe.RadiusTimesSineGeocentricLatitude (Location.latitude, Location.altitude);
+            Location.rhoCosPhi = AAJS.Globe.RadiusTimesCosineGeocentricLatitude (Location.latitude, Location.altitude);
+            }
+
+        }; 
+       
+        function PlanetPage() {}
+
+        function GetAAJS() { return AAJS; }
+
+        var SyncedTimeOut = setTimeout;
+
+</script>
+
+<script src="js/aajs.js"></script>
+<script type="text/JavaScript" src="js/planetdata.js"></script>
+<script src="js/occultablestars.js"></script>
+<script src="js/moon.js"></script>
+
+<script>
+
+
+(function() {
+    // get a JD
+    function sind (x) {
+        return Math.sin(x * Math.PI/180);
+    }
+    function cosd (x) {
+        return Math.cos(x * Math.PI/180);
+    }
+
+    function getOccultedStars(JDE) {
+        var moonData = MoonData.getDataAsObjectForJD(JDE, true);
+        var starsThatMayBeOcculted = OccultableStars.getStarsNear(moonData.RaTopo, moonData.DecTopo);
+        var occultedStars = [];
+        for (var i = 0; i < starsThatMayBeOcculted.length; i++) {
+            var star = starsThatMayBeOcculted[i];
+            var dist = Math.acos(sind(moonData.DecTopo)*sind(star.DEd) + 
+                                 cosd(moonData.DecTopo)*cosd(star.DEd)*cosd(moonData.RaTopo*15 - star.RAh*15));
+            dist *= 180/Math.PI;
+            if (dist < moonData.diameter / 2) {
+                occultedStars.push(star);
+            }
+        }
+        return occultedStars;
+    }
+
+    // 29 oct 2015, 22:30 UTC
+    function printOccultedStarsOn29Oct2015() {
+        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
+                return setTimeout (printOccultedStarsOn29Oct2015, 100);
+
+        var jd = AAJS.Date.DateToJD (2015, 10, 29, true) + (22 + 30/60)/24;
+        var s = getOccultedStars (jd);
+        console.log(s);
+        document.getElementById("pre").textContent = JSON.stringify(s);
+    }
+
+    printOccultedStarsOn29Oct2015();
+
+
+})();
 
 </script>
