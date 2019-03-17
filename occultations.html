@@ -64,14 +64,15 @@
         var dayIncrement = 1;
         var moonData = new DataForNow(MoonData);
         var jde = JDE;
-        var stepsCount = 48;
+        var stepsCount = 24;
         var jdeIncrement = dayIncrement / stepsCount;
         var handled = {};
 
+        var yearsSince2000 = (jde - 2451545)/365.25;
+
         for (var d = 0; d < numberOfDays; d += dayIncrement) {
 
-            for (var step = 0; step < stepsCount; step++ ) {
-                jde += jdeIncrement;
+            for (var step = 0; step < stepsCount; step++,  jde += jdeIncrement ) {
                 var dataForJd = moonData.getInterpolatedData(getDataObj(jde));
                 var ra = dataForJd.RaTopo;
                 var dec = dataForJd.DecTopo;
@@ -79,18 +80,23 @@
 
                 for (var i = 0; i < starsThatMayBeOcculted.length; i++) {
                     var star = starsThatMayBeOcculted[i];
+if (star.Name == "Aldebaran") {
+    var a = 0;
+    a++;
+}
+
                     if (handled[star.HR]) {
                         continue;
                     }
                    
-                    // fix precession here
+/*                    // fix precession here
                     var fixedCoords = AAJS.Precession.PrecessEquatorial( 
-                    star.RAh + (jde - 2451545) * star.pmRA / (15 * 3600), 
-                    star.DEd + (jde - 2451545) * star.pmDE / (3600), 
+                    star.RAh + yearsSince2000 * star.pmRA / (3600), 
+                    star.DEd + yearsSince2000 * star.pmDE / (3600), 
                     2451545, jde);
                     star.RAh = fixedCoords.X;
                     star.DEd = fixedCoords.Y;
-
+*/
                     // get the time of conjunction
                     var t = 1;
                     var conjunctionJde = jde;
@@ -122,7 +128,6 @@
                     }
                     handled[star.HR] = true;
                 }
-
             }
 
         }
@@ -134,8 +139,8 @@
         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
                 return setTimeout (printOccultedStarsOn29Oct2015, 100);
 
-        var jd = AAJS.Date.DateToJD (2015, 10, 27, true);
-        var s = getOccultedStars (jd, 4);
+        var jd = AAJS.Date.DateToJD (2015, 10, 29, true);
+        var s = getOccultedStars (jd, 1);
         console.log(s);
         document.getElementById("pre").textContent = JSON.stringify(s, null, 4);
     }
