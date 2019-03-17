@@ -80,8 +80,12 @@
 
                 for (var i = 0; i < starsThatMayBeOcculted.length; i++) {
                     var star = starsThatMayBeOcculted[i];
+                   
                     // fix precession here
-
+                    var fixedCoords = AAJS.Precession.PrecessEquatorial( 
+                    star.RAh, star.DEd, 2455200.5, jde);
+                    star.RAh = fixedCoords.X;
+                    star.DEd = fixedCoords.Y;
 
                     // get the time of conjunction
                     var beforeData = moonData.getInterpolatedData(getDataObj(jde - 1/24));
@@ -98,7 +102,7 @@
                     dist *= 180/Math.PI;
                     if (dist <= conjunctionDiameter / 2) 
                     {
-                        var key = Math.round(conjunctionJde * 1e3) / 1e3;
+                        var key = Math.round(conjunctionJde);
 
                         if (!occultedStars[key]) {
                             occultedStars[key] = {};
