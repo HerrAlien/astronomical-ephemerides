@@ -63,13 +63,11 @@
         var occultedStars = {};
         var dayIncrement = 1;
         var moonData = new DataForNow(MoonData);
+        var jde = JDE;
+        var stepsCount = 48;
+        var jdeIncrement = dayIncrement / stepsCount;
 
         for (var d = 0; d < numberOfDays; d += dayIncrement) {
-            var jde = JDE + d;
-            var key = Math.floor(jde) + 0.5;
-
-            var stepsCount = 1024;
-            var jdeIncrement = dayIncrement / stepsCount;
 
             for (var step = 0; step < stepsCount; step++ ) {
                 jde += jdeIncrement;
@@ -83,16 +81,25 @@
                    
                     // fix precession here
                     var fixedCoords = AAJS.Precession.PrecessEquatorial( 
-                    star.RAh, star.DEd, 2455200.5, jde);
+                    star.RAh + (jde - 2455200.5) * star.pmRA / (15 * 3600), 
+                    star.DEd + (jde - 2455200.5) * star.pmDE / (3600), 
+                    2455200.5, jde);
                     star.RAh = fixedCoords.X;
                     star.DEd = fixedCoords.Y;
 
                     // get the time of conjunction
-                    var beforeData = moonData.getInterpolatedData(getDataObj(jde - 1/24));
-                    var t = (star.RAh - beforeData.RaTopo) / (dataForJd.RaTopo - beforeData.RaTopo);
+                    var t = 1;
+                    var conjunctionJde = jde;
+                    var lastConjunctionJde = 0;
+                    for (var tIndex = 0; tIndex < 20 && Math.abs(t) > 1e-6; tIndex++) {
+                        dataForJd = moonData.getInterpolatedData(getDataObj(conjunctionJde));
+                        var beforeData = moonData.getInterpolatedData(getDataObj(conjunctionJde - 1/24));
+                        t = (star.RAh - beforeData.RaTopo) / (dataForJd.RaTopo - beforeData.RaTopo);
+                        conjunctionJde += t / 24;
+                    }
                     // interpolate new values for moon
-                    var conjunctionJde = jde + t/24;
-                    var dataAtConjunction = moonData.getInterpolatedData(getDataObj(conjunctionJde));
+                    
+                    var dataAtConjunction = dataForJd;
                     var conjunctionDec = dataAtConjunction.DecTopo;
                     var conjunctionDiameter = dataAtConjunction.diameter;
                     // compute the distance
@@ -102,7 +109,7 @@
                     dist *= 180/Math.PI;
                     if (dist <= conjunctionDiameter / 2) 
                     {
-                        var key = Math.round(conjunctionJde);
+                        var key = Math.round(conjunctionJde * 1e6) / 1e6;
 
                         if (!occultedStars[key]) {
                             occultedStars[key] = {};
@@ -122,8 +129,8 @@
         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
                 return setTimeout (printOccultedStarsOn29Oct2015, 100);
 
-        var jd = AAJS.Date.DateToJD (2015, 10, 29, true);
-        var s = getOccultedStars (jd, 2);
+        var jd = AAJS.Date.DateToJD (2015, 10, 20, true);
+        var s = getOccultedStars (jd, 11);
         console.log(s);
         document.getElementById("pre").textContent = JSON.stringify(s, null, 4);
     }
