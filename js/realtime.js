@@ -53,6 +53,7 @@ var RealTimeDataViewer = {
                 // TODO: on a settings notification, update the visibility for all entries in this.allViews
 
                 this.rtData = new DataForNow(this.page.dataSource);
+                this.rtData.start();
                 var obj = this;
                 this.rtData.onDataUpdated.add(function (data) {
 

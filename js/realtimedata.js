@@ -52,7 +52,6 @@ var JDForRealTimeView = {
     function DataForNow(dataSource) {
         this.dataSource = dataSource;
         this.onDataUpdated = new Notifications.New();
-        this.start();
     }
     
     (function(){
