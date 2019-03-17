@@ -1166,4 +1166,4 @@ var OccultableStars = new OccultableStarsTree (
 {"HR":"7659","bfID":"","Name":"","RAh":20.07211111,"DEd":-32.05638889,"Vmag":4.99,"pmRA":0.047,"pmDE":-0.015},
 {"HR":"8433","bfID":"Ups PsA","Name":"","RAh":22.14055556,"DEd":-34.04388889,"Vmag":4.99,"pmRA":0.008,"pmDE":-0.049},
 ], 
-0.5);
+1);

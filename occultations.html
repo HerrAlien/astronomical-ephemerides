@@ -25,7 +25,7 @@
         }; 
        
         var Timeout = {onInit: 1000};
-       
+
         function PlanetPage() {}
 
         function GetAAJS() { return AAJS; }
@@ -80,11 +80,15 @@
 
                 for (var i = 0; i < starsThatMayBeOcculted.length; i++) {
                     var star = starsThatMayBeOcculted[i];
+                    // fix precession here
+
+
                     // get the time of conjunction
                     var beforeData = moonData.getInterpolatedData(getDataObj(jde - 1/24));
                     var t = (star.RAh - beforeData.RaTopo) / (dataForJd.RaTopo - beforeData.RaTopo);
                     // interpolate new values for moon
-                    var dataAtConjunction = moonData.getInterpolatedData(getDataObj(jde + t/24));
+                    var conjunctionJde = jde + t/24;
+                    var dataAtConjunction = moonData.getInterpolatedData(getDataObj(conjunctionJde));
                     var conjunctionDec = dataAtConjunction.DecTopo;
                     var conjunctionDiameter = dataAtConjunction.diameter;
                     // compute the distance
@@ -94,6 +98,8 @@
                     dist *= 180/Math.PI;
                     if (dist <= conjunctionDiameter / 2) 
                     {
+                        var key = Math.round(conjunctionJde * 1e3) / 1e3;
+
                         if (!occultedStars[key]) {
                             occultedStars[key] = {};
                         }
@@ -112,8 +118,8 @@
         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
                 return setTimeout (printOccultedStarsOn29Oct2015, 100);
 
-        var jd = AAJS.Date.DateToJD (2013, 01, 01, true);
-        var s = getOccultedStars (jd, 9);
+        var jd = AAJS.Date.DateToJD (2015, 10, 29, true);
+        var s = getOccultedStars (jd, 2);
         console.log(s);
         document.getElementById("pre").textContent = JSON.stringify(s, null, 4);
     }
