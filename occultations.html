@@ -66,6 +66,7 @@
         var jde = JDE;
         var stepsCount = 48;
         var jdeIncrement = dayIncrement / stepsCount;
+        var handled = {};
 
         for (var d = 0; d < numberOfDays; d += dayIncrement) {
 
@@ -78,12 +79,15 @@
 
                 for (var i = 0; i < starsThatMayBeOcculted.length; i++) {
                     var star = starsThatMayBeOcculted[i];
+                    if (handled[star.HR]) {
+                        continue;
+                    }
                    
                     // fix precession here
                     var fixedCoords = AAJS.Precession.PrecessEquatorial( 
-                    star.RAh + (jde - 2455200.5) * star.pmRA / (15 * 3600), 
-                    star.DEd + (jde - 2455200.5) * star.pmDE / (3600), 
-                    2455200.5, jde);
+                    star.RAh + (jde - 2451545) * star.pmRA / (15 * 3600), 
+                    star.DEd + (jde - 2451545) * star.pmDE / (3600), 
+                    2451545, jde);
                     star.RAh = fixedCoords.X;
                     star.DEd = fixedCoords.Y;
 
@@ -116,6 +120,7 @@
                         }
                         occultedStars[key][star.HR] = star;
                     }
+                    handled[star.HR] = true;
                 }
 
             }
@@ -129,8 +134,8 @@
         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
                 return setTimeout (printOccultedStarsOn29Oct2015, 100);
 
-        var jd = AAJS.Date.DateToJD (2015, 10, 20, true);
-        var s = getOccultedStars (jd, 11);
+        var jd = AAJS.Date.DateToJD (2015, 10, 27, true);
+        var s = getOccultedStars (jd, 4);
         console.log(s);
         document.getElementById("pre").textContent = JSON.stringify(s, null, 4);
     }
