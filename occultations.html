@@ -118,7 +118,7 @@
         var jd = AAJS.Date.DateToJD (2015, 10, 30, true);
         var s = getOccultedStars (jd, 10);
         console.log(s);
-        document.getElementById("pre").textContent = JSON.stringify(s);
+        document.getElementById("pre").textContent = JSON.stringify(s, null, 4);
     }
 
     printOccultedStarsOn29Oct2015();
