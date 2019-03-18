@@ -33,11 +33,6 @@ var MoonData = {
             data['Month'] = _date.M;
             data['Day'] = _date.D;
 
-            if (_date.M == 10 && _date.D == 29) {
-                var zz = 0;
-                zz++
-            }
-
             var posData = GetAAJS().Moon.PositionalEphemeris(JDE, Location.latitude, Location.longitude, Location.altitude);
             
             for (var key in posData)
