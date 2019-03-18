@@ -19,6 +19,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 function OccultableStarsTree (stars, granularityDeg) {
     var _granularityDeg = granularityDeg;
     var _raSlicesCount = Math.round(360 / granularityDeg);
+    var _stars = stars;
 
     this.getRaIndex = function(RAh) {
         return Math.round(RAh * 15 / _granularityDeg);
@@ -30,10 +31,29 @@ function OccultableStarsTree (stars, granularityDeg) {
 
     var tree = {};
 
-    for (var i = 0; i < stars.length; i++) {
-        var star = stars[i];
+    this.epoch = 2451545;
+    this.init = function (jde) {
+            if (!jde) {
+                jde = 2451545;
+            }
+            var yearsSince2000 = 0;
 
-        // TODO: apply precession and proper motion
+            if (Math.abs(jde - this.epoch) < 366) {
+                return; // same year, no need to update;
+            }
+            yearsSince2000 = (jde - 2451545)/365.25;
+        
+        tree = {};
+
+    for (var i = 0; i < _stars.length; i++) {
+        var star = _stars[i];
+
+                    var fixedCoords = AAJS.Precession.PrecessEquatorial( 
+                    star.RAh + yearsSince2000 * star.pmRA / (3600), 
+                    star.DEd + yearsSince2000 * star.pmDE / (3600), 
+                    2451545, jde);
+                    star.RAh = fixedCoords.X;
+                    star.DEd = fixedCoords.Y;
 
         var raIndex = this.getRaIndex(star.RAh);
         if (!tree[raIndex]) {
@@ -45,8 +65,13 @@ function OccultableStarsTree (stars, granularityDeg) {
         }
         tree[raIndex][decIndex].push(star);
     }
+
+            this.epoch = jde;
+    }
+
     
-    this.getStarsNear = function (rah, ded) {
+    this.getStarsNear = function (rah, ded, jde) {
+        this.init(jde);
         var currentRaIndex = this.getRaIndex(rah);
         var currentDecIndex = this.getDecIndex(ded);
 

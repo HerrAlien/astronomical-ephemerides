@@ -67,9 +67,6 @@
         var jde = JDE + dt;
         var stepsCount = 48;
         var jdeIncrement = dayIncrement / stepsCount;
-        var precessionHandled = {};
-
-        var yearsSince2000 = (jde - 2451545)/365.25;
 
         for (var d = 0; d < numberOfDays; d += dayIncrement) {
 
@@ -77,24 +74,10 @@
                 var dataForJd = moonData.getInterpolatedData(getDataObj(jde));
                 var ra = dataForJd.RaTopo;
                 var dec = dataForJd.DecTopo;
-                var starsThatMayBeOcculted = OccultableStars.getStarsNear(ra, dec);
+                var starsThatMayBeOcculted = OccultableStars.getStarsNear(ra, dec, jde);
 
                 for (var i = 0; i < starsThatMayBeOcculted.length; i++) {
-                    var star = starsThatMayBeOcculted[i];
-                    
-                    if (!precessionHandled[star.HR]) {
-
-                  
-                    // fix precession here - but get both aajs and the MEM file
-                    // this time.
-                    var fixedCoords = AAJS.Precession.PrecessEquatorial( 
-                    star.RAh + yearsSince2000 * star.pmRA / (3600), 
-                    star.DEd + yearsSince2000 * star.pmDE / (3600), 
-                    2451545, jde);
-                    star.RAh = fixedCoords.X;
-                    star.DEd = fixedCoords.Y;
-                        precessionHandled[star.HR] = true;
-                    }
+                    var star = starsThatMayBeOcculted[i];            
 
                     // get the time of conjunction
                     var t = 1;
