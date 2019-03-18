@@ -16,45 +16,73 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
-function OccultedStar (RA, Dec) {
-    this.RA = RA;
-    this.Dec = Dec;
-    this.Parallax = 0;
-    this.Diameter = 0;
-    
-    this.getDataAsObjectForJD : function () {
-        return this;
+var Occultations = {
+    getOccultedStars : function (startJde, numberOfDays) {
+
+    function sind (x) {
+        return Math.sin(x * Math.PI/180);
     }
-}
+    function cosd (x) {
+        return Math.cos(x * Math.PI/180);
+    }
 
-/*! function BesselianElements (occultor, occulted, occultorRadius, jd) {
-    this.timeBasedValues = {
-            "x"      : NaN,
-            "y"      : NaN,
-            "d"      : NaN,
-            "mu"     : NaN,
-            "l1"     : NaN,
-            "l2"     : NaN,
-            "tan_f1" : NaN,
-            "tan_f2" : NaN,
-    };
-    this.leastSquareFitCoeff = {
-            "x"      : NaN,
-            "y"      : NaN,
-            "d"      : NaN,
-            "mu"     : NaN,
-            "l1"     : NaN,
-            "l2"     : NaN,
-            "tan_f1" : NaN,
-            "tan_f2" : NaN,
-    };
-}*/
+    function getDataObj (JDE) {
+        var jd3 =  Math.floor(JDE) + 0.5;
+        return { T1: jd3 - 2, T2: jd3 - 1, T3: jd3, T4: jd3 + 1, T5: jd3 + 2, n: JDE - jd3};
+    }
 
-function Occultation (star, initialJD) {
-    this.star = star;
-    this.occulted = new OccultedStar (this.star.RA, this.star.Dec);
-    
-    Location.recomputeGeocentricCoordinates();
-    
-    this.
-}
+
+        var occultedStars = {};
+        var dayIncrement = 1;
+        var moonData = new DataForNow(MoonData);
+        var dt = GetAAJS().DynamicalTime.DeltaT(startJde)/(3600 * 24);
+        var jde = startJde + dt;
+        var stepsCount = 48;
+        var jdeIncrement = dayIncrement / stepsCount;
+
+        for (var d = 0; d < numberOfDays; d += dayIncrement) {
+
+            for (var step = 0; step < stepsCount; step++,  jde += jdeIncrement ) {
+                var dataForJd = moonData.getInterpolatedData(getDataObj(jde));
+                var ra = dataForJd.RaTopo;
+                var dec = dataForJd.DecTopo;
+                var starsThatMayBeOcculted = OccultableStars.getStarsNear(ra, dec, jde);
+
+                for (var i = 0; i < starsThatMayBeOcculted.length; i++) {
+                    var star = starsThatMayBeOcculted[i];            
+
+                    // get the time of conjunction
+                    var t = 1;
+                    var conjunctionJde = jde;
+                    for (var tIndex = 0; tIndex < 100 && Math.abs(t) > 1e-6; tIndex++) {
+                        dataForJd =  moonData.getInterpolatedData(getDataObj(conjunctionJde));
+                        var beforeData = moonData.getInterpolatedData(getDataObj(conjunctionJde - 1/24));
+                        t = (star.RAh - beforeData.RaTopo) / (dataForJd.RaTopo - beforeData.RaTopo);
+                        conjunctionJde += t / 24;
+                    }
+                    // interpolate new values for moon
+                    
+                    var dataAtConjunction = dataForJd;
+                    var conjunctionDec = dataAtConjunction.DecTopo;
+                    var conjunctionDiameter = dataAtConjunction.diameter;
+                    // compute the distance
+
+                    var dist = Math.acos(sind(conjunctionDec)*sind(star.DEd) + 
+                                         cosd(conjunctionDec)*cosd(star.DEd));
+                    dist *= 180/Math.PI;
+                    if (dist <= conjunctionDiameter/2) 
+                    {
+                        var key = Math.round(conjunctionJde * 1e6) / 1e6;
+
+                        if (!occultedStars[key]) {
+                            occultedStars[key] = {};
+                        }
+                        occultedStars[key][star.HR] = star;
+                    }                   
+                }
+            }
+
+        }
+        return occultedStars;
+    }
+};
