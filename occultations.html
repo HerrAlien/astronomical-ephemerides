@@ -52,15 +52,76 @@
         return Occultations.getOccultedStars(JDE, numberOfDays);
     }
 
+        function sind (x) {
+            return Math.sin(x * Math.PI/180);
+        }
+        function cosd (x) {
+            return Math.cos(x * Math.PI/180);
+        }
+
+    var getDataObj = Occultations.getDataObj;
+
+    var distance = function  (moonData, star, jde) {
+        var dataForJd = moonData.getInterpolatedData(getDataObj(jde));
+        var dist = Math.acos(sind(dataForJd.DecTopo)*sind(star.DEd) + 
+                             cosd(dataForJd.DecTopo)*cosd(star.DEd)*cosd(dataForJd.RaTopo*15 - star.RAh*15));
+        dist *= 180/Math.PI;
+        return dist;
+    }
+
+    var getStartOrEndDate = function (moonData, star, jde, isForStart) {
+        var startJde = jde;
+        if (isForStart) {
+            startJde -= 1/24;
+        } else {
+            startJde += 1/24;
+        }
+        var lastStartJde = jde;
+        var lastDistance = 1;
+        var eps = 1e-5;
+
+        while (Math.abs(startJde - lastStartJde) > eps) {
+            var possibleJde = (startJde + lastStartJde) / 2;
+            var d = distance (moonData, star, possibleJde);
+            if (d < lastDistance) {
+                lastDistance = d;
+                startJde = possibleJde;
+            } else {
+                lastStartJde = possibleJde;
+            }
+        }
+        return startJde;
+    };
+
+
     // 29 oct 2015, 22:30 UTC
     function printOccultedStarsOn29Oct2015() {
         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
                 return setTimeout (printOccultedStarsOn29Oct2015, 100);
 
+        var moonData = new DataForNow(MoonData);
+
         var jd = AAJS.Date.DateToJD (2014, 01, 01, true);
         var s = getOccultedStars (jd, 30);
+
+        var data = {};
+
+        for (var jdeString in s) {
+            var jde = Number(jdeString);
+            var stars = s[jdeString];
+            for (var hrId in stars) {
+                star = stars[hrId];
+                data [jdeString] = {
+                    star : star,
+                    start : getStartOrEndDate(moonData, star, jde, true),
+                    end : getStartOrEndDate(moonData, star, jde, false)
+                };
+            }
+        }
+
+
         console.log(s);
-        document.getElementById("pre").textContent = JSON.stringify(s, null, 4);
+        document.getElementById("pre").textContent = JSON.stringify(data, null, 4);
     }
 
     printOccultedStarsOn29Oct2015();

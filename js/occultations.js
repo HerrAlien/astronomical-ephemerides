@@ -17,26 +17,27 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 "use strict";
 
 var Occultations = {
-    getOccultedStars : function (startJde, numberOfDays) {
-
-    function sind (x) {
-        return Math.sin(x * Math.PI/180);
-    }
-    function cosd (x) {
-        return Math.cos(x * Math.PI/180);
-    }
-
-    function getDataObj (JDE) {
+    getDataObj : function(JDE) {
         var jd3 =  Math.floor(JDE) + 0.5;
         return { T1: jd3 - 2, T2: jd3 - 1, T3: jd3, T4: jd3 + 1, T5: jd3 + 2, n: JDE - jd3};
-    }
+    },
 
+    getOccultedStars : function (startJD_utc, numberOfDays) {
+
+        function sind (x) {
+            return Math.sin(x * Math.PI/180);
+        }
+        function cosd (x) {
+            return Math.cos(x * Math.PI/180);
+        }
+
+        var getDataObj = Occultations.getDataObj;
 
         var occultedStars = {};
         var dayIncrement = 1;
         var moonData = new DataForNow(MoonData);
-        var dt = GetAAJS().DynamicalTime.DeltaT(startJde)/(3600 * 24);
-        var jde = startJde + dt;
+        var dt = GetAAJS().DynamicalTime.DeltaT(startJD_utc)/(3600 * 24);
+        var jde = startJD_utc + dt;
         var stepsCount = 48;
         var jdeIncrement = dayIncrement / stepsCount;
 
