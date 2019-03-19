@@ -84,7 +84,7 @@
         var moonData = new DataForNow(MoonData);
         
         for (var i = 0; i < 1000 && Math.abs(d) > epsD; i++) {
-            var dataForT = moonData.getInterpolatedData(getDataObj(t, fraction/2, 1e-12));
+            var dataForT = moonData.getInterpolatedData(getDataObj(t, fraction, 1e-12));
             var distanceFromCenter = distance(dataForT, star);
             var moonRadius = dataForT.diameter/2;
             d = distanceFromCenter - moonRadius;
