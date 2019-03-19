@@ -72,7 +72,7 @@
         var t = jde;
         var d = 1;
         var lastD = 1;
-        var epsD = 3e-4;
+        var epsD = 1e-6;
         var fraction = 2/24;
         if (isForStart) {
             t -= fraction;
@@ -83,8 +83,8 @@
 
         var moonData = new DataForNow(MoonData);
         
-        for (var i = 0; i < 1000 && Math.abs(d) > epsD; i++) {
-            var dataForT = moonData.getInterpolatedData(getDataObj(t, fraction, 1e-12));
+        for (var i = 0; i < 100 && Math.abs(d) > epsD; i++) {
+            var dataForT = moonData.getInterpolatedData(getDataObj(t, fraction));
             var distanceFromCenter = distance(dataForT, star);
             var moonRadius = dataForT.diameter/2;
             d = distanceFromCenter - moonRadius;
@@ -103,11 +103,11 @@
         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
                 return setTimeout (printOccultedStarsOn29Oct2015, 100);
 
-        var jd = AAJS.Date.DateToJD (2015, 10, 29, true);
+        var jd = AAJS.Date.DateToJD (2014, 1, 1, true);
         
         var dt = GetAAJS().DynamicalTime.DeltaT(jd)/(3600 * 24);
 
-        var s = getOccultedStars (jd, 1);
+        var s = getOccultedStars (jd, 365);
 
 
         var data = {};

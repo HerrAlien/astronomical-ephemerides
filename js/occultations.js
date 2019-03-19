@@ -17,14 +17,12 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 "use strict";
 
 var Occultations = {
-    getDataObj : function(JDE, fraction, offset) {
+    getDataObj : function(JDE, fraction) {
         if  (!fraction) {
             fraction = 1;
         }
-        if (!offset) {
-            offset = 0.5;
-        }
-        var jd3 =  Math.round(JDE/fraction)*fraction + offset;
+        
+        var jd3 =  Math.floor(JDE/fraction)*fraction;
         return { T1: jd3 - 2 * fraction, 
                  T2: jd3 - fraction, 
                  T3: jd3, 
@@ -55,7 +53,7 @@ var Occultations = {
         for (var d = 0; d < numberOfDays; d += dayIncrement) {
 
             for (var step = 0; step < stepsCount; step++,  jde += jdeIncrement ) {
-                var dataForJd = moonData.getInterpolatedData(getDataObj(jde));
+                var dataForJd = moonData.getInterpolatedData(getDataObj(jde, 2*jdeIncrement));
                 var ra = dataForJd.RaTopo;
                 var dec = dataForJd.DecTopo;
                 var starsThatMayBeOcculted = OccultableStars.getStarsNear(ra, dec, jde);
@@ -67,8 +65,8 @@ var Occultations = {
                     var t = 1;
                     var conjunctionJde = jde;
                     for (var tIndex = 0; tIndex < 100 && Math.abs(t) > 1e-6; tIndex++) {
-                        dataForJd =  moonData.getInterpolatedData(getDataObj(conjunctionJde));
-                        var beforeData = moonData.getInterpolatedData(getDataObj(conjunctionJde - 1/24));
+                        dataForJd =  moonData.getInterpolatedData(getDataObj(conjunctionJde, 2*jdeIncrement));
+                        var beforeData = moonData.getInterpolatedData(getDataObj(conjunctionJde - 1/24, 2*jdeIncrement));
                         t = (star.RAh - beforeData.RaTopo) / (dataForJd.RaTopo - beforeData.RaTopo);
                         conjunctionJde += t / 24;
                     }
