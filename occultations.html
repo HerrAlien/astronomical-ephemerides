@@ -73,15 +73,18 @@
         var d = 1;
         var lastD = 1;
         var epsD = 3e-4;
+        var fraction = 2/24;
         if (isForStart) {
-            t -= 2/24;
+            t -= fraction;
         } else {
-            t += 2/24;
+            t += fraction;
         }
         var timeStep = (jde - t) / 2;
+
+        var moonData = new DataForNow(MoonData);
         
         for (var i = 0; i < 1000 && Math.abs(d) > epsD; i++) {
-            var dataForT = MoonData.getDataAsObjectForJD(t);
+            var dataForT = moonData.getInterpolatedData(getDataObj(t, fraction/2, 1e-12));
             var distanceFromCenter = distance(dataForT, star);
             var moonRadius = dataForT.diameter/2;
             d = distanceFromCenter - moonRadius;
@@ -91,8 +94,7 @@
             t += timeStep;
             lastD = d;
         }
-
-        return t - GetAAJS().DynamicalTime.DeltaT(t)/(3600 * 24);;
+        return t;
     };
 
 
@@ -102,7 +104,11 @@
                 return setTimeout (printOccultedStarsOn29Oct2015, 100);
 
         var jd = AAJS.Date.DateToJD (2015, 10, 29, true);
+        
+        var dt = GetAAJS().DynamicalTime.DeltaT(jd)/(3600 * 24);
+
         var s = getOccultedStars (jd, 1);
+
 
         var data = {};
 
@@ -113,8 +119,8 @@
                 star = stars[hrId];
                 data [jdeString] = {
                     star : star,
-                    start : getStartOrEndDate(star, jde, true),
-                    end : getStartOrEndDate(star, jde, false)
+                    start : getStartOrEndDate(star, jde, true) - dt,
+                    end : getStartOrEndDate(star, jde, false) - dt
                 };
             }
         }

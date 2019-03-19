@@ -17,9 +17,20 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 "use strict";
 
 var Occultations = {
-    getDataObj : function(JDE) {
-        var jd3 =  Math.floor(JDE) + 0.5;
-        return { T1: jd3 - 2, T2: jd3 - 1, T3: jd3, T4: jd3 + 1, T5: jd3 + 2, n: JDE - jd3};
+    getDataObj : function(JDE, fraction, offset) {
+        if  (!fraction) {
+            fraction = 1;
+        }
+        if (!offset) {
+            offset = 0.5;
+        }
+        var jd3 =  Math.round(JDE/fraction)*fraction + offset;
+        return { T1: jd3 - 2 * fraction, 
+                 T2: jd3 - fraction, 
+                 T3: jd3, 
+                 T4: jd3 + fraction, 
+                 T5: jd3 + 2 * fraction, 
+                 n: (JDE - jd3) / fraction};
     },
 
     getOccultedStars : function (startJD_utc, numberOfDays) {
