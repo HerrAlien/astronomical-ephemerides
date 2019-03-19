@@ -61,36 +61,38 @@
 
     var getDataObj = Occultations.getDataObj;
 
-    var distance = function  (moonData, star, jde) {
-        var dataForJd = moonData.getInterpolatedData(getDataObj(jde));
+    var distance = function  (dataForJd, star) {
         var dist = Math.acos(sind(dataForJd.DecTopo)*sind(star.DEd) + 
                              cosd(dataForJd.DecTopo)*cosd(star.DEd)*cosd(dataForJd.RaTopo*15 - star.RAh*15));
         dist *= 180/Math.PI;
         return dist;
     }
 
-    var getStartOrEndDate = function (moonData, star, jde, isForStart) {
-        var startJde = jde;
+    var getStartOrEndDate = function (star, jde, isForStart) {
+        var t = jde;
+        var d = 1;
+        var lastD = 1;
+        var epsD = 3e-4;
         if (isForStart) {
-            startJde -= 1/24;
+            t -= 2/24;
         } else {
-            startJde += 1/24;
+            t += 2/24;
         }
-        var lastStartJde = jde;
-        var lastDistance = 1;
-        var eps = 1e-5;
-
-        while (Math.abs(startJde - lastStartJde) > eps) {
-            var possibleJde = (startJde + lastStartJde) / 2;
-            var d = distance (moonData, star, possibleJde);
-            if (d < lastDistance) {
-                lastDistance = d;
-                startJde = possibleJde;
-            } else {
-                lastStartJde = possibleJde;
+        var timeStep = (jde - t) / 2;
+        
+        for (var i = 0; i < 1000 && Math.abs(d) > epsD; i++) {
+            var dataForT = MoonData.getDataAsObjectForJD(t);
+            var distanceFromCenter = distance(dataForT, star);
+            var moonRadius = dataForT.diameter/2;
+            d = distanceFromCenter - moonRadius;
+            if (lastD * d < 0) {
+                timeStep *= -0.5;
             }
+            t += timeStep;
+            lastD = d;
         }
-        return startJde;
+
+        return t - GetAAJS().DynamicalTime.DeltaT(t)/(3600 * 24);;
     };
 
 
@@ -99,10 +101,8 @@
         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
                 return setTimeout (printOccultedStarsOn29Oct2015, 100);
 
-        var moonData = new DataForNow(MoonData);
-
-        var jd = AAJS.Date.DateToJD (2014, 01, 01, true);
-        var s = getOccultedStars (jd, 30);
+        var jd = AAJS.Date.DateToJD (2015, 10, 29, true);
+        var s = getOccultedStars (jd, 1);
 
         var data = {};
 
@@ -113,8 +113,8 @@
                 star = stars[hrId];
                 data [jdeString] = {
                     star : star,
-                    start : getStartOrEndDate(moonData, star, jde, true),
-                    end : getStartOrEndDate(moonData, star, jde, false)
+                    start : getStartOrEndDate(star, jde, true),
+                    end : getStartOrEndDate(star, jde, false)
                 };
             }
         }
