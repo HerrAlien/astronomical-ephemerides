@@ -65,12 +65,12 @@ var JDForRealTimeView = {
             }
         }
 
-        DataForNow.prototype['getInterpolatedData'] = function (datesObj) {
-            var obj1 = this.dataSource.getDataAsObjectForJD (datesObj.T1, true);
-            var obj2 = this.dataSource.getDataAsObjectForJD (datesObj.T2, true);
-            var obj3 = this.dataSource.getDataAsObjectForJD (datesObj.T3, true);
-            var obj4 = this.dataSource.getDataAsObjectForJD (datesObj.T4, true);
-            var obj5 = this.dataSource.getDataAsObjectForJD (datesObj.T5, true);
+        DataForNow.prototype['getInterpolatedData'] = function (datesObj, computeRiseSet) {
+            var obj1 = this.dataSource.getDataAsObjectForJD (datesObj.T1, computeRiseSet);
+            var obj2 = this.dataSource.getDataAsObjectForJD (datesObj.T2, computeRiseSet);
+            var obj3 = this.dataSource.getDataAsObjectForJD (datesObj.T3, computeRiseSet);
+            var obj4 = this.dataSource.getDataAsObjectForJD (datesObj.T4, computeRiseSet);
+            var obj5 = this.dataSource.getDataAsObjectForJD (datesObj.T5, computeRiseSet);
             
             var interpolationLimits = {
                 "RA" : 24
