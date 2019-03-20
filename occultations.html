@@ -59,10 +59,10 @@
         
         var dt = GetAAJS().DynamicalTime.DeltaT(jd)/(3600 * 24);
 
-        var s = getOccultedStars (jd, 10);
+        var s = getOccultedStars (jd, 1);
         for (var jd in s) {
-            s[jd].start -= dt;
-            s[jd].end -= dt;
+            s[jd].start.t -= dt;
+            s[jd].end.t -= dt;
         }
 
        console.log(s);

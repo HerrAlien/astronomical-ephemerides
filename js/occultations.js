@@ -110,7 +110,7 @@ var Occultations = {
         return dist;
     },
 
-    getStartOrEndDate : function (star, jde, isForStart) {
+    getStartOrEndContact : function (star, jde, isForStart) {
         var t = jde;
         var d = 1;
         var lastD = 1;
@@ -136,7 +136,20 @@ var Occultations = {
             t += timeStep;
             lastD = d;
         }
-        return t;
+
+        var degra = Math.PI/180;
+        var dRa = 15*(star.RAh - dataForT.RaTopo);
+        if (dRa > 180) {
+            dRa -= 360;
+        } else if (dRa < -180) {
+            dRa += 360;
+        }
+        var dx = dRa * Math.cos(dataForT.DecTopo * degra);
+        var PA = Math.atan2(star.DEd - dataForT.DecTopo, dx) / degra;
+        if (PA < 0)
+            PA += 360;
+
+        return {t:t, PA: PA};
     },
 
     getOccultedStars : function (startJDE, numberOfDays) {
@@ -150,8 +163,8 @@ var Occultations = {
                 var star = stars[hrId];
                 data [jdeString] = {
                     star : star,
-                    start : Occultations.getStartOrEndDate(star, jde, true),
-                    end : Occultations.getStartOrEndDate(star, jde, false)
+                    start : Occultations.getStartOrEndContact(star, jde, true),
+                    end : Occultations.getStartOrEndContact(star, jde, false)
                 };
             }
         }
