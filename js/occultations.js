@@ -124,9 +124,10 @@ var Occultations = {
         var timeStep = (jde - t) / 2;
 
         var moonData = new DataForNow(MoonData);
+        var dataForT = false;
         
         for (var i = 0; i < 100 && Math.abs(d) > epsD; i++) {
-            var dataForT = moonData.getInterpolatedData(this.getDataObj(t, fraction));
+            dataForT = moonData.getInterpolatedData(this.getDataObj(t, fraction));
             var distanceFromCenter = this.distance(dataForT, star);
             var moonRadius = dataForT.diameter/2;
             d = distanceFromCenter - moonRadius;
@@ -144,10 +145,14 @@ var Occultations = {
         } else if (dRa < -180) {
             dRa += 360;
         }
-        var dx = dRa * Math.cos(dataForT.DecTopo * degra);
-        var PA = Math.atan2(star.DEd - dataForT.DecTopo, dx) / degra;
+        var dx = dRa * Math.cos(star.DEd * degra);
+        var dy = star.DEd - dataForT.DecTopo;
+        var PA = Math.atan2(dy, dx) / degra;
         if (PA < 0)
             PA += 360;
+        PA -= 90;
+
+
 
         return {t:t, PA: PA};
     },
