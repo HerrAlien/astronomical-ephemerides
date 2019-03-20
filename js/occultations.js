@@ -31,7 +31,7 @@ var Occultations = {
                  n: (JDE - jd3) / fraction};
     },
 
-    getOccultedStars : function (startJD_utc, numberOfDays) {
+    getOccultedStars_noTimings : function (startJD_utc, numberOfDays) {
 
         function sind (x) {
             return Math.sin(x * Math.PI/180);
@@ -94,5 +94,67 @@ var Occultations = {
 
         }
         return occultedStars;
+    },
+
+    distance : function  (dataForJd, star) {
+        var degra = Math.PI/180;
+        var moonDecRad = dataForJd.DecTopo * degra;
+        var moonRaRad = dataForJd.RaTopo*15* degra;
+
+        var starDecRad = star.DEd * degra;
+        var starRaRad = star.RAh*15 * degra;
+
+        var dist = Math.acos(Math.sin(moonDecRad)*Math.sin(starDecRad) + 
+                             Math.cos(moonDecRad)*Math.cos(starDecRad)*Math.cos(moonRaRad - starRaRad));
+        dist *= 180/Math.PI;
+        return dist;
+    },
+
+    getStartOrEndDate : function (star, jde, isForStart) {
+        var t = jde;
+        var d = 1;
+        var lastD = 1;
+        var epsD = 1e-6;
+        var fraction = 2/24;
+        if (isForStart) {
+            t -= fraction;
+        } else {
+            t += fraction;
+        }
+        var timeStep = (jde - t) / 2;
+
+        var moonData = new DataForNow(MoonData);
+        
+        for (var i = 0; i < 100 && Math.abs(d) > epsD; i++) {
+            var dataForT = moonData.getInterpolatedData(this.getDataObj(t, fraction));
+            var distanceFromCenter = this.distance(dataForT, star);
+            var moonRadius = dataForT.diameter/2;
+            d = distanceFromCenter - moonRadius;
+            if (lastD * d < 0) {
+                timeStep *= -0.5;
+            }
+            t += timeStep;
+            lastD = d;
+        }
+        return t;
+    },
+
+    getOccultedStars : function (startJDE, numberOfDays) {
+        var s = Occultations.getOccultedStars_noTimings (startJDE, 365);
+        var data = {};
+
+        for (var jdeString in s) {
+            var jde = Number(jdeString);
+            var stars = s[jdeString];
+            for (var hrId in stars) {
+                var star = stars[hrId];
+                data [jdeString] = {
+                    star : star,
+                    start : Occultations.getStartOrEndDate(star, jde, true),
+                    end : Occultations.getStartOrEndDate(star, jde, false)
+                };
+            }
+        }
+        return data;        
     }
 };
