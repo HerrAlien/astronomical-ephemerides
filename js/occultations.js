@@ -140,7 +140,7 @@ var Occultations = {
     },
 
     getOccultedStars : function (startJDE, numberOfDays) {
-        var s = Occultations.getOccultedStars_noTimings (startJDE, 365);
+        var s = Occultations.getOccultedStars_noTimings (startJDE, numberOfDays);
         var data = {};
 
         for (var jdeString in s) {

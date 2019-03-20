@@ -55,11 +55,11 @@
         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
                 return setTimeout (printOccultedStarsOn29Oct2015, 100);
 
-        var jd = AAJS.Date.DateToJD (2014, 1, 1, true);
+        var jd = AAJS.Date.DateToJD (2015, 10, 29, true);
         
         var dt = GetAAJS().DynamicalTime.DeltaT(jd)/(3600 * 24);
 
-        var s = getOccultedStars (jd, 365);
+        var s = getOccultedStars (jd, 10);
         for (var jd in s) {
             s[jd].start -= dt;
             s[jd].end -= dt;
