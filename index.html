@@ -313,6 +313,16 @@ function GetAAJS() {
     return AAJS;
 }
 
+var Pages = {"addPlainPages" : function(titles){
+    for (var i = 0; i < titles.length; i++) {
+        var title = titles[i];
+        Pages[title] = {"displayPage" : function() {}, "reset" : function() {}};
+    }
+}};
+
+Pages.addPlainPages(["more", "settings", "home", "privacy", "Search results", "about", "Occultations"]);
+
+
 </script>
 
 
@@ -1721,6 +1731,42 @@ h1 {
             <div id="SolarEclipsesContainer" class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></div>
         </div>
 
+
+       <div id="Occultations" class="page">
+            <h1>Occultations</h1>
+            <div class="leftaligned">
+            Accuracy of the times displayed below is about 1 minute. Position angles are in sexagesimal degrees (&deg;)
+            </div>
+            
+
+            <div id="OccultationsContainer" class="loadingMemFileContents">
+            <!--
+            <div class="loadingMemFileContentsDiv">&nbsp;</div>
+-->
+
+            <div class="moonEclipse" id="occultations2458504">
+                <h2>2019-01-21: Aldebaran (ZC 687)</h2>
+
+                <table>
+                  <tr>
+                    <th>Phase</th><th>Time (local)</th><th>Position Angle</th>
+                   </tr>
+                   <tr>
+                      <td>Disappearance</td><td>04:36</td><td>106</td>
+                   </tr>
+                   <tr>
+                      <td>Reappearance</td><td>06:36</td><td>286</td>
+                   </tr>
+                 </table>
+            </div>
+
+
+
+
+        </div>
+
+
+
        <div id="privacy" class="page">
             <h1>Privacy Policy</h1>
             <div class="leftaligned">
@@ -1796,21 +1842,15 @@ title="opens in a new window">Bits of software</a><br>
 <script type="text/JavaScript" async="" src="js/nextdayseventsdata.js"></script>
 <script type="text/JavaScript" async="" src="js/nextdayseventsview.js"></script>
 
+<script type="text/JavaScript" async="" src="js/occultations.js"></script>
+<script type="text/JavaScript" async="" src="js/occultablestars.js"></script>
+
 
  <script>
 
 "use strict";
 
 $get("JSDisabledPage").style.display = "none";
-
-var Pages = {"addPlainPages" : function(titles){
-    for (var i = 0; i < titles.length; i++) {
-        var title = titles[i];
-        Pages[title] = {"displayPage" : function() {}, "reset" : function() {}};
-    }
-}};
-
-Pages.addPlainPages(["more", "settings", "home", "privacy", "Search results", "about"]);
 
 var previousPage = false;
 var currentActiveLink = false;
