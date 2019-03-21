@@ -146,15 +146,9 @@ var Occultations = {
             dRaDeg += 360;
         }
 
-        var maxDecDeg = Math.abs(star.DEd) > Math.abs(dataForT.DecTopo) ?
-                        star.DEd : dataForT.DecTopo;
-
-        var dx = dRaDeg * Math.cos(maxDecDeg * degra);
-        var dy = star.DEd - dataForT.DecTopo;
+        var dx = Math.cos(dataForT.DecTopo * degra)*Math.tan(star.DEd * degra)-Math.sin(dataForT.DecTopo * degra)*Math.cos(dRaDeg * degra)
+        var dy = Math.sin(dRaDeg * degra);
         var PA = Math.atan2(dy, dx) / degra;
-        if (PA < 0)
-            PA += 360;
-        PA -= 90;
         if (PA < 0)
             PA += 360;
 
