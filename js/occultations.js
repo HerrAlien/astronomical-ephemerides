@@ -105,7 +105,7 @@ var Occultations = {
         var starRaRad = star.RAh*15 * degra;
 
         var dist = Math.acos(Math.sin(moonDecRad)*Math.sin(starDecRad) + 
-                             Math.cos(moonDecRad)*Math.cos(starDecRad)*Math.cos(moonRaRad - starRaRad));
+                   Math.cos(moonDecRad)*Math.cos(starDecRad)*Math.cos(moonRaRad - starRaRad));
         dist *= 180/Math.PI;
         return dist;
     },
@@ -139,20 +139,24 @@ var Occultations = {
         }
 
         var degra = Math.PI/180;
-        var dRa = 15*(star.RAh - dataForT.RaTopo);
-        if (dRa > 180) {
-            dRa -= 360;
-        } else if (dRa < -180) {
-            dRa += 360;
+        var dRaDeg = 15*(star.RAh - dataForT.RaTopo);
+        if (dRaDeg > 180) {
+            dRaDeg -= 360;
+        } else if (dRaDeg < -180) {
+            dRaDeg += 360;
         }
-        var dx = dRa * Math.cos(star.DEd * degra);
+
+        var maxDecDeg = Math.abs(star.DEd) > Math.abs(dataForT.DecTopo) ?
+                        star.DEd : dataForT.DecTopo;
+
+        var dx = dRaDeg * Math.cos(maxDecDeg * degra);
         var dy = star.DEd - dataForT.DecTopo;
         var PA = Math.atan2(dy, dx) / degra;
         if (PA < 0)
             PA += 360;
         PA -= 90;
-
-
+        if (PA < 0)
+            PA += 360;
 
         return {t:t, PA: PA};
     },

@@ -2,6 +2,8 @@
 <body>
 <pre id="pre">
 </pre>
+
+
 </body>
 </html>
 
@@ -56,6 +58,7 @@
                 return setTimeout (printOccultedStarsOn29Oct2015, 100);
 
         var jd = AAJS.Date.DateToJD (1984, 11, 19, true);
+//        var jd = AAJS.Date.DateToJD (2015, 10, 29, true);
         
         var dt = GetAAJS().DynamicalTime.DeltaT(jd)/(3600 * 24);
 
@@ -66,10 +69,11 @@
         }
 
        console.log(s);
-        document.getElementById("pre").textContent = JSON.stringify(s, null, 4);
+       document.getElementById("pre").textContent = JSON.stringify(s, null, 4);
     }
 
     printOccultedStarsOn29Oct2015();
+
 
 
 })();
