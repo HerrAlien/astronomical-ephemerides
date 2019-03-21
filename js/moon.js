@@ -19,7 +19,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 var MoonData = {
     cache : {},
        
-   getDataAsObjectForJD : function (JDE, computeRiseTransitSet) {
+   getDataAsObjectForJD : function (JDE, computeRiseTransitSet, computeSelenographicData) {
         
         var data = this.cache[JDE];
         
@@ -44,14 +44,6 @@ var MoonData = {
             data ['Parallax'] = data.parallax;
             
 			data['MeridianTransit'] = false;
-
-            var selenographicCoordsOfSun = GetAAJS().Moon.CalculateSelenographicPositionOfSun (JDE, true);
-            var colongitude = 90 - selenographicCoordsOfSun.l0;
-            if (colongitude < 0)
-                colongitude += 360;
-            
-            data['Colongitude'] = colongitude;
-            data['b0'] = selenographicCoordsOfSun.b0;
             
             this.cache[JDE] = data;
         }
@@ -59,6 +51,17 @@ var MoonData = {
         if (computeRiseTransitSet) {
             this.riseSetAngle = 0.7275 * data.parallax - 0.56666666666666666666666666666667;
             data = this.addRiseTransitSetData(JDE, data);
+            this.cache[JDE] = data;
+        }
+
+        if (computeSelenographicData) {
+            var selenographicCoordsOfSun = GetAAJS().Moon.CalculateSelenographicPositionOfSun (JDE, true);
+            var colongitude = 90 - selenographicCoordsOfSun.l0;
+            if (colongitude < 0)
+                colongitude += 360;
+
+            data['Colongitude'] = colongitude;
+            data['b0'] = selenographicCoordsOfSun.b0;
             this.cache[JDE] = data;
         }
 

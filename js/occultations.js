@@ -80,7 +80,7 @@ var Occultations = {
                     var dist = Math.acos(sind(conjunctionDec)*sind(star.DEd) + 
                                          cosd(conjunctionDec)*cosd(star.DEd));
                     dist *= 180/Math.PI;
-                    if (dist <= conjunctionDiameter/2) 
+                    if (dist < conjunctionDiameter) 
                     {
                         var key = Math.round(conjunctionJde * 1e6) / 1e6;
 
@@ -170,11 +170,18 @@ var Occultations = {
             var stars = s[jdeString];
             for (var hrId in stars) {
                 var star = stars[hrId];
-                data [jdeString] = {
-                    star : star,
-                    start : Occultations.getStartOrEndContact(star, jde, true),
-                    end : Occultations.getStartOrEndContact(star, jde, false)
-                };
+                var start = Occultations.getStartOrEndContact(star, jde, true);
+                var end = Occultations.getStartOrEndContact(star, jde, false);
+                if (end.t - start.t < 1/8) {
+                    data [jdeString] = {
+                        star : star,
+                        start : start,
+                        end : end
+                    };
+                }
+                else {
+                    console.log(jde + ": " + star);
+                }
             }
         }
         return data;        
