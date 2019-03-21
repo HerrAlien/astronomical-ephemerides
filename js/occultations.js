@@ -80,7 +80,7 @@ var Occultations = {
                     var dist = Math.acos(sind(conjunctionDec)*sind(star.DEd) + 
                                          cosd(conjunctionDec)*cosd(star.DEd));
                     dist *= 180/Math.PI;
-                    if (dist < conjunctionDiameter) 
+                    if (dist < conjunctionDiameter * 0.75) 
                     {
                         var key = Math.round(conjunctionJde * 1e6) / 1e6;
 
@@ -126,7 +126,7 @@ var Occultations = {
         var moonData = new DataForNow(MoonData);
         var dataForT = false;
         
-        for (var i = 0; i < 100 && Math.abs(d) > epsD; i++) {
+        for (var i = 0; i < 100 && Math.abs(d) > epsD && Math.abs(t - jde) < 0.25; i++) {
             dataForT = moonData.getInterpolatedData(this.getDataObj(t, fraction));
             var distanceFromCenter = this.distance(dataForT, star);
             var moonRadius = dataForT.diameter/2;
@@ -137,6 +137,9 @@ var Occultations = {
             t += timeStep;
             lastD = d;
         }
+
+        if (Math.abs(t - jde) >= 0.25)
+            return false;
 
         var degra = Math.PI/180;
         var dRaDeg = 15*(star.RAh - dataForT.RaTopo);
@@ -166,15 +169,12 @@ var Occultations = {
                 var star = stars[hrId];
                 var start = Occultations.getStartOrEndContact(star, jde, true);
                 var end = Occultations.getStartOrEndContact(star, jde, false);
-                if (end.t - start.t < 1/8) {
+                if (start && end) {
                     data [jdeString] = {
                         star : star,
                         start : start,
                         end : end
                     };
-                }
-                else {
-                    console.log(jde + ": " + star);
                 }
             }
         }
