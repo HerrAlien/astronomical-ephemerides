@@ -1770,7 +1770,88 @@ h1 {
 
             </div>
 
+<script>
+var ocl = {
+        "star": {
+            "HR": "1457",
+            "bfID": "Alp Tau",
+            "Name": "Aldebaran",
+            "RAh": 4.614087537755451,
+            "DEd": 16.539761397531645,
+            "Vmag": 0.85,
+            "pmRA": 0.063,
+            "pmDE": -0.19,
+            "zc": 692
+        },
+        "start": {
+            "t": 2457325.415794253,
+            "PA": 95.69277545187946
+        },
+        "end": {
+            "t": 2457325.465001869,
+            "PA": 240.58866136100926
+        }
+    };
+var oclHost = document.getElementById("OccultationsContainer");
+var addNodeChild = false;
+var yyyymmdd_hhmmOfJD = false;
 
+
+function getOccultationTitle (occultation) {
+    var dt = yyyymmdd_hhmmOfJD(occultation.start.t);
+    var dateString  = "" + dt.date.Y + "-" + dt.date.M + "-" + dt.date.D;
+    var star = occultation.star;
+    var name = star.Name ? star.Name : star.bfID ? star.bfID  : "" ;
+    return dateString + " " + name + (star.zc ? " (ZC " + occultation.star.zc + ")" : "") ;
+}
+
+function getOccultationID (occultation) {
+  return "occultation" + Math.round(occultation.start.t * 10000);
+}
+
+function drawOccultation (occultation, host) {
+  var fragment = document.createDocumentFragment();
+  var div = addNodeChild (fragment, "div");
+  div.classList.add("individualEventSection");
+  div.classList.add("occultation");
+  div["id"] = getOccultationID (occultation);
+
+  var h2 = addNodeChild (div, "h2", getOccultationTitle(occultation));
+
+  var table = addNodeChild (div, "table");
+  var header = addNodeChild(table, "tr");
+  addNodeChild(header, "th", "Phase");
+  addNodeChild(header, "th", "Time");
+  addNodeChild(header, "th", "Position Angle");
+
+  var immersionRow = addNodeChild(table, "tr");
+  addNodeChild(immersionRow, "td", "Disappearance (D)");
+  var t = yyyymmdd_hhmmOfJD(occultation.start.t);
+  addNodeChild(immersionRow, "td", t.time.Ord3 + ":" + t.time.Ord2);
+  addNodeChild(immersionRow,"td", Math.round(occultation.start.PA));
+
+  var emmersionRow = addNodeChild(table, "tr");
+  addNodeChild(emmersionRow, "td", "Reappearance (R)");
+  t = yyyymmdd_hhmmOfJD(occultation.end.t);
+  addNodeChild(emmersionRow, "td", t.time.Ord3 + ":" + t.time.Ord2);
+  addNodeChild(emmersionRow,"td", Math.round(occultation.end.PA));
+
+  host.appendChild(fragment);
+}
+
+function zzzzzz() {
+  if (typeof PlanetPage != "undefined" && 
+  typeof AAJS != "undefined" && AAJS.AllDependenciesLoaded()) {
+addNodeChild = PlanetPage.prototype["addNodeChild"];
+yyyymmdd_hhmmOfJD =  PlanetPage.prototype["yyyymmdd_hhmmOfJD"];
+    drawOccultation (ocl, oclHost);
+  }
+  else
+    setTimeout (zzzzzz, 500);
+}
+
+zzzzzz();
+</script>
 
 
         </div>
