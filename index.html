@@ -1786,7 +1786,7 @@ var ocl = {
     };
 
 
-/* ocl = {
+var ocl = {
         "star": {
             "HR": "4826",
             "bfID": "Gam Vir",
@@ -1807,7 +1807,7 @@ var ocl = {
             "PA": 263.2512823473213
         }
     };
-*/
+
 var oclHost = document.getElementById("OccultationsContainer");
 var addNodeChild = false;
 var yyyymmdd_hhmmOfJD = false;
@@ -1853,16 +1853,6 @@ function drawOccultation (occultation, host) {
   addNodeChild(emmersionRow, "td", t.time.Ord3 + ":" + t.time.Ord2);
   addNodeChild(emmersionRow,"td", Math.round(occultation.end.PA));
 
-/*
-                <svg class="viewport" viewBox="0 0 480 480" preserveAspectRatio="xMidYMid meet">
-                  <svg width="480" height="480" alt="Lunar Eclipse Graph">
-                    <line x1="0" y1="359.4724971408152" x2="480" y2="301.4724971408152"  fill="none" stroke="#000000" stroke-width="1"></line>
-                    <circle cx="240" cy="240" r="200.7359478311445" fill="#eeeeee" stroke="#000000" stroke-width="1"></circle>
-                    <text x="40.06062380368883" y="400.4724971408152">D</text>
-                    <text x="440.06062380368883" y="359.4724971408152">R</text>
-                  </svg>
-                </svg>
-*/
   var moonRadius = 160;
   var w = 480;
   var h = 480;
@@ -1882,6 +1872,7 @@ function drawOccultation (occultation, host) {
 
 
   var degra = Math.PI/180;
+  var hra = Math.PI/12;
   var paD = degra * (90 + occultation.start.PA);
   var xd = moonRadius * Math.cos(paD);
   var yd = moonRadius * Math.sin(paD);
@@ -1889,6 +1880,19 @@ function drawOccultation (occultation, host) {
   var paR = degra * (90 + occultation.end.PA);
   var xr = moonRadius * Math.cos(paR);
   var yr = moonRadius * Math.sin(paR);
+
+  var text = document.createElementNS (svgns, "text");
+  img.appendChild (text);
+  text.setAttribute("x", xd + w/2 - 10);
+  text.setAttribute("y", h/2 - yd + 30);
+  text.textContent = "D";
+
+  text = document.createElementNS (svgns, "text");
+  img.appendChild (text);
+  text.setAttribute("x", xr + w/2);
+  text.setAttribute("y", h/2 - yr + 30);
+  text.textContent = "R";
+
 
   var slope = (yr - yd) / (xr - xd);
   var yStart = (slope * (-w/2 - xd) + yd);
@@ -1903,7 +1907,6 @@ function drawOccultation (occultation, host) {
   l.setAttribute ("y1", yStart);
   l.setAttribute("x2", w);
   l.setAttribute ("y2", yEnd);
-  // stroke="#000000" stroke-width="1"
   l.setAttribute("stroke", "#000000");
   l.setAttribute("stroke-width", 1);
 
@@ -1913,8 +1916,103 @@ function drawOccultation (occultation, host) {
   moon.setAttribute("cx", h/2);
   moon.setAttribute("cy", w/2);
   moon.setAttribute("r", moonRadius);
-  moon.setAttribute("fill", "#eeeeee");
+  moon.setAttribute("fill", "#cccccc");
   moon.setAttribute("stroke", "#000000");
+
+  var moonData = MoonData.getDataAsObjectForJD(occultation.start.t);
+  var sunData = SunData.getDataAsObjectForJD(occultation.start.t);
+
+  var cos = Math.cos;
+  var sin = Math.sin;
+  var tan = Math.tan;
+
+  var paSun = Math.atan2 (cos(sunData.Dec * degra) * sin(hra * (sunData.RA - moonData.RaGeo)),
+                          (sin(sunData.Dec * degra) * cos(moonData.DecGeo*degra) -
+                          cos(sunData.Dec * degra) * sin(moonData.DecGeo*degra) * cos(hra * (sunData.RA - moonData.RaGeo))
+                          )
+                          );
+  paSun += Math.PI/2;
+  var limbX = moonRadius * cos(paSun);
+  var limbY = moonRadius * sin(paSun);
+
+  var darkX = moonRadius * cos(paSun + Math.PI);
+  var darkY = moonRadius * sin(paSun + Math.PI);
+
+  var cusp1PA = paSun + Math.PI/2; 
+  var cusp1X = moonRadius * cos(cusp1PA);
+  var cusp1Y = moonRadius * sin(cusp1PA);
+
+  var cusp2PA = cusp1PA + Math.PI; 
+  var cusp2X = -cusp1X;
+  var cusp2Y = -cusp1Y;
+
+  var T = (occultation.start.t - 2451545)/36525;
+  var T2 = T*T;
+  var T3 = T2*T;
+  var T4 = T3*T;
+
+  var D = 297.8502042 + 445267.1115168 * T
+                      - 0.00163 * T2
+                      + T3/545868 
+                      - T4/113065000;
+  var M = 357.5291092 + 35999.0502909 * T
+                      - 0.0001536 * T2
+                      + T3 / 24490000;   
+
+  var _M = 134.9634114 + 477198.8676313*T
+                       + 0.008997 * T2
+                       + T3/69699 
+                       - T4 / 14712000;                                         
+
+  var i = 180 - D - 6.289 * sin (_M * degra)
+                  + 2.1 * sin (M * degra)
+                  - 1.274 * sin ((2*D - _M) * degra)
+                  - 0.658 * sin (2 * D * degra)
+                  - 0.214 * sin (2 * _M * degra)
+                  - 0.11 * sin (D * degra);
+  
+  var k = (1 + cos(i * degra)) / 2;
+
+  var tx = (1 - k) * limbX + k * darkX;
+  var ty = (1 - k) * limbY + k * darkY;
+
+  var p1x = (cusp1X + tx) / 2;
+  var p1y = (cusp1Y + ty) / 2;
+  var slope1 = (-1) / ((cusp1Y - ty) / (cusp1X - tx));
+
+  var p2x = (cusp2X + tx) / 2;
+  var p2y = (cusp2Y + ty) / 2;
+  var slope2 = (-1) / ((cusp2Y - ty) / (cusp2X - tx));
+
+  var cx = (slope1 * p1x - slope2 * p2x + p2y - p1y) / (slope1 - slope2);
+  var cy = slope1 * (cx - p1x) + p1y;
+
+  var tr = Math.sqrt((cx - p1x) * (cx - p1x) + (cy - p1y) * (cy - p1y));
+
+  cusp1X += w/2;
+  cusp2X += w/2;
+  darkX  += w/2;
+  limbX  += w/2;
+  tx += w/2;
+
+ cusp1Y = h/2 - cusp1Y;
+ cusp2Y = h/2 - cusp2Y;
+ darkY  = h/2 - darkY ;
+ limbY  = h/2 - limbY ;
+ ty = h/2 - ty;
+
+  var d = "M " + cusp1X + " " + cusp1Y +
+            " A " + tr + " " + tr + " 0 0 1 " + tx + " " + ty  +
+            " A " + tr + " " + tr + " 0 0 1 " + cusp2X + " " + cusp2Y  +
+            " A " + moonRadius + " " + moonRadius + " 0 0 0 " + limbX + " " + limbY  +
+            " A " + moonRadius + " " + moonRadius + " 0 0 0 " + cusp1X + " " + cusp1Y;
+
+  var path = document.createElementNS(svgns, "path");
+  img.appendChild (path);
+  path.setAttribute("d", d);
+  path.setAttribute ("fill", "#ffffff");
+  path.setAttribute ("sroke", "#000000");
+  path.setAttribute ("stroke-width", "2");
 
   host.appendChild(fragment);
 }
