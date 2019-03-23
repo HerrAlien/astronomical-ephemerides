@@ -1784,6 +1784,30 @@ var ocl = {
             "PA": 240.58866136100926
         }
     };
+
+
+/* ocl = {
+        "star": {
+            "HR": "4826",
+            "bfID": "Gam Vir",
+            "Name": "",
+            "RAh": 12.683769371609834,
+            "DEd": -1.3666980365526753,
+            "Vmag": 3.68,
+            "pmRA": -0.565,
+            "pmDE": 0.012,
+            "zc": 1821
+        },
+        "start": {
+            "t": 2446024.004584848,
+            "PA": 151.54644637578815
+        },
+        "end": {
+            "t": 2446024.036753165,
+            "PA": 263.2512823473213
+        }
+    };
+*/
 var oclHost = document.getElementById("OccultationsContainer");
 var addNodeChild = false;
 var yyyymmdd_hhmmOfJD = false;
@@ -1839,7 +1863,7 @@ function drawOccultation (occultation, host) {
                   </svg>
                 </svg>
 */
-  var moonRadius = 200;
+  var moonRadius = 160;
   var w = 480;
   var h = 480;
 
@@ -1856,6 +1880,34 @@ function drawOccultation (occultation, host) {
   img.setAttribute("width", w);
   img.setAttribute("alt", occultationTitle);
 
+
+  var degra = Math.PI/180;
+  var paD = degra * (90 + occultation.start.PA);
+  var xd = moonRadius * Math.cos(paD);
+  var yd = moonRadius * Math.sin(paD);
+
+  var paR = degra * (90 + occultation.end.PA);
+  var xr = moonRadius * Math.cos(paR);
+  var yr = moonRadius * Math.sin(paR);
+
+  var slope = (yr - yd) / (xr - xd);
+  var yStart = (slope * (-w/2 - xd) + yd);
+  var yEnd = (slope * (w/2 - xd) + yd);
+
+  yStart = h/2 - yStart;
+  yEnd = h/2 - yEnd;
+
+  var l = document.createElementNS(svgns, "line");
+  img.appendChild (l);
+  l.setAttribute("x1", 0);
+  l.setAttribute ("y1", yStart);
+  l.setAttribute("x2", w);
+  l.setAttribute ("y2", yEnd);
+  // stroke="#000000" stroke-width="1"
+  l.setAttribute("stroke", "#000000");
+  l.setAttribute("stroke-width", 1);
+
+
   var moon = document.createElementNS(svgns, "circle");
   img.appendChild (moon);
   moon.setAttribute("cx", h/2);
@@ -1863,7 +1915,6 @@ function drawOccultation (occultation, host) {
   moon.setAttribute("r", moonRadius);
   moon.setAttribute("fill", "#eeeeee");
   moon.setAttribute("stroke", "#000000");
-
 
   host.appendChild(fragment);
 }
