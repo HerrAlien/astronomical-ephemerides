@@ -85,7 +85,8 @@ drawOccultation: function  (occultation, host) {
   var occultationTitle = OccultationsPage.getOccultationTitle(occultation);
 
   var h2 = addNodeChild (div, "h2", occultationTitle);
-
+  addNodeChild (div, "span", "Star magnitude: " + occultation.star.Vmag);
+  
   var table = addNodeChild (div, "table");
   var header = addNodeChild(table, "tr");
   addNodeChild(header, "th", "Phase");
