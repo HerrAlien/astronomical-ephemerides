@@ -1988,6 +1988,7 @@ function drawOccultation (occultation, host) {
   var cy = slope1 * (cx - p1x) + p1y;
 
   var tr = Math.sqrt((cx - tx) * (cx - tx) + (cy - ty) * (cy - ty));
+  var flip = (tx < cx) ? 1 : 0;
 
   cusp1X += w/2;
   cusp2X += w/2;
@@ -2002,17 +2003,17 @@ function drawOccultation (occultation, host) {
  ty = h/2 - ty;
 
   var d = "M " + cusp1X + " " + cusp1Y +
-            " A " + tr + " " + tr + " 0 0 1 " + tx + " " + ty  +
-            " A " + tr + " " + tr + " 0 0 1 " + cusp2X + " " + cusp2Y  +
+            " A " + tr + " " + tr + " 0 0 " + flip + " " + tx + " " + ty  +
+            " A " + tr + " " + tr + " 0 0 " + flip + " " + cusp2X + " " + cusp2Y  +
             " A " + moonRadius + " " + moonRadius + " 0 0 0 " + limbX + " " + limbY  +
             " A " + moonRadius + " " + moonRadius + " 0 0 0 " + cusp1X + " " + cusp1Y;
 
   var path = document.createElementNS(svgns, "path");
   img.appendChild (path);
   path.setAttribute("d", d);
-  path.setAttribute ("fill", "#ffffff");
+  path.setAttribute ("fill", "#ffffdd");
   path.setAttribute ("sroke", "#000000");
-  path.setAttribute ("stroke-width", "2");
+  path.setAttribute ("stroke-width", 2);
 
   host.appendChild(fragment);
 }
