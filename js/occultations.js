@@ -16,7 +16,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
-var Occultations = {
+var OccultationsData = {
     getDataObj : function(JDE, fraction) {
         if  (!fraction) {
             fraction = 1;
@@ -40,7 +40,7 @@ var Occultations = {
             return Math.cos(x * Math.PI/180);
         }
 
-        var getDataObj = Occultations.getDataObj;
+        var getDataObj = OccultationsData.getDataObj;
 
         var occultedStars = {};
         var dayIncrement = 1;
@@ -159,7 +159,7 @@ var Occultations = {
     },
 
     getOccultedStars : function (startJDE, numberOfDays) {
-        var s = Occultations.getOccultedStars_noTimings (startJDE, numberOfDays);
+        var s = OccultationsData.getOccultedStars_noTimings (startJDE, numberOfDays);
         var data = {};
 
         for (var jdeString in s) {
@@ -167,8 +167,8 @@ var Occultations = {
             var stars = s[jdeString];
             for (var hrId in stars) {
                 var star = stars[hrId];
-                var start = Occultations.getStartOrEndContact(star, jde, true);
-                var end = Occultations.getStartOrEndContact(star, jde, false);
+                var start = OccultationsData.getStartOrEndContact(star, jde, true);
+                var end = OccultationsData.getStartOrEndContact(star, jde, false);
                 if (start && end) {
                     data [jdeString] = {
                         star : star,
