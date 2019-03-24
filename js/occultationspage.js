@@ -239,7 +239,8 @@ drawOccultation: function  (occultation, host) {
   var cy = slope1 * (cx - p1x) + p1y;
 
   var tr = Math.sqrt((cx - tx) * (cx - tx) + (cy - ty) * (cy - ty));
-  var flip = (tx < cx) ? 1 : 0;
+
+  var flip = k < 0.5 ? 1 : 0;
 
   cusp1X += w/2;
   cusp2X += w/2;
