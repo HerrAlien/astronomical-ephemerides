@@ -1987,7 +1987,7 @@ function drawOccultation (occultation, host) {
   var cx = (slope1 * p1x - slope2 * p2x + p2y - p1y) / (slope1 - slope2);
   var cy = slope1 * (cx - p1x) + p1y;
 
-  var tr = Math.sqrt((cx - p1x) * (cx - p1x) + (cy - p1y) * (cy - p1y));
+  var tr = Math.sqrt((cx - tx) * (cx - tx) + (cy - ty) * (cy - ty));
 
   cusp1X += w/2;
   cusp2X += w/2;
@@ -2019,7 +2019,7 @@ function drawOccultation (occultation, host) {
 
 function zzzzzz() {
   if (typeof PlanetPage != "undefined" && 
-  typeof AAJS != "undefined" && AAJS.AllDependenciesLoaded()) {
+  typeof AAJS != "undefined" && AAJS.AllDependenciesLoaded && AAJS.AllDependenciesLoaded()) {
 addNodeChild = PlanetPage.prototype["addNodeChild"];
 yyyymmdd_hhmmOfJD =  PlanetPage.prototype["yyyymmdd_hhmmOfJD"];
     drawOccultation (ocl, oclHost);
