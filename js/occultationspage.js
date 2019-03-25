@@ -35,6 +35,7 @@ var OccultationsPage = {
             return;
 
         OccultationsPage.reset();
+        OccultationsPage.occultationRendered = {};
         var endJD = startJD + numberOfDays;
         
         function processJD (JD) {
