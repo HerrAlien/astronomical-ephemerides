@@ -31,7 +31,7 @@ var OccultationsData = {
                  n: (JDE - jd3) / fraction};
     },
 
-    getOccultedStars_noTimings : function (startJD_utc, numberOfDays) {
+    getOccultedStars_noTimings : function (jde, numberOfDays) {
 
         function sind (x) {
             return Math.sin(x * Math.PI/180);
@@ -45,8 +45,6 @@ var OccultationsData = {
         var occultedStars = {};
         var dayIncrement = 1;
         var moonData = new DataForNow(MoonData);
-        var dt = GetAAJS().DynamicalTime.DeltaT(startJD_utc)/(3600 * 24);
-        var jde = startJD_utc + dt;
         var stepsCount = 48;
         var jdeIncrement = dayIncrement / stepsCount;
 
@@ -62,13 +60,14 @@ var OccultationsData = {
                     var star = starsThatMayBeOcculted[i];            
 
                     // get the time of conjunction
-                    var t = 1;
                     var conjunctionJde = jde;
-                    for (var tIndex = 0; tIndex < 100 && Math.abs(t) > 1e-6; tIndex++) {
+                    var lastConjunctionJde = conjunctionJde - 1;
+                    for (var cjIndex = 0; cjIndex < 10 && Math.abs(conjunctionJde - lastConjunctionJde) > 1e-6; cjIndex++) {
+                        lastConjunctionJde = conjunctionJde;
                         dataForJd =  moonData.getInterpolatedData(getDataObj(conjunctionJde, 2*jdeIncrement));
                         var beforeData = moonData.getInterpolatedData(getDataObj(conjunctionJde - 1/24, 2*jdeIncrement));
-                        t = (star.RAh - beforeData.RaTopo) / (dataForJd.RaTopo - beforeData.RaTopo);
-                        conjunctionJde += t / 24;
+                        var t = (star.RAh - beforeData.RaTopo) / (dataForJd.RaTopo - beforeData.RaTopo);
+                        conjunctionJde = conjunctionJde - 1/24 + t/24;
                     }
                     // interpolate new values for moon
                     

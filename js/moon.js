@@ -70,7 +70,6 @@ var MoonData = {
 
     reset : function () {
         this.cache = {};
-        this.toDUT = 0;
     },
 
     riseSetAngle : -0.83333

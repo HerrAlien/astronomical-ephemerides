@@ -32,7 +32,13 @@ function OccultableStarsTree (stars, granularityDeg) {
     var tree = {};
 
     this.epoch = 2451545;
+    this.reset = function() {
+        tree = {}; 
+        this.epoch = 2451545;               
+    }
+
     this.init = function (jde) {
+        if (tree) {
             if (!jde) {
                 jde = 2451545;
             }
@@ -44,6 +50,7 @@ function OccultableStarsTree (stars, granularityDeg) {
             yearsSince2000 = (jde - 2451545)/365.25;
         
         tree = {};
+    }
 
     for (var i = 0; i < _stars.length; i++) {
         var star = _stars[i];

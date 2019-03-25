@@ -36,15 +36,17 @@ var OccultationsPage = {
 
         OccultationsPage.reset();
         OccultationsPage.occultationRendered = {};
+        MoonData.reset();
+        OccultableStars.reset();
         var endJD = startJD + numberOfDays;
         
-        function processJD (JD) {
+        function OccultationsPageProcessJD (JD) {
             if (JD >= endJD) {
                 OccultationsPage.pageRendered = true;
                 return;
             }
-            
-            var occultations = OccultationsData.getOccultedStars(JD, 10);
+
+            var occultations = OccultationsData.getOccultedStars(JD, 1);
             for (var occKey in occultations) {
                 if ( OccultationsPage.occultationRendered[occKey]) {
                     continue;
@@ -53,10 +55,10 @@ var OccultationsPage = {
                 OccultationsPage.occultationRendered[occKey] = true;
             }
             
-            requestAnimationFrame (function() { processJD(JD + 10); });
+            requestAnimationFrame (function() { OccultationsPageProcessJD(JD + 1); });
         }
         
-        processJD(startJD);
+        OccultationsPageProcessJD(startJD);
     },
 
 
@@ -78,6 +80,8 @@ drawOccultation: function  (occultation, host) {
     var addNodeChild = PlanetPage.prototype["addNodeChild"];
     var yyyymmdd_hhmmOfJD =  PlanetPage.prototype["yyyymmdd_hhmmOfJD"];
 
+    var dt = GetAAJS().DynamicalTime.DeltaT(occultation.start.t)/(3600 * 24);
+
   var fragment = document.createDocumentFragment();
   var div = addNodeChild (fragment, "div");
   div.classList.add("individualEventSection");
@@ -96,13 +100,13 @@ drawOccultation: function  (occultation, host) {
 
   var immersionRow = addNodeChild(table, "tr");
   addNodeChild(immersionRow, "td", "Disappearance (D)");
-  var t = yyyymmdd_hhmmOfJD(occultation.start.t);
+  var t = yyyymmdd_hhmmOfJD(occultation.start.t - dt);
   addNodeChild(immersionRow, "td", t.time.Ord3 + ":" + t.time.Ord2);
   addNodeChild(immersionRow,"td", Math.round(occultation.start.PA));
 
   var emmersionRow = addNodeChild(table, "tr");
   addNodeChild(emmersionRow, "td", "Reappearance (R)");
-  t = yyyymmdd_hhmmOfJD(occultation.end.t);
+  t = yyyymmdd_hhmmOfJD(occultation.end.t - dt);
   addNodeChild(emmersionRow, "td", t.time.Ord3 + ":" + t.time.Ord2);
   addNodeChild(emmersionRow,"td", Math.round(occultation.end.PA));
 
