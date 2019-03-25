@@ -21,12 +21,20 @@ var OccultationsPage = {
     hostElement : document.getElementById("OccultationsContainer"),
     pageRendered : false,
     occultationRendered : {},
+    signature : false,
+    getSignature : function() {
+      return  JSON.stringify(PageTimeInterval) + JSON.stringify(
+        [Location.latitude, Location.longitude, Location.altitude]
+      );
+    },
     
 
     displayPage : function () {
         
         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !AAJS.AllDependenciesLoaded || !PageTimeInterval.JD )
             return SyncedTimeOut (function() { OccultationsPage.displayPage(); }, Timeout.onInit);
+
+        OccultationsPage.signature = OccultationsPage.getSignature();
 
         var startJD = PageTimeInterval.JD;
         var numberOfDays =  PageTimeInterval.days;
@@ -41,8 +49,9 @@ var OccultationsPage = {
         var endJD = startJD + numberOfDays;
         
         function OccultationsPageProcessJD (JD) {
-            if (JD >= endJD) {
-                OccultationsPage.pageRendered = true;
+            var signatureChanged = OccultationsPage.signature != OccultationsPage.getSignature();
+            if (JD >= endJD || signatureChanged) {
+                OccultationsPage.pageRendered = !signatureChanged;
                 return;
             }
 
@@ -141,13 +150,24 @@ drawOccultation: function  (occultation, host) {
   var text = document.createElementNS (svgns, "text");
   img.appendChild (text);
   text.setAttribute("x", xd + w/2 - 25);
-  text.setAttribute("y", h/2 - yd + 30);
+  var yText = h/2 - yd;
+  var yOffset = 40;
+  if (yText < h/2)
+    yText -= yOffset;
+  else
+    yText += yOffset;
+  text.setAttribute("y", yText);
   text.textContent = "D";
 
   text = document.createElementNS (svgns, "text");
   img.appendChild (text);
   text.setAttribute("x", xr + w/2);
-  text.setAttribute("y", h/2 - yr + 30);
+  yText = h/2 - yr;
+  if (yText < h/2)
+    yText -= yOffset;
+  else
+    yText += yOffset;
+  text.setAttribute("y", yText);
   text.textContent = "R";
 
 
