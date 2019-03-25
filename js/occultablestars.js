@@ -31,10 +31,11 @@ function OccultableStarsTree (stars, granularityDeg) {
 
     var tree = {};
 
-    this.epoch = 2451545;
+    var jd2000 = 2451545;
+    this.epoch = jd2000;
     this.reset = function() {
         tree = {}; 
-        this.epoch = 2451545;               
+        this.epoch = jd2000;               
     }
 
     this.init = function (jde) {
@@ -47,20 +48,20 @@ function OccultableStarsTree (stars, granularityDeg) {
             if (Math.abs(jde - this.epoch) < 366) {
                 return; // same year, no need to update;
             }
-            yearsSince2000 = (jde - 2451545)/365.25;
+            yearsSince2000 = (jde - jd2000)/365.25;
         
         tree = {};
     }
 
     for (var i = 0; i < _stars.length; i++) {
-        var star = _stars[i];
+        var star = JSON.parse(JSON.stringify(_stars[i]));
 
-                    var fixedCoords = AAJS.Precession.PrecessEquatorial( 
-                    star.RAh + yearsSince2000 * star.pmRA / (3600), 
-                    star.DEd + yearsSince2000 * star.pmDE / (3600), 
-                    2451545, jde);
-                    star.RAh = fixedCoords.X;
-                    star.DEd = fixedCoords.Y;
+        var fixedCoords = AAJS.Precession.PrecessEquatorial( 
+        star.RAh + yearsSince2000 * star.pmRA / (3600), 
+        star.DEd + yearsSince2000 * star.pmDE / (3600), 
+        jd2000, jde);
+        star.RAh = fixedCoords.X;
+        star.DEd = fixedCoords.Y;
 
         var raIndex = this.getRaIndex(star.RAh);
         if (!tree[raIndex]) {

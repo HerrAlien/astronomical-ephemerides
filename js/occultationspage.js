@@ -80,7 +80,7 @@ drawOccultation: function  (occultation, host) {
     var addNodeChild = PlanetPage.prototype["addNodeChild"];
     var yyyymmdd_hhmmOfJD =  PlanetPage.prototype["yyyymmdd_hhmmOfJD"];
 
-    var dt = GetAAJS().DynamicalTime.DeltaT(occultation.start.t)/(3600 * 24);
+    var dt = AAJS.DynamicalTime.DeltaT(occultation.start.t)/(3600 * 24);
 
   var fragment = document.createDocumentFragment();
   var div = addNodeChild (fragment, "div");
