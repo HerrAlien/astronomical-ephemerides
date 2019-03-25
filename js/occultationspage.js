@@ -105,14 +105,14 @@ drawOccultation: function  (occultation, host) {
   addNodeChild(emmersionRow, "td", t.time.Ord3 + ":" + t.time.Ord2);
   addNodeChild(emmersionRow,"td", Math.round(occultation.end.PA));
 
-  var moonRadius = 160;
-  var w = 480;
-  var h = 480;
+  var w = 800;
+  var h = 800;
+  var moonRadius = w/3;
 
   var svgns = "http://www.w3.org/2000/svg";
   var viewport = document.createElementNS(svgns, "svg");
-  fragment.appendChild (viewport);
-  viewport.setAttribute("class", "viewport480");
+  div.appendChild (viewport);
+  viewport.setAttribute("class", "viewport");
   viewport.setAttribute("viewBox", "0 0 " + w + " " + h);
   viewport.setAttribute("preserveAspectRatio", "xMidYMid meet");
 
