@@ -57,11 +57,12 @@ var OccultationsPage = {
 
             var occultations = OccultationsData.getOccultedStars(JD, 1);
             for (var occKey in occultations) {
-                if ( OccultationsPage.occultationRendered[occKey]) {
+                var id = OccultationsPage.getId(occultations[occKey]);
+                if ( OccultationsPage.occultationRendered[id]) {
                     continue;
                 }
                 OccultationsPage.drawOccultation(occultations[occKey], OccultationsPage.hostElement);
-                OccultationsPage.occultationRendered[occKey] = true;
+                OccultationsPage.occultationRendered[id] = true;
             }
             
             requestAnimationFrame (function() { OccultationsPageProcessJD(JD + 1); });
