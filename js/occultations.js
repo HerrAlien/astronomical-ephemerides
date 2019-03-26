@@ -51,6 +51,12 @@ var OccultationsData = {
         for (var d = 0; d < numberOfDays; d += dayIncrement) {
 
             for (var step = 0; step < stepsCount; step++,  jde += jdeIncrement ) {
+
+                var moonDataForRiseSet = MoonData.getDataAsObjectForJD(Math.floor(jde) + 0.5, true);
+                if (jde + jdeIncrement < moonDataForRiseSet.Rise || jde - jdeIncrement > moonDataForRiseSet.Set) {
+                    continue;
+                }
+
                 var dataForJd = moonData.getInterpolatedData(getDataObj(jde, 2*jdeIncrement));
                 var ra = dataForJd.RaTopo;
                 var dec = dataForJd.DecTopo;
@@ -70,7 +76,11 @@ var OccultationsData = {
                         conjunctionJde = conjunctionJde - 1/24 + t/24;
                     }
                     // interpolate new values for moon
-                    
+                   
+                    if (conjunctionJde < moonDataForRiseSet.Rise || conjunctionJde > moonDataForRiseSet.Set) {
+                        continue;
+                    }
+
                     var dataAtConjunction = dataForJd;
                     var conjunctionDec = dataAtConjunction.DecTopo;
                     var conjunctionDiameter = dataAtConjunction.diameter;

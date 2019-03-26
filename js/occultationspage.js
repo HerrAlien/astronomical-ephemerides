@@ -222,32 +222,7 @@ drawOccultation: function  (occultation, host) {
   var cusp2X = -cusp1X;
   var cusp2Y = -cusp1Y;
 
-  var T = (occultation.start.t - 2451545)/36525;
-  var T2 = T*T;
-  var T3 = T2*T;
-  var T4 = T3*T;
-
-  var D = 297.8502042 + 445267.1115168 * T
-                      - 0.00163 * T2
-                      + T3/545868 
-                      - T4/113065000;
-  var M = 357.5291092 + 35999.0502909 * T
-                      - 0.0001536 * T2
-                      + T3 / 24490000;   
-
-  var _M = 134.9634114 + 477198.8676313*T
-                       + 0.008997 * T2
-                       + T3/69699 
-                       - T4 / 14712000;                                         
-
-  var i = 180 - D - 6.289 * sin (_M * degra)
-                  + 2.1 * sin (M * degra)
-                  - 1.274 * sin ((2*D - _M) * degra)
-                  - 0.658 * sin (2 * D * degra)
-                  - 0.214 * sin (2 * _M * degra)
-                  - 0.11 * sin (D * degra);
-  
-  var k = (1 + cos(i * degra)) / 2;
+  var k = MoonData.getApproximatePhase(occultation.start.t);
 
   // tip of the terminator
   var tx = (1 - k) * limbX + k * darkX;
