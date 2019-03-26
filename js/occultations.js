@@ -58,7 +58,7 @@ var OccultationsData = {
                     continue; // too close to the Sun
                 }
 
-                var moonDataForRiseSet = MoonData.getDataAsObjectForJD(Math.floor(jde), true);
+                var moonDataForRiseSet = MoonData.getDataAsObjectForJD(Math.floor(jde) + 0.5, true);
                 if (jde + jdeIncrement < moonDataForRiseSet.Rise || jde - jdeIncrement > moonDataForRiseSet.Set) {
                     continue;
                 }
