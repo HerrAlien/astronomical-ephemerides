@@ -51,6 +51,12 @@ var OccultationsData = {
         for (var d = 0; d < numberOfDays; d += dayIncrement) {
 
             for (var step = 0; step < stepsCount; step++,  jde += jdeIncrement ) {
+                
+                var approximatePhase = MoonData.getApproximatePhase(jde);
+                var noDimmerThanThis_m = 6;
+                if (approximatePhase < 0.017) {
+                    continue; // too close to the Sun
+                }
 
                 var moonDataForRiseSet = MoonData.getDataAsObjectForJD(Math.floor(jde) + 0.5, true);
                 if (jde + jdeIncrement < moonDataForRiseSet.Rise || jde - jdeIncrement > moonDataForRiseSet.Set) {
@@ -63,7 +69,10 @@ var OccultationsData = {
                 var starsThatMayBeOcculted = OccultableStars.getStarsNear(ra, dec, jde);
 
                 for (var i = 0; i < starsThatMayBeOcculted.length; i++) {
-                    var star = starsThatMayBeOcculted[i];            
+                    var star = starsThatMayBeOcculted[i];
+                    if (Math.round(star.Vmag * 5) / 5 > noDimmerThanThis_m){
+                        continue;
+                    }
 
                     // get the time of conjunction
                     var conjunctionJde = jde;
