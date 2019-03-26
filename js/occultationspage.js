@@ -77,7 +77,7 @@ var OccultationsPage = {
     var dt = yyyymmdd_hhmmOfJD(occultation.start.t);
     var dateString  = "" + dt.date.Y + "-" + dt.date.M + "-" + dt.date.D;
     var star = occultation.star;
-    var name = star.Name ? star.Name : star.bfID ? star.bfID  : "" ;
+    var name = star.Name ? star.Name : star.bfID ? star.bfID  : "HR " + star.HR ;
     return dateString + " " + name + (star.zc ? " (ZC " + occultation.star.zc + ")" : "") ;
 },
 
