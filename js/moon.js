@@ -19,7 +19,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 var MoonData = {
     cache : {},
        
-   getDataAsObjectForJD : function (JDE, computeRiseTransitSet) {
+   getDataAsObjectForJD : function (JDE, computeRiseTransitSet, computeSelenographicData) {
         
         var data = this.cache[JDE];
         
@@ -44,14 +44,6 @@ var MoonData = {
             data ['Parallax'] = data.parallax;
             
 			data['MeridianTransit'] = false;
-
-            var selenographicCoordsOfSun = GetAAJS().Moon.CalculateSelenographicPositionOfSun (JDE, true);
-            var colongitude = 90 - selenographicCoordsOfSun.l0;
-            if (colongitude < 0)
-                colongitude += 360;
-            
-            data['Colongitude'] = colongitude;
-            data['b0'] = selenographicCoordsOfSun.b0;
             
             this.cache[JDE] = data;
         }
@@ -62,13 +54,57 @@ var MoonData = {
             this.cache[JDE] = data;
         }
 
+        if (computeSelenographicData) {
+            var selenographicCoordsOfSun = GetAAJS().Moon.CalculateSelenographicPositionOfSun (JDE, true);
+            var colongitude = 90 - selenographicCoordsOfSun.l0;
+            if (colongitude < 0)
+                colongitude += 360;
+
+            data['Colongitude'] = colongitude;
+            data['b0'] = selenographicCoordsOfSun.b0;
+            this.cache[JDE] = data;
+        }
+
         return data;
     },
 
     reset : function () {
         this.cache = {};
-        this.toDUT = 0;
     },
+
+    getApproximatePhaseAngle : function(JDE) {
+        var T = (JDE - 2451545)/36525;
+        var T2 = T*T;
+        var T3 = T2*T;
+        var T4 = T3*T;
+        var D = 297.8502042 + 445267.1115168 * T
+                            - 0.00163 * T2
+                            + T3/545868 
+                            - T4/113065000;
+        var M = 357.5291092 + 35999.0502909 * T
+                            - 0.0001536 * T2
+                            + T3 / 24490000;   
+
+        var _M = 134.9634114 + 477198.8676313*T
+                             + 0.008997 * T2
+                             + T3/69699 
+                             - T4 / 14712000;                                         
+
+        var degra =  Math.PI/180;
+
+        var i = 180 - D - 6.289 * Math.sin (_M * degra)
+                        + 2.1 * Math.sin (M * degra)
+                        - 1.274 * Math.sin ((2*D - _M) * degra)
+                        - 0.658 * Math.sin (2 * D * degra)
+                        - 0.214 * Math.sin (2 * _M * degra)
+                        - 0.11 * Math.sin (D * degra);
+        return i;
+    },
+
+    getApproximatePhase : function (JDE) {
+        return (1 + Math.cos(MoonData.getApproximatePhaseAngle(JDE) * Math.PI/180)) / 2;
+    },
+  
 
     riseSetAngle : -0.83333
 };

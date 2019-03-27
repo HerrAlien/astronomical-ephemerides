@@ -93,6 +93,7 @@ var SolarEclipsesPage = {
         var mainDiv = addNodeChild(SolarEclipsesPage.hostElement, "div");
         mainDiv["id"] = this.getId(eclipseData);
         mainDiv.classList.add("solarEclipse");
+        mainDiv.classList.add("individualEventSection");
 
         var oldOpt = TimeStepsData.useLocalTime;
         TimeStepsData.useLocalTime = false;

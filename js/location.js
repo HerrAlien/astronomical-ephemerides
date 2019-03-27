@@ -123,7 +123,7 @@ var Location = {
         if (Location.geocentricCoordinatesUpToDate)
             return;
         
-         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
+         if (typeof AAJS == "undefined" || !AAJS || !AAJS.AllDependenciesLoaded || !AAJS.AllDependenciesLoaded())
             return;
         
         Location.rhoSinPhi = AAJS.Globe.RadiusTimesSineGeocentricLatitude (Location.latitude, Location.altitude);

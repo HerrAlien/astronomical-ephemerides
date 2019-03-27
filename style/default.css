@@ -256,7 +256,7 @@ tr.secondHeaderRowScrolled th:last-of-type {
 }
 
 
-.moonEclipse, .solarEclipse {
+.individualEventSection {
     text-align: center;
     border-top: solid 1px #AAAAAA;
     margin-top: -1px;
@@ -268,18 +268,24 @@ tr.secondHeaderRowScrolled th:last-of-type {
     padding: 0px 20px 20px 0px;
 }
 
-.moonEclipse table, .solarEclipse table {
+.individualEventSection table {
     margin-bottom: 20px;
     font-size: 30px;
 }
 
-.moonEclipse table td, .solarEclipse table td{
+.individualEventSection table td{
     padding: 10px;
+}
+
+
+.occultation table th:nth-of-type(1)
+{
+    min-width:350px;
 }
 
 .moonEclipse table th:nth-of-type(1)
 {
-    width:550px;
+    min-width:550px;
 }
 
 .solarEclipse table td{

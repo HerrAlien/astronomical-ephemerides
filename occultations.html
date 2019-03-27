@@ -1,0 +1,80 @@
+<html>
+<body>
+<pre id="pre">
+</pre>
+
+
+</body>
+</html>
+
+
+<script>
+
+            var Pages = {};
+
+         var Location = {
+            latitude  : 44.4,
+            longitude : 26.12,
+            altitude  : 100,
+            
+            rhoSinPhi : 0,
+            rhoCosPhi : 0,
+            recomputeGeocentricCoordinates : function () {
+            Location.rhoSinPhi = AAJS.Globe.RadiusTimesSineGeocentricLatitude (Location.latitude, Location.altitude);
+            Location.rhoCosPhi = AAJS.Globe.RadiusTimesCosineGeocentricLatitude (Location.latitude, Location.altitude);
+            }
+
+        }; 
+       
+        var Timeout = {onInit: 1000};
+
+        function PlanetPage() {}
+
+        function GetAAJS() { return AAJS; }
+
+        var SyncedTimeOut = setTimeout;
+
+</script>
+
+<script src="js/aajs.js"></script>
+<script type="text/JavaScript" src="js/planetdata.js"></script>
+<script src="js/occultations.js"></script>
+<script src="js/occultablestars.js"></script>
+<script src="js/realtimedata.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/moon.js"></script>
+
+<script>
+
+
+(function() {
+    // get a JD
+
+    var getOccultedStars = OccultationsData.getOccultedStars;
+
+    // 29 oct 2015, 22:30 UTC
+    function printOccultedStarsOn29Oct2015() {
+        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
+                return setTimeout (printOccultedStarsOn29Oct2015, 100);
+
+//        var jd = AAJS.Date.DateToJD (1984, 1, 1, true);
+        var jd = AAJS.Date.DateToJD (1984, 11, 19, true);
+        
+        var dt = GetAAJS().DynamicalTime.DeltaT(jd)/(3600 * 24);
+
+        var s = getOccultedStars (jd, 1);
+        for (var jd in s) {
+            s[jd].start.t -= dt;
+            s[jd].end.t -= dt;
+        }
+
+       document.getElementById("pre").textContent = JSON.stringify(s, null, 4);
+    }
+
+    printOccultedStarsOn29Oct2015();
+
+
+
+})();
+
+</script>
