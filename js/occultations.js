@@ -57,11 +57,15 @@ var OccultationsData = {
         var lst =  (GetAAJS().Sidereal.ApparentGreenwichSiderealTime(jde) * 15 + 
                     Location.longitude) * deg2rad;
         var utc2lstRatio = 1.00273737909350795;
-        var lstIncrement = jdeIncrement * utc2lstRatio;
+        var lstIncrement = jdeIncrement * 2 * Math.PI * utc2lstRatio;
         for (var d = 0; d < numberOfDays; d += dayIncrement) {
 
             for (var step = 0; step < stepsCount; step++,  jde += jdeIncrement, lst += lstIncrement) {
                 
+                if (lst > Math.PI * 2) {
+                    lst -= Math.PI * 2;
+                }
+
                 var approximatePhase = MoonData.getApproximatePhase(jde);
                 var noDimmerThanThis_m = 7;
                 if (approximatePhase < 0.047) {
@@ -87,11 +91,6 @@ var OccultationsData = {
 
                     var starDecR = star.DEd * deg2rad;
 
-                    var starAltR =  Math.asin (Math.sin (starDecR) * Math.sin (lat) + Math.cos (starDecR) * Math.cos (lat) * Math.cos (lst - star.RAh * 15 * deg2rad));
-                    if (starAltR <= 0) {
-                        continue; // below horizon
-                    }
-
                     // get the time of conjunction
                     var conjunctionJde = jde;
                     var lastConjunctionJde = conjunctionJde - 1;
@@ -111,8 +110,10 @@ var OccultationsData = {
                     treatedJde[conjunctionId] = true;
                     // interpolate new values for moon
                    
-                    var conjunctionLst = lst + utc2lstRatio * (conjunctionJde - jde);
-                    starAltR =  Math.asin (Math.sin (starDecR) * Math.sin (lat) + Math.cos (starDecR) * Math.cos (lat) * Math.cos (conjunctionLst - star.RAh * 15 * deg2rad));
+                    var conjunctionLst = (GetAAJS().Sidereal.ApparentGreenwichSiderealTime(conjunctionJde) * 15 + 
+                    Location.longitude) * deg2rad;
+
+                    var starAltR =  Math.asin (Math.sin (starDecR) * Math.sin (lat) + Math.cos (starDecR) * Math.cos (lat) * Math.cos (conjunctionLst - star.RAh * 15 * deg2rad));
 
                     if (starAltR <= 0) {
                         continue;
