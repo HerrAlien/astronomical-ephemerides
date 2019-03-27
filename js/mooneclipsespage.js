@@ -231,6 +231,7 @@ var MoonEclipsesPage = {
         var addNodeChild = PlanetPage.prototype.addNodeChild;
         var mainDiv = addNodeChild(MoonEclipsesPage.hostElement, "div");
         mainDiv.classList.add("moonEclipse");
+        mainDiv.classList.add("individualEventSection");
         mainDiv['id'] = this.getId(oppositionData);
         
         MoonEclipsesPage.displayTimings (oppositionData, mainDiv);

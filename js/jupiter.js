@@ -26,9 +26,9 @@ var JupiterData = {};
             JupiterData = new PlanetData({ number: 4, name: "Jupiter", 
                                        semidiameterFunctionName :   function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.JupiterEquatorialSemidiameterB (delta); } } );
             JupiterData['old_GetData'] = JupiterData.getDataAsObjectForJD;
-            JupiterData.getDataAsObjectForJD = function (JD, computeRiseTransitSet) {
+            JupiterData.getDataAsObjectForJD = function (JD, computeRiseTransitSet, computePhysical) {
                 var data = this.old_GetData(JD, computeRiseTransitSet); 
-                if (!data['EarthDeclination']) {
+                if (!data['EarthDeclination'] && computePhysical) {
                     var physicalData = GetAAJS()['Jupiter']['PhysicalDetails'] (JD);
                     for (var key in physicalData)
                         data[key] = physicalData[key];

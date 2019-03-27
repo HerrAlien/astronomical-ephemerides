@@ -206,7 +206,7 @@ function PlanetPage (planetDataSource, tableName) {
 
                     var JDE = JD + GetAAJS().DynamicalTime.DeltaT(JD)/(3600 * 24);
 
-                    var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JDE, true), JDE);
+                    var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JDE, true, true), JDE);
                     var changedMonth = !pageObj.lastAppendedLine || 
                                         (preparedData[0] && pageObj.lastAppendedLine[0] != preparedData[0]);
         
