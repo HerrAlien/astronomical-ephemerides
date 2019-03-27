@@ -57,7 +57,8 @@ var OccultationsData = {
         var lst =  (GetAAJS().Sidereal.ApparentGreenwichSiderealTime(jde) * 15 + 
                     Location.longitude) * deg2rad;
         var utc2lstRatio = 1.00273737909350795;
-        var lstIncrement = jdeIncrement * 2 * Math.PI * utc2lstRatio;
+        var TWO_PI = 2 * Math.PI;
+        var lstIncrement = jdeIncrement * TWO_PI * utc2lstRatio;
         for (var d = 0; d < numberOfDays; d += dayIncrement) {
 
             for (var step = 0; step < stepsCount; step++,  jde += jdeIncrement, lst += lstIncrement) {
@@ -109,9 +110,15 @@ var OccultationsData = {
                     }
                     treatedJde[conjunctionId] = true;
                     // interpolate new values for moon
-                   
-                    var conjunctionLst = (GetAAJS().Sidereal.ApparentGreenwichSiderealTime(conjunctionJde) * 15 + 
-                    Location.longitude) * deg2rad;
+                                    
+                    var conjunctionLst = lst + TWO_PI * utc2lstRatio * (conjunctionJde - jde);
+                    while (conjunctionLst > TWO_PI) {
+                        conjunctionLst -= TWO_PI;
+                    } 
+
+                    while (conjunctionLst < 0) {
+                        conjunctionLst += TWO_PI;
+                    }                   
 
                     var starAltR =  Math.asin (Math.sin (starDecR) * Math.sin (lat) + Math.cos (starDecR) * Math.cos (lat) * Math.cos (conjunctionLst - star.RAh * 15 * deg2rad));
 
