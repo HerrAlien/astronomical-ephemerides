@@ -45,7 +45,7 @@ var OccultationsData = {
         var occultedStars = {};
         var dayIncrement = 1;
         var moonData = new DataForNow(MoonData);
-        var stepsCount = 48;
+        var stepsCount = 12;
         var jdeIncrement = dayIncrement / stepsCount;
 
         var treatedJde = {};
@@ -60,7 +60,7 @@ var OccultationsData = {
                     continue; // too close to the Sun
                 }
 
-                var dataForJd = moonData.getInterpolatedData(getDataObj(jde, 2*jdeIncrement));
+                var dataForJd = moonData.getInterpolatedData(getDataObj(jde, 6/24));
                 var ra = dataForJd.RaTopo;
                 var dec = dataForJd.DecTopo;
                 var starsThatMayBeOcculted = OccultableStars.getStarsNear(ra, dec, jde);
@@ -76,8 +76,8 @@ var OccultationsData = {
                     var lastConjunctionJde = conjunctionJde - 1;
                     for (var cjIndex = 0; cjIndex < 10 && Math.abs(conjunctionJde - lastConjunctionJde) > 1e-6; cjIndex++) {
                         lastConjunctionJde = conjunctionJde;
-                        dataForJd =  moonData.getInterpolatedData(getDataObj(conjunctionJde, 2*jdeIncrement));
-                        var beforeData = moonData.getInterpolatedData(getDataObj(conjunctionJde - 1/24, 2*jdeIncrement));
+                        dataForJd =  moonData.getInterpolatedData(getDataObj(conjunctionJde, 4/24));
+                        var beforeData = moonData.getInterpolatedData(getDataObj(conjunctionJde - 1/24, 4/24));
                         var t = (star.RAh - beforeData.RaTopo) / (dataForJd.RaTopo - beforeData.RaTopo);
                         conjunctionJde = conjunctionJde - 1/24 + t/24;
                     }
