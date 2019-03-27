@@ -39,42 +39,41 @@ function OccultableStarsTree (stars, granularityDeg) {
     }
 
     this.init = function (jde) {
+        var yearsSince2000 = 0;
         if (tree) {
             if (!jde) {
                 jde = 2451545;
             }
-            var yearsSince2000 = 0;
 
             if (Math.abs(jde - this.epoch) < 366) {
                 return; // same year, no need to update;
             }
             yearsSince2000 = (jde - jd2000)/365.25;
-        
-        tree = {};
-    }
-
-    for (var i = 0; i < _stars.length; i++) {
-        var star = JSON.parse(JSON.stringify(_stars[i]));
-
-        var fixedCoords = AAJS.Precession.PrecessEquatorial( 
-        star.RAh + yearsSince2000 * star.pmRA / (3600), 
-        star.DEd + yearsSince2000 * star.pmDE / (3600), 
-        jd2000, jde);
-        star.RAh = fixedCoords.X;
-        star.DEd = fixedCoords.Y;
-
-        var raIndex = this.getRaIndex(star.RAh);
-        if (!tree[raIndex]) {
-            tree[raIndex] = {};
+            tree = {};
         }
-        var decIndex = this.getDecIndex(star.DEd);
-        if (!tree[raIndex][decIndex]) {
-            tree[raIndex][decIndex] = [];
-        }
-        tree[raIndex][decIndex].push(star);
-    }
 
-            this.epoch = jde;
+        for (var i = 0; i < _stars.length; i++) {
+            var star = JSON.parse(JSON.stringify(_stars[i]));
+
+            var fixedCoords = AAJS.Precession.PrecessEquatorial( 
+            star.RAh + yearsSince2000 * star.pmRA / (3600), 
+            star.DEd + yearsSince2000 * star.pmDE / (3600), 
+            jd2000, jde);
+            star.RAh = fixedCoords.X;
+            star.DEd = fixedCoords.Y;
+
+            var raIndex = this.getRaIndex(star.RAh);
+            if (!tree[raIndex]) {
+                tree[raIndex] = {};
+            }
+            var decIndex = this.getDecIndex(star.DEd);
+            if (!tree[raIndex][decIndex]) {
+                tree[raIndex][decIndex] = [];
+            }
+            tree[raIndex][decIndex].push(star);
+        }
+
+        this.epoch = jde;
     }
 
     

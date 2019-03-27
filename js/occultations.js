@@ -50,14 +50,27 @@ var OccultationsData = {
 
         var treatedJde = {};
 
+        var deg2rad = Math.PI / 180;
+        var lat = Location.latitude * deg2rad;
+        var long = Location.longitude * deg2rad;
+
+        var lst =  (GetAAJS().Sidereal.ApparentGreenwichSiderealTime(jde) * 15 + 
+                    Location.longitude) * deg2rad;
+        var utc2lstRatio = 1.00273737909350795;
+        var lstIncrement = jdeIncrement * utc2lstRatio;
         for (var d = 0; d < numberOfDays; d += dayIncrement) {
 
-            for (var step = 0; step < stepsCount; step++,  jde += jdeIncrement ) {
+            for (var step = 0; step < stepsCount; step++,  jde += jdeIncrement, lst += lstIncrement) {
                 
                 var approximatePhase = MoonData.getApproximatePhase(jde);
                 var noDimmerThanThis_m = 7;
-                if (approximatePhase < 0.017) {
+                if (approximatePhase < 0.047) {
+                    noDimmerThanThis_m = 2.1;
+                } else if (approximatePhase < 0.017) {
                     continue; // too close to the Sun
+                }
+                if (approximatePhase > 0.9) {
+                    noDimmerThanThis_m = 4;
                 }
 
                 var dataForJd = moonData.getInterpolatedData(getDataObj(jde, 6/24));
@@ -65,10 +78,18 @@ var OccultationsData = {
                 var dec = dataForJd.DecTopo;
                 var starsThatMayBeOcculted = OccultableStars.getStarsNear(ra, dec, jde);
 
+
                 for (var i = 0; i < starsThatMayBeOcculted.length; i++) {
                     var star = starsThatMayBeOcculted[i];
                     if (Math.round(star.Vmag * 10) / 10 > noDimmerThanThis_m){
                         continue;
+                    }
+
+                    var starDecR = star.DEd * deg2rad;
+
+                    var starAltR =  Math.asin (Math.sin (starDecR) * Math.sin (lat) + Math.cos (starDecR) * Math.cos (lat) * Math.cos (lst - star.RAh * 15 * deg2rad));
+                    if (starAltR <= 0) {
+                        continue; // below horizon
                     }
 
                     // get the time of conjunction
@@ -90,7 +111,10 @@ var OccultationsData = {
                     treatedJde[conjunctionId] = true;
                     // interpolate new values for moon
                    
-                    if (!MoonData.isAboveHorizon(conjunctionJde)) {
+                    var conjunctionLst = lst + utc2lstRatio * (conjunctionJde - jde);
+                    starAltR =  Math.asin (Math.sin (starDecR) * Math.sin (lat) + Math.cos (starDecR) * Math.cos (lat) * Math.cos (conjunctionLst - star.RAh * 15 * deg2rad));
+
+                    if (starAltR <= 0) {
                         continue;
                     }
 
