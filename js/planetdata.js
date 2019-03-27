@@ -89,8 +89,19 @@ function PlanetData(planet)
     };
 
     PlanetData.prototype["isAboveHorizon"] = function (JD) {
-    	var data = this.getDataAsObjectForJD(Math.floor(JD), true);
-    	return (JD > data.Rise && JD < data.Set);
+    	var data = this.getDataAsObjectForJD(JD, false);
+
+        var deg2rad = Math.PI / 180;
+
+        var ra = data.RA * 15 * deg2rad;
+        var dec = data.Dec * deg2rad;
+        var lat = Location.latitude * deg2rad;
+        var long = Location.longitude * deg2rad;
+        var lst =  (GetAAJS().Sidereal.ApparentGreenwichSiderealTime(JD) * 15 + 
+                   Location.longitude) * deg2rad;
+
+        var alt =  Math.asin (Math.sin (dec) * Math.sin (lat) + Math.cos (dec) * Math.cos (lat) * Math.cos (lst - ra)) * 180 / Math.PI;
+        return alt > 0;
     };
     
 })();

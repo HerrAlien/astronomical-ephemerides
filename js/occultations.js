@@ -48,6 +48,8 @@ var OccultationsData = {
         var stepsCount = 48;
         var jdeIncrement = dayIncrement / stepsCount;
 
+        var treatedJde = {};
+
         for (var d = 0; d < numberOfDays; d += dayIncrement) {
 
             for (var step = 0; step < stepsCount; step++,  jde += jdeIncrement ) {
@@ -79,10 +81,17 @@ var OccultationsData = {
                         var t = (star.RAh - beforeData.RaTopo) / (dataForJd.RaTopo - beforeData.RaTopo);
                         conjunctionJde = conjunctionJde - 1/24 + t/24;
                     }
+                    
+                    var conjunctionId = conjunctionJde + " " + star.RAh + " " + star.DEd;
+
+                    if (treatedJde[conjunctionId]) {
+                        continue;
+                    }
+                    treatedJde[conjunctionId] = true;
                     // interpolate new values for moon
                    
-                    if ( MoonData.isAboveHorizon(conjunctionJde)) {
-                       // continue;
+                    if (!MoonData.isAboveHorizon(conjunctionJde)) {
+                        continue;
                     }
 
                     var dataAtConjunction = dataForJd;
