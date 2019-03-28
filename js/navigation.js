@@ -156,8 +156,8 @@ function onhashchange(){
                         (function(){
                             var targetDiv = false;
                             var attemptsCount = 0;
-                            var maxAttempts = 5;
-                            var timeout = 250;
+                            var maxAttempts = 200;
+                            var timeout = 500;
                             var scollAction = function () {
                                 targetDiv = document.getElementById(action.parameters);
                                 if (targetDiv) {

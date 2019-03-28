@@ -88,7 +88,8 @@ var OccultationsPage = {
 },
 
 getId: function (occultation) {
-  return "occultation" + Math.round(occultation.start.t * 10000);
+  return "occultation " + Math.round(occultation.start.t) + 
+          + " " + OccultationsPage.getStarName(occultation);
 },
 
 drawOccultation: function  (occultation, host) {
