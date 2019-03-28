@@ -344,13 +344,19 @@ function PlanetPage (planetDataSource, tableName) {
         return res.time.Ord3 + ":" +  res.time.Ord2;
     };
     
-    PlanetPage.prototype["yyyymmdd_hhmmOfJD"] = function (JD) {
+    PlanetPage.prototype["yyyymmdd_hhmmOfJD"] = function (JD, timeAccuracy) {
         var fullDayJD = 0.5 + Math.floor(JD - 0.5);
         var dayFraction = JD - fullDayJD;
         if (dayFraction < 0) dayFraction += 1;
+
+        if (!timeAccuracy) {
+            timeAccuracy = 1/(24 * 60);
+        }
+
+        var roundedDayFraction = Math.round(dayFraction/timeAccuracy) * timeAccuracy;
         
         var dateOfJD =  GetAAJS().Date.JD2Date(fullDayJD);
-        var roundedTime = Math.round(dayFraction * 24 * 60) / 60;
+        var roundedTime = roundedDayFraction * 24;
         var sexagesimalTime = GetAAJS().Numerical.ToSexagesimal (roundedTime);
 
         if (TimeStepsData.useLocalTime)
