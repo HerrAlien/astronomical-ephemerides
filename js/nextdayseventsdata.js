@@ -152,4 +152,31 @@ var NextEvents = {
         }
     };
 
+/////////////////// Occultations //////////////////////////
+    NextEvents["Occultations"] = {
+        GetEvents : function () {
+            NextEvents.init();
+            var events = [];
+            var jd = NextEvents.startJd;
+
+            var occultations = OccultationsData.getOccultedStars(jd, NextEvents.numberOfDays);
+            for (var conjunctionJde in occultations) {
+                var occultation = occultations[conjunctionJde];
+                var id = OccultationsPage.getId(occultation);
+                var event = {
+                    start :  occultation.start.t,
+                    end :    occultation.end.t,
+                    navigActionObj : {
+                        page:"Occultations",
+                        actions:[{name:"scroll", parameters: id}]
+                        },
+                   title: "Occultation: " + OccultationsPage.getStarName(occultation)
+                };
+                events.push (event);
+            }
+            
+            return events;
+        }
+    };
+
 })();

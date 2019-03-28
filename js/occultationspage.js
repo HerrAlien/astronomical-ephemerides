@@ -71,15 +71,20 @@ var OccultationsPage = {
         OccultationsPageProcessJD(startJD);
     },
 
+    getStarName: function (occultation) {
+        var star = occultation.star;
+        var name = star.Name ? star.Name : star.bfID ? star.bfID  : "HR " + star.HR +
+                   (star.zc ? " (ZC " + occultation.star.zc + ")" : "");
+        return name;
+    },
 
     getOccultationTitle: function (occultation) {
     var yyyymmdd_hhmmOfJD =  PlanetPage.prototype["yyyymmdd_hhmmOfJD"];
 
     var dt = yyyymmdd_hhmmOfJD(occultation.start.t);
     var dateString  = "" + dt.date.Y + "-" + dt.date.M + "-" + dt.date.D;
-    var star = occultation.star;
-    var name = star.Name ? star.Name : star.bfID ? star.bfID  : "HR " + star.HR ;
-    return dateString + " " + name + (star.zc ? " (ZC " + occultation.star.zc + ")" : "") ;
+    var name = OccultationsPage.getStarName(occultation);
+    return dateString + " " + name;
 },
 
 getId: function (occultation) {
