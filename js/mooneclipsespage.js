@@ -51,19 +51,25 @@ var MoonEclipsesPage = {
         
         processJD(startJD);
     },
+
+
+    getTypeOfEclipseString : function (oppositionData) {
+        var type = "Eclipse through the penumbra";
+        if (oppositionData.umbralPartialEclipse)
+            type = "Partial eclipse";
+        if (oppositionData.umbralTotalEclipse)
+            type = "Total eclipse";
+        return type;
+    },
+
     
     displayTimings : function (oppositionData, mainDiv) {
         var addNodeChild = PlanetPage.prototype.addNodeChild;
         
         var yyyymmdd_hhmmOfJD  = PlanetPage.prototype.yyyymmdd_hhmmOfJD;
         
-        // get the JD of the opposition
+        var description = this.getTypeOfEclipseString(oppositionData);
         var oppositionDateTime = yyyymmdd_hhmmOfJD(oppositionData.JD);
-        var description = "Eclipse through the penumbra";
-        if (oppositionData.umbralPartialEclipse)
-            description = "Partial eclipse";
-        if (oppositionData.umbralTotalEclipse)
-            description = "Total eclipse";
         
         // the contents of this title is temporary. It may change, if the eclipse starts on one day and ends in another.
         var eclipseTitle = addNodeChild (mainDiv, "h2", oppositionDateTime.date.Y + "-" + oppositionDateTime.date.M + "-" + oppositionDateTime.date.D + " " + description);
@@ -225,10 +231,17 @@ var MoonEclipsesPage = {
         var addNodeChild = PlanetPage.prototype.addNodeChild;
         var mainDiv = addNodeChild(MoonEclipsesPage.hostElement, "div");
         mainDiv.classList.add("moonEclipse");
+        mainDiv.classList.add("individualEventSection");
+        mainDiv['id'] = this.getId(oppositionData);
         
         MoonEclipsesPage.displayTimings (oppositionData, mainDiv);
         MoonEclipsesPage.displayGraph (oppositionData, mainDiv); 
     },
+
+    getId (oppositionData) {
+        return "moonEclipse" + Math.floor(oppositionData.Timings.Penumbral.firstContact);
+    },
+
     keywordsArray : ["Shadow", "Umbra", "Penumbra", "Partial", "Total", "Eclipse",
                       "Contact", "First", "Last"]
     // clears up the rendered thing

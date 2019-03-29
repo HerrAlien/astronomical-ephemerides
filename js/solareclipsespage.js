@@ -60,15 +60,12 @@ var SolarEclipsesPage = {
         processK(startK, endK);
     },
 
-    drawNewEclipse: function (eclipseData) {
-        var yyyymmdd_hhmmOfJD  = PlanetPage.prototype.yyyymmdd_hhmmOfJD;
-        
-        var addNodeChild = PlanetPage.prototype.addNodeChild;
-        var mainDiv = addNodeChild(SolarEclipsesPage.hostElement, "div");
-        mainDiv.classList.add("solarEclipse");
-        var dateTime = yyyymmdd_hhmmOfJD(eclipseData.t0);
-        
+    getTypeOfEclipseString : function (eclipseData) {
+        var oldOpt = TimeStepsData.useLocalTime;
+        TimeStepsData.useLocalTime = false;
+        TimeStepsData.useLocalTime = oldOpt;
         var description = "";
+     
         if (eclipseData.isPartial)
             description += "Partial ";
         if (eclipseData.isTotal)
@@ -77,13 +74,80 @@ var SolarEclipsesPage = {
             description += "Annular ";
         if (eclipseData.isAnnularTotal)
             description += "Hybrid ";
-        description += "Eclipse";
+        description += "Eclipse.";
+        
+        if (!eclipseData["t1"]) {
+            description += " Not visible from your location.";
+        }
+        
+        return description;
+    },
+
+    getId : function (eclipseData) {
+        return "SolarEclipse" + eclipseData.t0;
+    },
+
+    drawNewEclipse: function (eclipseData) {
+        var yyyymmdd_hhmmOfJD  = PlanetPage.prototype.yyyymmdd_hhmmOfJD;
+        
+        var addNodeChild = PlanetPage.prototype.addNodeChild;
+        var mainDiv = addNodeChild(SolarEclipsesPage.hostElement, "div");
+        mainDiv["id"] = this.getId(eclipseData);
+        mainDiv.classList.add("solarEclipse");
+        mainDiv.classList.add("individualEventSection");
+
+        var oldOpt = TimeStepsData.useLocalTime;
+        TimeStepsData.useLocalTime = false;
+        var dateTime = yyyymmdd_hhmmOfJD(eclipseData.t0);
+        TimeStepsData.useLocalTime = oldOpt;
+        
+        var description = this.getTypeOfEclipseString(eclipseData);
         
         var decimalsFactor = 1e5; 
 
-        var eclipseTitle = addNodeChild (mainDiv, "h2", dateTime.date.Y + "-" + dateTime.date.M + "-" + dateTime.date.D + " " + description);
-        var eclipseTitle = addNodeChild (mainDiv, "h3", "Besselian elements:");
-        addNodeChild (mainDiv, "span", "T0 = " + dateTime.time.Ord3 + ":" +  dateTime.time.Ord2 + " UTC");
+        addNodeChild (mainDiv, "h2", dateTime.date.Y + "-" + dateTime.date.M + "-" + dateTime.date.D + " " + description);
+
+        if (eclipseData.t1) {
+            
+            function timeString(t) {
+                var _t = yyyymmdd_hhmmOfJD(t);
+                return _t.time.Ord3 + ":" +  _t.time.Ord2;
+            }
+
+            addNodeChild (mainDiv, "h3", "Local circumstances:");
+            var timings = addNodeChild (mainDiv, "span");
+            timings.textContent = "Magnitude: " +  GetAAJS().Numerical.RoundTo2Decimals(eclipseData["magnitude"]);;
+
+            var localsTable = addNodeChild (mainDiv, "table");
+            var timings = {t1:"Eclipse starts (T1)", 
+                             t2:"Totality starts (T2)", 
+                             tMax:"Time of maximum", 
+                             t3:"Totality ends (T3)", 
+                             t4:"Eclipse ends (T4)"};
+            for (var key in timings) {
+                if (!eclipseData[key]) {
+                    continue;
+                }
+                var localRow =  addNodeChild (localsTable, "tr");
+                addNodeChild(localRow, "td", timings[key]);
+                addNodeChild(localRow, "td", timeString(eclipseData[key]));
+            }
+
+            var positionAngles = {PA1:"Position angle: first contact", 
+                                  PA4:"Position angle: last contact"};
+            for (var key in positionAngles) {
+                if (!eclipseData[key]) {
+                    continue;
+                }
+                var localRow =  addNodeChild (localsTable, "tr");
+                addNodeChild(localRow, "td", positionAngles[key]);
+                addNodeChild(localRow, "td", Math.round(eclipseData[key]));
+            }
+
+        }
+
+        addNodeChild (mainDiv, "h3", "Besselian elements:");
+        addNodeChild (mainDiv, "span", "T0 = " + dateTime.time.Ord3 + ":" +  dateTime.time.Ord2 + " DT");
         
         var table = addNodeChild (mainDiv, "table");
         var header = addNodeChild (table, "tr");

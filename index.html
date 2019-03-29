@@ -313,6 +313,16 @@ function GetAAJS() {
     return AAJS;
 }
 
+var Pages = {"addPlainPages" : function(titles){
+    for (var i = 0; i < titles.length; i++) {
+        var title = titles[i];
+        Pages[title] = {"displayPage" : function() {}, "reset" : function() {}};
+    }
+}};
+
+Pages.addPlainPages(["more", "settings", "home", "privacy", "Search results", "about"]);
+
+
 </script>
 
 
@@ -416,6 +426,10 @@ th {
     line-height: 10.4;
 }
 
+#futureEventsNumberOfDays {
+  font-size: 50px;
+}
+
  .MenuLinkDiv::after {
     content: "More ...";
 }
@@ -473,6 +487,14 @@ th {
 }
  .SaturnMoonsLinkButton::after { content: 
  "Saturn Moons";
+}
+
+ .OccultationsLinkButton::after { content: 
+ "Occultations";
+}
+
+.largeButtons-menuPageItemImg-linkButton.OccultationsLinkButton {
+  width:190px;
 }
 
 
@@ -544,14 +566,20 @@ h1, h2, hr {
     text-align: center;
 }
 
-#homeH1 {
-    font-size: 70px;
+#homeH1, #futureEventsH1 {
+    font-size: 60px;
     text-align: left;
+    float:left;
+}
+
+#futureEventsH1 {
+  margin-top: 50px;
 }
 
  h2 {
     font-size: 40px;
-    margin-top: 40px;
+    margin-top: 0px;
+    padding-top: 100px;
     margin-bottom: 0px;
 }
 
@@ -758,7 +786,7 @@ label > h3 {
 
 #promotedMenuScrollableContents {
   height: 110px;
-  width: 1560px;
+  width: 1750px;
 }
 
 #promotedMenu::after, #promotedMenu::before {
@@ -803,6 +831,31 @@ label > h3 {
     height: 0px;
 }
 
+  .configureRtView {
+    margin-top: 120px;
+    position: absolute;
+    display: block;
+    background-image: url(images/sprite.svg#settings-light);
+    background-size: 32px 32px;
+    width:32px;
+    height:32px;
+    background-position:center;
+  }
+
+  #rightNowFrontPageSettingsLink {
+    display: block;
+    margin-top: 20px;
+    background-image: url(images/sprite.svg#settings-light);
+    background-size: 64px 64px;
+    width:64px;
+    height:64px;
+    margin-bottom: 40px;
+    background-position:center;
+    background-repeat: no-repeat;
+    text-align:center;
+    float:right;
+}
+
 @media  screen and  (max-width: 936px)  {
 
 h1 {
@@ -813,6 +866,13 @@ h1 {
         width:  320px;
         height: 320px;
     }
+
+  .configureRtView {
+    margin-top: 210px;
+    background-size: 64px 64px;
+    width:64px;
+    height:64px;
+  }
 
     .scrollableRT {
         margin-top:130px;
@@ -955,6 +1015,9 @@ h1 {
 .SettingsBackground {
     background-image: url('images/sprite.svg#settings');
 }
+.OccultationsBackground {
+    background-image: url('images/sprite.svg#occultation');
+}
 
 
 /* color backgrounds */
@@ -1007,6 +1070,9 @@ h1 {
 .ColorLunarEclipsesBackground {
     background-image: url('images/sprite.svg#color-lunar-eclipse');
 }
+.ColorOccultationsBackground {
+    background-image: url('images/sprite.svg#color-occultation');
+}
 
 
 
@@ -1017,7 +1083,9 @@ h1 {
 .ColorGalileanMoonsBackground,
 .ColorSaturnMoonsBackground,
 .ColorSolarEclipsesBackground,
-.ColorLunarEclipsesBackground
+.ColorLunarEclipsesBackground,
+.OccultationsBackground,
+.ColorOccultationsBackground
 {
   width: 140px;
 }
@@ -1187,13 +1255,6 @@ h1 {
   }
 }
 
- @media screen and (min-width: 1900px)  {
-    #MenuLink, .MenuLinkDiv.topmenulink, .MenuLinkDiv.topmenulink img, .MenuLinkDiv.topmenulink::after {
-        width: 0px;
-        height: 0px;
-        display: none;
-    }
-
 .buttonsToSwitchPosPhys, .physSeenAtSmallWidth {
     display: none;
 }
@@ -1205,7 +1266,6 @@ h1 {
 #jupiterHorizontalScroller , #marsHorizontalScroller{
         width: 890px;
 }
- }
 
 
 #footer {
@@ -1224,6 +1284,16 @@ h1 {
 #timeScaleMainPage {
   font-weight: bolder;
 }
+
+
+/* comment these when the features are ready */
+/*
+#upcommingEventsFrontPage, #futureEventsH1, 
+#futureEventsSettingsTitle, #futureEventsSettingsContainer,
+#rightNowFrontPageSettingsLink, .configureRtView {
+  display: none;
+}
+*/
 
     </style>
     
@@ -1317,6 +1387,7 @@ h1 {
             <a title="Saturn Ephemeris"              href="#Saturn Ephemeris"              class="promotedMenuLink SaturnLinkButton topmenulink-linkButton SaturnBackground"></a>
             <a title="Solar Eclipses"                href="#Solar Eclipses"                class="promotedMenuLink SolarEclipseLinkButton topmenulink-linkButton SolarEclipsesBackground"></a>
             <a title="Lunar Eclipses"                href="#Lunar Eclipses"                class="promotedMenuLink LunarEclipseLinkButton topmenulink-linkButton LunarEclipsesBackground"> </a>
+            <a title="Occultations"                  href="#Occultations"                  class="promotedMenuLink OccultationsLinkButton topmenulink-linkButton OccultationsBackground"> </a>
             <a title="Elongations of Galilean Moons" href="#Elongations of Galilean Moons" class="promotedMenuLink GalileanMoonsLinkButton topmenulink-linkButton GalileanMoonsBackground"> </a>
             <a title="Mars Ephemeris"                href="#Mars Ephemeris"                class="promotedMenuLink MarsLinkButton topmenulink-linkButton MarsBackground"></a>
             <a title="Elongations of Saturn Moons"   href="#Elongations of Saturn Moons"   class="promotedMenuLink SaturnMoonsLinkButton topmenulink-linkButton SaturnMoonsBackground"></a>
@@ -1341,6 +1412,7 @@ h1 {
                 <a  title="Moon Ephemeris"                href="#Moon Ephemeris"                 class="largeButtons-menuPageItemImg-linkButton MoonLinkButton MoonBackground"></a>
                 <a  title="Lunar Eclipses"                href="#Lunar Eclipses"                 class="largeButtons-menuPageItemImg-linkButton LunarEclipseLinkButton LunarEclipsesBackground"></a>
                 <a  title="Solar Eclipses"                href="#Solar Eclipses"                 class="largeButtons-menuPageItemImg-linkButton SolarEclipseLinkButton SolarEclipsesBackground"></a>
+                <a  title="Occultations"                  href="#Occultations"                   class="largeButtons-menuPageItemImg-linkButton OccultationsLinkButton OccultationsBackground"> </a>
                 <a  title="Mercury Ephemeris"             href="#Mercury Ephemeris"              class="largeButtons-menuPageItemImg-linkButton MercuryLinkButton MercuryBackground"></a>
                 <a  title="Venus Ephemeris"               href="#Venus Ephemeris"                class="largeButtons-menuPageItemImg-linkButton VenusLinkButton VenusBackground"></a>
                 <a  title="Mars Ephemeris"                href="#Mars Ephemeris"                 class="largeButtons-menuPageItemImg-linkButton MarsLinkButton MarsBackground"></a>
@@ -1384,9 +1456,55 @@ h1 {
 
               </div>
 
-                <h2>Show on home page</h2>
+                <h2 id="realTimeSettingsTitle">Show on home page</h2>
                 <div id="realTimeSettingsContainer">
                     
+                </div>
+
+                <h2 id="futureEventsSettingsTitle">Future events</h2>
+                <div id="futureEventsSettingsContainer">
+                    
+                    <div class="row">
+                      <label class="switch">
+                        <input type="checkbox" id="futureSolarEclipsesSettings" class="switchinput" checked="true">
+                        <span class="slider round"></span>
+                      </label>
+                      <label for="futureSolarEclipsesSettings">
+                        <div class="settingsLabelDiv">Solar Eclipses</div>
+                      </label>
+                   </div>
+
+                    <div class="row">
+                      <label class="switch">
+                        <input type="checkbox" id="futureLunarEclipsesSettings" class="switchinput" checked="true">
+                        <span class="slider round"></span>
+                      </label>
+                      <label for="futureLunarEclipsesSettings">
+                        <div class="settingsLabelDiv">Lunar Eclipses</div>
+                      </label>
+                   </div>
+
+                    <div class="row">
+                      <label class="switch">
+                        <input type="checkbox" id="futureOccultationsSettings" class="switchinput" checked="true">
+                        <span class="slider round"></span>
+                      </label>
+                      <label for="futureOccultationsSettings">
+                        <div class="settingsLabelDiv">Occultations</div>
+                      </label>
+                   </div>
+                  <!-- no transits for now -->
+                  <!--
+                    <div class="row">
+                      <label class="switch">
+                        <input type="checkbox" id="futureTransitsSettings" class="switchinput">
+                        <span class="slider round"></span>
+                      </label>
+                      <label for="futureTransitsSettings">
+                        <div class="settingsLabelDiv">Transits over the Sun</div>
+                      </label>
+                   </div>
+                -->
                 </div>
           </div>
         </div>
@@ -1405,11 +1523,33 @@ h1 {
             </div>
           </div>
 
-            <h1 id="homeH1">Right now:</h1>
+            <h1 id="homeH1">Right now:
+              <a id="rightNowFrontPageSettingsLink" title="Configure the 'Right Now' view"
+              href='#{"page":"settings","actions":[{"name":"scroll","parameters":"realTimeSettingsTitle"}]}'>
+              </a>
+            </h1>
+    <div class="clear maxWidth">&nbsp;</div>
+
             <div id="rightNowFrontPage">
             </div>
-                <div id="lofiWarning">Loading high accuracy algorithm ...(<span id="lofiWarningProgress"></span>)</div>
-             <div class="clear maxWidth">&nbsp;</div>
+
+
+
+            <h1 id="futureEventsH1">Next <input type="number" id="futureEventsNumberOfDays" value="14"> days:
+               <a id="rightNowFrontPageSettingsLink" title="Configure the 'Right Now' view"
+              href='#{"page":"settings","actions":[{"name":"scroll","parameters":"futureEventsSettingsTitle"}]}'>
+              </a>
+           </h1>
+    <div class="clear maxWidth">&nbsp;</div>
+
+            <div id="upcommingEventsFrontPage">
+
+            </div>
+
+
+
+            <div id="lofiWarning">Loading high accuracy algorithm ...(<span id="lofiWarningProgress"></span>)</div>
+            <div class="clear maxWidth">&nbsp;</div>
 
         <br/>
 <a href="#about">What time argument is used? What type of positions are computed?</a>
@@ -1602,6 +1742,20 @@ h1 {
             <div id="SolarEclipsesContainer" class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></div>
         </div>
 
+
+       <div id="Occultations" class="page">
+            <h1>Occultations</h1>
+            <div class="leftaligned">
+            Accuracy of the times displayed below is about 1 minute. Position angles are in sexagesimal degrees (&deg;)
+            </div>
+            
+
+            <div id="OccultationsContainer" class="loadingMemFileContents">
+            <div class="loadingMemFileContentsDiv">&nbsp;</div>
+            </div>
+
+      </div>
+
        <div id="privacy" class="page">
             <h1>Privacy Policy</h1>
             <div class="leftaligned">
@@ -1620,30 +1774,31 @@ h1 {
             </div>
         </div>
 
-<div id="footer">
-<a href="https://bitbucket.org/herr_alien/astronomical_ephemerides" target="_blank" 
-   rel="noopener" title="Source code for the app">Source code</a> | 
-<a href="https://bitbucket.org/herr_alien/astronomical_ephemerides/issues?status=new&status=open" target="_blank" 
-   rel="noopener" title="Bug tracker">Found a bug?</a> | 
-<a href="http://www.astronomy.ro/forum/viewtopic.php?t=17450" target="_blank" 
-   rel="noopener" title="Forum (Romanian language)">Forum (RO)</a> | 
 
-<a href="https://www.cloudynights.com/topic/609148-yet-another-set-of-astronomical-ephemerides/" target="_blank" 
-   rel="noopener" title="Forum (English language)">Forum (EN)</a> | 
+        <div id="footer">
+        <a href="https://bitbucket.org/herr_alien/astronomical_ephemerides" target="_blank" 
+           rel="noopener" title="Source code for the app">Source code</a> | 
+        <a href="https://bitbucket.org/herr_alien/astronomical_ephemerides/issues?status=new&status=open" target="_blank" 
+           rel="noopener" title="Bug tracker">Found a bug?</a> | 
+        <a href="http://www.astronomy.ro/forum/viewtopic.php?t=17450" target="_blank" 
+           rel="noopener" title="Forum (Romanian language)">Forum (RO)</a> | 
 
-<a href="mailto:alexandru.garofide@gmail.com">Contact us</a><br>
-<br>
-<a href="#about">About</a> | 
-<a href="#privacy">Privacy Policy</a> | 
-<a href="https://www.gnu.org/licenses/agpl.html" target="_blank" rel="noopener"  
-title="opens in a new window">AGPL License</a>  | 
-<a href="http://herralien-apps.appspot.com" target="_blank" rel="noopener"  
-title="opens in a new window">Bits of software</a><br>
-<br><br>
-        Copyright <span id="copyrightYear">2018</span>  Alexandru Garofide &lt;<a href="mailto:alexandru.garofide@gmail.com">alexandru.garofide@gmail.com</a>&gt;
-</div>
+        <a href="https://www.cloudynights.com/topic/609148-yet-another-set-of-astronomical-ephemerides/" target="_blank" 
+           rel="noopener" title="Forum (English language)">Forum (EN)</a> | 
 
+        <a href="mailto:alexandru.garofide@gmail.com">Contact us</a><br>
+        <br>
+        <a href="#about">About</a> | 
+        <a href="#privacy">Privacy Policy</a> | 
+        <a href="https://www.gnu.org/licenses/agpl.html" target="_blank" rel="noopener"  
+        title="opens in a new window">AGPL License</a>  | 
+        <a href="http://herralien-apps.appspot.com" target="_blank" rel="noopener"  
+        title="opens in a new window">Bits of software</a><br>
+        <br><br>
+                Copyright <span id="copyrightYear">2018</span>  Alexandru Garofide &lt;<a href="mailto:alexandru.garofide@gmail.com">alexandru.garofide@gmail.com</a>&gt;
         </div>
+
+      </div>
     
 	</body>
 
@@ -1674,21 +1829,18 @@ title="opens in a new window">Bits of software</a><br>
 <script type="text/JavaScript" async="" src="js/scrollbehavior.js"></script>
 <script type="text/JavaScript" async="" src="js/promotedmenu.js"></script>
 <script type="text/JavaScript" async="" src="js/navigation.js"></script>
+<script type="text/JavaScript" async="" src="js/nextdayseventsdata.js"></script>
+<script type="text/JavaScript" async="" src="js/nextdayseventsview.js"></script>
+
+<script type="text/JavaScript" async="" src="js/occultations.js"></script>
+<script type="text/JavaScript" async="" src="js/occultablestars.js"></script>
+<script type="text/JavaScript" async="" src="js/occultationspage.js"></script>
 
  <script>
 
 "use strict";
 
 $get("JSDisabledPage").style.display = "none";
-
-var Pages = {"addPlainPages" : function(titles){
-    for (var i = 0; i < titles.length; i++) {
-        var title = titles[i];
-        Pages[title] = {"displayPage" : function() {}, "reset" : function() {}};
-    }
-}};
-
-Pages.addPlainPages(["more", "settings", "home", "privacy", "Search results", "about"]);
 
 var previousPage = false;
 var currentActiveLink = false;
@@ -1774,8 +1926,16 @@ var appInit = function() {
        || !Location.init || !TimeStepsData.init) {
        SyncedTimeOut (appInit, Timeout.onInit);
    } else {
+     try {
        Location.init();
+     } catch (locationInitError) {
+       console.log(locationInitError);
+     }
+     try {
        TimeStepsData.init();
+     } catch (timeSettingsError) {
+       console.log(timeSettingsError);
+     }
    }
 }
 

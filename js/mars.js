@@ -26,9 +26,9 @@ var MarsData = {};
                                        semidiameterFunctionName :  function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.MarsSemidiameterB(delta); } } );				
 
             MarsData['old_GetData'] = MarsData.getDataAsObjectForJD;
-            MarsData.getDataAsObjectForJD = function (JD, computeRiseTransitSet) {
+            MarsData.getDataAsObjectForJD = function (JD, computeRiseTransitSet, computePhysical) {
                 var data = this.old_GetData(JD, computeRiseTransitSet); 
-                if (!data['EarthDeclination']) {
+                if (!data['EarthDeclination'] && computePhysical) {
                     var physicalData = GetAAJS()['Mars']['PhysicalDetails'] (JD);
                     for (var key in physicalData)
                         data[key] = physicalData[key];

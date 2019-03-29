@@ -128,6 +128,8 @@ function error404(pageName) {
     }
 }
 
+var actions = null;
+
 function onhashchange(){
     if (typeof PageRank == 'undefined') {
         SyncedTimeOut(onhashchange, Timeout.onInit);
@@ -147,9 +149,59 @@ function onhashchange(){
 
         if (previousPage){
             DisplayPage (pageName);
+            if (actions) {
+                for (var i = 0; i < actions.length; i++) {
+                    var action = actions[i];
+                    if (action.name == "scroll") {
+                        (function(){
+                            var targetDiv = false;
+                            var attemptsCount = 0;
+                            var maxAttempts = 200;
+                            var timeout = 500;
+                            var scollAction = function () {
+                                targetDiv = document.getElementById(action.parameters);
+                                if (targetDiv) {
+                                    targetDiv.scrollIntoView();
+                                    return;
+                                }
+                                if (attemptsCount < maxAttempts) {
+                                    setTimeout (scollAction, timeout);
+                                }
+                                attemptsCount++;
+                            }
+                            scollAction();
+                        })();
+                    } else if (action.name == "classListRemove") {
+                        var targetDiv = document.getElementById(action.parameters.target);
+                        if (targetDiv) {
+                            var classes = action.parameters.classes;
+                            for (var clsIndex = 0; clsIndex < classes.length; clsIndex++) {
+                                targetDiv.classList.remove(classes[clsIndex]);
+                            }
+                        }
+                    } else if (action.name == "classListAdd") {
+                        var targetDiv = document.getElementById(action.parameters.target);
+                        if (targetDiv) {
+                            var classes = action.parameters.classes;
+                            for (var clsIndex = 0; clsIndex < classes.length; clsIndex++) {
+                                targetDiv.classList.add(classes[clsIndex]);
+                            }
+                        }
+                    }
+                }
+
+                actions = null;
+            }
         } else {
-            error404 (pageName);
-            window.location.href = "#Search results";
+            try{
+                /* {"page":"settings","actions":[{"name":"scroll","parameters":"realTimeSettingsContainer"}]} */
+                var payload = JSON.parse(pageName);
+                actions = payload.actions;
+                window.location.replace("#" + payload.page);
+            } catch (err){
+                error404 (pageName);
+                window.location.replace("#Search results");
+            }
         }
     }
 }

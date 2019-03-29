@@ -1,0 +1,296 @@
+<html>
+    <head>
+        <script type="text/javascript" src="js/aajs.js"></script>
+        <script type="text/javascript" src="testlib.js"></script>
+        <script type="text/JavaScript" src="js/planetdata.js"></script>
+
+        <script type="text/javascript">
+            var Pages = {};
+
+         var Location = {
+            latitude  : 38.685509760012025,
+            longitude : -9.124145507812502,
+            altitude  : 100,
+            
+            rhoSinPhi : 0,
+            rhoCosPhi : 0,
+            recomputeGeocentricCoordinates : function () {
+            Location.rhoSinPhi = AAJS.Globe.RadiusTimesSineGeocentricLatitude (Location.latitude, Location.altitude);
+            Location.rhoCosPhi = AAJS.Globe.RadiusTimesCosineGeocentricLatitude (Location.latitude, Location.altitude);
+            }
+
+        }; 
+       
+        function PlanetPage() {}
+
+        function GetAAJS() { return AAJS; }
+
+            </script>
+
+
+
+        <script type="text/javascript" src="js/sun.js"></script>
+
+        <script type="text/javascript" src="js/moon.js"></script>
+        <script type="text/javascript" src="js/matrix.js"></script>
+        <script type="text/javascript" src="js/numerical.js"></script>
+
+       <script type="text/javascript" src="js/notifications.js"></script>
+       <script type="text/javascript" src="js/mooneclipsesdata.js"></script>
+        <script type="text/JavaScript" src="js/besselianelements.js"></script>
+       <script type="text/javascript" src="js/solareclipsesdata.js"></script>
+        <style>
+            p {
+                line-spacing: 2px;
+            }
+        </style>
+    </head>
+    <body>
+    </body>
+</html>
+<script type="text/javascript">
+         
+    (function () {
+            
+        var tests = [
+        {
+            name : "Eclipse 2015-03-20 Lisbon",
+            input : AAJS.Date.DateToJD (2015, 03, 20, true) + 10/24, // dynamic time
+            expectedOutput : {"t1" : AAJS.Date.DateToJD (2015, 03, 20, true) + 1/24 * (7 + 59/60),
+                              "tMax" : AAJS.Date.DateToJD (2015, 03, 20, true) + 1/24 * (9 + 1/60),
+                              "t4" : AAJS.Date.DateToJD (2015, 03, 20, true) + 1/24 * (10 + 8/60),
+                },
+                  
+                  
+            accuracies : {
+                    "t1"  : 1/60/24,
+                    "tMax"  : 1/60/24,
+                    "t4"  : 1/60/24
+                },
+                
+            actualOutput : false,
+                      
+            test : function () {
+                var t0 = this.input;
+                var eclipseData = {
+                    besselianElements: SolarEclipses.ComputeBesselianElements (t0),
+                    t0: t0
+                };
+
+                eclipseData = SolarEclipses.LocalCircumstances(eclipseData);
+
+                var expectedEq = function  (actual, expected, eps, key) {
+                    if (Math.abs(actual-expected) > eps) {
+                        console.log ("For " + key + ", expecting " + expected + 
+                                     " got instead " + actual + ". Diff = " + 
+                                     Math.abs(actual-expected) +" , eps = " + eps);
+                        return false;
+                    }
+                    return true;
+                };
+
+                this.actualOutput = { t1: eclipseData.t1, tMax : eclipseData.tMax, t4: eclipseData.t4};
+
+                 
+               var okT1 = expectedEq(this.actualOutput.t1, this.expectedOutput.t1, this.accuracies.t1, "t1") ;
+               var okTMax = expectedEq(this.actualOutput.tMax, this.expectedOutput.tMax, this.accuracies.tMax, "tMax");
+               var okT4 = expectedEq(this.actualOutput.t4, this.expectedOutput.t4, this.accuracies.t4, "t4") ;
+
+               return okT1 && okTMax && okT4;
+            }
+        },
+
+
+/*
+
+Polynomial Besselian Elements: Partial Solar Eclipse of 2022 Oct 25
+
+Polynomial Besselian Elements
+2022 Oct 25 at 11:00:00.0 TD (=t0)
+n	x	        y	        d	        l1	        l2	        μ
+0	0.45479	    0.96877	    -12.1735	0.54990	    0.00372	    348.9823
+1	0.49555	    -0.23959	-0.0137	    -0.00012	-0.00011	15.0024
+2	0.00003	    0.00002	    0.0000	    -0.00001	-0.00001	-0.0000
+3	-0.00001	0.00000	-	-	-	-
+Tan ƒ1	0.0047019
+Tan ƒ2	0.0046785
+
+
+Polynomial Besselian Elements: Total Solar Eclipse of 2027 Aug 02
+
+Polynomial Besselian Elements
+2027 Aug 02 at 10:00:00.0 TD (=t0)
+n	x	        y	        d	        l1	        l2	        μ
+0	-0.01977	0.16007	1   7.7625	    0.53062	    -0.01546	328.4225
+1	0.54471	    -0.21116	-0.0102	    0.00001	    0.00001	    15.0021
+2	-0.00004	-0.00012	-0.0000	    -0.00001	-0.00001	0.0000
+3	-0.00001	0.00000	-	-	-	-
+Tan ƒ1	0.0046064
+Tan ƒ2	0.0045834
+
+Polynomial Besselian Elements: Annular Solar Eclipse of 2030 Jun 01
+
+Polynomial Besselian Elements
+2030 Jun 01 at 06:00:00.0 TD (=t0)
+n	x	        y	        d	        l1	        l2	        μ
+0	-0.26939	0.55197	    22.0613	    0.56617	    0.01991	    270.5399
+1	0.50564	    0.02101	    0.0056	    -0.00001	-0.00001	14.9997
+2	0.00002	    -0.00016	-0.0000	    -0.00001	-0.00001	-0.0000
+3	-0.00001	-0.00000	-	-	-	-
+Tan ƒ1	0.0046120
+Tan ƒ2	0.0045890
+
+
+*/        
+
+        /*
+        
+2018-january-31        
+Event	UTC Time	Time in Brussels*	Visible in Brussels
+Penumbral Eclipse begins	31 Jan, 10:51:13	31 Jan, 11:51:13	No, below the horizon
+Partial Eclipse begins	31 Jan, 11:48:27	31 Jan, 12:48:27	No, below the horizon
+Full Eclipse begins	31 Jan, 12:51:47	31 Jan, 13:51:47	No, below the horizon
+Maximum Eclipse	31 Jan, 13:29:51	31 Jan, 14:29:51	No, below the horizon
+Full Eclipse ends	31 Jan, 14:07:51	31 Jan, 15:07:51	No, below the horizon
+Partial Eclipse ends	31 Jan, 15:11:11	31 Jan, 16:11:11	No, below the horizon
+Penumbral Eclipse ends	31 Jan, 16:08:29	31 Jan, 17:08:29	No, below the horizon
+
+
+Start of penumbral eclipse (TP1)	10:51:33
+Start of umbral eclipse (TU1)	11:49:50
+Start of totality (TU2)	12:52:38
+Eclipse maximum (TM)	13:30:59
+End of totality (TU3)	14:09:20
+End of umbral eclipse (TU4)	15:12:19
+End of penumbral eclipse (TP4)	16:10:41
+
+
+2018-july-27
+Event	UTC Time	Time in Brussels*	Visible in Brussels
+Penumbral Eclipse begins	27 Jul, 17:14:47	27 Jul, 19:14:47	No, below the horizon
+Partial Eclipse begins	27 Jul, 18:24:27	27 Jul, 20:24:27	No, below the horizon
+Full Eclipse begins	27 Jul, 19:30:15	27 Jul, 21:30:15	Yes
+Maximum Eclipse	27 Jul, 20:21:44	27 Jul, 22:21:44	Yes
+Full Eclipse ends	27 Jul, 21:13:11	27 Jul, 23:13:11	Yes
+Partial Eclipse ends	27 Jul, 22:19:00	28 Jul, 00:19:00	Yes
+Penumbral Eclipse ends	27 Jul, 23:28:38	28 Jul, 01:28:38	Yes
+
+
+2019-january-21
+Event	UTC Time	Time in Brussels*	Visible in Brussels
+Penumbral Eclipse begins	21 Jan, 02:36:29	21 Jan, 03:36:29	Yes
+Partial Eclipse begins	21 Jan, 03:33:54	21 Jan, 04:33:54	Yes
+Full Eclipse begins	21 Jan, 04:41:17	21 Jan, 05:41:17	Yes
+Maximum Eclipse	21 Jan, 05:12:14	21 Jan, 06:12:14	Yes
+Full Eclipse ends	21 Jan, 05:43:15	21 Jan, 06:43:15	Yes
+Partial Eclipse ends	21 Jan, 06:50:39	21 Jan, 07:50:39	Yes
+Penumbral Eclipse ends	21 Jan, 07:48:02	21 Jan, 08:48:02	No, below the horizon
+
+2019-july-16
+Event	UTC Time	Time in Brussels*	Visible in Brussels
+Penumbral Eclipse begins	16 Jul, 18:43:51	16 Jul, 20:43:51	No, below the horizon
+Partial Eclipse begins	16 Jul, 20:01:43	16 Jul, 22:01:43	Yes
+Maximum Eclipse	16 Jul, 21:30:44	16 Jul, 23:30:44	Yes
+Partial Eclipse ends	16 Jul, 22:59:39	17 Jul, 00:59:39	Yes
+Penumbral Eclipse ends	17 Jul, 00:17:38	17 Jul, 02:17:38	Yes
+
+2021-may-26
+Event	UTC Time	Time in Brussels*	Visible in Brussels
+Penumbral Eclipse begins	26 May, 08:47:39	26 May, 10:47:39	No, below the horizon
+Partial Eclipse begins	26 May, 09:44:58	26 May, 11:44:58	No, below the horizon
+Full Eclipse begins	26 May, 11:11:26	26 May, 13:11:26	No, below the horizon
+Maximum Eclipse	26 May, 11:18:42	26 May, 13:18:42	No, below the horizon
+Full Eclipse ends	26 May, 11:25:54	26 May, 13:25:54	No, below the horizon
+Partial Eclipse ends	26 May, 12:52:23	26 May, 14:52:23	No, below the horizon
+Penumbral Eclipse ends	26 May, 13:49:44	26 May, 15:49:44	No, below the horizon
+
+2021-november-19
+Event	UTC Time	Time in Brussels*	Visible in Brussels
+Penumbral Eclipse begins	19 Nov, 06:02:09	19 Nov, 07:02:09	Yes
+Partial Eclipse begins	19 Nov, 07:18:42	19 Nov, 08:18:42	No, below the horizon
+Maximum Eclipse	19 Nov, 09:02:55	19 Nov, 10:02:55	No, below the horizon
+Partial Eclipse ends	19 Nov, 10:47:04	19 Nov, 11:47:04	No, below the horizon
+Penumbral Eclipse ends	19 Nov, 12:03:40	19 Nov, 13:03:40	No, below the horizon
+
+
+2022-may-16
+Event	UTC Time	Time in Brussels*	Visible in Brussels
+Penumbral Eclipse begins	16 May, 01:32:05	16 May, 03:32:05	Yes
+Partial Eclipse begins	16 May, 02:27:52	16 May, 04:27:52	Yes
+Full Eclipse begins	16 May, 03:29:03	16 May, 05:29:03	Yes
+Maximum Eclipse	16 May, 04:11:28	16 May, 06:11:28	No, below the horizon
+Full Eclipse ends	16 May, 04:53:55	16 May, 06:53:55	No, below the horizon
+Partial Eclipse ends	16 May, 05:55:07	16 May, 07:55:07	No, below the horizon
+Penumbral Eclipse ends	16 May, 06:50:49	16 May, 08:50:49	No, below the horizon
+
+2022-november-8
+Event	UTC Time	Time in Brussels*	Visible in Brussels
+Penumbral Eclipse begins	8 Nov, 08:02:15	8 Nov, 09:02:15	No, below the horizon
+Partial Eclipse begins	8 Nov, 09:09:12	8 Nov, 10:09:12	No, below the horizon
+Full Eclipse begins	8 Nov, 10:16:39	8 Nov, 11:16:39	No, below the horizon
+Maximum Eclipse	8 Nov, 10:59:11	8 Nov, 11:59:11	No, below the horizon
+Full Eclipse ends	8 Nov, 11:41:36	8 Nov, 12:41:36	No, below the horizon
+Partial Eclipse ends	8 Nov, 12:49:03	8 Nov, 13:49:03	No, below the horizon
+Penumbral Eclipse ends	8 Nov, 13:56:09	8 Nov, 14:56:09	No, below the horizon
+
+
+2023-october-28
+Event	UTC Time	Time in Brussels*	Visible in Brussels
+Penumbral Eclipse begins	28 Oct, 18:01:44	28 Oct, 20:01:44	Yes
+Partial Eclipse begins	28 Oct, 19:35:18	28 Oct, 21:35:18	Yes
+Maximum Eclipse	28 Oct, 20:14:00	28 Oct, 22:14:00	Yes
+Partial Eclipse ends	28 Oct, 20:52:37	28 Oct, 22:52:37	Yes
+Penumbral Eclipse ends	28 Oct, 22:26:19	29 Oct, 00:26:19	Yes
+
+2024-september-18
+Event	UTC Time	Time in Brussels*	Visible in Brussels
+Penumbral Eclipse begins	18 Sep, 00:41:03	18 Sep, 02:41:03	Yes
+Partial Eclipse begins	18 Sep, 02:12:50	18 Sep, 04:12:50	Yes
+Maximum Eclipse	18 Sep, 02:44:12	18 Sep, 04:44:12	Yes
+Partial Eclipse ends	18 Sep, 03:15:35	18 Sep, 05:15:35	Yes
+Penumbral Eclipse ends	18 Sep, 04:47:21	18 Sep, 06:47:21	Yes
+
+
+2025-march-14
+Event	UTC Time	Time in Brussels*	Visible in Brussels
+Penumbral Eclipse begins	14 Mar, 03:57:24	14 Mar, 04:57:24	Yes
+Partial Eclipse begins	14 Mar, 05:09:34	14 Mar, 06:09:34	Yes
+Full Eclipse begins	14 Mar, 06:26:00	14 Mar, 07:26:00	No, below the horizon
+Maximum Eclipse	14 Mar, 06:58:44	14 Mar, 07:58:44	No, below the horizon
+Full Eclipse ends	14 Mar, 07:31:23	14 Mar, 08:31:23	No, below the horizon
+Partial Eclipse ends	14 Mar, 08:47:48	14 Mar, 09:47:48	No, below the horizon
+Penumbral Eclipse ends	14 Mar, 10:00:03	14 Mar, 11:00:03	No, below the horizon
+
+2025-september-7
+Event	UTC Time	Time in Brussels*	Visible in Brussels
+Penumbral Eclipse begins	7 Sep, 15:28:20	7 Sep, 17:28:20	No, below the horizon
+Partial Eclipse begins	7 Sep, 16:27:02	7 Sep, 18:27:02	No, below the horizon
+Full Eclipse begins	7 Sep, 17:30:41	7 Sep, 19:30:41	No, below the horizon
+Maximum Eclipse	7 Sep, 18:11:41	7 Sep, 20:11:41	No, below the horizon
+Full Eclipse ends	7 Sep, 18:52:46	7 Sep, 20:52:46	Yes
+Partial Eclipse ends	7 Sep, 19:56:26	7 Sep, 21:56:26	Yes
+Penumbral Eclipse ends	7 Sep, 20:55:01	7 Sep, 22:55:01	Yes        
+        
+        */
+        
+        
+        
+        
+        
+        ];
+           
+        
+        function runTests() {
+            if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
+                return setTimeout (runTests, 100);
+
+            testlib.runTests (tests);
+        }
+
+        runTests();
+
+
+    })();
+                
+        </script>
+

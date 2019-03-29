@@ -204,7 +204,9 @@ function PlanetPage (planetDataSource, tableName) {
                         break;
                     }
 
-                    var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JD, true), JD);
+                    var JDE = JD + GetAAJS().DynamicalTime.DeltaT(JD)/(3600 * 24);
+
+                    var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JDE, true, true), JDE);
                     var changedMonth = !pageObj.lastAppendedLine || 
                                         (preparedData[0] && pageObj.lastAppendedLine[0] != preparedData[0]);
         
@@ -262,6 +264,7 @@ function PlanetPage (planetDataSource, tableName) {
             this.hostElement.removeChild(this.hostElement.firstChild);
         }
         this.pageRendered = false;
+        this.header = false;
         // reset the data - transits depend on the longitude
         if (keepData && this.dataSource.reset) {
             this.dataSource.reset();
@@ -341,13 +344,19 @@ function PlanetPage (planetDataSource, tableName) {
         return res.time.Ord3 + ":" +  res.time.Ord2;
     };
     
-    PlanetPage.prototype["yyyymmdd_hhmmOfJD"] = function (JD) {
+    PlanetPage.prototype["yyyymmdd_hhmmOfJD"] = function (JD, timeAccuracy) {
         var fullDayJD = 0.5 + Math.floor(JD - 0.5);
         var dayFraction = JD - fullDayJD;
         if (dayFraction < 0) dayFraction += 1;
+
+        if (!timeAccuracy) {
+            timeAccuracy = 1/(24 * 60);
+        }
+
+        var roundedDayFraction = Math.round(dayFraction/timeAccuracy) * timeAccuracy;
         
         var dateOfJD =  GetAAJS().Date.JD2Date(fullDayJD);
-        var roundedTime = Math.round(dayFraction * 24 * 60) / 60;
+        var roundedTime = roundedDayFraction * 24;
         var sexagesimalTime = GetAAJS().Numerical.ToSexagesimal (roundedTime);
 
         if (TimeStepsData.useLocalTime)
