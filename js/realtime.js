@@ -56,12 +56,11 @@ var RealTimeDataViewer = {
                 this.rtData.start();
                 var obj = this;
                 this.rtData.onDataUpdated.add(function (data) {
-
-
                     for (var i = 0; i < obj.allKeys.length; i++) {
                         var key = obj.allKeys[i];
                         var decimals = Math.pow(10, key.decimalsNum);
                         var name = key.name;
+                        name = name.trim();
                         var keyData = Math.round(key.factor * data[name] * decimals) / decimals;
                         if (obj.allViews[name]) {
                             obj.allViews[name].textContent = Math.floor(keyData) +
@@ -205,7 +204,7 @@ var RealTimeDataViewer = {
                 localStorage.setItem(RealTimeDataViewer.Persistent.GetRTStorageKey(RealTimeDataViewer.Persistent.purposes.numberOfDecimals, pageName, key), numOfDecimals);
             }
 
-            return numOfDecimals * 1.0;
+            return Number(numOfDecimals);
         },
 
         IsVisible : function (pageName, key) {

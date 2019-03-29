@@ -65,12 +65,12 @@ var JDForRealTimeView = {
             }
         }
 
-        DataForNow.prototype['getInterpolatedData'] = function (datesObj, computeRiseSet) {
-            var obj1 = this.dataSource.getDataAsObjectForJD (datesObj.T1, computeRiseSet);
-            var obj2 = this.dataSource.getDataAsObjectForJD (datesObj.T2, computeRiseSet);
-            var obj3 = this.dataSource.getDataAsObjectForJD (datesObj.T3, computeRiseSet);
-            var obj4 = this.dataSource.getDataAsObjectForJD (datesObj.T4, computeRiseSet);
-            var obj5 = this.dataSource.getDataAsObjectForJD (datesObj.T5, computeRiseSet);
+        DataForNow.prototype['getInterpolatedData'] = function (datesObj, computeRiseSet, computePhysicalData) {
+            var obj1 = this.dataSource.getDataAsObjectForJD (datesObj.T1, computeRiseSet, computePhysicalData);
+            var obj2 = this.dataSource.getDataAsObjectForJD (datesObj.T2, computeRiseSet, computePhysicalData);
+            var obj3 = this.dataSource.getDataAsObjectForJD (datesObj.T3, computeRiseSet, computePhysicalData);
+            var obj4 = this.dataSource.getDataAsObjectForJD (datesObj.T4, computeRiseSet, computePhysicalData);
+            var obj5 = this.dataSource.getDataAsObjectForJD (datesObj.T5, computeRiseSet, computePhysicalData);
             
             var interpolationLimits = {
                 "RA" : 24
@@ -86,6 +86,10 @@ var JDForRealTimeView = {
         DataForNow.prototype['updateData'] = function (datesObj) {
             if (typeof GetAAJS() != 'undefined') {
                 var interpolatedObject = this.getInterpolatedData(datesObj);
+                var obj3 = this.dataSource.getDataAsObjectForJD (datesObj.T3, true, true);
+                interpolatedObject.Rise = obj3.Rise;
+                interpolatedObject.MeridianTransit = obj3.MeridianTransit;
+                interpolatedObject.Set = obj3.Set;
                 this.onDataUpdated.notify(interpolatedObject);
             }
         }

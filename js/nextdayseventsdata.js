@@ -44,7 +44,7 @@ var NextEvents = {
             var y = rightNow.getUTCFullYear();
             var m = 1 + rightNow.getUTCMonth();
             var d = rightNow.getUTCDate();
-            this.startJd = AAJS.Date.DateToJD (y, m, d, true);
+            this.startJd = AAJS.Date.DateToJD (y, m, d, true) + rightNow.getUTCHours()/24 + rightNow.getUTCMinutes()/(60 * 24);
         }
     };
 
@@ -53,9 +53,10 @@ var NextEvents = {
         this.startJd = false;
     };
 
-    NextEvents["GetEvents"] = function() {
+    NextEvents["GetEvents"] = function(types) {
         var events = [];
-        for (var key in NextEvents) {
+        for (var i in types) {
+            var key = types[i];
             if (((typeof NextEvents[key]).toUpperCase() == "OBJECT") &&
                 ((typeof NextEvents[key]["GetEvents"]).toUpperCase() == "FUNCTION")) {
                 var eventsForObj = NextEvents[key]["GetEvents"]();
@@ -148,6 +149,33 @@ var NextEvents = {
                     });
                 }
             }
+            return events;
+        }
+    };
+
+/////////////////// Occultations //////////////////////////
+    NextEvents["Occultations"] = {
+        GetEvents : function () {
+            NextEvents.init();
+            var events = [];
+            var jd = NextEvents.startJd;
+
+            var occultations = OccultationsData.getOccultedStars(jd, NextEvents.numberOfDays);
+            for (var conjunctionJde in occultations) {
+                var occultation = occultations[conjunctionJde];
+                var id = OccultationsPage.getId(occultation);
+                var event = {
+                    start :  occultation.start.t,
+                    end :    occultation.end.t,
+                    navigActionObj : {
+                        page:"Occultations",
+                        actions:[{name:"scroll", parameters: id}]
+                        },
+                   title: "Occultation: " + OccultationsPage.getStarName(occultation)
+                };
+                events.push (event);
+            }
+            
             return events;
         }
     };

@@ -20,8 +20,10 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     // IncrementHint is just a hint on the sample rate for getting from the inernal data sources.
     // If there is reasonable evidence to suspect an event, a finer icrement should be used.
     GetEvents (countOfDays) 
-    -> [ { start: <JD>, end: <JD>, title: string, navigActionObj : {}},
-         ... ... ...
+    -> [ 
+            { start: <JD>, end: <JD>, title: string, navigActionObj : {}},
+            { start: <JD>, end: <JD>, title: string, navigActionObj : {}},
+             ... ... ...
      ]
 
    Data sources for next events:
@@ -33,6 +35,56 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 (function(){
 
     var domHost = document.getElementById("upcommingEventsFrontPage");
+
+    function onDisplayEventTypeChange() {
+        setTimeout(function(){
+            reset();
+            init();
+        }, 100);
+    }
+
+    var solarEclipsesCheckBox = false;
+    function displaySolarEclipses() {
+        if (!solarEclipsesCheckBox) {
+            solarEclipsesCheckBox = document.getElementById("futureSolarEclipsesSettings");
+            solarEclipsesCheckBox.onchange = onDisplayEventTypeChange;
+        }
+        return solarEclipsesCheckBox && solarEclipsesCheckBox.checked;
+    }
+
+    var lunarEclipsesCheckBox = false;
+    function displayLunarEclipses() {
+        if (!lunarEclipsesCheckBox) {
+            lunarEclipsesCheckBox = document.getElementById("futureLunarEclipsesSettings");
+            lunarEclipsesCheckBox.onchange = onDisplayEventTypeChange;
+        }
+        return lunarEclipsesCheckBox && lunarEclipsesCheckBox.checked;
+    }
+
+    var occultationsCheckBox = false;
+    function displayOccultations() {
+        if (!occultationsCheckBox) {
+            occultationsCheckBox = document.getElementById("futureOccultationsSettings");
+            occultationsCheckBox.onchange = onDisplayEventTypeChange;
+        }
+        return occultationsCheckBox && occultationsCheckBox.checked;
+    }
+
+    var eventTypeToCheckFunction = {
+        "MoonEclipsesPage" : displayLunarEclipses,
+        "SolarEclipsesPage" : displaySolarEclipses,
+        "Occultations" : displayOccultations
+    };
+
+    function getEventTypesToDisplay() {
+        var types = [];
+        for (var type in eventTypeToCheckFunction) {
+            if (eventTypeToCheckFunction[type]()) {
+                types.push(type);
+            }
+        }
+        return types;
+    }
 
     function reset() {
         NextEvents["reset"]();
@@ -57,8 +109,10 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         updateMaxDays();
         if (daysInput.value != lastInputValue) {
             lastInputValue = daysInput.value;
-            reset();
-            init();
+            setTimeout(function(){
+                reset();
+                init();
+            }, 100);
         }
     }
 
@@ -66,7 +120,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
         try {
 
-            var events = NextEvents["GetEvents"]();
+            var events = NextEvents["GetEvents"](getEventTypesToDisplay());
             var addDomNode = PlanetPage.prototype.addNodeChild;
 
             var yyyymmdd_hhmmOfJD =   PlanetPage.prototype["yyyymmdd_hhmmOfJD"];
