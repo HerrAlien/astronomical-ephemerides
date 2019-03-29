@@ -44,7 +44,7 @@ var NextEvents = {
             var y = rightNow.getUTCFullYear();
             var m = 1 + rightNow.getUTCMonth();
             var d = rightNow.getUTCDate();
-            this.startJd = AAJS.Date.DateToJD (y, m, d, true);
+            this.startJd = AAJS.Date.DateToJD (y, m, d, true) + rightNow.getUTCHours()/24 + rightNow.getUTCMinutes()/(60 * 24);
         }
     };
 
@@ -53,9 +53,10 @@ var NextEvents = {
         this.startJd = false;
     };
 
-    NextEvents["GetEvents"] = function() {
+    NextEvents["GetEvents"] = function(types) {
         var events = [];
-        for (var key in NextEvents) {
+        for (var i in types) {
+            var key = types[i];
             if (((typeof NextEvents[key]).toUpperCase() == "OBJECT") &&
                 ((typeof NextEvents[key]["GetEvents"]).toUpperCase() == "FUNCTION")) {
                 var eventsForObj = NextEvents[key]["GetEvents"]();
