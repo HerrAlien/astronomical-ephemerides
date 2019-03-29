@@ -135,15 +135,6 @@ table {
     font-family: Courier;
 }
 
-@supports not (-webkit-overflow-scrolling: touch) {
-    .planetTable {
-        background: url('../images/sprite.svg#default-table');
-        background-repeat-x: no-repeat;
-        background-position: center;
-        background-size: contain;
-    }
-}
-
 .planetTableHeader {
     background: #ffffff;
     display: block;
@@ -198,7 +189,7 @@ table {
 }
 
 #JupiterTable, #JupiterTable > .planetTableHeader {
-    width: 985px;
+    width: 990px;
 }
 
 #MarsTable, #MarsTable > .planetTableHeader {
@@ -265,7 +256,7 @@ tr.secondHeaderRowScrolled th:last-of-type {
 }
 
 
-.moonEclipse, .solarEclipse {
+.individualEventSection {
     text-align: center;
     border-top: solid 1px #AAAAAA;
     margin-top: -1px;
@@ -277,18 +268,24 @@ tr.secondHeaderRowScrolled th:last-of-type {
     padding: 0px 20px 20px 0px;
 }
 
-.moonEclipse table, .solarEclipse table {
+.individualEventSection table {
     margin-bottom: 20px;
     font-size: 30px;
 }
 
-.moonEclipse table td, .solarEclipse table td{
+.individualEventSection table td{
     padding: 10px;
+}
+
+
+.occultation table th:nth-of-type(1)
+{
+    min-width:350px;
 }
 
 .moonEclipse table th:nth-of-type(1)
 {
-    width:550px;
+    min-width:550px;
 }
 
 .solarEclipse table td{
@@ -312,7 +309,6 @@ tr.secondHeaderRowScrolled th:last-of-type {
     position: fixed;
     bottom: 118px;
     background: #ffffff;
-    padding: 2px 0px 2px 2px;
     width: 100%;
 }
 
@@ -380,7 +376,10 @@ tr.secondHeaderRowScrolled th:last-of-type {
         display: block;
     }
 
-    
+    .physicalPositionalButtonsHolder {
+        padding: 2px 0px 2px 2px;
+    }
+
     @media (orientation: portrait) {
         .planetTableHeader.fixed {
             top: 0px;
@@ -499,7 +498,7 @@ input[type=date]::-webkit-inner-spin-button {
 
 .rtsettings {
     border-top: solid 1px #000000;
-    padding-top: 15px;
+    padding-top: 110px;
     padding-bottom: 65px;
     border-bottom: solid 1px #000000;
 }
@@ -536,6 +535,13 @@ input[type=date]::-webkit-inner-spin-button {
 #incrementDate, #numberOfDays {
     width: 230px;
 }
+
+#futureEventsNumberOfDays {
+    display: inline-block;
+    height: 60px;
+    width: 120px;
+}
+
 
 #startingDate {
     border-top: none;
@@ -577,6 +583,7 @@ input[type=date]::-webkit-inner-spin-button {
     overflow-y: hidden;
     border: none;
     padding-bottom: 0px;
+    padding-top: 15px;
 }
 
  .expandCollapseButton {

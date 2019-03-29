@@ -52,7 +52,6 @@ var JDForRealTimeView = {
     function DataForNow(dataSource) {
         this.dataSource = dataSource;
         this.onDataUpdated = new Notifications.New();
-        this.start();
     }
     
     (function(){
@@ -65,25 +64,32 @@ var JDForRealTimeView = {
                 SyncedTimeOut (function() { obj.start(); }, Timeout.onInit);
             }
         }
+
+        DataForNow.prototype['getInterpolatedData'] = function (datesObj, computeRiseSet, computePhysicalData) {
+            var obj1 = this.dataSource.getDataAsObjectForJD (datesObj.T1, computeRiseSet, computePhysicalData);
+            var obj2 = this.dataSource.getDataAsObjectForJD (datesObj.T2, computeRiseSet, computePhysicalData);
+            var obj3 = this.dataSource.getDataAsObjectForJD (datesObj.T3, computeRiseSet, computePhysicalData);
+            var obj4 = this.dataSource.getDataAsObjectForJD (datesObj.T4, computeRiseSet, computePhysicalData);
+            var obj5 = this.dataSource.getDataAsObjectForJD (datesObj.T5, computeRiseSet, computePhysicalData);
+            
+            var interpolationLimits = {
+                "RA" : 24
+            };
+
+            var interpolatedObject = {};
+            for (var key in obj1) {
+                interpolatedObject[key] = this.interpolate (datesObj.n, obj1[key], obj2[key], obj3[key], obj4[key], obj5[key], interpolationLimits[key]);
+            }
+            return interpolatedObject;
+        }
         
         DataForNow.prototype['updateData'] = function (datesObj) {
             if (typeof GetAAJS() != 'undefined') {
-
-                var obj1 = this.dataSource.getDataAsObjectForJD (datesObj.T1, true);
-                var obj2 = this.dataSource.getDataAsObjectForJD (datesObj.T2, true);
-                var obj3 = this.dataSource.getDataAsObjectForJD (datesObj.T3, true);
-                var obj4 = this.dataSource.getDataAsObjectForJD (datesObj.T4, true);
-                var obj5 = this.dataSource.getDataAsObjectForJD (datesObj.T5, true);
-                
-                var interpolationLimits = {
-                    "RA" : 24
-                };
-
-                var interpolatedObject = {};
-                for (var key in obj1) {
-                    interpolatedObject[key] = this.interpolate (datesObj.n, obj1[key], obj2[key], obj3[key], obj4[key], obj5[key], interpolationLimits[key]);
-                }
-                
+                var interpolatedObject = this.getInterpolatedData(datesObj);
+                var obj3 = this.dataSource.getDataAsObjectForJD (datesObj.T3, true, true);
+                interpolatedObject.Rise = obj3.Rise;
+                interpolatedObject.MeridianTransit = obj3.MeridianTransit;
+                interpolatedObject.Set = obj3.Set;
                 this.onDataUpdated.notify(interpolatedObject);
             }
         }

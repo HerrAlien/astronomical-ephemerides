@@ -23,6 +23,10 @@ var Location = {
 	altitude : 200,
 	storageKey : "LocationSettings",
     
+    rhoSinPhi : 0,
+    rhoCosPhi : 0,
+    geocentricCoordinatesUpToDate : false,
+    
     onLocationUpdated : false,
 
 	// these are the controls
@@ -95,14 +99,36 @@ var Location = {
 				this[key] = locationObj[key];
 			}
 		}
+            
+            var recomputeGeocentricCoordinatesUntilSuccess = function () {
+                Location.recomputeGeocentricCoordinates();
+                if (!Location.geocentricCoordinatesUpToDate) {
+                    setTimeout (recomputeGeocentricCoordinatesUntilSuccess, 200);
+                }
+            }
+            recomputeGeocentricCoordinatesUntilSuccess();
     },
 
     save: function() {
     	var locationSettings = {};
 		for (var key in {"latitude":0, "longitude":0, "altitude":0}) {
 			locationSettings[key] = this[key];
+            Location.geocentricCoordinatesUpToDate = false;
+            Location.recomputeGeocentricCoordinates();
 		}
 		localStorage.setItem(this.storageKey, JSON.stringify(locationSettings));
+    },
+    
+    recomputeGeocentricCoordinates : function () {
+        if (Location.geocentricCoordinatesUpToDate)
+            return;
+        
+         if (typeof AAJS == "undefined" || !AAJS || !AAJS.AllDependenciesLoaded || !AAJS.AllDependenciesLoaded())
+            return;
+        
+        Location.rhoSinPhi = AAJS.Globe.RadiusTimesSineGeocentricLatitude (Location.latitude, Location.altitude);
+        Location.rhoCosPhi = AAJS.Globe.RadiusTimesCosineGeocentricLatitude (Location.latitude, Location.altitude);
+        Location.geocentricCoordinatesUpToDate = true;
     },
 
 	init : function () {
