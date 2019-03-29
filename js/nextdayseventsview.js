@@ -37,8 +37,10 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     var domHost = document.getElementById("upcommingEventsFrontPage");
 
     function onDisplayEventTypeChange() {
-        reset();
-        init();        
+        setTimeout(function(){
+            reset();
+            init();
+        }, 100);
     }
 
     var solarEclipsesCheckBox = false;
@@ -107,8 +109,10 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         updateMaxDays();
         if (daysInput.value != lastInputValue) {
             lastInputValue = daysInput.value;
-            reset();
-            init();
+            setTimeout(function(){
+                reset();
+                init();
+            }, 100);
         }
     }
 
