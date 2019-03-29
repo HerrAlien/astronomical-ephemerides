@@ -22,6 +22,29 @@ var RealTimeDataViewer = {
 
     views : {},
 
+    format : {
+        default: function(value, unit, numberOfDecimals, factor) {
+            var decimals = Math.pow(10, numberOfDecimals);
+            var data = Math.round(factor * value * decimals) / decimals;
+            var dataStr = Math.floor(data) + unit + "." +
+                          RealTimeDataViewer.Utils.padToOrder(
+                              Math.floor(decimals * (data - Math.floor(data))), 
+                              numberOfDecimals);
+            return dataStr;
+        },
+        JD : function(value) {
+            try {
+            var dt = PlanetPage.prototype.yyyymmdd_hhmmOfJD(value);          
+            return dt.time.Ord3 + ":" + dt.time.Ord2;
+            } catch (err) {
+                return RealTimeDataViewer.format.default(value, "d", 3, 1);
+            }
+        },
+        Rise : function(value) { return RealTimeDataViewer.format.JD(value); },
+        Set :  function(value) { return RealTimeDataViewer.format.JD(value); },
+        MeridianTransit:  function(value) { return RealTimeDataViewer.format.JD(value); },
+     },
+
     getRtSettingsSectionId : function (pageName) {
         return pageName + " settings section";
     },
@@ -58,14 +81,19 @@ var RealTimeDataViewer = {
                 this.rtData.onDataUpdated.add(function (data) {
                     for (var i = 0; i < obj.allKeys.length; i++) {
                         var key = obj.allKeys[i];
-                        var decimals = Math.pow(10, key.decimalsNum);
-                        var name = key.name;
-                        name = name.trim();
-                        var keyData = Math.round(key.factor * data[name] * decimals) / decimals;
-                        if (obj.allViews[name]) {
-                            obj.allViews[name].textContent = Math.floor(keyData) +
-                                                              key.unit + "." +
-                                                              RealTimeDataViewer.Utils.padToOrder(Math.floor(decimals * (keyData - Math.floor(keyData))), key.decimalsNum);
+                        var viewFunction = RealTimeDataViewer.format[key.name];
+                        if (!viewFunction) {
+                            viewFunction = RealTimeDataViewer.format.default;
+                        }
+
+                        if (obj.allViews[key.name]) {
+                            obj.allViews[key.name].textContent = viewFunction(
+                                data[key.name],
+                                key.unit,
+                                key.decimalsNum,
+                                key.factor
+                            );
+
                         }
                     }
 
