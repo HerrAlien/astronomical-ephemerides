@@ -85,7 +85,7 @@ var JDForRealTimeView = {
         
         DataForNow.prototype['updateData'] = function (datesObj) {
             if (typeof GetAAJS() != 'undefined') {
-                var interpolatedObject = this.getInterpolatedData(datesObj);
+                var interpolatedObject = this.getInterpolatedData(datesObj, false, true);
                 var obj3 = this.dataSource.getDataAsObjectForJD (datesObj.T3, true, true);
                 interpolatedObject.Rise = obj3.Rise;
                 interpolatedObject.MeridianTransit = obj3.MeridianTransit;

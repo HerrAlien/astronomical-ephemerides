@@ -184,8 +184,13 @@ var RealTimeDataViewer = {
     CreateRtDomForPage : function (domHost, pageName, onViewAdded) {
         // same host
         try {
+            if (!AAJS.AllDependenciesLoaded())
+                throw "wait!";
             // This wil throw initially. Notifications will not update the view.
-            for (var key in Pages[pageName].dataSource.getDataAsObjectForJD(0, false)) {
+            for (var key in Pages[pageName].dataSource.getDataAsObjectForJD(0, true, true)) {
+                if (key == "bRiseValid" || key == "bSetValid" || key == "bTransitValid") {
+                    continue;
+                }
                 var createdDom = RealTimeDataViewer.Utils.CreateDom(domHost, "div", "loading ...");
                 createdDom.classList.add(key);
                 createdDom.classList.add("scrollableRTdiv");
