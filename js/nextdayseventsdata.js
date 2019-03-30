@@ -159,14 +159,15 @@ var NextEvents = {
             NextEvents.init();
             var events = [];
             var jd = NextEvents.startJd;
+            var dt = AAJS.DynamicalTime.DeltaT(jd)/(3600 * 24);
 
             var occultations = OccultationsData.getOccultedStars(jd, NextEvents.numberOfDays);
             for (var conjunctionJde in occultations) {
                 var occultation = occultations[conjunctionJde];
                 var id = OccultationsPage.getId(occultation);
                 var event = {
-                    start :  occultation.start.t,
-                    end :    occultation.end.t,
+                    start :  occultation.start.t - dt,
+                    end :    occultation.end.t - dt,
                     navigActionObj : {
                         page:"Occultations",
                         actions:[{name:"scroll", parameters: id}]
