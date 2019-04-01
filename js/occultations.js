@@ -128,7 +128,7 @@ var OccultationsData = {
 
                     var dataAtConjunction = dataForJd;
                     var conjunctionDec = dataAtConjunction.DecTopo;
-                    var conjunctionDiameter = dataAtConjunction.diameter;
+                    var conjunctionDiameter = dataAtConjunction.DiameterTopo;
                     // compute the distance
 
                     var dist = Math.acos(sind(conjunctionDec)*sind(star.DEd) + 
@@ -183,7 +183,7 @@ var OccultationsData = {
         for (var i = 0; i < 100 && Math.abs(d) > epsD && Math.abs(t - jde) < 0.25; i++) {
             dataForT = moonData.getInterpolatedData(this.getDataObj(t, fraction));
             var distanceFromCenter = this.distance(dataForT, star);
-            var moonRadius = dataForT.diameter/2;
+            var moonRadius = dataForT.DiameterTopo/2;
             d = distanceFromCenter - moonRadius;
             if (lastD * d < 0) {
                 timeStep *= -0.5;

@@ -211,9 +211,9 @@ drawOccultation: function  (occultation, host) {
   var sin = Math.sin;
   var tan = Math.tan;
 
-  var paSun = Math.atan2 (cos(sunData.Dec * degra) * sin(hra * (sunData.RA - moonData.RaGeo)),
-                          (sin(sunData.Dec * degra) * cos(moonData.DecGeo*degra) -
-                          cos(sunData.Dec * degra) * sin(moonData.DecGeo*degra) * cos(hra * (sunData.RA - moonData.RaGeo))
+  var paSun = Math.atan2 (cos(sunData.Dec * degra) * sin(hra * (sunData.RA - moonData.RA)),
+                          (sin(sunData.Dec * degra) * cos(moonData.Dec*degra) -
+                          cos(sunData.Dec * degra) * sin(moonData.Dec*degra) * cos(hra * (sunData.RA - moonData.RA))
                           )
                           );
   paSun += Math.PI/2;
