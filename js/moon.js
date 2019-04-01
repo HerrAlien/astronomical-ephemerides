@@ -39,8 +39,6 @@ var MoonData = {
                 data[key] = posData[key];
             
             // how about we rename the geo ones?
-            data ['RA'] = data['RaGeo'];
-            data ['Dec'] = data['DecGeo'];
 			data['MeridianTransit'] = false;
             
             this.cache[JDE] = data;
@@ -132,7 +130,7 @@ var MoonData = {
                 "0" : { "text" : "  \u03B1 "},
                 "1" : { "text" : "  h  "},
                 "longText" : "Apparent geocentric equatorial coordinates: Right Ascension",
-                "dataKey" : 'RaGeo'
+                "dataKey" : 'RA'
             },
         "3" : {
                 "0" : { "text" : "(RA)   "},
@@ -148,7 +146,7 @@ var MoonData = {
                 "0" : { "text" : " \u03B4 "},
                 "1" : { "text" : " \u00B0 "},
                 "longText" : "Apparent geocentric equatorial coordinates: Declination",
-                "dataKey" : 'DecGeo'
+                "dataKey" : 'Dec'
             },
         "6" :  {
                 "0" : { "text" : "(Dec) "},
@@ -305,12 +303,12 @@ var MoonData = {
         displayableLine[1] = obj.Day;
         
         var di = 2;
-        var sexagesimalRaGeo = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.RaGeo * 36000)/36000);
+        var sexagesimalRaGeo = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.RA * 36000)/36000);
         displayableLine[di++] = sexagesimalRaGeo.Ord3 ;
         displayableLine[di++] = sexagesimalRaGeo.Ord2 
         displayableLine[di++] = sexagesimalRaGeo.Ord1;
 
-        var sexagesimalDecGeo = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.DecGeo * 3600)/3600);
+        var sexagesimalDecGeo = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.Dec * 3600)/3600);
         displayableLine[di++] = sexagesimalDecGeo.Ord3 ;
         displayableLine[di++] = sexagesimalDecGeo.Ord2;
         displayableLine[di++] = sexagesimalDecGeo.Ord1;
@@ -325,7 +323,7 @@ var MoonData = {
         displayableLine[di++] = sexagesimalDecTopo.Ord2;
         displayableLine[di++] = sexagesimalDecTopo.Ord1;
 
-        var sexagesimalDiam = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.diameter * 3600)/3600);
+        var sexagesimalDiam = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.Diameter * 3600)/3600);
         displayableLine[di++] = sexagesimalDiam.Ord2;
         displayableLine[di++] = sexagesimalDiam.Ord1;
         
@@ -333,7 +331,7 @@ var MoonData = {
         displayableLine[di++] = this.timeToHhColumnMm(obj.MeridianTransit);
         displayableLine[di++] = this.timeToHhColumnMm(obj.Set);
             
-        var sexagesimalParallax = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.parallax * 3600)/3600);
+        var sexagesimalParallax = GetAAJS().Numerical.ToSexagesimal(Math.round(obj.Parallax * 3600)/3600);
         
         displayableLine[di++] = sexagesimalParallax.Ord3;
         displayableLine[di++] = sexagesimalParallax.Ord2;
