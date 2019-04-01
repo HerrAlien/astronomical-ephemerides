@@ -41,10 +41,7 @@ var MoonData = {
             // how about we rename the geo ones?
             data ['RA'] = data['RaGeo'];
             data ['Dec'] = data['DecGeo'];
-            data ['Parallax'] = data.parallax;
-            
 			data['MeridianTransit'] = false;
-			data['Diameter'] = data.diameter;
             
             this.cache[JDE] = data;
         }
