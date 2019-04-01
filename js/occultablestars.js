@@ -62,6 +62,9 @@ function OccultableStarsTree (stars, granularityDeg) {
             star.RAh = fixedCoords.X;
             star.DEd = fixedCoords.Y;
 
+            star['RA'] = fixedCoords.X;
+            star['Dec'] = fixedCoords.Y;
+
             var raIndex = this.getRaIndex(star.RAh);
             if (!tree[raIndex]) {
                 tree[raIndex] = {};

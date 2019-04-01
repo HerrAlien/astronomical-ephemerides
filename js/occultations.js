@@ -31,6 +31,14 @@ var OccultationsData = {
                  n: (JDE - jd3) / fraction};
     },
 
+    moonData : false,
+
+    getMoonData : function () {
+        if (!OccultationsData.moonData)
+            OccultationsData.moonData = new DataForNow(MoonData);
+        return OccultationsData.moonData;
+    },
+
     getOccultedStars_noTimings : function (jde, numberOfDays) {
 
         function sind (x) {
@@ -42,17 +50,15 @@ var OccultationsData = {
 
         var getDataObj = OccultationsData.getDataObj;
 
-        var occultedStars = {};
+        var occultedObjects = {};
         var dayIncrement = 1;
-        var moonData = new DataForNow(MoonData);
+        var moonData = OccultationsData.getMoonData();
         var stepsCount = 12;
         var jdeIncrement = dayIncrement / stepsCount;
 
         var treatedJde = {};
 
         var deg2rad = Math.PI / 180;
-        var lat = Location.latitude * deg2rad;
-        var long = Location.longitude * deg2rad;
 
         var lst =  (GetAAJS().Sidereal.ApparentGreenwichSiderealTime(jde) * 15 + 
                     Location.longitude) * deg2rad;
@@ -82,72 +88,100 @@ var OccultationsData = {
                 var ra = dataForJd.RaTopo;
                 var dec = dataForJd.DecTopo;
                 var starsThatMayBeOcculted = OccultableStars.getStarsNear(ra, dec, jde);
+                
+                OccultationsData.processPossibleOccultedObjects (jde, lst,treatedJde,
+                    starsThatMayBeOcculted,
+                    function(s) { return s.HR; },
+                    noDimmerThanThis_m,
+                    occultedObjects);
 
-
-                for (var i = 0; i < starsThatMayBeOcculted.length; i++) {
-                    var star = starsThatMayBeOcculted[i];
-                    if (Math.round(star.Vmag * 10) / 10 > noDimmerThanThis_m){
-                        continue;
-                    }
-
-                    var starDecR = star.DEd * deg2rad;
-
-                    // get the time of conjunction
-                    var conjunctionJde = jde;
-                    var lastConjunctionJde = conjunctionJde - 1;
-                    for (var cjIndex = 0; cjIndex < 10 && Math.abs(conjunctionJde - lastConjunctionJde) > 1e-6; cjIndex++) {
-                        lastConjunctionJde = conjunctionJde;
-                        dataForJd =  moonData.getInterpolatedData(getDataObj(conjunctionJde, 4/24));
-                        var beforeData = moonData.getInterpolatedData(getDataObj(conjunctionJde - 1/24, 4/24));
-                        var t = (star.RAh - beforeData.RaTopo) / (dataForJd.RaTopo - beforeData.RaTopo);
-                        conjunctionJde = conjunctionJde - 1/24 + t/24;
-                    }
-                    
-                    var conjunctionId = conjunctionJde + " " + star.RAh + " " + star.DEd;
-
-                    if (treatedJde[conjunctionId]) {
-                        continue;
-                    }
-                    treatedJde[conjunctionId] = true;
-                    // interpolate new values for moon
-                                    
-                    var conjunctionLst = lst + TWO_PI * utc2lstRatio * (conjunctionJde - jde);
-                    while (conjunctionLst > TWO_PI) {
-                        conjunctionLst -= TWO_PI;
-                    } 
-
-                    while (conjunctionLst < 0) {
-                        conjunctionLst += TWO_PI;
-                    }                   
-
-                    var starAltR =  Math.asin (Math.sin (starDecR) * Math.sin (lat) + Math.cos (starDecR) * Math.cos (lat) * Math.cos (conjunctionLst - star.RAh * 15 * deg2rad));
-
-                    if (starAltR <= 0) {
-                        continue;
-                    }
-
-                    var dataAtConjunction = dataForJd;
-                    var conjunctionDec = dataAtConjunction.DecTopo;
-                    var conjunctionDiameter = dataAtConjunction.diameter;
-                    // compute the distance
-
-                    var dist = Math.acos(sind(conjunctionDec)*sind(star.DEd) + 
-                                         cosd(conjunctionDec)*cosd(star.DEd));
-                    dist *= 180/Math.PI;
-                    if (dist < conjunctionDiameter * 0.75) 
-                    {
-                        var key = Math.round(conjunctionJde * 1e6) / 1e6;
-
-                        if (!occultedStars[key]) {
-                            occultedStars[key] = {};
-                        }
-                        occultedStars[key][star.HR] = star;
-                    }                   
-                }
             }
 
         }
-        return occultedStars;
+        return occultedObjects;
+    },
+
+    processPossibleOccultedObjects : function (jde, lst,
+                                                treatedJde,
+                                               inputObjects, 
+                                               getIdOfObject,
+                                               noDimmerThanThis_m,
+                                               occultedObjects) {
+        var moonData = OccultationsData.getMoonData();
+        var deg2rad = Math.PI / 180;
+        var TWO_PI = 2 * Math.PI;
+        var getDataObj = OccultationsData.getDataObj;
+        var dataForJd = false;
+        var utc2lstRatio = 1.00273737909350795;
+        var lat = Location.latitude * deg2rad;
+        var long = Location.longitude * deg2rad;
+        
+        function sind (x) {
+            return Math.sin(x * Math.PI/180);
+        }
+        function cosd (x) {
+            return Math.cos(x * Math.PI/180);
+        }
+
+        for (var i = 0; i < inputObjects.length; i++) {
+            var currentObject = inputObjects[i];
+            if (Math.round(currentObject.Vmag * 10) / 10 > noDimmerThanThis_m){
+                continue;
+            }
+
+            var starDecR = currentObject.Dec * deg2rad;
+
+            // get the time of conjunction
+            var conjunctionJde = jde;
+            var lastConjunctionJde = conjunctionJde - 1;
+            for (var cjIndex = 0; cjIndex < 10 && Math.abs(conjunctionJde - lastConjunctionJde) > 1e-6; cjIndex++) {
+                lastConjunctionJde = conjunctionJde;
+                dataForJd =  moonData.getInterpolatedData(getDataObj(conjunctionJde, 4/24));
+                var beforeData = moonData.getInterpolatedData(getDataObj(conjunctionJde - 1/24, 4/24));
+               var t = (currentObject.RA - beforeData.RaTopo) / (dataForJd.RaTopo - beforeData.RaTopo);
+               conjunctionJde = conjunctionJde - 1/24 + t/24;
+           }
+           
+           var conjunctionId = conjunctionJde + " " + currentObject.RA + " " + currentObject.Dec;
+
+           if (treatedJde[conjunctionId]) {
+               continue;
+           }
+           treatedJde[conjunctionId] = true;
+           // interpolate new values for moon
+                           
+           var conjunctionLst = lst + TWO_PI * utc2lstRatio * (conjunctionJde - jde);
+           while (conjunctionLst > TWO_PI) {
+               conjunctionLst -= TWO_PI;
+           } 
+
+           while (conjunctionLst < 0) {
+               conjunctionLst += TWO_PI;
+           }                   
+
+           var starAltR =  Math.asin (Math.sin (starDecR) * Math.sin (lat) + Math.cos (starDecR) * Math.cos (lat) * Math.cos (conjunctionLst - currentObject.RA * 15 * deg2rad));
+
+           if (starAltR <= 0) {
+               continue;
+           }
+
+           var dataAtConjunction = dataForJd;
+           var conjunctionDec = dataAtConjunction.DecTopo;
+           var conjunctionDiameter = dataAtConjunction.diameter;
+           // compute the distance
+
+           var dist = Math.acos(sind(conjunctionDec)*sind(currentObject.Dec) + 
+                                cosd(conjunctionDec)*cosd(currentObject.Dec));
+           dist *= 180/Math.PI;
+           if (dist < conjunctionDiameter * 0.75) {
+                var key = Math.round(conjunctionJde * 1e6) / 1e6;
+
+                if (!occultedObjects[key]) {
+                    occultedObjects[key] = {};
+                }
+                occultedObjects[key][getIdOfObject(currentObject)] = currentObject;
+            }                   
+       }        
     },
 
     distance : function  (dataForJd, star) {
