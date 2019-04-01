@@ -182,13 +182,18 @@ var RealTimeDataViewer = {
     },
 
     CreateRtDomForPage : function (domHost, pageName, onViewAdded) {
+        var hiddenKeys = ["bRiseValid","bSetValid","bTransitValid",
+                          "parallax", "diameter","RaGeo","DecGeo",
+                          "Day", "Month",
+                          "CentralMeridianGeometricLongitude_System1",
+                          "CentralMeridianGeometricLongitude_System2"];
         // same host
         try {
             if (!AAJS.AllDependenciesLoaded())
                 throw "wait!";
             // This wil throw initially. Notifications will not update the view.
             for (var key in Pages[pageName].dataSource.getDataAsObjectForJD(0, true, true)) {
-                if (key == "bRiseValid" || key == "bSetValid" || key == "bTransitValid") {
+                if (hiddenKeys.indexOf(key) >= 0) {
                     continue;
                 }
                 var createdDom = RealTimeDataViewer.Utils.CreateDom(domHost, "div", "loading ...");
@@ -199,7 +204,7 @@ var RealTimeDataViewer = {
                 var scaleFactor = 1;
                 for (var tableKey in Pages[pageName].tableHeaderInfo) {
                     if (key == Pages[pageName].tableHeaderInfo[tableKey].dataKey) {
-                        unit = Pages[pageName].tableHeaderInfo[tableKey]["1"]["text"];
+                        unit = Pages[pageName].tableHeaderInfo[tableKey]["1"]["text"].trim();
                         createdDom.setAttribute("alt", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
                         createdDom.setAttribute("title", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
                         createdDom.onclick = RealTimeDataViewer.alertDivTitle;
@@ -208,7 +213,7 @@ var RealTimeDataViewer = {
 
                 if (unit == "'") {
                     scaleFactor = 60;
-                } else if (unit == "''") {
+                } else if (unit == "''" || unit == '"') {
                     scaleFactor = 3600;
                 } else if (unit == "hh:mm") {
                     unit = "h";
@@ -386,7 +391,7 @@ var RealTimeDataViewer = {
         function AddSettingsForKeys() {
             if (rtViewer.allKeys.length != 0) {
                 for (var key in rtViewer.allViews) {
-                    if (key == "Day" || key == "Month")
+/*                    if (key == "Day" || key == "Month")
                         continue;
 
                     if (pageName == "Jupiter Ephemeris") {
@@ -396,11 +401,11 @@ var RealTimeDataViewer = {
                         }
                     }
                     if (pageName == "Moon Ephemeris") {
-                        if (key == "RA" || key == "Dec") {
+                        if (key == "RaGeo" || key == "DecGeo") {
                             continue;
                         }
                     }
-                
+*/                
                     var checkboxId = pageName+key+"settings";
 
                     // div + checkbox for each key

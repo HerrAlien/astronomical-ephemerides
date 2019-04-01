@@ -44,6 +44,7 @@ var MoonData = {
             data ['Parallax'] = data.parallax;
             
 			data['MeridianTransit'] = false;
+			data['Diameter'] = data.diameter;
             
             this.cache[JDE] = data;
         }
