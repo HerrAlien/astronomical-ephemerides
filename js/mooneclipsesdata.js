@@ -33,21 +33,21 @@ function MoonEclipse (JD) {
         
         this.dRaSun   = 15 * (sunDataPlus.RA - sunDataMinus.RA) / dT;
         this.dDecSun  = (sunDataPlus.Dec - sunDataMinus.Dec) / dT;
-        this.dRaMoon  = 15 * (moonDataPlus.RaGeo - moonDataMinus.RaGeo) / dT;
-        this.dDecMoon = (moonDataPlus.DecGeo - moonDataMinus.DecGeo) / dT;
+        this.dRaMoon  = 15 * (moonDataPlus.RA - moonDataMinus.RA) / dT;
+        this.dDecMoon = (moonDataPlus.Dec - moonDataMinus.Dec) / dT;
         
         // this is in UTC.        
         this.JD = JD - GetAAJS().DynamicalTime.DeltaT(JD)/(3600 * 24);
         this.ParallaxSun = sunData.Parallax;
-        this.ParallaxMoon = moonData.parallax;
+        this.ParallaxMoon = moonData.Parallax;
 
-        this.MoonDiameter = moonData.diameter;
+        this.MoonDiameter = moonData.Diameter;
         this.SunDiameter = sunData.Diameter;
 
         this.RaSun   = sunData.RA * 15;
         this.DecSun  = sunData.Dec;
-        this.RaMoon  = moonData.RaGeo * 15;
-        this.DecMoon = moonData.DecGeo;
+        this.RaMoon  = moonData.RA * 15;
+        this.DecMoon = moonData.Dec;
 
         var shadowRa = 180 + this.RaSun;
         if (shadowRa > 360)
@@ -145,7 +145,7 @@ var MoonEclipsesData = {
             dMoonData = MoonData.getDataAsObjectForJD (jd + dJd);
             
             var opposingSunRA = 12 + sunData.RA;
-            var moonRA_1 = moonData.RaGeo;
+            var moonRA_1 = moonData.RA;
             if (Math.abs(opposingSunRA - moonRA_1) > 12){
                 if (opposingSunRA < moonRA_1)
                     opposingSunRA += 24;
@@ -153,7 +153,7 @@ var MoonEclipsesData = {
                     moonRA_1 += 24;
             }
             
-            var dMoonDataRA = dMoonData.RaGeo;
+            var dMoonDataRA = dMoonData.RA;
             var moonRA_2 = moonRA_1;
             if (Math.abs(dMoonDataRA - moonRA_2) > 12){
                 if (dMoonDataRA < moonRA_2)
