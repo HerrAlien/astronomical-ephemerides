@@ -114,18 +114,18 @@ drawOccultation: function  (occultation, host) {
   addNodeChild(header, "th", "Time");
   addNodeChild(header, "th", "Position Angle");
 
-  var timeAccuracy = 1/(24 * 60);
+  var timeAccuracy = 1/(24 * 3600);
 
   var immersionRow = addNodeChild(table, "tr");
   addNodeChild(immersionRow, "td", "Disappearance (D)");
   var t = yyyymmdd_hhmmOfJD(occultation.start.t - dt, timeAccuracy);
-  addNodeChild(immersionRow, "td", t.time.Ord3 + ":" + t.time.Ord2);
+  addNodeChild(immersionRow, "td", t.time.Ord3 + ":" + t.time.Ord2 + ":" + t.time.Ord1);
   addNodeChild(immersionRow,"td", Math.round(occultation.start.PA));
 
   var emmersionRow = addNodeChild(table, "tr");
   addNodeChild(emmersionRow, "td", "Reappearance (R)");
   t = yyyymmdd_hhmmOfJD(occultation.end.t - dt, timeAccuracy);
-  addNodeChild(emmersionRow, "td", t.time.Ord3 + ":" + t.time.Ord2);
+  addNodeChild(emmersionRow, "td", t.time.Ord3 + ":" + t.time.Ord2 + ":" + t.time.Ord1);
   addNodeChild(emmersionRow,"td", Math.round(occultation.end.PA));
 
   var w = 800;
@@ -211,9 +211,9 @@ drawOccultation: function  (occultation, host) {
   var sin = Math.sin;
   var tan = Math.tan;
 
-  var paSun = Math.atan2 (cos(sunData.Dec * degra) * sin(hra * (sunData.RA - moonData.RaGeo)),
-                          (sin(sunData.Dec * degra) * cos(moonData.DecGeo*degra) -
-                          cos(sunData.Dec * degra) * sin(moonData.DecGeo*degra) * cos(hra * (sunData.RA - moonData.RaGeo))
+  var paSun = Math.atan2 (cos(sunData.Dec * degra) * sin(hra * (sunData.RA - moonData.RA)),
+                          (sin(sunData.Dec * degra) * cos(moonData.Dec*degra) -
+                          cos(sunData.Dec * degra) * sin(moonData.Dec*degra) * cos(hra * (sunData.RA - moonData.RA))
                           )
                           );
   paSun += Math.PI/2;

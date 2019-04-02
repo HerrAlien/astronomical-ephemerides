@@ -282,7 +282,7 @@ AAJSLoFi = {
 
     Diameters : { MercurySemidiameterB : zero, VenusSemidiameterB : zero, MarsSemidiameterB : zero,
       JupiterEquatorialSemidiameterB : zero, SaturnEquatorialSemidiameterB: zero, UranusSemidiameterB: zero,
-      NeptuneSemidiameterB: zero },
+      NeptuneSemidiameterB: zero, GeocentricMoonSemidiameter: zero },
 
     Mercury : { RadiusVector: zero },
     Venus : { RadiusVector: zero },
@@ -300,7 +300,8 @@ AAJSLoFi = {
     Moon : { 
       PositionalEphemeris : function() { return {"RaGeo" : 0, "DecGeo" : 0 }; } ,
       CalculateSelenographicPositionOfSun  : zero
-    }
+    },
+    Globe : { Radius: 6371.4 }
 };
 })();
 
