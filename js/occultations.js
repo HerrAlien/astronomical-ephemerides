@@ -129,20 +129,20 @@ var OccultationsData = {
                 continue;
             }
 
-            var starDecR = currentObject.Dec * deg2rad;
-
             // get the time of conjunction
             var conjunctionJde = jde;
             var lastConjunctionJde = conjunctionJde - 1;
+            var starRaH = false;
             for (var cjIndex = 0; cjIndex < 10 && Math.abs(conjunctionJde - lastConjunctionJde) > 1e-6; cjIndex++) {
                 lastConjunctionJde = conjunctionJde;
                 dataForJd =  moonData.getInterpolatedData(getDataObj(conjunctionJde, 4/24));
+                starRaH = currentObject.getRa(conjunctionJde);
                 var beforeData = moonData.getInterpolatedData(getDataObj(conjunctionJde - 1/24, 4/24));
-               var t = (currentObject.RA - beforeData.RaTopo) / (dataForJd.RaTopo - beforeData.RaTopo);
-               conjunctionJde = conjunctionJde - 1/24 + t/24;
+                var t = (starRaH - beforeData.RaTopo) / (dataForJd.RaTopo - beforeData.RaTopo);
+                conjunctionJde = conjunctionJde - 1/24 + t/24;
            }
            
-           var conjunctionId = conjunctionJde + " " + currentObject.RA + " " + currentObject.Dec;
+           var conjunctionId = conjunctionJde + " " + currentObject.getRa(conjunctionJde) + " " + starDecR;
 
            if (treatedJde[conjunctionId]) {
                continue;
@@ -159,7 +159,8 @@ var OccultationsData = {
                conjunctionLst += TWO_PI;
            }                   
 
-           var starAltR =  Math.asin (Math.sin (starDecR) * Math.sin (lat) + Math.cos (starDecR) * Math.cos (lat) * Math.cos (conjunctionLst - currentObject.RA * 15 * deg2rad));
+            var starDecR = currentObject.getDec(conjunctionJde) * deg2rad;
+           var starAltR =  Math.asin (Math.sin (starDecR) * Math.sin (lat) + Math.cos (starDecR) * Math.cos (lat) * Math.cos (conjunctionLst - currentObject.getRa(conjunctionJde) * 15 * deg2rad));
 
            if (starAltR <= 0) {
                continue;
@@ -170,8 +171,8 @@ var OccultationsData = {
            var conjunctionDiameter = dataAtConjunction.DiameterTopo;
            // compute the distance
 
-           var dist = Math.acos(sind(conjunctionDec)*sind(currentObject.Dec) + 
-                                cosd(conjunctionDec)*cosd(currentObject.Dec));
+           var dist = Math.acos(sind(conjunctionDec)*Math.sin(starDecR) + 
+                                cosd(conjunctionDec)*Math.cos(starDecR));
            dist *= 180/Math.PI;
            if (dist < conjunctionDiameter * 0.75) {
                 var key = Math.round(conjunctionJde * 1e6) / 1e6;
@@ -189,8 +190,8 @@ var OccultationsData = {
         var moonDecRad = dataForJd.DecTopo * degra;
         var moonRaRad = dataForJd.RaTopo*15* degra;
 
-        var starDecRad = star.DEd * degra;
-        var starRaRad = star.RAh*15 * degra;
+        var starDecRad = star.getDec(dataForJd) * degra;
+        var starRaRad = star.getRa(dataForJd)*15 * degra;
 
         var dist = Math.acos(Math.sin(moonDecRad)*Math.sin(starDecRad) + 
                    Math.cos(moonDecRad)*Math.cos(starDecRad)*Math.cos(moonRaRad - starRaRad));
@@ -230,14 +231,14 @@ var OccultationsData = {
             return false;
 
         var degra = Math.PI/180;
-        var dRaDeg = 15*(star.RAh - dataForT.RaTopo);
+        var dRaDeg = 15*(star.getRa(t) - dataForT.RaTopo);
         if (dRaDeg > 180) {
             dRaDeg -= 360;
         } else if (dRaDeg < -180) {
             dRaDeg += 360;
         }
 
-        var dx = Math.cos(dataForT.DecTopo * degra)*Math.tan(star.DEd * degra)-Math.sin(dataForT.DecTopo * degra)*Math.cos(dRaDeg * degra)
+        var dx = Math.cos(dataForT.DecTopo * degra)*Math.tan(star.getDec(t) * degra)-Math.sin(dataForT.DecTopo * degra)*Math.cos(dRaDeg * degra)
         var dy = Math.sin(dRaDeg * degra);
         var PA = Math.atan2(dy, dx) / degra;
         if (PA < 0)

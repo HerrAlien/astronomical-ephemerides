@@ -52,6 +52,9 @@ function OccultableStarsTree (stars, granularityDeg) {
             tree = {};
         }
 
+        var fixedRA = function() { return this.RAh; };
+        var fixedDec = function() { return this.DEd; };
+
         for (var i = 0; i < _stars.length; i++) {
             var star = JSON.parse(JSON.stringify(_stars[i]));
 
@@ -62,8 +65,10 @@ function OccultableStarsTree (stars, granularityDeg) {
             star.RAh = fixedCoords.X;
             star.DEd = fixedCoords.Y;
 
-            star['RA'] = fixedCoords.X;
+            star['RA']  = fixedCoords.X;
             star['Dec'] = fixedCoords.Y;
+            star['getRa']  = fixedRA;
+            star['getDec'] = fixedDec;
 
             var raIndex = this.getRaIndex(star.RAh);
             if (!tree[raIndex]) {
