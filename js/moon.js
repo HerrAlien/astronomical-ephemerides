@@ -35,8 +35,22 @@ var MoonData = {
 
             var posData = GetAAJS().Moon.PositionalEphemeris(JDE, Location.latitude, Location.longitude, Location.altitude);
             
-            for (var key in posData)
-                data[key] = posData[key];
+            for (var key in posData) {
+                if (key == 'RaGeo') {
+                    data['RA'] = posData[key];
+                } else if (key == 'DecGeo') {
+                    data['Dec'] = posData[key];
+                } else if (key == 'diameter') {
+                    data['DiameterTopo'] = posData[key];
+                } else if (key == 'parallax') {
+                    data['Parallax'] = posData[key];
+                } else {
+                    data[key] = posData[key];
+                }
+            }
+
+            var r = data['R'] * GetAAJS().Globe.Radius;
+            data['Diameter'] =  GetAAJS().Diameters.GeocentricMoonSemidiameter(r)/1800;
             
             // how about we rename the geo ones?
 			data['MeridianTransit'] = false;
