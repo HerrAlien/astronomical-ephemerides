@@ -31,6 +31,60 @@ var OccultationsData = {
                  n: (JDE - jd3) / fraction};
     },
 
+    wrappedPlanets : false,
+
+    getWrappedPlanets : function () {
+        if (!OccultationsData.wrappedPlanets) {
+
+            function WrappedPlanet(displayName, data, initialTimeInterval) {
+                this.displayName = displayName;
+                this.getJdObj = OccultationsData.getDataObj;
+                this.interpolatedDataSource = new DataForNow(data);
+                
+                if (initialTimeInterval)
+                    this.timeInterval = initialTimeInterval;
+                else
+                    this.timeInterval = 1; // one day
+
+                this.getRa = function (jde) {
+                    var interpolatedData = this.interpolatedDataSource.getInterpolatedData (
+                        this.getJdObj(jde, this.timeInterval));
+                    return interpolatedData.RA;
+                };
+
+                this.getDec = function (jde) {
+                    var interpolatedData = this.interpolatedDataSource.getInterpolatedData (
+                        this.getJdObj(jde, this.timeInterval));
+                    return interpolatedData.Dec;
+                };
+
+                this.setInterpolationInterval = function(dayFraction) {
+                    if (dayFraction) {
+                        this.timeInterval = dayFraction;
+                    }
+                };
+
+                this.getDisplayName = function () {
+                    return this.displayName;
+                };
+
+                this. Vmag = 1;
+            }
+
+            OccultationsData.wrappedPlanets = [
+                 new WrappedPlanet("Mercury", MercuryData, 1),
+                 new WrappedPlanet("Venus", VenusData, 1),
+                 new WrappedPlanet("Mars", MarsData, 10),
+                 new WrappedPlanet("Jupiter", JupiterData, 10),
+                 new WrappedPlanet("Saturn", SaturnData, 10),
+                 new WrappedPlanet("Uranus", UranusData, 10),
+                 new WrappedPlanet("Neptune", NeptuneData, 10)
+            ];
+
+        }
+        return OccultationsData.wrappedPlanets;
+    },
+
     moonData : false,
 
     getMoonData : function () {
@@ -97,6 +151,13 @@ var OccultationsData = {
 
                 // get/create wrappers for the planets. inner planets interpolate on a daily basis,
                 // outer planets on a 10 days basis.
+
+                var planets = OccultationsData.getWrappedPlanets();
+                OccultationsData.processPossibleOccultedObjects (jde, lst,treatedJde,
+                    planets,
+                    function(s) { return s.getDisplayName(); },
+                    noDimmerThanThis_m,
+                    occultedObjects);
 
             }
 
@@ -219,6 +280,9 @@ var OccultationsData = {
 
         // call a setInterpolationInterval() method,
         // so that the star objects for planets interpolate at a smaller step
+        if (star.setInterpolationInterval) {
+            star.setInterpolationInterval(2 * fraction);
+        }
 
         var dataForT = false;        
         for (var i = 0; i < 100 && Math.abs(d) > epsD && Math.abs(t - jde) < 0.25; i++) {
