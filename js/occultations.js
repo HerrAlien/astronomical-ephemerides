@@ -95,6 +95,9 @@ var OccultationsData = {
                     noDimmerThanThis_m,
                     occultedObjects);
 
+                // get/create wrappers for the planets. inner planets interpolate on a daily basis,
+                // outer planets on a 10 days basis.
+
             }
 
         }
@@ -213,8 +216,11 @@ var OccultationsData = {
         var timeStep = (jde - t) / 2;
 
         var moonData = new DataForNow(MoonData);
-        var dataForT = false;
-        
+
+        // call a setInterpolationInterval() method,
+        // so that the star objects for planets interpolate at a smaller step
+
+        var dataForT = false;        
         for (var i = 0; i < 100 && Math.abs(d) > epsD && Math.abs(t - jde) < 0.25; i++) {
             dataForT = moonData.getInterpolatedData(this.getDataObj(t, fraction));
             var distanceFromCenter = this.distance(dataForT, star);
