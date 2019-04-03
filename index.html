@@ -627,9 +627,10 @@ label > h3 {
   font-size: 24px;
 }
 
- #home {
+ #home, #about {
     text-align: left;
     line-height: 1.5;
+    max-width: 1024px;
 }
 
 .rightNowFrontPageWidget {
@@ -1523,7 +1524,8 @@ h1 {
               <div class="tagline">For any time span or location, even offline!</div>
             </div>
           </div>
-
+          
+          <div id="rightNowSection">
             <h1 id="homeH1">Right now:
               <a id="rightNowFrontPageSettingsLink" title="Configure the 'Right Now' view"
               href='#{"page":"settings","actions":[{"name":"scroll","parameters":"realTimeSettingsTitle"}]}'>
@@ -1533,9 +1535,10 @@ h1 {
 
             <div id="rightNowFrontPage">
             </div>
+            </div>
 
 
-
+          <div id="futureEventsSection">
             <h1 id="futureEventsH1">Next <input type="number" id="futureEventsNumberOfDays" value="14"> days:
                <a id="rightNowFrontPageSettingsLink" title="Configure the 'Right Now' view"
               href='#{"page":"settings","actions":[{"name":"scroll","parameters":"futureEventsSettingsTitle"}]}'>
@@ -1546,7 +1549,7 @@ h1 {
             <div id="upcommingEventsFrontPage">
 
             </div>
-
+          </div>
 
 
             <div id="lofiWarning">Loading high accuracy algorithm ...(<span id="lofiWarningProgress"></span>)</div>
