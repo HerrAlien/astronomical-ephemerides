@@ -113,18 +113,16 @@ drawOccultation: function  (occultation, host) {
   addNodeChild(header, "th", "Time");
   addNodeChild(header, "th", "Position Angle");
 
-  var timeAccuracy = 1/(24 * 3600);
-
   var immersionRow = addNodeChild(table, "tr");
   addNodeChild(immersionRow, "td", "Disappearance (D)");
-  var t = yyyymmdd_hhmmOfJD(occultation.start.t - dt, timeAccuracy);
-  addNodeChild(immersionRow, "td", t.time.Ord3 + ":" + t.time.Ord2 + ":" + t.time.Ord1);
+  var t = yyyymmdd_hhmmOfJD(occultation.start.t - dt);
+  addNodeChild(immersionRow, "td", t.time.Ord3 + ":" + t.time.Ord2);
   addNodeChild(immersionRow,"td", Math.round(occultation.start.PA));
 
   var emmersionRow = addNodeChild(table, "tr");
   addNodeChild(emmersionRow, "td", "Reappearance (R)");
-  t = yyyymmdd_hhmmOfJD(occultation.end.t - dt, timeAccuracy);
-  addNodeChild(emmersionRow, "td", t.time.Ord3 + ":" + t.time.Ord2 + ":" + t.time.Ord1);
+  t = yyyymmdd_hhmmOfJD(occultation.end.t - dt);
+  addNodeChild(emmersionRow, "td", t.time.Ord3 + ":" + t.time.Ord2);
   addNodeChild(emmersionRow,"td", Math.round(occultation.end.PA));
 
   var w = 800;
