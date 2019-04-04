@@ -31,8 +31,10 @@ var OccultationsPage = {
 
     displayPage : function () {
         
-        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !AAJS.AllDependenciesLoaded || !PageTimeInterval.JD )
+        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !AAJS.AllDependenciesLoaded || !PageTimeInterval.JD 
+            || typeof OccultableStars == "undefined" || typeof MoonData == "undefined") {
             return SyncedTimeOut (function() { OccultationsPage.displayPage(); }, Timeout.onInit);
+       }
 
         OccultationsPage.signature = OccultationsPage.getSignature();
 

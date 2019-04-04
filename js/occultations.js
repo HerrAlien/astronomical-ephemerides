@@ -50,19 +50,19 @@ var OccultationsData = {
                 if (vmag)
                     this.Vmag = vmag;               
 
-                this.getInterpolatedData = function(jde) {
+                this.getInterpolatedData = function(_JD) {
                     var interpolatedData = this.interpolatedDataSource.getInterpolatedData (
-                        this.getJdObj(jde, this.timeInterval));
+                        this.getJdObj(_JD, this.timeInterval));
                     return interpolatedData;
                 };
 
-                this.getRa = function (jde) {
-                    var interpolatedData = this.getInterpolatedData(jde);
+                this.getRa = function (_JD) {
+                    var interpolatedData = this.getInterpolatedData(_JD);
                     return interpolatedData.RA;
                 };
 
-                this.getDec = function (jde) {
-                    var interpolatedData = this.getInterpolatedData(jde);
+                this.getDec = function (_JD) {
+                    var interpolatedData = this.getInterpolatedData(_JD);
                     return interpolatedData.Dec;
                 };
 
@@ -277,13 +277,13 @@ var OccultationsData = {
        }        
     },
 
-    distance : function  (dataForJd, star) {
+    distance : function  (dataForJd, star, t) {
         var degra = Math.PI/180;
         var moonDecRad = dataForJd.DecTopo * degra;
         var moonRaRad = dataForJd.RaTopo*15* degra;
 
-        var starDecRad = star.getDec(dataForJd) * degra;
-        var starRaRad = star.getRa(dataForJd)*15 * degra;
+        var starDecRad = star.getDec(t) * degra;
+        var starRaRad = star.getRa(t)*15 * degra;
 
         var dist = Math.acos(Math.sin(moonDecRad)*Math.sin(starDecRad) + 
                    Math.cos(moonDecRad)*Math.cos(starDecRad)*Math.cos(moonRaRad - starRaRad));
@@ -309,13 +309,13 @@ var OccultationsData = {
         // call a setInterpolationInterval() method,
         // so that the star objects for planets interpolate at a smaller step
         if (star.setInterpolationInterval) {
-            star.setInterpolationInterval(2 * fraction);
+            star.setInterpolationInterval(fraction);
         }
 
         var dataForT = false;        
         for (var i = 0; i < 100 && Math.abs(d) > epsD && Math.abs(t - jde) < 0.25; i++) {
             dataForT = moonData.getInterpolatedData(this.getDataObj(t, fraction));
-            var distanceFromCenter = this.distance(dataForT, star);
+            var distanceFromCenter = this.distance(dataForT, star, t);
             var moonRadius = dataForT.DiameterTopo/2;
             d = distanceFromCenter - moonRadius;
             if (lastD * d < 0) {
