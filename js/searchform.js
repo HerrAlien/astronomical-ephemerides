@@ -1,5 +1,5 @@
-(function(){
-    var searchFormInput = document.getElementById("searchTerms"); 
+(function () {
+    var searchFormInput = document.getElementById("searchTerms");
     var button = document.getElementById("searchButton");
     var menu = document.getElementById("promotedMenu");
 
@@ -9,30 +9,30 @@
         }
     }
 
-    searchFormInput.onblur = function() {
-            button.classList.add("visible");
-            button.classList.remove("hidden");
-            menu.classList.remove("searchTermsVisible");
-            searchFormInput.classList.remove("visible");
-            searchFormInput.classList.add("hidden");
+    searchFormInput.onblur = function () {
+        button.classList.add("visible");
+        button.classList.remove("hidden");
+        menu.classList.remove("searchTermsVisible");
+        searchFormInput.classList.remove("visible");
+        searchFormInput.classList.add("hidden");
     };
 
-    button.onclick = function() {
+    button.onclick = function () {
         button.classList.add("hidden");
         button.classList.remove("visible");
 
-            searchFormInput.classList.remove("hidden");
-            searchFormInput.classList.add("visible");
-            searchFormInput.value = "";
-            searchFormInput.focus();
-            menu.classList.add("searchTermsVisible");
+        searchFormInput.classList.remove("hidden");
+        searchFormInput.classList.add("visible");
+        searchFormInput.value = "";
+        searchFormInput.focus();
+        menu.classList.add("searchTermsVisible");
     }
 
     searchFormInput.onkeydown = function (evt) {
-      if (evt.key == "Enter") {
-          searchFormInput.onblur();
-          search();
-      }
+        if (evt.key == "Enter") {
+            searchFormInput.onblur();
+            search();
+        }
     }
 
 

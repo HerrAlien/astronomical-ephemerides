@@ -30,12 +30,12 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 */
 
 var NextEvents = {
-    numberOfDays : false,
-    startJd : false
+    numberOfDays: false,
+    startJd: false
 };
 
-(function(){
-    NextEvents["init"] = function() {
+(function () {
+    NextEvents["init"] = function () {
         if (!this.numberOfDays) {
             this.numberOfDays = Number(document.getElementById("futureEventsNumberOfDays").value);
         }
@@ -44,16 +44,16 @@ var NextEvents = {
             var y = rightNow.getUTCFullYear();
             var m = 1 + rightNow.getUTCMonth();
             var d = rightNow.getUTCDate();
-            this.startJd = AAJS.Date.DateToJD (y, m, d, true) + rightNow.getUTCHours()/24 + rightNow.getUTCMinutes()/(60 * 24);
+            this.startJd = AAJS.Date.DateToJD(y, m, d, true) + rightNow.getUTCHours() / 24 + rightNow.getUTCMinutes() / (60 * 24);
         }
     };
 
-    NextEvents["reset"] = function() {
+    NextEvents["reset"] = function () {
         this.numberOfDays = false;
         this.startJd = false;
     };
 
-    NextEvents["GetEvents"] = function(types) {
+    NextEvents["GetEvents"] = function (types) {
         var events = [];
         for (var i in types) {
             var key = types[i];
@@ -64,13 +64,13 @@ var NextEvents = {
             }
         }
 
-        events.sort(function(a, b) { return a.start - b.start; });
+        events.sort(function (a, b) { return a.start - b.start; });
         return events;
     };
 
-/////////////////// Moon Eclipses //////////////////////////
+    /////////////////// Moon Eclipses //////////////////////////
     NextEvents["MoonEclipsesPage"] = {
-        GetEvents : function () {
+        GetEvents: function () {
             NextEvents.init();
             var events = [];
             var jd = NextEvents.startJd;
@@ -81,11 +81,11 @@ var NextEvents = {
                     continue;
                 }
 
-                var eclipseData = {eclipse: false};
+                var eclipseData = { eclipse: false };
                 try {
-                    if (!AAJS.AllDependenciesLoaded()) 
+                    if (!AAJS.AllDependenciesLoaded())
                         throw "AAJS not loaded";
-                    eclipseData = MoonEclipsesData.calculateEclipseForJD (jd + i);
+                    eclipseData = MoonEclipsesData.calculateEclipseForJD(jd + i);
                 } catch (err) {
                     var errStr = String(err);
                     if (0 > errStr.indexOf("Cannot obtain JD for opposition"))
@@ -96,14 +96,14 @@ var NextEvents = {
 
                 if (eclipseData.eclipse) {
                     var id = MoonEclipsesPage.getId(eclipseData);
-                    events.push ({
-                        start : eclipseData.umbralPartialEclipse? eclipseData.Timings.Umbral.firstContact: eclipseData.Timings.Penumbral.firstContact,
-                        end :   eclipseData.umbralPartialEclipse? eclipseData.Timings.Umbral.lastContact: eclipseData.Timings.Penumbral.lastContact,
-                        navigActionObj : {
-                            page:"Lunar Eclipses",
-                            actions:[{name:"scroll", parameters: id}]
-                            },
-                       title: "Lunar Eclipse: " + MoonEclipsesPage.getTypeOfEclipseString(eclipseData)
+                    events.push({
+                        start: eclipseData.umbralPartialEclipse ? eclipseData.Timings.Umbral.firstContact : eclipseData.Timings.Penumbral.firstContact,
+                        end: eclipseData.umbralPartialEclipse ? eclipseData.Timings.Umbral.lastContact : eclipseData.Timings.Penumbral.lastContact,
+                        navigActionObj: {
+                            page: "Lunar Eclipses",
+                            actions: [{ name: "scroll", parameters: id }]
+                        },
+                        title: "Lunar Eclipse: " + MoonEclipsesPage.getTypeOfEclipseString(eclipseData)
                     });
                 }
             }
@@ -112,9 +112,9 @@ var NextEvents = {
         }
     };
 
-/////////////////// Solar Eclipses //////////////////////////
+    /////////////////// Solar Eclipses //////////////////////////
     NextEvents["SolarEclipsesPage"] = {
-        GetEvents : function () {
+        GetEvents: function () {
             NextEvents.init();
             var events = [];
             var jd = NextEvents.startJd;
@@ -123,7 +123,7 @@ var NextEvents = {
             for (var i = 0; i < NextEvents.numberOfDays; i++) {
 
                 // check if there's an eclipse.
-                var k = AAJS.Moon.kForJD (jd + i);
+                var k = AAJS.Moon.kForJD(jd + i);
                 if (k < 0)
                     k = -1 * Math.ceil(Math.abs(k));
                 else
@@ -138,14 +138,14 @@ var NextEvents = {
                 var eclipseData = SolarEclipses.EclipseDataForK(k);
                 if (eclipseData.bEclipse) {
                     var id = SolarEclipsesPage.getId(eclipseData);
-                    events.push ({
-                        start :  eclipseData.t0,
-                        end :    eclipseData.t0,
-                        navigActionObj : {
-                            page:"Solar Eclipses",
-                            actions:[{name:"scroll", parameters: id}]
-                            },
-                       title: "Solar Eclipse: " + SolarEclipsesPage.getTypeOfEclipseString(eclipseData)
+                    events.push({
+                        start: eclipseData.t0,
+                        end: eclipseData.t0,
+                        navigActionObj: {
+                            page: "Solar Eclipses",
+                            actions: [{ name: "scroll", parameters: id }]
+                        },
+                        title: "Solar Eclipse: " + SolarEclipsesPage.getTypeOfEclipseString(eclipseData)
                     });
                 }
             }
@@ -153,30 +153,30 @@ var NextEvents = {
         }
     };
 
-/////////////////// Occultations //////////////////////////
+    /////////////////// Occultations //////////////////////////
     NextEvents["Occultations"] = {
-        GetEvents : function () {
+        GetEvents: function () {
             NextEvents.init();
             var events = [];
             var jd = NextEvents.startJd;
-            var dt = AAJS.DynamicalTime.DeltaT(jd)/(3600 * 24);
+            var dt = AAJS.DynamicalTime.DeltaT(jd) / (3600 * 24);
 
             var occultations = OccultationsData.getOccultedStars(jd, NextEvents.numberOfDays);
             for (var conjunctionJde in occultations) {
                 var occultation = occultations[conjunctionJde];
                 var id = OccultationsPage.getId(occultation);
                 var event = {
-                    start :  occultation.start.t - dt,
-                    end :    occultation.end.t - dt,
-                    navigActionObj : {
-                        page:"Occultations",
-                        actions:[{name:"scroll", parameters: id}]
-                        },
-                   title: "Occultation: " + OccultationsPage.getStarName(occultation)
+                    start: occultation.start.t - dt,
+                    end: occultation.end.t - dt,
+                    navigActionObj: {
+                        page: "Occultations",
+                        actions: [{ name: "scroll", parameters: id }]
+                    },
+                    title: "Occultation: " + OccultationsPage.getStarName(occultation)
                 };
-                events.push (event);
+                events.push(event);
             }
-            
+
             return events;
         }
     };

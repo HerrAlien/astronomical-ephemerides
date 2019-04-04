@@ -21,20 +21,20 @@ along with this program.  If not, see https://www.gnu.org/licenses/agpl.html
 "use strict";
 
 var Notifications = {
-	New : function () { 
-		var a = {
-			_handlers : [],
-			add : function (handler) {
-				a._handlers.push (handler);
-			},
-			notify : function () {
-				var i = 0;
-				for (i = 0; i < a._handlers.length; i++)
-					a._handlers[i].apply(this, arguments);
-			}
-		};
-		return a;
-	}
+    New: function () {
+        var a = {
+            _handlers: [],
+            add: function (handler) {
+                a._handlers.push(handler);
+            },
+            notify: function () {
+                var i = 0;
+                for (i = 0; i < a._handlers.length; i++)
+                    a._handlers[i].apply(this, arguments);
+            }
+        };
+        return a;
+    }
 };
 
 try {

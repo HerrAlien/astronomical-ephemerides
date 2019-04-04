@@ -16,17 +16,19 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 var MercuryData = {};
-							   
+
 (function () {
-	var localInit = function () {
-		if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
-			MercuryData = new PlanetData({ number: 1, name: "Mercury", 
-									   semidiameterFunctionName : function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.MercurySemidiameterB(delta); } } );						   
-			var Page = new PlanetPage (MercuryData, "MercuryTable");
-			Pages["Mercury Ephemeris"] = Page;
-		} else {
-			SyncedTimeOut(localInit, Timeout.onInit);
-		}
-	}
-	localInit();
+    var localInit = function () {
+        if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
+            MercuryData = new PlanetData({
+                number: 1, name: "Mercury",
+                semidiameterFunctionName: function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.MercurySemidiameterB(delta); }
+            });
+            var Page = new PlanetPage(MercuryData, "MercuryTable");
+            Pages["Mercury Ephemeris"] = Page;
+        } else {
+            SyncedTimeOut(localInit, Timeout.onInit);
+        }
+    }
+    localInit();
 })();

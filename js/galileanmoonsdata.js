@@ -18,12 +18,12 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 "use strict";
 var GalileanMoonsData = {};
 
-(function(){
+(function () {
     var localInit = function () {
         try {
-            GalileanMoonsData = new MoonsData (function (JD, highPrecision) { if (typeof AAJS != "undefined") return AAJS.GalileanMoons.Calculate(JD, highPrecision); } );
+            GalileanMoonsData = new MoonsData(function (JD, highPrecision) { if (typeof AAJS != "undefined") return AAJS.GalileanMoons.Calculate(JD, highPrecision); });
         } catch (err) {
-            SyncedTimeOut (localInit, Timeout.onInit);
+            SyncedTimeOut(localInit, Timeout.onInit);
         }
     }
     localInit();

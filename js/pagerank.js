@@ -17,7 +17,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 var PageRank = {
     // returns an array of page names, in order of likelyhood of being the
     // result the user expected.
-    rank : function (searchTerms) {
+    rank: function (searchTerms) {
         var caseInsensitiveSearchTerms = [];
         for (var i = 0; i < searchTerms.length; i++) {
             caseInsensitiveSearchTerms.push(searchTerms[i].toUpperCase());
@@ -28,12 +28,14 @@ var PageRank = {
             if (!Pages[key]['PageRankKeywords']) {
                 Pages[key]['PageRankKeywords'] = PageRank.getPageKeywords(key);
             }
-            pagesAray.push({name : key, 
-                            rank: PageRank.computeRank(caseInsensitiveSearchTerms, Pages[key]['PageRankKeywords'])});
+            pagesAray.push({
+                name: key,
+                rank: PageRank.computeRank(caseInsensitiveSearchTerms, Pages[key]['PageRankKeywords'])
+            });
         }
-        pagesAray.sort(function(entryA, entryB){ 
+        pagesAray.sort(function (entryA, entryB) {
             if (entryB.rank != entryA.rank)
-                return entryB.rank - entryA.rank; 
+                return entryB.rank - entryA.rank;
             return entryA.name > entryB.name;
         });
         for (var i = 0; i < pagesAray.length; i++) {
@@ -43,7 +45,7 @@ var PageRank = {
         }
         return rankedPages;
     },
-    getPageKeywords : function (pageName) {
+    getPageKeywords: function (pageName) {
         var keywords = [pageName];
         var titleArr = pageName.split(" ");
         for (var i = 0; i < titleArr.length; i++) {
@@ -51,7 +53,7 @@ var PageRank = {
         }
         var page = Pages[pageName];
         for (var key in page) {
-            keywords.push (key.toUpperCase());
+            keywords.push(key.toUpperCase());
             var obj = page[key];
             if (obj) {
                 if (typeof obj == "function") {
@@ -73,25 +75,25 @@ var PageRank = {
         return keywords;
     },
 
-    arrayHasBeginWithSubstring : function (term, arr) {
-      for (var i = 0; i < arr.length; i++) {
-          if (arr[i].startsWith(term)) {
-              return true;
-          }
-      }
-      return false;  
+    arrayHasBeginWithSubstring: function (term, arr) {
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].startsWith(term)) {
+                return true;
+            }
+        }
+        return false;
     },
 
-    arrayHasSubstring : function (term, arr) {
-      for (var i = 0; i < arr.length; i++) {
-          if (arr[i].indexOf(term) >= 0 && Math.abs(arr[i].length - term.length) < 3) {
-              return true;
-          }
-      }
-      return false;  
+    arrayHasSubstring: function (term, arr) {
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].indexOf(term) >= 0 && Math.abs(arr[i].length - term.length) < 3) {
+                return true;
+            }
+        }
+        return false;
     },
 
-    computeRank : function (searchTerms, keywords) {
+    computeRank: function (searchTerms, keywords) {
         var rank = 0;
         var dirrectIncrement = 1;
         var reverseToDirrectRatio = 0.25;

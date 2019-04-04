@@ -14,53 +14,53 @@ PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
-(function(){
-var sourceMenu = $get("navigation");
-var oldScrollTop = 0;
-    
-window.addEventListener("scroll", function() {
-    var scrolledTop = document.body.scrollTop || (document.body.getBoundingClientRect().y * -1);
-    var scrolled = scrolledTop >= 20;
-    var pageObj = false;
-    if (previousPage) {
-        pageObj = Pages [previousPage.id];
-        if (pageObj && pageObj.header) {
-            if (scrolled) {
-                pageObj.header.classList.add("fixed");
-            } else {
-                pageObj.header.classList.remove("fixed");
-            }
-        }            
-    }
-    
-    if (scrolled) {
-        sourceMenu.classList.add ("withDropShadow");
-    } else {
-        sourceMenu.classList.remove ("withDropShadow");
-    }
-    
-    var hysterezis = 15;
-    // is it on a small screen?
-    if (pageObj && pageObj.header) {   
-        if (scrolledTop > oldScrollTop + hysterezis && scrolledTop > 180 ) {
-            // scrolled down
-            sourceMenu.classList.add ("movedMenu");
-            pageObj.header.classList.add ("movedMenu");
-        } else if (scrolledTop < oldScrollTop - hysterezis || scrolledTop < 180) {
-        // scrolled up
-            sourceMenu.classList.remove ("movedMenu");
-            pageObj.header.classList.remove ("movedMenu");
-        }
-    
-        oldScrollTop = scrolledTop;
-    }
-});
+(function () {
+    var sourceMenu = $get("navigation");
+    var oldScrollTop = 0;
 
-$get("showNavigationMenu").onclick = function () {
-    var pageObj = Pages [previousPage.id];
-    sourceMenu.classList.remove ("movedMenu");
-    if (pageObj && pageObj.header) {
-            pageObj.header.classList.remove ("movedMenu");
+    window.addEventListener("scroll", function () {
+        var scrolledTop = document.body.scrollTop || (document.body.getBoundingClientRect().y * -1);
+        var scrolled = scrolledTop >= 20;
+        var pageObj = false;
+        if (previousPage) {
+            pageObj = Pages[previousPage.id];
+            if (pageObj && pageObj.header) {
+                if (scrolled) {
+                    pageObj.header.classList.add("fixed");
+                } else {
+                    pageObj.header.classList.remove("fixed");
+                }
+            }
+        }
+
+        if (scrolled) {
+            sourceMenu.classList.add("withDropShadow");
+        } else {
+            sourceMenu.classList.remove("withDropShadow");
+        }
+
+        var hysterezis = 15;
+        // is it on a small screen?
+        if (pageObj && pageObj.header) {
+            if (scrolledTop > oldScrollTop + hysterezis && scrolledTop > 180) {
+                // scrolled down
+                sourceMenu.classList.add("movedMenu");
+                pageObj.header.classList.add("movedMenu");
+            } else if (scrolledTop < oldScrollTop - hysterezis || scrolledTop < 180) {
+                // scrolled up
+                sourceMenu.classList.remove("movedMenu");
+                pageObj.header.classList.remove("movedMenu");
+            }
+
+            oldScrollTop = scrolledTop;
+        }
+    });
+
+    $get("showNavigationMenu").onclick = function () {
+        var pageObj = Pages[previousPage.id];
+        sourceMenu.classList.remove("movedMenu");
+        if (pageObj && pageObj.header) {
+            pageObj.header.classList.remove("movedMenu");
+        }
     }
-}
 })();

@@ -20,36 +20,36 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 // ---------------------------- view side ----------------------------------------    
 var RealTimeDataViewer = {
 
-    views : {},
+    views: {},
 
-    format : {
-        default: function(value, unit, numberOfDecimals, factor) {
+    format: {
+        default: function (value, unit, numberOfDecimals, factor) {
             var decimals = Math.pow(10, numberOfDecimals);
             var data = Math.round(factor * value * decimals) / decimals;
             var dataStr = Math.floor(data) + unit + "." +
                           RealTimeDataViewer.Utils.padToOrder(
-                              Math.floor(decimals * (data - Math.floor(data))), 
+                              Math.floor(decimals * (data - Math.floor(data))),
                               numberOfDecimals);
             return dataStr;
         },
-        JD : function(value) {
+        JD: function (value) {
             try {
-            var dt = PlanetPage.prototype.yyyymmdd_hhmmOfJD(value);          
-            return dt.time.Ord3 + ":" + dt.time.Ord2;
+                var dt = PlanetPage.prototype.yyyymmdd_hhmmOfJD(value);
+                return dt.time.Ord3 + ":" + dt.time.Ord2;
             } catch (err) {
                 return RealTimeDataViewer.format.default(value, "d", 3, 1);
             }
         },
-        Rise : function(value) { return RealTimeDataViewer.format.JD(value); },
-        Set :  function(value) { return RealTimeDataViewer.format.JD(value); },
-        MeridianTransit:  function(value) { return RealTimeDataViewer.format.JD(value); },
-     },
+        Rise: function (value) { return RealTimeDataViewer.format.JD(value); },
+        Set: function (value) { return RealTimeDataViewer.format.JD(value); },
+        MeridianTransit: function (value) { return RealTimeDataViewer.format.JD(value); },
+    },
 
-    getRtSettingsSectionId : function (pageName) {
+    getRtSettingsSectionId: function (pageName) {
         return pageName + " settings section";
     },
 
-    rtDomHost : document.getElementById("rightNowFrontPage"),
+    rtDomHost: document.getElementById("rightNowFrontPage"),
 
     New: function (pageName) {
 
@@ -132,12 +132,12 @@ var RealTimeDataViewer = {
         return returnedViewer;
     },
 
-    alertDivTitle : function() { 
-        alert(this.title); 
+    alertDivTitle: function () {
+        alert(this.title);
     },
 
-    CreateLinkDom : function(host, pageName) {
-        
+    CreateLinkDom: function (host, pageName) {
+
         var createDom = RealTimeDataViewer.Utils.CreateDom;
         var createdDoms = {};
 
@@ -181,9 +181,9 @@ var RealTimeDataViewer = {
         return createdDoms;
     },
 
-    CreateRtDomForPage : function (domHost, pageName, onViewAdded) {
-        var hiddenKeys = ["bRiseValid","bSetValid","bTransitValid",
-                          "parallax", "diameter","RaGeo","DecGeo",
+    CreateRtDomForPage: function (domHost, pageName, onViewAdded) {
+        var hiddenKeys = ["bRiseValid", "bSetValid", "bTransitValid",
+                          "parallax", "diameter", "RaGeo", "DecGeo",
                           "Day", "Month",
                           "CentralMeridianGeometricLongitude_System1",
                           "CentralMeridianGeometricLongitude_System2"];
@@ -234,8 +234,8 @@ var RealTimeDataViewer = {
         }
     },
 
-    Persistent : {
-        GetNumberOfDecimals : function (pageName, key) {
+    Persistent: {
+        GetNumberOfDecimals: function (pageName, key) {
             var numOfDecimals = localStorage.getItem(RealTimeDataViewer.Persistent.GetRTStorageKey(RealTimeDataViewer.Persistent.purposes.numberOfDecimals, pageName, key));
             if (numOfDecimals === null) {
                 numOfDecimals = 3;
@@ -245,45 +245,45 @@ var RealTimeDataViewer = {
             return Number(numOfDecimals);
         },
 
-        IsVisible : function (pageName, key) {
+        IsVisible: function (pageName, key) {
             var visible = localStorage.getItem(RealTimeDataViewer.Persistent.GetRTStorageKey(RealTimeDataViewer.Persistent.purposes.visibility, pageName, key));
             if (visible == null) {
                 visible = 'false';
                 if (pageName == 'Venus Ephemeris' || pageName == 'Jupiter Ephemeris') {
-                    
+
                     if (key) {
                         if (pageName == 'Venus Ephemeris' && key == 'Phase') {
                             visible = 'true';
                         }
-                        if (pageName ==  'Jupiter Ephemeris' && (key == 'RA' || key == 'Dec')) {
+                        if (pageName == 'Jupiter Ephemeris' && (key == 'RA' || key == 'Dec')) {
                             visible = 'true';
                         }
                     } else {
                         visible = 'true';
                     }
                 }
-                
+
                 localStorage.setItem(RealTimeDataViewer.Persistent.GetRTStorageKey(RealTimeDataViewer.Persistent.purposes.visibility, pageName, key), visible);
             }
             return ('true' == visible);
         },
 
-        GetRTStorageKey : function (purpose, pageName, key){
+        GetRTStorageKey: function (purpose, pageName, key) {
             if (typeof purpose == 'undefined') {
                 throw "Invalid purpose!";
             }
             return pageName + "/" + key + "/" + purpose;
         },
 
-        purposes : { 
-            visibility : "visible",
-            numberOfDecimals : "numOfDecimals"
+        purposes: {
+            visibility: "visible",
+            numberOfDecimals: "numOfDecimals"
         },
 
     },
 
-    Utils : {
-        CreateDom : function(parent, type, content) {
+    Utils: {
+        CreateDom: function (parent, type, content) {
             var child = parent.ownerDocument.createElement(type);
             parent.appendChild(child);
             if (content)
@@ -309,7 +309,7 @@ var RealTimeDataViewer = {
             return res + "" + absNum;
         },
 
-        padToTens : function (a){
+        padToTens: function (a) {
             return RealTimeDataViewer.Utils.padToOrder(a, 2);
         }
 
@@ -318,72 +318,72 @@ var RealTimeDataViewer = {
 };
 
 
-(function(){
+(function () {
 
-    function createCheckboxSwitch (host, usingID) {
+    function createCheckboxSwitch(host, usingID) {
         /*<label class="switch">
   <input type="checkbox">
   <span class="slider round"></span>
 </label>*/
         var createDom = RealTimeDataViewer.Utils.CreateDom;
-        var containingLabel = createDom (host, "label");
+        var containingLabel = createDom(host, "label");
         containingLabel.classList.add("switch");
-        var actualInput = createDom (containingLabel, "input");
+        var actualInput = createDom(containingLabel, "input");
         actualInput.type = "checkbox";
         actualInput.id = usingID;
         actualInput.classList.add("switchinput");
-        var span = createDom (containingLabel, "span");
+        var span = createDom(containingLabel, "span");
         span.classList.add("slider");
         span.classList.add("round");
         return actualInput;
     }
 
-    function CreateRTSettings (hostForRTSettings, pageName) {
+    function CreateRTSettings(hostForRTSettings, pageName) {
         var createDom = RealTimeDataViewer.Utils.CreateDom;
         var persistent = RealTimeDataViewer.Persistent;
         var topDiv = createDom(hostForRTSettings, "div");
-        createDom (topDiv, "div", " ").classList.add("clear");
+        createDom(topDiv, "div", " ").classList.add("clear");
 
         // <div class="rtsettings">
-        var bodySectionDiv = createDom (topDiv, "div");
-        bodySectionDiv.classList.add ("rtsettings");
-        bodySectionDiv.classList.add ("collapsed");
+        var bodySectionDiv = createDom(topDiv, "div");
+        bodySectionDiv.classList.add("rtsettings");
+        bodySectionDiv.classList.add("collapsed");
 
         bodySectionDiv['id'] = RealTimeDataViewer.getRtSettingsSectionId(pageName);
 
         // <h3>Sun</h3>
         // TODO: this should be from the page object.
-        createDom (bodySectionDiv, "div", " ").classList.add("clear");
+        createDom(bodySectionDiv, "div", " ").classList.add("clear");
         var objectName = pageName.substr(0, pageName.indexOf(" "));
-        
-        var sectionCheckboxId = pageName+"settings";
+
+        var sectionCheckboxId = pageName + "settings";
 
         // <input type="checkbox"></input>
-        var sectionCheckbox = createCheckboxSwitch (bodySectionDiv, sectionCheckboxId);
+        var sectionCheckbox = createCheckboxSwitch(bodySectionDiv, sectionCheckboxId);
 
         sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName));
 
-        var sectionLabel = createDom (bodySectionDiv, "label");
+        var sectionLabel = createDom(bodySectionDiv, "label");
         sectionLabel.setAttribute('for', sectionCheckboxId);
 
-        var collapseExpand = createDom (bodySectionDiv, "div");
+        var collapseExpand = createDom(bodySectionDiv, "div");
         collapseExpand.classList.add("expandCollapseButton");
         collapseExpand.onclick = function () {
-            if (this.parentElement.classList.contains ("collapsed")) {
-                this.parentElement.classList.remove ("collapsed");
+            if (this.parentElement.classList.contains("collapsed")) {
+                this.parentElement.classList.remove("collapsed");
             } else {
-                this.parentElement.classList.add ("collapsed");
+                this.parentElement.classList.add("collapsed");
             }
         }
 
 
-        var sectionLabel2 = createDom (bodySectionDiv, "label");
+        var sectionLabel2 = createDom(bodySectionDiv, "label");
         sectionLabel2.setAttribute('for', sectionCheckboxId);
-        createDom (sectionLabel2, "h3", objectName);
+        createDom(sectionLabel2, "h3", objectName);
 
 
         var rtViewer = RealTimeDataViewer.views[pageName];
-        sectionCheckbox.onclick = function () { 
+        sectionCheckbox.onclick = function () {
             localStorage.setItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName), this.checked);
             rtViewer.resetItemVisibility();
         }
@@ -391,90 +391,75 @@ var RealTimeDataViewer = {
         function AddSettingsForKeys() {
             if (rtViewer.allKeys.length != 0) {
                 for (var key in rtViewer.allViews) {
-/*                    if (key == "Day" || key == "Month")
-                        continue;
-
-                    if (pageName == "Jupiter Ephemeris") {
-                        if (key == "CentralMeridianGeometricLongitude_System1" ||
-                            key == "CentralMeridianGeometricLongitude_System2") {
-                            continue;
-                        }
-                    }
-                    if (pageName == "Moon Ephemeris") {
-                        if (key == "RaGeo" || key == "DecGeo") {
-                            continue;
-                        }
-                    }
-*/                
-                    var checkboxId = pageName+key+"settings";
+                    var checkboxId = pageName + key + "settings";
 
                     // div + checkbox for each key
-                    createDom (bodySectionDiv, "div", " ").classList.add("clear");
-                    var row = createDom (bodySectionDiv, "div");
+                    createDom(bodySectionDiv, "div", " ").classList.add("clear");
+                    var row = createDom(bodySectionDiv, "div");
                     row.classList.add("row");
 
-                    sectionCheckbox = createCheckboxSwitch (row, checkboxId);
+                    sectionCheckbox = createCheckboxSwitch(row, checkboxId);
 
                     sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName, key));
 
-                    sectionCheckbox.onclick = (function(){
+                    sectionCheckbox.onclick = (function () {
                         var keyName = key;
-                        return function () { 
+                        return function () {
                             localStorage.setItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName, keyName), this.checked);
                             rtViewer.resetItemVisibility();
                         }
                     })();
 
-                    var lbl = createDom (row, "label");
+                    var lbl = createDom(row, "label");
                     lbl.setAttribute('for', checkboxId);
-                    var labelDiv = createDom (lbl, "div", " ");
+                    var labelDiv = createDom(lbl, "div", " ");
                     labelDiv.classList.add(key);
                     labelDiv.classList.add("settingsLabelDiv");
 
                 }
-             } else {
-                    SyncedTimeOut (AddSettingsForKeys, Timeout.onInit);
-             }
+            } else {
+                SyncedTimeOut(AddSettingsForKeys, Timeout.onInit);
+            }
         }
 
         AddSettingsForKeys();
 
         // <div class="clear">&nbsp;</div>
-        createDom (bodySectionDiv, "div", " ").classList.add("clear");
-        createDom (bodySectionDiv, "div", " ").classList.add("clear");
+        createDom(bodySectionDiv, "div", " ").classList.add("clear");
+        createDom(bodySectionDiv, "div", " ").classList.add("clear");
         rtViewer.resetItemVisibility();
     }
 
 
-        var pagesDoms = document.getElementsByClassName("page");
-        var hostForRTSettings = document.getElementById("realTimeSettingsContainer");
+    var pagesDoms = document.getElementsByClassName("page");
+    var hostForRTSettings = document.getElementById("realTimeSettingsContainer");
 
-        var localInit = function () {
-            if (typeof Pages != 'undefined' && typeof DataForNow != 'undefined' && typeof Notifications != 'undefined') {
-                var pagesAccountedFor = 0;
-                for (var i = 0; i < pagesDoms.length; i++) {
-                    var pageName = pagesDoms[i].id;
-                    if (typeof Pages != 'undefined' && 
-                        Pages[pageName] && 
-                        Pages[pageName]["tableHeaderInfo"] && !(RealTimeDataViewer.views[pageName])) {
-                        RealTimeDataViewer.views[pageName] = RealTimeDataViewer.New (pageName);
-                        var host = document.createDocumentFragment();
-                        CreateRTSettings (host, pageName);
-                        hostForRTSettings.appendChild(host);
-                    }
-
-                    if (typeof Pages != 'undefined' && Pages[pageName]) {
-                        pagesAccountedFor++;
-                    }
+    var localInit = function () {
+        if (typeof Pages != 'undefined' && typeof DataForNow != 'undefined' && typeof Notifications != 'undefined') {
+            var pagesAccountedFor = 0;
+            for (var i = 0; i < pagesDoms.length; i++) {
+                var pageName = pagesDoms[i].id;
+                if (typeof Pages != 'undefined' &&
+                    Pages[pageName] &&
+                    Pages[pageName]["tableHeaderInfo"] && !(RealTimeDataViewer.views[pageName])) {
+                    RealTimeDataViewer.views[pageName] = RealTimeDataViewer.New(pageName);
+                    var host = document.createDocumentFragment();
+                    CreateRTSettings(host, pageName);
+                    hostForRTSettings.appendChild(host);
                 }
-                if (pagesAccountedFor == pagesDoms.length) {
-                    return;
-                }
-            } 
 
-                SyncedTimeOut(localInit, Timeout.onInit);
+                if (typeof Pages != 'undefined' && Pages[pageName]) {
+                    pagesAccountedFor++;
+                }
+            }
+            if (pagesAccountedFor == pagesDoms.length) {
+                return;
+            }
         }
 
-        localInit();
-    })();
+        SyncedTimeOut(localInit, Timeout.onInit);
+    }
+
+    localInit();
+})();
 

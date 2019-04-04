@@ -20,15 +20,17 @@ var SaturnData = {};
 
 (function () {
 
-	var initLocal = function () {
-		if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
-		SaturnData = new PlanetData({ number: 5, name: "Saturn", 
-                               semidiameterFunctionName :   function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.SaturnEquatorialSemidiameterB (delta); } } );		
-    	var Page = new PlanetPage (SaturnData, "SaturnTable");
-        Pages["Saturn Ephemeris"] = Page;
-		} else {
-			SyncedTimeOut (initLocal, Timeout.onInit);
-		}
-	}
-	initLocal();
+    var initLocal = function () {
+        if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
+            SaturnData = new PlanetData({
+                number: 5, name: "Saturn",
+                semidiameterFunctionName: function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.SaturnEquatorialSemidiameterB(delta); }
+            });
+            var Page = new PlanetPage(SaturnData, "SaturnTable");
+            Pages["Saturn Ephemeris"] = Page;
+        } else {
+            SyncedTimeOut(initLocal, Timeout.onInit);
+        }
+    }
+    initLocal();
 })();

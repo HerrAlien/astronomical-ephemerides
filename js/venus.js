@@ -18,19 +18,21 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var VenusData = {};
 
-							   
+
 (function () {
-	var localInit = function() {
-		if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
-			VenusData = new PlanetData({ number: 2, name: "Venus", 
-									   semidiameterFunctionName :   function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.VenusSemidiameterB (delta); } } );		
+    var localInit = function () {
+        if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
+            VenusData = new PlanetData({
+                number: 2, name: "Venus",
+                semidiameterFunctionName: function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.VenusSemidiameterB(delta); }
+            });
 
-			var Page = new PlanetPage (VenusData, "VenusTable");
-			Pages["Venus Ephemeris"] = Page;
-		} else {
-			SyncedTimeOut(localInit, Timeout.onInit);
-		}
-	}
+            var Page = new PlanetPage(VenusData, "VenusTable");
+            Pages["Venus Ephemeris"] = Page;
+        } else {
+            SyncedTimeOut(localInit, Timeout.onInit);
+        }
+    }
 
-	localInit();
+    localInit();
 })();

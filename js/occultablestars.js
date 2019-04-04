@@ -16,16 +16,16 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
-function OccultableStarsTree (stars, granularityDeg) {
+function OccultableStarsTree(stars, granularityDeg) {
     var _granularityDeg = granularityDeg;
     var _raSlicesCount = Math.round(360 / granularityDeg);
     var _stars = stars;
 
-    this.getRaIndex = function(RAh) {
+    this.getRaIndex = function (RAh) {
         return Math.round(RAh * 15 / _granularityDeg);
     }
 
-    this.getDecIndex = function(DEd) {
+    this.getDecIndex = function (DEd) {
         return Math.round(DEd / _granularityDeg);
     }
 
@@ -33,9 +33,9 @@ function OccultableStarsTree (stars, granularityDeg) {
 
     var jd2000 = 2451545;
     this.epoch = jd2000;
-    this.reset = function() {
-        tree = {}; 
-        this.epoch = jd2000;               
+    this.reset = function () {
+        tree = {};
+        this.epoch = jd2000;
     }
 
     this.init = function (jde) {
@@ -48,31 +48,31 @@ function OccultableStarsTree (stars, granularityDeg) {
             if (Math.abs(jde - this.epoch) < 366) {
                 return; // same year, no need to update;
             }
-            yearsSince2000 = (jde - jd2000)/365.25;
+            yearsSince2000 = (jde - jd2000) / 365.25;
             tree = {};
         }
 
-        var fixedRA = function() { return this.RAh; };
-        var fixedDec = function() { return this.DEd; };
-        var getDisplayName = function () { 
-           var name = this.Name ? this.Name : this.bfID ? this.bfID  : "HR " + this.HR +
-                      (this.zc ? " (ZC " + this.zc + ")" : "");
-           return name;
+        var fixedRA = function () { return this.RAh; };
+        var fixedDec = function () { return this.DEd; };
+        var getDisplayName = function () {
+            var name = this.Name ? this.Name : this.bfID ? this.bfID : "HR " + this.HR +
+                       (this.zc ? " (ZC " + this.zc + ")" : "");
+            return name;
         };
 
         for (var i = 0; i < _stars.length; i++) {
             var star = JSON.parse(JSON.stringify(_stars[i]));
 
-            var fixedCoords = AAJS.Precession.PrecessEquatorial( 
-            star.RAh + yearsSince2000 * star.pmRA / (3600), 
-            star.DEd + yearsSince2000 * star.pmDE / (3600), 
+            var fixedCoords = AAJS.Precession.PrecessEquatorial(
+            star.RAh + yearsSince2000 * star.pmRA / (3600),
+            star.DEd + yearsSince2000 * star.pmDE / (3600),
             jd2000, jde);
             star.RAh = fixedCoords.X;
             star.DEd = fixedCoords.Y;
 
-            star['RA']  = fixedCoords.X;
+            star['RA'] = fixedCoords.X;
             star['Dec'] = fixedCoords.Y;
-            star['getRa']  = fixedRA;
+            star['getRa'] = fixedRA;
             star['getDec'] = fixedDec;
             star['getDisplayName'] = getDisplayName;
 
@@ -90,7 +90,7 @@ function OccultableStarsTree (stars, granularityDeg) {
         this.epoch = jde;
     }
 
-    
+
     this.getStarsNear = function (rah, ded, jde) {
         this.init(jde);
         var currentRaIndex = this.getRaIndex(rah);
@@ -108,14 +108,14 @@ function OccultableStarsTree (stars, granularityDeg) {
 
         var a = [];
         if (tree[currentRaIndex] && tree[currentRaIndex][currentDecIndex]) a = a.concat(tree[currentRaIndex][currentDecIndex]);
-        if (tree[prevRaIndex] && tree[prevRaIndex][currentDecIndex] ) a = a.concat(tree[prevRaIndex][currentDecIndex] );
-        if (tree[nextRaIndex] && tree[nextRaIndex][currentDecIndex] ) a = a.concat(tree[nextRaIndex][currentDecIndex] );
+        if (tree[prevRaIndex] && tree[prevRaIndex][currentDecIndex]) a = a.concat(tree[prevRaIndex][currentDecIndex]);
+        if (tree[nextRaIndex] && tree[nextRaIndex][currentDecIndex]) a = a.concat(tree[nextRaIndex][currentDecIndex]);
         if (tree[currentRaIndex] && tree[currentRaIndex][currentDecIndex + 1]) a = a.concat(tree[currentRaIndex][currentDecIndex + 1]);
-        if (tree[prevRaIndex] && tree[prevRaIndex][currentDecIndex + 1] ) a = a.concat(tree[prevRaIndex][currentDecIndex + 1] );
-        if (tree[nextRaIndex] && tree[nextRaIndex][currentDecIndex + 1] ) a = a.concat(tree[nextRaIndex][currentDecIndex + 1] );
+        if (tree[prevRaIndex] && tree[prevRaIndex][currentDecIndex + 1]) a = a.concat(tree[prevRaIndex][currentDecIndex + 1]);
+        if (tree[nextRaIndex] && tree[nextRaIndex][currentDecIndex + 1]) a = a.concat(tree[nextRaIndex][currentDecIndex + 1]);
         if (tree[currentRaIndex] && tree[currentRaIndex][currentDecIndex - 1]) a = a.concat(tree[currentRaIndex][currentDecIndex - 1]);
         if (tree[prevRaIndex] && tree[prevRaIndex][currentDecIndex - 1]) a = a.concat(tree[prevRaIndex][currentDecIndex - 1]);
-        if (tree[nextRaIndex] && tree[nextRaIndex][currentDecIndex - 1] ) a = a.concat(tree[nextRaIndex][currentDecIndex - 1] );
+        if (tree[nextRaIndex] && tree[nextRaIndex][currentDecIndex - 1]) a = a.concat(tree[nextRaIndex][currentDecIndex - 1]);
 
         return a;
     };

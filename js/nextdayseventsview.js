@@ -32,12 +32,12 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 */
 
 
-(function(){
+(function () {
 
     var domHost = document.getElementById("upcommingEventsFrontPage");
 
     function onDisplayEventTypeChange() {
-        setTimeout(function(){
+        setTimeout(function () {
             reset();
             init();
         }, 100);
@@ -71,9 +71,9 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     }
 
     var eventTypeToCheckFunction = {
-        "MoonEclipsesPage" : displayLunarEclipses,
-        "SolarEclipsesPage" : displaySolarEclipses,
-        "Occultations" : displayOccultations
+        "MoonEclipsesPage": displayLunarEclipses,
+        "SolarEclipsesPage": displaySolarEclipses,
+        "Occultations": displayOccultations
     };
 
     function getEventTypesToDisplay() {
@@ -97,19 +97,19 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     var lastInputValue = daysInput.value;
 
     function updateMaxDays() {
-        var max =  Math.round(PageTimeInterval.JD + PageTimeInterval.days - 
-                   NextEvents.startJd); 
+        var max = Math.round(PageTimeInterval.JD + PageTimeInterval.days -
+                   NextEvents.startJd);
         daysInput["max"] = max;
         if (Number(daysInput.value) > max) {
             daysInput.value = max;
         }
     }
-    
+
     function onDaysCountChange() {
         updateMaxDays();
         if (daysInput.value != lastInputValue) {
             lastInputValue = daysInput.value;
-            setTimeout(function(){
+            setTimeout(function () {
                 reset();
                 init();
             }, 100);
@@ -123,21 +123,21 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             var events = NextEvents["GetEvents"](getEventTypesToDisplay());
             var addDomNode = PlanetPage.prototype.addNodeChild;
 
-            var yyyymmdd_hhmmOfJD =   PlanetPage.prototype["yyyymmdd_hhmmOfJD"];
+            var yyyymmdd_hhmmOfJD = PlanetPage.prototype["yyyymmdd_hhmmOfJD"];
 
             var documentFrag = document.createDocumentFragment();
             for (var i = 0; i < events.length; i++) {
                 var currentEvent = events[i];
                 var listItem = addDomNode(documentFrag, "li");
-                
-                var timing = yyyymmdd_hhmmOfJD (currentEvent.start);
+
+                var timing = yyyymmdd_hhmmOfJD(currentEvent.start);
                 var anchorText = timing.date.Y + "-" + timing.date.M + "-" + timing.date.D + " " +
                                  timing.time.Ord3 + ":" + timing.time.Ord2 + " " + currentEvent.title;
 
                 var anchor = addDomNode(listItem, "a", anchorText);
                 anchor["href"] = "#" + JSON.stringify(currentEvent.navigActionObj);
             }
-            
+
             var list = addDomNode(domHost, "ol");
             list.appendChild(documentFrag);
 
@@ -145,14 +145,14 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             setTimeout(init, 500);
         }
     }
-    
+
     init();
 
-    (function(){
+    (function () {
 
         daysInput.onblur = onDaysCountChange;
         daysInput.onchange = onDaysCountChange;
-        daysInput.onkeypress = function(keyboardEvent) {
+        daysInput.onkeypress = function (keyboardEvent) {
             if (keyboardEvent.key.toUpperCase() == "ENTER") {
                 onDaysCountChange();
             }

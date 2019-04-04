@@ -20,16 +20,18 @@ var MarsData = {};
 
 // upgrade the object to handle physical data as well.
 (function () {
-    var initLocal = function () {    
+    var initLocal = function () {
         if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
-            MarsData = new PlanetData({ number: 3, name: "Mars", 
-                                       semidiameterFunctionName :  function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.MarsSemidiameterB(delta); } } );				
+            MarsData = new PlanetData({
+                number: 3, name: "Mars",
+                semidiameterFunctionName: function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.MarsSemidiameterB(delta); }
+            });
 
             MarsData['old_GetData'] = MarsData.getDataAsObjectForJD;
             MarsData.getDataAsObjectForJD = function (JD, computeRiseTransitSet, computePhysical) {
-                var data = this.old_GetData(JD, computeRiseTransitSet); 
+                var data = this.old_GetData(JD, computeRiseTransitSet);
                 if (!data['EarthDeclination'] && computePhysical) {
-                    var physicalData = GetAAJS()['Mars']['PhysicalDetails'] (JD);
+                    var physicalData = GetAAJS()['Mars']['PhysicalDetails'](JD);
                     for (var key in physicalData)
                         data[key] = physicalData[key];
                     this.cache[JD] = data;
@@ -37,32 +39,32 @@ var MarsData = {};
                 return data;
             };
 
-            var Page = new PlanetPage (MarsData, "MarsTable");
+            var Page = new PlanetPage(MarsData, "MarsTable");
 
 
             Page.tableHeaderInfo['20'] = {
-                "0" : { "text" : " Date  " },
-                "1" : { "text" : "          " },
-                "longText" : "Date: month",
-                "dataKey" : 'Month'
+                "0": { "text": " Date  " },
+                "1": { "text": "          " },
+                "longText": "Date: month",
+                "dataKey": 'Month'
             };
             Page.tableHeaderInfo['21'] = {
-                "0" : { "text" : " "},
-                "1" : { "text" : "          "},
-                "longText" : "Date: day",
-                "dataKey" : 'Day'
+                "0": { "text": " " },
+                "1": { "text": "          " },
+                "longText": "Date: day",
+                "dataKey": 'Day'
             };
-            Page.tableHeaderInfo['16'] = {  "dataKey" : 'CentralMeridianLongitude', "0" : {"text" : "    L0"}, "1" : {"text" : "             \u00B0"}, "longText" : "Longitude of central meridian (physical ephemeris)" };
-            Page.tableHeaderInfo['17'] = {  "dataKey" : 'EarthDeclination', "0" : {"text" : "    DE"}, "1" : {"text" : "     \u00B0"}, "longText" : "Planetocentric declination of Earth (physical ephemeris)" };
-            Page.tableHeaderInfo['18'] = {  "dataKey" : 'SunDeclination', "0" : {"text" : "    DS"}, "1" : {"text" : "     \u00B0"}, "longText" : "Planetocentric declination of the Sun (physical ephemeris)" };
-            Page.tableHeaderInfo['19'] = {  "dataKey" : 'P', "0" : {"text" : "    P  " }, "1" : {"text" : "     \u00B0"}, "longText" : "Position angle of the North Pole (physical ephemeris)" };
+            Page.tableHeaderInfo['16'] = { "dataKey": 'CentralMeridianLongitude', "0": { "text": "    L0" }, "1": { "text": "             \u00B0" }, "longText": "Longitude of central meridian (physical ephemeris)" };
+            Page.tableHeaderInfo['17'] = { "dataKey": 'EarthDeclination', "0": { "text": "    DE" }, "1": { "text": "     \u00B0" }, "longText": "Planetocentric declination of Earth (physical ephemeris)" };
+            Page.tableHeaderInfo['18'] = { "dataKey": 'SunDeclination', "0": { "text": "    DS" }, "1": { "text": "     \u00B0" }, "longText": "Planetocentric declination of the Sun (physical ephemeris)" };
+            Page.tableHeaderInfo['19'] = { "dataKey": 'P', "0": { "text": "    P  " }, "1": { "text": "     \u00B0" }, "longText": "Position angle of the North Pole (physical ephemeris)" };
             Page.formattingFunctions = Page.formattingFunctions.concat([
-            function(L0) { return prePadTo(L0, " ", 5); }, 
-            function(DE) { return prePadTo(DE, " ", 5); }, 
-            function(DS) { return prePadTo(DS, " ", 5); }, 
-            function(P) { return prePadTo(P, " ", 5); }, 
-            function(month) { return prePadTo(month, " ", 3); }, 
-            function (day) { return prePadTo(day, " ", 2); }, 
+            function (L0) { return prePadTo(L0, " ", 5); },
+            function (DE) { return prePadTo(DE, " ", 5); },
+            function (DS) { return prePadTo(DS, " ", 5); },
+            function (P) { return prePadTo(P, " ", 5); },
+            function (month) { return prePadTo(month, " ", 3); },
+            function (day) { return prePadTo(day, " ", 2); },
             ]);
 
             Page["old_addPlanetTableHeader"] = Page.addTableHeader;
@@ -88,7 +90,7 @@ var MarsData = {};
 
             Pages["Mars Ephemeris"] = Page;
         } else {
-            SyncedTimeOut (initLocal, Timeout.onInit);
+            SyncedTimeOut(initLocal, Timeout.onInit);
         }
     }
     initLocal();

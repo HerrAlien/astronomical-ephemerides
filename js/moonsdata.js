@@ -16,34 +16,34 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
-function MoonsData (dataFunction) {
-	this.cache = {};
+function MoonsData(dataFunction) {
+    this.cache = {};
     this.dataFunction = dataFunction;
 }
 
-(function(){
+(function () {
     MoonsData.prototype["reset"] = function () {
         this.cache = {};
     };
-    
+
     MoonsData.prototype["getDataAsObjectForJD"] = function (JD, bHighPrecision) {
         var data = this.cache[JD];
-            if (!data) {
-				data = this.dataFunction(JD, bHighPrecision);
-                for (var moon in data) {
-                    data[moon].ApparentRectangularCoordinates["ApparentElongation"] = Math.sqrt(data[moon].ApparentRectangularCoordinates.X * data[moon].ApparentRectangularCoordinates.X +
-                                                       data[moon].ApparentRectangularCoordinates.Y * data[moon].ApparentRectangularCoordinates.Y);
-                }
-                
-                // when ApparentElongation is close or smaller than 1, we may have some events ..
-				var dateOfJD = PlanetPage.prototype.yyyymmdd_hhmmOfJD(JD);
-				data['Month'] = Number(dateOfJD.date.M);
-				data['Day'] = Number(dateOfJD.date.D);
-                data['DayFraction'] = (Number(dateOfJD.time.Ord3) + Number(dateOfJD.time.Ord2)/60.0)/24.0;
-				
-				this.cache[JD] = data;
-			}
-		return data;
+        if (!data) {
+            data = this.dataFunction(JD, bHighPrecision);
+            for (var moon in data) {
+                data[moon].ApparentRectangularCoordinates["ApparentElongation"] = Math.sqrt(data[moon].ApparentRectangularCoordinates.X * data[moon].ApparentRectangularCoordinates.X +
+                                                   data[moon].ApparentRectangularCoordinates.Y * data[moon].ApparentRectangularCoordinates.Y);
+            }
+
+            // when ApparentElongation is close or smaller than 1, we may have some events ..
+            var dateOfJD = PlanetPage.prototype.yyyymmdd_hhmmOfJD(JD);
+            data['Month'] = Number(dateOfJD.date.M);
+            data['Day'] = Number(dateOfJD.date.D);
+            data['DayFraction'] = (Number(dateOfJD.time.Ord3) + Number(dateOfJD.time.Ord2) / 60.0) / 24.0;
+
+            this.cache[JD] = data;
+        }
+        return data;
     };
-    
+
 })();

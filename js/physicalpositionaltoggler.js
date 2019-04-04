@@ -14,73 +14,73 @@ PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
-(function() {
+(function () {
 
-function PhysicalPositionalToggler (pageId, firstPhysicalColumnIndex) {
-    var pageElement = document.getElementById(pageId);
-    this.table = pageElement.getElementsByClassName("planetTable")[0];
-    this.cellsToHide_physical = false;
-    this.cellsToHide_positional = false;
-    
-    this.positionalButton = pageElement.getElementsByClassName("positionalButton")[0];
-    this.physicalButton = pageElement.getElementsByClassName("physicalButton")[0];
-    if (typeof firstPhysicalColumnIndex == 'undefined')
-        this.firstPhysicalColumnIndex = 16;
-    else
-        this.firstPhysicalColumnIndex = firstPhysicalColumnIndex;
-}
+    function PhysicalPositionalToggler(pageId, firstPhysicalColumnIndex) {
+        var pageElement = document.getElementById(pageId);
+        this.table = pageElement.getElementsByClassName("planetTable")[0];
+        this.cellsToHide_physical = false;
+        this.cellsToHide_positional = false;
 
-PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
-    return [];
-}
+        this.positionalButton = pageElement.getElementsByClassName("positionalButton")[0];
+        this.physicalButton = pageElement.getElementsByClassName("physicalButton")[0];
+        if (typeof firstPhysicalColumnIndex == 'undefined')
+            this.firstPhysicalColumnIndex = 16;
+        else
+            this.firstPhysicalColumnIndex = firstPhysicalColumnIndex;
+    }
 
-PhysicalPositionalToggler.prototype['init'] = function () {
-    var _this = this;
+    PhysicalPositionalToggler.prototype['updateCellsToHide'] = function () {
+        return [];
+    }
 
-    this.positionalButton.onclick = function () {
-        _this.positionalButton.classList.add("activeButton");
-        _this.physicalButton.classList.remove("activeButton");
-        _this.table.classList.remove ("showPhysical");
-        _this.table.classList.add ("showPositional");
-        if (!_this.cellsToHide_physical)
-            _this.updateCellsToHide();
-            
-        for (var i = 0; i < _this.cellsToHide_physical.length; i++) {
-            _this.cellsToHide_physical[i].classList.remove("physPosVisible");
-            _this.cellsToHide_physical[i].classList.add("physPosHidden");
+    PhysicalPositionalToggler.prototype['init'] = function () {
+        var _this = this;
+
+        this.positionalButton.onclick = function () {
+            _this.positionalButton.classList.add("activeButton");
+            _this.physicalButton.classList.remove("activeButton");
+            _this.table.classList.remove("showPhysical");
+            _this.table.classList.add("showPositional");
+            if (!_this.cellsToHide_physical)
+                _this.updateCellsToHide();
+
+            for (var i = 0; i < _this.cellsToHide_physical.length; i++) {
+                _this.cellsToHide_physical[i].classList.remove("physPosVisible");
+                _this.cellsToHide_physical[i].classList.add("physPosHidden");
+            }
+
+            for (var i = 0; i < _this.cellsToHide_positional.length; i++) {
+                _this.cellsToHide_positional[i].classList.remove("physPosHidden");
+                _this.cellsToHide_positional[i].classList.add("physPosVisible");
+            }
         }
-            
-        for (var i = 0; i < _this.cellsToHide_positional.length; i++) {
-            _this.cellsToHide_positional[i].classList.remove("physPosHidden");
-            _this.cellsToHide_positional[i].classList.add("physPosVisible");
+
+        this.physicalButton.onclick = function () {
+            _this.physicalButton.classList.add("activeButton");
+            _this.positionalButton.classList.remove("activeButton");
+
+            _this.table.classList.remove("showPositional");
+            _this.table.classList.add("showPhysical");
+            if (!_this.cellsToHide_physical)
+                _this.updateCellsToHide();
+
+            for (var i = 0; i < _this.cellsToHide_physical.length; i++) {
+                _this.cellsToHide_physical[i].classList.remove("physPosHidden");
+                _this.cellsToHide_physical[i].classList.add("physPosVisible");
+            }
+
+            for (var i = 0; i < _this.cellsToHide_positional.length; i++) {
+                _this.cellsToHide_positional[i].classList.remove("physPosVisible");
+                _this.cellsToHide_positional[i].classList.add("physPosHidden");
+            }
         }
     }
- 
-    this.physicalButton.onclick = function () {
-        _this.physicalButton.classList.add("activeButton");
-        _this.positionalButton.classList.remove("activeButton");
 
-        _this.table.classList.remove ("showPositional");
-        _this.table.classList.add ("showPhysical");
-        if (!_this.cellsToHide_physical)
-            _this.updateCellsToHide();
+    var jupiterToggler = new PhysicalPositionalToggler("Jupiter Ephemeris");
+    jupiterToggler.init();
 
-         for (var i = 0; i < _this.cellsToHide_physical.length; i++) {
-             _this.cellsToHide_physical[i].classList.remove("physPosHidden");  
-             _this.cellsToHide_physical[i].classList.add("physPosVisible");
-         }
-             
-         for (var i = 0; i < _this.cellsToHide_positional.length; i++) {
-             _this.cellsToHide_positional[i].classList.remove("physPosVisible");
-             _this.cellsToHide_positional[i].classList.add("physPosHidden");
-         }
-     }
- }
+    var marsToggler = new PhysicalPositionalToggler("Mars Ephemeris");
+    marsToggler.init();
+})();
 
-var jupiterToggler = new PhysicalPositionalToggler("Jupiter Ephemeris");
-jupiterToggler.init();
-
-var marsToggler = new PhysicalPositionalToggler("Mars Ephemeris");
-marsToggler.init();
-})();    
-                

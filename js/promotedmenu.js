@@ -14,25 +14,25 @@ PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
-(function(){
-  var menu = $get("promotedMenu");
-  function toggleArrows(){
-      if (menu.scrollLeft < 30) {
-        menu.classList.add("noLeft");
-      } else {
-        menu.classList.remove("noLeft");
-      }
+(function () {
+    var menu = $get("promotedMenu");
+    function toggleArrows() {
+        if (menu.scrollLeft < 30) {
+            menu.classList.add("noLeft");
+        } else {
+            menu.classList.remove("noLeft");
+        }
 
-      var rightLimit = menu.scrollWidth - menu.clientWidth - 30;
-      if (menu.scrollLeft > rightLimit) {
-        menu.classList.add("noRight");
-      } else {
-        menu.classList.remove("noRight");
-      }
-  }
+        var rightLimit = menu.scrollWidth - menu.clientWidth - 30;
+        if (menu.scrollLeft > rightLimit) {
+            menu.classList.add("noRight");
+        } else {
+            menu.classList.remove("noRight");
+        }
+    }
 
-  menu.addEventListener("scroll", function() { requestAnimationFrame(toggleArrows); }, false);
-  toggleArrows();
+    menu.addEventListener("scroll", function () { requestAnimationFrame(toggleArrows); }, false);
+    toggleArrows();
 
 })();
 

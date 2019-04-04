@@ -17,50 +17,50 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 "use strict";
 
 var FunctionFitting = {
-    PolynomialLSF : function (values, args, polynomialDegree) {
+    PolynomialLSF: function (values, args, polynomialDegree) {
         this.ComputeInputMatrixFinalForm = function (args) {
             var X = [];
             for (var i = 0; i < args.length; i++)
                 X[i] = [];
-            
+
             for (var argIndex = 0; argIndex < args.length; argIndex++) {
-                for (var degree = 0; degree <= polynomialDegree; degree++ ) {
+                for (var degree = 0; degree <= polynomialDegree; degree++) {
                     X[argIndex][degree] = Math.pow(args[argIndex], degree);
                 }
             }
-            
+
             var X_t = Matrix.transpose(X);
-            
-            var multipliedTransposeWithSelf = Matrix.multiply (X_t, X);
-            var reversedMatrix = Matrix.inverse (multipliedTransposeWithSelf);
+
+            var multipliedTransposeWithSelf = Matrix.multiply(X_t, X);
+            var reversedMatrix = Matrix.inverse(multipliedTransposeWithSelf);
             return Matrix.multiply(reversedMatrix, X_t);
         }
-        
-        var reversedMultipliedWTrannspose = this.ComputeInputMatrixFinalForm (args);
-        
+
+        var reversedMultipliedWTrannspose = this.ComputeInputMatrixFinalForm(args);
+
         this.ComputePolynomialCoeffs = function (reversedMultipliedWTrannspose, values) {
-        
+
             var valuesColumnMatrix = [];
             for (var i = 0; i < values.length; i++) {
                 valuesColumnMatrix[i] = [];
                 valuesColumnMatrix[i][0] = values[i];
             }
-            
-            var coeffColumn = Matrix.multiply (reversedMultipliedWTrannspose, valuesColumnMatrix);
+
+            var coeffColumn = Matrix.multiply(reversedMultipliedWTrannspose, valuesColumnMatrix);
             var res = [];
             for (var i = 0; i < coeffColumn.length; i++)
                 res[i] = coeffColumn[i][0];
-            
+
             return res;
         }
-        
+
         return this.ComputePolynomialCoeffs(reversedMultipliedWTrannspose, values);
     },
-    
-    Taylor_ForwardDiff : function (ValuesArray) {
+
+    Taylor_ForwardDiff: function (ValuesArray) {
         var coefficients = [];
         if (ValuesArray.length >= 4) {
-        
+
             coefficients[0] = ValuesArray[0];
             coefficients[1] = ValuesArray[1] - ValuesArray[0];
             coefficients[2] = ValuesArray[2] - 2 * ValuesArray[1] + ValuesArray[0];
@@ -70,14 +70,14 @@ var FunctionFitting = {
             coefficients[3] /= 6;
 
         }
-        
+
         return coefficients;
     },
-            
-    Taylor_BackwardDiff : function (ValuesArray) {
+
+    Taylor_BackwardDiff: function (ValuesArray) {
         var coefficients = [];
         if (ValuesArray.length >= 4) {
-        
+
             coefficients[0] = ValuesArray[3];
             coefficients[1] = ValuesArray[3] - ValuesArray[2];
             coefficients[2] = ValuesArray[3] - 2 * ValuesArray[2] + ValuesArray[1];
@@ -87,19 +87,19 @@ var FunctionFitting = {
             coefficients[3] /= 6;
 
         }
-        
+
         return coefficients;
     },
-            
-    Taylor_Average : function (ValuesArray) {
-    
-        var forwardValues = ValuesArray.slice (3, 7);
-        var backwardValues = ValuesArray.slice (0, 4);
-    
-        var forwards = FunctionFitting.Taylor_ForwardDiff(forwardValues);
-        var backwards = FunctionFitting.Taylor_BackwardDiff (backwardValues);
 
-        return [ 0.5 * (backwards[0] + forwards[0]),
+    Taylor_Average: function (ValuesArray) {
+
+        var forwardValues = ValuesArray.slice(3, 7);
+        var backwardValues = ValuesArray.slice(0, 4);
+
+        var forwards = FunctionFitting.Taylor_ForwardDiff(forwardValues);
+        var backwards = FunctionFitting.Taylor_BackwardDiff(backwardValues);
+
+        return [0.5 * (backwards[0] + forwards[0]),
                  0.5 * (backwards[1] + forwards[1]),
                  0.5 * (backwards[2] + forwards[2]),
                  0.5 * (backwards[3] + forwards[3])];
@@ -107,25 +107,25 @@ var FunctionFitting = {
 
 };
 
-function QuadraticEquation (a, b, c) {
+function QuadraticEquation(a, b, c) {
     this.a = a;
     this.b = b;
     this.c = c;
-    
+
     this.delta = this.b * this.b - 4 * this.a * this.c;
     var hasRealSolutions = this.delta > 0;
-    
-    this.x1 = { "real" : NaN, "imaginary" : NaN };
-    this.x2 = { "real" : NaN, "imaginary" : NaN };
-    
-    var inverted2A = 1/(2 * this.a);
+
+    this.x1 = { "real": NaN, "imaginary": NaN };
+    this.x2 = { "real": NaN, "imaginary": NaN };
+
+    var inverted2A = 1 / (2 * this.a);
     var realPart = -this.b * inverted2A;
     this.x1.real = realPart;
     this.x2.real = realPart;
-    
+
     var absDelta = Math.abs(this.delta);
     var potentiallyImaginaryPart = Math.sqrt(absDelta) * inverted2A;
-    
+
     if (hasRealSolutions) {
         this.x1.imaginary = 0;
         this.x2.imaginary = 0;
