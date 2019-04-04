@@ -31,6 +31,88 @@ var OccultationsData = {
                  n: (JDE - jd3) / fraction};
     },
 
+    wrappedPlanets : false,
+
+    getWrappedPlanets : function () {
+        if (!OccultationsData.wrappedPlanets) {
+
+            function WrappedPlanet(displayName, data, initialTimeInterval, vmag) {
+                this.displayName = displayName;
+                this.getJdObj = OccultationsData.getDataObj;
+                this.interpolatedDataSource = new DataForNow(data);
+                
+                if (initialTimeInterval)
+                    this.timeInterval = initialTimeInterval;
+                else
+                    this.timeInterval = 1; // one day
+
+                this.Vmag = -1;
+                if (vmag)
+                    this.Vmag = vmag;               
+
+                this.getInterpolatedData = function(jde) {
+                    var interpolatedData = this.interpolatedDataSource.getInterpolatedData (
+                        this.getJdObj(jde, this.timeInterval));
+                    return interpolatedData;
+                };
+
+                this.getRa = function (jde) {
+                    var interpolatedData = this.getInterpolatedData(jde);
+                    return interpolatedData.RA;
+                };
+
+                this.getDec = function (jde) {
+                    var interpolatedData = this.getInterpolatedData(jde);
+                    return interpolatedData.Dec;
+                };
+
+                this.setInterpolationInterval = function(dayFraction) {
+                    if (dayFraction) {
+                        this.timeInterval = dayFraction;
+                    }
+                };
+
+                this.getDisplayName = function () {
+                    return this.displayName;
+                };
+            }
+
+            OccultationsData.wrappedPlanets = [
+                 new WrappedPlanet("Mercury", MercuryData, 5, -1),
+                 new WrappedPlanet("Venus", VenusData, 5, -3),
+                 new WrappedPlanet("Mars", MarsData, 5, 5),
+                 new WrappedPlanet("Jupiter", JupiterData, 5, -2),
+                 new WrappedPlanet("Saturn", SaturnData, 5, 1),
+                 new WrappedPlanet("Uranus", UranusData, 5, 5),
+                 new WrappedPlanet("Neptune", NeptuneData, 5, 7)
+            ];
+
+        }        
+
+        return OccultationsData.wrappedPlanets;
+    },
+
+    getPlanetsCloseToMoon : function (jde) {
+        var planetsCloseToMoon = [];
+        var moonData = OccultationsData.getMoonData();
+        var getDataObj = OccultationsData.getDataObj;
+        var moonPositionData = moonData.getInterpolatedData(getDataObj(jde));
+        
+        var allPlanets = OccultationsData.getWrappedPlanets();
+        var raEps = 1/15;
+        var decEps = 1;
+
+        for (var i = 0; i < allPlanets.length; i++) {
+            allPlanets[i].timeInterval = 5; // reset for low precision high speed
+            var planetData = allPlanets[i].getInterpolatedData(jde);
+            if (Math.abs(planetData.Dec - moonPositionData.Dec) < decEps &&
+                Math.abs(planetData.RA - moonPositionData.RA) < raEps) {
+                    planetsCloseToMoon.push(allPlanets[i]);
+            }
+        }
+        return planetsCloseToMoon;
+    },
+
     moonData : false,
 
     getMoonData : function () {
@@ -92,6 +174,16 @@ var OccultationsData = {
                 OccultationsData.processPossibleOccultedObjects (jde, lst,treatedJde,
                     starsThatMayBeOcculted,
                     function(s) { return s.HR; },
+                    noDimmerThanThis_m,
+                    occultedObjects);
+
+                // get/create wrappers for the planets. inner planets interpolate on a daily basis,
+                // outer planets on a 10 days basis.
+
+                var planets = OccultationsData.getPlanetsCloseToMoon(jde);
+                OccultationsData.processPossibleOccultedObjects (jde, lst,treatedJde,
+                    planets,
+                    function(s) { return s.getDisplayName(); },
                     noDimmerThanThis_m,
                     occultedObjects);
 
@@ -213,8 +305,14 @@ var OccultationsData = {
         var timeStep = (jde - t) / 2;
 
         var moonData = new DataForNow(MoonData);
-        var dataForT = false;
-        
+
+        // call a setInterpolationInterval() method,
+        // so that the star objects for planets interpolate at a smaller step
+        if (star.setInterpolationInterval) {
+            star.setInterpolationInterval(2 * fraction);
+        }
+
+        var dataForT = false;        
         for (var i = 0; i < 100 && Math.abs(d) > epsD && Math.abs(t - jde) < 0.25; i++) {
             dataForT = moonData.getInterpolatedData(this.getDataObj(t, fraction));
             var distanceFromCenter = this.distance(dataForT, star);
@@ -258,7 +356,7 @@ var OccultationsData = {
                 var star = stars[hrId];
                 var start = OccultationsData.getStartOrEndContact(star, jde, true);
                 var end = OccultationsData.getStartOrEndContact(star, jde, false);
-                if (start && end) {
+                if (start && end && start.t < end.t && (jde - start.t) < 1 && (end.t - jde) < 1) {
                     data [jdeString] = {
                         star : star,
                         start : start,

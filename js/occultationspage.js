@@ -72,10 +72,7 @@ var OccultationsPage = {
     },
 
     getStarName: function (occultation) {
-        var star = occultation.star;
-        var name = star.Name ? star.Name : star.bfID ? star.bfID  : "HR " + star.HR +
-                   (star.zc ? " (ZC " + occultation.star.zc + ")" : "");
-        return name;
+        return occultation.star.getDisplayName();
     },
 
     getOccultationTitle: function (occultation) {
