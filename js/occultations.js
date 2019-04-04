@@ -36,7 +36,7 @@ var OccultationsData = {
     getWrappedPlanets : function () {
         if (!OccultationsData.wrappedPlanets) {
 
-            function WrappedPlanet(displayName, data, initialTimeInterval) {
+            function WrappedPlanet(displayName, data, initialTimeInterval, vmag) {
                 this.displayName = displayName;
                 this.getJdObj = OccultationsData.getDataObj;
                 this.interpolatedDataSource = new DataForNow(data);
@@ -46,15 +46,23 @@ var OccultationsData = {
                 else
                     this.timeInterval = 1; // one day
 
-                this.getRa = function (jde) {
+                this.Vmag = -1;
+                if (vmag)
+                    this.Vmag = vmag;               
+
+                this.getInterpolatedData = function(jde) {
                     var interpolatedData = this.interpolatedDataSource.getInterpolatedData (
                         this.getJdObj(jde, this.timeInterval));
+                    return interpolatedData;
+                };
+
+                this.getRa = function (jde) {
+                    var interpolatedData = this.getInterpolatedData(jde);
                     return interpolatedData.RA;
                 };
 
                 this.getDec = function (jde) {
-                    var interpolatedData = this.interpolatedDataSource.getInterpolatedData (
-                        this.getJdObj(jde, this.timeInterval));
+                    var interpolatedData = this.getInterpolatedData(jde);
                     return interpolatedData.Dec;
                 };
 
@@ -67,22 +75,42 @@ var OccultationsData = {
                 this.getDisplayName = function () {
                     return this.displayName;
                 };
-
-                this. Vmag = 1;
             }
 
             OccultationsData.wrappedPlanets = [
-                 new WrappedPlanet("Mercury", MercuryData, 1),
-                 new WrappedPlanet("Venus", VenusData, 1),
-                 new WrappedPlanet("Mars", MarsData, 10),
-                 new WrappedPlanet("Jupiter", JupiterData, 10),
-                 new WrappedPlanet("Saturn", SaturnData, 10),
-                 new WrappedPlanet("Uranus", UranusData, 10),
-                 new WrappedPlanet("Neptune", NeptuneData, 10)
+                 new WrappedPlanet("Mercury", MercuryData, 5, -1),
+                 new WrappedPlanet("Venus", VenusData, 5, -3),
+                 new WrappedPlanet("Mars", MarsData, 5, 5),
+                 new WrappedPlanet("Jupiter", JupiterData, 5, -2),
+                 new WrappedPlanet("Saturn", SaturnData, 5, 1),
+                 new WrappedPlanet("Uranus", UranusData, 5, 5),
+                 new WrappedPlanet("Neptune", NeptuneData, 5, 7)
             ];
 
-        }
+        }        
+
         return OccultationsData.wrappedPlanets;
+    },
+
+    getPlanetsCloseToMoon : function (jde) {
+        var planetsCloseToMoon = [];
+        var moonData = OccultationsData.getMoonData();
+        var getDataObj = OccultationsData.getDataObj;
+        var moonPositionData = moonData.getInterpolatedData(getDataObj(jde));
+        
+        var allPlanets = OccultationsData.getWrappedPlanets();
+        var raEps = 1/15;
+        var decEps = 1;
+
+        for (var i = 0; i < allPlanets.length; i++) {
+            allPlanets[i].timeInterval = 5; // reset for low precision high speed
+            var planetData = allPlanets[i].getInterpolatedData(jde);
+            if (Math.abs(planetData.Dec - moonPositionData.Dec) < decEps &&
+                Math.abs(planetData.RA - moonPositionData.RA) < raEps) {
+                    planetsCloseToMoon.push(allPlanets[i]);
+            }
+        }
+        return planetsCloseToMoon;
     },
 
     moonData : false,
@@ -152,7 +180,7 @@ var OccultationsData = {
                 // get/create wrappers for the planets. inner planets interpolate on a daily basis,
                 // outer planets on a 10 days basis.
 
-                var planets = OccultationsData.getWrappedPlanets();
+                var planets = OccultationsData.getPlanetsCloseToMoon(jde);
                 OccultationsData.processPossibleOccultedObjects (jde, lst,treatedJde,
                     planets,
                     function(s) { return s.getDisplayName(); },
@@ -328,7 +356,7 @@ var OccultationsData = {
                 var star = stars[hrId];
                 var start = OccultationsData.getStartOrEndContact(star, jde, true);
                 var end = OccultationsData.getStartOrEndContact(star, jde, false);
-                if (start && end) {
+                if (start && end && start.t < end.t && (jde - start.t) < 1 && (end.t - jde) < 1) {
                     data [jdeString] = {
                         star : star,
                         start : start,
