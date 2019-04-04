@@ -138,15 +138,17 @@ var NextEvents = {
                 var eclipseData = SolarEclipses.EclipseDataForK(k);
                 if (eclipseData.bEclipse) {
                     var id = SolarEclipsesPage.getId(eclipseData);
-                    events.push({
-                        start: eclipseData.t0,
-                        end: eclipseData.t0,
-                        navigActionObj: {
-                            page: "Solar Eclipses",
-                            actions: [{ name: "scroll", parameters: id }]
-                        },
-                        title: "Solar Eclipse: " + SolarEclipsesPage.getTypeOfEclipseString(eclipseData)
-                    });
+                    if (eclipseData["t1"]) {
+                        events.push({
+                            start: eclipseData.t0,
+                            end: eclipseData.t0,
+                            navigActionObj: {
+                                page: "Solar Eclipses",
+                                actions: [{ name: "scroll", parameters: id }]
+                            },
+                            title: "Solar Eclipse: " + SolarEclipsesPage.getTypeOfEclipseString(eclipseData)
+                        });
+                    }
                 }
             }
             return events;
