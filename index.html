@@ -1287,16 +1287,6 @@ h1 {
   font-weight: bolder;
 }
 
-
-/* comment these when the features are ready */
-/*
-#upcommingEventsFrontPage, #futureEventsH1, 
-#futureEventsSettingsTitle, #futureEventsSettingsContainer,
-#rightNowFrontPageSettingsLink, .configureRtView {
-  display: none;
-}
-*/
-
     </style>
     
 
@@ -1353,14 +1343,6 @@ h1 {
 }
 
 </script>
-
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
-    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-    crossorigin=""/>
-
- <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
-   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
-   crossorigin=""></script>
 
 </head>
 
@@ -1539,7 +1521,8 @@ h1 {
 
 
           <div id="futureEventsSection">
-            <h1 id="futureEventsH1">Next <input type="number" id="futureEventsNumberOfDays" value="14"> days:
+            <h1 id="futureEventsH1">
+            <label>Next <input type="number" id="futureEventsNumberOfDays" value="14"> days:</label>
                <a id="rightNowFrontPageSettingsLink" title="Configure the 'Right Now' view"
               href='#{"page":"settings","actions":[{"name":"scroll","parameters":"futureEventsSettingsTitle"}]}'>
               </a>
@@ -1912,18 +1895,41 @@ var registerWorker = function () {
 }
 registerWorker();
 
-var injectCssDom = function(url) {
+var injectCssDom = function(url, postInject) {
   SyncedTimeOut (function() {
   var link = document.createElement("link");
   link.rel = "stylesheet";
   link.type="text/css";
   link.href=url;
-  document.body.appendChild(link); }, Timeout.onInit);
+  document.body.appendChild(link); 
+
+  if (postInject)
+    postInject();
+
+  }, Timeout.onInit);
 }
+
+var injectScript = function(url, postInject) {
+  SyncedTimeOut (function() {
+  var link = document.createElement("script");
+  link.type="text/javascript";
+  link.src=url;
+  document.body.appendChild(link); 
+
+  if (postInject)
+    postInject();
+
+  }, Timeout.onInit);
+}
+
 
 injectCssDom("../style/common.css");
 injectCssDom("style/default.css");
 injectCssDom("style/print.css");
+
+injectCssDom("https://unpkg.com/leaflet@1.3.4/dist/leaflet.css",
+  function() { injectScript("https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"); }
+);
 
 var appInit = function() {
    if (typeof Location == 'undefined' || typeof TimeStepsData == 'undefined' || typeof Notifications == 'undefined'
