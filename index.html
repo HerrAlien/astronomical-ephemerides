@@ -1287,16 +1287,6 @@ h1 {
   font-weight: bolder;
 }
 
-
-/* comment these when the features are ready */
-/*
-#upcommingEventsFrontPage, #futureEventsH1, 
-#futureEventsSettingsTitle, #futureEventsSettingsContainer,
-#rightNowFrontPageSettingsLink, .configureRtView {
-  display: none;
-}
-*/
-
     </style>
     
 
@@ -1531,7 +1521,8 @@ h1 {
 
 
           <div id="futureEventsSection">
-            <h1 id="futureEventsH1">Next <input type="number" id="futureEventsNumberOfDays" value="14"> days:
+            <h1 id="futureEventsH1">
+            <label>Next <input type="number" id="futureEventsNumberOfDays" value="14"> days:</label>
                <a id="rightNowFrontPageSettingsLink" title="Configure the 'Right Now' view"
               href='#{"page":"settings","actions":[{"name":"scroll","parameters":"futureEventsSettingsTitle"}]}'>
               </a>

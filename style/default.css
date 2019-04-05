@@ -469,6 +469,14 @@ label input:focus{
     color: #000000;
 }
 
+#futureEventsH1 label {
+    font-size: 60px;
+    text-align: left;
+    display: inline;
+    color: #000000;
+}
+
+
 input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
