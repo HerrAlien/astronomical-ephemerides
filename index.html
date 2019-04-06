@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-US">
 
 <head>
@@ -1946,7 +1946,8 @@
 
         var appInit = function () {
             if (typeof Location == 'undefined' || typeof TimeStepsData == 'undefined' || typeof Notifications == 'undefined'
-                || !Location.init || !TimeStepsData.init) {
+                || !Location.init || !TimeStepsData.init
+                || typeof L == 'undefined') {
                 SyncedTimeOut(appInit, Timeout.onInit);
             } else {
                 try {
