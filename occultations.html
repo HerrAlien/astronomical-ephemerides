@@ -43,6 +43,14 @@
 <script src="js/realtimedata.js"></script>
 <script src="js/notifications.js"></script>
 <script src="js/moon.js"></script>
+<script src="js/mercury.js"></script>
+<script src="js/venus.js"></script>
+<script src="js/mars.js"></script>
+<script src="js/jupiter.js"></script>
+<script src="js/saturn.js"></script>
+<script src="js/uranus.js"></script>
+<script src="js/neptune.js"></script>
+<script src="js/sun.js"></script>
 
 <script>
 
@@ -58,15 +66,10 @@
                 return setTimeout (printOccultedStarsOn29Oct2015, 100);
 
 //        var jd = AAJS.Date.DateToJD (1984, 1, 1, true);
-        var jd = AAJS.Date.DateToJD (1984, 11, 19, true);
+        var jd = AAJS.Date.DateToJD (2019, 04, 14, true);
         
-        var dt = GetAAJS().DynamicalTime.DeltaT(jd)/(3600 * 24);
 
         var s = getOccultedStars (jd, 1);
-        for (var jd in s) {
-            s[jd].start.t -= dt;
-            s[jd].end.t -= dt;
-        }
 
        document.getElementById("pre").textContent = JSON.stringify(s, null, 4);
     }

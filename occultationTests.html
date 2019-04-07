@@ -1,0 +1,126 @@
+<html>
+    <head>
+
+        <script type="text/javascript">
+            var Pages = {};
+
+         var Location = {
+            latitude  : 44.4,
+            longitude : 26.12,
+            altitude  : 100,
+            
+            rhoSinPhi : 0,
+            rhoCosPhi : 0,
+            recomputeGeocentricCoordinates : function () {
+            Location.rhoSinPhi = AAJS.Globe.RadiusTimesSineGeocentricLatitude (Location.latitude, Location.altitude);
+            Location.rhoCosPhi = AAJS.Globe.RadiusTimesCosineGeocentricLatitude (Location.latitude, Location.altitude);
+            }
+
+        }; 
+       
+        function PlanetPage() {}
+
+        function GetAAJS() { return AAJS; }
+        var SyncedTimeOut = setTimeout;
+        var Timeout = {onInit: 1000};
+
+            </script>
+
+
+<script src="js/aajs.js"></script>
+<script type="text/JavaScript" src="js/planetdata.js"></script>
+<script src="js/occultations.js"></script>
+<script src="js/occultablestars.js"></script>
+<script src="js/realtimedata.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/moon.js"></script>
+<script src="js/mercury.js"></script>
+<script src="js/venus.js"></script>
+<script src="js/mars.js"></script>
+<script src="js/jupiter.js"></script>
+<script src="js/saturn.js"></script>
+<script src="js/uranus.js"></script>
+<script src="js/neptune.js"></script>
+<script type="text/javascript" src="js/sun.js"></script>
+<script type="text/javascript" src="testlib.js"></script>
+
+        <style>
+            p {
+                line-spacing: 2px;
+            }
+        </style>
+    </head>
+    <body>
+    </body>
+</html>
+<script type="text/javascript">
+         
+    (function () {
+            
+        var tests = [
+                
+        /*
+2019-04-14 8 Leo
+Magnitude of occulted object: 5.69
+Phase	Time	Position Angle
+Disappearance (D)	22:51	67
+Reappearance (R)	23:41	339
+        */
+        {
+            name : "Occultation of 8 Leo",
+            input : AAJS.Date.DateToJD (2019, 04, 14, true),
+            expectedOutput : {
+    "2458588.353077": {
+        "star": {
+            "HR": "3826",
+            "Vmag": 5.69,
+            "RAh": 9.635009940583982,
+            "DEd": 16.350471749526605,
+            "pmRA": -0.014,
+            "pmDE": -0.006,
+            "zc": 1418,
+            "bfID": "8    Leo",
+            "RA": 9.635009940583982,
+            "Dec": 16.350471749526605
+        },
+        "start": {
+            "t": 2458588.3282274217,
+            "PA": 66.9718976546216
+        },
+        "end": {
+            "t": 2458588.3629875868,
+            "PA": 338.66379980997016
+        }
+    }
+},
+                  
+            actualOutput : OccultationsData.getOccultedStars(this.input, 1),
+            tolerance : [ ],
+            actualOutput : false,
+
+            test : function () {
+                this.actualOutput = OccultationsData.getOccultedStars(this.input, 1);
+                return JSON.stringify(this.actualOutput) == JSON.stringify(this.expectedOutput);
+              
+            }
+        },
+
+        
+        
+        ];
+           
+        
+        function runTests() {
+            if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
+                return setTimeout (runTests, 100);
+
+            testlib.runTests (tests);
+        }
+
+        runTests();
+
+
+    })();
+                
+        </script>
+
