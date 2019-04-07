@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-US">
 
 <head>
@@ -1532,7 +1532,7 @@
 
             <div id="futureEventsSection">
                 <h1 id="futureEventsH1">
-                    <label>Next <input type="number" id="futureEventsNumberOfDays" value="14"> days:</label>
+                    Next <input type="number" id="futureEventsNumberOfDays" value="14"> days:
                     <a id="rightNowFrontPageSettingsLink" title="Configure the 'Right Now' view"
                        href='#{"page":"settings","actions":[{"name":"scroll","parameters":"futureEventsSettingsTitle"}]}'>
                     </a>
@@ -1946,7 +1946,8 @@
 
         var appInit = function () {
             if (typeof Location == 'undefined' || typeof TimeStepsData == 'undefined' || typeof Notifications == 'undefined'
-                || !Location.init || !TimeStepsData.init) {
+                || !Location.init || !TimeStepsData.init
+                || typeof L == 'undefined') {
                 SyncedTimeOut(appInit, Timeout.onInit);
             } else {
                 try {
