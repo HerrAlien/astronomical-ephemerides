@@ -105,7 +105,37 @@ Reappearance (R)	23:41	339
             }
         },
 
-        
+/*2019-02-02 Saturn
+Magnitude of occulted object: 1
+Phase	Time	Position Angle
+Disappearance (D)	07:53	49
+Reappearance (R)	08:52	319*/        
+        {
+            name : "Occultation of Saturn",
+            input : AAJS.Date.DateToJD (2019, 02, 02, true),
+            expectedOutput : {
+                    "start": {
+            "t": 2458516.745792701,
+            "PA": 48.5879912477152
+        },
+        "end": {
+            "t": 2458516.7868892374,
+            "PA": 319.0485345262774
+        }
+        },
+                  
+            actualOutput : OccultationsData.getOccultedStars(this.input, 1),
+            tolerance : [ ],
+            actualOutput : false,
+
+            test : function () {
+                    var occ = OccultationsData.getOccultedStars(this.input, 1);
+                    var occData = occ["2458516.767042"];
+                this.actualOutput = {start: occData.start, end: occData.end };
+                return JSON.stringify(this.actualOutput) == JSON.stringify(this.expectedOutput);
+              
+            }
+        },
         
         ];
            
