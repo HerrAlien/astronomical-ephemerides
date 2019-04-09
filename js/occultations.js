@@ -40,21 +40,16 @@ var OccultationsData = {
 
             function WrappedPlanet(displayName, data, initialTimeInterval, vmag) {
                 this.displayName = displayName;
-                this.getJdObj = OccultationsData.getDataObj;
-                this.interpolatedDataSource = new DataForNow(data);
-
-                if (initialTimeInterval)
-                    this.timeInterval = initialTimeInterval;
-                else
-                    this.timeInterval = 1; // one day
+                
+                var interpolatedDataSource = InterpolatedData[displayName]();
+                interpolatedDataSource.daysBetweenDataPoints = initialTimeInterval;
 
                 this.Vmag = -1;
                 if (vmag)
                     this.Vmag = vmag;
 
                 this.getInterpolatedData = function (_JD) {
-                    var interpolatedData = this.interpolatedDataSource.getInterpolatedData(
-                        this.getJdObj(_JD, this.timeInterval));
+                    var interpolatedData = interpolatedDataSource.getDataAsObjectForJD(_JD);
                     return interpolatedData;
                 };
 
@@ -70,7 +65,7 @@ var OccultationsData = {
 
                 this.setInterpolationInterval = function (dayFraction) {
                     if (dayFraction) {
-                        this.timeInterval = dayFraction;
+                        interpolatedDataSource.daysBetweenDataPoints = dayFraction;
                     }
                 };
 
@@ -107,8 +102,8 @@ var OccultationsData = {
         for (var i = 0; i < allPlanets.length; i++) {
             allPlanets[i].timeInterval = 5; // reset for low precision high speed
             var planetData = allPlanets[i].getInterpolatedData(jde);
-            if (Math.abs(planetData.Dec - moonPositionData.Dec) < decEps &&
-                Math.abs(planetData.RA - moonPositionData.RA) < raEps) {
+            if (Math.abs(planetData.Dec - moonPositionData.DecTopo) < decEps &&
+                Math.abs(planetData.RA - moonPositionData.RaTopo) < raEps) {
                 planetsCloseToMoon.push(allPlanets[i]);
             }
         }

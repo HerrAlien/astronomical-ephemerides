@@ -42,6 +42,7 @@
 <script src="js/uranus.js"></script>
 <script src="js/neptune.js"></script>
 <script type="text/javascript" src="js/sun.js"></script>
+<script type="text/JavaScript" src="js/interpolated_data.js"></script>
 <script type="text/javascript" src="testlib.js"></script>
 
         <style>
@@ -132,7 +133,28 @@ Reappearance (R)	08:52	319*/
                     var occ = OccultationsData.getOccultedStars(this.input, 1);
                     var occData = occ["2458516.767042"];
                 this.actualOutput = {start: occData.start, end: occData.end };
-                return JSON.stringify(this.actualOutput) == JSON.stringify(this.expectedOutput);
+                var identical = JSON.stringify(this.actualOutput) == JSON.stringify(this.expectedOutput);
+                if (identical) {
+                    return true;
+                }
+
+                var errMsg = "";
+                for (var moment in this.expectedOutput) {
+                    var momentData = this.expectedOutput[moment];
+                    for (var k in momentData) {
+                        var relativeDelta = (momentData[k] - this.actualOutput[moment][k]) / this.actualOutput[moment][k];
+                        if (relativeDelta > 1e-10) {
+                            errMsg += " for " + moment + "[" + k + "]" + " expected " + this.expectedOutput[moment][k] +
+                                      " got instead " + this.actualOutput[moment][k];
+                        }
+                    }
+                }
+
+                if (errMsg) {
+                    throw errMsg;
+                }
+                
+                return true;
               
             }
         },
