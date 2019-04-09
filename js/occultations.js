@@ -17,21 +17,6 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 "use strict";
 
 var OccultationsData = {
-    getDataObj: function (JDE, fraction) {
-        if (!fraction) {
-            fraction = 1;
-        }
-
-        var jd3 = Math.floor(JDE / fraction) * fraction;
-        return {
-            T1: jd3 - 2 * fraction,
-            T2: jd3 - fraction,
-            T3: jd3,
-            T4: jd3 + fraction,
-            T5: jd3 + 2 * fraction,
-            n: (JDE - jd3) / fraction
-        };
-    },
 
     wrappedPlanets: false,
 
@@ -89,11 +74,8 @@ var OccultationsData = {
         return OccultationsData.wrappedPlanets;
     },
 
-    getPlanetsCloseToMoon: function (jde) {
+    getPlanetsCloseToMoon: function (ra, dec, jde) {
         var planetsCloseToMoon = [];
-        var moonData = OccultationsData.getMoonData();
-        var getDataObj = OccultationsData.getDataObj;
-        var moonPositionData = moonData.getInterpolatedData(getDataObj(jde));
 
         var allPlanets = OccultationsData.getWrappedPlanets();
         var raEps = 1 / 15;
@@ -102,8 +84,8 @@ var OccultationsData = {
         for (var i = 0; i < allPlanets.length; i++) {
             allPlanets[i].timeInterval = 5; // reset for low precision high speed
             var planetData = allPlanets[i].getInterpolatedData(jde);
-            if (Math.abs(planetData.Dec - moonPositionData.DecTopo) < decEps &&
-                Math.abs(planetData.RA - moonPositionData.RaTopo) < raEps) {
+            if (Math.abs(planetData.Dec - dec) < decEps &&
+                Math.abs(planetData.RA - ra) < raEps) {
                 planetsCloseToMoon.push(allPlanets[i]);
             }
         }
@@ -114,7 +96,7 @@ var OccultationsData = {
 
     getMoonData: function () {
         if (!OccultationsData.moonData)
-            OccultationsData.moonData = new DataForNow(MoonData);
+            OccultationsData.moonData = InterpolatedData["Moon"]();
         return OccultationsData.moonData;
     },
 
@@ -148,6 +130,8 @@ var OccultationsData = {
 
             for (var step = 0; step < stepsCount; step++, jde += jdeIncrement, lst += lstIncrement) {
 
+                moonData.daysBetweenDataPoints =  1; // coarser
+    
                 if (lst > Math.PI * 2) {
                     lst -= Math.PI * 2;
                 }
@@ -163,7 +147,7 @@ var OccultationsData = {
                     noDimmerThanThis_m = 4;
                 }
 
-                var dataForJd = moonData.getInterpolatedData(getDataObj(jde, 6 / 24));
+                var dataForJd = moonData.getDataAsObjectForJD(jde);
                 var ra = dataForJd.RaTopo;
                 var dec = dataForJd.DecTopo;
                 var starsThatMayBeOcculted = OccultableStars.getStarsNear(ra, dec, jde);
@@ -177,7 +161,7 @@ var OccultationsData = {
                 // get/create wrappers for the planets. inner planets interpolate on a daily basis,
                 // outer planets on a 10 days basis.
 
-                var planets = OccultationsData.getPlanetsCloseToMoon(jde);
+                var planets = OccultationsData.getPlanetsCloseToMoon(ra, dec, jde);
                 OccultationsData.processPossibleOccultedObjects(jde, lst, treatedJde,
                     planets,
                     function (s) { return s.getDisplayName(); },
@@ -213,6 +197,9 @@ var OccultationsData = {
         }
 
         for (var i = 0; i < inputObjects.length; i++) {
+
+            moonData.daysBetweenDataPoints =  4 / 24; // not much of a change from 6/24 ...
+
             var currentObject = inputObjects[i];
             if (Math.round(currentObject.Vmag * 10) / 10 > noDimmerThanThis_m) {
                 continue;
@@ -224,9 +211,9 @@ var OccultationsData = {
             var starRaH = false;
             for (var cjIndex = 0; cjIndex < 10 && Math.abs(conjunctionJde - lastConjunctionJde) > 1e-6; cjIndex++) {
                 lastConjunctionJde = conjunctionJde;
-                dataForJd = moonData.getInterpolatedData(getDataObj(conjunctionJde, 4 / 24));
+                dataForJd = moonData.getDataAsObjectForJD(conjunctionJde);
                 starRaH = currentObject.getRa(conjunctionJde);
-                var beforeData = moonData.getInterpolatedData(getDataObj(conjunctionJde - 1 / 24, 4 / 24));
+                var beforeData = moonData.getDataAsObjectForJD(conjunctionJde - 1 / 24);
                 var t = (starRaH - beforeData.RaTopo) / (dataForJd.RaTopo - beforeData.RaTopo);
                 conjunctionJde = conjunctionJde - 1 / 24 + t / 24;
             }
@@ -301,7 +288,8 @@ var OccultationsData = {
         }
         var timeStep = (jde - t) / 2;
 
-        var moonData = new DataForNow(MoonData);
+        var moonData = OccultationsData.getMoonData();
+        moonData.daysBetweenDataPoints = fraction;
 
         // call a setInterpolationInterval() method,
         // so that the star objects for planets interpolate at a smaller step
@@ -311,7 +299,7 @@ var OccultationsData = {
 
         var dataForT = false;
         for (var i = 0; i < 100 && Math.abs(d) > epsD && Math.abs(t - jde) < 0.25; i++) {
-            dataForT = moonData.getInterpolatedData(this.getDataObj(t, fraction));
+            dataForT = moonData.getDataAsObjectForJD(t);
             var distanceFromCenter = this.distance(dataForT, star, t);
             var moonRadius = dataForT.DiameterTopo / 2;
             d = distanceFromCenter - moonRadius;

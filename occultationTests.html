@@ -101,8 +101,12 @@ Reappearance (R)	23:41	339
 
             test : function () {
                 this.actualOutput = OccultationsData.getOccultedStars(this.input, 1);
-                return JSON.stringify(this.actualOutput) == JSON.stringify(this.expectedOutput);
-              
+                 var identical = JSON.stringify(this.actualOutput) == JSON.stringify(this.expectedOutput);
+                if (identical) {
+                    return true;
+                }
+                
+                
             }
         },
 
@@ -131,7 +135,12 @@ Reappearance (R)	08:52	319*/
 
             test : function () {
                     var occ = OccultationsData.getOccultedStars(this.input, 1);
-                    var occData = occ["2458516.767042"];
+                    var occData = false;
+                    for (var k in occ) {
+                        occData = occ[k];
+                        break;
+                    }
+
                 this.actualOutput = {start: occData.start, end: occData.end };
                 var identical = JSON.stringify(this.actualOutput) == JSON.stringify(this.expectedOutput);
                 if (identical) {
@@ -139,11 +148,14 @@ Reappearance (R)	08:52	319*/
                 }
 
                 var errMsg = "";
+
+                var eps = {"PA" : 1e-3, "t" : 1e-6};
+
                 for (var moment in this.expectedOutput) {
                     var momentData = this.expectedOutput[moment];
                     for (var k in momentData) {
                         var relativeDelta = (momentData[k] - this.actualOutput[moment][k]) / this.actualOutput[moment][k];
-                        if (relativeDelta > 1e-10) {
+                        if (Math.abs(relativeDelta) > eps[k]) {
                             errMsg += " for " + moment + "[" + k + "]" + " expected " + this.expectedOutput[moment][k] +
                                       " got instead " + this.actualOutput[moment][k];
                         }
@@ -153,7 +165,7 @@ Reappearance (R)	08:52	319*/
                 if (errMsg) {
                     throw errMsg;
                 }
-                
+
                 return true;
               
             }
