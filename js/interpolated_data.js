@@ -145,6 +145,9 @@ var InterpolatedData = { };
             var interpolatedData = interpolationObject.getInterpolatedData (datesObj, computeRiseSet, computePhysicalData);
             return interpolatedData;
         }
+        this.getInterpolatedData = function (datesObj, computeRiseSet, computePhysicalData) { 
+            return interpolationObject.getInterpolatedData(datesObj, computeRiseSet, computePhysicalData); 
+        };
     }
 
     // ================ definition of InterpolatedData =========================

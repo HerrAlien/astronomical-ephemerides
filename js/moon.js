@@ -17,6 +17,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 "use strict";
 
 var MoonData = {
+    planet: { name: "Moon" },
+    
     cache: {},
 
     getDataAsObjectForJD: function (JDE, computeRiseTransitSet, computeSelenographicData) {
