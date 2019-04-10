@@ -45,6 +45,34 @@ var RealTimeDataViewer = {
         MeridianTransit: function (value) { return RealTimeDataViewer.format.JD(value); },
     },
 
+    buildRtDataObject : function (planetName) {
+        var rtDataObj = InterpolatedData[planetName]();
+        rtDataObj.daysBetweenDataPoints = 1/24;
+        
+        rtDataObj['start'] = function () {
+            if (JDForRealTimeView.onRecomputedTimes) {
+                JDForRealTimeView.onRecomputedTimes.add(function (datesObj) { rtDataObj.updateData(datesObj); });
+                JDForRealTimeView.start();
+            } else {
+                SyncedTimeOut(function () { rtDataObj.start(); }, Timeout.onInit);
+            }
+        };
+
+        rtDataObj['updateData'] = function (datesObj) {
+            if (typeof GetAAJS() != 'undefined') {
+                try {
+                    var interpolatedObject = rtDataObj.getInterpolatedData(datesObj, true, true);
+                    rtDataObj.onDataUpdated.notify(interpolatedObject);
+                } catch (err) {
+
+                }
+            }
+        };
+
+        rtDataObj['onDataUpdated'] = new Notifications.New();
+        return rtDataObj;
+    },
+
     getRtSettingsSectionId: function (pageName) {
         return pageName + " settings section";
     },
@@ -75,35 +103,10 @@ var RealTimeDataViewer = {
                 }
                 // TODO: on a settings notification, update the visibility for all entries in this.allViews
 
-                this.rtData = InterpolatedData[this.page.dataSource.planet.name]();
-                this.rtData.daysBetweenDataPoints = 1/24;
-                var rtDataObj = this.rtData;
-                
-                this.rtData['start'] = function () {
-                    if (JDForRealTimeView.onRecomputedTimes) {
-                        JDForRealTimeView.onRecomputedTimes.add(function (datesObj) { rtDataObj.updateData(datesObj); });
-                        JDForRealTimeView.start();
-                    } else {
-                        SyncedTimeOut(function () { rtDataObj.start(); }, Timeout.onInit);
-                    }
-                };
-
-                this.rtData ['updateData'] = function (datesObj) {
-                    if (typeof GetAAJS() != 'undefined') {
-                        try {
-                            var interpolatedObject = rtDataObj.getInterpolatedData(datesObj, true, true);
-                            rtDataObj.onDataUpdated.notify(interpolatedObject);
-                        } catch (err) {
-
-                        }
-                    }
-                };
-
-                this.rtData.onDataUpdated = new Notifications.New();
-                rtDataObj.start();
+                this.rtData = RealTimeDataViewer.buildRtDataObject(this.page.dataSource.planet.name);
+                this.rtData.start();
 
                 var obj = this;
-
                 this.rtData.onDataUpdated.add(function (data) {
                     for (var i = 0; i < obj.allKeys.length; i++) {
                         var key = obj.allKeys[i];
@@ -122,7 +125,6 @@ var RealTimeDataViewer = {
 
                         }
                     }
-
                 });
 
                 var onKeyAdded = function (key, dom) {
