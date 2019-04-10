@@ -61,7 +61,10 @@ var RealTimeDataViewer = {
         rtDataObj['updateData'] = function (datesObj) {
             if (typeof GetAAJS() != 'undefined') {
                 try {
-                    var interpolatedObject = rtDataObj.getInterpolatedData(datesObj, true, true);
+                    var interpolatedObject = rtDataObj.getInterpolatedData(datesObj, 
+                        true, // rise - transit - set
+                        true, // physical ephemeris, where applicable
+                        true); // topocentric coordinates
                     rtDataObj.onDataUpdated.notify(interpolatedObject);
                 } catch (err) {
 

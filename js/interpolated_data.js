@@ -24,28 +24,44 @@ var InterpolatedData = { };
 
     function DataForNow(dataSource) {
         this.dataSource = dataSource;
-//        this.onDataUpdated = new Notifications.New();
     }
 
-//    DataForNow.prototype['start'] = function () {
-//        var obj = this;
-//        if (JDForRealTimeView.onRecomputedTimes) {
-//            JDForRealTimeView.onRecomputedTimes.add(function (datesObj) { obj.updateData(datesObj); });
-//            JDForRealTimeView.start();
-//        } else {
-//            SyncedTimeOut(function () { obj.start(); }, Timeout.onInit);
-//        }
-//    }
+    DataForNow.prototype['getInterpolatedData'] = function (datesObj, 
+                                                            computeRiseSet, 
+                                                            computePhysicalData, 
+                                                            computeTopocentricCoordinates) {
+        var T1 = datesObj.T1;
+        var T2 = datesObj.T2;
+        var T3 = datesObj.T3;
+        var T4 = datesObj.T4;
+        var T5 = datesObj.T5;
 
-    DataForNow.prototype['getInterpolatedData'] = function (datesObj, computeRiseSet, computePhysicalData) {
-        var obj1 = this.dataSource.getDataAsObjectForJD(datesObj.T1, computeRiseSet, computePhysicalData);
-        var obj2 = this.dataSource.getDataAsObjectForJD(datesObj.T2, computeRiseSet, computePhysicalData);
-        var obj3 = this.dataSource.getDataAsObjectForJD(datesObj.T3, computeRiseSet, computePhysicalData);
-        var obj4 = this.dataSource.getDataAsObjectForJD(datesObj.T4, computeRiseSet, computePhysicalData);
-        var obj5 = this.dataSource.getDataAsObjectForJD(datesObj.T5, computeRiseSet, computePhysicalData);
+        var obj1 = this.dataSource.getDataAsObjectForJD(T1, computeRiseSet, computePhysicalData);
+        var obj2 = this.dataSource.getDataAsObjectForJD(T2, computeRiseSet, computePhysicalData);
+        var obj3 = this.dataSource.getDataAsObjectForJD(T3, computeRiseSet, computePhysicalData);
+        var obj4 = this.dataSource.getDataAsObjectForJD(T4, computeRiseSet, computePhysicalData);
+        var obj5 = this.dataSource.getDataAsObjectForJD(T5, computeRiseSet, computePhysicalData);
+
+        if (computeTopocentricCoordinates) {
+            var parallax = Math.atan2(6.378137e+6, 149597870700 * obj3.DistanceToEarth) * 180 / Math.PI;
+            var objs = [obj1, obj2, obj3, obj4, obj5];
+            var times = [T1, T2, T3, T4, T5];
+            for (var i = 0; i < objs.length; i++) {
+                var current = objs[i];
+                if (!current["RaTopo"]) {
+                    var T = times[i];
+                    var topoCoords = AAJS['Globe']['EquatorialGeocentricToTopocentric'] (current.RA, current.Dec,
+                        parallax, T, Location.latitude, Location.longitude, Location.altitude);
+                    current["RaTopo"] = topoCoords["X"];
+                    current["DecTopo"] = topoCoords["Y"];
+                    current["Parallax"] = parallax;
+                }
+            }
+        }
 
         var interpolationLimits = {
-            "RA": 24
+            "RA": 24,
+            "RaTopo" : 24
         };
 
         var interpolatedObject = {};
@@ -59,14 +75,6 @@ var InterpolatedData = { };
 
         return interpolatedObject;
     }
-
-    // for real time view
-//    DataForNow.prototype['updateData'] = function (datesObj) {
-//        if (typeof GetAAJS() != 'undefined') {
-//            var interpolatedObject = this.getInterpolatedData(datesObj, true, true);
-//            this.onDataUpdated.notify(interpolatedObject);
-//        }
-//    }
 
     DataForNow.prototype['interpolate'] = function (n, y1, y2, y3, y4, y5, limit) {
 
@@ -140,13 +148,13 @@ var InterpolatedData = { };
         if (!this.daysBetweenDataPoints) {
             this.daysBetweenDataPoints = 1; // high accuracy
         }
-        this.getDataAsObjectForJD = function (JDE, computeRiseSet, computePhysicalData) {
+        this.getDataAsObjectForJD = function (JDE, computeRiseSet, computePhysicalData, computeTopocentricCoordinates) {
             var datesObj = getDataObjForInterpolation (JDE, this.daysBetweenDataPoints);
-            var interpolatedData = interpolationObject.getInterpolatedData (datesObj, computeRiseSet, computePhysicalData);
+            var interpolatedData = interpolationObject.getInterpolatedData (datesObj, computeRiseSet, computePhysicalData, computeTopocentricCoordinates);
             return interpolatedData;
         }
-        this.getInterpolatedData = function (datesObj, computeRiseSet, computePhysicalData) { 
-            return interpolationObject.getInterpolatedData(datesObj, computeRiseSet, computePhysicalData); 
+        this.getInterpolatedData = function (datesObj, computeRiseSet, computePhysicalData, computeTopocentricCoordinates) { 
+            return interpolationObject.getInterpolatedData(datesObj, computeRiseSet, computePhysicalData, computeTopocentricCoordinates); 
         };
     }
 
