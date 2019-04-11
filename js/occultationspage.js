@@ -209,12 +209,9 @@ var OccultationsPage = {
         var sin = Math.sin;
         var tan = Math.tan;
 
-        var paSun = Math.atan2(cos(sunData.Dec * degra) * sin(hra * (sunData.RA - moonData.RA)),
-                                (sin(sunData.Dec * degra) * cos(moonData.Dec * degra) -
-                                cos(sunData.Dec * degra) * sin(moonData.Dec * degra) * cos(hra * (sunData.RA - moonData.RA))
-                                )
-                                );
+        var paSun = PositionAngleDFromEqCoordinates (moonData.RA, moonData.Dec, sunData.RA, sunData.Dec) * degra;
         paSun += Math.PI / 2;
+        
         var limbX = moonRadius * cos(paSun);
         var limbY = moonRadius * sin(paSun);
 

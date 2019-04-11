@@ -151,3 +151,25 @@ function DistanceDFromEqCoordinates (rah1, ded1, rah2, ded2) {
         return dist;
 
 }
+
+function PositionAngleDFromEqCoordinates (centerRah, centerDed, targetRah, targetDed) {
+    var degra = Math.PI / 180;
+
+    var dRaDeg = 15 * (targetRah - centerRah);
+    if (dRaDeg > 180) {
+        dRaDeg -= 360;
+    } else if (dRaDeg < -180) {
+        dRaDeg += 360;
+    }
+
+    var centerDeR = centerDed * degra;
+    var targetDeR = targetDed * degra;
+
+    var dRaR = dRaDeg * degra;
+    var dx = Math.cos(centerDeR) * Math.tan(targetDeR) - Math.sin(centerDeR) * Math.cos(dRaR);
+    var dy = Math.sin(dRaR);
+    var PA = Math.atan2(dy, dx) / degra;
+    if (PA < 0)
+        PA += 360;
+    return PA;
+}

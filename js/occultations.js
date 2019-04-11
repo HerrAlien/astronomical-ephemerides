@@ -303,19 +303,7 @@ var OccultationsData = {
         if (Math.abs(t - jde) >= 0.25)
             return false;
 
-        var degra = Math.PI / 180;
-        var dRaDeg = 15 * (star.getRa(t) - dataForT.RaTopo);
-        if (dRaDeg > 180) {
-            dRaDeg -= 360;
-        } else if (dRaDeg < -180) {
-            dRaDeg += 360;
-        }
-
-        var dx = Math.cos(dataForT.DecTopo * degra) * Math.tan(star.getDec(t) * degra) - Math.sin(dataForT.DecTopo * degra) * Math.cos(dRaDeg * degra)
-        var dy = Math.sin(dRaDeg * degra);
-        var PA = Math.atan2(dy, dx) / degra;
-        if (PA < 0)
-            PA += 360;
+        var PA = PositionAngleDFromEqCoordinates (dataForT.RaTopo, dataForT.DecTopo, star.getRa(t), star.getDec(t));
 
         return { t: t, PA: PA };
     },
