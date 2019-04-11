@@ -136,3 +136,18 @@ function QuadraticEquation(a, b, c) {
         this.x2.imaginary = potentiallyImaginaryPart;
     }
 }
+
+function DistanceDFromEqCoordinates (rah1, ded1, rah2, ded2) {
+        var degra = Math.PI / 180;
+        var rar1 = rah1 * 15 * degra;
+        var der1 = ded1 * degra;
+
+        var rar2 = rah2 * 15 * degra;
+        var der2 = ded2 * degra;
+
+        var dist = Math.acos(Math.sin(der1) * Math.sin(der2) +
+                   Math.cos(der1) * Math.cos(der2) * Math.cos(rar1 - rar2));
+        dist /= degra;
+        return dist;
+
+}

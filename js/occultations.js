@@ -262,17 +262,7 @@ var OccultationsData = {
     },
 
     distance: function (dataForJd, star, t) {
-        var degra = Math.PI / 180;
-        var moonDecRad = dataForJd.DecTopo * degra;
-        var moonRaRad = dataForJd.RaTopo * 15 * degra;
-
-        var starDecRad = star.getDec(t) * degra;
-        var starRaRad = star.getRa(t) * 15 * degra;
-
-        var dist = Math.acos(Math.sin(moonDecRad) * Math.sin(starDecRad) +
-                   Math.cos(moonDecRad) * Math.cos(starDecRad) * Math.cos(moonRaRad - starRaRad));
-        dist *= 180 / Math.PI;
-        return dist;
+        return DistanceDFromEqCoordinates (dataForJd.RaTopo, dataForJd.DecTopo, star.getRa(t), star.getDec(t));
     },
 
     getStartOrEndContact: function (star, jde, isForStart) {
