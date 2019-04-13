@@ -1,0 +1,123 @@
+<html>
+<body>
+<pre id="pre">
+</pre>
+
+
+</body>
+</html>
+
+
+<script>
+
+var Pages = {};
+
+var Location = {
+    latitude  : 44.4,
+    longitude : 26.12,
+    altitude  : 100,
+    
+    rhoSinPhi : 0,
+    rhoCosPhi : 0,
+    recomputeGeocentricCoordinates : function () {
+    Location.rhoSinPhi = AAJS.Globe.RadiusTimesSineGeocentricLatitude (Location.latitude, Location.altitude);
+    Location.rhoCosPhi = AAJS.Globe.RadiusTimesCosineGeocentricLatitude (Location.latitude, Location.altitude);
+    }
+}; 
+
+var Timeout = {onInit: 1000};
+
+function PlanetPage() {}
+
+function GetAAJS() { return AAJS; }
+
+var SyncedTimeOut = setTimeout;
+
+</script>
+
+<script src="js/aajs.js"></script>
+<script type="text/JavaScript" src="js/planetdata.js"></script>
+<script src="js/occultations.js"></script>
+<script src="js/occultablestars.js"></script>
+<script src="js/realtimedata.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/moon.js"></script>
+<script src="js/mercury.js"></script>
+<script src="js/venus.js"></script>
+<script src="js/mars.js"></script>
+<script src="js/jupiter.js"></script>
+<script src="js/saturn.js"></script>
+<script src="js/uranus.js"></script>
+<script src="js/neptune.js"></script>
+<script type="text/javascript" src="js/sun.js"></script>
+<script type="text/JavaScript" src="js/interpolated_data.js"></script>
+<script type="text/JavaScript" src="js/numerical.js"></script>
+
+<script>
+
+
+(function() {
+
+    // 29 oct 2015, 22:30 UTC
+    function printTransits() {
+        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
+                return setTimeout (printTransits, 100);
+
+        var jd = AAJS.Date.DateToJD (2019, 1, 1, true);
+
+
+        var s = {};
+
+        var interpolated = {
+            "Mercury" : false,
+            "Venus" : false
+        };
+
+        for (var key in interpolated) {
+            interpolated[key] = InterpolatedData[key]();
+            interpolated[key].daysBetweenDataPoints = 1;
+        }
+
+        interpolated["Mercury"]['synodicPeriod'] = 0.317 * 365.25;
+        interpolated["Venus"  ]['synodicPeriod'] = 1.599 * 365.25;
+
+        var Sun = InterpolatedData["Sun"]();
+
+        var conjunctionJd = jd;
+        var lastConjunctionJd = 0;
+        for (var i = 0; i < 100 && Math.abs(lastConjunctionJd - conjunctionJd) > 1/(24 * 3600); i++) {
+
+            lastConjunctionJd = conjunctionJd;
+
+            var sunDataForJd       = Sun.getDataAsObjectForJD(conjunctionJd);
+            var sunDataForBeforeJd = Sun.getDataAsObjectForJD(conjunctionJd - 1);
+            var mercuryDataForJd       = interpolated["Mercury"].getDataAsObjectForJD(conjunctionJd);
+            var mercuryDataForBeforeJd = interpolated["Mercury"].getDataAsObjectForJD(conjunctionJd - 1);
+
+            var dRaSun = sunDataForJd.RA - sunDataForBeforeJd.RA;
+            var dRaMercury = mercuryDataForJd.RA - mercuryDataForBeforeJd.RA;
+            var dRaSunMercury = sunDataForJd.RA - mercuryDataForJd.RA;
+
+            var tUntilConjunction = dRaSunMercury / (dRaSun - dRaMercury);
+
+            conjunctionJd -= tUntilConjunction;
+
+        }
+
+        // find first conjunction. Check that planet distance to Earth is lower than 1 A.U.
+        // for each conjunction, check that the angular distance is smaller than sun diameter
+
+        // compute times for all four contacts
+
+        // next conjunction? one synodic period later, more or less.
+
+        document.getElementById("pre").textContent = JSON.stringify(s, null, 4);
+    }
+
+    printTransits();
+
+
+
+})();
+
+</script>
