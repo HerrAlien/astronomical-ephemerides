@@ -132,6 +132,7 @@ var SyncedTimeOut = setTimeout;
                 return setTimeout (printTransits, 100);
 
         var jd = AAJS.Date.DateToJD (2019, 1, 1, true);
+        var numDays = 365;
 
 
         var s = {};
@@ -149,14 +150,24 @@ var SyncedTimeOut = setTimeout;
         interpolated["Mercury"]['synodicPeriod'] = 0.317 * 365.25;
         interpolated["Venus"  ]['synodicPeriod'] = 1.599 * 365.25;
 
-        var conjunctionJd = Transits.JdOfClosestInferiorConjunction(jd, interpolated["Mercury"]);
+        var conjunctionJd = jd;
 
+        while (conjunctionJd - jd < numDays) {
+
+        conjunctionJd = Transits.JdOfClosestInferiorConjunction(conjunctionJd, interpolated["Mercury"]);
         var Sun = Transits.Sun();
         var sunDataAtConjunction = Sun.getDataAsObjectForJD(conjunctionJd);
         var planetDataForJd = interpolated["Mercury"].getDataAsObjectForJD(conjunctionJd);
 
         var distanceBetweenPlanetAndSun = DistanceDFromEqCoordinates(sunDataAtConjunction.RA, sunDataAtConjunction.Dec,
             planetDataForJd.RA, planetDataForJd.Dec);
+
+            if (distanceBetweenPlanetAndSun < sunDataAtConjunction.Diameter * 0.5) {
+                s[conjunctionJd] = true;
+            }
+
+        conjunctionJd += interpolated["Mercury"].synodicPeriod;
+        }
 
         // find first conjunction. Check that planet distance to Earth is lower than 1 A.U.
         // for each conjunction, check that the angular distance is smaller than sun diameter
@@ -166,6 +177,7 @@ var SyncedTimeOut = setTimeout;
         // next conjunction? one synodic period later, more or less.
 
         document.getElementById("pre").textContent = JSON.stringify(s, null, 4);
+        
     }
 
     printTransits();
