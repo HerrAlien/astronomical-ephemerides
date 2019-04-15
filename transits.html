@@ -225,7 +225,8 @@ var SyncedTimeOut = setTimeout;
                     firstContact : firstContact,
                     ingress : ingress,
                     egress : egress,
-                    lastContact: lastContact};    
+                    lastContact: lastContact,
+                    greatestTransit : 0.25 * (firstContact.t + ingress.t + egress.t + lastContact.t)};    
                 }
            }
 
