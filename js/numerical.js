@@ -178,13 +178,13 @@ function ContactDetails (fixedObj, mobileObj, requiredDistance, conjunctonJd, in
     var fixedObjdDaysBetweenDataPoints = fixedObj.daysBetweenDataPoints;
     var mobileObjdDaysBetweenDataPoints = mobileObj.daysBetweenDataPoints;
 
-    var t = conjunctonJd + 0.5 * initialTimeStep;
+    var t = conjunctonJd + initialTimeStep;
     var timeStep = initialTimeStep;
     if (!timeAccuracy) {
         timeAccuracy = 1 / (24 * 3600);
     }
 
-    fixedObj.daysBetweenDataPoints = Math.abs(initialTimeStep);
+    fixedObj.daysBetweenDataPoints = Math.abs(2 * initialTimeStep);
     mobileObj.daysBetweenDataPoints = fixedObj.daysBetweenDataPoints;
 
     var fixedObjData = false;
