@@ -173,3 +173,50 @@ function PositionAngleDFromEqCoordinates (centerRah, centerDed, targetRah, targe
         PA += 360;
     return PA;
 }
+
+function ContactDetails (fixedObj, mobileObj, requiredDistance, conjunctonJd, initialTimeStep, timeAccuracy) {
+    var fixedObjdDaysBetweenDataPoints = fixedObj.daysBetweenDataPoints;
+    var mobileObjdDaysBetweenDataPoints = mobileObj.daysBetweenDataPoints;
+
+    var t = conjunctonJd + 0.5 * initialTimeStep;
+    var timeStep = initialTimeStep;
+    if (!timeAccuracy) {
+        timeAccuracy = 1 / (24 * 3600);
+    }
+
+    fixedObj.daysBetweenDataPoints = Math.abs(initialTimeStep);
+    mobileObj.daysBetweenDataPoints = fixedObj.daysBetweenDataPoints;
+
+    var fixedObjData = false;
+    var mobileObjData = false;
+
+    var d = 1;
+    var lastD = 0;
+
+    for (var i = 0; i < 100 && Math.abs(timeStep) > timeAccuracy && Math.abs(t - conjunctonJd) < 1; i++) {
+        fixedObjData = fixedObj.getDataAsObjectForJD (t, false, false, true);
+        mobileObjData = mobileObj.getDataAsObjectForJD (t, false, false, true);
+
+        var distanceFromCenter = DistanceDFromEqCoordinates (fixedObjData.RaTopo, fixedObjData.DecTopo, mobileObjData.RaTopo, mobileObjData.DecTopo);
+        d = distanceFromCenter - requiredDistance;
+        if (lastD * d < 0 || Math.abs(d) > Math.abs(lastD)) {
+            timeStep *= -0.5;
+        }
+        t += timeStep;
+        lastD = d;
+    }
+
+    fixedObj.daysBetweenDataPoints = fixedObjdDaysBetweenDataPoints;
+    mobileObj.daysBetweenDataPoints = mobileObjdDaysBetweenDataPoints;
+
+    if (Math.abs(t - conjunctonJd) >= 1) {
+        return false;
+    }
+
+    var fixedObjRa = fixedObjData.RaTopo ? fixedObjData.RaTopo : fixedObjData.RA;
+    var fixedObjDec = fixedObjData.DecTopo ? fixedObjData.DecTopo : fixedObjData.Dec;
+    var mobileObjRa =  mobileObjData.RaTopo ?  mobileObjData.RaTopo :  mobileObjData.RA;
+    var mobileObjDec = mobileObjData.DecTopo ? mobileObjData.DecTopo : mobileObjData.Dec;
+
+    return {t: t, PA: PositionAngleDFromEqCoordinates(fixedObjRa, fixedObjDec, mobileObjRa, mobileObjDec)};
+}

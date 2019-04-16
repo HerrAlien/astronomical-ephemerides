@@ -126,46 +126,6 @@ var SyncedTimeOut = setTimeout;
         }
     };
 
-    function ContactDetails (fixedObj, mobileObj, distance, conjunctonJd, initialTimeStep) {
-        var fixedObjdDaysBetweenDataPoints = fixedObj.daysBetweenDataPoints;
-        var mobileObjdDaysBetweenDataPoints = mobileObj.daysBetweenDataPoints;
-
-        var t = conjunctonJd + 0.5 * initialTimeStep;
-        var timeStep = initialTimeStep;
-
-        fixedObj.daysBetweenDataPoints = Math.abs(initialTimeStep);
-        mobileObj.daysBetweenDataPoints = fixedObj.daysBetweenDataPoints;
-
-        var fixedObjData = false;
-        var mobileObjData = false;
-
-        var d = 1;
-        var lastD = 0;
-
-        for (var i = 0; i < 100 && Math.abs(timeStep) > 1 / (24 * 3600) && Math.abs(t - conjunctonJd) < 1; i++) {
-            fixedObjData = fixedObj.getDataAsObjectForJD (t, false, false, true);
-            mobileObjData = mobileObj.getDataAsObjectForJD (t, false, false, true);
-
-            var distanceFromCenter = DistanceDFromEqCoordinates (fixedObjData.RaTopo, fixedObjData.DecTopo, mobileObjData.RaTopo, mobileObjData.DecTopo);
-            d = distanceFromCenter - distance;
-            if (lastD * d < 0 || Math.abs(d) > Math.abs(lastD)) {
-                timeStep *= -0.5;
-            }
-            t += timeStep;
-            lastD = d;
-        }
-
-        fixedObj.daysBetweenDataPoints = fixedObjdDaysBetweenDataPoints;
-        mobileObj.daysBetweenDataPoints = mobileObjdDaysBetweenDataPoints;
-
-        if (Math.abs(t - conjunctonJd) >= 1) {
-            return false;
-        }
-
-        return {t: t, PA: PositionAngleDFromEqCoordinates(fixedObjData.RaTopo, fixedObjData.DecTopo, mobileObjData.RaTopo, mobileObjData.DecTopo)};
-
-    }
-
     // 29 oct 2015, 22:30 UTC
     function printTransits() {
         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded())
@@ -190,47 +150,65 @@ var SyncedTimeOut = setTimeout;
         interpolated["Mercury"]['synodicPeriod'] = 0.317 * 365.25;
         interpolated["Venus"  ]['synodicPeriod'] = 1.599 * 365.25;
 
-        var conjunctionJd = jd;
+        for (var planetName in interpolated) {
+            var planetDataSource = interpolated[planetName];
 
-        while (conjunctionJd - jd < numDays) {
+            var conjunctionJd = jd;
+            while (conjunctionJd - jd < numDays) {
+                conjunctionJd = Transits.JdOfClosestInferiorConjunction(conjunctionJd, planetDataSource);
+                var Sun = Transits.Sun();
+                var sunDataAtConjunction = Sun.getDataAsObjectForJD(conjunctionJd);
+                var planetDataForJd = planetDataSource.getDataAsObjectForJD(conjunctionJd);
 
-        conjunctionJd = Transits.JdOfClosestInferiorConjunction(conjunctionJd, interpolated["Mercury"]);
-        var Sun = Transits.Sun();
-        var sunDataAtConjunction = Sun.getDataAsObjectForJD(conjunctionJd);
-        var planetDataForJd = interpolated["Mercury"].getDataAsObjectForJD(conjunctionJd);
+                var distanceBetweenPlanetAndSun = DistanceDFromEqCoordinates(sunDataAtConjunction.RA, sunDataAtConjunction.Dec,
+                    planetDataForJd.RA, planetDataForJd.Dec);
 
-        var distanceBetweenPlanetAndSun = DistanceDFromEqCoordinates(sunDataAtConjunction.RA, sunDataAtConjunction.Dec,
-            planetDataForJd.RA, planetDataForJd.Dec);
+                if (distanceBetweenPlanetAndSun < sunDataAtConjunction.Diameter * 0.5) {
+                    var accuracy = 1 / (24 * 240); // quarter of a minute
 
-            if (distanceBetweenPlanetAndSun < sunDataAtConjunction.Diameter * 0.5) {
+                    var C1 = ContactDetails (Sun, planetDataSource,
+                                                       (sunDataAtConjunction.Diameter + planetDataForJd.Diameter)/2,
+                                                       conjunctionJd, -6/24, accuracy);
+                    if (C1) {
+                        var C2 = ContactDetails (Sun, planetDataSource,
+                                                           (sunDataAtConjunction.Diameter - planetDataForJd.Diameter)/2,
+                                                           C1.t, 10/(60 * 24), accuracy);
+                        var C3 = ContactDetails (Sun, planetDataSource,
+                                                           (sunDataAtConjunction.Diameter - planetDataForJd.Diameter)/2,
+                                                           conjunctionJd, 6/24, accuracy);
+                        var C4 = ContactDetails (Sun, planetDataSource,
+                                                           (sunDataAtConjunction.Diameter + planetDataForJd.Diameter)/2,
+                                                           C3.t, 10/(60*24), accuracy);
 
-                var firstContact = ContactDetails (Sun, interpolated["Mercury"],
-                                                   (sunDataAtConjunction.Diameter + planetDataForJd.Diameter)/2,
-                                                   conjunctionJd, -6/24);
-                if (firstContact) {
+                        var tMax = 0.25 * (C1.t + C2.t + C3.t + C4.t);
+                        var oldSunDT = Sun.daysBetweenDataPoints;
+                        var oldPlanetDT = planetDataSource.daysBetweenDataPoints;
 
-                var ingress = ContactDetails (Sun, interpolated["Mercury"],
-                                                   (sunDataAtConjunction.Diameter - planetDataForJd.Diameter)/2,
-                                                   firstContact.t, 10/(60 * 24));
+                        planetDataSource.daysBetweenDataPoints = 1/24;
+                        Sun.daysBetweenDataPoints = 1/24;
 
-                 var egress = ContactDetails (Sun, interpolated["Mercury"],
-                                                   (sunDataAtConjunction.Diameter - planetDataForJd.Diameter)/2,
-                                                   conjunctionJd, 6/24);
+                        var sunDataAtMax = Sun.getDataAsObjectForJD(tMax, false, false, true);
+                        var planetDataAtMax = planetDataSource.getDataAsObjectForJD(tMax, false, false, true);
 
-                 var lastContact = ContactDetails (Sun, interpolated["Mercury"],
-                                                   (sunDataAtConjunction.Diameter + planetDataForJd.Diameter)/2,
-                                                   egress.t, 10/(60*24));
+                        planetDataSource.daysBetweenDataPoints = oldSunDT;
+                        Sun.daysBetweenDataPoints = oldPlanetDT;
 
-                    s[conjunctionJd] = {name: "Mercury",
-                    firstContact : firstContact,
-                    ingress : ingress,
-                    egress : egress,
-                    lastContact: lastContact,
-                    greatestTransit : 0.25 * (firstContact.t + ingress.t + egress.t + lastContact.t)};    
+                        var distAtTMaxD = DistanceDFromEqCoordinates (sunDataAtMax.RaTopo, sunDataAtMax.DecTopo, 
+                                                                      planetDataAtMax.RaTopo, planetDataAtMax.DecTopo);
+
+                        s[conjunctionJd] = {
+                            name: planetName,
+                            C1 : C1,
+                            C2 : C2,
+                            C3 : C3,
+                            C4: C4,
+                            tMax : tMax,
+                            distAtTMaxD : distAtTMaxD
+                        };    
+                    }
                 }
-           }
-
-        conjunctionJd += interpolated["Mercury"].synodicPeriod;
+                conjunctionJd += planetDataSource.synodicPeriod;
+            }
         }
 
         // find first conjunction. Check that planet distance to Earth is lower than 1 A.U.
