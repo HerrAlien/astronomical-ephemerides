@@ -198,8 +198,8 @@ function ContactDetails (fixedObj, mobileObj, requiredDistance, conjunctonJd, in
         mobileObjData = mobileObj.getDataAsObjectForJD (t, false, false, true);
 
         var distanceFromCenter = DistanceDFromEqCoordinates (fixedObjData.RaTopo, fixedObjData.DecTopo, mobileObjData.RaTopo, mobileObjData.DecTopo);
-        d = distanceFromCenter - requiredDistance;
-        if (lastD * d < 0 || Math.abs(d) > Math.abs(lastD)) {
+        d = Math.abs(distanceFromCenter - requiredDistance);
+        if (d > lastD) {
             timeStep *= -0.5;
         }
         t += timeStep;

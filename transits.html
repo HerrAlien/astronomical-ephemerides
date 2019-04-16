@@ -132,7 +132,7 @@ var SyncedTimeOut = setTimeout;
                 return setTimeout (printTransits, 100);
 
         var jd = AAJS.Date.DateToJD (2019, 1, 1, true);
-        var numDays = 365;
+        var numDays = 9000;
 
 
         var s = {};
@@ -150,10 +150,11 @@ var SyncedTimeOut = setTimeout;
         interpolated["Mercury"]['synodicPeriod'] = 0.317 * 365.25;
         interpolated["Venus"  ]['synodicPeriod'] = 1.599 * 365.25;
 
+        var conjunctionJd = 0;
         for (var planetName in interpolated) {
             var planetDataSource = interpolated[planetName];
-
-            var conjunctionJd = jd;
+            
+            conjunctionJd = jd;
             while (conjunctionJd - jd < numDays) {
                 conjunctionJd = Transits.JdOfClosestInferiorConjunction(conjunctionJd, planetDataSource);
                 var Sun = Transits.Sun();
@@ -163,22 +164,22 @@ var SyncedTimeOut = setTimeout;
                 var distanceBetweenPlanetAndSun = DistanceDFromEqCoordinates(sunDataAtConjunction.RA, sunDataAtConjunction.Dec,
                     planetDataForJd.RA, planetDataForJd.Dec);
 
-                if (distanceBetweenPlanetAndSun < sunDataAtConjunction.Diameter * 0.5) {
-                    var accuracy = 1 / (24 * 240); // quarter of a minute
+                if (distanceBetweenPlanetAndSun < sunDataAtConjunction.Diameter * 0.75) {
+                    var accuracy = 1 / (24 * 3600); // quarter of a minute
 
                     var C1 = ContactDetails (Sun, planetDataSource,
                                                        (sunDataAtConjunction.Diameter + planetDataForJd.Diameter)/2,
-                                                       conjunctionJd, -6/24, accuracy);
+                                                       conjunctionJd, -4/24, accuracy);
                     if (C1) {
                         var C2 = ContactDetails (Sun, planetDataSource,
                                                            (sunDataAtConjunction.Diameter - planetDataForJd.Diameter)/2,
-                                                           C1.t, 10/(60 * 24), accuracy);
+                                                           C1.t, 20/(60 * 24), accuracy);
                         var C3 = ContactDetails (Sun, planetDataSource,
                                                            (sunDataAtConjunction.Diameter - planetDataForJd.Diameter)/2,
-                                                           conjunctionJd, 6/24, accuracy);
+                                                           conjunctionJd, 4/24, accuracy);
                         var C4 = ContactDetails (Sun, planetDataSource,
                                                            (sunDataAtConjunction.Diameter + planetDataForJd.Diameter)/2,
-                                                           C3.t, 10/(60*24), accuracy);
+                                                           C3.t, 20/(60*24), accuracy);
 
                         var tMax = 0.25 * (C1.t + C2.t + C3.t + C4.t);
                         var oldSunDT = Sun.daysBetweenDataPoints;
