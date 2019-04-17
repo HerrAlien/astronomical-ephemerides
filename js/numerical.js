@@ -174,7 +174,7 @@ function PositionAngleDFromEqCoordinates (centerRah, centerDed, targetRah, targe
     return PA;
 }
 
-function ContactDetails (fixedObj, mobileObj, requiredDistance, conjunctonJd, initialTimeStep, timeAccuracy) {
+function ContactDetails (fixedObj, mobileObj, target, conjunctonJd, initialTimeStep, timeAccuracy) {
     var fixedObjdDaysBetweenDataPoints = fixedObj.daysBetweenDataPoints;
     var mobileObjdDaysBetweenDataPoints = mobileObj.daysBetweenDataPoints;
 
@@ -187,23 +187,27 @@ function ContactDetails (fixedObj, mobileObj, requiredDistance, conjunctonJd, in
     fixedObj.daysBetweenDataPoints = Math.abs(2 * initialTimeStep);
     mobileObj.daysBetweenDataPoints = fixedObj.daysBetweenDataPoints;
 
-    var fixedObjData = false;
-    var mobileObjData = false;
+    var lastT = t - 0.5/24;
 
-    var d = 1;
-    var lastD = 0;
+    var fixedObjData = fixedObj.getDataAsObjectForJD (lastT, false, false, true);
+    var mobileObjData = mobileObj.getDataAsObjectForJD (lastT, false, false, true);
 
-    for (var i = 0; i < 100 && Math.abs(timeStep) > timeAccuracy && Math.abs(t - conjunctonJd) < 1; i++) {
+    var lastDistanceFromCenter = DistanceDFromEqCoordinates (fixedObjData.RaTopo, fixedObjData.DecTopo, 
+                                                            mobileObjData.RaTopo, mobileObjData.DecTopo);
+
+
+    for (var i = 0; i < 100 && Math.abs(lastT - t) > timeAccuracy && Math.abs(t - conjunctonJd) < 1; i++) {
+        
         fixedObjData = fixedObj.getDataAsObjectForJD (t, false, false, true);
         mobileObjData = mobileObj.getDataAsObjectForJD (t, false, false, true);
 
-        var distanceFromCenter = DistanceDFromEqCoordinates (fixedObjData.RaTopo, fixedObjData.DecTopo, mobileObjData.RaTopo, mobileObjData.DecTopo);
-        d = Math.abs(distanceFromCenter - requiredDistance);
-        if (d > lastD) {
-            timeStep *= -0.5;
-        }
-        t += timeStep;
-        lastD = d;
+        var distanceFromCenter = DistanceDFromEqCoordinates (fixedObjData.RaTopo, fixedObjData.DecTopo, 
+                                                            mobileObjData.RaTopo, mobileObjData.DecTopo);
+        var derivative = (distanceFromCenter - lastDistanceFromCenter) / (t - lastT);
+
+        lastT = t;
+        lastDistanceFromCenter = distanceFromCenter;
+        t -= (distanceFromCenter - target) / derivative;
     }
 
     fixedObj.daysBetweenDataPoints = fixedObjdDaysBetweenDataPoints;
