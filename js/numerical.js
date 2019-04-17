@@ -174,11 +174,11 @@ function PositionAngleDFromEqCoordinates (centerRah, centerDed, targetRah, targe
     return PA;
 }
 
-function ContactDetails (fixedObj, mobileObj, target, conjunctonJd, initialTimeStep, timeAccuracy) {
+function ContactDetails (fixedObj, mobileObj, targetDistance, initialTime, initialTimeStep, timeAccuracy) {
     var fixedObjdDaysBetweenDataPoints = fixedObj.daysBetweenDataPoints;
     var mobileObjdDaysBetweenDataPoints = mobileObj.daysBetweenDataPoints;
 
-    var t = conjunctonJd + initialTimeStep;
+    var t = initialTime + initialTimeStep;
     var timeStep = initialTimeStep;
     if (!timeAccuracy) {
         timeAccuracy = 1 / (24 * 3600);
@@ -196,7 +196,7 @@ function ContactDetails (fixedObj, mobileObj, target, conjunctonJd, initialTimeS
                                                             mobileObjData.RaTopo, mobileObjData.DecTopo);
 
 
-    for (var i = 0; i < 100 && Math.abs(lastT - t) > timeAccuracy && Math.abs(t - conjunctonJd) < 1; i++) {
+    for (var i = 0; i < 100 && Math.abs(lastT - t) > timeAccuracy && Math.abs(t - initialTime) < 1; i++) {
         
         fixedObjData = fixedObj.getDataAsObjectForJD (t, false, false, true);
         mobileObjData = mobileObj.getDataAsObjectForJD (t, false, false, true);
@@ -207,13 +207,13 @@ function ContactDetails (fixedObj, mobileObj, target, conjunctonJd, initialTimeS
 
         lastT = t;
         lastDistanceFromCenter = distanceFromCenter;
-        t -= (distanceFromCenter - target) / derivative;
+        t -= (distanceFromCenter - targetDistance) / derivative;
     }
 
     fixedObj.daysBetweenDataPoints = fixedObjdDaysBetweenDataPoints;
     mobileObj.daysBetweenDataPoints = mobileObjdDaysBetweenDataPoints;
 
-    if (Math.abs(t - conjunctonJd) >= 1) {
+    if (Math.abs(t - initialTime) >= 1) {
         return false;
     }
 
