@@ -38,6 +38,11 @@ var OccultationsData = {
                     return interpolatedData;
                 };
 
+                this.getDataAsObjectForJD = function (_JD, riseSet, physical, topo) {
+                    var interpolatedData = interpolatedDataSource.getDataAsObjectForJD(_JD, riseSet, physical, topo);
+                    return interpolatedData;
+                };
+
                 this.getRa = function (_JD) {
                     var interpolatedData = this.getInterpolatedData(_JD);
                     return interpolatedData.RA;
@@ -78,8 +83,8 @@ var OccultationsData = {
         var planetsCloseToMoon = [];
 
         var allPlanets = OccultationsData.getWrappedPlanets();
-        var raEps = 1 / 15;
-        var decEps = 1;
+        var raEps = 1 / 30;
+        var decEps = 0.5;
 
         for (var i = 0; i < allPlanets.length; i++) {
             allPlanets[i].timeInterval = 5; // reset for low precision high speed
@@ -250,7 +255,7 @@ var OccultationsData = {
             var dist = Math.acos(sind(conjunctionDec) * Math.sin(starDecR) +
                                  cosd(conjunctionDec) * Math.cos(starDecR));
             dist *= 180 / Math.PI;
-            if (dist < conjunctionDiameter * 0.75) {
+            if (dist < conjunctionDiameter * 0.55) {
                 var key = Math.round(conjunctionJde * 1e6) / 1e6;
 
                 if (!occultedObjects[key]) {
@@ -287,25 +292,11 @@ var OccultationsData = {
             star.setInterpolationInterval(fraction);
         }
 
-        var dataForT = false;
-        for (var i = 0; i < 100 && Math.abs(d) > epsD && Math.abs(t - jde) < 0.25; i++) {
-            dataForT = moonData.getDataAsObjectForJD(t);
-            var distanceFromCenter = this.distance(dataForT, star, t);
-            var moonRadius = dataForT.DiameterTopo / 2;
-            d = distanceFromCenter - moonRadius;
-            if (lastD * d < 0) {
-                timeStep *= -0.5;
-            }
-            t += timeStep;
-            lastD = d;
-        }
+        var moonDataAtConjunction = moonData.getDataAsObjectForJD(t, false, false, true);
 
-        if (Math.abs(t - jde) >= 0.25)
-            return false;
+        return ContactDetails (moonData, star, 0.5 * moonDataAtConjunction.DiameterTopo, 
+                               t, timeStep, 1/(24 * 3600)); 
 
-        var PA = PositionAngleDFromEqCoordinates (dataForT.RaTopo, dataForT.DecTopo, star.getRa(t), star.getDec(t));
-
-        return { t: t, PA: PA };
     },
 
     getOccultedStars: function (startJDE, numberOfDays) {

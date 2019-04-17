@@ -125,12 +125,12 @@ Reappearance (R)	23:41	339
                 }
                 if (!testlib.doubleEq(Number(this.expectedOutput[expectedConjunctionJD].start.PA), 
                                           Number(this.actualOutput[actualConjunctionJD].start.PA), 
-                                      0.05)) {
+                                      0.1)) {
                     return false;
                 }
                 if (!testlib.doubleEq(Number(this.expectedOutput[expectedConjunctionJD].end.PA), 
                                           Number(this.actualOutput[actualConjunctionJD].end.PA), 
-                                      0.05)) {
+                                      0.1)) {
                     return false;
                 }
                 return true;
@@ -176,7 +176,7 @@ Reappearance (R)	08:52	319*/
 
                 var errMsg = "";
 
-                var eps = {"PA" : 1e-3, "t" : 1e-6};
+                var eps = {"PA" : 2e-3, "t" : 1e-6};
 
                 for (var moment in this.expectedOutput) {
                     var momentData = this.expectedOutput[moment];

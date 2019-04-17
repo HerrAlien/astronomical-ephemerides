@@ -213,7 +213,7 @@ function ContactDetails (fixedObj, mobileObj, targetDistance, initialTime, initi
     fixedObj.daysBetweenDataPoints = fixedObjdDaysBetweenDataPoints;
     mobileObj.daysBetweenDataPoints = mobileObjdDaysBetweenDataPoints;
 
-    if (Math.abs(t - initialTime) >= 1) {
+    if (Math.abs(t - initialTime) >= 1 || i == 100) {
         return false;
     }
 
