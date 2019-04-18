@@ -38,6 +38,11 @@ var OccultationsData = {
                     return interpolatedData;
                 };
 
+                this.getDataAsObjectForJD = function (_JD, riseSet, physical, topo) {
+                    var interpolatedData = interpolatedDataSource.getDataAsObjectForJD(_JD, riseSet, physical, topo);
+                    return interpolatedData;
+                };
+
                 this.getRa = function (_JD) {
                     var interpolatedData = this.getInterpolatedData(_JD);
                     return interpolatedData.RA;
@@ -78,11 +83,11 @@ var OccultationsData = {
         var planetsCloseToMoon = [];
 
         var allPlanets = OccultationsData.getWrappedPlanets();
-        var raEps = 1 / 15;
-        var decEps = 1;
+        var raEps = 2 / 15;
+        var decEps = 2;
 
         for (var i = 0; i < allPlanets.length; i++) {
-            allPlanets[i].timeInterval = 5; // reset for low precision high speed
+            allPlanets[i].setInterpolationInterval(5); // reset for low precision high speed
             var planetData = allPlanets[i].getInterpolatedData(jde);
             if (Math.abs(planetData.Dec - dec) < decEps &&
                 Math.abs(planetData.RA - ra) < raEps) {
@@ -250,7 +255,7 @@ var OccultationsData = {
             var dist = Math.acos(sind(conjunctionDec) * Math.sin(starDecR) +
                                  cosd(conjunctionDec) * Math.cos(starDecR));
             dist *= 180 / Math.PI;
-            if (dist < conjunctionDiameter * 0.75) {
+            if (dist < conjunctionDiameter * 0.6) {
                 var key = Math.round(conjunctionJde * 1e6) / 1e6;
 
                 if (!occultedObjects[key]) {
@@ -262,17 +267,7 @@ var OccultationsData = {
     },
 
     distance: function (dataForJd, star, t) {
-        var degra = Math.PI / 180;
-        var moonDecRad = dataForJd.DecTopo * degra;
-        var moonRaRad = dataForJd.RaTopo * 15 * degra;
-
-        var starDecRad = star.getDec(t) * degra;
-        var starRaRad = star.getRa(t) * 15 * degra;
-
-        var dist = Math.acos(Math.sin(moonDecRad) * Math.sin(starDecRad) +
-                   Math.cos(moonDecRad) * Math.cos(starDecRad) * Math.cos(moonRaRad - starRaRad));
-        dist *= 180 / Math.PI;
-        return dist;
+        return DistanceDFromEqCoordinates (dataForJd.RaTopo, dataForJd.DecTopo, star.getRa(t), star.getDec(t));
     },
 
     getStartOrEndContact: function (star, jde, isForStart) {
@@ -286,7 +281,6 @@ var OccultationsData = {
         } else {
             t += fraction;
         }
-        var timeStep = (jde - t) / 2;
 
         var moonData = OccultationsData.getMoonData();
         moonData.daysBetweenDataPoints = fraction;
@@ -297,37 +291,11 @@ var OccultationsData = {
             star.setInterpolationInterval(fraction);
         }
 
-        var dataForT = false;
-        for (var i = 0; i < 100 && Math.abs(d) > epsD && Math.abs(t - jde) < 0.25; i++) {
-            dataForT = moonData.getDataAsObjectForJD(t);
-            var distanceFromCenter = this.distance(dataForT, star, t);
-            var moonRadius = dataForT.DiameterTopo / 2;
-            d = distanceFromCenter - moonRadius;
-            if (lastD * d < 0) {
-                timeStep *= -0.5;
-            }
-            t += timeStep;
-            lastD = d;
-        }
+        var moonDataAtConjunction = moonData.getDataAsObjectForJD(t, false, false, true);
 
-        if (Math.abs(t - jde) >= 0.25)
-            return false;
+        return ContactDetails (moonData, star, 0.5 * moonDataAtConjunction.DiameterTopo, 
+                               t, 1/(24 * 3600)); 
 
-        var degra = Math.PI / 180;
-        var dRaDeg = 15 * (star.getRa(t) - dataForT.RaTopo);
-        if (dRaDeg > 180) {
-            dRaDeg -= 360;
-        } else if (dRaDeg < -180) {
-            dRaDeg += 360;
-        }
-
-        var dx = Math.cos(dataForT.DecTopo * degra) * Math.tan(star.getDec(t) * degra) - Math.sin(dataForT.DecTopo * degra) * Math.cos(dRaDeg * degra)
-        var dy = Math.sin(dRaDeg * degra);
-        var PA = Math.atan2(dy, dx) / degra;
-        if (PA < 0)
-            PA += 360;
-
-        return { t: t, PA: PA };
     },
 
     getOccultedStars: function (startJDE, numberOfDays) {

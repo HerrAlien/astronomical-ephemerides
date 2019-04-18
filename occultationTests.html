@@ -43,6 +43,7 @@
 <script src="js/neptune.js"></script>
 <script type="text/javascript" src="js/sun.js"></script>
 <script type="text/JavaScript" src="js/interpolated_data.js"></script>
+<script type="text/JavaScript" src="js/numerical.js"></script>
 <script type="text/javascript" src="testlib.js"></script>
 
         <style>
@@ -101,12 +102,38 @@ Reappearance (R)	23:41	339
 
             test : function () {
                 this.actualOutput = OccultationsData.getOccultedStars(this.input, 1);
-                 var identical = JSON.stringify(this.actualOutput) == JSON.stringify(this.expectedOutput);
+                var identical = JSON.stringify(this.actualOutput) == JSON.stringify(this.expectedOutput);
                 if (identical) {
                     return true;
                 }
-                
-                
+                var expectedConjunctionJD;
+                var actualConjunctionJD;
+                for (expectedConjunctionJD in this.expectedOutput);
+                for (actualConjunctionJD in this.actualOutput);
+                if (!testlib.doubleEq(Number(expectedConjunctionJD), Number(actualConjunctionJD), 0.5 / (24 * 60))) {
+                    return false;
+                }
+                if (!testlib.doubleEq(Number(this.expectedOutput[expectedConjunctionJD].start.t), 
+                                          Number(this.actualOutput[actualConjunctionJD].start.t), 
+                                      0.25 / (24 * 60))) {
+                    return false;
+                }
+                if (!testlib.doubleEq(Number(this.expectedOutput[expectedConjunctionJD].end.t), 
+                                          Number(this.actualOutput[actualConjunctionJD].end.t), 
+                                      0.25 / (24 * 60))) {
+                    return false;
+                }
+                if (!testlib.doubleEq(Number(this.expectedOutput[expectedConjunctionJD].start.PA), 
+                                          Number(this.actualOutput[actualConjunctionJD].start.PA), 
+                                      0.25)) {
+                    return false;
+                }
+                if (!testlib.doubleEq(Number(this.expectedOutput[expectedConjunctionJD].end.PA), 
+                                          Number(this.actualOutput[actualConjunctionJD].end.PA), 
+                                      0.25)) {
+                    return false;
+                }
+                return true;
             }
         },
 
@@ -149,7 +176,7 @@ Reappearance (R)	08:52	319*/
 
                 var errMsg = "";
 
-                var eps = {"PA" : 1e-3, "t" : 1e-6};
+                var eps = {"PA" : 3e-3, "t" : 1e-6};
 
                 for (var moment in this.expectedOutput) {
                     var momentData = this.expectedOutput[moment];
