@@ -83,11 +83,11 @@ var OccultationsData = {
         var planetsCloseToMoon = [];
 
         var allPlanets = OccultationsData.getWrappedPlanets();
-        var raEps = 1 / 30;
-        var decEps = 0.5;
+        var raEps = 2 / 15;
+        var decEps = 2;
 
         for (var i = 0; i < allPlanets.length; i++) {
-            allPlanets[i].timeInterval = 5; // reset for low precision high speed
+            allPlanets[i].setInterpolationInterval(5); // reset for low precision high speed
             var planetData = allPlanets[i].getInterpolatedData(jde);
             if (Math.abs(planetData.Dec - dec) < decEps &&
                 Math.abs(planetData.RA - ra) < raEps) {
@@ -255,7 +255,7 @@ var OccultationsData = {
             var dist = Math.acos(sind(conjunctionDec) * Math.sin(starDecR) +
                                  cosd(conjunctionDec) * Math.cos(starDecR));
             dist *= 180 / Math.PI;
-            if (dist < conjunctionDiameter * 0.55) {
+            if (dist < conjunctionDiameter * 0.6) {
                 var key = Math.round(conjunctionJde * 1e6) / 1e6;
 
                 if (!occultedObjects[key]) {
