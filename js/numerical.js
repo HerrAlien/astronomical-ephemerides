@@ -174,18 +174,12 @@ function PositionAngleDFromEqCoordinates (centerRah, centerDed, targetRah, targe
     return PA;
 }
 
-function ContactDetails (fixedObj, mobileObj, targetDistance, initialTime, initialTimeStep, timeAccuracy) {
-    var fixedObjdDaysBetweenDataPoints = fixedObj.daysBetweenDataPoints;
-    var mobileObjdDaysBetweenDataPoints = mobileObj.daysBetweenDataPoints;
+function ContactDetails (fixedObj, mobileObj, targetDistance, initialTime, timeAccuracy) {
 
-    var t = initialTime + initialTimeStep;
-    var timeStep = initialTimeStep;
+    var t = initialTime;
     if (!timeAccuracy) {
         timeAccuracy = 1 / (24 * 3600);
     }
-
-    fixedObj.daysBetweenDataPoints = Math.abs(2 * initialTimeStep);
-    mobileObj.daysBetweenDataPoints = fixedObj.daysBetweenDataPoints;
 
     var lastT = t - 0.5/24;
 
@@ -209,9 +203,6 @@ function ContactDetails (fixedObj, mobileObj, targetDistance, initialTime, initi
         lastDistanceFromCenter = distanceFromCenter;
         t -= (distanceFromCenter - targetDistance) / derivative;
     }
-
-    fixedObj.daysBetweenDataPoints = fixedObjdDaysBetweenDataPoints;
-    mobileObj.daysBetweenDataPoints = mobileObjdDaysBetweenDataPoints;
 
     if (Math.abs(t - initialTime) >= 1 || i == 100) {
         return false;

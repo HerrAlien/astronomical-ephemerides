@@ -132,7 +132,7 @@ var SyncedTimeOut = setTimeout;
                 return setTimeout (printTransits, 100);
 
         var jd = AAJS.Date.DateToJD (2019, 1, 1, true);
-        var numDays = 9000;
+        var numDays = 365;
 
 
         var s = {};
@@ -165,28 +165,29 @@ var SyncedTimeOut = setTimeout;
                     planetDataForJd.RA, planetDataForJd.Dec);
 
                 if (distanceBetweenPlanetAndSun < sunDataAtConjunction.Diameter * 0.75) {
+                    var oldSunDT = Sun.daysBetweenDataPoints;
+                    var oldPlanetDT = planetDataSource.daysBetweenDataPoints;
+
+                    planetDataSource.daysBetweenDataPoints = 1/24;
+                    Sun.daysBetweenDataPoints = 1/24;
+
                     var accuracy = 1 / (24 * 3600); // quarter of a minute
 
                     var C1 = ContactDetails (Sun, planetDataSource,
                                                        (sunDataAtConjunction.Diameter + planetDataForJd.Diameter)/2,
-                                                       conjunctionJd, -4/24, accuracy);
+                                                       conjunctionJd -4/24, accuracy);
                     if (C1) {
                         var C2 = ContactDetails (Sun, planetDataSource,
                                                            (sunDataAtConjunction.Diameter - planetDataForJd.Diameter)/2,
-                                                           C1.t, 20/(60 * 24), accuracy);
+                                                           C1.t + 20/(60 * 24), accuracy);
                         var C3 = ContactDetails (Sun, planetDataSource,
                                                            (sunDataAtConjunction.Diameter - planetDataForJd.Diameter)/2,
-                                                           conjunctionJd, 4/24, accuracy);
+                                                           conjunctionJd + 4/24, accuracy);
                         var C4 = ContactDetails (Sun, planetDataSource,
                                                            (sunDataAtConjunction.Diameter + planetDataForJd.Diameter)/2,
-                                                           C3.t, 20/(60*24), accuracy);
+                                                           C3.t - 20/(60*24), accuracy);
 
                         var tMax = 0.25 * (C1.t + C2.t + C3.t + C4.t);
-                        var oldSunDT = Sun.daysBetweenDataPoints;
-                        var oldPlanetDT = planetDataSource.daysBetweenDataPoints;
-
-                        planetDataSource.daysBetweenDataPoints = 1/24;
-                        Sun.daysBetweenDataPoints = 1/24;
 
                         var sunDataAtMax = Sun.getDataAsObjectForJD(tMax, false, false, true);
                         var planetDataAtMax = planetDataSource.getDataAsObjectForJD(tMax, false, false, true);

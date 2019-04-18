@@ -115,22 +115,22 @@ Reappearance (R)	23:41	339
                 }
                 if (!testlib.doubleEq(Number(this.expectedOutput[expectedConjunctionJD].start.t), 
                                           Number(this.actualOutput[actualConjunctionJD].start.t), 
-                                      0.1 / (24 * 60))) {
+                                      0.25 / (24 * 60))) {
                     return false;
                 }
                 if (!testlib.doubleEq(Number(this.expectedOutput[expectedConjunctionJD].end.t), 
                                           Number(this.actualOutput[actualConjunctionJD].end.t), 
-                                      0.1 / (24 * 60))) {
+                                      0.25 / (24 * 60))) {
                     return false;
                 }
                 if (!testlib.doubleEq(Number(this.expectedOutput[expectedConjunctionJD].start.PA), 
                                           Number(this.actualOutput[actualConjunctionJD].start.PA), 
-                                      0.1)) {
+                                      0.25)) {
                     return false;
                 }
                 if (!testlib.doubleEq(Number(this.expectedOutput[expectedConjunctionJD].end.PA), 
                                           Number(this.actualOutput[actualConjunctionJD].end.PA), 
-                                      0.1)) {
+                                      0.25)) {
                     return false;
                 }
                 return true;
@@ -176,7 +176,7 @@ Reappearance (R)	08:52	319*/
 
                 var errMsg = "";
 
-                var eps = {"PA" : 2e-3, "t" : 1e-6};
+                var eps = {"PA" : 3e-3, "t" : 1e-6};
 
                 for (var moment in this.expectedOutput) {
                     var momentData = this.expectedOutput[moment];

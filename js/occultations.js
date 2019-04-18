@@ -281,7 +281,6 @@ var OccultationsData = {
         } else {
             t += fraction;
         }
-        var timeStep = (jde - t) / 2;
 
         var moonData = OccultationsData.getMoonData();
         moonData.daysBetweenDataPoints = fraction;
@@ -295,7 +294,7 @@ var OccultationsData = {
         var moonDataAtConjunction = moonData.getDataAsObjectForJD(t, false, false, true);
 
         return ContactDetails (moonData, star, 0.5 * moonDataAtConjunction.DiameterTopo, 
-                               t, timeStep, 1/(24 * 3600)); 
+                               t, 1/(24 * 3600)); 
 
     },
 
