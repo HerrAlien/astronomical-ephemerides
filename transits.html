@@ -52,64 +52,13 @@ var SyncedTimeOut = setTimeout;
 <script type="text/javascript" src="js/sun.js"></script>
 <script type="text/JavaScript" src="js/interpolated_data.js"></script>
 <script type="text/JavaScript" src="js/numerical.js"></script>
+<script type="text/JavaScript" src="js/transits.js"></script>
 
 <script>
 
 
 (function() {
 
-    var Transits = {
-        ____Sun : false,
-
-        Sun : function() {
-            if (!Transits.____Sun) {
-                Transits.____Sun = InterpolatedData.Sun();
-            }
-            return Transits.____Sun;
-        },
-
-        JdOfClosestInferiorConjunction : function (startJd, inferiorPlanet) {
-
-            var planetDataForJd = false;
-
-            var computeConjunction = function(jd) {
-                var Sun = Transits.Sun();
-                var conjunctionJd = jd;
-                var lastConjunctionJd = 0;
-
-                for (var i = 0; i < 100 && Math.abs(lastConjunctionJd - conjunctionJd) > 1/(24 * 3600); i++) {
-
-                    lastConjunctionJd = conjunctionJd;
-
-                    var sunDataForJd       = Sun.getDataAsObjectForJD(conjunctionJd);
-                    var sunDataForBeforeJd = Sun.getDataAsObjectForJD(conjunctionJd - 1);
-                    planetDataForJd       = inferiorPlanet.getDataAsObjectForJD(conjunctionJd);
-                    var planetDataForBeforeJd = inferiorPlanet.getDataAsObjectForJD(conjunctionJd - 1);
-
-                    var dRaSun = sunDataForJd.RA - sunDataForBeforeJd.RA;
-                    var dRaPlanet = planetDataForJd.RA - planetDataForBeforeJd.RA;
-                    var dRaSunPlanet = sunDataForJd.RA - planetDataForJd.RA;
-                    if (dRaSunPlanet > 12)
-                        dRaSunPlanet -= 24;
-                    else if (dRaSunPlanet < -12)
-                        dRaSunPlanet += 24;
-
-                    var tUntilConjunction = dRaSunPlanet / (dRaSun - dRaPlanet);
-
-                    conjunctionJd -= tUntilConjunction;
-                }
-
-                return conjunctionJd;
-            }
-            var inferiorConjunctionJd = computeConjunction (startJd);
-
-            if (planetDataForJd.DistanceToEarth > 1) {
-                inferiorConjunctionJd = computeConjunction (inferiorConjunctionJd + 0.5 * inferiorPlanet.synodicPeriod);
-            }
-            
-            return inferiorConjunctionJd;
-        }
-    };
 
     // 29 oct 2015, 22:30 UTC
     function printTransits() {
@@ -120,83 +69,7 @@ var SyncedTimeOut = setTimeout;
         var numDays = 365;
 
 
-        var s = {};
-
-        var interpolated = {
-            "Mercury" : false,
-            "Venus" : false
-        };
-
-        for (var key in interpolated) {
-            interpolated[key] = InterpolatedData[key]();
-            interpolated[key].daysBetweenDataPoints = 5;
-        }
-
-        interpolated["Mercury"]['synodicPeriod'] = 0.317 * 365.25;
-        interpolated["Venus"  ]['synodicPeriod'] = 1.599 * 365.25;
-
-        var conjunctionJd = 0;
-        for (var planetName in interpolated) {
-            var planetDataSource = interpolated[planetName];
-            
-            conjunctionJd = jd;
-            while (conjunctionJd - jd < numDays) {
-                conjunctionJd = Transits.JdOfClosestInferiorConjunction(conjunctionJd, planetDataSource);
-                var Sun = Transits.Sun();
-                var sunDataAtConjunction = Sun.getDataAsObjectForJD(conjunctionJd);
-                var planetDataForJd = planetDataSource.getDataAsObjectForJD(conjunctionJd);
-
-                var distanceBetweenPlanetAndSun = DistanceDFromEqCoordinates(sunDataAtConjunction.RA, sunDataAtConjunction.Dec,
-                    planetDataForJd.RA, planetDataForJd.Dec);
-
-                if (distanceBetweenPlanetAndSun < sunDataAtConjunction.Diameter * 0.75) {
-                    var oldSunDT = Sun.daysBetweenDataPoints;
-                    var oldPlanetDT = planetDataSource.daysBetweenDataPoints;
-
-                    planetDataSource.daysBetweenDataPoints = 1/24;
-                    Sun.daysBetweenDataPoints = 1/24;
-
-                    var accuracy = 1 / (24 * 3600); // quarter of a minute
-
-                    var C1 = ContactDetails (Sun, planetDataSource,
-                                                       (sunDataAtConjunction.Diameter + planetDataForJd.Diameter)/2,
-                                                       conjunctionJd -4/24, accuracy);
-                    if (C1) {
-                        var C2 = ContactDetails (Sun, planetDataSource,
-                                                           (sunDataAtConjunction.Diameter - planetDataForJd.Diameter)/2,
-                                                           C1.t + 20/(60 * 24), accuracy);
-                        var C3 = ContactDetails (Sun, planetDataSource,
-                                                           (sunDataAtConjunction.Diameter - planetDataForJd.Diameter)/2,
-                                                           conjunctionJd + 4/24, accuracy);
-                        var C4 = ContactDetails (Sun, planetDataSource,
-                                                           (sunDataAtConjunction.Diameter + planetDataForJd.Diameter)/2,
-                                                           C3.t - 20/(60*24), accuracy);
-
-                        var tMax = 0.25 * (C1.t + C2.t + C3.t + C4.t);
-
-                        var sunDataAtMax = Sun.getDataAsObjectForJD(tMax, false, false, true);
-                        var planetDataAtMax = planetDataSource.getDataAsObjectForJD(tMax, false, false, true);
-
-                        planetDataSource.daysBetweenDataPoints = oldSunDT;
-                        Sun.daysBetweenDataPoints = oldPlanetDT;
-
-                        var distAtTMaxD = DistanceDFromEqCoordinates (sunDataAtMax.RaTopo, sunDataAtMax.DecTopo, 
-                                                                      planetDataAtMax.RaTopo, planetDataAtMax.DecTopo);
-
-                        s[conjunctionJd] = {
-                            name: planetName,
-                            C1 : C1,
-                            C2 : C2,
-                            C3 : C3,
-                            C4: C4,
-                            tMax : tMax,
-                            distAtTMaxD : distAtTMaxD
-                        };    
-                    }
-                }
-                conjunctionJd += planetDataSource.synodicPeriod;
-            }
-        }
+        var s = Transits.get(jd, numDays);
 
         // find first conjunction. Check that planet distance to Earth is lower than 1 A.U.
         // for each conjunction, check that the angular distance is smaller than sun diameter
