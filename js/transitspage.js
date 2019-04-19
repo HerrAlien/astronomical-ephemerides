@@ -46,7 +46,7 @@ var TransitsPage = {
             return;
 
         TransitsPage.reset();
-        TransitsPage.occultationRendered = {};
+        TransitsPage.transitRendered = {};
         MoonData.reset(); //????
         var endJD = startJD + numberOfDays;
 
@@ -90,7 +90,7 @@ var TransitsPage = {
 
     getId: function (event) {
         return "transit " + Math.round(event.C1.t) +
-                + " " + TransitsPage.getStarName(event);
+                + " " + TransitsPage.getPlanetName(event);
     },
 
     draw: function (event, host) {
@@ -104,10 +104,9 @@ var TransitsPage = {
         div.classList.add("individualEventSection");
         div.classList.add("occultation");
         div["id"] = TransitsPage.getId(event);
-        var occultationTitle = TransitsPage.getOccultationTitle(event);
+        var occultationTitle = TransitsPage.getTitle(event);
 
         var h2 = addNodeChild(div, "h2", occultationTitle);
-        addNodeChild(div, "span", "Magnitude of occulted object: " + event.star.Vmag);
 
         var table = addNodeChild(div, "table");
         var header = addNodeChild(table, "tr");
@@ -115,17 +114,35 @@ var TransitsPage = {
         addNodeChild(header, "th", "Time");
         addNodeChild(header, "th", "Position Angle");
 
-        var immersionRow = addNodeChild(table, "tr");
-        addNodeChild(immersionRow, "td", "Disappearance (D)");
-        var t = yyyymmdd_hhmmOfJD(event.start.t - dt);
-        addNodeChild(immersionRow, "td", t.time.Ord3 + ":" + t.time.Ord2);
-        addNodeChild(immersionRow, "td", Math.round(event.start.PA));
+        var row = addNodeChild(table, "tr");
+        addNodeChild(row, "td", "First Contact (C1)");
+        var t = yyyymmdd_hhmmOfJD(event.C1.t - dt);
+        addNodeChild(row, "td", t.time.Ord3 + ":" + t.time.Ord2);
+        addNodeChild(row, "td", Math.round(event.C1.PA));
 
-        var emmersionRow = addNodeChild(table, "tr");
-        addNodeChild(emmersionRow, "td", "Reappearance (R)");
-        t = yyyymmdd_hhmmOfJD(event.end.t - dt);
-        addNodeChild(emmersionRow, "td", t.time.Ord3 + ":" + t.time.Ord2);
-        addNodeChild(emmersionRow, "td", Math.round(event.end.PA));
+        row = addNodeChild(table, "tr");
+        addNodeChild(row, "td", "Ingress (C2)");
+        t = yyyymmdd_hhmmOfJD(event.C2.t - dt);
+        addNodeChild(row, "td", t.time.Ord3 + ":" + t.time.Ord2);
+        addNodeChild(row, "td", Math.round(event.C2.PA));
+
+        row = addNodeChild(table, "tr");
+        addNodeChild(row, "td", "Maximum");
+        t = yyyymmdd_hhmmOfJD(event.tMax - dt);
+        addNodeChild(row, "td", t.time.Ord3 + ":" + t.time.Ord2);
+        addNodeChild(row, "td", "N/A");
+
+        row = addNodeChild(table, "tr");
+        addNodeChild(row, "td", "Egress (C4)");
+        t = yyyymmdd_hhmmOfJD(event.C3.t - dt);
+        addNodeChild(row, "td", t.time.Ord3 + ":" + t.time.Ord2);
+        addNodeChild(row, "td", Math.round(event.C3.PA));
+
+        row = addNodeChild(table, "tr");
+        addNodeChild(row, "td", "Last Contact (C4)");
+        t = yyyymmdd_hhmmOfJD(event.C4.t - dt);
+        addNodeChild(row, "td", t.time.Ord3 + ":" + t.time.Ord2);
+        addNodeChild(row, "td", Math.round(event.C4.PA));
 
         var w = 800;
         var h = 800;
