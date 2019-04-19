@@ -78,6 +78,7 @@ var urlsToCache = [
 "js/solareclipsespage.js",
 "js/sun.js",
 "js/timeinput.js",
+"js/transits.js",
 "js/uranus.js",
 "js/venus.js",
 "images/bulgarian-courier.ttf",
