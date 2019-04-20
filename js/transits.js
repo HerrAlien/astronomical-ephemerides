@@ -91,6 +91,10 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                     conjunctionJd = jd;
                     while (conjunctionJd - jd < numDays) {
                         conjunctionJd = Transits.JdOfClosestInferiorConjunction(conjunctionJd, planetDataSource);
+                        if (conjunctionJd < jd) {
+                                conjunctionJd += planetDataSource.synodicPeriod;
+                                continue;
+                        }
                         var Sun = Transits.Sun();
                         var sunDataAtConjunction = Sun.getDataAsObjectForJD(conjunctionJd);
                         var planetDataForJd = planetDataSource.getDataAsObjectForJD(conjunctionJd);

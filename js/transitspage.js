@@ -50,7 +50,7 @@ var TransitsPage = {
         MoonData.reset(); //????
         var endJD = startJD + numberOfDays;
 
-        var daysPerDrawCall = 100;
+        var daysPerDrawCall = numberOfDays;
 
         function TransitsPageProcessJD(JD) {
             var signatureChanged = TransitsPage.signature != TransitsPage.getSignature();
@@ -161,8 +161,54 @@ var TransitsPage = {
         img.setAttribute("width", w);
         img.setAttribute("alt", occultationTitle);
 
+        var sunCircle = document.createElementNS(svgns, "circle");
+        img.appendChild(sunCircle);
+        sunCircle.setAttribute("cx", w/2);
+        sunCircle.setAttribute("cy", h/2);
+        sunCircle.setAttribute("r", sunRadius);
+        sunCircle.setAttribute("stroke-width", 1);
+        sunCircle.setAttribute("stroke", "#000000");
+        sunCircle.setAttribute("fill", "#ffffff");
+
 
         var degra = Math.PI / 180;
+
+        var c1x = sunRadius * Math.cos((event.C1.PA + 90) * degra);
+        var c1y = sunRadius * Math.sin((event.C1.PA + 90) * degra);
+
+        var c4x = sunRadius * Math.cos((event.C4.PA + 90) * degra);
+        var c4y = sunRadius * Math.sin((event.C4.PA + 90) * degra);
+
+/*        var planetLine = document.createElementNS(svgns, "line");
+        img.appendChild(planetLine);
+        planetLine.setAttribute("x1", c1x + w/2);
+        planetLine.setAttribute("y1", h/2 - c1y);
+        planetLine.setAttribute("x2", c4x + w/2);
+        planetLine.setAttribute("y2", h/2 - c4y);
+        planetLine.setAttribute("stroke-width", 1);
+        planetLine.setAttribute("stroke", "#000000");
+*/
+
+        var slope = (c1y - c4y) / (c1x - c4x);
+        var pixelsPerHour = 24 * ( Math.sqrt( (c1x-c4x)*(c1x-c4x) + (c1y-c4y)*(c1y-c4y)) )
+                            / (event.C4.t - event.C1.t);
+
+        var yAt0 = slope * (-w/2 - c1x) + c1y;
+        var yAtW = slope * (w/2 - c1x) + c1y;
+
+        yAt0 = h/2 - yAt0;
+        yAtW = h/2 - yAtW; 
+
+        var planetLine = document.createElementNS(svgns, "line");
+        img.appendChild(planetLine);
+        planetLine.setAttribute("x1", 0);
+        planetLine.setAttribute("y1", yAt0);
+        planetLine.setAttribute("x2", w);
+        planetLine.setAttribute("y2", yAtW);
+        planetLine.setAttribute("stroke-width", 1);
+        planetLine.setAttribute("stroke", "#000000");
+       
+
 
 /*
         var text = document.createElementNS(svgns, "text");
