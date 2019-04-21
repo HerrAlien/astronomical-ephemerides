@@ -107,6 +107,8 @@ var TransitsPage = {
         var occultationTitle = TransitsPage.getTitle(event);
 
         var h2 = addNodeChild(div, "h2", occultationTitle);
+        var sepparation = GetAAJS().Numerical.ToSexagesimal(event.distAtTMaxD);
+        addNodeChild(div, "span", "Closest: " + sepparation.Ord2 + "' " + Math.round(sepparation.Ord1) + "''");
 
         var table = addNodeChild(div, "table");
         var header = addNodeChild(table, "tr");
