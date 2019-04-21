@@ -183,4 +183,32 @@ var NextEvents = {
         }
     };
 
+    /////////////////// Occultations //////////////////////////
+    NextEvents["Transits"] = {
+        GetEvents: function () {
+            NextEvents.init();
+            var nextDaysEvents = [];
+            var jd = NextEvents.startJd;
+            var dt = AAJS.DynamicalTime.DeltaT(jd) / (3600 * 24);
+
+            var events = Transits.get(jd, NextEvents.numberOfDays);
+            for (var jde in events) {
+                var event = events[jde];
+                var id = TransitsPage.getId(event);
+                var nextDaysEvent = {
+                    start: event.C1.t - dt,
+                    end: event.C4.t - dt,
+                    navigActionObj: {
+                        page: "Transits",
+                        actions: [{ name: "scroll", parameters: id }]
+                    },
+                    title: "Transit: " + event.name
+                };
+                nextDaysEvents.push(nextDaysEvent);
+            }
+
+            return nextDaysEvents;
+        }
+    };
+
 })();
