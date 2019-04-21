@@ -50,7 +50,7 @@ var TransitsPage = {
         MoonData.reset(); //????
         var endJD = startJD + numberOfDays;
 
-        var daysPerDrawCall = numberOfDays;
+        var daysPerDrawCall = 100;
 
         function TransitsPageProcessJD(JD) {
             var signatureChanged = TransitsPage.signature != TransitsPage.getSignature();
