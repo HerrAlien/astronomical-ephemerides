@@ -179,19 +179,11 @@ var TransitsPage = {
         var c4x = sunRadius * Math.cos((event.C4.PA + 90) * degra);
         var c4y = sunRadius * Math.sin((event.C4.PA + 90) * degra);
 
-/*        var planetLine = document.createElementNS(svgns, "line");
-        img.appendChild(planetLine);
-        planetLine.setAttribute("x1", c1x + w/2);
-        planetLine.setAttribute("y1", h/2 - c1y);
-        planetLine.setAttribute("x2", c4x + w/2);
-        planetLine.setAttribute("y2", h/2 - c4y);
-        planetLine.setAttribute("stroke-width", 1);
-        planetLine.setAttribute("stroke", "#000000");
-*/
-
         var slope = (c1y - c4y) / (c1x - c4x);
-        var pixelsPerHour = 24 * ( Math.sqrt( (c1x-c4x)*(c1x-c4x) + (c1y-c4y)*(c1y-c4y)) )
+        var pixelsPerDay = ( Math.sqrt( (c1x-c4x)*(c1x-c4x) + (c1y-c4y)*(c1y-c4y)) )
                             / (event.C4.t - event.C1.t);
+        var pixelsXPerDay = Math.abs(pixelsPerDay * Math.cos (Math.atan2((c1y - c4y) , (c1x - c4x))));
+        var notchesSlope = -1/slope;
 
         var yAt0 = slope * (-w/2 - c1x) + c1y;
         var yAtW = slope * (w/2 - c1x) + c1y;
@@ -207,35 +199,40 @@ var TransitsPage = {
         planetLine.setAttribute("y2", yAtW);
         planetLine.setAttribute("stroke-width", 1);
         planetLine.setAttribute("stroke", "#000000");
-       
 
+        var earliestHourNotchFromC1 = Math.floor (event.C1.t * 24);
+        var latestHourNotchFromC4 = Math.ceil (event.C4.t * 24);
+        var notchLen = 20;
+        var notchDx = notchLen * Math.cos(Math.atan(notchesSlope));
 
-/*
-        var text = document.createElementNS(svgns, "text");
-        img.appendChild(text);
-        text.setAttribute("x", xd + w / 2 - 25);
-        var yText = h / 2 - yd;
-        var yOffset = 40;
-        if (yText < h / 2)
-            yText -= yOffset;
-        else
-            yText += yOffset;
-        text.setAttribute("y", yText);
-        text.textContent = "D";
+        for (var hour = earliestHourNotchFromC1; hour <= latestHourNotchFromC4; hour++) {
+            var inDays = hour/24;
+            var distanceFromStart = inDays - event.C1.t + dt;
+            var notchStartX = c1x + (distanceFromStart) * pixelsXPerDay;
+            var notchStartY = slope * (distanceFromStart) * pixelsXPerDay + c1y;
 
-        text = document.createElementNS(svgns, "text");
-        img.appendChild(text);
-        text.setAttribute("x", xr + w / 2);
-        yText = h / 2 - yr;
-        if (yText < h / 2)
-            yText -= yOffset;
-        else
-            yText += yOffset;
-        text.setAttribute("y", yText);
-        text.textContent = "R";
-*/
+            var notchEndX = notchStartX + notchDx;
+            var notchEndY = notchesSlope * (notchEndX - notchStartX) + notchStartY;
 
+            var firstNotch =  document.createElementNS(svgns, "line");
+            img.appendChild(firstNotch);
+            firstNotch.setAttribute("x1", notchStartX + w/2);
+            firstNotch.setAttribute("y1", h/2 - notchStartY);
+            firstNotch.setAttribute("x2", notchEndX + w/2);
+            firstNotch.setAttribute("y2", h/2 - notchEndY);
+            firstNotch.setAttribute("stroke-width", 1);
+            firstNotch.setAttribute("stroke", "#000000");
 
+            if (hour == earliestHourNotchFromC1 || hour == latestHourNotchFromC4) {
+                var text = document.createElementNS(svgns, "text");
+                img.appendChild(text);
+                text.setAttribute("x", notchEndX + w / 2);
+                var yText = h / 2 - notchEndY;
+                text.setAttribute("y", yText + 30);
+                var t = yyyymmdd_hhmmOfJD(inDays);
+                text.textContent = t.time.Ord3 + ":00";
+            }
+        }
 
         host.appendChild(fragment);
     },
