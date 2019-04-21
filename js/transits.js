@@ -55,9 +55,9 @@ var Transits = {
 
                 var tUntilConjunction = dRaSunPlanet / (dRaSun - dRaPlanet) * (lastConjunctionJd - conjunctionJd);
                 if (tUntilConjunction > 5) {
-                        tUntilConjunction = 5;
+                    tUntilConjunction = 5;
                 } else if (tUntilConjunction < -5) {
-                        tUntilConjunction = -5;
+                    tUntilConjunction = -5;
                 }
                 lastConjunctionJd = conjunctionJd;
                 conjunctionJd += tUntilConjunction;

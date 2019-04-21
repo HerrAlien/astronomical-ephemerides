@@ -70,10 +70,20 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         return occultationsCheckBox && occultationsCheckBox.checked;
     }
 
+    var transitsCheckBox = false;
+    function displayTransits() {
+        if (!transitsCheckBox) {
+            transitsCheckBox = document.getElementById("futureTransitsSettings");
+            transitsCheckBox.onchange = onDisplayEventTypeChange;
+        }
+        return transitsCheckBox && transitsCheckBox.checked;
+    }
+
     var eventTypeToCheckFunction = {
         "MoonEclipsesPage": displayLunarEclipses,
         "SolarEclipsesPage": displaySolarEclipses,
-        "Occultations": displayOccultations
+        "Occultations": displayOccultations,
+        "Transits": displayTransits
     };
 
     function getEventTypesToDisplay() {
