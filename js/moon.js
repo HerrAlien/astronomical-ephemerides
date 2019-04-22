@@ -61,7 +61,7 @@ var MoonData = {
         }
 
         if (computeRiseTransitSet) {
-            this.riseSetAngle = 0.7275 * data.parallax - 0.56666666666666666666666666666667;
+            this.riseSetAngle = 0.7275 * data.Parallax - 0.56666666666666666666666666666667;
             data = this.addRiseTransitSetData(JDE, data);
             this.cache[JDE] = data;
         }
