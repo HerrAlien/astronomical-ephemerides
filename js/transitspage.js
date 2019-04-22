@@ -20,7 +20,7 @@ var TransitsPage = {
 
     hostElement: document.getElementById("TransitsContainer"),
     pageRendered: false,
-    transitsRendered: {},
+    transitRendered: {},
     signature: false,
     getSignature: function () {
         return JSON.stringify(PageTimeInterval) + JSON.stringify(
@@ -62,11 +62,11 @@ var TransitsPage = {
             var events = Transits.get(JD, daysPerDrawCall);
             for (var key in events) {
                 var id = TransitsPage.getId(events[key]);
-                if (TransitsPage.transitsRendered[id]) {
+                if (TransitsPage.transitRendered[id]) {
                     continue;
                 }
                 TransitsPage.draw(events[key], TransitsPage.hostElement);
-                TransitsPage.transitsRendered[id] = true;
+                TransitsPage.transitRendered[id] = true;
             }
 
             requestAnimationFrame(function () { TransitsPageProcessJD(JD + daysPerDrawCall); });
