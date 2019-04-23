@@ -230,6 +230,11 @@ var TransitsPage = {
                 img.appendChild(text);
                 text.setAttribute("x", notchEndX + w / 2);
                 var yText = h / 2 - notchEndY;
+                
+                if (notchEndY > notchStartY) {
+                    yText -= 40;
+                }
+
                 text.setAttribute("y", yText + 30);
                 var t = yyyymmdd_hhmmOfJD(inDays);
                 text.textContent = t.time.Ord3 + ":00";
