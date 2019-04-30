@@ -222,16 +222,19 @@ var RealTimeDataViewer = {
                           "parallax", "diameter", "RaGeo", "DecGeo",
                           "Day", "Month",
                           "CentralMeridianGeometricLongitude_System1",
-                          "CentralMeridianGeometricLongitude_System2"];
+                          "CentralMeridianGeometricLongitude_System2",
+                          "DiameterTopo"];
         // same host
         try {
             if (!AAJS.AllDependenciesLoaded())
                 throw "wait!";
             // This wil throw initially. Notifications will not update the view.
-            for (var key in Pages[pageName].dataSource.getDataAsObjectForJD(0, true, true)) {
+            var seed = Pages[pageName].dataSource.getDataAsObjectForJD(0, true, true);
+            for (var key in seed) {
                 if (hiddenKeys.indexOf(key) >= 0) {
                     continue;
                 }
+                    
                 var createdDom = RealTimeDataViewer.Utils.CreateDom(domHost, "div", "loading ...");
                 createdDom.classList.add(key);
                 createdDom.classList.add("scrollableRTdiv");

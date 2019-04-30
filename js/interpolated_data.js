@@ -61,7 +61,8 @@ var InterpolatedData = { };
             "CentralMeridianLongitude" : 360,
             "CentralMeridianApparentLongitude_System1" : 360,
             "CentralMeridianApparentLongitude_System2" : 360,
-            "Colongitude" : 360
+            "Colongitude" : 360,
+            "b0" : 360
         };
         
         var interpolatedObject = {};
