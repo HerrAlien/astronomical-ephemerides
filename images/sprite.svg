@@ -1281,8 +1281,7 @@
 
     <!-- -->
     
-    <g class="section" id="solar-eclipse" transform="scale(1.28)">
-
+    <g class="section" id="solar-eclipse" transform="scale(1.2) rotate(180) translate(-1024,-1024)">
 
     <g transform="scale(2)">
 <path style="fill:#000000;" d="M255.985,512c-2.488,0-5.01-0.634-7.321-1.967c-7.017-4.051-9.421-13.023-5.369-20.04l50.339-87.19
@@ -1308,14 +1307,14 @@
     
     
     <g transform="translate(120,230) scale(0.9)">
-<circle style="fill:#444444;" cx="256.003" cy="256.003" r="248"/>
+<circle style="fill:#888888;" cx="256.003" cy="256.003" r="248"/>
 <g>
-	<circle style="fill:#111111;" cx="288.003" cy="64.001" r="23.998"/>
-	<circle style="fill:#111111;" cx="175.997" cy="256.003" r="16"/>
-	<circle style="fill:#111111;" cx="64.001" cy="376.001" r="16"/>
-	<circle style="fill:#111111;" cx="335.998" cy="175.997" r="16"/>
-	<circle style="fill:#111111;" cx="200.005" cy="440.002" r="23.998"/>
-	<circle style="fill:#111111;" cx="79.996" cy="183.999" r="56"/>
+	<circle style="fill:#444444;" cx="288.003" cy="64.001" r="23.998"/>
+	<circle style="fill:#444444;" cx="175.997" cy="256.003" r="16"/>
+	<circle style="fill:#444444;" cx="64.001" cy="376.001" r="16"/>
+	<circle style="fill:#444444;" cx="335.998" cy="175.997" r="16"/>
+	<circle style="fill:#444444;" cx="200.005" cy="440.002" r="23.998"/>
+	<circle style="fill:#444444;" cx="79.996" cy="183.999" r="56"/>
 	
 </g>
 <g>
@@ -1376,7 +1375,6 @@
 </g>
 
 </g>
-    
     
     </g>
 
@@ -2545,7 +2543,7 @@
 <circle style="fill:#AF8066;" cx="480" cy="20" r="20"/>
 </g>
     
-    <g class="section" id="color-solar-eclipse" transform="scale(1.28)">
+    <g class="section" id="color-solar-eclipse" transform="scale(1.2) rotate(180) translate(-1024,-1024)">
 
 
     <g transform="scale(2)">
@@ -2572,14 +2570,14 @@
     
     
     <g transform="translate(120,230) scale(0.9)">
-<circle style="fill:#444444;" cx="256.003" cy="256.003" r="248"/>
+<circle style="fill:#888888;" cx="256.003" cy="256.003" r="248"/>
 <g>
-	<circle style="fill:#111111;" cx="288.003" cy="64.001" r="23.998"/>
-	<circle style="fill:#111111;" cx="175.997" cy="256.003" r="16"/>
-	<circle style="fill:#111111;" cx="64.001" cy="376.001" r="16"/>
-	<circle style="fill:#111111;" cx="335.998" cy="175.997" r="16"/>
-	<circle style="fill:#111111;" cx="200.005" cy="440.002" r="23.998"/>
-	<circle style="fill:#111111;" cx="79.996" cy="183.999" r="56"/>
+	<circle style="fill:#444444;" cx="288.003" cy="64.001" r="23.998"/>
+	<circle style="fill:#444444;" cx="175.997" cy="256.003" r="16"/>
+	<circle style="fill:#444444;" cx="64.001" cy="376.001" r="16"/>
+	<circle style="fill:#444444;" cx="335.998" cy="175.997" r="16"/>
+	<circle style="fill:#444444;" cx="200.005" cy="440.002" r="23.998"/>
+	<circle style="fill:#444444;" cx="79.996" cy="183.999" r="56"/>
 	
 </g>
 <g>
@@ -2760,13 +2758,13 @@
 <g transform="rotate(180 384 384) scale(3) translate(-384 -184)">
 <circle style="fill:#CCCCCC;" cx="256.003" cy="256.003" r="248"/>
 <g>
-	<circle style="fill:#666666;" cx="288.003" cy="64.001" r="23.998"/>
-	<circle style="fill:#666666;" cx="175.997" cy="256.003" r="16"/>
-	<circle style="fill:#666666;" cx="64.001" cy="376.001" r="16"/>
-	<circle style="fill:#666666;" cx="335.998" cy="175.997" r="16"/>
-	<circle style="fill:#666666;" cx="200.005" cy="440.002" r="23.998"/>
-	<circle style="fill:#666666;" cx="79.996" cy="183.999" r="56"/>
-	<path style="fill:#666666;" d="M255.999,8.001c136.966,0,248,111.033,248,248s-111.034,248-248,248
+	<circle style="fill:#888888;" cx="288.003" cy="64.001" r="23.998"/>
+	<circle style="fill:#888888;" cx="175.997" cy="256.003" r="16"/>
+	<circle style="fill:#888888;" cx="64.001" cy="376.001" r="16"/>
+	<circle style="fill:#888888;" cx="335.998" cy="175.997" r="16"/>
+	<circle style="fill:#888888;" cx="200.005" cy="440.002" r="23.998"/>
+	<circle style="fill:#888888;" cx="79.996" cy="183.999" r="56"/>
+	<path   style="fill:#888888;" d="M255.999,8.001c136.966,0,248,111.033,248,248s-111.034,248-248,248
 		C255.999,504,435.668,195.435,255.999,8.001"/>
 </g>
 <g>

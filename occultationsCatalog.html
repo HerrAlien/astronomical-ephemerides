@@ -16,6 +16,23 @@
     </body>
 </html>
 <script>
+
+function DistanceDFromEqCoordinates (rah1, ded1, rah2, ded2) {
+        var degra = Math.PI / 180;
+        var rar1 = rah1 * 15 * degra;
+        var der1 = ded1 * degra;
+
+        var rar2 = rah2 * 15 * degra;
+        var der2 = ded2 * degra;
+
+        var dist = Math.acos(Math.sin(der1) * Math.sin(der2) +
+                   Math.cos(der1) * Math.cos(der2) * Math.cos(rar1 - rar2));
+        dist /= degra;
+        return dist;
+
+}
+
+
 var bcStars = false;
 
 document.getElementById("generateCatalog").onclick = function() {
@@ -29,10 +46,10 @@ document.getElementById("generateCatalog").onclick = function() {
             "dec" : (Number(line.substr(45,2)) + Number(line.substr(47,2))/60 + Number(line.substr(49,6))/3600) * 
                     (line.substr(44,1) == "-" ? -1 : 1)
         });
-        console.log(zc[zc.length-1]);
     }
 
     var finalCatalog = [];
+    var noZc = [];
     for (var bcIndex = 0; bcIndex < bcStars.length; bcIndex++) {
         var bcStar = bcStars[bcIndex];
         if (Math.abs(bcStar.DEd) > 35) {
@@ -42,13 +59,27 @@ document.getElementById("generateCatalog").onclick = function() {
             continue; // too dim
         }
         
-        var zcName = false;
+        var nearestZc = false;
+        var nearestDistance = 99999;
         for (var zcIndex = 0; zcIndex < zc.length; zcIndex++) {
             var zcStar = zc[zcIndex];
-            if (Math.abs(zcStar.ra - bcStar.RAh) < 1e-3 && 
-                Math.abs(zcStar.dec - bcStar.DEd) < 5e-3) {
-                zcName = zcStar.zc;        
+            if (!nearestZc) {
+                nearestZc = zcStar;
             }
+            var currentDistance = Math.abs(zcStar.ra - bcStar.RAh) * 15 + 
+                                  Math.abs(zcStar.dec - bcStar.DEd);
+
+            if (currentDistance < nearestDistance) {
+                nearestDistance = currentDistance;
+                nearestZc = zcStar;
+            }
+        }
+
+        var zcName = false;
+        if (nearestDistance < .25) {
+            zcName = nearestZc.zc;
+        } else {
+            noZc.push ({bcStar: bcStar, zcStar: nearestZc});
         }
 
         var finalStar = { HR: bcStar.HR, 
@@ -60,6 +91,7 @@ document.getElementById("generateCatalog").onclick = function() {
         if (zcName) {
             finalStar["zc"] = zcName;
         }
+
         if (bcStar.Name) {
             finalStar["Name"] = bcStar.Name;
         }
@@ -90,6 +122,8 @@ document.getElementById("generateCatalog").onclick = function() {
     document.getElementById("pre").textContent = txt;
     this.style.display = "none";
     document.getElementById("zc").style.display = "none";
+//    console.log(zc);
+    console.log(noZc);
 }
 
 bcStars = [{"HR":"2491","bfID":"9Alp CMa","Name":"Sirius","RAh":6.752472222,"DEd":-16.71611111,"Vmag":-1.46,"Sp":"A1Vm","pmRA":-0.553,"pmDE":-1.205},
