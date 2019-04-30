@@ -56,9 +56,14 @@ var InterpolatedData = { };
 
         var interpolationLimits = {
             "RA": 24,
-            "RaTopo" : 24
+            "RaTopo" : 24,
+            "L0" : 360,
+            "CentralMeridianLongitude" : 360,
+            "CentralMeridianApparentLongitude_System1" : 360,
+            "CentralMeridianApparentLongitude_System2" : 360,
+            "Colongitude" : 360
         };
-
+        
         var interpolatedObject = {};
         for (var key in obj1) {
             interpolatedObject[key] = this.interpolate(datesObj.n, obj1[key], obj2[key], obj3[key], obj4[key], obj5[key], interpolationLimits[key]);

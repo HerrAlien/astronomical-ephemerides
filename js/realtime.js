@@ -47,7 +47,6 @@ var RealTimeDataViewer = {
 
     buildRtDataObject : function (planetName) {
         var rtDataObj = InterpolatedData[planetName]();
-        rtDataObj.daysBetweenDataPoints = 1/24;
         
         rtDataObj['start'] = function () {
             if (JDForRealTimeView.onRecomputedTimes) {
