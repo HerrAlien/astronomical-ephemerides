@@ -10,7 +10,7 @@
         top: 0px;
     }
 
-    .printOnly, .planetTable > .planetTableHeader.printOnly {
+    .planetTable > .planetTableHeader.printOnly {
         display: block;
         height: 100%;
         width: 100%;
