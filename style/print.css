@@ -12,6 +12,7 @@
 
     .planetTable > .planetTableHeader.printOnly {
         display: block;
+        height: 100%;
     }
 
     .screenOnly {
