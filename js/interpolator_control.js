@@ -19,40 +19,40 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 // ---------------------------- model side ----------------------------------------
 
 var InterpolatorControl = {
-    New : function(domHost) {
-        var rightNow_specifyDate_toggle = InterpolatorControl.Toggle.New (domHost, "rightNowOrSpecifyDate");
+    New : function(page, name) {
+        var appendDomNode = PlanetPage.prototype["addNodeChild"]
+        var domHost = appendDomNode (page, "div");
+        domHost.classList.add("interpolator");
 
-        var localTime_universalTime_toggle = InterpolatorControl.Toggle.New (domHost, "localOrUniversalTime");
-    },
+        var rightNow_specifyDate_toggle = InterpolatorControl.Toggle.New (domHost, name + "_rightNowOrSpecifyDate");
+        appendDomNode (domHost, "br");
 
-    appendDomNode : function (host, nodeType, content) {
-        var n = document.createElement (nodeType);
-        if (content) {
-            n.textContent = content;
-        }
-        host.appendChild (n);
-        return n;
+
+
+        var localTime_universalTime_toggle = InterpolatorControl.Toggle.New (domHost, name + "_localOrUniversalTime");
+        appendDomNode (domHost, "br");
     },
 
     Toggle : {
         New : function (domHost, meaning) {
-            var appendDomNode = InterpolatorControl.appendDomNode;
+            var appendDomNode = PlanetPage.prototype["addNodeChild"]
+
             var offLabel = appendDomNode (domHost, "label", meaning + "_off");
-            offLabel['for'] = meaning;
+            offLabel.setAttribute('for', meaning);
             var switchLabel = appendDomNode(domHost, "label");
 
-            var input =  appendDomNode(domHost, "input");
+            var input =  appendDomNode(switchLabel, "input");
             input['type'] = "checkbox";
             input['id'] = meaning;
-            input.classlist.add("switchinput");
+            input.classList.add("switchinput");
 
-            var span =  appendDomNode(domHost, "span");
-            span.classlist.add("slider");
-            span.classlist.add("round");
+            var span =  appendDomNode(switchLabel, "span");
+            span.classList.add("slider");
+            span.classList.add("round");
 
             var onLabel = appendDomNode (domHost, "label", meaning + "_on");
-            onLabel['for'] = meaning;
-            var br = appendDomNode (domHost, "br");
+            onLabel.setAttribute('for', meaning);
+            
 
             var returnedObj =  {
                 offLabel : offLabel,
@@ -66,4 +66,15 @@ var InterpolatorControl = {
             return returnedObj;
         }
     },
+    Date : {
+        New : function (host) {
+
+        }
+    }, 
+
+    TIme : {
+        New : function (host) {
+            
+        }
+    }
 };

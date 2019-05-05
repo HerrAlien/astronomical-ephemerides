@@ -73,7 +73,7 @@ var SunData = {
     var Sun = {
         hostElement: document.getElementById("SunTable"),
         pageRendered: false,
-        dataSource: SunData,
+        dataSource: SunData,        
         tableHeaderInfo: {
             "0": {
                 "0": { "text": "Date  " },

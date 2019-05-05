@@ -173,7 +173,8 @@ function PlanetPage(planetDataSource, tableName) {
 
     PlanetPage.prototype["displayPage"] = function () {
         var pageObj = this;
-        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
+        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD ||
+            typeof InterpolatorControl == "undefined")
             return SyncedTimeOut(function () { pageObj.displayPage(); }, Timeout.onInit);
 
         var JD = PageTimeInterval.JD;
@@ -184,12 +185,11 @@ function PlanetPage(planetDataSource, tableName) {
         if (!this.pageRendered) {
             this.reset();
 
-            // so far we have no styling, so suppress the first header for now.
-            // this.addTableHeader (this.hostElement, [["fixed", "firstHeaderRow"], ["fixed", "secondHeaderRow"]]);
-
             var hostElement = pageObj.hostElement;
             var columnClasses = pageObj.firstDataRowColumnClasses;
             var dataSource = pageObj.dataSource;
+
+            InterpolatorControl.New(hostElement.parentElement, "Sun");
 
             var delayedAppendData = function (JD, endJD, steps, hostElement, columnClasses, dataSource) {
                 if (JD >= endJD)
