@@ -1599,9 +1599,37 @@
             <br>
         </div>
 
-        <div id="Sun Ephemeris" class="page invisible">
+        <div id="Sun Ephemeris" class="page">
             <h1>Sun</h1>
             <div class="muddle">For Solar Eclipses, <a href="#Solar Eclipses">click here.</a></div>
+
+            <div class="interpolator">
+
+                <label class="settingsLabel" for="forNowOrSpecifiedDate">For right now</label>
+                <label class="switch">
+                    <input type="checkbox" id="forNowOrSpecifiedDate" class="switchinput">
+                    <span class="slider round"></span>
+                </label>
+                <label class="settingsLabel" for="forNowOrSpecifiedDate">For a specified date</label>
+                
+                <br>
+
+                <label class="settingsLabel">Date: <br><input type="date"></label>
+                <label class="settingsLabel">Time: <br>
+                    <input type="number" class="hours"> : 
+                    <input type="number" class="minutes"> : 
+                    <input type="number" class="seconds">
+                </label>
+                
+                <label class="settingsLabel" for="inputInUtOrLocal">Local Time</label>
+                <label class="switch">
+                    <input type="checkbox" id="inputInUtOrLocal" class="switchinput">
+                    <span class="slider round"></span>
+                </label>
+
+                <label class="settingsLabel" for="inputInUtOrLocal">Universal Time</label>
+            </div>
+
             <pre id="SunTable" cellspacing="0" cellpadding="0" class="planetTable hidden">
             <span class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></span>
              </pre>

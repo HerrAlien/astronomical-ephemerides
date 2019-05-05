@@ -538,8 +538,18 @@ input[type=date]::-webkit-inner-spin-button {
     width: 120px;
 }
 
+.interpolator {
+    padding-bottom: 60px;
+    margin-top: 40px;
 
-#startingDate {
+    --colored-bg-light: #2196F3;
+    --colored-bg: #2196F3;
+    --colored-bg-dark: #003377;
+    --inactive: #2196F3;
+}
+
+
+#startingDate , .interpolator input[type=date]{
     border-top: none;
     border-left: none;
     border-right: none;
@@ -552,6 +562,15 @@ input[type=date]::-webkit-inner-spin-button {
     transition: 0.25s;
 }
 
+.interpolator input[type=number] {
+    display: inline-block;
+    margin-top: 7px;
+    width: 40px;
+}
+
+.interpolator .switch {
+    display: inline-block;
+}
 
 #latitudeInput, #longitudeInput, #altitudeInput, 
 #incrementDate, #numberOfDays {
@@ -611,7 +630,7 @@ input[type=date]::-webkit-inner-spin-button {
         --input-height: 25px;
     }
 
-    #settings {
+    #settings, .interpolator {
         --slider-width: 30px;
         --slider-height: 7px;  
         --slider-cursor-to-slider-height: 2.5;
@@ -639,9 +658,14 @@ tr.firstHeaderRowScrolled{
 tr.secondHeaderRowScrolled{
     top: 126px;
 }
-#startingDate {
+#startingDate, .interpolator input[type=date] {
     width: 240px;
 }
+
+.interpolator input[type=number] {
+    width: 60px;
+}
+
 }
 
 #displayTimesDiv span{
