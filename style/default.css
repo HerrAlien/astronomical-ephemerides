@@ -67,8 +67,10 @@
 }
 
 .settingsLabel, #getFromGeolocationAnchor{
-    float: left;
+    display: inline-block;
     margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 #mapHolder {
@@ -90,10 +92,6 @@
 
 #cancelSettingsChanges,  #applySettingsChanges{
     margin-top: 16px;
-}
-
-.settingsLabel, #getFromGeolocationAnchor, #applySettingsChanges {
-    margin-left: 6px;
 }
 
 #cancelSettingsChanges {
@@ -529,9 +527,7 @@ input[type=date]::-webkit-inner-spin-button {
 #latitudeInput, #longitudeInput, #altitudeInput {
     width: 230px;
 }
-#startingDate {
-    width: 220px;
-} 
+
 #incrementDate, #numberOfDays {
     width: 230px;
 }
