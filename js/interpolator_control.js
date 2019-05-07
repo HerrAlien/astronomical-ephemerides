@@ -39,8 +39,10 @@ var InterpolatorControl = {
 
             var offLabel = appendDomNode (domHost, "label", meaning + "_off");
             offLabel.setAttribute('for', meaning);
-            var switchLabel = appendDomNode(domHost, "label");
+            offLabel.classList.add("settingsLabel");
 
+            var switchLabel = appendDomNode(domHost, "label");
+            switchLabel.classList.add("switch");
             var input =  appendDomNode(switchLabel, "input");
             input['type'] = "checkbox";
             input['id'] = meaning;
@@ -52,7 +54,7 @@ var InterpolatorControl = {
 
             var onLabel = appendDomNode (domHost, "label", meaning + "_on");
             onLabel.setAttribute('for', meaning);
-            
+            onLabel.classList.add("settingsLabel");
 
             var returnedObj =  {
                 offLabel : offLabel,
