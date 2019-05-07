@@ -572,6 +572,10 @@ input[type=date]::-webkit-inner-spin-button {
     display: inline-block;
 }
 
+.disabledOption {
+    color: #666666;
+}
+
 #latitudeInput, #longitudeInput, #altitudeInput, 
 #incrementDate, #numberOfDays {
     font-size: 26px;

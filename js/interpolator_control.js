@@ -27,6 +27,7 @@ var InterpolatorControl = {
         var rightNow_specifyDate_toggle = InterpolatorControl.Toggle.New (domHost, name + "_rightNowOrSpecifyDate");
         rightNow_specifyDate_toggle.offLabel.textContent = "For right now ";
         rightNow_specifyDate_toggle.onLabel.textContent = " For a given date";
+        rightNow_specifyDate_toggle.set(false);
         appendDomNode (domHost, "br");
 
 
@@ -34,6 +35,7 @@ var InterpolatorControl = {
         var localTime_universalTime_toggle = InterpolatorControl.Toggle.New (domHost, name + "_localOrUniversalTime");
         localTime_universalTime_toggle.offLabel.textContent = "Local Time ";
         localTime_universalTime_toggle.onLabel.textContent = " UTC";
+        localTime_universalTime_toggle.set(false);
         appendDomNode (domHost, "br");
     },
 
@@ -63,11 +65,22 @@ var InterpolatorControl = {
             var returnedObj =  {
                 offLabel : offLabel,
                 onLabel : onLabel,
-                on : function () { return input.checked; }
+                on : function () { return input.checked; },
+                set : function (checked) { input.checked = !checked; input.click(); }
             };
 
             returnedObj['onchange'] = Notifications.New();
             input.onchange = returnedObj.onchange.notify;
+
+            returnedObj.onchange.add(function() { 
+                if (input.checked) {
+                    onLabel.classList.remove("disabledOption");
+                    offLabel.classList.add("disabledOption");
+                } else {
+                    offLabel.classList.remove("disabledOption");
+                    onLabel.classList.add("disabledOption");
+                }
+            });
 
             return returnedObj;
         }
