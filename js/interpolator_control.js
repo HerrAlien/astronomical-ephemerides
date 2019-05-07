@@ -25,11 +25,15 @@ var InterpolatorControl = {
         domHost.classList.add("interpolator");
 
         var rightNow_specifyDate_toggle = InterpolatorControl.Toggle.New (domHost, name + "_rightNowOrSpecifyDate");
+        rightNow_specifyDate_toggle.offLabel.textContent = "For right now ";
+        rightNow_specifyDate_toggle.onLabel.textContent = " For a given date";
         appendDomNode (domHost, "br");
 
 
 
         var localTime_universalTime_toggle = InterpolatorControl.Toggle.New (domHost, name + "_localOrUniversalTime");
+        localTime_universalTime_toggle.offLabel.textContent = "Local Time ";
+        localTime_universalTime_toggle.onLabel.textContent = " UTC";
         appendDomNode (domHost, "br");
     },
 
