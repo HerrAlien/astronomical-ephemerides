@@ -37,6 +37,11 @@ var InterpolatorControl = {
         localTime_universalTime_toggle.onLabel.textContent = " UTC";
         localTime_universalTime_toggle.set(false);
         appendDomNode (domHost, "br");
+
+        return {
+            "givenDateToggle" : rightNow_specifyDate_toggle,
+            "timeInUtc" : localTime_universalTime_toggle
+        };
     },
 
     Toggle : {
