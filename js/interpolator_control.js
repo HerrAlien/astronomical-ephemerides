@@ -20,7 +20,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var InterpolatorControl = {
     New : function(page, name) {
-        var appendDomNode = PlanetPage.prototype["addNodeChild"]
+        var appendDomNode = PlanetPage.prototype["addNodeChild"];
         var domHost = appendDomNode (page, "div");
         domHost.classList.add("interpolator");
 
@@ -30,7 +30,9 @@ var InterpolatorControl = {
         rightNow_specifyDate_toggle.set(false);
         appendDomNode (domHost, "br");
 
+        var dateObjects = InterpolatorControl.Date.New(domHost);
 
+        var timeObjects = InterpolatorControl.Time.New(domHost);
 
         var localTime_universalTime_toggle = InterpolatorControl.Toggle.New (domHost, name + "_localOrUniversalTime");
         localTime_universalTime_toggle.offLabel.textContent = "Local Time ";
@@ -38,15 +40,65 @@ var InterpolatorControl = {
         localTime_universalTime_toggle.set(false);
         appendDomNode (domHost, "br");
 
+        var update = function (date) {
+            if (!date) {
+                return;
+            }
+
+            dateObjects.input.valueAsDate = date;
+            if (localTime_universalTime_toggle.on()) { // this means UTC
+                timeObjects.hours.value =   date.getUTCHours();
+                timeObjects.minutes.value = date.getUTCMinutes();
+                timeObjects.seconds.value = date.getUTCSeconds();
+            } else { // local time
+                timeObjects.hours.value =   date.getHours();
+                timeObjects.minutes.value = date.getMinutes();
+                timeObjects.seconds.value = date.getSeconds();
+            }
+        }
+        update (new Date()); // initial value
+
+        var getCurrentDate = function () {
+            var date = dateObjects.input.valueAsDate;
+            if (localTime_universalTime_toggle.on()) { // this means UTC
+                date.setUTCHours  ( timeObjects.hours.value  );
+                date.setUTCMinutes( timeObjects.minutes.value);
+                date.setUTCSeconds( timeObjects.seconds.value);
+            } else { // local time
+                date.setHours  ( timeObjects.hours.value  );
+                date.setMinutes( timeObjects.minutes.value);
+                date.setSeconds( timeObjects.seconds.value);
+            }
+            return date;
+        }
+
+        var lastJD = false;
+        var lastDt = false;
+
+        var getCurrentJDE = function () {
+            var date = getCurrentDate();
+            var jd = AAJS.Date.DateToJD(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate(), true);
+            jd += ((date.getUTCSeconds() / 60 + date.getUTCMinutes()) / 60 + date.getUTCHours()) / 24;
+            if (!lastJD || Math.abs(jd - lastJD) > 365) {
+                lastJD = jd;
+                lastDt = AAJS.DynamicalTime.DeltaT(jd) / (3600 * 24);
+            }
+            jd += lastDt;
+            return jd;
+        }
+
         return {
             "givenDateToggle" : rightNow_specifyDate_toggle,
-            "timeInUtc" : localTime_universalTime_toggle
+            "timeInUtc" : localTime_universalTime_toggle,
+            "getCurrentDate" : getCurrentDate,
+            "getCurrentJDE" : getCurrentJDE,
+            "update": update
         };
     },
 
     Toggle : {
         New : function (domHost, meaning) {
-            var appendDomNode = PlanetPage.prototype["addNodeChild"]
+            var appendDomNode = PlanetPage.prototype["addNodeChild"];
 
             var offLabel = appendDomNode (domHost, "label", meaning + "_off");
             offLabel.setAttribute('for', meaning);
@@ -90,15 +142,45 @@ var InterpolatorControl = {
             return returnedObj;
         }
     },
+
     Date : {
         New : function (host) {
-
+            //<label class="settingsLabel">Date: <br><input type="date"></label>
+            var appendDomNode = PlanetPage.prototype["addNodeChild"];
+            var label = appendDomNode(host, "label", "Date: ");
+            label.classList.add("settingsLabel");
+            appendDomNode(label, "br");
+            var input = appendDomNode(label, "input");
+            input['type'] = 'date';
+            return { input: input, label : label };
         }
     }, 
 
-    TIme : {
+    Time : {
         New : function (host) {
-            
+            /*<label class="settingsLabel">Time: <br>
+                    <input type="number" class="hours"> : 
+                    <input type="number" class="minutes"> : 
+                    <input type="number" class="seconds">
+                </label>*/
+            var appendDomNode = PlanetPage.prototype["addNodeChild"];
+            var label = appendDomNode(host, "label", "Time: ");
+            label.classList.add("settingsLabel");
+            appendDomNode(label, "br");
+
+            var hours = appendDomNode(label, "input");
+            hours['type'] = 'number';
+            appendDomNode(label, "span", " : ");
+
+            var minutes = appendDomNode(label, "input");
+            minutes['type'] = 'number';
+            appendDomNode(label, "span", " : ");
+
+            var seconds = appendDomNode(label, "input");
+            seconds['type'] = 'number';
+            appendDomNode(label, "span", " : ");
+
+            return { hours: hours, minutes: minutes, seconds: seconds };
         }
     }
 };
