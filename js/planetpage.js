@@ -174,12 +174,8 @@ function PlanetPage(planetDataSource, tableName) {
     PlanetPage.prototype["displayPage"] = function () {
         var pageObj = this;
         if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD ||
-            typeof InterpolatorControl == "undefined")
+            typeof InterpolatorControl == "undefined" || typeof JDForRealTimeView == "undefined" || !JDForRealTimeView.onRecomputedTimes)
             return SyncedTimeOut(function () { pageObj.displayPage(); }, Timeout.onInit);
-
-        var JD = PageTimeInterval.JD;
-        var daysAfter = PageTimeInterval.days;
-        var stepSize = PageTimeInterval.stepSize;
 
         this.lastAppendedLine = false;
         if (!this.pageRendered) {
@@ -189,7 +185,22 @@ function PlanetPage(planetDataSource, tableName) {
             var columnClasses = pageObj.firstDataRowColumnClasses;
             var dataSource = pageObj.dataSource;
 
-            InterpolatorControl.New(hostElement.parentElement, "Sun");
+            var interpolatorControl = InterpolatorControl.New(hostElement.parentElement, "Sun");
+            JDForRealTimeView.onRecomputedTimes.add(function() { 
+                if (!interpolatorControl.givenDateToggle.on()) { // for right now
+                    interpolatorControl.update(new Date());
+                }
+            });
+
+            interpolatorControl.onDateChanged.add (function() { 
+                // here be rendering call ...
+            });
+
+            
+            // table specific stuff.
+            var JD = PageTimeInterval.JD;
+            var daysAfter = PageTimeInterval.days;
+            var stepSize = PageTimeInterval.stepSize;
 
             var delayedAppendData = function (JD, endJD, steps, hostElement, columnClasses, dataSource) {
                 if (JD >= endJD)

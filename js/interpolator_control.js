@@ -40,6 +40,8 @@ var InterpolatorControl = {
         localTime_universalTime_toggle.set(false);
         appendDomNode (domHost, "br");
 
+        var onDateChanged = Notifications.New();
+
         var update = function (date) {
             if (!date) {
                 return;
@@ -55,8 +57,14 @@ var InterpolatorControl = {
                 timeObjects.minutes.value = date.getMinutes();
                 timeObjects.seconds.value = date.getSeconds();
             }
+            onDateChanged.notify();
         }
         update (new Date()); // initial value
+        var inputChanged = function () { onDateChanged.notify(); };
+        timeObjects.hours.onchange = inputChanged;
+        timeObjects.minutes.onchange = inputChanged;
+        timeObjects.seconds.onchange = inputChanged;
+        dateObjects.input.onchange = inputChanged;
 
         var getCurrentDate = function () {
             var date = dateObjects.input.valueAsDate;
@@ -92,7 +100,8 @@ var InterpolatorControl = {
             "timeInUtc" : localTime_universalTime_toggle,
             "getCurrentDate" : getCurrentDate,
             "getCurrentJDE" : getCurrentJDE,
-            "update": update
+            "update": update,
+            "onDateChanged":onDateChanged,
         };
     },
 
