@@ -29,6 +29,22 @@
     }
 }
 
+
+.interpolatedTableLabel
+{
+    text-align: right;
+    font-size: 30px;
+    line-height: 0.5;
+    padding-top: 15px;
+    max-width: 500px;
+}
+
+.interpolatedTableLongText
+{
+    font-size: 18px;
+    line-height: 2;    
+}
+
 .largeButtons-menuPageItemImg-linkButton
 {
     margin-right: 15px;

@@ -192,6 +192,8 @@ function PlanetPage(planetDataSource, tableName) {
                 }
             });
 
+            var interpolatedView = newInterpolatedTable(hostElement.parentElement, this.tableHeaderInfo);
+
             interpolatorControl.onDateChanged.add (function() { 
                 // here be rendering call ...
             });
@@ -397,6 +399,35 @@ function PlanetPage(planetDataSource, tableName) {
         if (sexagesimalTime.Ord1 < 10) sexagesimalTime.Ord1 = "0" + sexagesimalTime.Ord1;
 
         return { 'date': dateOfJD, 'time': sexagesimalTime };
+    };
+
+    var newInterpolatedTable = function (hostElement, tableHeaderInfo) {
+        var dataKeyToDisplayDom = {};
+        var addNodeChild = PlanetPage.prototype.addNodeChild;
+
+        var table = addNodeChild (hostElement, "table");// may need styling
+        for (var tableKey in tableHeaderInfo) {
+            if (tableKey == "0" || tableKey == "1") {
+                continue;
+            }
+            var entry = tableHeaderInfo[tableKey];
+            if (!entry.dataKey) {
+                continue;
+            }
+
+            var row =  addNodeChild (table, "tr");// may need styling
+            // label
+            var labelTd = addNodeChild (row, "td", entry["0"].text);// may need styling
+            labelTd.classList.add("interpolatedTableLabel");
+            addNodeChild (labelTd, "br");
+            var longTextSpan = addNodeChild (labelTd, "span", entry.longText);// may need styling
+            longTextSpan.classList.add("interpolatedTableLongText");
+            var valueTd = addNodeChild (row, "td");// may need styling
+            valueTd.classList.add("interpolatedTableValue");
+
+            dataKeyToDisplayDom[entry.dataKey] = valueTd;
+        }
+        return dataKeyToDisplayDom;
     };
 
 })();
