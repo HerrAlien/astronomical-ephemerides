@@ -196,6 +196,20 @@ function PlanetPage(planetDataSource, tableName) {
 
             interpolatorControl.onDateChanged.add (function() { 
                 // here be rendering call ...
+                var objectData = pageObj.dataSource.getDataAsObjectForJD (
+                    interpolatorControl.getCurrentJDE(), true, true, true
+                );
+
+                for (var k in interpolatedView) {
+                    var data = objectData[k];
+                    var format = pageObj.interpolatorDisplayFunctions[k];
+                    var display = interpolatedView[k];
+                    if (data && format && display) {
+                        display.textContent = format(data);
+                    } else {
+                        console.log(k);
+                    }
+                }
             });
 
             
@@ -282,6 +296,53 @@ function PlanetPage(planetDataSource, tableName) {
         if (keepData && this.dataSource.reset) {
             this.dataSource.reset();
         }
+
+    var genericAngleDisplay = function (a) {
+        var sexagesimal = GetAAJS().Numerical.ToSexagesimal(Math.round(a * 3600) / 3600);
+        return sexagesimal.Ord3 + "\u00B0 " +
+               sexagesimal.Ord2 + "' " +
+               sexagesimal.Ord1 + "'' ";
+    };
+
+        this.interpolatorDisplayFunctions = {
+            RA : function (ra) {
+                var sexagesimalRA = GetAAJS().Numerical.ToSexagesimal(Math.round(ra * 36000) / 36000);
+                return sexagesimalRA.Ord3 + "h " +
+                       sexagesimalRA.Ord2 + "m " + 
+                       sexagesimalRA.Ord1 + "s";
+            },
+            Dec : genericAngleDisplay,
+            Diameter : genericAngleDisplay,
+            Rise : this.timeToHhColumnMm,
+            MeridianTransit : this.timeToHhColumnMm,
+            Set : this.timeToHhColumnMm,
+            DistanceToEarth : GetAAJS().Numerical.RoundTo3Decimals,
+            DistanceToSun : GetAAJS().Numerical.RoundTo3Decimals,
+            Elongation : function (e) {
+                var cardinalCoordinateRelativeToSun = "W";
+
+                var sunRA = SunData.getRA(JD);
+                var planetRA = this.dataSource.RA;
+                // this is probably because we have one angle in q1, the other in q4.
+                if (Math.abs(sunRA - planetRA) >= 12) // hours ...
+                {
+                    sunRA += 12;
+                    planetRA += 12;
+
+                    if (sunRA > 24)
+                        sunRA -= 24;
+                    if (planetRA > 24)
+                        planetRA -= 24;
+                }
+
+                if (sunRA < planetRA)
+                    cardinalCoordinateRelativeToSun = "E";
+
+                return GetAAJS().Numerical.RoundTo1Decimal(e) + " " + 
+                       cardinalCoordinateRelativeToSun;
+            }
+        };
+
     };
 
     PlanetPage.prototype["prepareOneDayDataObjectForView"] = function (obj, JD) {

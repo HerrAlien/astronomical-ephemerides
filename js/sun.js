@@ -272,7 +272,17 @@ var SunData = {
         if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
             SunData.addRiseTransitSetData = PlanetData.prototype.addRiseTransitSetData;
             SunData.isAboveHorizon = PlanetData.prototype.isAboveHorizon;
-            Sun.reset = PlanetPage.prototype.reset;
+            Sun.parent_reset = PlanetPage.prototype.reset;
+            Sun.reset = function () {
+                this.parent_reset();
+                this.interpolatorDisplayFunctions['Parallax'] = function (p) {
+                    return GetAAJS().Numerical.RoundTo3Decimals(p * 3600);
+                };
+
+                this.interpolatorDisplayFunctions['P']  = GetAAJS().Numerical.RoundTo3Decimals;
+                this.interpolatorDisplayFunctions['B0'] = GetAAJS().Numerical.RoundTo3Decimals;
+                this.interpolatorDisplayFunctions['L0'] = GetAAJS().Numerical.RoundTo3Decimals;
+            };
             Sun.displayPage = PlanetPage.prototype.displayPage;
             Sun.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
             Sun.appendLine = PlanetPage.prototype.appendLine;
