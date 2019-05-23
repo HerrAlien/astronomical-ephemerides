@@ -486,6 +486,10 @@ PlanetPage.prototype["rednderTable"] = function () {
                 continue;
             }
 
+            if (entry.dataKey == 'Day' ||entry.dataKey == 'Month') {
+                continue;
+            }
+
             var row =  addNodeChild (table, "tr");// may need styling
             // label
             var labelTd = addNodeChild (row, "td", entry["0"].text);// may need styling
@@ -493,7 +497,7 @@ PlanetPage.prototype["rednderTable"] = function () {
             addNodeChild (labelTd, "br");
             var longTextSpan = addNodeChild (labelTd, "span", entry.longText);// may need styling
             longTextSpan.classList.add("interpolatedTableLongText");
-            var valueTd = addNodeChild (row, "td");// may need styling
+            var valueTd = addNodeChild (row, "td", "-- -- -- -- --");// may need styling
             valueTd.classList.add("interpolatedTableValue");
 
             dataKeyToDisplayDom[entry.dataKey] = valueTd;

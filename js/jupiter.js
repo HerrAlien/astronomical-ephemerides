@@ -91,6 +91,21 @@ var JupiterData = {};
                 return header;
             }
 
+            Page.parent_reset = PlanetPage.prototype.reset;
+            Page.reset = function () {
+                this.parent_reset();
+
+                var angleDegrees_3Decimals = function (a) {
+                    return  GetAAJS().Numerical.RoundTo3Decimals(a) + "\u00B0";
+                };
+
+                this.interpolatorDisplayFunctions['P']  = angleDegrees_3Decimals;
+                this.interpolatorDisplayFunctions['EarthDeclination'] = angleDegrees_3Decimals;
+                this.interpolatorDisplayFunctions['SunDeclination'] = angleDegrees_3Decimals;                
+                this.interpolatorDisplayFunctions['CentralMeridianApparentLongitude_System1'] = angleDegrees_3Decimals;                
+                this.interpolatorDisplayFunctions['CentralMeridianApparentLongitude_System2'] = angleDegrees_3Decimals;                
+            };
+
             Pages["Jupiter Ephemeris"] = Page;
         } else {
             SyncedTimeOut(localInit, Timeout.onInit);
