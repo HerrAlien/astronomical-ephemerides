@@ -276,12 +276,16 @@ var SunData = {
             Sun.reset = function () {
                 this.parent_reset();
                 this.interpolatorDisplayFunctions['Parallax'] = function (p) {
-                    return GetAAJS().Numerical.RoundTo3Decimals(p * 3600);
+                    return GetAAJS().Numerical.RoundTo3Decimals(p * 3600) + "''";
                 };
 
-                this.interpolatorDisplayFunctions['P']  = GetAAJS().Numerical.RoundTo3Decimals;
-                this.interpolatorDisplayFunctions['B0'] = GetAAJS().Numerical.RoundTo3Decimals;
-                this.interpolatorDisplayFunctions['L0'] = GetAAJS().Numerical.RoundTo3Decimals;
+                var angleDegrees_3Decimals = function (a) {
+                    return  GetAAJS().Numerical.RoundTo3Decimals(a) + "\u00B0";
+                };
+
+                this.interpolatorDisplayFunctions['P']  = angleDegrees_3Decimals;
+                this.interpolatorDisplayFunctions['B0'] = angleDegrees_3Decimals;
+                this.interpolatorDisplayFunctions['L0'] = angleDegrees_3Decimals;                
             };
             Sun.displayPage = PlanetPage.prototype.displayPage;
             Sun.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;

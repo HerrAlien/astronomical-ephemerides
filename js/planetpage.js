@@ -196,8 +196,9 @@ function PlanetPage(planetDataSource, tableName) {
 
             interpolatorControl.onDateChanged.add (function() { 
                 // here be rendering call ...
+                var JDE = interpolatorControl.getCurrentJDE();
                 var objectData = pageObj.dataSource.getDataAsObjectForJD (
-                    interpolatorControl.getCurrentJDE(), true, true, true
+                    JDE, true, true, true
                 );
 
                 for (var k in interpolatedView) {
@@ -205,14 +206,18 @@ function PlanetPage(planetDataSource, tableName) {
                     var format = pageObj.interpolatorDisplayFunctions[k];
                     var display = interpolatedView[k];
                     if (data && format && display) {
-                        display.textContent = format(data);
+                        display.textContent = format(data, JDE);
                     } else {
                         console.log(k);
                     }
                 }
             });
 
-            
+            this.pageRendered = true;
+        }
+    };
+
+PlanetPage.prototype["rednderTable"] = function () {
             // table specific stuff.
             var JD = PageTimeInterval.JD;
             var daysAfter = PageTimeInterval.days;
@@ -255,9 +260,7 @@ function PlanetPage(planetDataSource, tableName) {
                 requestAnimationFrame(function () { delayedAppendData(JD, endJD, steps, hostElement, columnClasses, dataSource); });
             }
             delayedAppendData(JD, JD + daysAfter, 20, hostElement, columnClasses, dataSource);
-            this.pageRendered = true;
-        }
-    };
+};
 
     PlanetPage.prototype["appendLine"] = function (dataArray, classes, docFragment) {
 
@@ -304,6 +307,12 @@ function PlanetPage(planetDataSource, tableName) {
                sexagesimal.Ord1 + "'' ";
     };
 
+    var angleDegrees_3Decimals = function (a) {
+        return  GetAAJS().Numerical.RoundTo3Decimals(a) + "\u00B0";
+    };
+
+        var _thisPage = this;
+
         this.interpolatorDisplayFunctions = {
             RA : function (ra) {
                 var sexagesimalRA = GetAAJS().Numerical.ToSexagesimal(Math.round(ra * 36000) / 36000);
@@ -318,11 +327,11 @@ function PlanetPage(planetDataSource, tableName) {
             Set : this.timeToHhColumnMm,
             DistanceToEarth : GetAAJS().Numerical.RoundTo3Decimals,
             DistanceToSun : GetAAJS().Numerical.RoundTo3Decimals,
-            Elongation : function (e) {
+            Elongation : function (e, JD) {
                 var cardinalCoordinateRelativeToSun = "W";
 
                 var sunRA = SunData.getRA(JD);
-                var planetRA = this.dataSource.RA;
+                var planetRA = _thisPage.dataSource.RA;
                 // this is probably because we have one angle in q1, the other in q4.
                 if (Math.abs(sunRA - planetRA) >= 12) // hours ...
                 {
@@ -340,7 +349,8 @@ function PlanetPage(planetDataSource, tableName) {
 
                 return GetAAJS().Numerical.RoundTo1Decimal(e) + " " + 
                        cardinalCoordinateRelativeToSun;
-            }
+            },
+            Phase : GetAAJS().Numerical.RoundTo3Decimals
         };
 
     };

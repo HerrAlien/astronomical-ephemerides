@@ -376,6 +376,25 @@ var MoonData = {
 
             MoonPage.oldHeaderFunc = PlanetPage.prototype.addTableHeader;
             MoonPage.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
+
+            MoonPage.parent_reset = PlanetPage.prototype.reset;
+            MoonPage.reset = function () {
+                this.parent_reset();
+                this.interpolatorDisplayFunctions['Parallax'] = function (p) {
+                    return GetAAJS().Numerical.RoundTo3Decimals(p * 3600) + "''";
+                };
+
+                var angleDegrees_3Decimals = function (a) {
+                    return  GetAAJS().Numerical.RoundTo3Decimals(a) + "\u00B0";
+                };
+
+                this.interpolatorDisplayFunctions['Colongitude']  = angleDegrees_3Decimals;
+                this.interpolatorDisplayFunctions['b0'] = angleDegrees_3Decimals;
+                this.interpolatorDisplayFunctions['RaTopo'] = this.interpolatorDisplayFunctions['RA'];
+                this.interpolatorDisplayFunctions['DecTopo'] = this.interpolatorDisplayFunctions['Dec']
+            };
+
+
             Pages["Moon Ephemeris"] = MoonPage;
         } else {
             SyncedTimeOut(localInit, Timeout.onInit);
