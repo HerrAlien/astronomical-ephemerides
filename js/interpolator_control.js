@@ -40,6 +40,23 @@ var InterpolatorControl = {
         localTime_universalTime_toggle.set(false);
         appendDomNode (domHost, "br");
 
+        var updateInputSensitivity = function () {
+            if (! rightNow_specifyDate_toggle.on()) {
+                dateObjects.input  .setAttribute('readonly', true);
+                timeObjects.hours  .setAttribute('readonly', true);
+                timeObjects.minutes.setAttribute('readonly', true);
+                timeObjects.seconds.setAttribute('readonly', true);
+            } else {
+                dateObjects.input  .removeAttribute('readonly');
+                timeObjects.hours  .removeAttribute('readonly');
+                timeObjects.minutes.removeAttribute('readonly');
+                timeObjects.seconds.removeAttribute('readonly');
+            }
+        };
+
+        rightNow_specifyDate_toggle.onchange.add (updateInputSensitivity);
+        updateInputSensitivity();
+
         var onDateChanged = Notifications.New();
 
         var update = function (date) {

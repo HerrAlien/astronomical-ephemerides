@@ -90,6 +90,7 @@
     margin-right: 0px;
 }
 
+
 #mapHolder {
     width:100%; 
     height:400px;
@@ -558,6 +559,9 @@ input[type=date]::-webkit-inner-spin-button {
 .interpolator {
     padding-bottom: 60px;
     margin-top: 40px;
+    max-width: 720px;
+    margin-right: auto;
+    margin-left:auto;
 
     --colored-bg-light: #2196F3;
     --colored-bg: #2196F3;
@@ -598,7 +602,7 @@ input[type=date]::-webkit-inner-spin-button {
     font-size: 26px;
 }
 
-#settings label, #getFromGeolocationAnchor {
+.settingsLabel, #getFromGeolocationAnchor {
     font-size: 26px;
     font-family: Verdana;
 }
