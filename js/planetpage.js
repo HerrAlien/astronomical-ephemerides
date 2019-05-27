@@ -192,7 +192,7 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
                 this.singleDateHostElement = hostElement.parentElement;
             }
 
-            var interpolatorControl = InterpolatorControl.New(this.singleDateHostElement, this.dataSource.planet.name);
+            var interpolatorControl = InterpolatorControl.New(this.singleDateHostElement, dataSource.planet.name);
             JDForRealTimeView.onRecomputedTimes.add(function() { 
                 if (!interpolatorControl.givenDateToggle.on()) { // for right now
                     interpolatorControl.update(new Date());
@@ -201,10 +201,10 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
 
             var interpolatedView = newInterpolatedTable(this.singleDateHostElement, this.tableHeaderInfo);
 
-            interpolatorControl.onDateChanged.add (function() { 
+            var updateValues = function () { 
                 // here be rendering call ...
                 var JDE = interpolatorControl.getCurrentJDE();
-                var objectData = pageObj.dataSource.getDataAsObjectForJD (
+                var objectData = dataSource.getDataAsObjectForJD (
                     JDE, true, true, true
                 );
 
@@ -218,7 +218,11 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
                         console.log(k);
                     }
                 }
-            });
+            };
+
+            interpolatorControl.onDateChanged.add (updateValues);
+            interpolatorControl.givenDateToggle.onchange.add(updateValues);
+            interpolatorControl.timeInUtc.onchange.add(updateValues);
 
             this.pageRendered = true;
         }

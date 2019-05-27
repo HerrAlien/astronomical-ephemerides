@@ -29,26 +29,6 @@
     }
 }
 
-
-.interpolatedTableLabel,
-.interpolatedTableValue
-{
-    text-align: right;
-    font-size: 30px;
-    line-height: 0.5;
-    padding-top: 15px;
-    max-width: 500px;
-    font-weight: 900;
-}
-
-.interpolatedTableLongText
-{
-    display: inline-block;
-    margin-top: 10px;
-    font-size: 24px;
-    line-height: 1;    
-}
-
 .largeButtons-menuPageItemImg-linkButton
 {
     margin-right: 15px;
@@ -559,20 +539,6 @@ input[type=date]::-webkit-inner-spin-button {
     width: 120px;
 }
 
-.interpolator {
-    padding-bottom: 60px;
-    margin-top: 40px;
-    max-width: 720px;
-    margin-right: auto;
-    margin-left:auto;
-
-    --colored-bg-light: #2196F3;
-    --colored-bg: #2196F3;
-    --colored-bg-dark: #003377;
-    --inactive: #2196F3;
-}
-
-
 #startingDate , .interpolator input[type=date]{
     border-top: none;
     border-left: none;
@@ -722,5 +688,56 @@ tr.secondHeaderRowScrolled{
 
 .notVisible td {
   background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, var(--colored-bg-light) 4px, var(--colored-bg-light) 24px);
+
+}
+
+
+.interpolatedTableLabel,
+.interpolatedTableValue
+{
+    text-align: right;
+    font-size: 30px;
+    line-height: 0.5;
+    padding-top: 15px;
+    max-width: 500px;
+    font-weight: 900;
+}
+
+.interpolatedTableLongText
+{
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 24px;
+    line-height: 1;    
+}
+
+.interpolator {
+    padding-bottom: 60px;
+    margin-top: 40px;
+    max-width: 720px;
+    margin-right: auto;
+    margin-left:auto;
+
+    --colored-bg-light: #2196F3;
+    --colored-bg: #2196F3;
+    --colored-bg-dark: #003377;
+    --inactive: #2196F3;
+}
+
+@media  screen and  (min-width: 936px) {
+
+.interpolator {
+    max-width: 800px;
+}
+
+.interpolatedTableLabel,
+.interpolatedTableValue {
+    font-size: 24px;
+}
+
+.interpolatedTableLongText {
+    margin-top: 10px;
+    font-size: 16px;
+}
 
 }
