@@ -39,7 +39,7 @@ var MarsData = {};
                 return data;
             };
 
-            var Page = new PlanetPage(MarsData, "MarsTable");
+            var Page = new PlanetPage(MarsData, "MarsTable", "Mars Ephemeris");
 
 
             Page.tableHeaderInfo['20'] = {

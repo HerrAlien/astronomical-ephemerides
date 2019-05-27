@@ -38,12 +38,15 @@
     line-height: 0.5;
     padding-top: 15px;
     max-width: 500px;
+    font-weight: 900;
 }
 
 .interpolatedTableLongText
 {
-    font-size: 18px;
-    line-height: 2;    
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 24px;
+    line-height: 1;    
 }
 
 .largeButtons-menuPageItemImg-linkButton

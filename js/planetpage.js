@@ -31,14 +31,17 @@ function postPadTo(v, pad, cnt) {
 }
 
 
-function PlanetPage(planetDataSource, tableName) {
+function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
     if (planetDataSource) {
         this.dataSource = planetDataSource;
         this.hostElement = document.getElementById(this.dataSource.planet.name);
     }
 
-    if (tableName)
-        this.hostElement = document.getElementById(tableName);
+    if (singleDateHostName)
+        this.singleDateHostElement = document.getElementById(singleDateHostName);
+
+    if (allDatesTableName)
+        this.hostElement = document.getElementById(allDatesTableName);
 
     this.pageRendered = false;
     this.lastAppendedLine = false;
@@ -185,14 +188,18 @@ function PlanetPage(planetDataSource, tableName) {
             var columnClasses = pageObj.firstDataRowColumnClasses;
             var dataSource = pageObj.dataSource;
 
-            var interpolatorControl = InterpolatorControl.New(hostElement.parentElement, "Sun");
+            if (!this.singleDateHostElement) {
+                this.singleDateHostElement = hostElement.parentElement;
+            }
+
+            var interpolatorControl = InterpolatorControl.New(this.singleDateHostElement, this.dataSource.planet.name);
             JDForRealTimeView.onRecomputedTimes.add(function() { 
                 if (!interpolatorControl.givenDateToggle.on()) { // for right now
                     interpolatorControl.update(new Date());
                 }
             });
 
-            var interpolatedView = newInterpolatedTable(hostElement.parentElement, this.tableHeaderInfo);
+            var interpolatedView = newInterpolatedTable(this.singleDateHostElement, this.tableHeaderInfo);
 
             interpolatorControl.onDateChanged.add (function() { 
                 // here be rendering call ...

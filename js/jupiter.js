@@ -39,7 +39,7 @@ var JupiterData = {};
                 return data;
             };
 
-            var Page = new PlanetPage(JupiterData, "JupiterTable");
+            var Page = new PlanetPage(JupiterData, "JupiterTable", "Jupiter Ephemeris");
 
             Page.tableHeaderInfo['16'] = { "dataKey": 'CentralMeridianApparentLongitude_System1', "0": { "text": "  L0-S1" }, "1": { "text": "             \u00B0" }, "longText": "Longitude of central meridian, System 1 (physical ephemeris)" };
             Page.tableHeaderInfo['17'] = { "dataKey": 'CentralMeridianApparentLongitude_System2', "0": { "text": " L0-S2" }, "1": { "text": "     \u00B0 " }, "longText": "Longitude of central meridian, System 2 (physical ephemeris)" };
