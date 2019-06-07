@@ -33,7 +33,9 @@ var JDForRealTimeView = {
         var d = rightNow.getUTCDate();
 
         var jdT3 = GetAAJS().Date.DateToJD(y, m, d, true);
-        var spanBetweenComputedTimes = 1/24; // [days] - one full day
+        jdT3 += (rightNow.getUTCHours() + (rightNow.getUTCMinutes() + rightNow.getUTCSeconds()/60)/60)/24;
+
+        var spanBetweenComputedTimes = 300/(3600 * 24); // [days] - one full day
         // get the T1
         var jdT2 = jdT3 - spanBetweenComputedTimes;
         var jdT1 = jdT2 - spanBetweenComputedTimes;
