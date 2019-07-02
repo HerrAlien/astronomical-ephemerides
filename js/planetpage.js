@@ -181,16 +181,19 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
             return SyncedTimeOut(function () { pageObj.displayPage(); }, Timeout.onInit);
 
         this.lastAppendedLine = false;
+
+        var hostElement = pageObj.hostElement;
+        var columnClasses = pageObj.firstDataRowColumnClasses;
+        var dataSource = pageObj.dataSource;
+
+        hostElement.classList.add ("hidden");
+
+        if (!this.singleDateHostElement) {
+            this.singleDateHostElement = hostElement.parentElement;
+        }
+
         if (!this.pageRendered) {
             this.reset();
-
-            var hostElement = pageObj.hostElement;
-            var columnClasses = pageObj.firstDataRowColumnClasses;
-            var dataSource = pageObj.dataSource;
-
-            if (!this.singleDateHostElement) {
-                this.singleDateHostElement = hostElement.parentElement;
-            }
 
             var interpolatorControl = InterpolatorControl.New(this.singleDateHostElement, dataSource.planet.name);
             JDForRealTimeView.onRecomputedTimes.add(function() { 
@@ -225,53 +228,77 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
             interpolatorControl.timeInUtc.onchange.add(updateValues);
 
             this.pageRendered = true;
+
+            var plotTheTableLink = PlanetPage.prototype.addNodeChild (this.singleDateHostElement, 
+                                                                      "a", "Plot table");
+            plotTheTableLink.onclick = function() {
+                if (!pageObj.lastAppendedLine) {
+                    pageObj.renderTable();
+                }
+                hostElement.classList.remove ("hidden");
+                interpolatorControl.dom.classList.add ("hidden");
+                interpolatedView.table.classList.add ("hidden");
+            }
+
+            var plotInterpolatorLink = PlanetPage.prototype.addNodeChild (this.singleDateHostElement, 
+                                                                      "a", "Plot interpolated data");
+            plotInterpolatorLink.onclick = function() {
+                interpolatorControl.dom.classList.remove ("hidden");
+                interpolatedView.table.classList.remove ("hidden");
+                hostElement.classList.add ("hidden");
+            }
+
         }
     };
 
-PlanetPage.prototype["rednderTable"] = function () {
-            // table specific stuff.
-            var JD = PageTimeInterval.JD;
-            var daysAfter = PageTimeInterval.days;
-            var stepSize = PageTimeInterval.stepSize;
+    PlanetPage.prototype["renderTable"] = function () {
+        // table specific stuff.
+        var JD = PageTimeInterval.JD;
+        var daysAfter = PageTimeInterval.days;
+        var stepSize = PageTimeInterval.stepSize;
+        var pageObj = this;
+        var hostElement = pageObj.hostElement;
+        var columnClasses = pageObj.firstDataRowColumnClasses;
+        var dataSource = pageObj.dataSource;
 
-            var delayedAppendData = function (JD, endJD, steps, hostElement, columnClasses, dataSource) {
-                if (JD >= endJD)
-                    return;
+        var delayedAppendData = function (JD, endJD, steps, hostElement, columnClasses, dataSource) {
+            if (JD >= endJD)
+                return;
 
-                var i = 0;
-                var docFragment = hostElement.ownerDocument.createDocumentFragment();
-                var span = pageObj.addNodeChild(docFragment, "span");
+            var i = 0;
+            var docFragment = hostElement.ownerDocument.createDocumentFragment();
+            var span = pageObj.addNodeChild(docFragment, "span");
 
-                for (i = 0; i < steps; i++, JD += stepSize) {
-                    if (JD >= endJD) {
-                        break;
-                    }
-
-                    var JDE = JD + GetAAJS().DynamicalTime.DeltaT(JD) / (3600 * 24);
-
-                    var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JDE, true, true), JDE);
-                    var changedMonth = !pageObj.lastAppendedLine ||
-                                        (preparedData[0] && pageObj.lastAppendedLine[0] != preparedData[0]);
-
-                    if (changedMonth) {
-                        var header = pageObj.addTableHeader(docFragment);
-                        if (!pageObj.header) {
-                            pageObj.header = header;
-                        } else {
-                            header.classList.add("printOnly");
-                        }
-                        span = pageObj.addNodeChild(docFragment, "span");
-                    }
-
-
-                    pageObj.appendLine(preparedData, columnClasses, span);
+            for (i = 0; i < steps; i++, JD += stepSize) {
+                if (JD >= endJD) {
+                    break;
                 }
 
-                hostElement.appendChild(docFragment);
-                requestAnimationFrame(function () { delayedAppendData(JD, endJD, steps, hostElement, columnClasses, dataSource); });
+                var JDE = JD + GetAAJS().DynamicalTime.DeltaT(JD) / (3600 * 24);
+
+                var preparedData = pageObj.prepareOneDayDataObjectForView(pageObj.dataSource.getDataAsObjectForJD(JDE, true, true), JDE);
+                var changedMonth = !pageObj.lastAppendedLine ||
+                                    (preparedData[0] && pageObj.lastAppendedLine[0] != preparedData[0]);
+
+                if (changedMonth) {
+                    var header = pageObj.addTableHeader(docFragment);
+                    if (!pageObj.header) {
+                        pageObj.header = header;
+                    } else {
+                        header.classList.add("printOnly");
+                    }
+                    span = pageObj.addNodeChild(docFragment, "span");
+                }
+
+
+                pageObj.appendLine(preparedData, columnClasses, span);
             }
-            delayedAppendData(JD, JD + daysAfter, 20, hostElement, columnClasses, dataSource);
-};
+
+            hostElement.appendChild(docFragment);
+            requestAnimationFrame(function () { delayedAppendData(JD, endJD, steps, hostElement, columnClasses, dataSource); });
+        }
+        delayedAppendData(JD, JD + daysAfter, 20, hostElement, columnClasses, dataSource);
+    };
 
     PlanetPage.prototype["appendLine"] = function (dataArray, classes, docFragment) {
 
@@ -513,6 +540,9 @@ PlanetPage.prototype["rednderTable"] = function () {
 
             dataKeyToDisplayDom[entry.dataKey] = valueTd;
         }
+
+        dataKeyToDisplayDom['table'] = table;
+
         return dataKeyToDisplayDom;
     };
 

@@ -119,6 +119,7 @@ var InterpolatorControl = {
             "getCurrentJDE" : getCurrentJDE,
             "update": update,
             "onDateChanged":onDateChanged,
+            "dom" : domHost,
         };
     },
 
