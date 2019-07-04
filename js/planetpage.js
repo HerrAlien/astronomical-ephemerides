@@ -217,8 +217,6 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
                     var display = interpolatedView[k];
                     if (data && format && display) {
                         display.textContent = format(data, JDE);
-                    } else {
-                        console.log(k);
                     }
                 }
             };

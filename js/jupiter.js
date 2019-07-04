@@ -105,6 +105,7 @@ var JupiterData = {};
                 this.interpolatorDisplayFunctions['CentralMeridianApparentLongitude_System1'] = angleDegrees_3Decimals;                
                 this.interpolatorDisplayFunctions['CentralMeridianApparentLongitude_System2'] = angleDegrees_3Decimals;                
             };
+            Page.renderTable = PlanetPage.prototype.renderTable;
 
             Pages["Jupiter Ephemeris"] = Page;
         } else {

@@ -101,6 +101,7 @@ var MarsData = {};
                 this.interpolatorDisplayFunctions['SunDeclination'] = angleDegrees_3Decimals;                
                 this.interpolatorDisplayFunctions['CentralMeridianLongitude'] = angleDegrees_3Decimals;                
             };
+            Page.renderTable = PlanetPage.prototype.renderTable;
 
             Pages["Mars Ephemeris"] = Page;
         } else {

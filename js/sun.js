@@ -292,6 +292,7 @@ var SunData = {
             Sun.appendLine = PlanetPage.prototype.appendLine;
             Sun.addNodeChild = PlanetPage.prototype.addNodeChild;
             Sun.oldAddHeader = PlanetPage.prototype.addTableHeader;
+            Sun.renderTable = PlanetPage.prototype.renderTable;
             Pages["Sun Ephemeris"] = Sun;
         } else {
             SyncedTimeOut(localInit, Timeout.onInit);

@@ -393,6 +393,7 @@ var MoonData = {
                 this.interpolatorDisplayFunctions['RaTopo'] = this.interpolatorDisplayFunctions['RA'];
                 this.interpolatorDisplayFunctions['DecTopo'] = this.interpolatorDisplayFunctions['Dec']
             };
+            MoonPage.renderTable = PlanetPage.prototype.renderTable;
 
 
             Pages["Moon Ephemeris"] = MoonPage;
