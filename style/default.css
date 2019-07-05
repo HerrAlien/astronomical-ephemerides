@@ -712,16 +712,21 @@ tr.secondHeaderRowScrolled{
 }
 
 .interpolator {
-    padding-bottom: 60px;
+    padding-bottom: 0;
     margin-top: 40px;
     max-width: 720px;
     margin-right: auto;
     margin-left:auto;
-
+    margin-bottom: 20px;
     --colored-bg-light: #2196F3;
     --colored-bg: #2196F3;
     --colored-bg-dark: #003377;
     --inactive: #2196F3;
+}
+
+.interpolatorTable
+{
+    width: 800px;
 }
 
 @media  screen and  (min-width: 936px) {

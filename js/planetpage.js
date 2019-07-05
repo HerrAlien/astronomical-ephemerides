@@ -513,6 +513,7 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
         var addNodeChild = PlanetPage.prototype.addNodeChild;
 
         var table = addNodeChild (hostElement, "table");// may need styling
+        table.classList.add("interpolatorTable");
         for (var tableKey in tableHeaderInfo) {
             if (tableKey == "0" || tableKey == "1") {
                 continue;
@@ -528,7 +529,7 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
 
             var row =  addNodeChild (table, "tr");// may need styling
             // label
-            var labelTd = addNodeChild (row, "td", entry["0"].text);// may need styling
+            var labelTd = addNodeChild (row, "td", entry["0"].text.trim() + " ");// may need styling
             labelTd.classList.add("interpolatedTableLabel");
             addNodeChild (labelTd, "br");
             var longTextSpan = addNodeChild (labelTd, "span", entry.longText);// may need styling
