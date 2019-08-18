@@ -45,12 +45,14 @@ var NextEvents = {
             var m = 1 + rightNow.getUTCMonth();
             var d = rightNow.getUTCDate();
             this.startJd = AAJS.Date.DateToJD(y, m, d, true) + rightNow.getUTCHours() / 24 + rightNow.getUTCMinutes() / (60 * 24);
+            this.endJd = this.startJd + this.numberOfDays;
         }
     };
 
     NextEvents["reset"] = function () {
         this.numberOfDays = false;
         this.startJd = false;
+        this.endJd = false;
     };
 
     NextEvents["GetEvents"] = function (types) {
@@ -66,6 +68,11 @@ var NextEvents = {
 
         events.sort(function (a, b) { return a.start - b.start; });
         return events;
+    };
+
+    NextEvents["InTimeBounds"] = function (event) {
+        return (event.end >= NextEvents.startJd && 
+                event.start <= NextEvents.endJd);
     };
 
     /////////////////// Moon Eclipses //////////////////////////
@@ -96,7 +103,7 @@ var NextEvents = {
 
                 if (eclipseData.eclipse) {
                     var id = MoonEclipsesPage.getId(eclipseData);
-                    events.push({
+                    var evt = {
                         start: eclipseData.umbralPartialEclipse ? eclipseData.Timings.Umbral.firstContact : eclipseData.Timings.Penumbral.firstContact,
                         end: eclipseData.umbralPartialEclipse ? eclipseData.Timings.Umbral.lastContact : eclipseData.Timings.Penumbral.lastContact,
                         navigActionObj: {
@@ -104,7 +111,10 @@ var NextEvents = {
                             actions: [{ name: "scroll", parameters: id }]
                         },
                         title: "Lunar Eclipse: " + MoonEclipsesPage.getTypeOfEclipseString(eclipseData)
-                    });
+                    };
+                    if (NextEvents.InTimeBounds(evt)) {
+                        events.push (evt);
+                    }
                 }
             }
 
@@ -139,7 +149,7 @@ var NextEvents = {
                 if (eclipseData.bEclipse) {
                     var id = SolarEclipsesPage.getId(eclipseData);
                     if (eclipseData["t1"]) {
-                        events.push({
+                        var evt = {
                             start: eclipseData.t0,
                             end: eclipseData.t0,
                             navigActionObj: {
@@ -147,7 +157,11 @@ var NextEvents = {
                                 actions: [{ name: "scroll", parameters: id }]
                             },
                             title: "Solar Eclipse: " + SolarEclipsesPage.getTypeOfEclipseString(eclipseData)
-                        });
+                        };
+
+                        if (NextEvents.InTimeBounds(evt)) {
+                            events.push (evt);
+                        }
                     }
                 }
             }
@@ -176,7 +190,10 @@ var NextEvents = {
                     },
                     title: "Occultation: " + OccultationsPage.getStarName(occultation)
                 };
-                events.push(event);
+
+                if (NextEvents.InTimeBounds(event)) {
+                        events.push (event);
+                }
             }
 
             return events;
@@ -204,7 +221,10 @@ var NextEvents = {
                     },
                     title: "Transit: " + event.name
                 };
-                nextDaysEvents.push(nextDaysEvent);
+
+                if (NextEvents.InTimeBounds(nextDaysEvent)) {
+                        nextDaysEvents.push (nextDaysEvent);
+                }
             }
 
             return nextDaysEvents;
