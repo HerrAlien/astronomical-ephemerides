@@ -123,19 +123,19 @@ var TransitsPage = {
         addNodeChild(row, "td", Math.round(event.C1.PA));
 
         row = addNodeChild(table, "tr");
-        addNodeChild(row, "td", "Ingress (C2)");
+        addNodeChild(row, "td", "Second Contact (C2)");
         t = yyyymmdd_hhmmOfJD(event.C2.t - dt);
         addNodeChild(row, "td", t.time.Ord3 + ":" + t.time.Ord2);
         addNodeChild(row, "td", Math.round(event.C2.PA));
 
         row = addNodeChild(table, "tr");
-        addNodeChild(row, "td", "Maximum");
+        addNodeChild(row, "td", "Greatest Transit");
         t = yyyymmdd_hhmmOfJD(event.tMax - dt);
         addNodeChild(row, "td", t.time.Ord3 + ":" + t.time.Ord2);
         addNodeChild(row, "td", "N/A");
 
         row = addNodeChild(table, "tr");
-        addNodeChild(row, "td", "Egress (C4)");
+        addNodeChild(row, "td", "Third Contact (C3)");
         t = yyyymmdd_hhmmOfJD(event.C3.t - dt);
         addNodeChild(row, "td", t.time.Ord3 + ":" + t.time.Ord2);
         addNodeChild(row, "td", Math.round(event.C3.PA));
