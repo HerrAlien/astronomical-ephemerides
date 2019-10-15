@@ -325,7 +325,7 @@
             }
         };
 
-        Pages.addPlainPages(["more", "settings", "home", "privacy", "Search results", "about"]);
+        Pages.addPlainPages(["more", "settings", "home", "privacy", "Search results", "about", "Lunar X"]); // TODO: remove Lunar X
 
 
     </script>
@@ -500,6 +500,10 @@
 
         .TransitsLinkButton::after {
             content: "Transits";
+        }
+
+        .LunarXLinkButton::after {
+            content: "Lunar X";
         }
 
         .largeButtons-menuPageItemImg-linkButton.OccultationsLinkButton {
@@ -794,7 +798,7 @@
 
         #promotedMenuScrollableContents {
             height: 110px;
-            width: 1724px;
+            width: 1830px;
         }
 
         #promotedMenu::after, #promotedMenu::before {
@@ -1035,6 +1039,10 @@
             background-image: url('images/sprite.svg#transit');
         }
 
+        .LunarXBackground {
+            background-image: url('images/sprite.svg#lunar-x');
+        }
+
 
         /* color backgrounds */
         .ColorSunBackground {
@@ -1095,6 +1103,10 @@
 
         .ColorTransitsBackground {
             background-image: url('images/sprite.svg#color-transit');
+        }
+
+        .ColorLunarXBackground {
+            background-image: url('images/sprite.svg#color-lunar-x');
         }
 
         .GalileanMoonsBackground,
@@ -1391,6 +1403,9 @@
                 <a title="Lunar Eclipses" href="#Lunar Eclipses" class="promotedMenuLink LunarEclipseLinkButton topmenulink-linkButton LunarEclipsesBackground"> </a>
                 <a title="Occultations" href="#Occultations" class="promotedMenuLink OccultationsLinkButton topmenulink-linkButton OccultationsBackground"> </a>
                 <a title="Transits" href="#Transits" class="promotedMenuLink TransitsLinkButton topmenulink-linkButton TransitsBackground"> </a>
+
+                <a title="Lunar X" href="#Lunar X" class="promotedMenuLink LunarXLinkButton topmenulink-linkButton LunarXBackground"> </a>
+
                 <a title="Sun Ephemeris" href="#Sun Ephemeris" class="promotedMenuLink SunLinkButton topmenulink-linkButton SunBackground"></a>
                 <a title="Moon Ephemeris" href="#Moon Ephemeris" class="promotedMenuLink MoonLinkButton topmenulink-linkButton MoonBackground"></a>
                 <a title="Jupiter Ephemeris" href="#Jupiter Ephemeris" class="promotedMenuLink JupiterLinkButton topmenulink-linkButton JupiterBackground"></a>
@@ -1419,6 +1434,9 @@
             <a title="Lunar Eclipses" href="#Lunar Eclipses" class="largeButtons-menuPageItemImg-linkButton LunarEclipseLinkButton LunarEclipsesBackground"></a>
             <a title="Occultations" href="#Occultations" class="largeButtons-menuPageItemImg-linkButton OccultationsLinkButton OccultationsBackground"> </a>
             <a title="Transits" href="#Transits" class="largeButtons-menuPageItemImg-linkButton TransitsLinkButton TransitsBackground"> </a>
+
+            <a title="Lunar X" href="#Lunar X" class="largeButtons-menuPageItemImg-linkButton LunarXLinkButton LunarXBackground"> </a>
+
             <a title="Sun Ephemeris" href="#Sun Ephemeris" class="largeButtons-menuPageItemImg-linkButton SunLinkButton SunBackground"></a>
             <a title="Moon Ephemeris" href="#Moon Ephemeris" class="largeButtons-menuPageItemImg-linkButton MoonLinkButton MoonBackground"></a>
             <a title="Jupiter Ephemeris" href="#Jupiter Ephemeris" class="largeButtons-menuPageItemImg-linkButton JupiterLinkButton JupiterBackground"></a>
@@ -1784,6 +1802,17 @@
             </div>
 
             <div id="TransitsContainer" class="loadingMemFileContents">
+                <div class="loadingMemFileContentsDiv">&nbsp;</div>
+            </div>
+        </div>
+
+        <div id="Lunar X" class="page">
+            <h1>Lunar X</h1>
+            <div class="leftaligned">
+                Accuracy of the times displayed below is about 15 minutes.
+            </div>
+
+            <div id="LunarXContainer" class="loadingMemFileContents">
                 <div class="loadingMemFileContentsDiv">&nbsp;</div>
             </div>
         </div>

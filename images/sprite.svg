@@ -2980,12 +2980,12 @@
 
 <!-- lunar x -->
 
-<g class="section" id="lunar-x">
+<g class="section" id="lunar-x" transform="scale(2)">
 
 <!-- moon -->
     <!-- g transform="translate(120,230) scale(0.9)" -->
 	<g>
-<circle style="fill:#666666;" cx="256.003" cy="256.003" r="248"/>
+<circle style="fill:#444444;" cx="256.003" cy="256.003" r="248"/>
 <g>
 	<circle style="fill:#444444;" cx="288.003" cy="64.001" r="23.998"/>
 	<circle style="fill:#444444;" cx="175.997" cy="256.003" r="16"/>
@@ -3057,16 +3057,16 @@
 </g>
 
 <!-- the X -->
-<g transform="translate(192,300)">
-	<line x1="0" y1="0" x2="64" y2="64" stroke="#FFFFFF" style="stroke-width:20"/>
-	<line x1="64" y1="0" x2="0" y2="64" stroke="#FFFFFF" style="stroke-width:20"/>
+<g transform="translate(140,250)">
+	<line x1="0" y1="0" x2="128" y2="128" stroke="#FFFFFF" style="stroke-width:40"/>
+	<line x1="128" y1="0" x2="0" y2="128" stroke="#FFFFFF" style="stroke-width:40"/>
 </g>
 
 </g>
 
 <!-- color-lunar x -->
 
-<g class="section" id="color-lunar-x">
+<g class="section" id="color-lunar-x" transform="scale(2)">
 
 <!-- moon -->
     <!-- g transform="translate(120,230) scale(0.9)" -->
@@ -3139,9 +3139,9 @@
 </g>
 
 <!-- the X -->
-<g transform="translate(192,300)">
-	<line x1="0" y1="0" x2="64" y2="64" stroke="#D4D4AA" style="stroke-width:20"/>
-	<line x1="64" y1="0" x2="0" y2="64" stroke="#D4D4AA" style="stroke-width:20"/>
+<g transform="translate(140,250)">
+	<line x1="0" y1="0" x2="128" y2="128" stroke="#D4D4AA" style="stroke-width:40"/>
+	<line x1="128" y1="0" x2="0" y2="128" stroke="#D4D4AA" style="stroke-width:40"/>
 </g>
 
 </g>
