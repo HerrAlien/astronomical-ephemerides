@@ -43,8 +43,27 @@ var LunarXPage = {
         MoonData.reset();
         var endJD = startJD + numberOfDays;
 
+        function ProcessJD(JD) {
+            var signatureChanged = LunarXPage.signature != LunarXPage.getSignature();
+            if (JD >= endJD || signatureChanged) {
+                LunarXPage.pageRendered = !signatureChanged;
+                return;
+            }
 
-        LunarXPage.pageRendered = true;
+            var lunarXData = LunarXPage.dataSource.getEvent(JD);
+            for (var occKey in occultations) {
+                var id = OccultationsPage.getId(occultations[occKey]);
+                if (OccultationsPage.occultationRendered[id]) {
+                    continue;
+                }
+                OccultationsPage.drawOccultation(occultations[occKey], OccultationsPage.hostElement);
+                OccultationsPage.occultationRendered[id] = true;
+            }
+
+            requestAnimationFrame(function () { OccultationsPageProcessJD(lunarXData.nextFirstQuarter); });
+        }
+
+        ProcessJD(startJD);
     }
 };
 
