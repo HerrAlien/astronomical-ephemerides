@@ -79,11 +79,21 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         return transitsCheckBox && transitsCheckBox.checked;
     }
 
+    var lunarXCheckBox = false;
+    function displayLunarX() {
+        if (!lunarXCheckBox) {
+            lunarXCheckBox = document.getElementById("futureLunarXSettings");
+            lunarXCheckBox.onchange = onDisplayEventTypeChange;
+        }
+        return lunarXCheckBox && lunarXCheckBox.checked;
+    }
+
     var eventTypeToCheckFunction = {
         "MoonEclipsesPage": displayLunarEclipses,
         "SolarEclipsesPage": displaySolarEclipses,
         "Occultations": displayOccultations,
-        "Transits": displayTransits
+        "Transits": displayTransits,
+        "LunarXPage" : displayLunarX
     };
 
     function getEventTypesToDisplay() {

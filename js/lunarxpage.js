@@ -71,7 +71,9 @@ var LunarXPage = {
 
         PlanetPage.prototype["addNodeChild"](row, "td",  t.date.Y + "-" + t.date.M + "-" + t.date.D);
         PlanetPage.prototype["addNodeChild"](row, "td", t.time.Ord3 + ":" + t.time.Ord2);
-    }
+    },
+
+     keywordsArray: ["Moon", "Luna", "X", "Cross", "Lunar X", "Werner X", "Werner Cross"]
 };
 
 (function () {

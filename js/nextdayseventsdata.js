@@ -200,7 +200,7 @@ var NextEvents = {
         }
     };
 
-    /////////////////// Occultations //////////////////////////
+    /////////////////// Transits //////////////////////////
     NextEvents["Transits"] = {
         GetEvents: function () {
             NextEvents.init();
@@ -230,5 +230,51 @@ var NextEvents = {
             return nextDaysEvents;
         }
     };
+
+
+    /////////////////// Lunar X //////////////////////////
+    NextEvents["LunarXPage"] = {
+        GetEvents: function () {
+            NextEvents.init();
+            var events = [];
+            var jd = NextEvents.startJd;
+            var lastFirstQuarterJd = false;
+            for (var i = 0; i < NextEvents.numberOfDays; i++) {
+
+                if (lastFirstQuarterJd && Math.abs(jd + i - lastFirstQuarterJd) < 27) {
+                    continue;
+                }
+
+                var xData = false;
+                try {
+                    if (!AAJS.AllDependenciesLoaded())
+                        throw "AAJS not loaded";
+                    xData = LunarXData.getEvent(jd + i);
+                } catch (err) {
+                    var errStr = String(err);
+                    if (0 > errStr.indexOf("Cannot obtain JD for opposition"))
+                        throw err;
+                }
+
+                lastFirstQuarterJd = xData.currentLunarXJd;
+                
+                    var evt = {
+                        start: lastFirstQuarterJd,
+                        end: lastFirstQuarterJd,
+                        navigActionObj: {
+                            page: "Lunar X",
+                            actions: []
+                        },
+                        title: "Lunar X"
+                    };
+                    if (NextEvents.InTimeBounds(evt)) {
+                        events.push (evt);
+                    }
+            }
+
+            return events;
+        }
+    };
+
 
 })();
