@@ -17,9 +17,43 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 "use strict";
 
 var LunarXData = {
+    
+    moonData : false,
 
-    getEvent : function(jd) {
-        var currentLunarXJd = jd;
+    getEvent : function(jd) {        
+
+        // get the closest first quarter moon.
+        var k = AAJS.Moon.kForJD(jd);
+        var firstQuarterK = Math.floor(k) + 0.25;
+
+        if ((k - firstQuarterK) > 0.1) {
+            firstQuarterK = Math.ceil(k) + 0.25;
+        }
+
+        var currentLunarXJd = AAJS['Moon']['JDforK'](firstQuarterK);
+
+        if (!LunarXData.moonData) {
+            LunarXData.moonData = MoonData;// new InterpolatedPlanetData(MoonData, 1);
+        }
+
+        var xFunc = function (jd) {
+            var dateData = LunarXData.moonData.getDataAsObjectForJD(jd, false, true);
+            return dateData.Colongitude - 28 * Math.sin(dateData.b0 * Math.PI / 180);
+        }
+
+        var dayFraction = 6/24;
+
+        var currentAngle = xFunc(currentLunarXJd);
+        var nextAngle = xFunc(currentLunarXJd + dayFraction);
+
+        var slope = (nextAngle - currentAngle) / dayFraction;
+        var err = currentAngle - 358;
+        var nextErr = nextAngle - 358;
+        
+        var jdCorrection = err / slope;
+
+        currentLunarXJd -= jdCorrection;
+
         return { "currentLunarXJd" : currentLunarXJd, 
                  "nextFirstQuarter" : currentLunarXJd + 29}; // both are JDs
     }
