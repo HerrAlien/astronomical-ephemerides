@@ -43,7 +43,7 @@ var LunarXPage = {
         MoonData.reset();
         var endJD = startJD + numberOfDays;
 
-        function ProcessJD(JD) {
+        function ProcessJD(JD, host) {
             var signatureChanged = LunarXPage.signature != LunarXPage.getSignature();
             if (JD >= endJD || signatureChanged) {
                 LunarXPage.pageRendered = !signatureChanged;
@@ -51,19 +51,26 @@ var LunarXPage = {
             }
 
             var lunarXData = LunarXPage.dataSource.getEvent(JD);
-            for (var occKey in occultations) {
-                var id = OccultationsPage.getId(occultations[occKey]);
-                if (OccultationsPage.occultationRendered[id]) {
-                    continue;
-                }
-                OccultationsPage.drawOccultation(occultations[occKey], OccultationsPage.hostElement);
-                OccultationsPage.occultationRendered[id] = true;
-            }
+            LunarXPage.addEntry(lunarXData.currentLunarXJd, host);
 
-            requestAnimationFrame(function () { OccultationsPageProcessJD(lunarXData.nextFirstQuarter); });
+            requestAnimationFrame(function () { ProcessJD(lunarXData.nextFirstQuarter, host); });
         }
 
-        ProcessJD(startJD);
+        var div = PlanetPage.prototype["addNodeChild"](LunarXPage.hostElement, "div");
+        div.classList.add ("lunarXEvents");
+        var table = PlanetPage.prototype["addNodeChild"](div, "table");
+        var row = PlanetPage.prototype["addNodeChild"](table, "tr");
+        PlanetPage.prototype["addNodeChild"](row, "th",  "Date");
+        PlanetPage.prototype["addNodeChild"](row, "th",  TimeStepsData.useLocalTime ? "Time (local)" : "Time (UTC)");
+        ProcessJD(startJD, table);
+    },
+
+    addEntry : function (jd, domHost) {
+        var row = PlanetPage.prototype["addNodeChild"](domHost, "tr");
+        var t = PlanetPage.prototype["yyyymmdd_hhmmOfJD"](jd);
+
+        PlanetPage.prototype["addNodeChild"](row, "td",  t.date.Y + "-" + t.date.M + "-" + t.date.D);
+        PlanetPage.prototype["addNodeChild"](row, "td", t.time.Ord3 + ":" + t.time.Ord2);
     }
 };
 

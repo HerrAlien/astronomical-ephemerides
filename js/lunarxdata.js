@@ -21,6 +21,6 @@ var LunarXData = {
     getEvent : function(jd) {
         var currentLunarXJd = jd;
         return { "currentLunarXJd" : currentLunarXJd, 
-                 "nextFirstQuarter" : currentLunarXJd + 29/4}; // both are JDs
+                 "nextFirstQuarter" : currentLunarXJd + 29}; // both are JDs
     }
 };
