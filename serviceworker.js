@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 (function() {
 var CACHE_PREFIX = 'Cache-for-ephemerides';
-var CACHE_VERSION = '229';
+var CACHE_VERSION = '232';
 var CACHE_NAME = CACHE_PREFIX + '-' + CACHE_VERSION;
 
 var AAJS_CACHE_PREFIX = 'Cache-for-AAJS'
@@ -36,7 +36,7 @@ var urlsToCache = [
 "index.html",
 "manifest.json",
 "style/default.css",
-"../style/common.css",
+"style/common.css",
 "style/largescreen.css",
 "style/print.css",
 "js/besselianelements.js",
@@ -45,6 +45,8 @@ var urlsToCache = [
 "js/interpolated_data.js",
 "js/jupiter.js",
 "js/location.js",
+"js/lunarxdata.js",
+"js/lunarxpage.js",
 "js/mars.js",
 "js/matrix.js",
 "js/mercury.js",

@@ -245,7 +245,7 @@ var TransitsPage = {
     },
 
 
-    keywordsArray: ["Transit", "Ingress", "Egress"]
+    keywordsArray: ["Transit", "Ingress", "Egress", "Sun", "Mercury", "Venus"]
     // clears up the rendered thing
 };
 

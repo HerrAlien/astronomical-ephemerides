@@ -502,6 +502,10 @@
             content: "Transits";
         }
 
+        .LunarXLinkButton::after {
+            content: "Lunar X";
+        }
+
         .largeButtons-menuPageItemImg-linkButton.OccultationsLinkButton {
             width: 190px;
         }
@@ -794,7 +798,7 @@
 
         #promotedMenuScrollableContents {
             height: 110px;
-            width: 1724px;
+            width: 1830px;
         }
 
         #promotedMenu::after, #promotedMenu::before {
@@ -1035,6 +1039,10 @@
             background-image: url('images/sprite.svg#transit');
         }
 
+        .LunarXBackground {
+            background-image: url('images/sprite.svg#lunar-x');
+        }
+
 
         /* color backgrounds */
         .ColorSunBackground {
@@ -1095,6 +1103,10 @@
 
         .ColorTransitsBackground {
             background-image: url('images/sprite.svg#color-transit');
+        }
+
+        .ColorLunarXBackground {
+            background-image: url('images/sprite.svg#color-lunar-x');
         }
 
         .GalileanMoonsBackground,
@@ -1391,6 +1403,9 @@
                 <a title="Lunar Eclipses" href="#Lunar Eclipses" class="promotedMenuLink LunarEclipseLinkButton topmenulink-linkButton LunarEclipsesBackground"> </a>
                 <a title="Occultations" href="#Occultations" class="promotedMenuLink OccultationsLinkButton topmenulink-linkButton OccultationsBackground"> </a>
                 <a title="Transits" href="#Transits" class="promotedMenuLink TransitsLinkButton topmenulink-linkButton TransitsBackground"> </a>
+
+                <a title="Lunar X" href="#Lunar X" class="promotedMenuLink LunarXLinkButton topmenulink-linkButton LunarXBackground"> </a>
+
                 <a title="Sun Ephemeris" href="#Sun Ephemeris" class="promotedMenuLink SunLinkButton topmenulink-linkButton SunBackground"></a>
                 <a title="Moon Ephemeris" href="#Moon Ephemeris" class="promotedMenuLink MoonLinkButton topmenulink-linkButton MoonBackground"></a>
                 <a title="Jupiter Ephemeris" href="#Jupiter Ephemeris" class="promotedMenuLink JupiterLinkButton topmenulink-linkButton JupiterBackground"></a>
@@ -1419,6 +1434,9 @@
             <a title="Lunar Eclipses" href="#Lunar Eclipses" class="largeButtons-menuPageItemImg-linkButton LunarEclipseLinkButton LunarEclipsesBackground"></a>
             <a title="Occultations" href="#Occultations" class="largeButtons-menuPageItemImg-linkButton OccultationsLinkButton OccultationsBackground"> </a>
             <a title="Transits" href="#Transits" class="largeButtons-menuPageItemImg-linkButton TransitsLinkButton TransitsBackground"> </a>
+
+            <a title="Lunar X" href="#Lunar X" class="largeButtons-menuPageItemImg-linkButton LunarXLinkButton LunarXBackground"> </a>
+
             <a title="Sun Ephemeris" href="#Sun Ephemeris" class="largeButtons-menuPageItemImg-linkButton SunLinkButton SunBackground"></a>
             <a title="Moon Ephemeris" href="#Moon Ephemeris" class="largeButtons-menuPageItemImg-linkButton MoonLinkButton MoonBackground"></a>
             <a title="Jupiter Ephemeris" href="#Jupiter Ephemeris" class="largeButtons-menuPageItemImg-linkButton JupiterLinkButton JupiterBackground"></a>
@@ -1501,6 +1519,7 @@
                             <div class="settingsLabelDiv">Occultations</div>
                         </label>
                     </div>
+
                         <div class="row">
                           <label class="switch">
                             <input type="checkbox" id="futureTransitsSettings" class="switchinput" checked="true">
@@ -1510,6 +1529,17 @@
                             <div class="settingsLabelDiv">Transits over the Sun</div>
                           </label>
                        </div>
+
+                        <div class="row">
+                          <label class="switch">
+                            <input type="checkbox" id="futureLunarXSettings" class="switchinput" checked="true">
+                            <span class="slider round"></span>
+                          </label>
+                          <label for="futureLunarXSettings">
+                            <div class="settingsLabelDiv">Lunar X</div>
+                          </label>
+                       </div>
+
                 </div>
             </div>
         </div>
@@ -1611,14 +1641,20 @@
         </div>
         <div id="Mercury Ephemeris" class="page">
             <h1>Mercury</h1>
-            <pre id="MercuryTable" cellspacing="0" cellpadding="0" class="planetTable hidden">
+            <div class="muddle">
+                For Transits, <a href="#Transits">click here.</a>
+            </div>
+           <pre id="MercuryTable" cellspacing="0" cellpadding="0" class="planetTable">
             <span class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></span>
              </pre>
         </div>
 
         <div id="Venus Ephemeris" class="page">
             <h1>Venus</h1>
-            <pre id="VenusTable" cellspacing="0" cellpadding="0" class="planetTable hidden">
+            <div class="muddle">
+                For Transits, <a href="#Transits">click here.</a>
+            </div>
+            <pre id="VenusTable" cellspacing="0" cellpadding="0" class="planetTable">
             <span class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></span>
              </pre>
         </div>
@@ -1681,6 +1717,7 @@
             <div class="muddle">
                 For Lunar Eclipses, <a href="#Lunar Eclipses">click here.</a>
                 For Occultations, <a href="#Occultations">click here.</a>
+                For Lunar X events, <a href="#Lunar X">click here.</a>
             </div>
             <pre id="MoonTable" cellspacing="0" cellpadding="0" class="planetTable hidden">
             <span class="loadingMemFileContents"><div class="loadingMemFileContentsDiv">&nbsp;</div></span>
@@ -1788,6 +1825,17 @@
             </div>
         </div>
 
+        <div id="Lunar X" class="page">
+            <h1>Lunar X</h1>
+            <div class="leftaligned">
+                Accuracy of the times displayed below is about 10 minutes.
+            </div>
+
+            <div id="LunarXContainer" class="loadingMemFileContents">
+                <div class="loadingMemFileContentsDiv">&nbsp;</div>
+            </div>
+        </div>
+
 
         <div id="privacy" class="page">
             <h1>Privacy Policy</h1>
@@ -1873,6 +1921,9 @@
 
 <script type="text/JavaScript" async="" src="js/transits.js"></script>
 <script type="text/JavaScript" async="" src="js/transitspage.js"></script>
+
+<script type="text/JavaScript" async="" src="js/lunarxdata.js"></script>
+<script type="text/JavaScript" async="" src="js/lunarxpage.js"></script>
 
 <script>
 
@@ -1974,7 +2025,7 @@
         }
 
 
-        injectCssDom("../style/common.css");
+        injectCssDom("style/common.css");
         injectCssDom("style/default.css");
         injectCssDom("style/print.css");
 

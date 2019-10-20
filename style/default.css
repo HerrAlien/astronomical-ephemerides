@@ -267,15 +267,20 @@ tr.secondHeaderRowScrolled th:last-of-type {
     padding: 0px 20px 20px 0px;
 }
 
-.individualEventSection table {
+.individualEventSection table,
+.lunarXEvents table {
     margin-bottom: 20px;
     font-size: 30px;
 }
 
-.individualEventSection table td{
+.individualEventSection table td,
+.lunarXEvents table td{
     padding: 10px;
 }
 
+.lunarXEvents table td{
+    text-align: center;
+}
 
 .occultation table th:nth-of-type(1)
 {
@@ -285,6 +290,11 @@ tr.secondHeaderRowScrolled th:last-of-type {
 .moonEclipse table th:nth-of-type(1)
 {
     min-width:550px;
+}
+
+.lunarXEvents table th:nth-of-type(1)
+{
+    min-width:250px;
 }
 
 .solarEclipse table td{
