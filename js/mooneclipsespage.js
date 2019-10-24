@@ -73,6 +73,7 @@ var MoonEclipsesPage = {
 
         // the contents of this title is temporary. It may change, if the eclipse starts on one day and ends in another.
         var eclipseTitle = addNodeChild(mainDiv, "h2", oppositionDateTime.date.Y + "-" + oppositionDateTime.date.M + "-" + oppositionDateTime.date.D + " " + description);
+
         addNodeChild(mainDiv, "span", "magnitude: " + GetAAJS().Numerical.RoundTo2Decimals(oppositionData.magnitude) + "; penumbral magnitude: " + GetAAJS().Numerical.RoundTo2Decimals(oppositionData.penumbralMagnitude));
 
         var timingsTable = addNodeChild(mainDiv, "table");
@@ -132,6 +133,11 @@ var MoonEclipsesPage = {
             eclipseTitle.textContent = beginsAt.dateTime.date.Y + "-" + beginsAt.dateTime.date.M + "-" + beginsAt.dateTime.date.D + " -- " +
                                        endsAt.dateTime.date.Y + "-" + endsAt.dateTime.date.M + "-" + endsAt.dateTime.date.D + " " + description;
         }
+
+        var shareAnchor = addNodeChild(eclipseTitle, "a");
+        shareAnchor.classList.add("shareIcon");
+        shareAnchor.href = "#" + JSON.stringify(this.getNavigationObject(oppositionData));
+
     },
 
     circle: function (svg, R, CX, CY, fillColor, strokeColor) {
@@ -238,8 +244,13 @@ var MoonEclipsesPage = {
         MoonEclipsesPage.displayGraph(oppositionData, mainDiv);
     },
 
-    getId (oppositionData) {
+    getId: function (oppositionData) {
         return "moonEclipse" + Math.floor(oppositionData.Timings.Penumbral.firstContact);
+    },
+
+    getNavigationObject : function (oppositionData) {
+        return { page: "Lunar Eclipses",
+                 actions: [{ name: "scroll", parameters: this.getId(oppositionData) }] };
     },
 
     keywordsArray: ["Shadow", "Umbra", "Penumbra", "Partial", "Total", "Eclipse",

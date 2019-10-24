@@ -682,3 +682,14 @@ tr.secondHeaderRowScrolled{
   background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, var(--colored-bg-light) 4px, var(--colored-bg-light) 24px);
 
 }
+
+.shareIcon {
+    width: 40px;
+    height: 45px;
+    background-image: url(../images/sprite.svg#share);
+    background-size: 40px 45px;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: inline-block;
+    float: right;
+}
