@@ -139,7 +139,7 @@ var MoonEclipsesPage = {
         //shareAnchor.href = "#" + JSON.stringify(this.getNavigationObject(oppositionData));
         shareAnchor.onclick = function() { PlanetPage.prototype["share"](
             MoonEclipsesPage.getShareEventTitle(oppositionData),
-            "#" + encodeURI(JSON.stringify(MoonEclipsesPage.getNavigationObject(oppositionData)))
+            "#" + JSON.stringify(MoonEclipsesPage.getNavigationObject(oppositionData))
         )};
     },
 
