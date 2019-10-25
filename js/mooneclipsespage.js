@@ -136,8 +136,11 @@ var MoonEclipsesPage = {
 
         var shareAnchor = addNodeChild(eclipseTitle, "a");
         shareAnchor.classList.add("shareIcon");
-        shareAnchor.href = "#" + JSON.stringify(this.getNavigationObject(oppositionData));
-
+        //shareAnchor.href = "#" + JSON.stringify(this.getNavigationObject(oppositionData));
+        shareAnchor.onclick = function() { PlanetPage.prototype["share"](
+            MoonEclipsesPage.getShareEventTitle(oppositionData),
+            "#" + JSON.stringify(MoonEclipsesPage.getNavigationObject(oppositionData))
+        )};
     },
 
     circle: function (svg, R, CX, CY, fillColor, strokeColor) {
@@ -251,6 +254,10 @@ var MoonEclipsesPage = {
     getNavigationObject : function (oppositionData) {
         return { page: "Lunar Eclipses",
                  actions: [{ name: "scroll", parameters: this.getId(oppositionData) }] };
+    },
+
+    getShareEventTitle : function (oppositionData) {
+        return "Lunar Eclipse: " + this.getTypeOfEclipseString(oppositionData);
     },
 
     keywordsArray: ["Shadow", "Umbra", "Penumbra", "Partial", "Total", "Eclipse",

@@ -102,15 +102,11 @@ var NextEvents = {
                 lastOppositionJd = eclipseData.JD;
 
                 if (eclipseData.eclipse) {
-                    var id = MoonEclipsesPage.getId(eclipseData);
                     var evt = {
                         start: eclipseData.umbralPartialEclipse ? eclipseData.Timings.Umbral.firstContact : eclipseData.Timings.Penumbral.firstContact,
                         end: eclipseData.umbralPartialEclipse ? eclipseData.Timings.Umbral.lastContact : eclipseData.Timings.Penumbral.lastContact,
-                        navigActionObj: {
-                            page: "Lunar Eclipses",
-                            actions: [{ name: "scroll", parameters: id }]
-                        },
-                        title: "Lunar Eclipse: " + MoonEclipsesPage.getTypeOfEclipseString(eclipseData)
+                        navigActionObj: MoonEclipsesPage.getNavigationObject(eclipseData),
+                        title: MoonEclipsesPage.getShareEventTitle(eclipseData)
                     };
                     if (NextEvents.InTimeBounds(evt)) {
                         events.push (evt);

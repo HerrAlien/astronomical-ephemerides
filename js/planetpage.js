@@ -388,4 +388,14 @@ function PlanetPage(planetDataSource, tableName) {
         return { 'date': dateOfJD, 'time': sexagesimalTime };
     };
 
+    PlanetPage.prototype["share"] = function (title, urlFragment) {
+        if (navigator.share) {
+            navigator.share({
+                text : title,
+                url : urlFragment,
+                title: title
+            });
+        }
+    }
+
 })();
