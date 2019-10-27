@@ -693,3 +693,7 @@ tr.secondHeaderRowScrolled{
     display: inline-block;
     float: right;
 }
+
+.individualEventSection .shareIcon {
+    margin-top: 110px;
+}
