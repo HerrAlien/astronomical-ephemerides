@@ -71,6 +71,14 @@ var MoonEclipsesPage = {
         var description = this.getTypeOfEclipseString(oppositionData);
         var oppositionDateTime = yyyymmdd_hhmmOfJD(oppositionData.JD);
 
+         var shareAnchor = addNodeChild(mainDiv, "a");
+        shareAnchor.classList.add("shareIcon");
+        //shareAnchor.href = "#" + JSON.stringify(this.getNavigationObject(oppositionData));
+        shareAnchor.onclick = function() { PlanetPage.prototype["share"](
+            MoonEclipsesPage.getShareEventTitle(oppositionData),
+            "#" + JSON.stringify(MoonEclipsesPage.getNavigationObject(oppositionData))
+        )};
+
         // the contents of this title is temporary. It may change, if the eclipse starts on one day and ends in another.
         var eclipseTitle = addNodeChild(mainDiv, "h2", oppositionDateTime.date.Y + "-" + oppositionDateTime.date.M + "-" + oppositionDateTime.date.D + " " + description);
 
@@ -133,14 +141,6 @@ var MoonEclipsesPage = {
             eclipseTitle.textContent = beginsAt.dateTime.date.Y + "-" + beginsAt.dateTime.date.M + "-" + beginsAt.dateTime.date.D + " -- " +
                                        endsAt.dateTime.date.Y + "-" + endsAt.dateTime.date.M + "-" + endsAt.dateTime.date.D + " " + description;
         }
-
-        var shareAnchor = addNodeChild(eclipseTitle, "a");
-        shareAnchor.classList.add("shareIcon");
-        //shareAnchor.href = "#" + JSON.stringify(this.getNavigationObject(oppositionData));
-        shareAnchor.onclick = function() { PlanetPage.prototype["share"](
-            MoonEclipsesPage.getShareEventTitle(oppositionData),
-            "#" + JSON.stringify(MoonEclipsesPage.getNavigationObject(oppositionData))
-        )};
     },
 
     circle: function (svg, R, CX, CY, fillColor, strokeColor) {

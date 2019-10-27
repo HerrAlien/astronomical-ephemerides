@@ -144,15 +144,15 @@ var NextEvents = {
                 var eclipseData = SolarEclipses.EclipseDataForK(k);
                 if (eclipseData.bEclipse) {
                     var id = SolarEclipsesPage.getId(eclipseData);
-                    if (eclipseData["t1"]) {
+                    //let's not condition this by visibility. Keep consistent with
+                    // how moon eclipses and other events are treated.
+                    // if (eclipseData["t1"]) 
+                    {
                         var evt = {
                             start: eclipseData.t0,
                             end: eclipseData.t0,
-                            navigActionObj: {
-                                page: "Solar Eclipses",
-                                actions: [{ name: "scroll", parameters: id }]
-                            },
-                            title: "Solar Eclipse: " + SolarEclipsesPage.getTypeOfEclipseString(eclipseData)
+                            navigActionObj: SolarEclipsesPage.getNavigationObject(eclipseData),
+                            title: SolarEclipsesPage.getShareEventTitle(eclipseData)
                         };
 
                         if (NextEvents.InTimeBounds(evt)) {
