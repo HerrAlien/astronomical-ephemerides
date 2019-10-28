@@ -118,7 +118,7 @@ var SolarEclipsesPage = {
         //shareAnchor.href = "#" + JSON.stringify(this.getNavigationObject(oppositionData));
         shareAnchor.onclick = function() { PlanetPage.prototype["share"](
             SolarEclipsesPage.getShareEventTitle(eclipseData),
-            "#" + JSON.stringify(SolarEclipsesPage.getNavigationObject(eclipseData))
+            "%23" + JSON.stringify(SolarEclipsesPage.getNavigationObject(eclipseData))
         )};
 
 
