@@ -392,8 +392,7 @@ function PlanetPage(planetDataSource, tableName) {
         if (navigator.share) {
             navigator.share({
                 text : title,
-                url : document.location.origin + document.location.pathname + 
-                    encodeURI(urlFragment),
+                url : document.location.origin + document.location.pathname + urlFragment,
                 title: title
             });
         }
