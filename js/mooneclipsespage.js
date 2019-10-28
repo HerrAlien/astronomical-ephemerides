@@ -76,7 +76,7 @@ var MoonEclipsesPage = {
         //shareAnchor.href = "#" + JSON.stringify(this.getNavigationObject(oppositionData));
         shareAnchor.onclick = function() { PlanetPage.prototype["share"](
             MoonEclipsesPage.getShareEventTitle(oppositionData),
-            "%23" + JSON.stringify(MoonEclipsesPage.getNavigationObject(oppositionData))
+            "#" + JSON.stringify(MoonEclipsesPage.getNavigationObject(oppositionData))
         )};
 
         // the contents of this title is temporary. It may change, if the eclipse starts on one day and ends in another.
