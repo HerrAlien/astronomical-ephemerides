@@ -71,13 +71,9 @@ var MoonEclipsesPage = {
         var description = this.getTypeOfEclipseString(oppositionData);
         var oppositionDateTime = yyyymmdd_hhmmOfJD(oppositionData.JD);
 
-         var shareAnchor = addNodeChild(mainDiv, "a");
-        shareAnchor.classList.add("shareIcon");
-        //shareAnchor.href = "#" + JSON.stringify(this.getNavigationObject(oppositionData));
-        shareAnchor.onclick = function() { PlanetPage.prototype["share"](
-            MoonEclipsesPage.getShareEventTitle(oppositionData),
-            "#" + JSON.stringify(MoonEclipsesPage.getNavigationObject(oppositionData))
-        )};
+         var shareAnchor = PlanetPage.prototype["addShareIcon"](mainDiv, 
+                MoonEclipsesPage.getShareEventTitle(oppositionData),
+                MoonEclipsesPage.getNavigationObject(oppositionData));
 
         // the contents of this title is temporary. It may change, if the eclipse starts on one day and ends in another.
         var eclipseTitle = addNodeChild(mainDiv, "h2", oppositionDateTime.date.Y + "-" + oppositionDateTime.date.M + "-" + oppositionDateTime.date.D + " " + description);

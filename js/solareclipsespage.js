@@ -113,14 +113,9 @@ var SolarEclipsesPage = {
 
         var decimalsFactor = 1e5;
 
-        var shareAnchor = addNodeChild(mainDiv, "a");
-        shareAnchor.classList.add("shareIcon");
-        //shareAnchor.href = "#" + JSON.stringify(this.getNavigationObject(oppositionData));
-        shareAnchor.onclick = function() { PlanetPage.prototype["share"](
-            SolarEclipsesPage.getShareEventTitle(eclipseData),
-            "#" + JSON.stringify(SolarEclipsesPage.getNavigationObject(eclipseData))
-        )};
-
+        var shareAnchor = PlanetPage.prototype["addShareIcon"](mainDiv, 
+                SolarEclipsesPage.getShareEventTitle(eclipseData),
+                SolarEclipsesPage.getNavigationObject(eclipseData));
 
         addNodeChild(mainDiv, "h2", dateTime.date.Y + "-" + dateTime.date.M + "-" + dateTime.date.D + " " + description);
 

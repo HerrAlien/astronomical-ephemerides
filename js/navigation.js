@@ -206,7 +206,20 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         }
     }
 
+    function onload () {
+        // drop the hash.
+        try {
+            var navigationObjectString = decodeURI(document.location.search.slice(18));
+            var payload = JSON.parse(navigationObjectString);
+            window.location.replace(
+            document.location.origin + document.location.pathname +
+            "#" + navigationObjectString);
+        } catch (err) { }
+    }
+
     window.addEventListener("hashchange", onhashchange, false);
     if (location.hash) SyncedTimeOut(onhashchange, Timeout.onInit);
+
+    window.addEventListener("load", onload, false);
 
 })();
