@@ -388,14 +388,26 @@ function PlanetPage(planetDataSource, tableName) {
         return { 'date': dateOfJD, 'time': sexagesimalTime };
     };
 
-    PlanetPage.prototype["share"] = function (title, urlFragment) {
+    PlanetPage.prototype["addShareIcon"] = function (hostElement, title, navigationObject) {
+        var a = PlanetPage.prototype.addNodeChild(hostElement, "a");
+        a.classList.add("shareIcon");
+
+        var shareURL = document.location.origin + document.location.pathname + 
+                      "?navigationObject=" + encodeURI(JSON.stringify(navigationObject));
+
         if (navigator.share) {
-            navigator.share({
-                text : title,
-                url : document.location.origin + document.location.pathname + urlFragment,
-                title: title
-            });
+            a.onclick = function() {navigator.share(
+                { text: title,
+                  title: title,
+                  // to be refined ...
+                  url: shareURL
+                });
+            };
+        } else {
+            a.href = shareURL;
         }
+
+        return a;
     }
 
 })();
