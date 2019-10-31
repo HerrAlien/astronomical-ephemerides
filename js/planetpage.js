@@ -480,16 +480,11 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
         var sexagesimalTime = GetAAJS().Numerical.ToSexagesimal(roundedTime);
 
         if (TimeStepsData.useLocalTime) {
-            var lt = new Date();
-            lt.setUTCHours(sexagesimalTime.Ord3);
-            lt.setUTCMinutes(sexagesimalTime.Ord2);
-            lt.setUTCSeconds(sexagesimalTime.Ord1);
-            lt.setUTCFullYear(dateOfJD.Y);
-            lt.setUTCMonth(dateOfJD.M - 1);
-            lt.setUTCDate(dateOfJD.D);
+            var lt = new Date(Date.UTC(dateOfJD.Y, dateOfJD.M - 1, 
+            dateOfJD.D, sexagesimalTime.Ord3, sexagesimalTime.Ord2, sexagesimalTime.Ord1));
 
             dateOfJD.Y = lt.getFullYear();
-            dateOfJD.M = lt.getMonth() + 1;
+            dateOfJD.M = Number(lt.getMonth()) + 1;
             dateOfJD.D = lt.getDate();
 
             sexagesimalTime.Ord3 = lt.getHours();
