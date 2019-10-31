@@ -176,15 +176,11 @@ var NextEvents = {
             var occultations = OccultationsData.getOccultedStars(jd, NextEvents.numberOfDays);
             for (var conjunctionJde in occultations) {
                 var occultation = occultations[conjunctionJde];
-                var id = OccultationsPage.getId(occultation);
                 var event = {
                     start: occultation.start.t - dt,
                     end: occultation.end.t - dt,
-                    navigActionObj: {
-                        page: "Occultations",
-                        actions: [{ name: "scroll", parameters: id }]
-                    },
-                    title: "Occultation: " + OccultationsPage.getStarName(occultation)
+                    navigActionObj: OccultationsPage.getNavigationObject(occultation),
+                    title: OccultationsPage.getShareEventTitle(occultation)
                 };
 
                 if (NextEvents.InTimeBounds(event)) {
@@ -207,15 +203,11 @@ var NextEvents = {
             var events = Transits.get(jd, NextEvents.numberOfDays);
             for (var jde in events) {
                 var event = events[jde];
-                var id = TransitsPage.getId(event);
                 var nextDaysEvent = {
                     start: event.C1.t - dt,
                     end: event.C4.t - dt,
-                    navigActionObj: {
-                        page: "Transits",
-                        actions: [{ name: "scroll", parameters: id }]
-                    },
-                    title: "Transit: " + event.name
+                    navigActionObj: TransitsPage.getNavigationObject(event),
+                    title: TransitsPage.getShareEventTitle(event)
                 };
 
                 if (NextEvents.InTimeBounds(nextDaysEvent)) {
