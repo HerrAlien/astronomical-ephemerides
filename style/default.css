@@ -684,14 +684,16 @@ tr.secondHeaderRowScrolled{
 }
 
 .shareIcon {
-    width: 40px;
-    height: 45px;
+    width: 60px;
+    height: 60px;
     background-image: url(../images/sprite.svg#share);
     background-size: 40px 45px;
     background-position: center;
     background-repeat: no-repeat;
     display: inline-block;
     float: right;
+    border-radius: 50%;
+    margin-left: 10px;
 }
 
 .individualEventSection .shareIcon {

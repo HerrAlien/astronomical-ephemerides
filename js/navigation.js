@@ -161,7 +161,12 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                                 var scollAction = function () {
                                     targetDiv = document.getElementById(action.parameters);
                                     if (targetDiv) {
-                                        targetDiv.scrollIntoView();
+                                        try {
+                                            targetDiv.scrollIntoView();
+                                        } catch (err) {
+                                            targetDiv.parentNode.scrollTop = targetDiv.offsetTop - 
+                                                                             targetDiv.parentNode.offsetTop;
+                                        }
                                         return;
                                     }
                                     if (attemptsCount < maxAttempts) {
