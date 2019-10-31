@@ -92,6 +92,15 @@ var OccultationsPage = {
                 + " " + OccultationsPage.getStarName(occultation);
     },
 
+    getNavigationObject: function (occultation) {
+        return { page: "Occultations",
+                 actions: [{ name: "scroll", parameters: OccultationsPage.getId(occultation) }]};
+    },
+
+    getShareEventTitle: function (occultation) {
+        return "Occultation: " + OccultationsPage.getStarName(occultation);
+    },
+
     drawOccultation: function (occultation, host) {
         var addNodeChild = PlanetPage.prototype["addNodeChild"];
         var yyyymmdd_hhmmOfJD = PlanetPage.prototype["yyyymmdd_hhmmOfJD"];
@@ -103,6 +112,11 @@ var OccultationsPage = {
         div.classList.add("individualEventSection");
         div.classList.add("occultation");
         div["id"] = OccultationsPage.getId(occultation);
+
+        var shareAnchor = PlanetPage.prototype["addShareIcon"](div, 
+                OccultationsPage.getShareEventTitle(occultation),
+                OccultationsPage.getNavigationObject(occultation));
+
         var occultationTitle = OccultationsPage.getOccultationTitle(occultation);
 
         var h2 = addNodeChild(div, "h2", occultationTitle);

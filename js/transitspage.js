@@ -89,9 +89,19 @@ var TransitsPage = {
     },
 
     getId: function (event) {
-        return "transit " + Math.round(event.C1.t) +
+        return "Transit " + Math.round(event.C1.t) +
                 + " " + TransitsPage.getPlanetName(event);
     },
+
+    getShareEventTitle : function (event) {
+        return "Transit: " + event.name;
+    },
+    
+    getNavigationObject: function (event) {
+        return { page: "Transits",
+                 actions: [{ name: "scroll", parameters: TransitsPage.getId(event) }]};
+    },
+
 
     draw: function (event, host) {
         var addNodeChild = PlanetPage.prototype["addNodeChild"];
@@ -104,9 +114,15 @@ var TransitsPage = {
         div.classList.add("individualEventSection");
         div.classList.add("occultation");
         div["id"] = TransitsPage.getId(event);
-        var occultationTitle = TransitsPage.getTitle(event);
 
-        var h2 = addNodeChild(div, "h2", occultationTitle);
+        var shareAnchor = PlanetPage.prototype["addShareIcon"](div, 
+                TransitsPage.getShareEventTitle(event),
+                TransitsPage.getNavigationObject(event));
+
+
+        var title = TransitsPage.getTitle(event);
+
+        var h2 = addNodeChild(div, "h2", title);
         var sepparation = GetAAJS().Numerical.ToSexagesimal(event.distAtTMaxD);
         addNodeChild(div, "span", "Closest: " + sepparation.Ord2 + "' " + Math.round(sepparation.Ord1) + "''");
 
@@ -161,7 +177,7 @@ var TransitsPage = {
         viewport.appendChild(img);
         img.setAttribute("height", h);
         img.setAttribute("width", w);
-        img.setAttribute("alt", occultationTitle);
+        img.setAttribute("alt", title);
 
         var sunCircle = document.createElementNS(svgns, "circle");
         img.appendChild(sunCircle);
