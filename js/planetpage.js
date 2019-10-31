@@ -508,6 +508,28 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
         return { 'date': dateOfJD, 'time': sexagesimalTime };
     };
 
+    PlanetPage.prototype["addShareIcon"] = function (hostElement, title, navigationObject) {
+        var a = PlanetPage.prototype.addNodeChild(hostElement, "a");
+        a.classList.add("shareIcon");
+
+        var shareURL = document.location.origin + document.location.pathname + 
+                      "?navigationObject=" + encodeURI(JSON.stringify(navigationObject));
+
+        if (navigator.share) {
+            a.onclick = function() {navigator.share(
+                { text: title,
+                  title: title,
+                  // to be refined ...
+                  url: shareURL
+                });
+            };
+        } else {
+            a.href = shareURL;
+        }
+
+        return a;
+    }
+    
     var newInterpolatedTable = function (hostElement, tableHeaderInfo) {
         var dataKeyToDisplayDom = {};
         var addNodeChild = PlanetPage.prototype.addNodeChild;

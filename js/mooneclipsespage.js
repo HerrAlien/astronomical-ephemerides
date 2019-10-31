@@ -71,8 +71,13 @@ var MoonEclipsesPage = {
         var description = this.getTypeOfEclipseString(oppositionData);
         var oppositionDateTime = yyyymmdd_hhmmOfJD(oppositionData.JD);
 
+         var shareAnchor = PlanetPage.prototype["addShareIcon"](mainDiv, 
+                MoonEclipsesPage.getShareEventTitle(oppositionData),
+                MoonEclipsesPage.getNavigationObject(oppositionData));
+
         // the contents of this title is temporary. It may change, if the eclipse starts on one day and ends in another.
         var eclipseTitle = addNodeChild(mainDiv, "h2", oppositionDateTime.date.Y + "-" + oppositionDateTime.date.M + "-" + oppositionDateTime.date.D + " " + description);
+
         addNodeChild(mainDiv, "span", "magnitude: " + GetAAJS().Numerical.RoundTo2Decimals(oppositionData.magnitude) + "; penumbral magnitude: " + GetAAJS().Numerical.RoundTo2Decimals(oppositionData.penumbralMagnitude));
 
         var timingsTable = addNodeChild(mainDiv, "table");
@@ -238,8 +243,17 @@ var MoonEclipsesPage = {
         MoonEclipsesPage.displayGraph(oppositionData, mainDiv);
     },
 
-    getId (oppositionData) {
+    getId: function (oppositionData) {
         return "moonEclipse" + Math.floor(oppositionData.Timings.Penumbral.firstContact);
+    },
+
+    getNavigationObject : function (oppositionData) {
+        return { page: "Lunar Eclipses",
+                 actions: [{ name: "scroll", parameters: this.getId(oppositionData) }] };
+    },
+
+    getShareEventTitle : function (oppositionData) {
+        return "Lunar Eclipse: " + this.getTypeOfEclipseString(oppositionData);
     },
 
     keywordsArray: ["Shadow", "Umbra", "Penumbra", "Partial", "Total", "Eclipse",

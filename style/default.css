@@ -701,6 +701,20 @@ tr.secondHeaderRowScrolled{
 
 }
 
+.shareIcon {
+    width: 40px;
+    height: 45px;
+    background-image: url(../images/sprite.svg#share);
+    background-size: 40px 45px;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: inline-block;
+    float: right;
+}
+
+.individualEventSection .shareIcon {
+    margin-top: 110px;
+}
 
 .interpolatedTableLabel,
 .interpolatedTableValue
@@ -755,4 +769,3 @@ tr.secondHeaderRowScrolled{
     font-size: 16px;
 }
 
-}

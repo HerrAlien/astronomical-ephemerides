@@ -102,15 +102,11 @@ var NextEvents = {
                 lastOppositionJd = eclipseData.JD;
 
                 if (eclipseData.eclipse) {
-                    var id = MoonEclipsesPage.getId(eclipseData);
                     var evt = {
                         start: eclipseData.umbralPartialEclipse ? eclipseData.Timings.Umbral.firstContact : eclipseData.Timings.Penumbral.firstContact,
                         end: eclipseData.umbralPartialEclipse ? eclipseData.Timings.Umbral.lastContact : eclipseData.Timings.Penumbral.lastContact,
-                        navigActionObj: {
-                            page: "Lunar Eclipses",
-                            actions: [{ name: "scroll", parameters: id }]
-                        },
-                        title: "Lunar Eclipse: " + MoonEclipsesPage.getTypeOfEclipseString(eclipseData)
+                        navigActionObj: MoonEclipsesPage.getNavigationObject(eclipseData),
+                        title: MoonEclipsesPage.getShareEventTitle(eclipseData)
                     };
                     if (NextEvents.InTimeBounds(evt)) {
                         events.push (evt);
@@ -148,15 +144,15 @@ var NextEvents = {
                 var eclipseData = SolarEclipses.EclipseDataForK(k);
                 if (eclipseData.bEclipse) {
                     var id = SolarEclipsesPage.getId(eclipseData);
-                    if (eclipseData["t1"]) {
+                    //let's not condition this by visibility. Keep consistent with
+                    // how moon eclipses and other events are treated.
+                    // if (eclipseData["t1"]) 
+                    {
                         var evt = {
                             start: eclipseData.t0,
                             end: eclipseData.t0,
-                            navigActionObj: {
-                                page: "Solar Eclipses",
-                                actions: [{ name: "scroll", parameters: id }]
-                            },
-                            title: "Solar Eclipse: " + SolarEclipsesPage.getTypeOfEclipseString(eclipseData)
+                            navigActionObj: SolarEclipsesPage.getNavigationObject(eclipseData),
+                            title: SolarEclipsesPage.getShareEventTitle(eclipseData)
                         };
 
                         if (NextEvents.InTimeBounds(evt)) {
@@ -180,15 +176,11 @@ var NextEvents = {
             var occultations = OccultationsData.getOccultedStars(jd, NextEvents.numberOfDays);
             for (var conjunctionJde in occultations) {
                 var occultation = occultations[conjunctionJde];
-                var id = OccultationsPage.getId(occultation);
                 var event = {
                     start: occultation.start.t - dt,
                     end: occultation.end.t - dt,
-                    navigActionObj: {
-                        page: "Occultations",
-                        actions: [{ name: "scroll", parameters: id }]
-                    },
-                    title: "Occultation: " + OccultationsPage.getStarName(occultation)
+                    navigActionObj: OccultationsPage.getNavigationObject(occultation),
+                    title: OccultationsPage.getShareEventTitle(occultation)
                 };
 
                 if (NextEvents.InTimeBounds(event)) {
@@ -211,15 +203,11 @@ var NextEvents = {
             var events = Transits.get(jd, NextEvents.numberOfDays);
             for (var jde in events) {
                 var event = events[jde];
-                var id = TransitsPage.getId(event);
                 var nextDaysEvent = {
                     start: event.C1.t - dt,
                     end: event.C4.t - dt,
-                    navigActionObj: {
-                        page: "Transits",
-                        actions: [{ name: "scroll", parameters: id }]
-                    },
-                    title: "Transit: " + event.name
+                    navigActionObj: TransitsPage.getNavigationObject(event),
+                    title: TransitsPage.getShareEventTitle(event)
                 };
 
                 if (NextEvents.InTimeBounds(nextDaysEvent)) {

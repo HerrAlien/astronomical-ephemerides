@@ -86,6 +86,15 @@ var SolarEclipsesPage = {
         return "SolarEclipse" + eclipseData.t0;
     },
 
+    getNavigationObject : function (eclipseData) {
+        return { page: "Solar Eclipses",
+        actions: [{ name: "scroll", parameters: SolarEclipsesPage.getId(eclipseData)}]};
+    },
+
+    getShareEventTitle : function (eclipseData) {
+        return "Solar Eclipse: " + SolarEclipsesPage.getTypeOfEclipseString(eclipseData);
+    },
+
     drawNewEclipse: function (eclipseData) {
         var yyyymmdd_hhmmOfJD = PlanetPage.prototype.yyyymmdd_hhmmOfJD;
 
@@ -103,6 +112,10 @@ var SolarEclipsesPage = {
         var description = this.getTypeOfEclipseString(eclipseData);
 
         var decimalsFactor = 1e5;
+
+        var shareAnchor = PlanetPage.prototype["addShareIcon"](mainDiv, 
+                SolarEclipsesPage.getShareEventTitle(eclipseData),
+                SolarEclipsesPage.getNavigationObject(eclipseData));
 
         addNodeChild(mainDiv, "h2", dateTime.date.Y + "-" + dateTime.date.M + "-" + dateTime.date.D + " " + description);
 
