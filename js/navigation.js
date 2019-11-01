@@ -160,7 +160,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                                 var timeout = 500;
                                 var scollAction = function () {
                                     targetDiv = document.getElementById(action.parameters);
-                                    if (targetDiv) {
+                                    if (targetDiv && Pages[pageName].pageRendered) {
                                         SyncedTimeOut ( function() {
                                             try {
                                                 targetDiv.scrollIntoView();
@@ -168,7 +168,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                                                 targetDiv.parentNode.scrollTop = targetDiv.offsetTop - 
                                                                                  targetDiv.parentNode.offsetTop;
                                             }
-                                        }, timeout);
+                                        }, 0);
                                         return;
                                     }
                                     if (attemptsCount < maxAttempts) {
