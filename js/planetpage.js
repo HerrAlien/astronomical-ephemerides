@@ -506,6 +506,7 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
     PlanetPage.prototype["addShareIcon"] = function (hostElement, title, navigationObject) {
         var a = PlanetPage.prototype.addNodeChild(hostElement, "a");
         a.classList.add("shareIcon");
+        a.classList.add("cta");
 
         var shareURL = document.location.origin + document.location.pathname + 
                       "?navigationObject=" + encodeURI(JSON.stringify(navigationObject));
