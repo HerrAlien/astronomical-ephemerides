@@ -327,6 +327,13 @@
 
         Pages.addPlainPages(["more", "settings", "home", "privacy", "Search results", "about"]);
 
+        // when we can't use the native share, just put it to clipboard.
+        if (!navigator.share && navigator.clipboard) {
+            navigator.share = function(obj) {
+                navigator.clipboard.writeText(obj.url)
+                    .then(function() { alert ("Link URL copied to clipboard"); } );
+            }
+        }
 
     </script>
 

@@ -160,17 +160,19 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                                 var timeout = 500;
                                 var scollAction = function () {
                                     targetDiv = document.getElementById(action.parameters);
-                                    if (targetDiv) {
-                                        try {
-                                            targetDiv.scrollIntoView();
-                                        } catch (err) {
-                                            targetDiv.parentNode.scrollTop = targetDiv.offsetTop - 
-                                                                             targetDiv.parentNode.offsetTop;
-                                        }
+                                    if (targetDiv && Pages[pageName].pageRendered) {
+                                        SyncedTimeOut ( function() {
+                                            try {
+                                                targetDiv.scrollIntoView();
+                                            } catch (err) {
+                                                targetDiv.parentNode.scrollTop = targetDiv.offsetTop - 
+                                                                                 targetDiv.parentNode.offsetTop;
+                                            }
+                                        }, 0);
                                         return;
                                     }
                                     if (attemptsCount < maxAttempts) {
-                                        setTimeout(scollAction, timeout);
+                                        SyncedTimeOut(scollAction, timeout);
                                     }
                                     attemptsCount++;
                                 }
