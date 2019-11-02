@@ -79,9 +79,16 @@ var LunarXPage = {
 (function () {
     var initLocal = function () {
         try {
+            
+            var pageDivId = "Lunar X";
+
             LunarXPage.dataSource = LunarXData;
             LunarXPage.reset = PlanetPage.prototype.reset;
-            Pages["Lunar X"] = LunarXPage;
+            Pages[pageDivId] = LunarXPage;
+
+            var div = document.getElementById(pageDivId);
+            PlanetPage.prototype.addFirstChildShareIcon(div, pageDivId, { page: pageDivId});
+
         } catch (err) {
             SyncedTimeOut(initLocal, Timeout.onInit);
         }

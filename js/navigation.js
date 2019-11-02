@@ -160,15 +160,13 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                                 var timeout = 500;
                                 var scollAction = function () {
                                     targetDiv = document.getElementById(action.parameters);
-                                    if (targetDiv && Pages[pageName].pageRendered) {
-                                        SyncedTimeOut ( function() {
-                                            try {
-                                                targetDiv.scrollIntoView();
-                                            } catch (err) {
-                                                targetDiv.parentNode.scrollTop = targetDiv.offsetTop - 
-                                                                                 targetDiv.parentNode.offsetTop;
-                                            }
-                                        }, 0);
+                                    if (targetDiv) {
+                                        try {
+                                            targetDiv.scrollIntoView();
+                                        } catch (err) {
+                                            targetDiv.parentNode.scrollTop = targetDiv.offsetTop - 
+                                                                             targetDiv.parentNode.offsetTop;
+                                        }
                                         return;
                                     }
                                     if (attemptsCount < maxAttempts) {
@@ -214,7 +212,6 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     }
 
     function onload () {
-        // drop the hash.
         try {
             var navigationObjectString = decodeURI(document.location.search.slice(18));
             var payload = JSON.parse(navigationObjectString);
