@@ -27,7 +27,7 @@ var UranusData = {};
                 semidiameterFunctionName: function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.UranusSemidiameterB(delta); }
             });
             var Page = new PlanetPage(UranusData, "UranusTable");
-            Pages["Uranus Ephemeris"] = Page;
+            Pages.addShareablePage(Page, "Uranus Ephemeris");
         } else {
             SyncedTimeOut(initLocal, Timeout.onInit);
         }

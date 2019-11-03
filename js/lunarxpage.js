@@ -81,7 +81,7 @@ var LunarXPage = {
         try {
             LunarXPage.dataSource = LunarXData;
             LunarXPage.reset = PlanetPage.prototype.reset;
-            Pages["Lunar X"] = LunarXPage;
+            Pages.addShareablePage(LunarXPage, "Lunar X");
         } catch (err) {
             SyncedTimeOut(initLocal, Timeout.onInit);
         }

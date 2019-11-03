@@ -220,7 +220,7 @@ var SolarEclipsesPage = {
         try {
             SolarEclipsesPage.dataSource = SolarEclipses;
             SolarEclipsesPage.reset = PlanetPage.prototype.reset;
-            Pages["Solar Eclipses"] = SolarEclipsesPage;
+            Pages.addShareablePage(SolarEclipsesPage, "Solar Eclipses");
         } catch (err) {
             SyncedTimeOut(initLocal, Timeout.onInit);
         }

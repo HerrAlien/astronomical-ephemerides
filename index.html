@@ -317,11 +317,16 @@
         }
 
         var Pages = {
-            "addPlainPages": function (titles) {
+            addPlainPages: function (titles) {
                 for (var i = 0; i < titles.length; i++) {
                     var title = titles[i];
                     Pages[title] = { "displayPage": function () { }, "reset": function () { } };
                 }
+            },
+            addShareablePage : function (pageObj, pageDivId) {
+                Pages[pageDivId] = pageObj;
+                var div = document.getElementById(pageDivId);
+                PlanetPage.prototype.addFirstChildShareIcon(div, pageDivId, { page: pageDivId});
             }
         };
 
@@ -574,7 +579,7 @@
             font-family: Verdana, Sans-Serif;
         }
 
-        h1 {
+        h1, .page .shareIcon {
             margin-top: 120px;
             margin-bottom: 0px;
             font-size: 50px;
@@ -877,7 +882,7 @@
 
         @media screen and (max-width: 936px) {
 
-            h1 {
+            h1, .page .shareIcon {
                 margin-top: 40px;
             }
 

@@ -27,7 +27,7 @@ var SaturnData = {};
                 semidiameterFunctionName: function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.SaturnEquatorialSemidiameterB(delta); }
             });
             var Page = new PlanetPage(SaturnData, "SaturnTable");
-            Pages["Saturn Ephemeris"] = Page;
+            Pages.addShareablePage(Page, "Saturn Ephemeris");
         } else {
             SyncedTimeOut(initLocal, Timeout.onInit);
         }
