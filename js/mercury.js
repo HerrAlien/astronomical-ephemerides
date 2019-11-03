@@ -25,7 +25,7 @@ var MercuryData = {};
                 semidiameterFunctionName: function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.MercurySemidiameterB(delta); }
             });
             var Page = new PlanetPage(MercuryData, "MercuryTable");
-            Pages["Mercury Ephemeris"] = Page;
+            Pages.addShareablePage(Page, "Mercury Ephemeris");
         } else {
             SyncedTimeOut(localInit, Timeout.onInit);
         }

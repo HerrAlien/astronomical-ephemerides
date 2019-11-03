@@ -28,7 +28,7 @@ var VenusData = {};
             });
 
             var Page = new PlanetPage(VenusData, "VenusTable");
-            Pages["Venus Ephemeris"] = Page;
+            Pages.addShareablePage(Page, "Venus Ephemeris");
         } else {
             SyncedTimeOut(localInit, Timeout.onInit);
         }

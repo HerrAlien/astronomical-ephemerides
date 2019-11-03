@@ -266,7 +266,7 @@ var MoonEclipsesPage = {
         try {
             MoonEclipsesPage.dataSource = MoonEclipsesData;
             MoonEclipsesPage.reset = PlanetPage.prototype.reset;
-            Pages["Lunar Eclipses"] = MoonEclipsesPage;
+            Pages.addShareablePage(MoonEclipsesPage, "Lunar Eclipses");
         } catch (err) {
             SyncedTimeOut(initLocal, Timeout.onInit);
         }

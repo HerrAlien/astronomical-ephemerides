@@ -376,7 +376,7 @@ var MoonData = {
 
             MoonPage.oldHeaderFunc = PlanetPage.prototype.addTableHeader;
             MoonPage.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
-            Pages["Moon Ephemeris"] = MoonPage;
+            Pages.addShareablePage(MoonPage, "Moon Ephemeris");
         } else {
             SyncedTimeOut(localInit, Timeout.onInit);
         }

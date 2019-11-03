@@ -87,8 +87,7 @@ var MarsData = {};
                 preparedLine[preparedLine.length] = preparedLine[1];
                 return preparedLine;
             }
-
-            Pages["Mars Ephemeris"] = Page;
+            Pages.addShareablePage(Page, "Mars Ephemeris");
         } else {
             SyncedTimeOut(initLocal, Timeout.onInit);
         }

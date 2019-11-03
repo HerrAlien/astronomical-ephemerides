@@ -32,8 +32,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             );
 
             GalileanMoonsPage.reset = PlanetPage.prototype.reset;
+            Pages.addShareablePage(GalileanMoonsPage, "Elongations of Galilean Moons");
 
-            Pages["Elongations of Galilean Moons"] = GalileanMoonsPage;
         } catch (err) {
             SyncedTimeOut(localInit, Timeout.onInit);
         }

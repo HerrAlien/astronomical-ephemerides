@@ -299,7 +299,7 @@ var OccultationsPage = {
         try {
             OccultationsPage.dataSource = OccultationsData;
             OccultationsPage.reset = PlanetPage.prototype.reset;
-            Pages["Occultations"] = OccultationsPage;
+            Pages.addShareablePage(OccultationsPage, "Occultations");
         } catch (err) {
             SyncedTimeOut(initLocal, Timeout.onInit);
         }

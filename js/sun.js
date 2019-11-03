@@ -278,7 +278,7 @@ var SunData = {
             Sun.appendLine = PlanetPage.prototype.appendLine;
             Sun.addNodeChild = PlanetPage.prototype.addNodeChild;
             Sun.oldAddHeader = PlanetPage.prototype.addTableHeader;
-            Pages["Sun Ephemeris"] = Sun;
+            Pages.addShareablePage(Sun, "Sun Ephemeris");
         } else {
             SyncedTimeOut(localInit, Timeout.onInit);
         }

@@ -90,8 +90,7 @@ var JupiterData = {};
                 divPhysical.classList.add("hidePhaseOnPhysical");
                 return header;
             }
-
-            Pages["Jupiter Ephemeris"] = Page;
+            Pages.addShareablePage(Page, "Jupiter Ephemeris");
         } else {
             SyncedTimeOut(localInit, Timeout.onInit);
         }

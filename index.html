@@ -317,11 +317,16 @@
         }
 
         var Pages = {
-            "addPlainPages": function (titles) {
+            addPlainPages: function (titles) {
                 for (var i = 0; i < titles.length; i++) {
                     var title = titles[i];
                     Pages[title] = { "displayPage": function () { }, "reset": function () { } };
                 }
+            },
+            addShareablePage : function (pageObj, pageDivId) {
+                Pages[pageDivId] = pageObj;
+                var div = document.getElementById(pageDivId);
+                PlanetPage.prototype.addFirstChildShareIcon(div, pageDivId, { page: pageDivId});
             }
         };
 

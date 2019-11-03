@@ -32,9 +32,9 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             );
 
             SaturnMoonsPage.reset = PlanetPage.prototype.reset;
-
-            Pages["Elongations of Saturn Moons"] = SaturnMoonsPage;
             SaturnMoonsPage.planetFraction = 1 / 23.0;
+
+            Pages.addShareablePage(SaturnMoonsPage, "Elongations of Saturn Moons");
         } catch (err) {
             SyncedTimeOut(localInit, Timeout.onInit);
         }
