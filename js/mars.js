@@ -87,7 +87,7 @@ var MarsData = {};
                 preparedLine[preparedLine.length] = preparedLine[1];
                 return preparedLine;
             }
-
+            Pages.addShareablePage(Page, "Mars Ephemeris");
             Page.parent_reset = PlanetPage.prototype.reset;
             Page.reset = function () {
                 this.parent_reset();
@@ -102,8 +102,6 @@ var MarsData = {};
                 this.interpolatorDisplayFunctions['CentralMeridianLongitude'] = angleDegrees_3Decimals;                
             };
             Page.renderTable = PlanetPage.prototype.renderTable;
-
-            Pages["Mars Ephemeris"] = Page;
         } else {
             SyncedTimeOut(initLocal, Timeout.onInit);
         }

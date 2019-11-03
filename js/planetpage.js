@@ -503,8 +503,7 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
         return { 'date': dateOfJD, 'time': sexagesimalTime };
     };
 
-    PlanetPage.prototype["addShareIcon"] = function (hostElement, title, navigationObject) {
-        var a = PlanetPage.prototype.addNodeChild(hostElement, "a");
+    function setupShareAnchor(a, title, navigationObject) {
         a.classList.add("shareIcon");
         a.classList.add("cta");
 
@@ -562,5 +561,17 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
 
         return dataKeyToDisplayDom;
     };
+
+    PlanetPage.prototype["addShareIcon"] = function (hostElement, title, navigationObject) {
+        var a = PlanetPage.prototype.addNodeChild(hostElement, "a");
+        return setupShareAnchor (a, title, navigationObject);
+    }
+
+
+    PlanetPage.prototype["addFirstChildShareIcon"] = function (hostElement, title, navigationObject) {
+        var a = document.createElement("a");
+        hostElement.insertBefore(a, hostElement.firstChild);
+        return setupShareAnchor (a, title, navigationObject);
+    }
 
 })();

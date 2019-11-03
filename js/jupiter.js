@@ -90,7 +90,7 @@ var JupiterData = {};
                 divPhysical.classList.add("hidePhaseOnPhysical");
                 return header;
             }
-
+            Pages.addShareablePage(Page, "Jupiter Ephemeris");
             Page.parent_reset = PlanetPage.prototype.reset;
             Page.reset = function () {
                 this.parent_reset();
@@ -106,8 +106,6 @@ var JupiterData = {};
                 this.interpolatorDisplayFunctions['CentralMeridianApparentLongitude_System2'] = angleDegrees_3Decimals;                
             };
             Page.renderTable = PlanetPage.prototype.renderTable;
-
-            Pages["Jupiter Ephemeris"] = Page;
         } else {
             SyncedTimeOut(localInit, Timeout.onInit);
         }

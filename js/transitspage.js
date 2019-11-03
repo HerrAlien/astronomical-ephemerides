@@ -270,7 +270,7 @@ var TransitsPage = {
         try {
             TransitsPage.dataSource = Transits;
             TransitsPage.reset = PlanetPage.prototype.reset;
-            Pages["Transits"] = TransitsPage;
+            Pages.addShareablePage(TransitsPage, "Transits");
         } catch (err) {
             SyncedTimeOut(initLocal, Timeout.onInit);
         }

@@ -27,7 +27,7 @@ var NeptuneData = {};
                 semidiameterFunctionName: function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.NeptuneSemidiameterB(delta); }
             });
             var Page = new PlanetPage(NeptuneData, "NeptuneTable");
-            Pages["Neptune Ephemeris"] = Page;
+            Pages.addShareablePage(Page, "Neptune Ephemeris");
         } else {
             SyncedTimeOut(initLocal, Timeout.onInit);
         }
