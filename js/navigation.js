@@ -107,6 +107,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             try {
                 ColorLinkOfPage(pageName);
                 Pages[pageName].displayPage();
+                console.log(document.getElementById(pageName).offsetHeight);
             } catch (err) {
                 SyncedTimeOut(delayedDisplay, Timeout.onInit);
             }
