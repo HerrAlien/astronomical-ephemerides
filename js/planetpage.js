@@ -574,4 +574,8 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
         return setupShareAnchor (a, title, navigationObject);
     }
 
+    PlanetPage.prototype["onSetDisplayTypeAsInterpolated"] = function (storageName, checkButton) {
+        
+    }
+
 })();
