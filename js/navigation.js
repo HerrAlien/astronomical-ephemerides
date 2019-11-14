@@ -202,10 +202,10 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                     /* {"page":"settings","actions":[{"name":"scroll","parameters":"realTimeSettingsContainer"}]} */
                     var payload = JSON.parse(pageName);
                     actions = payload.actions;
-                    window.location.replace("#" + payload.page);
+                    window.location.href = ("#" + payload.page);
                 } catch (err) {
                     error404(pageName);
-                    window.location.replace("#Search results");
+                    window.location.href = ("#Search results");
                 }
             }
         }
@@ -215,7 +215,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         try {
             var navigationObjectString = decodeURI(document.location.search.slice(18));
             var payload = JSON.parse(navigationObjectString);
-            window.location.replace(
+            window.location.href = (
             document.location.origin + document.location.pathname +
             "#" + navigationObjectString);
         } catch (err) { }
