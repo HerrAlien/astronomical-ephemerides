@@ -65,6 +65,7 @@ var urlsToCache = [
 "js/occultablestars.js",
 "js/occultations.js",
 "js/pagerank.js",
+"js/persistedcontrols.js",
 "js/planetdata.js",
 "js/planetpage.js",
 "js/physicalpositionaltoggler.js",

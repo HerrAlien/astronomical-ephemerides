@@ -311,11 +311,11 @@ var RealTimeDataViewer = {
             if (typeof purpose == 'undefined') {
                 throw "Invalid purpose!";
             }
-            return pageName + "/" + key + "/" + purpose;
+            return pageName + " " + key + " " + purpose;
         },
 
         purposes: {
-            visibility: "visible",
+            visibility: "RT View Settings.checked",
             numberOfDecimals: "numOfDecimals"
         },
 
@@ -360,21 +360,7 @@ var RealTimeDataViewer = {
 (function () {
 
     function createCheckboxSwitch(host, usingID) {
-        /*<label class="switch">
-  <input type="checkbox">
-  <span class="slider round"></span>
-</label>*/
-        var createDom = RealTimeDataViewer.Utils.CreateDom;
-        var containingLabel = createDom(host, "label");
-        containingLabel.classList.add("switch");
-        var actualInput = createDom(containingLabel, "input");
-        actualInput.type = "checkbox";
-        actualInput.id = usingID;
-        actualInput.classList.add("switchinput");
-        var span = createDom(containingLabel, "span");
-        span.classList.add("slider");
-        span.classList.add("round");
-        return actualInput;
+        return PersistedControls.addSettingsToggle(host, usingID, false, " ");
     }
 
     function CreateRTSettings(hostForRTSettings, pageName) {
@@ -395,12 +381,12 @@ var RealTimeDataViewer = {
         createDom(bodySectionDiv, "div", " ").classList.add("clear");
         var objectName = pageName.substr(0, pageName.indexOf(" "));
 
-        var sectionCheckboxId = pageName + "settings";
+        var sectionCheckboxId = pageName + " RT View Settings";
 
         // <input type="checkbox"></input>
         var sectionCheckbox = createCheckboxSwitch(bodySectionDiv, sectionCheckboxId);
 
-        sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName));
+//        sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName));
 
         var sectionLabel = createDom(bodySectionDiv, "label");
         sectionLabel.setAttribute('for', sectionCheckboxId);
@@ -422,32 +408,23 @@ var RealTimeDataViewer = {
 
 
         var rtViewer = RealTimeDataViewer.views[pageName];
-        sectionCheckbox.onclick = function () {
-            localStorage.setItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName), this.checked);
+        sectionCheckbox.onValueChanged.add(function () {
             rtViewer.resetItemVisibility();
-        }
+        });
 
         function AddSettingsForKeys() {
             if (rtViewer.allKeys.length != 0) {
                 for (var key in rtViewer.allViews) {
-                    var checkboxId = pageName + key + "settings";
+                    var checkboxId = pageName + " " + key + " RT View Settings";
 
                     // div + checkbox for each key
                     createDom(bodySectionDiv, "div", " ").classList.add("clear");
                     var row = createDom(bodySectionDiv, "div");
                     row.classList.add("row");
-
                     sectionCheckbox = createCheckboxSwitch(row, checkboxId);
-
-                    sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName, key));
-
-                    sectionCheckbox.onclick = (function () {
-                        var keyName = key;
-                        return function () {
-                            localStorage.setItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName, keyName), this.checked);
+                    sectionCheckbox.onValueChanged.add(function () {
                             rtViewer.resetItemVisibility();
-                        }
-                    })();
+                    });
 
                     var lbl = createDom(row, "label");
                     lbl.setAttribute('for', checkboxId);
