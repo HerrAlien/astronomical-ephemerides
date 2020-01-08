@@ -16,6 +16,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
+let REAL_TIME_VIEW_FRONT_PAGE_SCOPE_NAME = "RT View Settings";
 
 // ---------------------------- view side ----------------------------------------    
 var RealTimeDataViewer = {
@@ -318,7 +319,7 @@ var RealTimeDataViewer = {
         },
 
         purposes: {
-            visibility: "RT View Settings.checked",
+            visibility: REAL_TIME_VIEW_FRONT_PAGE_SCOPE_NAME + ".checked",
             numberOfDecimals: "numOfDecimals"
         },
 
@@ -379,17 +380,12 @@ var RealTimeDataViewer = {
 
         bodySectionDiv['id'] = RealTimeDataViewer.getRtSettingsSectionId(pageName);
 
-        // <h3>Sun</h3>
         // TODO: this should be from the page object.
         createDom(bodySectionDiv, "div", " ").classList.add("clear");
         var objectName = pageName.substr(0, pageName.indexOf(" "));
 
-        var sectionCheckboxId = pageName + " RT View Settings";
-
-        // <input type="checkbox"></input>
+        var sectionCheckboxId = pageName + " " + REAL_TIME_VIEW_FRONT_PAGE_SCOPE_NAME;
         var sectionCheckbox = createCheckboxSwitch(bodySectionDiv, sectionCheckboxId);
-
-//        sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName));
 
         var sectionLabel = createDom(bodySectionDiv, "label");
         sectionLabel.setAttribute('for', sectionCheckboxId);
@@ -404,7 +400,6 @@ var RealTimeDataViewer = {
             }
         }
 
-
         var sectionLabel2 = createDom(bodySectionDiv, "label");
         sectionLabel2.setAttribute('for', sectionCheckboxId);
         createDom(sectionLabel2, "h3", objectName);
@@ -418,7 +413,7 @@ var RealTimeDataViewer = {
         function AddSettingsForKeys() {
             if (rtViewer.allKeys.length != 0) {
                 for (var key in rtViewer.allViews) {
-                    var checkboxId = pageName + " " + key + " RT View Settings";
+                    var checkboxId = pageName + " " + key + " " + REAL_TIME_VIEW_FRONT_PAGE_SCOPE_NAME;
 
                     // div + checkbox for each key
                     createDom(bodySectionDiv, "div", " ").classList.add("clear");

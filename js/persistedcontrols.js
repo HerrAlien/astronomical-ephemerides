@@ -26,7 +26,43 @@ var PersistedControls = {};
         this.defaultValue = false;
     };
 
-    PersistedControls["registeredControls"] = {}; // pairs name - control
+    PersistedControls["addPersistenceToToggle"] = function (id, persistedControlToUpdate) {
+
+        var persistedControl = persistedControlToUpdate;
+        if (!persistedControlToUpdate) {
+            persistedControl = new PersistedControl();
+            persistedControl.control = document.getElementById(id);
+            persistedControl.control.id = id;
+        }
+
+        persistedControl.onValueChanged = Notifications.New();
+        
+        var ignoreThisEvent = false;
+        var checkedKey = id + ".checked";
+
+        persistedControl.onValueChanged.add(function(){
+            if (!ignoreThisEvent) {
+                localStorage.setItem(checkedKey, persistedControl.control.checked);
+            }
+        });
+
+        persistedControl.update = function() {
+            var checked = localStorage.getItem(checkedKey);
+            if (null == checked) {
+                checked = persistedControl.defaultValue;
+                localStorage.setItem(checkedKey, checked);
+            }
+
+            checked = (checked == 'true');
+            ignoreThisEvent = true;
+            persistedControl.control.checked = checked;
+            ignoreThisEvent = false;
+        }
+
+        persistedControl.update();
+        persistedControl.control.onchange = persistedControl.onValueChanged.notify;
+        return persistedControl;
+    }
 
     // this is a slider-like toggle switch
     PersistedControls["addSettingsToggle"] = function (host, id, defaultValue, textLabel) {
@@ -55,33 +91,9 @@ var PersistedControls = {};
         span.classList.add("slider");
         span.classList.add("round");
 
-        persistedControl.onValueChanged = Notifications.New();
-        
-        var ignoreThisEvent = false;
-        var checkedKey = id + ".checked";
-
-        persistedControl.onValueChanged.add(function(){
-            if (!ignoreThisEvent) {
-                localStorage.setItem(checkedKey, persistedControl.control.checked);
-            }
-        });
-
-        persistedControl.update = function() {
-            var checked = localStorage.getItem(checkedKey) == 'true';
-            if (null == checked) {
-                checked = persistedControl.defaultValue;
-                localStorage.setItem(checkedKey, checked);
-            }
-            ignoreThisEvent = true;
-            persistedControl.control.checked = checked;
-            ignoreThisEvent = false;
-        }
-
-        PersistedControls.registeredControls["id"] = persistedControl;
-
-        persistedControl.update();
-        persistedControl.control.onchange = persistedControl.onValueChanged.notify;
+        PersistedControls["addPersistenceToToggle"] (id, persistedControl);
         return persistedControl;
     }
+
 
 })();
