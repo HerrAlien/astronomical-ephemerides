@@ -285,7 +285,8 @@ var RealTimeDataViewer = {
         },
 
         IsVisible: function (pageName, key) {
-            var visible = localStorage.getItem(RealTimeDataViewer.Persistent.GetRTStorageKey(RealTimeDataViewer.Persistent.purposes.visibility, pageName, key));
+            var storageKey = RealTimeDataViewer.Persistent.GetRTStorageKey(RealTimeDataViewer.Persistent.purposes.visibility, pageName, key)
+            var visible = localStorage.getItem(storageKey);
             if (visible == null) {
                 visible = 'false';
                 if (pageName == 'Venus Ephemeris' || pageName == 'Jupiter Ephemeris') {
@@ -311,7 +312,9 @@ var RealTimeDataViewer = {
             if (typeof purpose == 'undefined') {
                 throw "Invalid purpose!";
             }
-            return pageName + " " + key + " " + purpose;
+            if (typeof key != 'undefined')
+                return pageName + " " + key + " " + purpose;
+            return pageName + " " + purpose;
         },
 
         purposes: {
