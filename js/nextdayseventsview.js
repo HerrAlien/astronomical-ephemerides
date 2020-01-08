@@ -43,50 +43,23 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         }, 100);
     }
 
-    var solarEclipsesCheckBox = false;
-    function displaySolarEclipses() {
-        if (!solarEclipsesCheckBox) {
-            solarEclipsesCheckBox = document.getElementById("futureSolarEclipsesSettings");
-            solarEclipsesCheckBox.onchange = onDisplayEventTypeChange;
+    function getCheckFunction(checkboxId) { // "futureSolarEclipsesSettings"
+    var checkbox = false;
+        return function () {
+            if (!checkbox) {
+                var ctrlComplex = PersistedControls["addPersistenceToToggle"](checkboxId);
+                ctrlComplex.onValueChanged.add(onDisplayEventTypeChange);
+                checkbox = ctrlComplex.control;
+            }
+            return checkbox && checkbox.checked;
         }
-        return solarEclipsesCheckBox && solarEclipsesCheckBox.checked;
     }
 
-    var lunarEclipsesCheckBox = false;
-    function displayLunarEclipses() {
-        if (!lunarEclipsesCheckBox) {
-            lunarEclipsesCheckBox = document.getElementById("futureLunarEclipsesSettings");
-            lunarEclipsesCheckBox.onchange = onDisplayEventTypeChange;
-        }
-        return lunarEclipsesCheckBox && lunarEclipsesCheckBox.checked;
-    }
-
-    var occultationsCheckBox = false;
-    function displayOccultations() {
-        if (!occultationsCheckBox) {
-            occultationsCheckBox = document.getElementById("futureOccultationsSettings");
-            occultationsCheckBox.onchange = onDisplayEventTypeChange;
-        }
-        return occultationsCheckBox && occultationsCheckBox.checked;
-    }
-
-    var transitsCheckBox = false;
-    function displayTransits() {
-        if (!transitsCheckBox) {
-            transitsCheckBox = document.getElementById("futureTransitsSettings");
-            transitsCheckBox.onchange = onDisplayEventTypeChange;
-        }
-        return transitsCheckBox && transitsCheckBox.checked;
-    }
-
-    var lunarXCheckBox = false;
-    function displayLunarX() {
-        if (!lunarXCheckBox) {
-            lunarXCheckBox = document.getElementById("futureLunarXSettings");
-            lunarXCheckBox.onchange = onDisplayEventTypeChange;
-        }
-        return lunarXCheckBox && lunarXCheckBox.checked;
-    }
+    var displaySolarEclipses = getCheckFunction("futureSolarEclipsesSettings");
+    var displayLunarEclipses = getCheckFunction("futureLunarEclipsesSettings");
+    var displayOccultations = getCheckFunction("futureOccultationsSettings");
+    var displayTransits = getCheckFunction("futureTransitsSettings");
+    var displayLunarX = getCheckFunction("futureLunarXSettings");
 
     var eventTypeToCheckFunction = {
         "MoonEclipsesPage": displayLunarEclipses,
