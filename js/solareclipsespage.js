@@ -1,4 +1,3 @@
-
 /* ephemeris - a software astronomical almanach 
 
 Copyright 2017 Herr_Alien <alexandru.garofide@gmail.com>

@@ -94,6 +94,5 @@ var PersistedControls = {};
         PersistedControls["addPersistenceToToggle"] (id, persistedControl);
         return persistedControl;
     }
-
-
+    
 })();
