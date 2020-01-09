@@ -443,15 +443,14 @@ var RealTimeDataViewer = {
         createDom(bodySectionDiv, "div", " ").classList.add("clear");
         rtViewer.resetItemVisibility();
     }
-
-
-    var pagesDoms = document.getElementsByClassName("page");
-    var hostForRTSettings = document.getElementById("realTimeSettingsContainer");
     
+    WHEN (function() { return typeof Pages != 'undefined' && typeof InterpolatedData != 'undefined' && typeof Notifications != 'undefined' &&
+        PersistedControls && PersistedControls.addPersistenceToToggle},
 
-    var localInit = function () {
-        if (typeof Pages != 'undefined' && typeof InterpolatedData != 'undefined' && typeof Notifications != 'undefined') {
-            var pagesAccountedFor = 0;
+        function () {
+            var pagesDoms = document.getElementsByClassName("page");
+            var hostForRTSettings = document.getElementById("realTimeSettingsContainer");
+
             for (var i = 0; i < pagesDoms.length; i++) {
                 var pageName = pagesDoms[i].id;
                 if (typeof Pages != 'undefined' &&
@@ -462,19 +461,9 @@ var RealTimeDataViewer = {
                     CreateRTSettings(host, pageName);
                     hostForRTSettings.appendChild(host);
                 }
-
-                if (typeof Pages != 'undefined' && Pages[pageName]) {
-                    pagesAccountedFor++;
-                }
-            }
-            if (pagesAccountedFor == pagesDoms.length) {
-                return;
             }
         }
+    );
 
-        SyncedTimeOut(localInit, Timeout.onInit);
-    }
-
-    localInit();
 })();
 

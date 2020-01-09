@@ -31,7 +31,6 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     - occultations
 */
 
-
 (function () {
 
     var domHost = document.getElementById("upcommingEventsFrontPage");
@@ -43,11 +42,11 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         }, 100);
     }
 
-    function getCheckFunction(checkboxId) { // "futureSolarEclipsesSettings"
+    function getCheckFunction(existingCheckboxId) {
     var checkbox = false;
         return function () {
             if (!checkbox) {
-                var ctrlComplex = PersistedControls["addPersistenceToToggle"](checkboxId);
+                var ctrlComplex = PersistedControls["addPersistenceToToggle"](existingCheckboxId);
                 ctrlComplex.onValueChanged.add(onDisplayEventTypeChange);
                 checkbox = ctrlComplex.control;
             }
@@ -55,18 +54,12 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         }
     }
 
-    var displaySolarEclipses = getCheckFunction("futureSolarEclipsesSettings");
-    var displayLunarEclipses = getCheckFunction("futureLunarEclipsesSettings");
-    var displayOccultations = getCheckFunction("futureOccultationsSettings");
-    var displayTransits = getCheckFunction("futureTransitsSettings");
-    var displayLunarX = getCheckFunction("futureLunarXSettings");
-
     var eventTypeToCheckFunction = {
-        "MoonEclipsesPage": displayLunarEclipses,
-        "SolarEclipsesPage": displaySolarEclipses,
-        "Occultations": displayOccultations,
-        "Transits": displayTransits,
-        "LunarXPage" : displayLunarX
+        "MoonEclipsesPage": getCheckFunction("futureLunarEclipsesSettings"),
+        "SolarEclipsesPage": getCheckFunction("futureSolarEclipsesSettings"),
+        "Occultations": getCheckFunction("futureOccultationsSettings"),
+        "Transits": getCheckFunction("futureTransitsSettings"),
+        "LunarXPage" : getCheckFunction("futureLunarXSettings")
     };
 
     function getEventTypesToDisplay() {
@@ -109,40 +102,32 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         }
     }
 
-    function init() {
+    function init () {
+      var events = NextEvents["GetEvents"](getEventTypesToDisplay());
+      var addDomNode = PlanetPage.prototype.addNodeChild;
 
-        try {
+      var yyyymmdd_hhmmOfJD = PlanetPage.prototype["yyyymmdd_hhmmOfJD"];
 
-            var events = NextEvents["GetEvents"](getEventTypesToDisplay());
-            var addDomNode = PlanetPage.prototype.addNodeChild;
+      var documentFrag = document.createDocumentFragment();
+      for (var i = 0; i < events.length; i++) {
+          var currentEvent = events[i];
+          var listItem = addDomNode(documentFrag, "li");
 
-            var yyyymmdd_hhmmOfJD = PlanetPage.prototype["yyyymmdd_hhmmOfJD"];
+          var timing = yyyymmdd_hhmmOfJD(currentEvent.start);
+          var anchorText = Pages["Moon Ephemeris"].months[Number(timing.date.M)] + " " + timing.date.D + ", " +
+                           timing.time.Ord3 + ":" + timing.time.Ord2 + ": " + currentEvent.title;
 
-            var documentFrag = document.createDocumentFragment();
-            for (var i = 0; i < events.length; i++) {
-                var currentEvent = events[i];
-                var listItem = addDomNode(documentFrag, "li");
+          var anchor = addDomNode(listItem, "a", anchorText);
+          anchor["href"] = "#" + JSON.stringify(currentEvent.navigActionObj);
+      }
 
-                var timing = yyyymmdd_hhmmOfJD(currentEvent.start);
-                var anchorText = Pages["Moon Ephemeris"].months[Number(timing.date.M)] + " " + timing.date.D + ", " +
-                                 timing.time.Ord3 + ":" + timing.time.Ord2 + ": " + currentEvent.title;
-
-                var anchor = addDomNode(listItem, "a", anchorText);
-                anchor["href"] = "#" + JSON.stringify(currentEvent.navigActionObj);
-            }
-
-            var list = addDomNode(domHost, "ol");
-            list.appendChild(documentFrag);
-
-        } catch (err) {
-            setTimeout(init, 500);
-        }
+      var list = addDomNode(domHost, "ol");
+      list.appendChild(documentFrag);
     }
-
-    init();
+    
+    WHEN (function() { return true; }, init);
 
     (function () {
-
         daysInput.onblur = onDaysCountChange;
         daysInput.onchange = onDaysCountChange;
         daysInput.onkeypress = function (keyboardEvent) {

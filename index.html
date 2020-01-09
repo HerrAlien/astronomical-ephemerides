@@ -69,6 +69,19 @@
             setTimeout(function () { requestAnimationFrame(func); }, time);
         }
 
+        function WHEN (condition, functionToExec, time){
+            var fct = function () {
+                try {
+                    if (condition()) {
+                        return functionToExec();
+                    }
+                } catch (err) {
+                    console.log (err);
+                }
+                SyncedTimeOut (fct, time);
+            }
+            return fct();
+        }
 
         (function () {
             var loaders = [];
