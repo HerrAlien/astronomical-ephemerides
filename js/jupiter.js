@@ -19,10 +19,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 var JupiterData = {};
 
 // upgrade the object to handle physical data as well.
-(function () {
-
-    var localInit = function () {
-        if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
+WHEN (function() { return (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined'); }, 
+      function () {
             JupiterData = new PlanetData({
                 number: 4, name: "Jupiter",
                 semidiameterFunctionName: function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.JupiterEquatorialSemidiameterB(delta); }
@@ -91,10 +89,5 @@ var JupiterData = {};
                 return header;
             }
             Pages.addShareablePage(Page, "Jupiter Ephemeris");
-        } else {
-            SyncedTimeOut(localInit, Timeout.onInit);
-        }
     }
-
-    localInit();
-})();
+);
