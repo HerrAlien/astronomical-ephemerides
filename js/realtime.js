@@ -226,52 +226,49 @@ var RealTimeDataViewer = {
                           "CentralMeridianGeometricLongitude_System2",
                           "DiameterTopo"];
         // same host
-        try {
-            if (!AAJS.AllDependenciesLoaded())
-                throw "wait!";
-            // This wil throw initially. Notifications will not update the view.
-            var seed = Pages[pageName].dataSource.getDataAsObjectForJD(0, true, true);
-            for (var key in seed) {
-                if (hiddenKeys.indexOf(key) >= 0) {
-                    continue;
-                }
-                    
-                var createdDom = RealTimeDataViewer.Utils.CreateDom(domHost, "div", "loading ...");
-                createdDom.classList.add(key);
-                createdDom.classList.add("scrollableRTdiv");
-
-                var unit = "\u00B0";
-                var scaleFactor = 1;
-                for (var tableKey in Pages[pageName].tableHeaderInfo) {
-                    if (key == Pages[pageName].tableHeaderInfo[tableKey].dataKey) {
-                        unit = Pages[pageName].tableHeaderInfo[tableKey]["1"]["text"].trim();
-                        createdDom.setAttribute("alt", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
-                        createdDom.setAttribute("title", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
-                        createdDom.onclick = RealTimeDataViewer.alertDivTitle;
+        WHEN(function(){return AAJS.AllDependenciesLoaded();},
+             function () {
+                // This wil throw initially. Notifications will not update the view.
+                var seed = Pages[pageName].dataSource.getDataAsObjectForJD(0, true, true);
+                for (var key in seed) {
+                    if (hiddenKeys.indexOf(key) >= 0) {
+                        continue;
                     }
-                }
 
-                if (unit == "'") {
-                    scaleFactor = 60;
-                } else if (unit == "''" || unit == '"') {
-                    scaleFactor = 3600;
-                } else if (unit == "hh:mm") {
-                    unit = "h";
-                }
+                    var createdDom = RealTimeDataViewer.Utils.CreateDom(domHost, "div", "loading ...");
+                    createdDom.classList.add(key);
+                    createdDom.classList.add("scrollableRTdiv");
 
-                var decimalsNum = RealTimeDataViewer.Persistent.GetNumberOfDecimals(pageName, key);
-                if (RealTimeDataViewer.Persistent.IsVisible(pageName, key)) {
-                    createdDom.classList.remove("hidden");
-                } else {
-                    createdDom.classList.add("hidden");
-                }
+                    var unit = "\u00B0";
+                    var scaleFactor = 1;
+                    for (var tableKey in Pages[pageName].tableHeaderInfo) {
+                        if (key == Pages[pageName].tableHeaderInfo[tableKey].dataKey) {
+                            unit = Pages[pageName].tableHeaderInfo[tableKey]["1"]["text"].trim();
+                            createdDom.setAttribute("alt", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
+                            createdDom.setAttribute("title", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
+                            createdDom.onclick = RealTimeDataViewer.alertDivTitle;
+                        }
+                    }
 
-                onViewAdded({ "name": key, "unit": unit, "decimalsNum": decimalsNum, "factor": scaleFactor }, createdDom);
+                    if (unit == "'") {
+                        scaleFactor = 60;
+                    } else if (unit == "''" || unit == '"') {
+                        scaleFactor = 3600;
+                    } else if (unit == "hh:mm") {
+                        unit = "h";
+                    }
+
+                    var decimalsNum = RealTimeDataViewer.Persistent.GetNumberOfDecimals(pageName, key);
+                    if (RealTimeDataViewer.Persistent.IsVisible(pageName, key)) {
+                        createdDom.classList.remove("hidden");
+                    } else {
+                        createdDom.classList.add("hidden");
+                    }
+
+                    onViewAdded({ "name": key, "unit": unit, "decimalsNum": decimalsNum, "factor": scaleFactor }, createdDom);
+                }
             }
-
-        } catch (err) {
-            SyncedTimeOut(function () { RealTimeDataViewer.CreateRtDomForPage(domHost, pageName, onViewAdded); }, Timeout.onInit);
-        }
+        );
     },
 
     Persistent: {
