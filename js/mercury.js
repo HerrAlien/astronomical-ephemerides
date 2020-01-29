@@ -17,7 +17,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 "use strict";
 var MercuryData = {};
 
-WHEN (function () { return (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined'); },
+WHEN (PlanetPageRegistrationCheck,
       function() {
           MercuryData = new PlanetData({
               number: 1, name: "Mercury",

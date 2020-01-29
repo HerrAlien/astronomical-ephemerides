@@ -364,7 +364,7 @@ var MoonData = {
         return result;
     };
 
-    WHEN (function () { return (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined');},
+    WHEN (PlanetPageRegistrationCheck,
           function() {
             MoonData.addRiseTransitSetData = PlanetData.prototype.addRiseTransitSetData;
             MoonData.isAboveHorizon = PlanetData.prototype.isAboveHorizon;

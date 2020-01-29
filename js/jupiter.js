@@ -19,7 +19,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 var JupiterData = {};
 
 // upgrade the object to handle physical data as well.
-WHEN (function() { return (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined'); }, 
+WHEN (PlanetPageRegistrationCheck, 
       function () {
             JupiterData = new PlanetData({
                 number: 4, name: "Jupiter",

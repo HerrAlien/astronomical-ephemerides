@@ -83,6 +83,10 @@
             return fct();
         }
 
+        function PlanetPageRegistrationCheck() { 
+            return (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined');
+        }
+
         (function () {
             var loaders = [];
             var realTimePercentage = false;

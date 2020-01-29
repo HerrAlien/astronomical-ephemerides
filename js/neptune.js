@@ -18,7 +18,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var NeptuneData = {};
 
-WHEN (function () { return (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined');},
+WHEN (PlanetPageRegistrationCheck,
       function() {
             NeptuneData = new PlanetData({
                 number: 7, name: "Neptune",

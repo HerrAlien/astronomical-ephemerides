@@ -268,7 +268,7 @@ var SunData = {
 
     };
 
-    WHEN (function () { return (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined');},
+    WHEN (PlanetPageRegistrationCheck,
           function() {
             SunData.addRiseTransitSetData = PlanetData.prototype.addRiseTransitSetData;
             SunData.isAboveHorizon = PlanetData.prototype.isAboveHorizon;

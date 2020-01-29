@@ -127,15 +127,11 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     
     WHEN (function() { return true; }, init);
 
-    (function () {
-        daysInput.onblur = onDaysCountChange;
-        daysInput.onchange = onDaysCountChange;
-        daysInput.onkeypress = function (keyboardEvent) {
-            if (keyboardEvent.key.toUpperCase() == "ENTER") {
-                onDaysCountChange();
-            }
-        };
-
-    })();
-
+    daysInput.onblur = onDaysCountChange;
+    daysInput.onchange = onDaysCountChange;
+    daysInput.onkeypress = function (keyboardEvent) {
+        if (keyboardEvent.key.toUpperCase() == "ENTER") {
+            onDaysCountChange();
+        }
+    };
 })();
