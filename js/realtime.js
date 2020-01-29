@@ -38,6 +38,7 @@ var RealTimeDataViewer = {
                 var dt = PlanetPage.prototype.yyyymmdd_hhmmOfJD(value);
                 return dt.time.Ord3 + ":" + dt.time.Ord2;
             } catch (err) {
+                console.log(err);
                 return RealTimeDataViewer.format.default(value, "d", 3, 1);
             }
         },
@@ -67,7 +68,7 @@ var RealTimeDataViewer = {
                         true); // topocentric coordinates
                     rtDataObj.onDataUpdated.notify(interpolatedObject);
                 } catch (err) {
-
+                    console.log(err);
                 }
             }
         };
@@ -226,7 +227,7 @@ var RealTimeDataViewer = {
                           "CentralMeridianGeometricLongitude_System2",
                           "DiameterTopo"];
         // same host
-        WHEN(function(){return AAJS.AllDependenciesLoaded();},
+        WHEN(function(){return AAJS && AAJS.AllDependenciesLoaded && AAJS.AllDependenciesLoaded();},
              function () {
                 // This wil throw initially. Notifications will not update the view.
                 var seed = Pages[pageName].dataSource.getDataAsObjectForJD(0, true, true);
