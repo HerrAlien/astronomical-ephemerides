@@ -16,7 +16,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
-WHEN (function() { return true; },
+WHEN (PlanetPageRegistrationCheck,
       function() {
             var SaturnMoonsPage = new MoonsPage("SaturnMoonsContainer",
                     SaturnMoonsData,

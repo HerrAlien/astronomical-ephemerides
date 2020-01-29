@@ -293,7 +293,7 @@ var OccultationsPage = {
     // clears up the rendered thing
 };
 
-WHEN (function() { return true;},
+WHEN (PlanetPageRegistrationCheck,
       function() {
             OccultationsPage.dataSource = OccultationsData;
             OccultationsPage.reset = PlanetPage.prototype.reset;

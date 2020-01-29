@@ -259,7 +259,7 @@ var MoonEclipsesPage = {
     // clears up the rendered thing
 };
 
-WHEN (function () { return true; },
+WHEN (PlanetPageRegistrationCheck,
       function () {
             MoonEclipsesPage.dataSource = MoonEclipsesData;
             MoonEclipsesPage.reset = PlanetPage.prototype.reset;
