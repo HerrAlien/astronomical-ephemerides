@@ -31,7 +31,6 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
     - occultations
 */
 
-
 (function () {
 
     var domHost = document.getElementById("upcommingEventsFrontPage");
@@ -43,57 +42,24 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         }, 100);
     }
 
-    var solarEclipsesCheckBox = false;
-    function displaySolarEclipses() {
-        if (!solarEclipsesCheckBox) {
-            solarEclipsesCheckBox = document.getElementById("futureSolarEclipsesSettings");
-            solarEclipsesCheckBox.onchange = onDisplayEventTypeChange;
+    function getCheckFunction(existingCheckboxId) {
+    var checkbox = false;
+        return function () {
+            if (!checkbox) {
+                var ctrlComplex = PersistedControls["addPersistenceToToggle"](existingCheckboxId);
+                ctrlComplex.onValueChanged.add(onDisplayEventTypeChange);
+                checkbox = ctrlComplex.control;
+            }
+            return checkbox && checkbox.checked;
         }
-        return solarEclipsesCheckBox && solarEclipsesCheckBox.checked;
-    }
-
-    var lunarEclipsesCheckBox = false;
-    function displayLunarEclipses() {
-        if (!lunarEclipsesCheckBox) {
-            lunarEclipsesCheckBox = document.getElementById("futureLunarEclipsesSettings");
-            lunarEclipsesCheckBox.onchange = onDisplayEventTypeChange;
-        }
-        return lunarEclipsesCheckBox && lunarEclipsesCheckBox.checked;
-    }
-
-    var occultationsCheckBox = false;
-    function displayOccultations() {
-        if (!occultationsCheckBox) {
-            occultationsCheckBox = document.getElementById("futureOccultationsSettings");
-            occultationsCheckBox.onchange = onDisplayEventTypeChange;
-        }
-        return occultationsCheckBox && occultationsCheckBox.checked;
-    }
-
-    var transitsCheckBox = false;
-    function displayTransits() {
-        if (!transitsCheckBox) {
-            transitsCheckBox = document.getElementById("futureTransitsSettings");
-            transitsCheckBox.onchange = onDisplayEventTypeChange;
-        }
-        return transitsCheckBox && transitsCheckBox.checked;
-    }
-
-    var lunarXCheckBox = false;
-    function displayLunarX() {
-        if (!lunarXCheckBox) {
-            lunarXCheckBox = document.getElementById("futureLunarXSettings");
-            lunarXCheckBox.onchange = onDisplayEventTypeChange;
-        }
-        return lunarXCheckBox && lunarXCheckBox.checked;
     }
 
     var eventTypeToCheckFunction = {
-        "MoonEclipsesPage": displayLunarEclipses,
-        "SolarEclipsesPage": displaySolarEclipses,
-        "Occultations": displayOccultations,
-        "Transits": displayTransits,
-        "LunarXPage" : displayLunarX
+        "MoonEclipsesPage": getCheckFunction("futureLunarEclipsesSettings"),
+        "SolarEclipsesPage": getCheckFunction("futureSolarEclipsesSettings"),
+        "Occultations": getCheckFunction("futureOccultationsSettings"),
+        "Transits": getCheckFunction("futureTransitsSettings"),
+        "LunarXPage" : getCheckFunction("futureLunarXSettings")
     };
 
     function getEventTypesToDisplay() {
@@ -136,48 +102,36 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         }
     }
 
-    function init() {
+    function init () {
+      var events = NextEvents["GetEvents"](getEventTypesToDisplay());
+      var addDomNode = PlanetPage.prototype.addNodeChild;
 
-        try {
+      var yyyymmdd_hhmmOfJD = PlanetPage.prototype["yyyymmdd_hhmmOfJD"];
 
-            var events = NextEvents["GetEvents"](getEventTypesToDisplay());
-            var addDomNode = PlanetPage.prototype.addNodeChild;
+      var documentFrag = document.createDocumentFragment();
+      for (var i = 0; i < events.length; i++) {
+          var currentEvent = events[i];
+          var listItem = addDomNode(documentFrag, "li");
 
-            var yyyymmdd_hhmmOfJD = PlanetPage.prototype["yyyymmdd_hhmmOfJD"];
+          var timing = yyyymmdd_hhmmOfJD(currentEvent.start);
+          var anchorText = Pages["Moon Ephemeris"].months[Number(timing.date.M)] + " " + timing.date.D + ", " +
+                           timing.time.Ord3 + ":" + timing.time.Ord2 + ": " + currentEvent.title;
 
-            var documentFrag = document.createDocumentFragment();
-            for (var i = 0; i < events.length; i++) {
-                var currentEvent = events[i];
-                var listItem = addDomNode(documentFrag, "li");
+          var anchor = addDomNode(listItem, "a", anchorText);
+          anchor["href"] = "#" + JSON.stringify(currentEvent.navigActionObj);
+      }
 
-                var timing = yyyymmdd_hhmmOfJD(currentEvent.start);
-                var anchorText = Pages["Moon Ephemeris"].months[Number(timing.date.M)] + " " + timing.date.D + ", " +
-                                 timing.time.Ord3 + ":" + timing.time.Ord2 + ": " + currentEvent.title;
-
-                var anchor = addDomNode(listItem, "a", anchorText);
-                anchor["href"] = "#" + JSON.stringify(currentEvent.navigActionObj);
-            }
-
-            var list = addDomNode(domHost, "ol");
-            list.appendChild(documentFrag);
-
-        } catch (err) {
-            setTimeout(init, 500);
-        }
+      var list = addDomNode(domHost, "ol");
+      list.appendChild(documentFrag);
     }
+    
+    WHEN (function() { return true; }, init);
 
-    init();
-
-    (function () {
-
-        daysInput.onblur = onDaysCountChange;
-        daysInput.onchange = onDaysCountChange;
-        daysInput.onkeypress = function (keyboardEvent) {
-            if (keyboardEvent.key.toUpperCase() == "ENTER") {
-                onDaysCountChange();
-            }
-        };
-
-    })();
-
+    daysInput.onblur = onDaysCountChange;
+    daysInput.onchange = onDaysCountChange;
+    daysInput.onkeypress = function (keyboardEvent) {
+        if (keyboardEvent.key.toUpperCase() == "ENTER") {
+            onDaysCountChange();
+        }
+    };
 })();

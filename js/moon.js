@@ -364,8 +364,8 @@ var MoonData = {
         return result;
     };
 
-    var localInit = function () {
-        if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
+    WHEN (PlanetPageRegistrationCheck,
+          function() {
             MoonData.addRiseTransitSetData = PlanetData.prototype.addRiseTransitSetData;
             MoonData.isAboveHorizon = PlanetData.prototype.isAboveHorizon;
 
@@ -377,11 +377,6 @@ var MoonData = {
             MoonPage.oldHeaderFunc = PlanetPage.prototype.addTableHeader;
             MoonPage.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
             Pages.addShareablePage(MoonPage, "Moon Ephemeris");
-        } else {
-            SyncedTimeOut(localInit, Timeout.onInit);
         }
-    }
-
-    localInit();
-
+    );
 })();

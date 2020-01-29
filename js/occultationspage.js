@@ -30,48 +30,47 @@ var OccultationsPage = {
 
 
     displayPage: function () {
+        WHEN (function() {return !(typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !AAJS.AllDependenciesLoaded || !PageTimeInterval.JD
+                                || typeof OccultableStars == "undefined" || typeof MoonData == "undefined" ||
+                                typeof DistanceDFromEqCoordinates == "undefined");},
+             function() {
+                OccultationsPage.signature = OccultationsPage.getSignature();
 
-        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !AAJS.AllDependenciesLoaded || !PageTimeInterval.JD
-            || typeof OccultableStars == "undefined" || typeof MoonData == "undefined" ||
-            typeof DistanceDFromEqCoordinates == "undefined") {
-            return SyncedTimeOut(function () { OccultationsPage.displayPage(); }, Timeout.onInit);
-        }
+                var startJD = PageTimeInterval.JD;
+                var numberOfDays = PageTimeInterval.days;
 
-        OccultationsPage.signature = OccultationsPage.getSignature();
+                if (OccultationsPage.pageRendered)
+                    return;
 
-        var startJD = PageTimeInterval.JD;
-        var numberOfDays = PageTimeInterval.days;
+                OccultationsPage.reset();
+                OccultationsPage.occultationRendered = {};
+                MoonData.reset();
+                OccultableStars.reset();
+                var endJD = startJD + numberOfDays;
 
-        if (OccultationsPage.pageRendered)
-            return;
+                function OccultationsPageProcessJD(JD) {
+                    var signatureChanged = OccultationsPage.signature != OccultationsPage.getSignature();
+                    if (JD >= endJD || signatureChanged) {
+                        OccultationsPage.pageRendered = !signatureChanged;
+                        return;
+                    }
 
-        OccultationsPage.reset();
-        OccultationsPage.occultationRendered = {};
-        MoonData.reset();
-        OccultableStars.reset();
-        var endJD = startJD + numberOfDays;
+                    var occultations = OccultationsData.getOccultedStars(JD, 1);
+                    for (var occKey in occultations) {
+                        var id = OccultationsPage.getId(occultations[occKey]);
+                        if (OccultationsPage.occultationRendered[id]) {
+                            continue;
+                        }
+                        OccultationsPage.drawOccultation(occultations[occKey], OccultationsPage.hostElement);
+                        OccultationsPage.occultationRendered[id] = true;
+                    }
 
-        function OccultationsPageProcessJD(JD) {
-            var signatureChanged = OccultationsPage.signature != OccultationsPage.getSignature();
-            if (JD >= endJD || signatureChanged) {
-                OccultationsPage.pageRendered = !signatureChanged;
-                return;
-            }
-
-            var occultations = OccultationsData.getOccultedStars(JD, 1);
-            for (var occKey in occultations) {
-                var id = OccultationsPage.getId(occultations[occKey]);
-                if (OccultationsPage.occultationRendered[id]) {
-                    continue;
+                    requestAnimationFrame(function () { OccultationsPageProcessJD(JD + 1); });
                 }
-                OccultationsPage.drawOccultation(occultations[occKey], OccultationsPage.hostElement);
-                OccultationsPage.occultationRendered[id] = true;
+
+                OccultationsPageProcessJD(startJD);
             }
-
-            requestAnimationFrame(function () { OccultationsPageProcessJD(JD + 1); });
-        }
-
-        OccultationsPageProcessJD(startJD);
+        );
     },
 
     getStarName: function (occultation) {
@@ -294,15 +293,10 @@ var OccultationsPage = {
     // clears up the rendered thing
 };
 
-(function () {
-    var initLocal = function () {
-        try {
+WHEN (PlanetPageRegistrationCheck,
+      function() {
             OccultationsPage.dataSource = OccultationsData;
             OccultationsPage.reset = PlanetPage.prototype.reset;
             Pages.addShareablePage(OccultationsPage, "Occultations");
-        } catch (err) {
-            SyncedTimeOut(initLocal, Timeout.onInit);
-        }
-    }
-    initLocal();
-})();
+     }
+);

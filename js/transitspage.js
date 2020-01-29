@@ -30,49 +30,47 @@ var TransitsPage = {
 
 
     displayPage: function () {
+        WHEN(function() { return !(typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !AAJS.AllDependenciesLoaded || !PageTimeInterval.JD
+                                    || typeof Transits == "undefined" || typeof SunData == "undefined" ||
+                                    typeof DistanceDFromEqCoordinates == "undefined" || typeof InterpolatedData == "undefined");},
+             function() { 
+                TransitsPage.signature = TransitsPage.getSignature();
+                var startJD = PageTimeInterval.JD;
+                var numberOfDays = PageTimeInterval.days;
 
-        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !AAJS.AllDependenciesLoaded || !PageTimeInterval.JD
-            || typeof Transits == "undefined" || typeof SunData == "undefined" ||
-            typeof DistanceDFromEqCoordinates == "undefined" || typeof InterpolatedData == "undefined") {
-            return SyncedTimeOut(function () { TransitsPage.displayPage(); }, Timeout.onInit);
-        }
+                if (TransitsPage.pageRendered)
+                    return;
 
-        TransitsPage.signature = TransitsPage.getSignature();
+                TransitsPage.reset();
+                TransitsPage.transitRendered = {};
+                MoonData.reset(); //????
+                var endJD = startJD + numberOfDays;
 
-        var startJD = PageTimeInterval.JD;
-        var numberOfDays = PageTimeInterval.days;
+                var daysPerDrawCall = 100;
 
-        if (TransitsPage.pageRendered)
-            return;
+                function TransitsPageProcessJD(JD) {
+                    var signatureChanged = TransitsPage.signature != TransitsPage.getSignature();
+                    if (JD >= endJD || signatureChanged) {
+                        TransitsPage.pageRendered = !signatureChanged;
+                        return;
+                    }
 
-        TransitsPage.reset();
-        TransitsPage.transitRendered = {};
-        MoonData.reset(); //????
-        var endJD = startJD + numberOfDays;
+                    var events = Transits.get(JD, daysPerDrawCall);
+                    for (var key in events) {
+                        var id = TransitsPage.getId(events[key]);
+                        if (TransitsPage.transitRendered[id]) {
+                            continue;
+                        }
+                        TransitsPage.draw(events[key], TransitsPage.hostElement);
+                        TransitsPage.transitRendered[id] = true;
+                    }
 
-        var daysPerDrawCall = 100;
-
-        function TransitsPageProcessJD(JD) {
-            var signatureChanged = TransitsPage.signature != TransitsPage.getSignature();
-            if (JD >= endJD || signatureChanged) {
-                TransitsPage.pageRendered = !signatureChanged;
-                return;
-            }
-
-            var events = Transits.get(JD, daysPerDrawCall);
-            for (var key in events) {
-                var id = TransitsPage.getId(events[key]);
-                if (TransitsPage.transitRendered[id]) {
-                    continue;
+                    requestAnimationFrame(function () { TransitsPageProcessJD(JD + daysPerDrawCall); });
                 }
-                TransitsPage.draw(events[key], TransitsPage.hostElement);
-                TransitsPage.transitRendered[id] = true;
+
+                TransitsPageProcessJD(startJD);
             }
-
-            requestAnimationFrame(function () { TransitsPageProcessJD(JD + daysPerDrawCall); });
-        }
-
-        TransitsPageProcessJD(startJD);
+        );
     },
 
     getPlanetName: function (event) {
@@ -101,7 +99,6 @@ var TransitsPage = {
         return { page: "Transits",
                  actions: [{ name: "scroll", parameters: TransitsPage.getId(event) }]};
     },
-
 
     draw: function (event, host) {
         var addNodeChild = PlanetPage.prototype["addNodeChild"];
@@ -265,8 +262,8 @@ var TransitsPage = {
     // clears up the rendered thing
 };
 
-(function () {
-    var initLocal = function () {
+WHEN (function () { return true; },
+      function () {
         try {
             TransitsPage.dataSource = Transits;
             TransitsPage.reset = PlanetPage.prototype.reset;
@@ -275,5 +272,4 @@ var TransitsPage = {
             SyncedTimeOut(initLocal, Timeout.onInit);
         }
     }
-    initLocal();
-})();
+);

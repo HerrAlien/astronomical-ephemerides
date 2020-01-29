@@ -15,7 +15,7 @@ You should have received a copy of the GNU Affero General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 (function() {
 var CACHE_PREFIX = 'Cache-for-ephemerides';
-var CACHE_VERSION = '250';
+var CACHE_VERSION = '251';
 var CACHE_NAME = CACHE_PREFIX + '-' + CACHE_VERSION;
 
 var AAJS_CACHE_PREFIX = 'Cache-for-AAJS'
@@ -65,6 +65,7 @@ var urlsToCache = [
 "js/occultablestars.js",
 "js/occultations.js",
 "js/pagerank.js",
+"js/persistedcontrols.js",
 "js/planetdata.js",
 "js/planetpage.js",
 "js/physicalpositionaltoggler.js",

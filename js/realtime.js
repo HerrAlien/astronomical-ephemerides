@@ -16,6 +16,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
+let REAL_TIME_VIEW_FRONT_PAGE_SCOPE_NAME = "RT View Settings";
 
 // ---------------------------- view side ----------------------------------------    
 var RealTimeDataViewer = {
@@ -37,6 +38,7 @@ var RealTimeDataViewer = {
                 var dt = PlanetPage.prototype.yyyymmdd_hhmmOfJD(value);
                 return dt.time.Ord3 + ":" + dt.time.Ord2;
             } catch (err) {
+                console.log(err);
                 return RealTimeDataViewer.format.default(value, "d", 3, 1);
             }
         },
@@ -66,7 +68,7 @@ var RealTimeDataViewer = {
                         true); // topocentric coordinates
                     rtDataObj.onDataUpdated.notify(interpolatedObject);
                 } catch (err) {
-
+                    console.log(err);
                 }
             }
         };
@@ -225,52 +227,49 @@ var RealTimeDataViewer = {
                           "CentralMeridianGeometricLongitude_System2",
                           "DiameterTopo"];
         // same host
-        try {
-            if (!AAJS.AllDependenciesLoaded())
-                throw "wait!";
-            // This wil throw initially. Notifications will not update the view.
-            var seed = Pages[pageName].dataSource.getDataAsObjectForJD(0, true, true);
-            for (var key in seed) {
-                if (hiddenKeys.indexOf(key) >= 0) {
-                    continue;
-                }
-                    
-                var createdDom = RealTimeDataViewer.Utils.CreateDom(domHost, "div", "loading ...");
-                createdDom.classList.add(key);
-                createdDom.classList.add("scrollableRTdiv");
-
-                var unit = "\u00B0";
-                var scaleFactor = 1;
-                for (var tableKey in Pages[pageName].tableHeaderInfo) {
-                    if (key == Pages[pageName].tableHeaderInfo[tableKey].dataKey) {
-                        unit = Pages[pageName].tableHeaderInfo[tableKey]["1"]["text"].trim();
-                        createdDom.setAttribute("alt", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
-                        createdDom.setAttribute("title", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
-                        createdDom.onclick = RealTimeDataViewer.alertDivTitle;
+        WHEN(function(){return AAJS && AAJS.AllDependenciesLoaded && AAJS.AllDependenciesLoaded();},
+             function () {
+                // This wil throw initially. Notifications will not update the view.
+                var seed = Pages[pageName].dataSource.getDataAsObjectForJD(0, true, true);
+                for (var key in seed) {
+                    if (hiddenKeys.indexOf(key) >= 0) {
+                        continue;
                     }
-                }
 
-                if (unit == "'") {
-                    scaleFactor = 60;
-                } else if (unit == "''" || unit == '"') {
-                    scaleFactor = 3600;
-                } else if (unit == "hh:mm") {
-                    unit = "h";
-                }
+                    var createdDom = RealTimeDataViewer.Utils.CreateDom(domHost, "div", "loading ...");
+                    createdDom.classList.add(key);
+                    createdDom.classList.add("scrollableRTdiv");
 
-                var decimalsNum = RealTimeDataViewer.Persistent.GetNumberOfDecimals(pageName, key);
-                if (RealTimeDataViewer.Persistent.IsVisible(pageName, key)) {
-                    createdDom.classList.remove("hidden");
-                } else {
-                    createdDom.classList.add("hidden");
-                }
+                    var unit = "\u00B0";
+                    var scaleFactor = 1;
+                    for (var tableKey in Pages[pageName].tableHeaderInfo) {
+                        if (key == Pages[pageName].tableHeaderInfo[tableKey].dataKey) {
+                            unit = Pages[pageName].tableHeaderInfo[tableKey]["1"]["text"].trim();
+                            createdDom.setAttribute("alt", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
+                            createdDom.setAttribute("title", Pages[pageName].tableHeaderInfo[tableKey]["longText"]);
+                            createdDom.onclick = RealTimeDataViewer.alertDivTitle;
+                        }
+                    }
 
-                onViewAdded({ "name": key, "unit": unit, "decimalsNum": decimalsNum, "factor": scaleFactor }, createdDom);
+                    if (unit == "'") {
+                        scaleFactor = 60;
+                    } else if (unit == "''" || unit == '"') {
+                        scaleFactor = 3600;
+                    } else if (unit == "hh:mm") {
+                        unit = "h";
+                    }
+
+                    var decimalsNum = RealTimeDataViewer.Persistent.GetNumberOfDecimals(pageName, key);
+                    if (RealTimeDataViewer.Persistent.IsVisible(pageName, key)) {
+                        createdDom.classList.remove("hidden");
+                    } else {
+                        createdDom.classList.add("hidden");
+                    }
+
+                    onViewAdded({ "name": key, "unit": unit, "decimalsNum": decimalsNum, "factor": scaleFactor }, createdDom);
+                }
             }
-
-        } catch (err) {
-            SyncedTimeOut(function () { RealTimeDataViewer.CreateRtDomForPage(domHost, pageName, onViewAdded); }, Timeout.onInit);
-        }
+        );
     },
 
     Persistent: {
@@ -285,7 +284,8 @@ var RealTimeDataViewer = {
         },
 
         IsVisible: function (pageName, key) {
-            var visible = localStorage.getItem(RealTimeDataViewer.Persistent.GetRTStorageKey(RealTimeDataViewer.Persistent.purposes.visibility, pageName, key));
+            var storageKey = RealTimeDataViewer.Persistent.GetRTStorageKey(RealTimeDataViewer.Persistent.purposes.visibility, pageName, key)
+            var visible = localStorage.getItem(storageKey);
             if (visible == null) {
                 visible = 'false';
                 if (pageName == 'Venus Ephemeris' || pageName == 'Jupiter Ephemeris') {
@@ -311,11 +311,13 @@ var RealTimeDataViewer = {
             if (typeof purpose == 'undefined') {
                 throw "Invalid purpose!";
             }
-            return pageName + "/" + key + "/" + purpose;
+            if (typeof key != 'undefined')
+                return pageName + " " + key + " " + purpose;
+            return pageName + " " + purpose;
         },
 
         purposes: {
-            visibility: "visible",
+            visibility: REAL_TIME_VIEW_FRONT_PAGE_SCOPE_NAME + ".checked",
             numberOfDecimals: "numOfDecimals"
         },
 
@@ -360,21 +362,7 @@ var RealTimeDataViewer = {
 (function () {
 
     function createCheckboxSwitch(host, usingID) {
-        /*<label class="switch">
-  <input type="checkbox">
-  <span class="slider round"></span>
-</label>*/
-        var createDom = RealTimeDataViewer.Utils.CreateDom;
-        var containingLabel = createDom(host, "label");
-        containingLabel.classList.add("switch");
-        var actualInput = createDom(containingLabel, "input");
-        actualInput.type = "checkbox";
-        actualInput.id = usingID;
-        actualInput.classList.add("switchinput");
-        var span = createDom(containingLabel, "span");
-        span.classList.add("slider");
-        span.classList.add("round");
-        return actualInput;
+        return PersistedControls.addSettingsToggle(host, usingID, false, " ");
     }
 
     function CreateRTSettings(hostForRTSettings, pageName) {
@@ -390,17 +378,12 @@ var RealTimeDataViewer = {
 
         bodySectionDiv['id'] = RealTimeDataViewer.getRtSettingsSectionId(pageName);
 
-        // <h3>Sun</h3>
         // TODO: this should be from the page object.
         createDom(bodySectionDiv, "div", " ").classList.add("clear");
         var objectName = pageName.substr(0, pageName.indexOf(" "));
 
-        var sectionCheckboxId = pageName + "settings";
-
-        // <input type="checkbox"></input>
+        var sectionCheckboxId = pageName + " " + REAL_TIME_VIEW_FRONT_PAGE_SCOPE_NAME;
         var sectionCheckbox = createCheckboxSwitch(bodySectionDiv, sectionCheckboxId);
-
-        sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName));
 
         var sectionLabel = createDom(bodySectionDiv, "label");
         sectionLabel.setAttribute('for', sectionCheckboxId);
@@ -415,39 +398,29 @@ var RealTimeDataViewer = {
             }
         }
 
-
         var sectionLabel2 = createDom(bodySectionDiv, "label");
         sectionLabel2.setAttribute('for', sectionCheckboxId);
         createDom(sectionLabel2, "h3", objectName);
 
 
         var rtViewer = RealTimeDataViewer.views[pageName];
-        sectionCheckbox.onclick = function () {
-            localStorage.setItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName), this.checked);
+        sectionCheckbox.onValueChanged.add(function () {
             rtViewer.resetItemVisibility();
-        }
+        });
 
         function AddSettingsForKeys() {
             if (rtViewer.allKeys.length != 0) {
                 for (var key in rtViewer.allViews) {
-                    var checkboxId = pageName + key + "settings";
+                    var checkboxId = pageName + " " + key + " " + REAL_TIME_VIEW_FRONT_PAGE_SCOPE_NAME;
 
                     // div + checkbox for each key
                     createDom(bodySectionDiv, "div", " ").classList.add("clear");
                     var row = createDom(bodySectionDiv, "div");
                     row.classList.add("row");
-
                     sectionCheckbox = createCheckboxSwitch(row, checkboxId);
-
-                    sectionCheckbox.checked = 'true' == localStorage.getItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName, key));
-
-                    sectionCheckbox.onclick = (function () {
-                        var keyName = key;
-                        return function () {
-                            localStorage.setItem(persistent.GetRTStorageKey(persistent.purposes.visibility, pageName, keyName), this.checked);
+                    sectionCheckbox.onValueChanged.add(function () {
                             rtViewer.resetItemVisibility();
-                        }
-                    })();
+                    });
 
                     var lbl = createDom(row, "label");
                     lbl.setAttribute('for', checkboxId);
@@ -468,15 +441,14 @@ var RealTimeDataViewer = {
         createDom(bodySectionDiv, "div", " ").classList.add("clear");
         rtViewer.resetItemVisibility();
     }
-
-
-    var pagesDoms = document.getElementsByClassName("page");
-    var hostForRTSettings = document.getElementById("realTimeSettingsContainer");
     
+    WHEN (function() { return typeof Pages != 'undefined' && typeof InterpolatedData != 'undefined' && typeof Notifications != 'undefined' &&
+        PersistedControls && PersistedControls.addPersistenceToToggle},
 
-    var localInit = function () {
-        if (typeof Pages != 'undefined' && typeof InterpolatedData != 'undefined' && typeof Notifications != 'undefined') {
-            var pagesAccountedFor = 0;
+        function () {
+            var pagesDoms = document.getElementsByClassName("page");
+            var hostForRTSettings = document.getElementById("realTimeSettingsContainer");
+
             for (var i = 0; i < pagesDoms.length; i++) {
                 var pageName = pagesDoms[i].id;
                 if (typeof Pages != 'undefined' &&
@@ -487,19 +459,9 @@ var RealTimeDataViewer = {
                     CreateRTSettings(host, pageName);
                     hostForRTSettings.appendChild(host);
                 }
-
-                if (typeof Pages != 'undefined' && Pages[pageName]) {
-                    pagesAccountedFor++;
-                }
-            }
-            if (pagesAccountedFor == pagesDoms.length) {
-                return;
             }
         }
+    );
 
-        SyncedTimeOut(localInit, Timeout.onInit);
-    }
-
-    localInit();
 })();
 

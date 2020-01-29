@@ -268,8 +268,8 @@ var SunData = {
 
     };
 
-    var localInit = function () {
-        if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
+    WHEN (PlanetPageRegistrationCheck,
+          function() {
             SunData.addRiseTransitSetData = PlanetData.prototype.addRiseTransitSetData;
             SunData.isAboveHorizon = PlanetData.prototype.isAboveHorizon;
             Sun.reset = PlanetPage.prototype.reset;
@@ -279,11 +279,6 @@ var SunData = {
             Sun.addNodeChild = PlanetPage.prototype.addNodeChild;
             Sun.oldAddHeader = PlanetPage.prototype.addTableHeader;
             Pages.addShareablePage(Sun, "Sun Ephemeris");
-        } else {
-            SyncedTimeOut(localInit, Timeout.onInit);
         }
-    }
-
-    localInit();
-
+    );
 })();
