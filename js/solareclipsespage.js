@@ -215,16 +215,10 @@ var SolarEclipsesPage = {
 
 };
 
-(function () {
-    var initLocal = function () {
-        try {
-            SolarEclipsesPage.dataSource = SolarEclipses;
-            SolarEclipsesPage.reset = PlanetPage.prototype.reset;
-            Pages.addShareablePage(SolarEclipsesPage, "Solar Eclipses");
-        } catch (err) {
-            SyncedTimeOut(initLocal, Timeout.onInit);
-        }
-    };
-    initLocal();
-})();
-
+WHEN (PlanetPageRegistrationCheck,
+      function () {
+          SolarEclipsesPage.dataSource = SolarEclipses;
+          SolarEclipsesPage.reset = PlanetPage.prototype.reset;
+          Pages.addShareablePage(SolarEclipsesPage, "Solar Eclipses");
+      }
+);
