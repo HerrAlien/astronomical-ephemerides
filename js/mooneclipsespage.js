@@ -23,35 +23,34 @@ var MoonEclipsesPage = {
 
 
     displayPage: function () {
+        WHEN (function () { return !(typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD); },
+              function () {
+                var startJD = PageTimeInterval.JD;
+                var numberOfDays = PageTimeInterval.days;
 
-        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD)
-            return SyncedTimeOut(function () { MoonEclipsesPage.displayPage(); }, Timeout.onInit);
+                if (MoonEclipsesPage.pageRendered)
+                    return;
 
-        var startJD = PageTimeInterval.JD;
-        var numberOfDays = PageTimeInterval.days;
+                MoonEclipsesPage.reset();
+                var endJD = startJD + numberOfDays;
 
-        if (MoonEclipsesPage.pageRendered)
-            return;
+                function processJD(JD) {
+                    if (JD >= endJD) {
+                        MoonEclipsesPage.pageRendered = true;
+                        return;
+                    }
 
-        MoonEclipsesPage.reset();
-        var endJD = startJD + numberOfDays;
+                    var oppositionData = MoonEclipsesPage.dataSource.calculateEclipseForJD(JD);
+                    if (oppositionData.eclipse)
+                        MoonEclipsesPage.drawNewEclipse(oppositionData);
 
-        function processJD(JD) {
-            if (JD >= endJD) {
-                MoonEclipsesPage.pageRendered = true;
-                return;
+                    requestAnimationFrame(function () { processJD(oppositionData.JD + MoonEclipsesPage.dataSource.sinodicPeriod); });
+                }
+
+                processJD(startJD);
             }
-
-            var oppositionData = MoonEclipsesPage.dataSource.calculateEclipseForJD(JD);
-            if (oppositionData.eclipse)
-                MoonEclipsesPage.drawNewEclipse(oppositionData);
-
-            requestAnimationFrame(function () { processJD(oppositionData.JD + MoonEclipsesPage.dataSource.sinodicPeriod); });
-        }
-
-        processJD(startJD);
+        );
     },
-
 
     getTypeOfEclipseString: function (oppositionData) {
         var type = "Eclipse through the penumbra";
@@ -61,7 +60,6 @@ var MoonEclipsesPage = {
             type = "Total eclipse";
         return type;
     },
-
 
     displayTimings: function (oppositionData, mainDiv) {
         var addNodeChild = PlanetPage.prototype.addNodeChild;
@@ -261,15 +259,10 @@ var MoonEclipsesPage = {
     // clears up the rendered thing
 };
 
-(function () {
-    var initLocal = function () {
-        try {
+WHEN (function () { return true; },
+      function () {
             MoonEclipsesPage.dataSource = MoonEclipsesData;
             MoonEclipsesPage.reset = PlanetPage.prototype.reset;
             Pages.addShareablePage(MoonEclipsesPage, "Lunar Eclipses");
-        } catch (err) {
-            SyncedTimeOut(initLocal, Timeout.onInit);
-        }
-    }
-    initLocal();
-})();
+      }
+);
