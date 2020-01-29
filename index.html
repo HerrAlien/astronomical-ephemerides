@@ -34,6 +34,7 @@
 
     <script type="text/JavaScript" async="" src="js/notifications.js"></script>
     <script type="text/JavaScript" async="" src="js/pagerank.js"></script>
+    <script type="text/JavaScript" async="" src="js/persistedcontrols.js"></script>
 
     <script type="text/JavaScript">
 
@@ -68,6 +69,23 @@
             setTimeout(function () { requestAnimationFrame(func); }, time);
         }
 
+        function WHEN (condition, functionToExec, time){
+            var fct = function () {
+                try {
+                    if (condition()) {
+                        return functionToExec();
+                    }
+                } catch (err) {
+                    console.log (err);
+                }
+                SyncedTimeOut (fct, time);
+            }
+            return fct();
+        }
+
+        function PlanetPageRegistrationCheck() { 
+            return (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined');
+        }
 
         (function () {
             var loaders = [];

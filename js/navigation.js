@@ -161,12 +161,7 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                                 var scollAction = function () {
                                     targetDiv = document.getElementById(action.parameters);
                                     if (targetDiv) {
-                                        try {
-                                            targetDiv.scrollIntoView();
-                                        } catch (err) {
-                                            targetDiv.parentNode.scrollTop = targetDiv.offsetTop - 
-                                                                             targetDiv.parentNode.offsetTop;
-                                        }
+                                        targetDiv.scrollIntoView();
                                         return;
                                     }
                                     if (attemptsCount < maxAttempts) {
@@ -202,10 +197,10 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
                     /* {"page":"settings","actions":[{"name":"scroll","parameters":"realTimeSettingsContainer"}]} */
                     var payload = JSON.parse(pageName);
                     actions = payload.actions;
-                    window.location.replace("#" + payload.page);
+                    window.location.replace ("#" + payload.page);
                 } catch (err) {
                     error404(pageName);
-                    window.location.replace("#Search results");
+                    window.location.replace ("#Search results");
                 }
             }
         }
@@ -215,15 +210,15 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
         try {
             var navigationObjectString = decodeURI(document.location.search.slice(18));
             var payload = JSON.parse(navigationObjectString);
-            window.location.replace(
+            window.location.replace (
             document.location.origin + document.location.pathname +
             "#" + navigationObjectString);
         } catch (err) { }
     }
 
-    window.addEventListener("hashchange", onhashchange, false);
+    window.addEventListener("hashchange", onhashchange, true);
     if (location.hash) SyncedTimeOut(onhashchange, Timeout.onInit);
 
-    window.addEventListener("load", onload, false);
+    window.addEventListener("load", onload, true);
 
 })();

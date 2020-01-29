@@ -268,14 +268,14 @@ var SunData = {
 
     };
 
-    var localInit = function () {
-        if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
+    WHEN (PlanetPageRegistrationCheck,
+          function() {
             SunData.addRiseTransitSetData = PlanetData.prototype.addRiseTransitSetData;
             SunData.isAboveHorizon = PlanetData.prototype.isAboveHorizon;
             Sun.parent_reset = PlanetPage.prototype.reset;
             Sun.reset = function () {
-                this.parent_reset();
-                this.interpolatorDisplayFunctions['Parallax'] = function (p) {
+                Sun.parent_reset();
+                Sun.interpolatorDisplayFunctions['Parallax'] = function (p) {
                     return GetAAJS().Numerical.RoundTo3Decimals(p * 3600) + "''";
                 };
 
@@ -283,9 +283,9 @@ var SunData = {
                     return  GetAAJS().Numerical.RoundTo3Decimals(a) + "\u00B0";
                 };
 
-                this.interpolatorDisplayFunctions['P']  = angleDegrees_3Decimals;
-                this.interpolatorDisplayFunctions['B0'] = angleDegrees_3Decimals;
-                this.interpolatorDisplayFunctions['L0'] = angleDegrees_3Decimals;                
+                Sun.interpolatorDisplayFunctions['P']  = angleDegrees_3Decimals;
+                Sun.interpolatorDisplayFunctions['B0'] = angleDegrees_3Decimals;
+                Sun.interpolatorDisplayFunctions['L0'] = angleDegrees_3Decimals;                
             };
             Sun.displayPage = PlanetPage.prototype.displayPage;
             Sun.timeToHhColumnMm = PlanetPage.prototype.timeToHhColumnMm;
@@ -294,11 +294,6 @@ var SunData = {
             Sun.oldAddHeader = PlanetPage.prototype.addTableHeader;
             Sun.renderTable = PlanetPage.prototype.renderTable;
             Pages.addShareablePage(Sun, "Sun Ephemeris");
-        } else {
-            SyncedTimeOut(localInit, Timeout.onInit);
         }
-    }
-
-    localInit();
-
+    );
 })();

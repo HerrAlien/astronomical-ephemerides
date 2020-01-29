@@ -18,19 +18,13 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 var SaturnData = {};
 
-(function () {
-
-    var initLocal = function () {
-        if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
+WHEN (PlanetPageRegistrationCheck,
+      function () {
             SaturnData = new PlanetData({
                 number: 5, name: "Saturn",
                 semidiameterFunctionName: function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.SaturnEquatorialSemidiameterB(delta); }
             });
             var Page = new PlanetPage(SaturnData, "SaturnTable");
             Pages.addShareablePage(Page, "Saturn Ephemeris");
-        } else {
-            SyncedTimeOut(initLocal, Timeout.onInit);
         }
-    }
-    initLocal();
-})();
+);

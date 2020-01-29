@@ -16,9 +16,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 
 "use strict";
 
-(function () {
-    var localInit = function () {
-        try {
+WHEN (PlanetPageRegistrationCheck,
+      function() {
             var SaturnMoonsPage = new MoonsPage("SaturnMoonsContainer",
                     SaturnMoonsData,
                     {
@@ -35,9 +34,5 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
             SaturnMoonsPage.planetFraction = 1 / 23.0;
 
             Pages.addShareablePage(SaturnMoonsPage, "Elongations of Saturn Moons");
-        } catch (err) {
-            SyncedTimeOut(localInit, Timeout.onInit);
-        }
-    }
-    localInit();
-})();
+      }
+);

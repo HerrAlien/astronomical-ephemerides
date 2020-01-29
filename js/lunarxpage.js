@@ -26,43 +26,44 @@ var LunarXPage = {
     },
 
     displayPage : function() {
-        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !AAJS.AllDependenciesLoaded || 
-            !PageTimeInterval.JD || typeof MoonData == "undefined") {
-            return SyncedTimeOut(function () { LunarXPage.displayPage(); }, Timeout.onInit);
-        }
+        WHEN (function() {return ! (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !AAJS.AllDependenciesLoaded || 
+                                    !PageTimeInterval.JD || typeof MoonData == "undefined");}, 
 
-        LunarXPage.signature = LunarXPage.getSignature();
+              function() {
+                  LunarXPage.signature = LunarXPage.getSignature();
 
-        var startJD = PageTimeInterval.JD;
-        var numberOfDays = PageTimeInterval.days;
+                  var startJD = PageTimeInterval.JD;
+                  var numberOfDays = PageTimeInterval.days;
 
-        if (LunarXPage.pageRendered)
-            return;
+                  if (LunarXPage.pageRendered)
+                      return;
 
-        LunarXPage.reset();
-        MoonData.reset();
-        var endJD = startJD + numberOfDays;
+                  LunarXPage.reset();
+                  MoonData.reset();
+                  var endJD = startJD + numberOfDays;
 
-        function ProcessJD(JD, host) {
-            var signatureChanged = LunarXPage.signature != LunarXPage.getSignature();
-            if (JD >= endJD || signatureChanged) {
-                LunarXPage.pageRendered = !signatureChanged;
-                return;
+                  function ProcessJD(JD, host) {
+                      var signatureChanged = LunarXPage.signature != LunarXPage.getSignature();
+                      if (JD >= endJD || signatureChanged) {
+                          LunarXPage.pageRendered = !signatureChanged;
+                          return;
+                      }
+
+                      var lunarXData = LunarXPage.dataSource.getEvent(JD);
+                      LunarXPage.addEntry(lunarXData.currentLunarXJd, host);
+
+                      requestAnimationFrame(function () { ProcessJD(lunarXData.nextFirstQuarter, host); });
+                  }
+
+                  var div = PlanetPage.prototype["addNodeChild"](LunarXPage.hostElement, "div");
+                  div.classList.add ("lunarXEvents");
+                  var table = PlanetPage.prototype["addNodeChild"](div, "table");
+                  var row = PlanetPage.prototype["addNodeChild"](table, "tr");
+                  PlanetPage.prototype["addNodeChild"](row, "th",  "Date");
+                  PlanetPage.prototype["addNodeChild"](row, "th",  TimeStepsData.useLocalTime ? "Time (local)" : "Time (UTC)");
+                  ProcessJD(startJD, table);
             }
-
-            var lunarXData = LunarXPage.dataSource.getEvent(JD);
-            LunarXPage.addEntry(lunarXData.currentLunarXJd, host);
-
-            requestAnimationFrame(function () { ProcessJD(lunarXData.nextFirstQuarter, host); });
-        }
-
-        var div = PlanetPage.prototype["addNodeChild"](LunarXPage.hostElement, "div");
-        div.classList.add ("lunarXEvents");
-        var table = PlanetPage.prototype["addNodeChild"](div, "table");
-        var row = PlanetPage.prototype["addNodeChild"](table, "tr");
-        PlanetPage.prototype["addNodeChild"](row, "th",  "Date");
-        PlanetPage.prototype["addNodeChild"](row, "th",  TimeStepsData.useLocalTime ? "Time (local)" : "Time (UTC)");
-        ProcessJD(startJD, table);
+        );
     },
 
     addEntry : function (jd, domHost) {
@@ -76,15 +77,10 @@ var LunarXPage = {
      keywordsArray: ["Moon", "Luna", "X", "Cross", "Lunar X", "Werner X", "Werner Cross"]
 };
 
-(function () {
-    var initLocal = function () {
-        try {
-            LunarXPage.dataSource = LunarXData;
-            LunarXPage.reset = PlanetPage.prototype.reset;
-            Pages.addShareablePage(LunarXPage, "Lunar X");
-        } catch (err) {
-            SyncedTimeOut(initLocal, Timeout.onInit);
-        }
-    }
-    initLocal();
-})();
+WHEN (function() { return true; },
+      function () {
+         LunarXPage.dataSource = LunarXData;
+         LunarXPage.reset = PlanetPage.prototype.reset;
+         Pages.addShareablePage(LunarXPage, "Lunar X");
+      }
+);

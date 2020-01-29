@@ -1,4 +1,3 @@
-
 /* ephemeris - a software astronomical almanach 
 
 Copyright 2017 Herr_Alien <alexandru.garofide@gmail.com>
@@ -25,38 +24,39 @@ var SolarEclipsesPage = {
     // clears up the rendered thing
     displayPage: function () {
 
-        if (typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD || typeof BesselianElements == 'undefined')
-            return SyncedTimeOut(function () { SolarEclipsesPage.displayPage(); }, Timeout.onInit);
+        WHEN (function () { return !(typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !PageTimeInterval.JD || typeof BesselianElements == 'undefined'); },
+              function () {        
+                if (SolarEclipsesPage.pageRendered)
+                    return;
 
-        if (SolarEclipsesPage.pageRendered)
-            return;
+                SolarEclipsesPage.reset();
+                var startJD = PageTimeInterval.JD;
+                var numberOfConjunctions = Math.round(PageTimeInterval.days / MoonEclipsesPage.dataSource.sinodicPeriod);
 
-        SolarEclipsesPage.reset();
-        var startJD = PageTimeInterval.JD;
-        var numberOfConjunctions = Math.round(PageTimeInterval.days / MoonEclipsesPage.dataSource.sinodicPeriod);
+                var startK = GetAAJS().Moon.kForJD(startJD);
+                if (startK < 0)
+                    startK = -1 * Math.ceil(Math.abs(startK));
+                else
+                    startK = Math.ceil(Math.abs(startK));
 
-        var startK = GetAAJS().Moon.kForJD(startJD);
-        if (startK < 0)
-            startK = -1 * Math.ceil(Math.abs(startK));
-        else
-            startK = Math.ceil(Math.abs(startK));
+                var endK = startK + numberOfConjunctions;
 
-        var endK = startK + numberOfConjunctions;
+                function processK(k, endingK) {
+                    if (k >= endingK) {
+                        SolarEclipsesPage.pageRendered = true;
+                        return;
+                    }
 
-        function processK(k, endingK) {
-            if (k >= endingK) {
-                SolarEclipsesPage.pageRendered = true;
-                return;
-            }
+                    var eclipseData = SolarEclipsesPage.dataSource.EclipseDataForK(k);
+                    if (eclipseData.bEclipse)
+                        SolarEclipsesPage.drawNewEclipse(eclipseData);
 
-            var eclipseData = SolarEclipsesPage.dataSource.EclipseDataForK(k);
-            if (eclipseData.bEclipse)
-                SolarEclipsesPage.drawNewEclipse(eclipseData);
+                    requestAnimationFrame(function () { processK(k + 1, endingK); });
+                }
 
-            requestAnimationFrame(function () { processK(k + 1, endingK); });
-        }
-
-        processK(startK, endK);
+                processK(startK, endK);
+              }
+          );
     },
 
     getTypeOfEclipseString: function (eclipseData) {

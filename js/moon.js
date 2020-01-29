@@ -364,8 +364,8 @@ var MoonData = {
         return result;
     };
 
-    var localInit = function () {
-        if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
+    WHEN (PlanetPageRegistrationCheck,
+          function() {
             MoonData.addRiseTransitSetData = PlanetData.prototype.addRiseTransitSetData;
             MoonData.isAboveHorizon = PlanetData.prototype.isAboveHorizon;
 
@@ -379,8 +379,8 @@ var MoonData = {
             Pages.addShareablePage(MoonPage, "Moon Ephemeris");
             MoonPage.parent_reset = PlanetPage.prototype.reset;
             MoonPage.reset = function () {
-                this.parent_reset();
-                this.interpolatorDisplayFunctions['Parallax'] = function (p) {
+                MoonPage.parent_reset();
+                MoonPage.interpolatorDisplayFunctions['Parallax'] = function (p) {
                     return GetAAJS().Numerical.RoundTo3Decimals(p * 3600) + "''";
                 };
 
@@ -388,19 +388,12 @@ var MoonData = {
                     return  GetAAJS().Numerical.RoundTo3Decimals(a) + "\u00B0";
                 };
 
-                this.interpolatorDisplayFunctions['Colongitude']  = angleDegrees_3Decimals;
-                this.interpolatorDisplayFunctions['b0'] = angleDegrees_3Decimals;
-                this.interpolatorDisplayFunctions['RaTopo'] = this.interpolatorDisplayFunctions['RA'];
-                this.interpolatorDisplayFunctions['DecTopo'] = this.interpolatorDisplayFunctions['Dec']
+                MoonPage.interpolatorDisplayFunctions['Colongitude']  = angleDegrees_3Decimals;
+                MoonPage.interpolatorDisplayFunctions['b0'] = angleDegrees_3Decimals;
+                MoonPage.interpolatorDisplayFunctions['RaTopo'] = MoonPage.interpolatorDisplayFunctions['RA'];
+                MoonPage.interpolatorDisplayFunctions['DecTopo'] = MoonPage.interpolatorDisplayFunctions['Dec']
             };
             MoonPage.renderTable = PlanetPage.prototype.renderTable;
-
-
-        } else {
-            SyncedTimeOut(localInit, Timeout.onInit);
         }
-    }
-
-    localInit();
-
+    );
 })();

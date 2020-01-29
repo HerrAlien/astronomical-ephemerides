@@ -19,10 +19,8 @@ with this program. If not, see <https://www.gnu.org/licenses/agpl.html>. */
 var JupiterData = {};
 
 // upgrade the object to handle physical data as well.
-(function () {
-
-    var localInit = function () {
-        if (typeof PlanetData != 'undefined' && typeof PlanetPage != 'undefined' && typeof Pages != 'undefined') {
+WHEN (PlanetPageRegistrationCheck, 
+      function () {
             JupiterData = new PlanetData({
                 number: 4, name: "Jupiter",
                 semidiameterFunctionName: function (delta) { if (typeof GetAAJS() != "undefined") return GetAAJS().Diameters.JupiterEquatorialSemidiameterB(delta); }
@@ -93,23 +91,18 @@ var JupiterData = {};
             Pages.addShareablePage(Page, "Jupiter Ephemeris");
             Page.parent_reset = PlanetPage.prototype.reset;
             Page.reset = function () {
-                this.parent_reset();
+                Page.parent_reset();
 
                 var angleDegrees_3Decimals = function (a) {
                     return  GetAAJS().Numerical.RoundTo3Decimals(a) + "\u00B0";
                 };
 
-                this.interpolatorDisplayFunctions['P']  = angleDegrees_3Decimals;
-                this.interpolatorDisplayFunctions['EarthDeclination'] = angleDegrees_3Decimals;
-                this.interpolatorDisplayFunctions['SunDeclination'] = angleDegrees_3Decimals;                
-                this.interpolatorDisplayFunctions['CentralMeridianApparentLongitude_System1'] = angleDegrees_3Decimals;                
-                this.interpolatorDisplayFunctions['CentralMeridianApparentLongitude_System2'] = angleDegrees_3Decimals;                
+                Page.interpolatorDisplayFunctions['P']  = angleDegrees_3Decimals;
+                Page.interpolatorDisplayFunctions['EarthDeclination'] = angleDegrees_3Decimals;
+                Page.interpolatorDisplayFunctions['SunDeclination'] = angleDegrees_3Decimals;                
+                Page.interpolatorDisplayFunctions['CentralMeridianApparentLongitude_System1'] = angleDegrees_3Decimals;                
+                Page.interpolatorDisplayFunctions['CentralMeridianApparentLongitude_System2'] = angleDegrees_3Decimals;                
             };
             Page.renderTable = PlanetPage.prototype.renderTable;
-        } else {
-            SyncedTimeOut(localInit, Timeout.onInit);
-        }
-    }
-
-    localInit();
-})();
+        } 
+);

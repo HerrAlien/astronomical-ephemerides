@@ -364,7 +364,7 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
             DistanceToEarth : GetAAJS().Numerical.RoundTo3Decimals,
             DistanceToSun : GetAAJS().Numerical.RoundTo3Decimals,
             Elongation : function (e, JD) {
-                var cardinalCoordinateRelativeToSun = "W";
+                var cardinalCoordinateRelativeToSun = "E";
 
                 var sunRA = SunData.getRA(JD);
                 var planetRA = _thisPage.dataSource.RA;
@@ -381,7 +381,7 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
                 }
 
                 if (sunRA < planetRA)
-                    cardinalCoordinateRelativeToSun = "E";
+                    cardinalCoordinateRelativeToSun = "W";
 
                 return GetAAJS().Numerical.RoundTo1Decimal(e) + " " + 
                        cardinalCoordinateRelativeToSun;
