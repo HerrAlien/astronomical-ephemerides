@@ -38,23 +38,34 @@ var LunarXData = {
 
         var xFunc = function (jd) {
             var dateData = LunarXData.moonData.getDataAsObjectForJD(jd, false, true);
-            return dateData.Colongitude - 28 * Math.sin(dateData.b0 * Math.PI / 180);
+            return dateData.Colongitude - 28 * Math.sin(dateData.b0 * Math.PI / 180) - 358;
+        }
+
+        var moonMaidenFunc = function (jd) {
+            var dateData = LunarXData.moonData.getDataAsObjectForJD(jd, false, true);
+            return dateData.Colongitude - 28 * Math.sin(dateData.b0 * Math.PI / 180) - 33.2;
         }
 
         var dayFraction = 6/24;
 
-        var currentAngle = xFunc(currentLunarXJd);
-        var nextAngle = xFunc(currentLunarXJd + dayFraction);
-
-        var slope = (nextAngle - currentAngle) / dayFraction;
-        var err = currentAngle - 358;
-        var nextErr = nextAngle - 358;
+        var err = xFunc(currentLunarXJd);
+        var nextErr = xFunc(currentLunarXJd + dayFraction);
+        var slope = (nextErr - err) / dayFraction;
         
         var jdCorrection = err / slope;
 
         currentLunarXJd -= jdCorrection;
 
+        var currentMoonMaidenJd = currentLunarXJd + 4;
+        err = moonMaidenFunc(currentLunarXJd);
+        nextErr = moonMaidenFunc(currentLunarXJd + dayFraction);
+        slope = (nextErr - err) / dayFraction;
+        
+        var jdCorrection = err / slope;
+        currentMoonMaidenJd -= jdCorrection;
+
         return { "currentLunarXJd" : currentLunarXJd, 
-                 "nextFirstQuarter" : currentLunarXJd + 29}; // both are JDs
+                 "nextFirstQuarter" : currentLunarXJd + 29,
+                 "currentMoonMaiden" : currentMoonMaidenJd };
     }
 };

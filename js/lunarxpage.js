@@ -50,7 +50,8 @@ var LunarXPage = {
                       }
 
                       var lunarXData = LunarXPage.dataSource.getEvent(JD);
-                      LunarXPage.addEntry(lunarXData.currentLunarXJd, host);
+                      LunarXPage.addEntry(lunarXData.currentLunarXJd, host, "Lunar X");
+                      LunarXPage.addEntry(lunarXData.currentMoonMaiden, host, "Moon Maiden");
 
                       requestAnimationFrame(function () { ProcessJD(lunarXData.nextFirstQuarter, host); });
                   }
@@ -61,17 +62,19 @@ var LunarXPage = {
                   var row = PlanetPage.prototype["addNodeChild"](table, "tr");
                   PlanetPage.prototype["addNodeChild"](row, "th",  "Date");
                   PlanetPage.prototype["addNodeChild"](row, "th",  TimeStepsData.useLocalTime ? "Time (local)" : "Time (UTC)");
+                  PlanetPage.prototype["addNodeChild"](row, "th",  "Event name");
                   ProcessJD(startJD, table);
             }
         );
     },
 
-    addEntry : function (jd, domHost) {
+    addEntry : function (jd, domHost, eventName) {
         var row = PlanetPage.prototype["addNodeChild"](domHost, "tr");
         var t = PlanetPage.prototype["yyyymmdd_hhmmOfJD"](jd);
 
         PlanetPage.prototype["addNodeChild"](row, "td",  t.date.Y + "-" + t.date.M + "-" + t.date.D);
         PlanetPage.prototype["addNodeChild"](row, "td", t.time.Ord3 + ":" + t.time.Ord2);
+        PlanetPage.prototype["addNodeChild"](row, "td", eventName);
     },
 
      keywordsArray: ["Moon", "Luna", "X", "Cross", "Lunar X", "Werner X", "Werner Cross"]
