@@ -216,7 +216,7 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
                     var format = pageObj.interpolatorDisplayFunctions[k];
                     var display = interpolatedView[k];
                     if (data && format && display) {
-                        display.textContent = format(data, JDE);
+                        display.textContent = format(data, JDE, objectData);
                     }
                 }
             };
@@ -363,25 +363,23 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
             Set : this.timeToHhColumnMm,
             DistanceToEarth : GetAAJS().Numerical.RoundTo3Decimals,
             DistanceToSun : GetAAJS().Numerical.RoundTo3Decimals,
-            Elongation : function (e, JD) {
-                var cardinalCoordinateRelativeToSun = "E";
+            Elongation : function (e, JD, planetDataObj) {
+                var cardinalCoordinateRelativeToSun = "W";
 
                 var sunRA = SunData.getRA(JD);
-                var planetRA = _thisPage.dataSource.RA;
+                var planetRA = planetDataObj.RA;
+                var delta = planetRA - sunRA;
                 // this is probably because we have one angle in q1, the other in q4.
-                if (Math.abs(sunRA - planetRA) >= 12) // hours ...
+                if (Math.abs(delta) >= 12) // hours ...
                 {
-                    sunRA += 12;
-                    planetRA += 12;
-
-                    if (sunRA > 24)
-                        sunRA -= 24;
-                    if (planetRA > 24)
-                        planetRA -= 24;
+                    if (delta > 0)
+                        delta -= 24;
+                    else
+                        delta += 24;
                 }
 
-                if (sunRA < planetRA)
-                    cardinalCoordinateRelativeToSun = "W";
+                if (delta > 0)
+                    cardinalCoordinateRelativeToSun = "E";
 
                 return GetAAJS().Numerical.RoundTo1Decimal(e) + " " + 
                        cardinalCoordinateRelativeToSun;
@@ -430,19 +428,17 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
 
         var sunRA = SunData.getRA(JD);
         var planetRA = obj.RA;
+        var delta = planetRA - sunRA;
         // this is probably because we have one angle in q1, the other in q4.
-        if (Math.abs(sunRA - planetRA) >= 12) // hours ...
+        if (Math.abs(delta) >= 12) // hours ...
         {
-            sunRA += 12;
-            planetRA += 12;
-
-            if (sunRA > 24)
-                sunRA -= 24;
-            if (planetRA > 24)
-                planetRA -= 24;
+            if (delta > 0)
+                delta -= 24;
+            else
+                delta += 24;
         }
 
-        if (sunRA < planetRA)
+        if (delta > 0)
             cardinalCoordinateRelativeToSun = "E";
 
         displayableLine[di++] = GetAAJS().Numerical.RoundTo1Decimal(obj.Elongation) + " " + cardinalCoordinateRelativeToSun;
