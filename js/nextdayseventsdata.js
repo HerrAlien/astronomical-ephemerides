@@ -250,13 +250,25 @@ var NextEvents = {
                         start: lastFirstQuarterJd,
                         end: lastFirstQuarterJd,
                         navigActionObj: {
-                            page: "Lunar X",
+                            page: "Terminator Events",
                             actions: []
                         },
                         title: "Lunar X"
                     };
                     if (NextEvents.InTimeBounds(evt)) {
                         events.push (evt);
+                    }
+                    var moonMaidenEvt = {
+                        start: xData.currentMoonMaiden,
+                        end: xData.currentMoonMaiden,
+                        navigActionObj: {
+                            page: "Terminator Events",
+                            actions: []
+                        },
+                        title: "Moon Maiden"
+                    };
+                    if (NextEvents.InTimeBounds(moonMaidenEvt)) {
+                        events.push (moonMaidenEvt);
                     }
             }
 

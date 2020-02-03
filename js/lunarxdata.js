@@ -43,7 +43,7 @@ var LunarXData = {
 
         var moonMaidenFunc = function (jd) {
             var dateData = LunarXData.moonData.getDataAsObjectForJD(jd, false, true);
-            return dateData.Colongitude - 28 * Math.sin(dateData.b0 * Math.PI / 180) - 33.2;
+            return dateData.Colongitude + 40.3 * Math.sin(dateData.b0 * Math.PI / 180) - 33.2;
         }
 
         var dayFraction = 6/24;

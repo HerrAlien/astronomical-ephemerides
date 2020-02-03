@@ -77,13 +77,14 @@ var LunarXPage = {
         PlanetPage.prototype["addNodeChild"](row, "td", eventName);
     },
 
-     keywordsArray: ["Moon", "Luna", "X", "Cross", "Lunar X", "Werner X", "Werner Cross"]
+     keywordsArray: ["Moon", "Luna", "X", "Cross", "Lunar X", "Werner X", "Werner Cross", 
+                      "Moon Maiden", "Maiden", "Lady", "Heraclid", "Heraclides"]
 };
 
 WHEN (function() { return true; },
       function () {
          LunarXPage.dataSource = LunarXData;
          LunarXPage.reset = PlanetPage.prototype.reset;
-         Pages.addShareablePage(LunarXPage, "Lunar X");
+         Pages.addShareablePage(LunarXPage, "Terminator Events");
       }
 );
