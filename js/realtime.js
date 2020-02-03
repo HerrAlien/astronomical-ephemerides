@@ -442,13 +442,14 @@ var RealTimeDataViewer = {
         rtViewer.resetItemVisibility();
     }
     
+    var createdRtViewers = 0;
     WHEN (function() { return typeof Pages != 'undefined' && typeof InterpolatedData != 'undefined' && typeof Notifications != 'undefined' &&
         PersistedControls && PersistedControls.addPersistenceToToggle},
 
         function () {
             var pagesDoms = document.getElementsByClassName("page");
             var hostForRTSettings = document.getElementById("realTimeSettingsContainer");
-
+            
             for (var i = 0; i < pagesDoms.length; i++) {
                 var pageName = pagesDoms[i].id;
                 if (typeof Pages != 'undefined' &&
@@ -458,7 +459,12 @@ var RealTimeDataViewer = {
                     var host = document.createDocumentFragment();
                     CreateRTSettings(host, pageName);
                     hostForRTSettings.appendChild(host);
+                    createdRtViewers++;
                 }
+            }
+            if (createdRtViewers < 9) // number of objects that can be interpolated
+            {
+                throw "Not all pages created";
             }
         }
     );
