@@ -311,19 +311,17 @@ function PlanetPage(planetDataSource, tableName) {
 
         var sunRA = SunData.getRA(JD);
         var planetRA = obj.RA;
+        var delta = planetRA - sunRA;
         // this is probably because we have one angle in q1, the other in q4.
-        if (Math.abs(sunRA - planetRA) >= 12) // hours ...
+        if (Math.abs(delta) >= 12) // hours ...
         {
-            sunRA += 12;
-            planetRA += 12;
-
-            if (sunRA > 24)
-                sunRA -= 24;
-            if (planetRA > 24)
-                planetRA -= 24;
+            if (delta > 0)
+                delta -= 24;
+            else
+                delta += 24;
         }
 
-        if (sunRA < planetRA)
+        if (delta > 0)
             cardinalCoordinateRelativeToSun = "E";
 
         displayableLine[di++] = GetAAJS().Numerical.RoundTo1Decimal(obj.Elongation) + " " + cardinalCoordinateRelativeToSun;
