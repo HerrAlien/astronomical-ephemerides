@@ -76,6 +76,8 @@ WHEN (PlanetPageRegistrationCheck,
                 return header;
             };
 
+        var Page = new PlanetPage(MarsData, "MarsTable");
+
         Page.tableHeaderInfo['20'] = {
             "0": { "text": " Date  " },
             "1": { "text": "          " },
