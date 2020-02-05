@@ -74,6 +74,7 @@ WHEN (PlanetPageRegistrationCheck,
                 var divPhysical = PlanetPage.prototype["addNodeChild"](header, "div");
                 divPhysical.classList.add("hidePhaseOnPhysical");
                 return header;
+            };
 
         var Page = new PlanetPage(MarsData, "MarsTable");
 
@@ -137,7 +138,6 @@ WHEN (PlanetPageRegistrationCheck,
                 Page.interpolatorDisplayFunctions['CentralMeridianLongitude'] = angleDegrees_3Decimals;                
             };
             Page.renderTable = PlanetPage.prototype.renderTable;
-        };
         Pages.addShareablePage(Page, "Mars Ephemeris");
     }
 );
