@@ -41,6 +41,10 @@ WHEN (PlanetPageRegistrationCheck,
             var Page = new PlanetPage(MarsData, "MarsTable", "Mars Ephemeris");
 
 
+            Page.tableHeaderInfo['16'] = { "dataKey": 'CentralMeridianLongitude', "0": { "text": "    L0" }, "1": { "text": "             \u00B0" }, "longText": "Longitude of central meridian (physical ephemeris)" };
+            Page.tableHeaderInfo['17'] = { "dataKey": 'EarthDeclination', "0": { "text": "    DE" }, "1": { "text": "     \u00B0" }, "longText": "Planetocentric declination of Earth (physical ephemeris)" };
+            Page.tableHeaderInfo['18'] = { "dataKey": 'SunDeclination', "0": { "text": "    DS" }, "1": { "text": "     \u00B0" }, "longText": "Planetocentric declination of the Sun (physical ephemeris)" };
+            Page.tableHeaderInfo['19'] = { "dataKey": 'P', "0": { "text": "    P  " }, "1": { "text": "     \u00B0" }, "longText": "Position angle of the North Pole (physical ephemeris)" };
             Page.tableHeaderInfo['20'] = {
                 "0": { "text": " Date  " },
                 "1": { "text": "          " },
@@ -53,10 +57,7 @@ WHEN (PlanetPageRegistrationCheck,
                 "longText": "Date: day",
                 "dataKey": 'Day'
             };
-            Page.tableHeaderInfo['16'] = { "dataKey": 'CentralMeridianLongitude', "0": { "text": "    L0" }, "1": { "text": "             \u00B0" }, "longText": "Longitude of central meridian (physical ephemeris)" };
-            Page.tableHeaderInfo['17'] = { "dataKey": 'EarthDeclination', "0": { "text": "    DE" }, "1": { "text": "     \u00B0" }, "longText": "Planetocentric declination of Earth (physical ephemeris)" };
-            Page.tableHeaderInfo['18'] = { "dataKey": 'SunDeclination', "0": { "text": "    DS" }, "1": { "text": "     \u00B0" }, "longText": "Planetocentric declination of the Sun (physical ephemeris)" };
-            Page.tableHeaderInfo['19'] = { "dataKey": 'P', "0": { "text": "    P  " }, "1": { "text": "     \u00B0" }, "longText": "Position angle of the North Pole (physical ephemeris)" };
+
             Page.formattingFunctions = Page.formattingFunctions.concat([
             function (L0) { return prePadTo(L0, " ", 5); },
             function (DE) { return prePadTo(DE, " ", 5); },
@@ -66,53 +67,7 @@ WHEN (PlanetPageRegistrationCheck,
             function (day) { return prePadTo(day, " ", 2); },
             ]);
 
-            Page["old_addPlanetTableHeader"] = Page.addTableHeader;
             Page["old_prepareOneDayDataObjectForView"] = Page.prepareOneDayDataObjectForView;
-
-            Page.addTableHeader = function (table, classes) {
-                var header = this.old_addPlanetTableHeader(table, classes);
-                var divPhysical = PlanetPage.prototype["addNodeChild"](header, "div");
-                divPhysical.classList.add("hidePhaseOnPhysical");
-                return header;
-            };
-
-        var Page = new PlanetPage(MarsData, "MarsTable");
-
-        Page.tableHeaderInfo['20'] = {
-            "0": { "text": " Date  " },
-            "1": { "text": "          " },
-            "longText": "Date: month",
-            "dataKey": 'Month'
-        };
-        Page.tableHeaderInfo['21'] = {
-            "0": { "text": " " },
-            "1": { "text": "          " },
-            "longText": "Date: day",
-            "dataKey": 'Day'
-        };
-        Page.tableHeaderInfo['16'] = { "dataKey": 'CentralMeridianLongitude', "0": { "text": "    L0" }, "1": { "text": "             \u00B0" }, "longText": "Longitude of central meridian (physical ephemeris)" };
-        Page.tableHeaderInfo['17'] = { "dataKey": 'EarthDeclination', "0": { "text": "    DE" }, "1": { "text": "     \u00B0" }, "longText": "Planetocentric declination of Earth (physical ephemeris)" };
-        Page.tableHeaderInfo['18'] = { "dataKey": 'SunDeclination', "0": { "text": "    DS" }, "1": { "text": "     \u00B0" }, "longText": "Planetocentric declination of the Sun (physical ephemeris)" };
-        Page.tableHeaderInfo['19'] = { "dataKey": 'P', "0": { "text": "    P  " }, "1": { "text": "     \u00B0" }, "longText": "Position angle of the North Pole (physical ephemeris)" };
-        Page.formattingFunctions = Page.formattingFunctions.concat([
-        function (L0) { return prePadTo(L0, " ", 5); },
-        function (DE) { return prePadTo(DE, " ", 5); },
-        function (DS) { return prePadTo(DS, " ", 5); },
-        function (P) { return prePadTo(P, " ", 5); },
-        function (month) { return prePadTo(month, " ", 3); },
-        function (day) { return prePadTo(day, " ", 2); },
-        ]);
-
-        Page["old_addPlanetTableHeader"] = Page.addTableHeader;
-        Page["old_prepareOneDayDataObjectForView"] = Page.prepareOneDayDataObjectForView;
-
-        Page.addTableHeader = function (table, classes) {
-            var header = this.old_addPlanetTableHeader(table, classes);
-            var divPhysical = PlanetPage.prototype["addNodeChild"](header, "div");
-            divPhysical.classList.add("hidePhaseOnPhysical");
-            return header;
-        }
-
             Page.prepareOneDayDataObjectForView = function (obj, JD) {
                 var preparedLine = this.old_prepareOneDayDataObjectForView(obj, JD);
                 preparedLine[preparedLine.length] = Math.round(obj.CentralMeridianLongitude * 10) / 10;
@@ -123,6 +78,15 @@ WHEN (PlanetPageRegistrationCheck,
                 preparedLine[preparedLine.length] = preparedLine[1];
                 return preparedLine;
             }
+
+            Page["old_addPlanetTableHeader"] = Page.addTableHeader;
+            Page.addTableHeader = function (table, classes) {
+                var header = this.old_addPlanetTableHeader(table, classes);
+                var divPhysical = PlanetPage.prototype["addNodeChild"](header, "div");
+                divPhysical.classList.add("hidePhaseOnPhysical");
+                return header;
+            };
+
             Pages.addShareablePage(Page, "Mars Ephemeris");
             Page.parent_reset = PlanetPage.prototype.reset;
             Page.reset = function () {
@@ -138,6 +102,5 @@ WHEN (PlanetPageRegistrationCheck,
                 Page.interpolatorDisplayFunctions['CentralMeridianLongitude'] = angleDegrees_3Decimals;                
             };
             Page.renderTable = PlanetPage.prototype.renderTable;
-        Pages.addShareablePage(Page, "Mars Ephemeris");
     }
 );
