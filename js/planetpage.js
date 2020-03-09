@@ -228,7 +228,14 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
             this.pageRendered = true;
 
             var plotTheTableLink = PlanetPage.prototype.addNodeChild (this.singleDateHostElement, 
-                                                                      "a", "Plot table");
+                                                                      "a", "Display time argument table");
+            plotTheTableLink.classList.add ("timeArgumentLink");
+
+            var plotInterpolatorLink = PlanetPage.prototype.addNodeChild (this.singleDateHostElement, 
+                                                                      "a", "Display interpolated data");
+            plotInterpolatorLink.classList.add ("interpolatedDataLink");
+            plotInterpolatorLink.classList.add ("currentDisplayActive");
+
             plotTheTableLink.onclick = function() {
                 if (!pageObj.lastAppendedLine) {
                     pageObj.renderTable();
@@ -236,15 +243,28 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
                 hostElement.classList.remove ("hidden");
                 interpolatorControl.dom.classList.add ("hidden");
                 interpolatedView.table.classList.add ("hidden");
+
+                plotTheTableLink.classList.add ("currentDisplayActive");
+                //plotTheTableLink.classList.remove ("currentDisplayInactive");
+
+                plotInterpolatorLink.classList.remove ("currentDisplayActive");
+                //plotInterpolatorLink.classList.add ("currentDisplayInactive");
             }
 
-            var plotInterpolatorLink = PlanetPage.prototype.addNodeChild (this.singleDateHostElement, 
-                                                                      "a", "Plot interpolated data");
             plotInterpolatorLink.onclick = function() {
                 interpolatorControl.dom.classList.remove ("hidden");
                 interpolatedView.table.classList.remove ("hidden");
                 hostElement.classList.add ("hidden");
+
+                plotInterpolatorLink.classList.add ("currentDisplayActive");
+                //plotInterpolatorLink.classList.remove ("currentDisplayInactive");
+
+                plotTheTableLink.classList.remove ("currentDisplayActive");
+                //plotTheTableLink.classList.add ("currentDisplayInactive");
             }
+
+            var clear = PlanetPage.prototype.addNodeChild (this.singleDateHostElement, "div");
+            clear.classList.add ("clear");
 
         }
     };

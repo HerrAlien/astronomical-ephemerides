@@ -760,6 +760,26 @@ tr.secondHeaderRowScrolled{
     width: 800px;
 }
 
+a.timeArgumentLink, a.interpolatedDataLink {
+    margin-top: 20px;
+    display:  inline-block;
+    cursor: pointer;
+}
+
+a.interpolatedDataLink {
+    float: left;
+}
+
+a.timeArgumentLink {
+    float: right;
+}
+
+a.interpolatedDataLink.currentDisplayActive, 
+a.timeArgumentLink.currentDisplayActive {
+    cursor: text;
+    text-decoration: none;
+}
+
 @media  screen and  (min-width: 936px) {
 
 .interpolator {
@@ -774,4 +794,13 @@ tr.secondHeaderRowScrolled{
 .interpolatedTableLongText {
     margin-top: 10px;
     font-size: 16px;
+}
+}
+
+#Jupiter\ Ephemeris {
+    max-width: 1020px;
+}
+
+#Mars\ Ephemeris {
+    max-width: 980px;
 }
