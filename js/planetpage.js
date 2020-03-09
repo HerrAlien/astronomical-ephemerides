@@ -186,13 +186,12 @@ function PlanetPage(planetDataSource, allDatesTableName, singleDateHostName) {
         var columnClasses = pageObj.firstDataRowColumnClasses;
         var dataSource = pageObj.dataSource;
 
-        hostElement.classList.add ("hidden");
-
         if (!this.singleDateHostElement) {
             this.singleDateHostElement = hostElement.parentElement;
         }
 
         if (!this.pageRendered) {
+            hostElement.classList.add ("hidden");
             this.reset();
 
             var interpolatorControl = InterpolatorControl.New(this.singleDateHostElement, dataSource.planet.name);
