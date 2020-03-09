@@ -556,10 +556,11 @@ input[type=date]::-webkit-inner-spin-button {
     border-color: var(--inactive-dark);
     border-bottom-width: 2px;
     width: 220px;
-    display: block;
+    display: inline-block;
     font-size: 26px;
     color: #666666;
     transition: 0.25s;
+    height: var(--input-height);
 }
 
 .interpolator input[type=number] {
@@ -584,6 +585,10 @@ input[type=date]::-webkit-inner-spin-button {
 .settingsLabel, #getFromGeolocationAnchor {
     font-size: 26px;
     font-family: Verdana;
+}
+
+div.interpolator > label.switch + .settingsLabel {
+    margin-left: 10px;
 }
 
 #settings label.switch {
@@ -770,4 +775,3 @@ tr.secondHeaderRowScrolled{
     margin-top: 10px;
     font-size: 16px;
 }
-

@@ -174,12 +174,12 @@ var InterpolatorControl = {
         New : function (host) {
             //<label class="settingsLabel">Date: <br><input type="date"></label>
             var appendDomNode = PlanetPage.prototype["addNodeChild"];
-            var label = appendDomNode(host, "label", "Date: ");
+/*            var label = appendDomNode(host, "label", "Date: ");
             label.classList.add("settingsLabel");
-            appendDomNode(label, "br");
-            var input = appendDomNode(label, "input");
+            appendDomNode(label, "br"); */
+            var input = appendDomNode(host, "input");
             input['type'] = 'date';
-            return { input: input, label : label };
+            return { input: input, label : false };
         }
     }, 
 
@@ -191,21 +191,21 @@ var InterpolatorControl = {
                     <input type="number" class="seconds">
                 </label>*/
             var appendDomNode = PlanetPage.prototype["addNodeChild"];
-            var label = appendDomNode(host, "label", "Time: ");
+/*            var label = appendDomNode(host, "label", "Time: ");
             label.classList.add("settingsLabel");
-            appendDomNode(label, "br");
+            appendDomNode(label, "br"); */
 
-            var hours = appendDomNode(label, "input");
+            var hours = appendDomNode(host, "input");
             hours['type'] = 'number';
-            appendDomNode(label, "span", " : ");
+            appendDomNode(host, "span", ":");
 
-            var minutes = appendDomNode(label, "input");
+            var minutes = appendDomNode(host, "input");
             minutes['type'] = 'number';
-            appendDomNode(label, "span", " : ");
+            appendDomNode(host, "span", ":");
 
-            var seconds = appendDomNode(label, "input");
+            var seconds = appendDomNode(host, "input");
             seconds['type'] = 'number';
-            appendDomNode(label, "span", " : ");
+            appendDomNode(host, "span", " - ");
 
             return { hours: hours, minutes: minutes, seconds: seconds };
         }
