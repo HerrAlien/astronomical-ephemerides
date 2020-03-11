@@ -29,15 +29,22 @@ var OccultationsPage = {
     },
 
 
-    displayPage: function () {
+    displayPage: function (startJD, numberOfDays) {
         WHEN (function() {return !(typeof AAJS == "undefined" || !AAJS.AllDependenciesLoaded() || !AAJS.AllDependenciesLoaded || !PageTimeInterval.JD
                                 || typeof OccultableStars == "undefined" || typeof MoonData == "undefined" ||
                                 typeof DistanceDFromEqCoordinates == "undefined");},
              function() {
                 OccultationsPage.signature = OccultationsPage.getSignature();
-
-                var startJD = PageTimeInterval.JD;
-                var numberOfDays = PageTimeInterval.days;
+                
+                var renderingLimitsNotProvided = !startJD || !numberOfDays;
+                if (!startJD)
+                {
+                    startJD = PageTimeInterval.JD;
+                }
+                if (!numberOfDays)
+                {
+                    numberOfDays = PageTimeInterval.days;
+                }
 
                 if (OccultationsPage.pageRendered)
                     return;
@@ -51,7 +58,7 @@ var OccultationsPage = {
                 function OccultationsPageProcessJD(JD) {
                     var signatureChanged = OccultationsPage.signature != OccultationsPage.getSignature();
                     if (JD >= endJD || signatureChanged) {
-                        OccultationsPage.pageRendered = !signatureChanged;
+                        OccultationsPage.pageRendered = !signatureChanged && renderingLimitsNotProvided;
                         return;
                     }
 
@@ -93,7 +100,10 @@ var OccultationsPage = {
 
     getNavigationObject: function (occultation) {
         return { page: "Occultations",
-                 actions: [{ name: "scroll", parameters: OccultationsPage.getId(occultation) }]};
+                 actions: [
+                    { name: "timeBoxedRender", parameters: {"startJD" : occultation.start.t - 0.05, "numberOfDays" : 0.1} },
+                    { name: "scroll", parameters: OccultationsPage.getId(occultation) }
+                 ]};
     },
 
     getShareEventTitle: function (occultation) {
