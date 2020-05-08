@@ -293,7 +293,7 @@ var OccultationsPage = {
         path.setAttribute("d", d);
         path.setAttribute("fill", "#ffffdd");
         path.setAttribute("stroke", "#000000");
-        path.setAttribute("stroke-width", 2);
+        path.setAttribute("stroke-width", 1);
 
         host.appendChild(fragment);
     },
