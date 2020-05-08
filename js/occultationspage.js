@@ -292,7 +292,7 @@ var OccultationsPage = {
         img.appendChild(path);
         path.setAttribute("d", d);
         path.setAttribute("fill", "#ffffdd");
-        path.setAttribute("sroke", "#000000");
+        path.setAttribute("stroke", "#000000");
         path.setAttribute("stroke-width", 2);
 
         host.appendChild(fragment);
