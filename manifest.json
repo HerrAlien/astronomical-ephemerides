@@ -28,7 +28,7 @@
       "sizes": "128x128"
     }
   ],
-  "start_url": ".",
+  "start_url": "https://herralien.github.io/ephemerides",
   "display": "standalone",
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
