@@ -31,5 +31,25 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#ffffff",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  
+  "categories": ["astronomy", "education"],
+  
+  "screenshots" : [
+        {
+            "src": "images/screenshots/home_screen_368x647.png",
+            "sizes": "368x647",
+            "type": "image/png"
+        },
+        {
+            "src": "images/screenshots/occultations_585x777.png",
+            "sizes": "585x777",
+            "type": "image/png"
+        },
+        {
+            "src": "images/screenshots/galilean_moons_646x367.png",
+            "sizes": "646x367",
+            "type": "image/png"
+        }
+    ]
 }
